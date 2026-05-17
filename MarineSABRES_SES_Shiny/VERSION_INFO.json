@@ -1,17 +1,22 @@
 {
-  "version": "1.14.0",
-  "version_name": "ML Pipeline — Phase 2",
+  "version": "1.15.0",
+  "version_name": "ML Pipeline — Phase 3 (closes original-abstract gap)",
   "release_date": "2026-05-17",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.14.0",
+  "documentation_version": "1.15.0",
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "GraphSAGE-based graph neural network for connection prediction (functions/ml_models.R + scripts/train_connection_predictor_gnn.R). 2-layer encoder produces 32-dim node embeddings; existence head consumes [h_s; h_t; h_s ⊙ h_t]. Retrospective validation: precision@5 = 0.086 vs base 0.057 (+51%); recall@10 = 0.100 vs 0.081 (+23%).",
+    "BERT chunk-classification head for SES element extraction (functions/ml_element_classifier.R + scripts/train_element_classifier.R). 7-way classifier on top of frozen sentence-transformer embedding. Test accuracy 61% (4.3× random baseline of 14.3%) on 1367 KB-derived (text, category) pairs.",
+    "LinUCB contextual bandit for response-measure prioritization (functions/ml_response_bandit.R + scripts/warm_start_response_bandit.R). 32-dim context vector, 3 priority arms (high/medium/low), warm-started from 251 KB response-related connections.",
+    "Collaborative filtering for SES recommendations (functions/ml_collaborative_filter.R + scripts/warm_start_cf.R). Truncated-SVD on a 44 × 1458 user × item matrix derived from KB contexts + production templates. Density 2.7%; rank 12.",
+    "Pilot study instrumentation (modules/pilot_study_module.R + docs/ml_pilot_protocol.md + docs/ml_pilot_consent_form.md + scripts/pilot_analysis.R). URL-param conditional activation (?pilot_condition=A|B), session timing, NASA-TLX modal, hashed participant IDs, paired Wilcoxon analysis with Bonferroni correction.",
     "Transformer-based text embeddings (Phase 2A): functions/ml_text_embeddings.R adds a 'transformer' strategy backed by the R `text` package (sentence-transformers/all-MiniLM-L6-v2, 384-dim). Selected at startup via MARINESABRES_EMBEDDING_STRATEGY env var; auto-preferred when the `text` package is available. Cached per-element-name to avoid re-encoding.",
     "Similarity-guided transfer-learning fine-tuning (Phase 2B): scripts/fine_tune_for_template.R scores target-vs-other template similarity and selects LR + freezing schedule. Ships fine-tuned checkpoints for coastal_lagoon, climate_change, fisheries.",
     "Retrospective validation pipeline: scripts/retrospective_validation.R masks 20% of human-validated positives per template, ranks all candidate pairs, and reports precision@k / recall@k. Macro-averaged precision@10 ≈ 0.057 (≈7× the ~0.008 random baseline); recall@20 ≈ 0.153.",
@@ -120,5 +125,5 @@
     "data$pims$engagements and data$pims$communications top-level slots added.",
     "VERSION_INFO.json was stale at 1.11.0 through v1.13.3 — Application Info modal now correctly reflects the running version."
   ],
-  "previous_version": "1.13.7"
+  "previous_version": "1.14.0"
 }

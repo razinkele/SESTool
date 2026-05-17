@@ -504,6 +504,216 @@ connection_predictor_v2 <- nn_module(
 )
 
 # ==============================================================================
+# GraphSAGE Encoder (Phase 3, v1.15.0)
+# ==============================================================================
+#
+# Learnable graph neural network for connection prediction. Replaces the
+# hand-engineered scalar graph features (centrality, shortest path,
+# framework compliance) with a 2-layer GraphSAGE message-passing encoder.
+#
+# Operates per-context: given a context's element set and the connections
+# already in the (partial) model, produces a 32-dim embedding for every
+# node. For a candidate edge (s, t) the prediction head consumes
+# [h_s; h_t; h_s * h_t] (96 dims), so direction and interaction are
+# both captured.
+#
+# Why GraphSAGE rather than vanilla GCN:
+#   1. Handles dynamic graphs at inference time (the user's model is
+#      partially built when we predict; we don't have a fixed adjacency).
+#   2. Mean aggregator + sampling tolerates the small graphs in this
+#      domain better than the spectral GCN normalization.
+#
+# Input node features (135-dim):
+#   - DAPSIWRM one-hot (7 dims)
+#   - Element-name text embedding (128 dims; truncated/projected from
+#     the existing sentence-transformer or vocabulary strategy)
+# ==============================================================================
+
+GRAPH_SAGE_NODE_DIM <- 135L  # 7 DAPSIWRM + 128 text-embedding
+GRAPH_SAGE_HIDDEN  <- 64L
+GRAPH_SAGE_OUTPUT  <- 32L
+
+#' GraphSAGE Layer
+#'
+#' Single SAGE convolution: aggregates neighbour embeddings, concatenates
+#' with the node's own embedding, projects through a linear layer + ReLU.
+#'
+#' @param in_dim Integer. Input embedding dimension.
+#' @param out_dim Integer. Output embedding dimension.
+#' @return torch nn_module
+graph_sage_layer <- nn_module(
+  "GraphSageLayer",
+
+  initialize = function(in_dim, out_dim) {
+    self$linear <- nn_linear(in_dim * 2, out_dim)
+  },
+
+  forward = function(node_features, adj) {
+    # node_features: (N, in_dim)
+    # adj: (N, N) row-normalized adjacency matrix as torch tensor.
+    #      Self-loops should already be included by the caller.
+    neighbor_agg <- torch_matmul(adj, node_features)               # (N, in_dim)
+    combined     <- torch_cat(list(node_features, neighbor_agg), dim = 2L)  # (N, 2*in_dim)
+    self$linear(combined)
+  }
+)
+
+#' GraphSAGE Encoder for SES Connection Prediction
+#'
+#' 2-layer encoder with edge dropout for regularization. The caller
+#' assembles the adjacency matrix from the context's current connection
+#' set; this module is agnostic to context size.
+#'
+#' @param node_dim Integer. Input node feature dim (default 135).
+#' @param hidden_dim Integer. Hidden layer dim (default 64).
+#' @param output_dim Integer. Output embedding dim (default 32).
+#' @param dropout Numeric. Dropout rate on node features (default 0.5).
+#' @param edge_dropout Numeric. Edge dropout during training (default 0.2).
+#' @return torch nn_module
+#' @export
+graph_sage_encoder <- nn_module(
+  "GraphSageEncoder",
+
+  initialize = function(node_dim = GRAPH_SAGE_NODE_DIM,
+                        hidden_dim = GRAPH_SAGE_HIDDEN,
+                        output_dim = GRAPH_SAGE_OUTPUT,
+                        dropout = 0.5,
+                        edge_dropout = 0.2) {
+    self$layer1 <- graph_sage_layer(node_dim, hidden_dim)
+    self$layer2 <- graph_sage_layer(hidden_dim, output_dim)
+    self$dropout_rate <- dropout
+    self$edge_dropout_rate <- edge_dropout
+    self$dropout1 <- nn_dropout(dropout)
+    self$dropout2 <- nn_dropout(dropout)
+  },
+
+  forward = function(node_features, adj, training_mode = TRUE) {
+    # Edge dropout: randomly mask a fraction of off-diagonal entries
+    # during training. Identical mask applied symmetrically.
+    if (training_mode && self$edge_dropout_rate > 0) {
+      n <- adj$shape[[1]]
+      eye <- torch_eye(n, dtype = adj$dtype, device = adj$device)
+      mask <- (torch_rand_like(adj) > self$edge_dropout_rate)$to(dtype = adj$dtype)
+      mask <- mask * (1 - eye) + eye  # always keep self-loops
+      adj_dropped <- adj * mask
+      # Re-normalize row sums to keep adjacency a valid mean aggregator
+      row_sums <- adj_dropped$sum(dim = 2L, keepdim = TRUE)$clamp(min = 1e-6)
+      adj <- adj_dropped / row_sums
+    }
+
+    h <- self$layer1(node_features, adj) %>% nnf_relu() %>% self$dropout1()
+    h <- self$layer2(h, adj) %>% nnf_relu() %>% self$dropout2()
+    h  # (N, output_dim)
+  }
+)
+
+#' Connection Predictor with GraphSAGE Encoder
+#'
+#' Multi-task head consuming pairwise node embeddings from GraphSAGE.
+#' Inputs at forward() are arranged per-batch where each example carries
+#' its source/target node indices into a per-context graph + the graph's
+#' node features and adjacency.
+#'
+#' Forward signature is intentionally explicit (no kwargs) so the model
+#' can be saved and reloaded across torch versions.
+#'
+#' Inputs at predict-time:
+#'   node_features: (N, node_dim) for this context
+#'   adj:           (N, N) row-normalized adjacency for this context
+#'   src_idx:       (B,) long, source node index per example
+#'   tgt_idx:       (B,) long, target node index per example
+#'
+#' @param node_dim Integer. Input node feature dim (default 135).
+#' @param hidden_dim Integer. Encoder hidden dim (default 64).
+#' @param emb_dim Integer. Node embedding output dim (default 32).
+#' @param head_dim Integer. MLP hidden dim before output heads (default 128).
+#' @param dropout Numeric. Dropout rate (default 0.5).
+#' @return torch nn_module
+#' @export
+connection_predictor_gnn <- nn_module(
+  "ConnectionPredictorGNN",
+
+  initialize = function(node_dim = GRAPH_SAGE_NODE_DIM,
+                        hidden_dim = GRAPH_SAGE_HIDDEN,
+                        emb_dim = GRAPH_SAGE_OUTPUT,
+                        head_dim = 128L,
+                        dropout = 0.5) {
+    self$encoder <- graph_sage_encoder(
+      node_dim = node_dim,
+      hidden_dim = hidden_dim,
+      output_dim = emb_dim,
+      dropout = dropout
+    )
+    # Pairwise input is [h_s; h_t; h_s * h_t] = 3 * emb_dim
+    pair_dim <- 3L * emb_dim
+    self$mlp1 <- nn_linear(pair_dim, head_dim)
+    self$bn1  <- nn_batch_norm1d(head_dim)
+    self$drop1 <- nn_dropout(dropout)
+
+    self$existence_head  <- nn_linear(head_dim, 1L)
+    self$strength_head   <- nn_linear(head_dim, 3L)
+    self$confidence_head <- nn_linear(head_dim, 1L)
+    self$polarity_head   <- nn_linear(head_dim, 1L)
+  },
+
+  forward = function(node_features, adj, src_idx, tgt_idx) {
+    # Run the GNN encoder over the entire context graph
+    h <- self$encoder(node_features, adj, training_mode = self$training)
+    # Gather source / target embeddings
+    h_s <- h$index_select(1L, src_idx)  # (B, emb_dim)
+    h_t <- h$index_select(1L, tgt_idx)  # (B, emb_dim)
+    pair <- torch_cat(list(h_s, h_t, h_s * h_t), dim = 2L)  # (B, 3*emb_dim)
+
+    features <- pair %>%
+      self$mlp1() %>%
+      self$bn1() %>%
+      nnf_relu() %>%
+      self$drop1()
+
+    list(
+      existence  = self$existence_head(features),
+      strength   = self$strength_head(features),
+      confidence = self$confidence_head(features),
+      polarity   = self$polarity_head(features)
+    )
+  }
+)
+
+# ==============================================================================
+# Adjacency helper for the GNN training / inference pipeline
+# ==============================================================================
+
+#' Build row-normalized adjacency with self-loops
+#'
+#' @param edge_list Two-column integer matrix (1-indexed) of (source, target) pairs,
+#'   or a 0-row matrix when the graph has no edges yet.
+#' @param n_nodes Integer. Total number of nodes in the context.
+#' @param directed Logical. If TRUE the adjacency is directed (default TRUE,
+#'   matching the DAPSIWRM framework which is sequential).
+#' @return torch_tensor of shape (n_nodes, n_nodes), float, row-normalized.
+#' @export
+build_normalized_adjacency <- function(edge_list, n_nodes, directed = TRUE) {
+  adj_mat <- matrix(0, n_nodes, n_nodes)
+  if (!is.null(edge_list) && nrow(edge_list) > 0L) {
+    for (i in seq_len(nrow(edge_list))) {
+      s <- edge_list[i, 1L]
+      t <- edge_list[i, 2L]
+      if (s >= 1L && s <= n_nodes && t >= 1L && t <= n_nodes) {
+        adj_mat[s, t] <- 1
+        if (!directed) adj_mat[t, s] <- 1
+      }
+    }
+  }
+  # Self-loops
+  diag(adj_mat) <- 1
+  # Row-normalize (mean aggregator)
+  row_sums <- rowSums(adj_mat)
+  row_sums[row_sums == 0] <- 1  # guard
+  adj_mat <- adj_mat / row_sums
+  torch_tensor(adj_mat, dtype = torch_float())
+}
+
+# ==============================================================================
 # Load message
 # ==============================================================================
 
@@ -512,5 +722,6 @@ debug_log("connection_predictor: Multi-task neural network (Phase 1, 358-dim)", 
 if (exists("context_embeddings")) {
   debug_log("connection_predictor_v2: Enhanced with context embeddings (Phase 2, 314-dim)", "ML_MODELS")
 }
+debug_log("connection_predictor_gnn: GraphSAGE encoder + multi-task heads (Phase 3)", "ML_MODELS")
 debug_log("multitask_loss: Weighted loss function", "ML_MODELS")
 debug_log("Metrics: accuracy, F1, MAE", "ML_MODELS")

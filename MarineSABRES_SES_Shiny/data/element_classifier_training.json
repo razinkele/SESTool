@@ -1,0 +1,5481 @@
+{
+  "examples": [
+    {
+      "text": "Food security from local fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational demand for nature tourism",
+      "category": "Drivers"
+    },
+    {
+      "text": "Agricultural production demand in catchment",
+      "category": "Drivers"
+    },
+    {
+      "text": "Urban wastewater management needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Cultural heritage of traditional fishing",
+      "category": "Drivers"
+    },
+    {
+      "text": "Small-scale gillnet fishing for pike-perch",
+      "category": "Activities"
+    },
+    {
+      "text": "Reed harvesting for thatching and bioenergy",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational angling for pike and perch",
+      "category": "Activities"
+    },
+    {
+      "text": "Agricultural drainage into lagoon",
+      "category": "Activities"
+    },
+    {
+      "text": "Bird-watching and nature tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Eel fishing with fyke nets",
+      "category": "Activities"
+    },
+    {
+      "text": "Nutrient enrichment from agricultural sources",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cyanobacteria bloom formation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Reduced water exchange with open sea",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sedimentation and lagoon infilling",
+      "category": "Pressures"
+    },
+    {
+      "text": "Microplastic accumulation in sediments",
+      "category": "Pressures"
+    },
+    {
+      "text": "Fishing mortality on pike-perch stock",
+      "category": "Pressures"
+    },
+    {
+      "text": "Pike-perch population dynamics",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Submerged macrophyte coverage (e.g., Potamogeton)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Phytoplankton community composition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reed bed extent and condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Water transparency and light penetration",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fish provisioning from lagoon fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Water purification by reed beds and macrophytes",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Bird habitat provision (breeding, staging)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Flood buffering and coastal protection",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fisher household income from pike-perch sales",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Recreational value for local communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity of lagoon fishing villages",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Tourism revenue from birdwatching and angling",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "HELCOM nutrient reduction targets for lagoon catchments",
+      "category": "Responses"
+    },
+    {
+      "text": "Reed bed restoration programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Pike-perch minimum landing size regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Agricultural buffer zone requirements",
+      "category": "Responses"
+    },
+    {
+      "text": "Natura 2000 lagoon habitat protection",
+      "category": "Responses"
+    },
+    {
+      "text": "Salmon and sea trout fishery demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Port and harbour expansion pressure",
+      "category": "Drivers"
+    },
+    {
+      "text": "Flood risk management needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial water supply demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational boating and waterfront access",
+      "category": "Drivers"
+    },
+    {
+      "text": "Navigation channel dredging",
+      "category": "Activities"
+    },
+    {
+      "text": "Salmon stocking and hatchery operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Industrial and municipal wastewater discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational salmon fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Flood defence construction and maintenance",
+      "category": "Activities"
+    },
+    {
+      "text": "Sand and gravel extraction from river bed",
+      "category": "Activities"
+    },
+    {
+      "text": "Heavy metal contamination from industrial legacy",
+      "category": "Pressures"
+    },
+    {
+      "text": "Physical habitat loss from channelisation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Blocked fish migration routes (dams, weirs)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Altered salinity gradient from flow regulation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sediment resuspension from dredging",
+      "category": "Pressures"
+    },
+    {
+      "text": "Altered freshwater flow regime from upstream regulation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Atlantic salmon migration success",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Dissolved oxygen levels in stratified waters",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Estuarine benthic invertebrate communities",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sea lamprey (Petromyzon marinus) population viability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Estuarine water quality (nutrients, contaminants)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Estuarine salinity gradient and mixing zone dynamics",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Salmon fishery productivity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nutrient filtration by estuarine wetlands",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nursery function for coastal fish species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Recreational fishing tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Port and shipping economic value",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Flood damage avoidance for riverside communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Drinking water quality for downstream users",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Port and navigation accessibility",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fish passage restoration (dam removal, fish ladders)",
+      "category": "Responses"
+    },
+    {
+      "text": "Wastewater treatment plant upgrades",
+      "category": "Responses"
+    },
+    {
+      "text": "Salmon stock recovery plans (HELCOM)",
+      "category": "Responses"
+    },
+    {
+      "text": "River basin nutrient management plans",
+      "category": "Responses"
+    },
+    {
+      "text": "Contaminated sediment remediation programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Demand for Baltic cod and herring",
+      "category": "Drivers"
+    },
+    {
+      "text": "Offshore wind energy expansion targets",
+      "category": "Drivers"
+    },
+    {
+      "text": "Maritime shipping route demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change mitigation goals",
+      "category": "Drivers"
+    },
+    {
+      "text": "Sand and aggregate resource needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Demersal trawling for Baltic cod",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic fishing for herring and sprat",
+      "category": "Activities"
+    },
+    {
+      "text": "Offshore wind farm construction and operation",
+      "category": "Activities"
+    },
+    {
+      "text": "Merchant shipping and ferry traffic",
+      "category": "Activities"
+    },
+    {
+      "text": "Submarine cable and pipeline installation",
+      "category": "Activities"
+    },
+    {
+      "text": "Overfishing of Eastern Baltic cod",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from shipping and construction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Bycatch of harbour porpoise and seabirds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabed disturbance from bottom trawling",
+      "category": "Pressures"
+    },
+    {
+      "text": "Contamination from dumped munitions",
+      "category": "Pressures"
+    },
+    {
+      "text": "Military munition dumping legacy",
+      "category": "Pressures"
+    },
+    {
+      "text": "Eastern Baltic cod stock biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Central Baltic herring recruitment",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Halocline dynamics and deep-water renewal",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Harbour porpoise population in Baltic Proper",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic macrofauna in deep basins",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-water hypoxia (dead zones)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Commercial fish stock provision (cod, herring, sprat)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Climate regulation through carbon cycling",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fishing fleet economic viability",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy security from Baltic wind farms",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fish processing industry employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Maritime trade revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Renewable energy generation from offshore wind",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Shipping route provision",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Baltic cod fishing quota reductions (EU TAC)",
+      "category": "Responses"
+    },
+    {
+      "text": "HELCOM Baltic Sea Action Plan",
+      "category": "Responses"
+    },
+    {
+      "text": "Maritime spatial planning for wind and fisheries",
+      "category": "Responses"
+    },
+    {
+      "text": "Harbour porpoise bycatch mitigation (pingers)",
+      "category": "Responses"
+    },
+    {
+      "text": "Trawling closure zones in spawning areas",
+      "category": "Responses"
+    },
+    {
+      "text": "Beach tourism and summer recreation demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal property development pressure",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal erosion risk management",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational fishing demand (sea trout, flounder)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Marine biodiversity conservation demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Beach recreation and bathing",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal erosion protection works (groynes, nourishment)",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational sea trout and flounder fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal residential and hotel development",
+      "category": "Activities"
+    },
+    {
+      "text": "Seal watching tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Seaweed and wrack harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal erosion from storms and sea level rise",
+      "category": "Pressures"
+    },
+    {
+      "text": "Beach litter and microplastic pollution",
+      "category": "Pressures"
+    },
+    {
+      "text": "Human disturbance at seal haul-out sites",
+      "category": "Pressures"
+    },
+    {
+      "text": "Nutrient-driven filamentous algae on shores",
+      "category": "Pressures"
+    },
+    {
+      "text": "Loss of natural coastal habitats from hardening",
+      "category": "Pressures"
+    },
+    {
+      "text": "Grey seal and ringed seal population trends",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal vegetation and dune stability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Bathing water quality",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Nearshore fish community (flounder, perch)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Wrack (bladderwrack) belt condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seal population recovery concerns",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass (Zostera marina) bed coverage along brackish open coastline",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Beach recreation and tourism amenity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal protection from natural dunes",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nearshore recreational fishery",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Aesthetic and cultural landscape value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal tourism employment and revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Property values in coastal settlements",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Quality of life for coastal residents",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Health benefits from beach recreation",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Beach nourishment and managed retreat programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Bathing water quality monitoring (EU BWD)",
+      "category": "Responses"
+    },
+    {
+      "text": "Seal protection zones and visitor management",
+      "category": "Responses"
+    },
+    {
+      "text": "Dune habitat restoration",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine litter reduction campaigns",
+      "category": "Responses"
+    },
+    {
+      "text": "Demand for shellfish (mussels, oysters, clams)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Ecotourism and flamingo-watching demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Salt production tradition",
+      "category": "Drivers"
+    },
+    {
+      "text": "Agricultural production demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal housing and infrastructure demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Shellfish farming (mussels, oysters, Manila clam)",
+      "category": "Activities"
+    },
+    {
+      "text": "Vallicultura extensive lagoon fish farming (sea bass, gilthead bream, eel)",
+      "category": "Activities"
+    },
+    {
+      "text": "Traditional fixed-net fishing (trabucco, lavoriero)",
+      "category": "Activities"
+    },
+    {
+      "text": "Flamingo and waterbird watching tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal salt harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Agricultural drainage and irrigation return flows",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational boating in lagoon channels",
+      "category": "Activities"
+    },
+    {
+      "text": "Eutrophication and macroalgal blooms (Ulva)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Anoxic events from decomposing algal biomass",
+      "category": "Pressures"
+    },
+    {
+      "text": "Reduced tidal exchange from inlet narrowing",
+      "category": "Pressures"
+    },
+    {
+      "text": "Pesticide contamination from agriculture",
+      "category": "Pressures"
+    },
+    {
+      "text": "Pathogen loading affecting shellfish safety",
+      "category": "Pressures"
+    },
+    {
+      "text": "Shellfish stock health and condition index",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Greater flamingo colony size and breeding success",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Water column dissolved oxygen dynamics",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Lagoon salinity regime and water residence time",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive Manila clam (Ruditapes philippinarum) spread",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Shellfish production for local and export markets",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nutrient cycling and water purification",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Waterbird habitat and biodiversity support",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Cultural landscape and heritage value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Shellfish farmer livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Nature tourism revenue for local communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Traditional fishing community identity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Public health from safe shellfish consumption",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Lagoon water exchange improvement (inlet management)",
+      "category": "Responses"
+    },
+    {
+      "text": "Shellfish sanitary monitoring programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Nutrient input reduction from agricultural best practice",
+      "category": "Responses"
+    },
+    {
+      "text": "Ramsar and Natura 2000 lagoon designations",
+      "category": "Responses"
+    },
+    {
+      "text": "Macroalgal biomass removal campaigns",
+      "category": "Responses"
+    },
+    {
+      "text": "Recreational boating and yacht tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal resort and marina demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Demand for sustainable blue carbon credits",
+      "category": "Drivers"
+    },
+    {
+      "text": "Water quality requirements for tourism",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change adaptation needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Yacht and sailboat anchoring over Posidonia",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal construction and marina expansion",
+      "category": "Activities"
+    },
+    {
+      "text": "Trawling near seagrass bed margins",
+      "category": "Activities"
+    },
+    {
+      "text": "Desalination brine discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Snorkeling and dive tourism over meadows",
+      "category": "Activities"
+    },
+    {
+      "text": "Underwater seagrass monitoring surveys",
+      "category": "Activities"
+    },
+    {
+      "text": "Mechanical damage from boat anchoring and mooring",
+      "category": "Pressures"
+    },
+    {
+      "text": "Turbidity increase from coastal works",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive algae (Caulerpa taxifolia, C. cylindracea)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sea temperature rise and marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Hypersaline discharge from desalination",
+      "category": "Pressures"
+    },
+    {
+      "text": "Climate change and ocean warming",
+      "category": "Pressures"
+    },
+    {
+      "text": "Posidonia oceanica meadow extent and density",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass-associated fish assemblage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Matte (root mat) integrity and accretion rate",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Epiphyte community on seagrass leaves",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Water clarity over meadow areas",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Nursery habitat for commercial fish (Sparidae, Labridae)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Blue carbon sequestration in seagrass matte",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Sediment stabilisation and coastal protection",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Water clarity maintenance through particle trapping",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Climate mitigation value of blue carbon storage",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Dive tourism and snorkeling amenity value",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Artisanal fishery catch value (seagrass-dependent species)",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal property protection from wave buffering",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Posidonia protection zones (anchoring bans)",
+      "category": "Responses"
+    },
+    {
+      "text": "Eco-mooring buoy installation programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Environmental impact assessment for coastal works",
+      "category": "Responses"
+    },
+    {
+      "text": "Caulerpa invasive species removal programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Seagrass transplanting and restoration trials",
+      "category": "Responses"
+    },
+    {
+      "text": "Artisanal fishing tradition and cultural demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Diving tourism and underwater recreation",
+      "category": "Drivers"
+    },
+    {
+      "text": "Sea urchin and shellfish harvesting demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Marine biodiversity conservation goals",
+      "category": "Drivers"
+    },
+    {
+      "text": "Artisanal trammel net and longline fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Sea urchin (Paracentrotus lividus) harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational spearfishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Scuba diving tourism on rocky reefs",
+      "category": "Activities"
+    },
+    {
+      "text": "Scientific monitoring and underwater surveys",
+      "category": "Activities"
+    },
+    {
+      "text": "Octopus and cuttlefish pot fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Overgrazing by sea urchins (urchin barrens)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overharvesting of predatory fish (grouper, dentex)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Mucilage events and marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ghost fishing from lost nets on rocky substrate",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overharvesting of predatory fish",
+      "category": "Pressures"
+    },
+    {
+      "text": "Physical habitat degradation of rocky substrate",
+      "category": "Pressures"
+    },
+    {
+      "text": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sea urchin population density",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Large predatory fish abundance (grouper, dentex)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Rocky reef biodiversity index",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive species presence (e.g., Siganus, Fistularia)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive tropical species establishment",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal food web integrity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fish provisioning from artisanal rocky reef fishery",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Diving and snorkeling tourism attraction",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Biodiversity and genetic resource conservation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Scientific and educational value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fisher income and cultural continuity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Dive centre and marine tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Seafood quality and gastronomic heritage",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "No-take marine reserve designation",
+      "category": "Responses"
+    },
+    {
+      "text": "Sea urchin harvesting quota management",
+      "category": "Responses"
+    },
+    {
+      "text": "Spearfishing regulations (ban in reserves)",
+      "category": "Responses"
+    },
+    {
+      "text": "Lost fishing gear retrieval programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Cystoseira habitat restoration projects",
+      "category": "Responses"
+    },
+    {
+      "text": "Offshore wind energy policy targets (EU, UK)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Oil and gas production demand (declining)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Sand and gravel resource demand for construction",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial-scale fisheries demand (sandeel, herring)",
+      "category": "Drivers"
+    },
+    {
+      "text": "International shipping and trade growth",
+      "category": "Drivers"
+    },
+    {
+      "text": "Offshore wind farm construction (monopile, jacket)",
+      "category": "Activities"
+    },
+    {
+      "text": "Oil and gas platform operation and decommissioning",
+      "category": "Activities"
+    },
+    {
+      "text": "Sandeel industrial fishery",
+      "category": "Activities"
+    },
+    {
+      "text": "Beam trawling for flatfish (sole, plaice)",
+      "category": "Activities"
+    },
+    {
+      "text": "Marine aggregate (sand/gravel) dredging",
+      "category": "Activities"
+    },
+    {
+      "text": "Container and tanker shipping traffic",
+      "category": "Activities"
+    },
+    {
+      "text": "Seabed habitat loss from wind farm foundations",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from pile-driving",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sandeel stock depletion affecting seabirds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Chronic hydrocarbon contamination from platforms",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabed disturbance from beam trawling",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ship-strike and collision risk for marine mammals",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sandeel stock abundance and distribution",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird breeding success (kittiwake, puffin, tern)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Harbour porpoise and minke whale abundance",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic community recovery around wind farms",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "North Sea herring stock biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird population sustainability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fish stock provisioning for human consumption",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Seabird conservation value (public concern)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fishing industry employment and revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy security and carbon reduction benefits",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Decommissioning cost burden (oil sector)",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Renewable energy generation capacity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Shipping and trade route services",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Sandeel fishery closure zones (UK, Denmark)",
+      "category": "Responses"
+    },
+    {
+      "text": "Maritime spatial planning (North Sea)",
+      "category": "Responses"
+    },
+    {
+      "text": "Underwater noise mitigation requirements (bubble curtains)",
+      "category": "Responses"
+    },
+    {
+      "text": "OSPAR regional action plans for marine litter",
+      "category": "Responses"
+    },
+    {
+      "text": "Platform decommissioning regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Major port and container terminal expansion",
+      "category": "Drivers"
+    },
+    {
+      "text": "Flood risk management for coastal cities",
+      "category": "Drivers"
+    },
+    {
+      "text": "Migratory fish (salmon, eel) recovery goals",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial and petrochemical water demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Water Framework Directive compliance pressure",
+      "category": "Drivers"
+    },
+    {
+      "text": "Capital and maintenance dredging for shipping",
+      "category": "Activities"
+    },
+    {
+      "text": "Tidal flood barrier and sea wall operation",
+      "category": "Activities"
+    },
+    {
+      "text": "Industrial cooling water abstraction and discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Brownfield site remediation on estuarine banks",
+      "category": "Activities"
+    },
+    {
+      "text": "Managed realignment and saltmarsh creation",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational sailing and powerboating",
+      "category": "Activities"
+    },
+    {
+      "text": "Commercial and recreational eel fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Legacy contaminants in estuarine sediments (PCBs, metals)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Tidal regime alteration from flood defences",
+      "category": "Pressures"
+    },
+    {
+      "text": "Turbidity maximum zone expansion from dredging",
+      "category": "Pressures"
+    },
+    {
+      "text": "Thermal discharge from power stations",
+      "category": "Pressures"
+    },
+    {
+      "text": "Loss of intertidal habitat from hard defences",
+      "category": "Pressures"
+    },
+    {
+      "text": "Pharmaceutical and endocrine disruptor contamination",
+      "category": "Pressures"
+    },
+    {
+      "text": "European eel recruitment and passage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Estuarine saltmarsh extent and condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Dissolved oxygen in turbidity maximum zone",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Estuarine fish community (smelt, flounder, bass)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sediment contaminant levels and bioavailability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Flood protection for low-lying areas",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Estuarine nursery function for marine fish",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Saltmarsh carbon sequestration and wave attenuation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Port and logistics industry employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Flood damage avoidance for riverside properties",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Recreational amenity of estuarine waterfront",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Water supply security for industry",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Managed realignment projects (set-back flood defences)",
+      "category": "Responses"
+    },
+    {
+      "text": "Water Framework Directive improvement measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Eel Management Plans (EU Eel Regulation)",
+      "category": "Responses"
+    },
+    {
+      "text": "Contaminated sediment management strategies",
+      "category": "Responses"
+    },
+    {
+      "text": "Nature-based solutions for flood resilience",
+      "category": "Responses"
+    },
+    {
+      "text": "Reef tourism and cruise ship visitor demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Reef fishery dependence for food security",
+      "category": "Drivers"
+    },
+    {
+      "text": "Tourism infrastructure demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Demand for reef-derived ornamental species",
+      "category": "Drivers"
+    },
+    {
+      "text": "Reef snorkeling and scuba diving tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Trap and spear fishing on reef",
+      "category": "Activities"
+    },
+    {
+      "text": "Lionfish removal programmes (culling dives)",
+      "category": "Activities"
+    },
+    {
+      "text": "Cruise ship anchoring and wastewater discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal resort and marina construction",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral reef monitoring and research",
+      "category": "Activities"
+    },
+    {
+      "text": "Mass coral bleaching from thermal stress",
+      "category": "Pressures"
+    },
+    {
+      "text": "Lionfish (Pterois volitans/miles) invasion and predation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Hurricane physical damage to reef structure",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overharvesting of herbivorous reef fish",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coral habitat loss and degradation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Global greenhouse gas emissions",
+      "category": "Pressures"
+    },
+    {
+      "text": "Live coral cover percentage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish species diversity and biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Parrotfish population (key herbivores)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef structural complexity (rugosity)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Macroalgal cover on reef substrate",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Stony coral tissue loss disease (SCTLD)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sargassum inundation events",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Adjacent mangrove forest extent and connectivity to reef system",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass bed coverage between reef and shore",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef-based tourism attraction value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal wave protection by reef barrier",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef fishery production for local food supply",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Biodiversity and pharmaceutical potential",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism-dependent community livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Food security from reef protein sources",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal property protection value",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural and spiritual connection to reefs",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Parrotfish and herbivore harvest bans",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine Protected Area network expansion",
+      "category": "Responses"
+    },
+    {
+      "text": "Coral nursery and outplanting programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Lionfish culling bounty programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Watershed management to reduce runoff",
+      "category": "Responses"
+    },
+    {
+      "text": "Arctic shipping route economic viability",
+      "category": "Drivers"
+    },
+    {
+      "text": "Hydrocarbon and mineral resource exploration",
+      "category": "Drivers"
+    },
+    {
+      "text": "Indigenous community food sovereignty",
+      "category": "Drivers"
+    },
+    {
+      "text": "Scientific research and monitoring demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Northern Sea Route commercial shipping",
+      "category": "Activities"
+    },
+    {
+      "text": "Indigenous subsistence hunting (seal, walrus, whale)",
+      "category": "Activities"
+    },
+    {
+      "text": "Arctic oil and gas seismic exploration",
+      "category": "Activities"
+    },
+    {
+      "text": "Polar expedition cruise tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Ice-edge fisheries (Arctic cod, polar cod)",
+      "category": "Activities"
+    },
+    {
+      "text": "Climate and sea ice monitoring research",
+      "category": "Activities"
+    },
+    {
+      "text": "Accelerating sea ice extent and thickness loss",
+      "category": "Pressures"
+    },
+    {
+      "text": "Earlier spring ice breakup disrupting breeding cycles",
+      "category": "Pressures"
+    },
+    {
+      "text": "Oil spill risk in ice-covered waters",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from increased shipping",
+      "category": "Pressures"
+    },
+    {
+      "text": "Black carbon deposition accelerating ice melt",
+      "category": "Pressures"
+    },
+    {
+      "text": "Polar bear population and body condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Ringed seal and bearded seal abundance",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Ice algae and under-ice primary production",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Narwhal and bowhead whale habitat availability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Multi-year ice coverage (critical habitat)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Indigenous marine mammal harvest provision",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Arctic climate regulation (ice-albedo feedback)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Polar ecosystem biodiversity maintenance",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Global climate stability benefit",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Inuit and indigenous community food security",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural continuity of ice-based livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Arctic shipping cost savings vs. Suez route",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Shipping route accessibility in summer",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "IMO Polar Code for Arctic shipping",
+      "category": "Responses"
+    },
+    {
+      "text": "Arctic oil exploration moratoriums",
+      "category": "Responses"
+    },
+    {
+      "text": "Indigenous co-management of marine resources",
+      "category": "Responses"
+    },
+    {
+      "text": "Arctic Council conservation measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Black carbon emission reduction agreements",
+      "category": "Responses"
+    },
+    {
+      "text": "Global demand for tuna and swordfish",
+      "category": "Drivers"
+    },
+    {
+      "text": "Deep-sea mineral resource interest (polymetallic nodules)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Transatlantic shipping and trade demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Telecommunications cable network expansion",
+      "category": "Drivers"
+    },
+    {
+      "text": "Longline fishing for tuna and swordfish",
+      "category": "Activities"
+    },
+    {
+      "text": "Purse seine fishing for skipjack and yellowfin",
+      "category": "Activities"
+    },
+    {
+      "text": "Deep-sea bottom trawling on seamounts",
+      "category": "Activities"
+    },
+    {
+      "text": "Transatlantic container shipping",
+      "category": "Activities"
+    },
+    {
+      "text": "Deep-sea mining exploration and piloting",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic scientific research surveys",
+      "category": "Activities"
+    },
+    {
+      "text": "Overfishing of Atlantic bluefin tuna",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird and turtle bycatch in longline fisheries",
+      "category": "Pressures"
+    },
+    {
+      "text": "Deep-sea habitat destruction from bottom trawling",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine plastic accumulation (North Atlantic gyre)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean acidification affecting deep-water corals",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ship-strike mortality of large whales",
+      "category": "Pressures"
+    },
+    {
+      "text": "Atlantic bluefin tuna stock recovery status",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-water coral and sponge garden condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "North Atlantic right whale population",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mesopelagic fish biomass (biological carbon pump)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sargasso Sea ecosystem health",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "High-value pelagic fishery provision (tuna, swordfish)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Ocean carbon sequestration (biological pump)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Deep-sea biodiversity and genetic resources",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Climate regulation benefits (carbon sink)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Marine scientific knowledge advancement",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tuna fishing fleet and processing industry revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Global seafood supply chain contribution",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Transatlantic shipping corridor services",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "ICCAT bluefin tuna quota management",
+      "category": "Responses"
+    },
+    {
+      "text": "BBNJ Treaty for high seas biodiversity",
+      "category": "Responses"
+    },
+    {
+      "text": "Vulnerable Marine Ecosystem closures (seamounts)",
+      "category": "Responses"
+    },
+    {
+      "text": "Seabird bycatch mitigation (tori lines, weighted hooks)",
+      "category": "Responses"
+    },
+    {
+      "text": "ISA deep-sea mining environmental regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Mass beach tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal urbanisation and second-home demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Artisanal fishing tradition and livelihoods",
+      "category": "Drivers"
+    },
+    {
+      "text": "Maritime transport and cruise tourism",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal protection from storm waves",
+      "category": "Drivers"
+    },
+    {
+      "text": "Beach tourism and bathing",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal construction and marina development",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale trammel net and longline fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational boat anchoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Cruise ship and ferry operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal wastewater discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Physical habitat loss from coastal construction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine litter and microplastic accumulation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Anchor damage to Posidonia oceanica meadows",
+      "category": "Pressures"
+    },
+    {
+      "text": "Nutrient enrichment from sewage and wastewater",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ballast water-mediated invasive species introduction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Noise and visual disturbance from tourism",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing pressure on reef fish",
+      "category": "Pressures"
+    },
+    {
+      "text": "Posidonia oceanica meadow extent and health",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal water quality (bathing water standards)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Rocky reef fish assemblage composition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Beach sediment budget and erosion rates",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Marine litter density on beaches and seafloor",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Tourism and recreation value of beaches",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fishery provision",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal protection by Posidonia banquettes",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Cultural and aesthetic seascape value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism industry employment and revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher household income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal property values",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Recreational well-being of residents and visitors",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine Protected Areas (no-take zones)",
+      "category": "Responses"
+    },
+    {
+      "text": "Posidonia protection legislation (EU Habitats Directive)",
+      "category": "Responses"
+    },
+    {
+      "text": "Beach nourishment and coastal defence planning",
+      "category": "Responses"
+    },
+    {
+      "text": "Mooring buoy installation to prevent anchor damage",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine litter reduction and beach cleanup programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Demand for Black Sea anchovy and sprat",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal resort and beach tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Food production demand from Danube basin",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial and urban land demand on coast",
+      "category": "Drivers"
+    },
+    {
+      "text": "Energy infrastructure demand (offshore pipelines)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Purse seine fishing for anchovy and sprat",
+      "category": "Activities"
+    },
+    {
+      "text": "Bottom trawling for turbot and other demersal species",
+      "category": "Activities"
+    },
+    {
+      "text": "Beach tourism along Bulgarian and Romanian coast",
+      "category": "Activities"
+    },
+    {
+      "text": "Mussel and rapana whelk harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal construction and port development",
+      "category": "Activities"
+    },
+    {
+      "text": "Eutrophication from Danube nutrient inputs",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of small pelagics and turbot",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine litter from rivers and coastal sources",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal erosion from reduced sediment supply",
+      "category": "Pressures"
+    },
+    {
+      "text": "Danube-origin nutrient and pollutant loading",
+      "category": "Pressures"
+    },
+    {
+      "text": "Anchovy and sprat stock biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mnemiopsis and Beroe zooplankton dynamics",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Northwestern shelf dissolved oxygen levels",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Phyllophora red algae field extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Turbot and Black Sea sturgeon populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive comb jelly (Mnemiopsis leidyi)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Hypoxia and hydrogen sulphide in deep waters",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Small pelagic fishery productivity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Beach tourism amenity value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nutrient processing by shelf ecosystems",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Cultural value of traditional fishing communities",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fishing fleet employment and income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Seafood supply for local markets",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal community livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Bucharest Convention (Black Sea Commission) measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Danube basin nutrient reduction plans (ICPDR)",
+      "category": "Responses"
+    },
+    {
+      "text": "Turbot and sturgeon fishing bans and quotas",
+      "category": "Responses"
+    },
+    {
+      "text": "Mnemiopsis biocontrol via Beroe ovata introduction",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine Protected Areas (Phyllophora, Danube delta)",
+      "category": "Responses"
+    },
+    {
+      "text": "Demand for queen conch and spiny lobster fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Agricultural land-use demand in watershed",
+      "category": "Drivers"
+    },
+    {
+      "text": "Boat anchoring in seagrass beds",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational snorkeling and diving over seagrass",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal conch and lobster harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Dredging for navigation channels and harbours",
+      "category": "Activities"
+    },
+    {
+      "text": "Propeller scarring of Thalassia beds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sedimentation from dredging and land clearing",
+      "category": "Pressures"
+    },
+    {
+      "text": "Thermal stress from marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Epiphyte smothering from nutrient enrichment",
+      "category": "Pressures"
+    },
+    {
+      "text": "Green turtle foraging on seagrass beds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Agricultural and urban watershed runoff",
+      "category": "Pressures"
+    },
+    {
+      "text": "Thalassia testudinum shoot density and canopy height",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Green turtle (Chelonia mydas) population abundance",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Queen conch (Lobatus gigas) juvenile density",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Spiny lobster (Panulirus argus) nursery function",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass epiphyte load and algal community composition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Green turtle population recovery (post-harvest moratorium)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Overgrazing by recovering green turtle populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mangrove-seagrass habitat connectivity and nursery function",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Nursery habitat provision for conch and lobster",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Sediment stabilisation and shoreline protection",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Blue carbon sequestration in seagrass sediments",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Water clarity maintenance through sediment trapping",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fisher livelihoods from conch and lobster",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Snorkeling and diving tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal community food security",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity linked to conch fishery traditions",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Seagrass no-anchor zones and mooring buoy installation",
+      "category": "Responses"
+    },
+    {
+      "text": "Queen conch harvest moratoriums and size limits",
+      "category": "Responses"
+    },
+    {
+      "text": "Watershed nutrient management and setback regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine Protected Area designation over seagrass beds",
+      "category": "Responses"
+    },
+    {
+      "text": "Slow-speed boating zones in shallow meadows",
+      "category": "Responses"
+    },
+    {
+      "text": "Global shrimp market demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal population growth and housing demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Energy demand for charcoal and firewood",
+      "category": "Drivers"
+    },
+    {
+      "text": "Ecotourism and mangrove recreation demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Shrimp pond conversion of mangrove areas",
+      "category": "Activities"
+    },
+    {
+      "text": "Mangrove charcoal and firewood production",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal aquaculture (milkfish, mud crab)",
+      "category": "Activities"
+    },
+    {
+      "text": "Mangrove ecotourism (boardwalks, kayaking)",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal infrastructure and road construction",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal mud crab and shellfish collection",
+      "category": "Activities"
+    },
+    {
+      "text": "Mangrove clearance for aquaculture ponds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Altered tidal hydrology from embankments and roads",
+      "category": "Pressures"
+    },
+    {
+      "text": "Oil and chemical pollution from shipping and industry",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sea level rise from thermal expansion and ice melt",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overharvesting of mangrove timber and fuelwood",
+      "category": "Pressures"
+    },
+    {
+      "text": "Mangrove canopy cover and forest extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Prop root habitat complexity (Rhizophora spp.)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Soil carbon sequestration rates in mangrove sediments",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Penaeid shrimp juvenile abundance in mangrove creeks",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mangrove-associated fish assemblage diversity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Blue carbon storage in mangrove soils",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Storm surge and wave attenuation for coastal communities",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nursery function for offshore shrimp and fish stocks",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Water filtration and nutrient trapping by mangrove roots",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal community income from mangrove fisheries",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Avoided storm damage costs for coastal settlements",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Ecotourism employment and community revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Subsistence food security from mangrove shellfish",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Mangrove restoration and replanting programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Aquaculture zoning and setback regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Payment for ecosystem services (blue carbon credits)",
+      "category": "Responses"
+    },
+    {
+      "text": "Community-based mangrove management (co-management)",
+      "category": "Responses"
+    },
+    {
+      "text": "Mangrove protected area designation (Ramsar, national parks)",
+      "category": "Responses"
+    },
+    {
+      "text": "Global demand for farmed Atlantic salmon",
+      "category": "Drivers"
+    },
+    {
+      "text": "Arctic cruise tourism growth",
+      "category": "Drivers"
+    },
+    {
+      "text": "Hydropower generation from fjord-draining rivers",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal community employment needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Open-pen Atlantic salmon aquaculture",
+      "category": "Activities"
+    },
+    {
+      "text": "Cruise ship tourism in fjord waters",
+      "category": "Activities"
+    },
+    {
+      "text": "Regulated hydropower discharge into fjords",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale coastal fishing (cod, saithe, prawns)",
+      "category": "Activities"
+    },
+    {
+      "text": "Kelp harvesting (Laminaria hyperborea)",
+      "category": "Activities"
+    },
+    {
+      "text": "Marine research and monitoring stations",
+      "category": "Activities"
+    },
+    {
+      "text": "Nutrient enrichment from aquaculture waste",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sea lice (Lepeophtheirus salmonis) infestation of wild salmonids",
+      "category": "Pressures"
+    },
+    {
+      "text": "Escaped farmed salmon genetic introgression into wild stocks",
+      "category": "Pressures"
+    },
+    {
+      "text": "Glacial retreat altering freshwater and sediment inputs",
+      "category": "Pressures"
+    },
+    {
+      "text": "Freshwater pulse reducing fjord deep-water salinity",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cruise ship discharge (grey water, air emissions)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Destructive bottom trawling on coral habitat",
+      "category": "Pressures"
+    },
+    {
+      "text": "Climate-driven Arctic warming and glacial retreat",
+      "category": "Pressures"
+    },
+    {
+      "text": "Deep-water renewal frequency and oxygen levels",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic oxygen concentration below salmon cages",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cold-water coral (Lophelia pertusa) reef condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Wild Atlantic salmon and sea trout run sizes",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fjord zooplankton (Calanus spp.) community structure",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Wild salmonid fishery productivity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fjord biodiversity and habitat provision",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Carbon cycling and fjord sediment carbon burial",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Scenic and wilderness value for tourism",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Aquaculture industry employment and export revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Recreational salmon fishing tourism income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cruise tourism revenue for fjord communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity of coastal fishing villages",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Traffic light system for salmon farming capacity (Norway)",
+      "category": "Responses"
+    },
+    {
+      "text": "Closed containment aquaculture technology development",
+      "category": "Responses"
+    },
+    {
+      "text": "Fjord emission control areas for cruise ships",
+      "category": "Responses"
+    },
+    {
+      "text": "Cold-water coral habitat protection regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Wild salmon river protection and sea lice treatment zones",
+      "category": "Responses"
+    },
+    {
+      "text": "Demand for cockle and mussel shellfish products",
+      "category": "Drivers"
+    },
+    {
+      "text": "North Sea energy transition (offshore wind and gas)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational and educational use of tidal flats",
+      "category": "Drivers"
+    },
+    {
+      "text": "International flyway conservation obligations",
+      "category": "Drivers"
+    },
+    {
+      "text": "Mechanical cockle and mussel harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Subsea gas extraction (Wadden Sea concessions)",
+      "category": "Activities"
+    },
+    {
+      "text": "Offshore wind farm cable landfall through tidal flats",
+      "category": "Activities"
+    },
+    {
+      "text": "Bait digging for lugworm (Arenicola marina)",
+      "category": "Activities"
+    },
+    {
+      "text": "Guided tidal flat walking (mudflat hiking)",
+      "category": "Activities"
+    },
+    {
+      "text": "Bottom trawling for brown shrimp (Crangon crangon)",
+      "category": "Activities"
+    },
+    {
+      "text": "Disturbance to roosting and foraging wading birds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sediment regime changes from coastal engineering",
+      "category": "Pressures"
+    },
+    {
+      "text": "Shellfish stock depletion from mechanical harvesting",
+      "category": "Pressures"
+    },
+    {
+      "text": "Substrate disturbance from cable installation and gas wells",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal squeeze and intertidal habitat loss",
+      "category": "Pressures"
+    },
+    {
+      "text": "Migratory shorebird numbers (bar-tailed godwit, red knot)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic invertebrate biomass (cockle, mussel, lugworm)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Intertidal mudflat and sandflat extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Eelgrass (Zostera noltei) bed coverage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Common seal and grey seal haul-out populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pacific oyster (Magallana gigas) reef expansion displacing native beds",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "East Atlantic Flyway staging habitat for migratory birds",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Shellfish provisioning for commercial fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal flood protection through natural sediment dynamics",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nature education and ecotourism amenity value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Shorebird conservation as international heritage value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Shellfish industry employment and revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Wadden Sea tourism and recreation income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal community flood safety",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Trilateral Wadden Sea Plan (NL-DE-DK cooperation)",
+      "category": "Responses"
+    },
+    {
+      "text": "Shellfish fishery food reservation policy for birds",
+      "category": "Responses"
+    },
+    {
+      "text": "Managed realignment and de-poldering for habitat creation",
+      "category": "Responses"
+    },
+    {
+      "text": "UNESCO World Heritage site management obligations",
+      "category": "Responses"
+    },
+    {
+      "text": "Seasonal access restrictions in bird breeding/moulting areas",
+      "category": "Responses"
+    },
+    {
+      "text": "Summer cottage and second-home culture",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational boating and sailing demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Small-scale commercial and recreational fishing heritage",
+      "category": "Drivers"
+    },
+    {
+      "text": "Ferry and shipping transport through archipelago",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational boating and marina use",
+      "category": "Activities"
+    },
+    {
+      "text": "Summer cottage habitation and sewage discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale gillnet fishing for perch and pike",
+      "category": "Activities"
+    },
+    {
+      "text": "Passenger ferry traffic (Stockholm-Helsinki, inter-island)",
+      "category": "Activities"
+    },
+    {
+      "text": "Shoreline modification and jetty construction",
+      "category": "Activities"
+    },
+    {
+      "text": "Leisure fishing (trolling, angling) for pike and sea trout",
+      "category": "Activities"
+    },
+    {
+      "text": "Boat sewage and grey water discharge in sheltered bays",
+      "category": "Pressures"
+    },
+    {
+      "text": "Antifouling paint leaching (copper, zinc) from boat hulls",
+      "category": "Pressures"
+    },
+    {
+      "text": "Physical disturbance to shallow bays from boat traffic",
+      "category": "Pressures"
+    },
+    {
+      "text": "Climate warming of shallow spawning bays",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ferry wake erosion of shorelines and shallow habitats",
+      "category": "Pressures"
+    },
+    {
+      "text": "Climate warming of shallow Baltic bays",
+      "category": "Pressures"
+    },
+    {
+      "text": "Bladder wrack (Fucus vesiculosus) coverage and depth distribution",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Northern pike (Esox lucius) spawning success in warm bays",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Rocky reef epifaunal community (blue mussel, barnacle)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Shallow bay water quality and oxygen levels",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Perch (Perca fluviatilis) population structure",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Zostera marina (seagrass) meadows in brackish archipelago waters",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal fish recruitment from archipelago nursery bays",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Habitat provision by Fucus belts for invertebrates and juvenile fish",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Recreational amenity value of archipelago waters",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Shoreline stabilisation by rocky reef communities",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Recreational fishing enjoyment and tourism income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Summer cottage property values and quality of life",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Small-scale commercial fisher livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Archipelago cultural heritage and identity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Boat sewage pump-out station network expansion",
+      "category": "Responses"
+    },
+    {
+      "text": "Antifouling paint regulations (biocide-free alternatives)",
+      "category": "Responses"
+    },
+    {
+      "text": "Pike spawning bay restoration (reed planting, flow improvement)",
+      "category": "Responses"
+    },
+    {
+      "text": "Archipelago zoning for nature protection vs recreation",
+      "category": "Responses"
+    },
+    {
+      "text": "Speed limits and wake restrictions in sensitive channels",
+      "category": "Responses"
+    },
+    {
+      "text": "Reef tourism growth (diving, snorkeling, resort islands)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Artisanal fishing dependence for coastal food security",
+      "category": "Drivers"
+    },
+    {
+      "text": "Global ornamental fish and coral trade demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Reef diving and snorkeling tourism operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal reef fishing (traps, handlines, spearfishing)",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral and sand mining for construction material",
+      "category": "Activities"
+    },
+    {
+      "text": "Desalination plant brine and intake operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Destructive fishing (dynamite and cyanide use)",
+      "category": "Activities"
+    },
+    {
+      "text": "Reef-based mariculture (giant clam, sea cucumber)",
+      "category": "Activities"
+    },
+    {
+      "text": "Mass coral bleaching from marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Dynamite and cyanide fishing destroying reef structure",
+      "category": "Pressures"
+    },
+    {
+      "text": "Plastic debris accumulation on reef and beach habitats",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sedimentation from coastal construction and land clearing",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of herbivorous reef fish (parrotfish, surgeonfish)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean acidification reducing coral calcification rates",
+      "category": "Pressures"
+    },
+    {
+      "text": "Live coral cover (Acropora, Porites, massive faviids)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Giant clam (Tridacna spp.) population density",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish biomass and trophic structure",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fishery production for coastal communities",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef-based coastal wave protection for low-lying islands",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef tourism amenity and aesthetic value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef biodiversity as genetic and pharmaceutical resource",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal fisher household food security and income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Dive tourism operator and resort employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Atoll community physical safety from wave overtopping",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural and spiritual value of reef ecosystems",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine Protected Area networks (e.g., Maldives Baa Atoll Biosphere)",
+      "category": "Responses"
+    },
+    {
+      "text": "Dynamite fishing enforcement and alternative livelihood programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Coral reef restoration (coral gardening, larval reseeding)",
+      "category": "Responses"
+    },
+    {
+      "text": "Herbivorous fish protection (parrotfish fishing bans)",
+      "category": "Responses"
+    },
+    {
+      "text": "Climate adaptation planning for reef-dependent nations",
+      "category": "Responses"
+    },
+    {
+      "text": "Mass seasonal tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Artisanal fishing tradition and cultural heritage",
+      "category": "Drivers"
+    },
+    {
+      "text": "Marine transport connectivity to mainland",
+      "category": "Drivers"
+    },
+    {
+      "text": "Freshwater scarcity and desalination needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Beach and yacht tourism operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal trammel net fishing for demersal species",
+      "category": "Activities"
+    },
+    {
+      "text": "Seawater desalination for freshwater supply",
+      "category": "Activities"
+    },
+    {
+      "text": "Ferry and cruise ship port operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational boat anchoring in coves",
+      "category": "Activities"
+    },
+    {
+      "text": "Sewage overload during peak tourist season",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal waste accumulation from limited island disposal capacity",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seawater intake and brine discharge from desalination",
+      "category": "Pressures"
+    },
+    {
+      "text": "Tourist overcrowding of beaches and nearshore waters",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (rats, feral cats) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing pressure on demersal fish stocks",
+      "category": "Pressures"
+    },
+    {
+      "text": "Posidonia oceanica meadow extent around island shelves",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal bathing water quality (E. coli, enterococci)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Endemic island fish community composition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Demersal fish stock biomass (Mullus, Diplodus, Sparisoma)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Infralittoral rocky reef algal assemblages",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (Audouin's gull, shearwaters)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive Caulerpa cylindracea displacement of native habitats",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fish provisioning from artisanal island fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal protection by Posidonia banquette deposits",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Aesthetic and recreational value of clear island waters",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Carbon sequestration by Posidonia matte",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism industry employment and island household income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher livelihoods from local seafood markets and restaurants",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity and sense of place for island communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Resident quality of life affected by seasonal overcrowding",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "EU MSFD Good Environmental Status targets for island waters",
+      "category": "Responses"
+    },
+    {
+      "text": "Mooring buoy systems to prevent Posidonia anchor damage",
+      "category": "Responses"
+    },
+    {
+      "text": "Tourist carrying capacity regulations for beaches and coves",
+      "category": "Responses"
+    },
+    {
+      "text": "Posidonia oceanica habitat restoration programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Seasonal fishing closures for spawning protection",
+      "category": "Responses"
+    },
+    {
+      "text": "Invasive predator eradication and biosecurity programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "International tourism dependency for GDP",
+      "category": "Drivers"
+    },
+    {
+      "text": "Food import dependency and local food security",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate vulnerability and hurricane exposure",
+      "category": "Drivers"
+    },
+    {
+      "text": "Cruise ship industry growth",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal livelihoods and poverty reduction",
+      "category": "Drivers"
+    },
+    {
+      "text": "All-inclusive resort tourism operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Cruise ship port calls and excursions",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale trap and line fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Sugar cane and rum production (agricultural runoff)",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral reef diving and snorkelling tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal sand mining for construction",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral bleaching from marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Hurricane physical damage to reefs and coastline",
+      "category": "Pressures"
+    },
+    {
+      "text": "Plastic and solid waste pollution from limited disposal",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of reef herbivores (parrotfish, surgeonfish)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (rats, mongoose) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Saltwater intrusion from sea level rise and over-extraction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Hurricane formation and intensification",
+      "category": "Pressures"
+    },
+    {
+      "text": "Fringing coral reef live cover and structural complexity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mangrove fringe extent and condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish community biomass and trophic structure",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic fish stocks (mahi-mahi, wahoo, flyingfish)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass (Thalassia testudinum) bed coverage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (terns, boobies, frigatebirds)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Freshwater lens integrity and volume",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef-based tourism and recreation value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal storm protection by coral reefs and mangroves",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fish protein provisioning for local food security",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nursery habitat for commercially important species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism-dependent household income and employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher community livelihoods and food access",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal community safety from storm events",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "National economic resilience (SIDS GDP vulnerability)",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coral reef marine protected area networks",
+      "category": "Responses"
+    },
+    {
+      "text": "Parrotfish fishing bans for herbivore protection",
+      "category": "Responses"
+    },
+    {
+      "text": "SIDS climate adaptation and resilience programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Sargassum early warning and beach clean-up systems",
+      "category": "Responses"
+    },
+    {
+      "text": "Mangrove restoration for coastal defence",
+      "category": "Responses"
+    },
+    {
+      "text": "Food security from reef and lagoon fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Tuna access fee revenue for national budgets",
+      "category": "Drivers"
+    },
+    {
+      "text": "Traditional ocean governance and cultural identity",
+      "category": "Drivers"
+    },
+    {
+      "text": "Population growth on limited land area",
+      "category": "Drivers"
+    },
+    {
+      "text": "Subsistence reef gleaning and spearfishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Copra production and coconut palm cultivation",
+      "category": "Activities"
+    },
+    {
+      "text": "Foreign fleet tuna fishing under access agreements",
+      "category": "Activities"
+    },
+    {
+      "text": "Pearl oyster farming in lagoons",
+      "category": "Activities"
+    },
+    {
+      "text": "Groundwater extraction from freshwater lens",
+      "category": "Activities"
+    },
+    {
+      "text": "Seawall and coastal defence construction",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral bleaching from ocean warming",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean acidification reducing coral calcification",
+      "category": "Pressures"
+    },
+    {
+      "text": "Freshwater lens salinisation from overwash events",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overharvesting of reef invertebrates (giant clams, sea cucumbers)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Limited waste disposal capacity and landfill pressure",
+      "category": "Pressures"
+    },
+    {
+      "text": "Atoll reef crest structural integrity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Freshwater lens volume and salinity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Lagoon water quality and coral cover",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish abundance for subsistence harvest",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Giant clam and sea cucumber population density",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (noddies, terns, shearwaters)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish protein provisioning for atoll communities",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal protection by reef crest wave dissipation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Freshwater provisioning from lens aquifer",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Cultural and spiritual value of reef and ocean",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Household food security and nutrition",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "National revenue from tuna licensing fees",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Community safety from coastal inundation",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural continuity and intergenerational wellbeing",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Traditional marine tenure and seasonal taboo systems",
+      "category": "Responses"
+    },
+    {
+      "text": "Nationally Determined Contributions under Paris Agreement",
+      "category": "Responses"
+    },
+    {
+      "text": "Community-based marine managed areas",
+      "category": "Responses"
+    },
+    {
+      "text": "Freshwater lens protection and rainwater harvesting",
+      "category": "Responses"
+    },
+    {
+      "text": "Regional tuna management (WCPFC conservation measures)",
+      "category": "Responses"
+    },
+    {
+      "text": "Nature-based tourism and whale watching demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Deep-water fisheries for tuna and swordfish",
+      "category": "Drivers"
+    },
+    {
+      "text": "Renewable ocean energy development potential",
+      "category": "Drivers"
+    },
+    {
+      "text": "Maritime shipping route connectivity",
+      "category": "Drivers"
+    },
+    {
+      "text": "Conservation of unique Macaronesian biodiversity",
+      "category": "Drivers"
+    },
+    {
+      "text": "Whale and dolphin watching excursions",
+      "category": "Activities"
+    },
+    {
+      "text": "Pole-and-line tuna fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Longline fishing for swordfish and black scabbardfish",
+      "category": "Activities"
+    },
+    {
+      "text": "Banana and wine terrace agriculture on slopes",
+      "category": "Activities"
+    },
+    {
+      "text": "Ferry and cargo port operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Scuba diving tourism on volcanic reefs",
+      "category": "Activities"
+    },
+    {
+      "text": "Ship strikes and acoustic disturbance to cetaceans",
+      "category": "Pressures"
+    },
+    {
+      "text": "Oil and bilge water pollution from shipping lanes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Volcanic substrate erosion from storm wave action",
+      "category": "Pressures"
+    },
+    {
+      "text": "Bycatch of seabirds and sea turtles in longlines",
+      "category": "Pressures"
+    },
+    {
+      "text": "Light pollution affecting Cory's shearwater fledglings",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (rats, feral cats, mice) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seamount and deepwater reef biodiversity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cetacean population abundance (sperm whale, bottlenose dolphin)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic fish stock status (bigeye tuna, swordfish)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Macaronesian endemic seabird colony sizes (Cory's shearwater)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Intertidal and subtidal volcanic reef community composition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (Cory's shearwater, petrels)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive algae colonisation of volcanic substrates",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cetacean-based ecotourism experience value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Pelagic fish provisioning from island fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Unique volcanic landscape and marine biodiversity aesthetic",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Scientific research value of endemic marine species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Ecotourism employment and island economic diversification",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher household income from high-value pelagic catches",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Community pride in unique natural heritage",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Research and education sector employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "EU MSFD and Natura 2000 marine site designations",
+      "category": "Responses"
+    },
+    {
+      "text": "Whale watching code of conduct and vessel distance regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "ICCAT tuna and swordfish quota management",
+      "category": "Responses"
+    },
+    {
+      "text": "Seabird rescue programmes during fledgling season",
+      "category": "Responses"
+    },
+    {
+      "text": "Seamount and deepwater habitat protection zones",
+      "category": "Responses"
+    },
+    {
+      "text": "Luxury tourism and resort development demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial tuna processing for export",
+      "category": "Drivers"
+    },
+    {
+      "text": "Blue economy diversification strategy",
+      "category": "Drivers"
+    },
+    {
+      "text": "Food security from artisanal fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Luxury resort and eco-lodge tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Industrial purse seine tuna processing (canning)",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal trap and handline fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Mariculture development (sea cucumber, finfish cages)",
+      "category": "Activities"
+    },
+    {
+      "text": "Spice and vanilla plantation agriculture",
+      "category": "Activities"
+    },
+    {
+      "text": "Marine scientific research and monitoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Coral bleaching from Indian Ocean warming events",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sedimentation from upland deforestation and agriculture",
+      "category": "Pressures"
+    },
+    {
+      "text": "Poaching of sea turtles and giant tortoises",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal erosion from reef degradation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Granitic reef vs coralline reef condition and cover",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird colony sizes (sooty tern, white tern, frigatebird)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sea turtle nesting success (hawksbill, green turtle)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef fish assemblage diversity and biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mangrove and coastal wetland extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (sooty tern, white tern, frigatebird)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive species threatening endemic island biota",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pristine reef and beach tourism experience value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fish protein provisioning",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Biodiversity and endemism conservation value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism-sector employment and household income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Tuna industry worker livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Artisanal fisher community food access",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "National pride in blue economy leadership",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Tuna export revenue and processing employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Seychelles Marine Spatial Plan and blue bonds",
+      "category": "Responses"
+    },
+    {
+      "text": "IOTC tuna stock management measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Coral reef restoration (gardening and transplantation)",
+      "category": "Responses"
+    },
+    {
+      "text": "Invasive predator eradication on seabird islands",
+      "category": "Responses"
+    },
+    {
+      "text": "Turtle nesting beach protection programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Seasonal tourism and cultural heritage visitation",
+      "category": "Drivers"
+    },
+    {
+      "text": "Traditional Baltic fishing and farming livelihoods",
+      "category": "Drivers"
+    },
+    {
+      "text": "Wind energy development in shallow island waters",
+      "category": "Drivers"
+    },
+    {
+      "text": "Military and strategic heritage value",
+      "category": "Drivers"
+    },
+    {
+      "text": "Agricultural production and food supply demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational boating and sailing",
+      "category": "Activities"
+    },
+    {
+      "text": "Limestone quarrying (Gotland, Saaremaa)",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale coastal fishing (herring, perch, pike)",
+      "category": "Activities"
+    },
+    {
+      "text": "Medieval heritage tourism (Visby, Kuressaare)",
+      "category": "Activities"
+    },
+    {
+      "text": "Eutrophication and cyanobacteria washing ashore on island beaches",
+      "category": "Pressures"
+    },
+    {
+      "text": "Recreational boating disturbance to breeding seabirds",
+      "category": "Pressures"
+    },
+    {
+      "text": "Winter ice reduction affecting ice-dependent species",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (American mink, rats) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal farmland drainage to nearshore waters",
+      "category": "Pressures"
+    },
+    {
+      "text": "Coastal meadow breeding bird populations (waders, geese)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Strandflat Fucus and filamentous algal mat extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Grey seal haul-out colony sizes",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Herring and perch stock condition around islands",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Nearshore water clarity and Secchi depth",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (eider, terns, guillemots)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Invasive round goby altering nearshore food webs",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Grey seal predation on coastal fish stocks and gear damage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal erosion of limestone and glacial till shores",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass (Zostera marina) beds in brackish shallow island waters",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Recreational and aesthetic value of island beaches",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fish provisioning from small-scale island fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal meadow biodiversity and grazing landscape heritage",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Seal watching and nature tourism attraction",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism and hospitality employment on islands",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher household income from herring and perch sales",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Resident quality of life during summer algal bloom events",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity linked to island maritime heritage",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "HELCOM Baltic Sea Action Plan nutrient targets",
+      "category": "Responses"
+    },
+    {
+      "text": "Coastal meadow grazing restoration schemes",
+      "category": "Responses"
+    },
+    {
+      "text": "Grey seal management plans (population control debate)",
+      "category": "Responses"
+    },
+    {
+      "text": "EU MSFD Good Environmental Status indicators for islands",
+      "category": "Responses"
+    },
+    {
+      "text": "Seabird nesting island access restrictions",
+      "category": "Responses"
+    },
+    {
+      "text": "Invasive predator control and biosecurity programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Indigenous subsistence needs (hunting, fishing)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Mineral and oil exploration interest",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate research and monitoring demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Arctic shipping route access (Northern Sea Route)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Expedition cruise tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Subsistence hunting (seal, walrus, seabird)",
+      "category": "Activities"
+    },
+    {
+      "text": "Mining operations (coal, mineral extraction)",
+      "category": "Activities"
+    },
+    {
+      "text": "Research station operations and monitoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale fishing (Arctic char, Greenland halibut)",
+      "category": "Activities"
+    },
+    {
+      "text": "Arctic shipping and supply vessel traffic",
+      "category": "Activities"
+    },
+    {
+      "text": "Permafrost thaw destabilizing coastal infrastructure",
+      "category": "Pressures"
+    },
+    {
+      "text": "Black carbon deposition on snow and ice",
+      "category": "Pressures"
+    },
+    {
+      "text": "Military legacy contamination (Cold War sites)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sea ice loss reducing habitat for ice-dependent species",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive mammalian predators (Arctic fox, rats) on native wildlife",
+      "category": "Pressures"
+    },
+    {
+      "text": "Disturbance to seabird breeding colonies from tourism",
+      "category": "Pressures"
+    },
+    {
+      "text": "Direct harvest mortality on marine mammals",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird colony populations (little auk, Brünnich's guillemot)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Polar bear (Ursus maritimus) denning habitat availability",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Permafrost coastal integrity and erosion rate",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Arctic char (Salvelinus alpinus) populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Walrus (Odobenus rosmarus) haul-out site occupancy",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Native seabird colony breeding success (little auk, guillemots, puffins)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Subsistence food provisioning from marine resources",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Carbon storage in permafrost soils",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Seabird nutrient transport to terrestrial ecosystems",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Wildlife viewing and wilderness experience",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Indigenous community food security and cultural continuity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Expedition tourism revenue for Arctic settlements",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Scientific knowledge value from Arctic monitoring",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Sense of place and wilderness identity for residents",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Svalbard Environmental Protection Act enforcement",
+      "category": "Responses"
+    },
+    {
+      "text": "Arctic Council AMAP contaminant monitoring programme",
+      "category": "Responses"
+    },
+    {
+      "text": "Indigenous co-management agreements for marine resources",
+      "category": "Responses"
+    },
+    {
+      "text": "Strict tourism landing permits and visitor quotas",
+      "category": "Responses"
+    },
+    {
+      "text": "Clean-up of Cold War military waste sites",
+      "category": "Responses"
+    },
+    {
+      "text": "Port and shipping expansion demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Flood risk management for estuarine communities",
+      "category": "Drivers"
+    },
+    {
+      "text": "Urban and industrial water demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Renewable energy interest (tidal power)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Commercial port operations and maintenance dredging",
+      "category": "Activities"
+    },
+    {
+      "text": "Migratory fish exploitation (shad, eel, lamprey)",
+      "category": "Activities"
+    },
+    {
+      "text": "Industrial and urban wastewater discharge",
+      "category": "Activities"
+    },
+    {
+      "text": "Tidal energy project development",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational sailing and waterfront development",
+      "category": "Activities"
+    },
+    {
+      "text": "Aggregate extraction from estuary bed",
+      "category": "Activities"
+    },
+    {
+      "text": "Chronic chemical contamination (heavy metals, PCBs)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Altered flow regime from upstream dams and abstraction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Habitat loss from land claim and channelization",
+      "category": "Pressures"
+    },
+    {
+      "text": "Microplastic accumulation in estuarine sediments",
+      "category": "Pressures"
+    },
+    {
+      "text": "Thermal plumes from coastal power stations",
+      "category": "Pressures"
+    },
+    {
+      "text": "European eel (Anguilla anguilla) recruitment",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Allis shad (Alosa alosa) migration success",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic invertebrate diversity in estuarine mud",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Turbidity maximum zone dynamics and position",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Saltmarsh extent and condition",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Chinese mitten crab and Pacific oyster (Eriocheir sinensis, Magallana gigas) invasion",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Migratory fish provisioning (eel, shad, lamprey)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Saltmarsh coastal flood attenuation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Nursery habitat for marine and diadromous species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Carbon sequestration in saltmarsh sediments",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fishing community livelihoods",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Port-related employment and economic output",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Flood damage avoidance for estuarine settlements",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Waterfront amenity and recreational value",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "EU Water Framework Directive ecological status measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Fish passage restoration (weir and barrier removal)",
+      "category": "Responses"
+    },
+    {
+      "text": "Contaminated sediment dredging and disposal protocols",
+      "category": "Responses"
+    },
+    {
+      "text": "Managed realignment for flood defence and habitat creation",
+      "category": "Responses"
+    },
+    {
+      "text": "OSPAR/ICES eel management plans",
+      "category": "Responses"
+    },
+    {
+      "text": "Surf and beach tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Commercial fishing tradition and livelihood dependency",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal urbanization and property development",
+      "category": "Drivers"
+    },
+    {
+      "text": "Renewable energy demand (wave and offshore wind)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Kelp and seaweed harvesting tradition",
+      "category": "Drivers"
+    },
+    {
+      "text": "Atlantic surfing and beach tourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Bottom trawling for demersal species (hake, monkfish, megrim)",
+      "category": "Activities"
+    },
+    {
+      "text": "Mussel and oyster raft aquaculture",
+      "category": "Activities"
+    },
+    {
+      "text": "Kelp and seaweed harvesting",
+      "category": "Activities"
+    },
+    {
+      "text": "Offshore wind and wave energy development",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal property development and urbanization",
+      "category": "Activities"
+    },
+    {
+      "text": "Storm intensification from climate change",
+      "category": "Pressures"
+    },
+    {
+      "text": "Plastic pollution from Atlantic gyre and river input",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of hake, monkfish, and megrim stocks",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine thermal stress from ocean warming",
+      "category": "Pressures"
+    },
+    {
+      "text": "Kelp forest (Laminaria hyperborea/digitata) canopy cover",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Atlantic mackerel (Scomber scombrus) stock biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sandy beach morphodynamics and sediment budget",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Harbour porpoise (Phocoena phocoena) populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal water clarity and photic zone depth",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal erosion and sediment deficit",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Demersal fish provisioning from Atlantic fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Kelp forest wave attenuation and coastal protection",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Beach recreational and surf tourism amenity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fishing fleet and processing community employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Surf and beach tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal property values and development income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity tied to maritime heritage",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Shellfish aquaculture production",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "OSPAR marine protected areas network",
+      "category": "Responses"
+    },
+    {
+      "text": "EU Common Fisheries Policy quotas and effort limits",
+      "category": "Responses"
+    },
+    {
+      "text": "Integrated coastal zone management plans",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine spatial planning for offshore energy",
+      "category": "Responses"
+    },
+    {
+      "text": "Beach nourishment and sediment management programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Recreational boating and summer cottage culture",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal erosion awareness and shore protection demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Marine protected area designation demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Scientific research interest in Baltic rocky communities",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational fishing tradition (sea trout, pike)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Shore-based recreational fishing (spinning for sea trout, trolling for pike)",
+      "category": "Activities"
+    },
+    {
+      "text": "Blue mussel (Mytilus trossulus) harvesting for feed/nutrient removal",
+      "category": "Activities"
+    },
+    {
+      "text": "Research monitoring of rocky shore algal communities",
+      "category": "Activities"
+    },
+    {
+      "text": "Kayaking and sailing tourism in archipelago",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational boating and marina operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Antifouling paint contamination (TBT legacy, copper/zinc current)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Wave erosion from recreational boat wakes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cyanobacteria accumulation on rocky shores in summer",
+      "category": "Pressures"
+    },
+    {
+      "text": "Oil spill exposure from Baltic shipping lanes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Eutrophication-driven filamentous algae overgrowth",
+      "category": "Pressures"
+    },
+    {
+      "text": "Fucus vesiculosus (bladderwrack) depth distribution and coverage",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Mytilus trossulus (Baltic blue mussel) density on rocky substrate",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Filamentous algae (Cladophora, Pilayella) cover ratio",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Grey seal (Halichoerus grypus) population",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sea trout (Salmo trutta) coastal populations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seagrass (Zostera marina) patches in brackish sheltered bays along rocky coast",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fucus belt habitat provisioning for juvenile fish and invertebrates",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Mussel-mediated water filtration and nutrient cycling",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Recreational fishing quality for sea trout anglers",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Archipelago landscape aesthetic and recreational value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Sea trout recreational fishing tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Summer cottage and archipelago property values",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Sense of place and cultural identity for coastal communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Health and well-being from archipelago recreation",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "HELCOM Baltic Sea Action Plan eutrophication measures",
+      "category": "Responses"
+    },
+    {
+      "text": "Antifouling paint regulations (EU Biocidal Products Regulation)",
+      "category": "Responses"
+    },
+    {
+      "text": "Natura 2000 reef habitat (1170) protection for rocky shores",
+      "category": "Responses"
+    },
+    {
+      "text": "Boat speed restrictions near sensitive shores and bird colonies",
+      "category": "Responses"
+    },
+    {
+      "text": "National eutrophication reduction targets (nitrogen, phosphorus)",
+      "category": "Responses"
+    },
+    {
+      "text": "Tourism demand for marine recreation",
+      "category": "Drivers"
+    },
+    {
+      "text": "EU Common Fisheries Policy requirements",
+      "category": "Drivers"
+    },
+    {
+      "text": "Population growth on island communities",
+      "category": "Drivers"
+    },
+    {
+      "text": "Global seafood demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Renewable ocean energy targets",
+      "category": "Drivers"
+    },
+    {
+      "text": "Cultural heritage of island fishing traditions",
+      "category": "Drivers"
+    },
+    {
+      "text": "Recreational diving and whale watching",
+      "category": "Activities"
+    },
+    {
+      "text": "Artisanal demersal fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Port and marina development",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal aquaculture (sea bass, sea bream)",
+      "category": "Activities"
+    },
+    {
+      "text": "Desalination plant operation",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational boating and anchoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Scientific research and monitoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal urbanization and land reclamation",
+      "category": "Activities"
+    },
+    {
+      "text": "Marine litter accumulation on island coasts",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of demersal fish stocks",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean warming and marine heatwaves",
+      "category": "Pressures"
+    },
+    {
+      "text": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Habitat degradation from boat anchoring",
+      "category": "Pressures"
+    },
+    {
+      "text": "Brine discharge from desalination",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from vessel traffic",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cystoseira and Sargassum forest extent and health",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cetacean population abundance and diversity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Demersal fish stock biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Rocky reef community structure and endemism",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Sea surface temperature regime",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal water quality index",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reduced artisanal fish catches",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Loss of endemic marine species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Degraded diving and snorkeling site quality",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Altered nearshore food web structure",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Decline in coastal carbon sequestration",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Fishing community livelihoods and income",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine tourism revenue",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity of island fishing communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Local food security from seafood",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Azores Marine Park and MPA network expansion",
+      "category": "Responses"
+    },
+    {
+      "text": "Fishing effort and quota regulations",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine spatial planning for Macaronesian waters",
+      "category": "Responses"
+    },
+    {
+      "text": "Invasive species monitoring and removal programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "EU Biodiversity Strategy implementation",
+      "category": "Responses"
+    },
+    {
+      "text": "Sustainable tourism certification schemes",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine litter reduction action plans",
+      "category": "Responses"
+    },
+    {
+      "text": "OSPAR Convention measures for NE Atlantic",
+      "category": "Responses"
+    },
+    {
+      "text": "EU Biodiversity Strategy 2030 targets",
+      "category": "Responses"
+    },
+    {
+      "text": "Global seafood demand for deep-water species",
+      "category": "Drivers"
+    },
+    {
+      "text": "Scientific research interest in deep-sea biodiversity",
+      "category": "Drivers"
+    },
+    {
+      "text": "EU deep-sea access regulations",
+      "category": "Drivers"
+    },
+    {
+      "text": "Renewable energy and mineral exploration targets",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change and deep-ocean warming",
+      "category": "Drivers"
+    },
+    {
+      "text": "Submarine cable infrastructure demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Deep-water bottom trawling on seamount flanks",
+      "category": "Activities"
+    },
+    {
+      "text": "Deep-water longline fishing for black scabbardfish",
+      "category": "Activities"
+    },
+    {
+      "text": "Scientific ROV surveys and sampling",
+      "category": "Activities"
+    },
+    {
+      "text": "Submarine cable and pipeline laying",
+      "category": "Activities"
+    },
+    {
+      "text": "Deep-sea mining exploration",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic fishing over seamount aggregations",
+      "category": "Activities"
+    },
+    {
+      "text": "Physical destruction of seamount benthos by trawling",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing of seamount-aggregating species",
+      "category": "Pressures"
+    },
+    {
+      "text": "Deep-ocean warming and deoxygenation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sedimentation from bottom-contact gear",
+      "category": "Pressures"
+    },
+    {
+      "text": "Potential disturbance from deep-sea mining",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine debris accumulation on seamount summits",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean acidification effects on deep corals",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cold-water coral garden coverage on seamount flanks",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-sea sponge aggregation integrity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Hydrothermal vent community health (Azores)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seamount-associated fish biomass",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-sea benthic invertebrate diversity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Loss of vulnerable marine ecosystem structure",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reduced deep-water fishery productivity",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Loss of undiscovered genetic resources",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Disrupted deep-sea nutrient cycling",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Deep-water fishing fleet viability",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Scientific knowledge and discovery value",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Existence value of unique deep-sea ecosystems",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Biotechnology potential from vent organisms",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Intergenerational equity in deep-sea resources",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "OSPAR seamount and hydrothermal vent protection",
+      "category": "Responses"
+    },
+    {
+      "text": "EU deep-sea access regulation (bottom trawl ban)",
+      "category": "Responses"
+    },
+    {
+      "text": "Azores deep-sea MPA designations",
+      "category": "Responses"
+    },
+    {
+      "text": "VME encounter protocols for fishing vessels",
+      "category": "Responses"
+    },
+    {
+      "text": "Deep-sea research and monitoring programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "ISA regulations for deep-sea mining",
+      "category": "Responses"
+    },
+    {
+      "text": "NEAFC bottom fishing closures",
+      "category": "Responses"
+    },
+    {
+      "text": "OSPAR and CBD conservation commitments",
+      "category": "Responses"
+    },
+    {
+      "text": "Global tuna and pelagic fish market demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change and shifting ocean currents",
+      "category": "Drivers"
+    },
+    {
+      "text": "EU Common Fisheries Policy for pelagic stocks",
+      "category": "Drivers"
+    },
+    {
+      "text": "Offshore renewable energy development targets",
+      "category": "Drivers"
+    },
+    {
+      "text": "International shipping route expansion",
+      "category": "Drivers"
+    },
+    {
+      "text": "Marine ecotourism demand (pelagic wildlife)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Industrial tuna purse-seine and pole-and-line fishing",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic longline fishing for swordfish and sharks",
+      "category": "Activities"
+    },
+    {
+      "text": "Commercial shipping and vessel transit",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic whale and dolphin watching excursions",
+      "category": "Activities"
+    },
+    {
+      "text": "Marine scientific research expeditions",
+      "category": "Activities"
+    },
+    {
+      "text": "Military sonar exercises",
+      "category": "Activities"
+    },
+    {
+      "text": "Overfishing of pelagic and highly migratory stocks",
+      "category": "Pressures"
+    },
+    {
+      "text": "Bycatch of sea turtles and seabirds in longlines",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ocean warming and current regime shifts",
+      "category": "Pressures"
+    },
+    {
+      "text": "Pelagic marine litter and microplastic pollution",
+      "category": "Pressures"
+    },
+    {
+      "text": "Ship strike risk to large cetaceans",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from shipping and sonar",
+      "category": "Pressures"
+    },
+    {
+      "text": "Shark finning and targeted shark mortality",
+      "category": "Pressures"
+    },
+    {
+      "text": "Atlantic tuna stock abundance (bluefin, skipjack, bigeye)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Large cetacean population health (sperm whale, beaked whales)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic shark and ray population status",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Loggerhead and leatherback sea turtle abundance",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic Sargassum community extent",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Cory's shearwater and other seabird colony size",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Loss of apex predator trophic function",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Disrupted pelagic food web connectivity",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Declining pelagic fishery catch rates",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reduced marine wildlife encounter rates for ecotourism",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Decline in seabird breeding success",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tuna fishing industry revenue and employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine ecotourism income from pelagic wildlife",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Regional food security from pelagic fish protein",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural significance of traditional tuna fishing",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Aesthetic and spiritual value of ocean wilderness",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "ICCAT tuna stock management measures",
+      "category": "Responses"
+    },
+    {
+      "text": "EU shark finning ban and catch limits",
+      "category": "Responses"
+    },
+    {
+      "text": "IMO shipping lane adjustments for cetacean protection",
+      "category": "Responses"
+    },
+    {
+      "text": "Seabird bycatch mitigation requirements",
+      "category": "Responses"
+    },
+    {
+      "text": "Pelagic MPA and OECM designations",
+      "category": "Responses"
+    },
+    {
+      "text": "OSPAR marine litter regional action plan",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine spatial planning for offshore activities",
+      "category": "Responses"
+    },
+    {
+      "text": "Cetacean critical habitat identification programmes",
+      "category": "Responses"
+    },
+    {
+      "text": "Renewable energy targets and climate policy (EU Green Deal, national NDCs)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Energy security and fossil fuel independence",
+      "category": "Drivers"
+    },
+    {
+      "text": "Electricity demand from industry and households",
+      "category": "Drivers"
+    },
+    {
+      "text": "Economic growth and blue economy development",
+      "category": "Drivers"
+    },
+    {
+      "text": "Food security from North Sea fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Regional employment and industrial transition needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Fixed-bottom offshore wind farm construction and operation",
+      "category": "Activities"
+    },
+    {
+      "text": "Submarine cable laying and grid connection",
+      "category": "Activities"
+    },
+    {
+      "text": "Turbine maintenance and vessel operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Wind farm decommissioning",
+      "category": "Activities"
+    },
+    {
+      "text": "Commercial demersal trawl fisheries (sole, plaice, cod)",
+      "category": "Activities"
+    },
+    {
+      "text": "Recreational angling near wind farms",
+      "category": "Activities"
+    },
+    {
+      "text": "Offshore aquaculture and mariculture co-location",
+      "category": "Activities"
+    },
+    {
+      "text": "Maritime shipping and navigation",
+      "category": "Activities"
+    },
+    {
+      "text": "Seabed surveys and environmental monitoring",
+      "category": "Activities"
+    },
+    {
+      "text": "Underwater noise from pile driving during construction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabed disturbance and habitat alteration from foundations and scour protection",
+      "category": "Pressures"
+    },
+    {
+      "text": "Exclusion of fishing vessels from wind farm safety zones",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird collision risk and displacement from foraging areas",
+      "category": "Pressures"
+    },
+    {
+      "text": "Electromagnetic fields from submarine power cables",
+      "category": "Pressures"
+    },
+    {
+      "text": "Visual impact on coastal seascapes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Barrier effects on marine mammal and fish migration routes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Sediment plume and turbidity during construction",
+      "category": "Pressures"
+    },
+    {
+      "text": "Competition for marine space between wind, shipping and fishing",
+      "category": "Pressures"
+    },
+    {
+      "text": "Marine mammal populations (harbour porpoise, harbour seal)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Demersal fish community composition (cod, plaice, sole)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic epifaunal colonisation on turbine foundations",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird populations (gannet, kittiwake, terns)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic fish aggregation around structures",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabed sediment characteristics and soft-bottom infauna",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Food web structure and trophic interactions",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Reef effect communities on hard substrates (mussels, crabs, lobsters)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Fish stock provisioning for human consumption and fisheries",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Carbon emission avoidance through wind energy generation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef habitat provision and enhanced local biodiversity (artificial reef effect)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "De facto marine refuge function (reduced fishing pressure)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal flood and wave energy regulation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Cultural ecosystem services (seascape aesthetics, recreation)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Seabird conservation value (public concern and stewardship)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Clean electricity supply to households and industry",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Employment in wind farm construction, operation and maintenance",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fishing industry revenue and employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Fisher household income and livelihood security",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal community economic diversification",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy affordability and price stability",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Tourism and recreation opportunities near coastal wind farms",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity and heritage of fishing communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Property values and coastal aesthetics perception",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Social acceptance and public trust in wind energy",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine Spatial Planning and wind farm zoning",
+      "category": "Responses"
+    },
+    {
+      "text": "Environmental Impact Assessment requirements",
+      "category": "Responses"
+    },
+    {
+      "text": "Stakeholder engagement and fisheries consultation processes",
+      "category": "Responses"
+    },
+    {
+      "text": "Compensation and mitigation funds for displaced fishers",
+      "category": "Responses"
+    },
+    {
+      "text": "Nature-inclusive design requirements for foundations",
+      "category": "Responses"
+    },
+    {
+      "text": "Biodiversity monitoring programmes (pre- and post-construction)",
+      "category": "Responses"
+    },
+    {
+      "text": "EU Renewable Energy Directive and national energy targets",
+      "category": "Responses"
+    },
+    {
+      "text": "Fisheries co-management and access agreements within wind farms",
+      "category": "Responses"
+    },
+    {
+      "text": "Decommissioning regulations and liability frameworks",
+      "category": "Responses"
+    },
+    {
+      "text": "Underwater noise mitigation measures (bubble curtains, soft start)",
+      "category": "Responses"
+    },
+    {
+      "text": "Seasonal construction windows for marine mammal protection",
+      "category": "Responses"
+    },
+    {
+      "text": "National renewable energy and net-zero targets",
+      "category": "Drivers"
+    },
+    {
+      "text": "Deep-water wind resource exploitation beyond fixed-bottom limits",
+      "category": "Drivers"
+    },
+    {
+      "text": "Energy security through domestic generation",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal economic regeneration and just transition needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change mitigation obligations (Paris Agreement)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Technological maturation of floating platform concepts",
+      "category": "Drivers"
+    },
+    {
+      "text": "Floating offshore wind farm deployment and operation",
+      "category": "Activities"
+    },
+    {
+      "text": "Dynamic cable installation and maintenance",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic and demersal fisheries in deep waters",
+      "category": "Activities"
+    },
+    {
+      "text": "Cetacean watching and marine ecotourism",
+      "category": "Activities"
+    },
+    {
+      "text": "Port development and supply chain logistics",
+      "category": "Activities"
+    },
+    {
+      "text": "Environmental baseline and monitoring surveys",
+      "category": "Activities"
+    },
+    {
+      "text": "Mooring system entanglement risk for marine mammals and sea turtles",
+      "category": "Pressures"
+    },
+    {
+      "text": "Displacement of pelagic fishing effort from wind farm zones",
+      "category": "Pressures"
+    },
+    {
+      "text": "Operational noise from floating platform motion and mooring",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird collision risk at deep-water sites",
+      "category": "Pressures"
+    },
+    {
+      "text": "Anchor and mooring seabed disturbance",
+      "category": "Pressures"
+    },
+    {
+      "text": "Visual impact from floating structures",
+      "category": "Pressures"
+    },
+    {
+      "text": "Cetacean populations (dolphins, fin whales, sperm whales)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic fish stocks (mackerel, horse mackerel, tuna)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-sea benthic communities at anchor points",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird foraging ecology (shearwaters, petrels, storm-petrels)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Biofouling communities on floating structures and mooring lines",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Carbon emission reduction from floating wind generation",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Pelagic fish aggregation around floating structures (FAD effect)",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Stepping-stone habitat for non-native biofouling species",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Pelagic fishery provisioning from deep waters",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Clean energy from deep-water wind resources",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Port community employment and skills development",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Deep-water fishers' livelihood security",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Regional supply chain development and economic diversification",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy price stability for consumers",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Social acceptance in coastal communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Marine Spatial Planning for floating wind zones",
+      "category": "Responses"
+    },
+    {
+      "text": "Floating wind environmental consenting frameworks",
+      "category": "Responses"
+    },
+    {
+      "text": "Fisheries displacement assessment and compensation schemes",
+      "category": "Responses"
+    },
+    {
+      "text": "Adaptive management and monitoring protocols",
+      "category": "Responses"
+    },
+    {
+      "text": "Just transition and community benefit funds",
+      "category": "Responses"
+    },
+    {
+      "text": "International cooperation on transboundary environmental effects",
+      "category": "Responses"
+    },
+    {
+      "text": "Entanglement risk mitigation for mooring systems",
+      "category": "Responses"
+    },
+    {
+      "text": "EU and national renewable energy targets for Baltic states",
+      "category": "Drivers"
+    },
+    {
+      "text": "Energy security and independence from Russian gas",
+      "category": "Drivers"
+    },
+    {
+      "text": "Demand for Baltic cod, herring and sprat fisheries",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change mitigation goals (HELCOM, EU)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Maritime shipping route demand through Baltic",
+      "category": "Drivers"
+    },
+    {
+      "text": "Regional employment in coastal communities",
+      "category": "Drivers"
+    },
+    {
+      "text": "Submarine cable laying and grid interconnection",
+      "category": "Activities"
+    },
+    {
+      "text": "Environmental monitoring and baseline surveys",
+      "category": "Activities"
+    },
+    {
+      "text": "Turbine maintenance and service vessel operations",
+      "category": "Activities"
+    },
+    {
+      "text": "Seabed disturbance and habitat alteration from foundations",
+      "category": "Pressures"
+    },
+    {
+      "text": "Bycatch risk for harbour porpoise and seabirds in displaced fisheries",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird collision risk and displacement (long-tailed duck, divers)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Electromagnetic fields from submarine cables",
+      "category": "Pressures"
+    },
+    {
+      "text": "Competition for marine space with shipping lanes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Contamination from dumped munitions legacy",
+      "category": "Pressures"
+    },
+    {
+      "text": "Baltic harbour porpoise population (critically low in Baltic Proper)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird populations (long-tailed duck, red-throated diver, common scoter)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Benthic community colonisation on foundations in brackish water",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabed sediment and soft-bottom infauna",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Deep-water hypoxia extent (dead zones)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "De facto marine refuge in wind farm exclusion zones",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Carbon emission avoidance through Baltic wind energy",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Reef habitat creation on foundations in sediment-dominated sea",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Baltic fishing fleet economic viability",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy security from Baltic offshore wind farms",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Employment in wind farm construction and O&M",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Renewable electricity generation capacity",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Maritime spatial planning for wind and fisheries (HELCOM/VASAB)",
+      "category": "Responses"
+    },
+    {
+      "text": "Environmental Impact Assessment with cumulative effects",
+      "category": "Responses"
+    },
+    {
+      "text": "Harbour porpoise bycatch mitigation (pingers, acoustic deterrents)",
+      "category": "Responses"
+    },
+    {
+      "text": "Seasonal construction restrictions for porpoise and bird protection",
+      "category": "Responses"
+    },
+    {
+      "text": "Fisheries compensation and co-existence agreements",
+      "category": "Responses"
+    },
+    {
+      "text": "EU Renewable Energy Directive Baltic implementation",
+      "category": "Responses"
+    },
+    {
+      "text": "EU and national renewable energy targets (REPowerEU, PNIEC)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Mediterranean energy import dependence (gas, oil)",
+      "category": "Drivers"
+    },
+    {
+      "text": "Deep-water wind resource potential close to Mediterranean coasts",
+      "category": "Drivers"
+    },
+    {
+      "text": "Climate change mitigation under Paris Agreement",
+      "category": "Drivers"
+    },
+    {
+      "text": "Artisanal fishing tradition and livelihood needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Mass coastal tourism demand",
+      "category": "Drivers"
+    },
+    {
+      "text": "Coastal economic development and employment needs",
+      "category": "Drivers"
+    },
+    {
+      "text": "Dynamic cable installation and grid connection",
+      "category": "Activities"
+    },
+    {
+      "text": "Small-scale artisanal fishing (trammel net, longline, purse seine)",
+      "category": "Activities"
+    },
+    {
+      "text": "Pelagic longline fishing for tuna and swordfish",
+      "category": "Activities"
+    },
+    {
+      "text": "Coastal and maritime tourism (beach, cruise, diving)",
+      "category": "Activities"
+    },
+    {
+      "text": "Port logistics and floating platform assembly",
+      "category": "Activities"
+    },
+    {
+      "text": "Displacement of artisanal fishers from wind farm zones",
+      "category": "Pressures"
+    },
+    {
+      "text": "Mooring and anchor disturbance to deep-sea habitats",
+      "category": "Pressures"
+    },
+    {
+      "text": "Seabird collision risk (Scopoli's shearwater, Yelkouan shearwater)",
+      "category": "Pressures"
+    },
+    {
+      "text": "Visual impact on coastal tourism seascapes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Underwater noise from floating platform operation and installation",
+      "category": "Pressures"
+    },
+    {
+      "text": "Entanglement risk from mooring lines for cetaceans and turtles",
+      "category": "Pressures"
+    },
+    {
+      "text": "Competition for marine space with shipping, fishing and tourism",
+      "category": "Pressures"
+    },
+    {
+      "text": "Anchor damage to Posidonia oceanica meadows from cable routes",
+      "category": "Pressures"
+    },
+    {
+      "text": "Overfishing pressure on demersal and reef fish",
+      "category": "Pressures"
+    },
+    {
+      "text": "Mediterranean cetacean populations (fin whale, sperm whale, bottlenose dolphin)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Demersal and reef fish assemblages (hake, red mullet, grouper)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Pelagic fish stocks (bluefin tuna, swordfish, anchovy)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Posidonia oceanica meadow extent near cable landfall sites",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Seabird breeding colonies (shearwaters, storm-petrels)",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Loggerhead sea turtle (Caretta caretta) population",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Biofouling communities on floating structures",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Coastal water quality and bathing water standards",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "De facto marine refuge from fishing exclusion zones",
+      "category": "Marine Processes & Functioning"
+    },
+    {
+      "text": "Carbon emission reduction from Mediterranean floating wind",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Artisanal fishery provisioning from coastal waters",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Tourism and recreation seascape value",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Coastal protection by Posidonia banquettes and meadows",
+      "category": "Ecosystem Services"
+    },
+    {
+      "text": "Clean energy supply reducing Mediterranean import dependence",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Employment in floating wind manufacturing and port operations",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Artisanal fisher household income and livelihood security",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal tourism industry revenue and employment",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Energy affordability for Mediterranean island communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Cultural identity of Mediterranean fishing communities",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Social acceptance and public perception of offshore wind",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Coastal property values and aesthetic perception",
+      "category": "Goods & Benefits"
+    },
+    {
+      "text": "Mediterranean maritime spatial planning (Barcelona Convention, WESTMED)",
+      "category": "Responses"
+    },
+    {
+      "text": "Environmental Impact Assessment with Posidonia protection",
+      "category": "Responses"
+    },
+    {
+      "text": "Artisanal fisheries compensation and co-existence frameworks",
+      "category": "Responses"
+    },
+    {
+      "text": "Stakeholder engagement with fishing and tourism sectors",
+      "category": "Responses"
+    },
+    {
+      "text": "Floating wind environmental consenting (national frameworks)",
+      "category": "Responses"
+    },
+    {
+      "text": "Nature-inclusive mooring design for cetacean and turtle safety",
+      "category": "Responses"
+    },
+    {
+      "text": "Adaptive management and post-construction monitoring",
+      "category": "Responses"
+    },
+    {
+      "text": "Marine Protected Areas and no-take zones",
+      "category": "Responses"
+    }
+  ],
+  "categories": [
+    "Activities",
+    "Drivers",
+    "Ecosystem Services",
+    "Goods & Benefits",
+    "Marine Processes & Functioning",
+    "Pressures",
+    "Responses"
+  ]
+}

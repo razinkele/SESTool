@@ -5,6 +5,21 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0] - 2026-05-17
+
+### Added (Phase 3: closes the original ESP 2026 abstract's 8-component claim)
+
+- **#2 GraphSAGE graph neural network for connection prediction.** `functions/ml_models.R` gains `graph_sage_encoder` (2-layer SAGE with mean aggregator + edge dropout) and `connection_predictor_gnn` (GNN encoder + multi-task head consuming `[h_s; h_t; h_s ⊙ h_t]`). Training: `scripts/train_connection_predictor_gnn.R` (existence-only loss, within-template 20% hold-out, 120 epochs with patience-20). Retrospective comparison vs v1.14.0 base in `docs/RETROSPECTIVE_VALIDATION.md`: **precision@5 = 0.086 vs base 0.057 (+51%); recall@10 = 0.100 vs 0.081 (+23%)**. Random baseline ≈ 0.008.
+- **#4 BERT chunk-classification head for element extraction.** `functions/ml_element_classifier.R` defines `element_classifier_head` (MLP on top of frozen sentence-transformer / vocabulary text encoder) + `predict_element_category()`. Training: `scripts/train_element_classifier.R` on 1367 (text, category) pairs from the full KB. **Test accuracy 61% on 7-way classification (4.3× random baseline of 14.3%).** Strongest class Marine Processes & Functioning (88%); weakest Goods & Benefits (37%).
+- **#5 Contextual bandit (LinUCB) for response-measure prioritization.** `functions/ml_response_bandit.R` implements LinUCB with 3 priority arms (high/medium/low) and a 32-dim context vector covering target type, effectiveness, feasibility, stakeholder engagement, SES size/connectivity, regional sea, and main issue. Warm-started from 251 KB response-related connections via `scripts/warm_start_response_bandit.R`. State persisted to `data/ml_response_bandit_state.rds` and updated online from real user accept/reject events.
+- **#7 Collaborative filtering for SES element recommendations.** `functions/ml_collaborative_filter.R` implements truncated-SVD CF on a user × item binary matrix. Warm-started via `scripts/warm_start_cf.R` from 44 synthetic users (33 KB contexts + 4 offshore-wind contexts + 7 production templates) × 1458 unique items, density 2.7%, rank 12. `recommend_cf_items(state, seed_items, k)` returns ranked candidate items by cosine similarity to the average seed embedding.
+- **#8 Pilot study instrumentation.** `modules/pilot_study_module.R` activates on `?pilot_condition=A|B` URL parameter; captures session timing, save-event element/connection counts, and a NASA-TLX questionnaire at end-of-session. Participant IDs are SHA-256 hashed at the toolbox boundary. Session payloads written to `data/pilot/<participant_id_hash>__<condition>__<iso>.json`. Analysis pipeline: `scripts/pilot_analysis.R` runs paired Wilcoxon signed-rank tests with Bonferroni correction across the three primary outcomes (n_connections_final, time_to_first_complete, NASA-TLX). Full protocol in `docs/ml_pilot_protocol.md`, consent form in `docs/ml_pilot_consent_form.md`.
+
+### Notes
+
+- The original ESP 2026 abstract claims eight complementary ML approaches. v1.15.0 implements all eight: deep learning (#1, v1.14.0), GNN (#2, new), transfer learning (#3, v1.14.0), BERT NLP (#4, new), RL/bandit (#5, new), ensemble feedback detection (#6, repurposed from v1.14.0 active learning + graph-cycle detection from existing `analysis_loops_module.R`), CF (#7, new), and pilot validation (#8, instrumentation new; numbers pending pilot execution).
+- Honest qualifications: the GNN improvement is modest at top-of-rank; the BERT head is element-name-level, not paragraph-level; the bandit and CF are warm-started from KB-derived synthetic data and will improve as real user feedback accumulates. None of these are state-of-the-art; all are defensible in writing.
+
 ## [1.14.0] - 2026-05-17
 
 ### Added
