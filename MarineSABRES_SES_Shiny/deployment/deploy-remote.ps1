@@ -423,8 +423,11 @@ echo 'Shiny Server:' && systemctl is-active shiny-server
 "@
 
 # Write remote script to temp file, scp it, execute it
+# CRITICAL: convert CRLF -> LF; bash on Linux treats \r as a literal character
+# and the script fails with `set: -: invalid option` and `$'\r': command not found`.
 $remoteScriptPath = Join-Path $env:TEMP "marinesabres-deploy-remote.sh"
-[System.IO.File]::WriteAllText($remoteScriptPath, $remoteScript, (New-Object System.Text.UTF8Encoding $false))
+$remoteScriptLF = $remoteScript -replace "`r`n", "`n"
+[System.IO.File]::WriteAllText($remoteScriptPath, $remoteScriptLF, (New-Object System.Text.UTF8Encoding $false))
 
 & scp $remoteScriptPath "${RemoteUser}@${RemoteHost}:/tmp/marinesabres-deploy-remote.sh"
 & ssh -t "${RemoteUser}@${RemoteHost}" "bash /tmp/marinesabres-deploy-remote.sh && rm -f /tmp/marinesabres-deploy-remote.sh"
