@@ -521,19 +521,51 @@ predict_connection_ml <- function(source_name, target_name,
   ecosystem_types <- context$ecosystem_types %||% context$ecosystem_type %||% "Other"
   main_issues <- context$main_issues %||% context$main_issue %||% "Other"
 
-  # Auto-classify types if not provided (fallback to rule-based)
-  if (is.null(source_type) && exists("classify_element_with_ai")) {
-    source_classification <- classify_element_with_ai(source_name, context)
-    source_type <- source_classification$primary$type
-  } else if (is.null(source_type)) {
-    source_type <- "Activities"  # Default fallback
+  # Auto-classify types if not provided. Order of preference:
+  #   1. Use the type if the caller supplied a valid DAPSI(W)R(M) value.
+  #   2. Call the BERT classifier (v1.15.0+) if loaded — it produces
+  #      probabilistic predictions rather than rule-based guesses.
+  #   3. Fall back to classify_element_with_ai (rule-based).
+  #   4. If nothing is available, refuse to predict rather than silently
+  #      default to "Activities" / "Pressures" — that produced confident
+  #      but structurally wrong predictions (P1-4).
+  valid_types <- if (exists("DAPSIWRM_ELEMENTS")) DAPSIWRM_ELEMENTS else c(
+    "Drivers", "Activities", "Pressures",
+    "Marine Processes & Functioning", "Ecosystem Services",
+    "Goods & Benefits", "Responses"
+  )
+  resolve_type <- function(t, name, fallback_label) {
+    if (!is.null(t) && nzchar(as.character(t)) && t %in% valid_types) return(t)
+    # Try BERT first
+    if (exists("predict_element_category", mode = "function") &&
+        file.exists("models/element_classifier_best.pt")) {
+      pred <- tryCatch(predict_element_category(name, top_k = 1L),
+                       error = function(e) NULL)
+      if (!is.null(pred) && nrow(pred) > 0 && pred$category[1] %in% valid_types) {
+        return(pred$category[1])
+      }
+    }
+    # Rule-based classifier
+    if (exists("classify_element_with_ai", mode = "function")) {
+      cl <- tryCatch(classify_element_with_ai(name, context),
+                     error = function(e) NULL)
+      if (!is.null(cl) && !is.null(cl$primary$type) &&
+          cl$primary$type %in% valid_types) return(cl$primary$type)
+    }
+    # No classifier worked — signal the caller to skip rather than guess.
+    debug_log(sprintf(
+      "predict_connection_ml: could not resolve %s for '%s'; refusing to predict",
+      fallback_label, name), "ML_INFERENCE")
+    return(NA_character_)
   }
-
-  if (is.null(target_type) && exists("classify_element_with_ai")) {
-    target_classification <- classify_element_with_ai(target_name, context)
-    target_type <- target_classification$primary$type
-  } else if (is.null(target_type)) {
-    target_type <- "Pressures"  # Default fallback
+  source_type <- resolve_type(source_type, source_name, "source_type")
+  target_type <- resolve_type(target_type, target_name, "target_type")
+  if (is.na(source_type) || is.na(target_type)) {
+    return(structure(NULL,
+      class = "ml_skipped",
+      reason = "missing_or_unresolvable_type",
+      source_type = source_type,
+      target_type = target_type))
   }
 
   # =========================================================================
@@ -684,7 +716,80 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
   ecosystem_types <- context$ecosystem_types %||% "Other"
   main_issues <- context$main_issues %||% "Other"
 
+  n_pairs_input <- nrow(pairs)
+
+  # P1-4: validate DAPSI(W)R(M) element types up front. The previous
+  # implementation silently defaulted missing source_type to "Activities"
+  # and target_type to "Pressures" at 5 sites in this file, producing
+  # confident-looking but structurally meaningless predictions whenever
+  # the caller's pair data was incomplete. Now we drop invalid pairs from
+  # inference and return NA-filled rows in their position; an attribute
+  # on the result indicates how many were dropped so callers can
+  # showNotification.
+  valid_types <- if (exists("DAPSIWRM_ELEMENTS")) DAPSIWRM_ELEMENTS else c(
+    "Drivers", "Activities", "Pressures",
+    "Marine Processes & Functioning", "Ecosystem Services",
+    "Goods & Benefits", "Responses"
+  )
+  src_ok <- !is.na(pairs$source_type) & nzchar(pairs$source_type) &
+            pairs$source_type %in% valid_types
+  tgt_ok <- !is.na(pairs$target_type) & nzchar(pairs$target_type) &
+            pairs$target_type %in% valid_types
+  valid_mask <- src_ok & tgt_ok
+  n_invalid <- sum(!valid_mask)
+  if (n_invalid > 0L) {
+    debug_log(sprintf(
+      "predict_batch_ml: %d/%d pairs have missing or invalid DAPSI(W)R(M) types — those rows will return NA. Examples: %s",
+      n_invalid, n_pairs_input,
+      paste(head(which(!valid_mask), 3), collapse = ",")
+    ), "ML_INFERENCE")
+    if (n_invalid == n_pairs_input) {
+      # Nothing to predict on — return an NA-filled result table so the
+      # caller can render the issue rather than crash on an unexpected NULL.
+      empty <- data.frame(
+        source_name = pairs$source_name,
+        target_name = pairs$target_name,
+        existence_probability = NA_real_,
+        connection_exists = NA,
+        stringsAsFactors = FALSE
+      )
+      attr(empty, "n_invalid") <- n_invalid
+      attr(empty, "warning_message") <-
+        "All candidate pairs are missing DAPSI(W)R(M) types; no ML predictions could be computed."
+      return(empty)
+    }
+  }
+
+  # Save the original (potentially with-invalid-rows) pair list so we can
+  # restore the output to the right length at the end.
+  pairs_full <- pairs
+  pairs <- pairs[valid_mask, , drop = FALSE]
   n_pairs <- nrow(pairs)
+
+  # Helper to expand the valid-only result back to the input's full size
+  # by inserting NA rows where validation rejected the input.
+  expand_to_full <- function(small_results) {
+    if (is.null(small_results)) return(NULL)
+    full <- data.frame(
+      source_name = pairs_full$source_name,
+      target_name = pairs_full$target_name,
+      existence_probability = NA_real_,
+      connection_exists = NA,
+      stringsAsFactors = FALSE
+    )
+    for (col in setdiff(names(small_results), names(full))) {
+      full[[col]] <- if (is.numeric(small_results[[col]])) NA_real_ else NA
+    }
+    full[valid_mask, names(small_results)] <- small_results
+    if (n_invalid > 0L) {
+      attr(full, "n_invalid") <- n_invalid
+      attr(full, "warning_message") <- sprintf(
+        "%d of %d candidate pairs were skipped because they were missing valid DAPSI(W)R(M) element types.",
+        n_invalid, n_pairs_input)
+    }
+    full
+  }
+
   debug_log(sprintf("predict_batch_ml: Processing %d pairs (model version: %s)",
                     n_pairs, .ml_env$model_version %||% "v1"), "ML_INFERENCE")
 
@@ -698,10 +803,11 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
       # Build element features matrix (n_pairs x 270)
       elem_matrix <- matrix(0, nrow = n_pairs, ncol = 270)
       for (i in 1:n_pairs) {
+        # Types already validated up-front; no fallback default needed.
         src_emb <- create_element_embedding(pairs$source_name[i], 128)
-        src_type <- encode_dapsiwrm_type(pairs$source_type[i] %||% "Activities")
+        src_type <- encode_dapsiwrm_type(pairs$source_type[i])
         tgt_emb <- create_element_embedding(pairs$target_name[i], 128)
-        tgt_type <- encode_dapsiwrm_type(pairs$target_type[i] %||% "Pressures")
+        tgt_type <- encode_dapsiwrm_type(pairs$target_type[i])
         elem_matrix[i, ] <- c(src_emb, src_type, tgt_emb, tgt_type)
       }
       elem_features <- torch_tensor(elem_matrix, dtype = torch_float())
@@ -774,7 +880,7 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
         })
       }
 
-      results
+      expand_to_full(results)
     }, error = function(e) {
       debug_log(sprintf("Phase 2 batch prediction failed: %s, falling back to Phase 1", e$message), "ML_INFERENCE")
       NULL
@@ -791,12 +897,13 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
   # =========================================================================
   debug_log("predict_batch_ml: Using Phase 1 feature pipeline", "ML_INFERENCE")
 
-  # Compute actual feature dimension from first pair
+  # Compute actual feature dimension from first pair.
+  # Types already validated up-front; no fallback default needed.
   first_fv <- create_feature_vector(
     source_name = pairs$source_name[1],
-    source_type = pairs$source_type[1] %||% "Activities",
+    source_type = pairs$source_type[1],
     target_name = pairs$target_name[1],
-    target_type = pairs$target_type[1] %||% "Pressures",
+    target_type = pairs$target_type[1],
     regional_sea = regional_sea,
     ecosystem_types = ecosystem_types,
     main_issues = main_issues,
@@ -811,9 +918,9 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
     for (i in 2:n_pairs) {
       feature_matrix[i, ] <- create_feature_vector(
         source_name = pairs$source_name[i],
-        source_type = pairs$source_type[i] %||% "Activities",
+        source_type = pairs$source_type[i],
         target_name = pairs$target_name[i],
-        target_type = pairs$target_type[i] %||% "Pressures",
+        target_type = pairs$target_type[i],
         regional_sea = regional_sea,
         ecosystem_types = ecosystem_types,
         main_issues = main_issues,
@@ -851,7 +958,7 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
     })
   }
 
-  return(results)
+  return(expand_to_full(results))
 }
 
 # ==============================================================================

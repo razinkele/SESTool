@@ -5,6 +5,19 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.2] - 2026-05-18
+
+### Fixed (P1-4)
+
+- **`functions/ml_inference.R` no longer silently defaults missing element types to "Activities" / "Pressures".** Five sites in `predict_batch_ml` (lines 702, 704, 797, 814, 816) and two sites in `predict_connection_ml` previously did `source_type %||% "Activities"` and `target_type %||% "Pressures"` when the caller's data was incomplete, producing confident-looking but structurally meaningless predictions. The fix:
+  - `predict_batch_ml` validates `source_type` and `target_type` against `DAPSIWRM_ELEMENTS` up front. Invalid rows are dropped from inference; the result table is re-expanded to the input's full size with NA scores in those positions. An `n_invalid` attribute and a human-readable `warning_message` attribute are attached so callers can show a notification.
+  - `predict_connection_ml` introduces an explicit type-resolution chain when types are NULL or invalid: (1) use the caller's value if it's a valid DAPSI(W)R(M) category; (2) call the v1.15.0 BERT classifier if the checkpoint is present; (3) fall back to the rule-based `classify_element_with_ai`; (4) if none of those works, return `structure(NULL, class="ml_skipped", reason="missing_or_unresolvable_type")` instead of guessing. Existing callers that test `!is.null(pred)` skip the result correctly.
+
+### Notes
+
+- This closes the last remaining "silent confident wrong answer" path in the ML inference pipeline identified by the multi-agent codebase review.
+- Behavior change: a tiny minority of historical use-cases that *expected* a missing type to silently become "Activities" (e.g., quick exploratory prediction calls in scratch scripts) will now get `NULL` back and need to provide the type explicitly. This is the intended behavior — guessing the type produced unreliable suggestions in the demo.
+
 ## [1.16.1] - 2026-05-18
 
 ### Fixed (P1-1)
