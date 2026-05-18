@@ -251,7 +251,7 @@ $tarSize = [math]::Round((Get-Item $TarPath).Length / 1MB, 1)
 Write-Success "Archive created: $TarPath ($tarSize MB)"
 
 # ============================================================================
-# Dry Run — just list contents
+# Dry Run -- just list contents
 # ============================================================================
 
 if ($DryRun) {
@@ -396,15 +396,15 @@ RESTART_STATUS_FILE=/tmp/marinesabres-restart-status
 rm -f `$RESTART_STATUS_FILE
 if sudo -n systemctl restart shiny-server 2>/dev/null; then
   echo 'full' > `$RESTART_STATUS_FILE
-  echo '  systemctl restart succeeded — all sessions evicted to new code'
+  echo '  systemctl restart succeeded -- all sessions evicted to new code'
 else
   echo '  sudo restart failed (password required), sending SIGHUP to reload...'
   if sudo -n kill -HUP `$(cat /var/run/shiny-server.pid 2>/dev/null) 2>/dev/null; then
     echo 'sighup' > `$RESTART_STATUS_FILE
-    echo '  SIGHUP delivered — workers reload; existing browser sessions keep old code until refresh'
+    echo '  SIGHUP delivered -- workers reload; existing browser sessions keep old code until refresh'
   else
     echo 'passive' > `$RESTART_STATUS_FILE
-    echo '  SIGHUP also failed — files on disk are new but server reload is passive'
+    echo '  SIGHUP also failed -- files on disk are new but server reload is passive'
     echo '  Existing sessions remain on old code; new connections will load v1.16.x'
     echo '  To force-evict existing sessions, run: ssh -t '`${RemoteUser}@${RemoteHost}'` "sudo systemctl restart shiny-server"'
   fi
@@ -431,7 +431,7 @@ Rscript -e "
     cat(sprintf('Note: %d optional package(s) not installed (ML features disabled)\n', length(opt[['missing']])))
   }
 " 2>&1 || {
-  echo '  WARNING: Package verification script failed — check manually'
+  echo '  WARNING: Package verification script failed -- check manually'
 }
 
 echo ''
@@ -469,13 +469,13 @@ if ($deployExitCode -eq 0) {
     Write-Host ""
     switch ($restartStatus) {
         "full" {
-            Write-Success "Shiny Server restart: FULL (systemctl) — all existing sessions evicted to new code"
+            Write-Success "Shiny Server restart: FULL (systemctl) -- all existing sessions evicted to new code"
         }
         "sighup" {
-            Write-Host "Shiny Server restart: SIGHUP — new worker processes will load new code; existing browser sessions keep old code until refresh" -ForegroundColor Yellow
+            Write-Host "Shiny Server restart: SIGHUP -- new worker processes will load new code; existing browser sessions keep old code until refresh" -ForegroundColor Yellow
         }
         "passive" {
-            Write-Host "Shiny Server restart: PASSIVE — neither systemctl nor SIGHUP succeeded" -ForegroundColor Yellow
+            Write-Host "Shiny Server restart: PASSIVE -- neither systemctl nor SIGHUP succeeded" -ForegroundColor Yellow
             Write-Host "                       Existing sessions remain on old code." -ForegroundColor Yellow
             Write-Host "                       To force-evict: ssh -t ${RemoteUser}@${RemoteHost} 'sudo systemctl restart shiny-server'" -ForegroundColor Yellow
         }
