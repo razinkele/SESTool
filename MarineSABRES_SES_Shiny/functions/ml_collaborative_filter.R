@@ -94,14 +94,26 @@ recommend_cf_items <- function(state, seed_items, k = 10L, exclude_seeds = TRUE)
   # Average seed embeddings
   seed_emb <- state$item_embeddings[seed, , drop = FALSE]
   q <- colMeans(seed_emb)
-  # Cosine score against all items
-  norms <- sqrt(rowSums(state$item_embeddings^2))
   q_norm <- sqrt(sum(q^2))
-  if (q_norm == 0 || any(norms == 0)) {
+  if (q_norm == 0) {
+    # Query vector is zero — there's nothing meaningful to recommend
+    # against (e.g., all seed items have zero embeddings, which
+    # shouldn't happen with a real SVD factorization but can occur on
+    # degenerate inputs).
     return(data.frame(item = character(0), score = numeric(0)))
+  }
+  # Cosine score against all items. Items with zero-norm embeddings
+  # would produce 0/0 = NaN cosines; we mask them out rather than
+  # short-circuiting the whole call (P2 fix — previously a single
+  # zero-norm item killed the entire recommender).
+  norms <- sqrt(rowSums(state$item_embeddings^2))
+  zero_norm <- norms == 0
+  if (any(zero_norm)) {
+    norms[zero_norm] <- 1  # avoid divide-by-zero
   }
   cos_sim <- (state$item_embeddings %*% q) / (norms * q_norm)
   scores <- as.numeric(cos_sim)
+  scores[zero_norm] <- -Inf  # zero-norm items can never be top
   names(scores) <- state$items
   if (exclude_seeds) scores[seed] <- -Inf
   ord <- order(scores, decreasing = TRUE)
@@ -122,12 +134,20 @@ save_cf_state <- function(state, path = CF_CONFIG$store_path) {
   invisible(path)
 }
 
+#' Load CF state. Returns NULL if not yet trained; warns if file is
+#' present but malformed so the user sees that persisted data was lost.
+#'
 #' @export
 load_cf_state <- function(path = CF_CONFIG$store_path) {
-  if (file.exists(path)) {
-    s <- readRDS(path)
-    if (!is.null(s) && !is.null(s$item_embeddings)) return(s)
-  }
+  if (!file.exists(path)) return(NULL)
+  s <- tryCatch(readRDS(path),
+                error = function(e) { warning(sprintf(
+                  "CF state file %s could not be read: %s.",
+                  path, conditionMessage(e))); NULL })
+  if (!is.null(s) && !is.null(s$item_embeddings)) return(s)
+  warning(sprintf(
+    "CF state file %s exists but is malformed (missing $item_embeddings). Returning NULL.",
+    path))
   NULL
 }
 

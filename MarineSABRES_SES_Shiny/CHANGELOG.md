@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.3] - 2026-05-18
+
+### Fixed (P1 + P2 from codebase review)
+
+- **P1-5: `deployment/deploy-remote.ps1` no longer always prints "deployment successful" regardless of what happened.** The remote script now writes one of three status tokens (`full` / `sighup` / `passive`) to `/tmp/marinesabres-restart-status`; the PowerShell summary reads it and reports honestly which restart mechanism succeeded — full systemctl restart (sessions evicted), SIGHUP (workers reload, browser sessions keep old code until refresh), or passive (files on disk are new but server reload didn't happen). Includes the exact `ssh -t … sudo systemctl restart shiny-server` command to run if you want to force-evict existing sessions.
+- **P1-6: `functions/ml_response_bandit.R::load_response_bandit` and `functions/ml_collaborative_filter.R::load_cf_state` distinguish "no state file" from "malformed state file".** Previously both cases silently returned a fresh-init bandit / NULL CF state, so the caller couldn't tell whether persisted learning had been lost. Now: missing file is silent (fine, normal cold start), malformed file produces a `warning()` that surfaces in the Shiny log so an operator notices.
+- **P2: `functions/ml_collaborative_filter.R::recommend_cf_items` no longer collapses on a single zero-norm item.** The old guard `if (q_norm == 0 || any(norms == 0))` returned an empty data.frame whenever any single item had a zero embedding, killing the whole recommender. Now zero-norm items are masked individually (score = -Inf so they can never be in the top-k); the rest of the recommendation pipeline runs normally. The `q_norm == 0` case (degenerate query vector) still short-circuits since there's nothing meaningful to recommend.
+
 ## [1.16.2] - 2026-05-18
 
 ### Fixed (P1-4)

@@ -385,12 +385,30 @@ echo '==> Cleaning up...'
 rm -f /tmp/${TarFilename}
 
 echo '==> Restarting Shiny Server...'
-sudo -n systemctl restart shiny-server 2>/dev/null || {
+# P1-5: track which restart path actually succeeded so the deploy summary
+# can be honest about whether existing user sessions are still on the old
+# code. Writes one of three strings to /tmp/marinesabres-restart-status:
+#   full     - systemctl restart succeeded; all sessions evicted
+#   sighup   - SIGHUP delivered; new workers spawn but existing sessions kept
+#   passive  - nothing actually restarted; existing sessions stay on old code,
+#              new connections will pick up the new code
+RESTART_STATUS_FILE=/tmp/marinesabres-restart-status
+rm -f `$RESTART_STATUS_FILE
+if sudo -n systemctl restart shiny-server 2>/dev/null; then
+  echo 'full' > `$RESTART_STATUS_FILE
+  echo '  systemctl restart succeeded — all sessions evicted to new code'
+else
   echo '  sudo restart failed (password required), sending SIGHUP to reload...'
-  sudo -n kill -HUP `$(cat /var/run/shiny-server.pid 2>/dev/null) 2>/dev/null || {
-    echo '  SIGHUP also failed. Server will pick up changes on next request.'
-  }
-}
+  if sudo -n kill -HUP `$(cat /var/run/shiny-server.pid 2>/dev/null) 2>/dev/null; then
+    echo 'sighup' > `$RESTART_STATUS_FILE
+    echo '  SIGHUP delivered — workers reload; existing browser sessions keep old code until refresh'
+  else
+    echo 'passive' > `$RESTART_STATUS_FILE
+    echo '  SIGHUP also failed — files on disk are new but server reload is passive'
+    echo '  Existing sessions remain on old code; new connections will load v1.16.x'
+    echo '  To force-evict existing sessions, run: ssh -t '`${RemoteUser}@${RemoteHost}'` "sudo systemctl restart shiny-server"'
+  fi
+fi
 sleep 2
 
 echo ''
@@ -441,8 +459,30 @@ Remove-Item $TarPath -Force -ErrorAction SilentlyContinue
 Remove-Item $remoteScriptPath -Force -ErrorAction SilentlyContinue
 
 if ($deployExitCode -eq 0) {
+    # P1-5: read the restart-status file written by the remote script
+    # so the summary distinguishes "all sessions evicted" from
+    # "files updated but existing sessions stay on old code".
+    $restartStatus = (& ssh "${RemoteUser}@${RemoteHost}" "cat /tmp/marinesabres-restart-status 2>/dev/null; rm -f /tmp/marinesabres-restart-status").Trim()
+
     Write-Header "Deployment Complete"
-    Write-Success "Remote deployment successful!"
+    Write-Success "Remote deployment successful (files updated on disk)"
+    Write-Host ""
+    switch ($restartStatus) {
+        "full" {
+            Write-Success "Shiny Server restart: FULL (systemctl) — all existing sessions evicted to new code"
+        }
+        "sighup" {
+            Write-Host "Shiny Server restart: SIGHUP — new worker processes will load new code; existing browser sessions keep old code until refresh" -ForegroundColor Yellow
+        }
+        "passive" {
+            Write-Host "Shiny Server restart: PASSIVE — neither systemctl nor SIGHUP succeeded" -ForegroundColor Yellow
+            Write-Host "                       Existing sessions remain on old code." -ForegroundColor Yellow
+            Write-Host "                       To force-evict: ssh -t ${RemoteUser}@${RemoteHost} 'sudo systemctl restart shiny-server'" -ForegroundColor Yellow
+        }
+        default {
+            Write-Host "Shiny Server restart status: unknown (status file not found)" -ForegroundColor Yellow
+        }
+    }
     Write-Host ""
     Write-Host "  Application URL: https://laguna.ku.lt/marinesabres/"
     Write-Host ""

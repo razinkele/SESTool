@@ -213,14 +213,29 @@ save_response_bandit <- function(state, path = BANDIT_CONFIG$store_path) {
 
 #' Load bandit state from disk; initialize a fresh one if not found.
 #'
+#' Three outcomes:
+#'   - file doesn't exist: silently return a fresh init (normal cold start).
+#'   - file exists and is valid: return the deserialized state.
+#'   - file exists but is malformed: warn() loudly, then return a fresh init
+#'     so the app keeps running, but the user / log gets a clear signal that
+#'     the persisted learning was lost rather than silently reset.
+#'
 #' @param path Character file path.
 #' @return Bandit state.
 #' @export
 load_response_bandit <- function(path = BANDIT_CONFIG$store_path) {
-  if (file.exists(path)) {
-    state <- readRDS(path)
-    if (is.list(state) && !is.null(state$arms) && !is.null(state$A)) return(state)
+  if (!file.exists(path)) return(init_response_bandit())
+  state <- tryCatch(readRDS(path),
+                    error = function(e) { warning(sprintf(
+                      "Bandit state file %s could not be read: %s. Returning fresh init.",
+                      path, conditionMessage(e))); NULL })
+  if (!is.null(state) && is.list(state) &&
+      !is.null(state$arms) && !is.null(state$A)) {
+    return(state)
   }
+  warning(sprintf(
+    "Bandit state file %s exists but is malformed (missing $arms or $A). Returning fresh init.",
+    path))
   init_response_bandit()
 }
 
