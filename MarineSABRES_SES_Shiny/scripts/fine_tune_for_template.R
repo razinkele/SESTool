@@ -246,29 +246,53 @@ cat(sprintf("Fine-tune split: %d train, %d val\n", length(train_idx), length(val
 # Load base model and apply freezing
 # ==============================================================================
 
-base_model <- NULL
-if (exists("load_ml_model", mode = "function")) {
-  base_model <- tryCatch(load_ml_model(CONFIG$base_model_path), error = function(e) NULL)
-}
-if (is.null(base_model) || !inherits(base_model, "nn_module")) {
-  # Fallback: rebuild architecture and load state_dict
-  base_model <- connection_predictor(input_dim = ncol(X), hidden_dim = 256, dropout = 0.3)
-  state <- torch_load(CONFIG$base_model_path)
-  if (!is.null(state$model_state_dict)) {
-    base_model$load_state_dict(state$model_state_dict)
-  } else if (is.list(state)) {
-    base_model$load_state_dict(state)
-  }
+# Build a fresh model with the right input_dim, then copy weights from the
+# saved base checkpoint via state_dict roundtrip. This is the SAME pattern
+# the retrospective_validation scripts use. The prior implementation called
+# load_ml_model(), which returns a LOGICAL (TRUE/FALSE), not the model
+# object — so the inherits(..., "nn_module") check always failed, both
+# fallback branches were also skipped (the saved file is an nn_module, not
+# a list with $model_state_dict, and inherits(nn_module, "list") is FALSE),
+# and base_model stayed freshly random-initialized. See P0-1 in
+# docs/CODEBASE_REVIEW_2026-05-18.md for the diagnostic that surfaced this.
+base_model <- connection_predictor(input_dim = ncol(X), hidden_dim = 256, dropout = 0.3)
+src <- torch_load(CONFIG$base_model_path)
+if (inherits(src, "nn_module")) {
+  base_model$load_state_dict(src$state_dict())
+} else if (is.list(src) && !is.null(src$model_state_dict)) {
+  base_model$load_state_dict(src$model_state_dict)
+} else if (is.list(src)) {
+  base_model$load_state_dict(src)
+} else {
+  stop("Cannot interpret base model file: class=", paste(class(src), collapse = "/"))
 }
 
-# Freeze layers if requested
-if ("input" %in% hp$freeze_layers && !is.null(base_model$input_layer)) {
-  for (p in base_model$input_layer$parameters) p$requires_grad <- FALSE
-  cat("Frozen: input_layer\n")
+# Sanity check that base weights actually copied (the bug would silently keep
+# random init; this guard fires on future format drift). We compare bn1's
+# running_mean — it's effectively zero for a fresh model and non-zero for a
+# trained one because batch norm tracks running statistics during training.
+running_mean_abs <- 0
+if (!is.null(base_model$bn1) && !is.null(base_model$bn1$running_mean)) {
+  running_mean_abs <- mean(abs(as.numeric(base_model$bn1$running_mean)))
 }
-if ("hidden1" %in% hp$freeze_layers && !is.null(base_model$hidden1)) {
-  for (p in base_model$hidden1$parameters) p$requires_grad <- FALSE
-  cat("Frozen: hidden1\n")
+if (running_mean_abs < 1e-6) {
+  warning(sprintf(
+    "Base model bn1$running_mean is near zero (%.2e). The base checkpoint may not be a trained model; fine-tuning will start from chance.",
+    running_mean_abs))
+} else {
+  cat(sprintf("Base model weights loaded (bn1$running_mean abs = %.4f).\n", running_mean_abs))
+}
+
+# Freeze layers if requested. The real layer names in connection_predictor
+# are fc1, fc2, fc3 (not input_layer / hidden1, which is what the original
+# script referenced and which silently no-op'd the freeze).
+if ("input" %in% hp$freeze_layers && !is.null(base_model$fc1)) {
+  for (p in base_model$fc1$parameters) p$requires_grad <- FALSE
+  cat("Frozen: fc1 (input layer)\n")
+}
+if ("hidden1" %in% hp$freeze_layers && !is.null(base_model$fc2)) {
+  for (p in base_model$fc2$parameters) p$requires_grad <- FALSE
+  cat("Frozen: fc2 (first hidden)\n")
 }
 
 # ==============================================================================
@@ -344,7 +368,11 @@ meta <- list(
   date = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
 )
 meta_path <- file.path(CONFIG$output_dir, paste0(template_slug, ".json"))
-writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
+# digits=8 preserves small numbers like LR=3e-5 (default digits=4 silently
+# rounds them to 0, which is what produced the misleading metadata in the
+# v1.14.0 fine-tuned JSONs).
+writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE, digits = 8),
+           meta_path)
 
 cat("\n==================================================================\n")
 cat(sprintf("Fine-tuning complete. Best val loss: %.4f\n", best_val_loss))
