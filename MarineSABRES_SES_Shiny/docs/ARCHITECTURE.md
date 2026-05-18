@@ -139,3 +139,51 @@ observeEvent(project_data_reactive()$project_id, {
 **Decision:** Wrap each `emit_*` function body in `shiny::isolate({...})`. Emit functions write events; they should not be reactive consumers, ever.
 
 **Consequences:** Tests can construct an event bus and exercise emit/get patterns directly with `shiny::isolate()` only on the *read-side* getters (which need to register dependencies in production). Production observers no longer depend on the events they emit. The fix turned 10 long-standing test errors green in one commit. Applied to all 8 `emit_*` functions: `emit_isa_change`, `emit_cld_update`, `emit_analysis_request`, `emit_template_loaded`, `emit_project_saved`, `emit_project_loaded`, `emit_navigation_request`, `emit_language_changed`.
+
+---
+
+## ADR-14: GraphSAGE Encoder for Connection Prediction (v1.15.0)
+
+**Context:** The v1.14.0 base predictor scores a candidate connection from a 358-dim feature vector that captures element-name embeddings, DAPSI(W)R(M) type one-hots, and per-template priors — but treats the user's in-progress SES graph as a *bag of features*, not as a graph. The original ESP 2026 abstract claimed "graph neural networks for model completion"; the v1.14.0 release fell short of that by using hand-engineered scalar graph features (centrality, shortest-path, framework-compliance flag) rather than learned message passing.
+
+**Decision:** Add a 2-layer GraphSAGE encoder (`functions/ml_models.R::graph_sage_encoder`) that produces 32-dim node embeddings from a 135-dim per-node input (7-dim DAPSI(W)R(M) one-hot + 128-dim sentence-transformer text embedding). The companion `connection_predictor_gnn` wraps the encoder with multi-task heads that consume the pair representation `[h_source; h_target; h_source ⊙ h_target]`. GraphSAGE was chosen over vanilla GCN because (a) inference graphs are dynamic — the user's partial model is what we feed in, not a fixed adjacency — and (b) the mean aggregator + neighbour-sampling pattern handles small graphs (typical template has 25-30 nodes) more gracefully than spectral GCN normalization.
+
+**Training:** Within-template hold-out (20% of positives masked per epoch), existence-only binary cross-entropy loss (the multi-task variant degraded ranking; see ADR-15), Adam lr=5e-4, dropout 0.3, edge dropout 0.1, patience-20 early stopping. Trained on all 7 production templates simultaneously.
+
+**Consequences:** Retrospective comparison vs. v1.14.0 base shows the GNN wins at top-of-rank (precision@5 0.086 vs base 0.057, +51%; recall@10 0.100 vs 0.081, +23%) and ties or slightly loses past top-10. Real-user impact is small in absolute terms but consistent: when users look at the FIRST few suggestions (which is what the UI surfaces), the GNN is meaningfully better. Both checkpoints are kept; `retrospective_validation_gnn.R` documents the side-by-side numbers.
+
+---
+
+## ADR-15: Existence-Only Loss for the GraphSAGE Predictor
+
+**Context:** The v1.14.0 multi-task loss combines four heads — existence (BCE, weight 0.4), strength (CE, 0.3), confidence (MSE, 0.2), polarity (BCE, 0.1). When the GraphSAGE-augmented architecture was trained with the same weighted loss, validation loss plateaued at ~1.6 and retrospective precision@10 was *worse* than the base classifier (0.029 vs 0.057). Inspection showed the strength/confidence/polarity heads were dominating gradient updates because the existence head's loss surface was already shallow, and the small per-template sample sizes meant the auxiliary tasks were memorizing noise.
+
+**Decision:** When training the GNN predictor (only — the v1.14.0 base keeps its multi-task loss), use binary cross-entropy on the existence head alone (`CONFIG$existence_only = TRUE` in `scripts/train_connection_predictor_gnn.R`).
+
+**Consequences:** Val loss drops to 0.63 with no overfitting (train 0.68). Precision@5 lifts to 0.086 (+51% over base). The strength/confidence/polarity heads still exist in the architecture (so the model object loads against `connection_predictor_gnn` cleanly) and are still functional at inference time — they're just trained passively from the existence-head gradients via the shared backbone. Hard lesson on small-data multi-task learning: more output heads ≠ more learning. The base v1.14.0 had enough data to support the auxiliary tasks; the GraphSAGE variant with its tighter parameter budget did not.
+
+---
+
+## ADR-16: In Silico Validation as a Pilot Proxy
+
+**Context:** The original ESP 2026 abstract claims "23% more relevant connections" and "64% greater consistency across users" — numbers that can only be measured with a human-subject pilot. The pilot is designed (`docs/ml_pilot_protocol.md`) but takes ~8 weeks calendar including ethics clearance and recruitment. The submission needed defensible numbers before that timeline.
+
+**Decision:** Build three computational analyses that use only the existing KB data to produce numbers in the same units the pilot would produce, with explicit caveats about what they do and do not measure:
+
+1. **Connection-recovery lift** (`scripts/simulate_non_expert_users.R`): simulate users who start with a random 30% subset of true positives and add 10 more via either uniform-random sampling within the DAPSI(W)R(M)-valid pool or top-ML-score. Replaces the "23% more connections" claim with a measured +100% median relative lift.
+2. **Cross-user consistency lift** (`scripts/cross_template_consistency.R`): 5 simulated users per template, mean pairwise Jaccard of final models. Replaces the "64% greater consistency" claim with a measured +396% median relative lift, plus an honest caveat that deterministic ML scoring contributes a substantial share of the lift.
+3. **Bibliometric calibration** (`scripts/bibliometric_validation.R`): Spearman correlation between ML existence probability and KB reference counts (and consortium expert confidence). Provides a "the model agrees with the literature" signal independent of either user-substitute simulation.
+
+All three feed into `docs/IN_SILICO_VALIDATION.md` and the ESP 2026 v3 abstract (`MARBEFES/ESP2026/abstract_Razinkovas_et_al_v3.docx`).
+
+**Consequences:** The submission can be made with measured numbers immediately. The pilot remains in the protocol queue but is no longer blocking. When the pilot eventually completes, its real-user numbers replace the in silico ones in any subsequent paper. The honest framing — "in silico simulation shows X; pilot in preparation to measure real-user gain" — is more defensible at the podium than either pure simulation or unsourced claims would be.
+
+---
+
+## ADR-17: Hashed Participant IDs at the Toolbox Boundary (Pilot Study)
+
+**Context:** The pilot study captures session-level measurements (timing, NASA-TLX, model snapshots) per participant. To run paired statistics across the two sessions per participant, every session needs to be linked to the same participant. To honour the consent form's "no PII captured" promise, the participant identifier on disk must not be a re-identifiable string.
+
+**Decision:** The participant ID enters the system via a URL parameter (`?pid=P01`) along with the condition (`?pilot_condition=A|B`). The `modules/pilot_study_module.R` module immediately hashes the raw `pid` with SHA-256 and truncates to the first 12 characters. Only the hashed value is written to disk (`data/pilot/<hashed_pid>__<condition>__<iso>.json`). The mapping from raw `pid` to hash is reconstructable (SHA-256 is deterministic) but is never persisted by the toolbox; the PI keeps the mapping in a separate password-protected spreadsheet that is destroyed after analysis.
+
+**Consequences:** Statistical pairing works (same raw `pid` → same hash → joined across two sessions). PII never lands in the repository. A reviewer can audit `data/pilot/` and see only opaque 12-character IDs. Even if the pilot raw data were accidentally pushed to git (it shouldn't be — the `.gitignore` excludes it), participants are not identifiable from the files alone. The 12-character truncation is fine for the expected N = 8-12 (collision probability negligible) and keeps file names short.
