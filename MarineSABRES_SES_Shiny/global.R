@@ -735,6 +735,13 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_active_learning.R")) {
       source("functions/ml_active_learning.R", local = TRUE)
     }
+    # safe_readRDS lives in functions/utils.R; ml_ensemble.R needs it at
+    # load-time. The big utils.R source happens further down in this file
+    # (line ~911), so we pre-source it here. Idempotent — re-sourcing
+    # later is harmless because all definitions are pure.
+    if (file.exists("functions/utils.R")) {
+      source("functions/utils.R", local = FALSE)
+    }
     if (file.exists("functions/ml_ensemble.R")) {
       source("functions/ml_ensemble.R", local = TRUE)
     }
@@ -767,6 +774,18 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_element_classifier.R")) {
       source("functions/ml_element_classifier.R", local = TRUE)
       cat("✓ ML element classifier loaded\n")
+    }
+
+    # LinUCB contextual bandit for response-measure prioritization (v1.15.0).
+    if (file.exists("functions/ml_response_bandit.R")) {
+      source("functions/ml_response_bandit.R", local = TRUE)
+      cat("✓ ML response bandit loaded\n")
+    }
+
+    # SVD collaborative filter for element recommendations (v1.15.0).
+    if (file.exists("functions/ml_collaborative_filter.R")) {
+      source("functions/ml_collaborative_filter.R", local = TRUE)
+      cat("✓ ML collaborative filter loaded\n")
     }
 
     # ML feature cache (LRU cache for feature vectors)
