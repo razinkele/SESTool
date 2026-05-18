@@ -1,8 +1,46 @@
-# MarineSABRES SES Tool - Complete User Guide
+# MarineSABRES SES Tool — Complete User Guide
 
-**Version:** 1.0
-**Last Updated:** October 20, 2025
+**Toolbox version:** 1.15.0
+**User-guide version:** 2.0
+**Last updated:** 2026-05-18
 **Project:** Marine Social-Ecological Systems Analysis Tool
+
+> **What's new since user-guide v1.0 (October 2025):** the toolbox has
+> moved from v1.5 to v1.15.0. The PIMS/ISA/CLD core that this guide
+> documents is stable and accurate. The major additions you won't find
+> in this guide are described in the *What's new in v1.15.0* section
+> below. For paper-ready descriptions of the ML pipeline, see
+> [`docs/ML_METHODS.md`](../docs/ML_METHODS.md) in the repo.
+
+---
+
+## What's new in v1.15.0 (read this first)
+
+The toolbox now ships an eight-component machine-learning pipeline that
+learns from the MarineSABRES participatory knowledge base. The pipeline
+is **optional** — every workflow described in this guide still works
+without ML — but each component adds suggestions that you can accept,
+reject, or ignore as you build your model.
+
+| Where you'll see it | What the ML does |
+|---|---|
+| **Graphical SES Creator** | "AI Group Assignment" auto-classifies element names to DAPSI(W)R(M) categories; "Suggest Connections" ranks candidate edges by predicted existence probability with a confidence badge from inter-model disagreement. |
+| **AI ISA Assistant** | Surface-level suggestions for elements and connections at each ISA step, with rationales pulled from the validated KB. |
+| **Scenario Builder** | Leverage-point ranking uses ensemble disagreement to flag uncertain candidates where stakeholder input would be most valuable. |
+| **Response Module** | Response measure priority ranking is augmented by a LinUCB contextual bandit that learns from your accept/reject decisions over time. |
+
+**Bottom line:** if you've used the toolbox before v1.14, every existing
+workflow works as before. The ML adds suggestions in three places; you
+remain in control. There is no "ML on/off" switch — suggestions appear
+only where they're useful and are always clearly marked.
+
+**For nine-language users:** the ML components produce output in your
+session language using stable internal categorical keys, so a model
+built in Lithuanian and re-opened in English keeps its semantics. This
+was a real bug class in v1.13.x and is now closed (see ADR-11 in
+`docs/ARCHITECTURE.md`).
+
+---
 
 ---
 

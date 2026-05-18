@@ -1,9 +1,65 @@
-# MarineSABRES SES Toolbox - Improvement Plan
+# MarineSABRES SES Toolbox — Improvement Plan
 
-**Version:** 3.0
+**Version:** 3.0 (March 2026 snapshot)
 **Date:** 2026-03-14
 **Analysis:** Full codebase deep-dive (architecture, modules, functions, i18n, tests, domain model, security)
-**Status:** Active
+**Status:** Historical snapshot — partially superseded by v1.13–v1.15 releases. See status update below.
+
+---
+
+## Status update (2026-05-18, post-v1.15.0)
+
+This plan is a March 2026 snapshot. Many P0/P1 items have been worked
+on in subsequent releases (v1.13.x, v1.14.0, v1.15.0). Before acting on
+any item below, cross-check against the current code — the relevant
+authoritative documents are:
+
+- [`CHANGELOG.md`](CHANGELOG.md) — release notes through v1.15.0
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — 17 ADRs covering the
+  decisions made on the way from the March snapshot to v1.15.0
+- [`docs/IMPLEMENTATION_PLAN_FROM_ORIGINAL_ABSTRACT.md`](docs/IMPLEMENTATION_PLAN_FROM_ORIGINAL_ABSTRACT.md) —
+  the v1.15.0 planning document that closes the original ESP 2026
+  abstract's 8-component ML gap.
+
+### Items materially addressed since this plan was written
+
+- **i18n / locale-stable categorical keys** (touched by ADR-11): closed
+  in v1.13.6 for Power/Interest, Effectiveness/Feasibility,
+  scenario-builder DAPSI categories.
+- **Module persistence pattern** (touched by ADR-12): closed in v1.13.x
+  for `pims_stakeholder_module`, `response_module`,
+  `isa_data_entry_module`.
+- **Event-bus `emit_*` self-firing** (touched by ADR-13): closed in
+  v1.13.7 (`isolate()` wrap on all 8 emit functions).
+- **VERSION ↔ VERSION_INFO.json drift** (touched in v1.13.5):
+  pre-deploy guard now refuses to deploy on mismatch.
+- **ML pipeline integration** (entirely new in v1.14–v1.15): the eight
+  ML components added in v1.15.0 didn't exist when this plan was
+  written. See `docs/ML_METHODS.md`.
+- **In silico validation methodology** (ADR-16): not anticipated by
+  this plan. See `docs/IN_SILICO_VALIDATION.md`.
+- **Pilot study instrumentation** (ADR-17): not anticipated.
+
+### Items likely still relevant
+
+- HTML injection / XSS audit (P0 #1) — sample fixes have been made but a full audit was not completed.
+- JSON schema validation on import (P0 #2) — partially mitigated by `safe_readRDS()`, JSON path less hardened.
+- File upload size limits (P0) — verify against current `app.R`.
+- ARIA accessibility helpers (P2) — the test file was deleted on 2026-04-11; the underlying functions still need implementation.
+- Test coverage to 85% — current ~70% based on recent counts; the v1.15.0 additions added scripts (training, validation) that are not unit-tested.
+
+### Items likely no longer relevant
+
+- "ML files 14 (torch-based, optional)" — now 22+ files including the
+  v1.15.0 additions; module count grew accordingly.
+- "Test files 61 (~1,191 cases)" — current count 56+ files; some were
+  consolidated during the v1.13.x audit work.
+- Module counts in the executive summary — refer to current `git ls-files modules/` for an authoritative number.
+
+If you want to refresh this plan against the v1.15.0 codebase, the
+right next action is a fresh deep-dive (similar to the March 2026
+analysis that produced this document). Don't try to mechanically
+update the line-numbered references below; many files have moved.
 
 ---
 
