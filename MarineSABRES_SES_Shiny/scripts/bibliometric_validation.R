@@ -140,6 +140,9 @@ if (inherits(state, "nn_module")) {
   base_model$load_state_dict(state$model_state_dict)
 } else if (is.list(state)) {
   base_model$load_state_dict(state)
+} else {
+  stop(sprintf("Unrecognized checkpoint format at %s (class=%s)",
+               CONFIG$base_path, paste(class(state), collapse = "/")))
 }
 set_inf(base_model)
 

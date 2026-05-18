@@ -183,7 +183,26 @@ pilot_study_server <- function(id,
         locale         = session$clientData$url_hostname %||% NA
       )
 
-      writeLines(jsonlite::toJSON(payload, auto_unbox = TRUE, pretty = TRUE), out_path)
+      write_ok <- tryCatch({
+        writeLines(jsonlite::toJSON(payload, auto_unbox = TRUE, pretty = TRUE),
+                   out_path)
+        TRUE
+      }, error = function(e) {
+        debug_log(sprintf("[pilot] failed to save session to %s: %s",
+                          out_path, conditionMessage(e)), "PILOT")
+        showNotification(
+          paste(
+            i18n$t("modules.pilot.tlx.save_failed") %||%
+              "Could not save pilot session — please notify the researcher.",
+            conditionMessage(e),
+            sep = " "
+          ),
+          type = "error", duration = NULL
+        )
+        FALSE
+      })
+      if (!isTRUE(write_ok)) return()
+
       rv$tlx_submitted <- TRUE
       removeModal()
       showNotification(

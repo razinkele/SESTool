@@ -761,6 +761,14 @@ if (ML_ENABLED) {
     source("functions/ml_feedback_logger.R", local = TRUE)
     cat("✓ ML feedback logger loaded\n")
 
+    # Element classifier (BERT chunk-classification head). Loads even if no
+    # checkpoint exists yet — predict_element_category fails fast at call
+    # time rather than at source time.
+    if (file.exists("functions/ml_element_classifier.R")) {
+      source("functions/ml_element_classifier.R", local = TRUE)
+      cat("✓ ML element classifier loaded\n")
+    }
+
     # ML feature cache (LRU cache for feature vectors)
     if (file.exists("functions/ml_feature_cache.R")) {
       source("functions/ml_feature_cache.R", local = TRUE)

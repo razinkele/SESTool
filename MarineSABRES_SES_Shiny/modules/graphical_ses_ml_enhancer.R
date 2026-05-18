@@ -191,7 +191,42 @@ classify_element_ml_enhanced <- function(element_name, context, reference_elemen
     )
   }
 
-  # If ML not available, return base classification
+  # BERT chunk-classification overlay (v1.15.0). If the BERT head is
+  # loaded AND a trained checkpoint exists, use its top-1 prediction
+  # to override the primary classification when its confidence beats
+  # the rule-based prior. The top-3 are always surfaced as alternatives
+  # for the UI to display.
+  bert_preds <- tryCatch({
+    if (exists("predict_element_category", mode = "function") &&
+        file.exists("models/element_classifier_best.pt")) {
+      predict_element_category(element_name, top_k = 3L)
+    } else {
+      NULL
+    }
+  }, error = function(e) {
+    debug_log(paste("BERT classification failed:", e$message), "ML_ENHANCER")
+    NULL
+  })
+
+  if (!is.null(bert_preds) && nrow(bert_preds) > 0) {
+    base_classification$bert_top3 <- bert_preds
+    # Promote BERT's top-1 to primary if confidence beats 0.5 and the
+    # rule-based confidence is at or below it.
+    bert_top1_conf <- bert_preds$probability[1]
+    base_conf <- base_classification$primary$confidence %||% 0
+    if (!is.na(bert_top1_conf) && bert_top1_conf >= 0.5 &&
+        bert_top1_conf > base_conf) {
+      debug_log(sprintf("BERT overrides primary: %s (conf=%.3f vs base %.3f)",
+                        bert_preds$category[1], bert_top1_conf, base_conf),
+                "ML_ENHANCER")
+      base_classification$primary$type <- bert_preds$category[1]
+      base_classification$primary$confidence <- bert_top1_conf
+      base_classification$primary$bert_enhanced <- TRUE
+    }
+  }
+
+  # If ML not available, return what we have (BERT overlay above is
+  # independent of the connection-predictor ML pipeline).
   if (!ml_model_available() || is.null(reference_elements) || nrow(reference_elements) == 0) {
     return(base_classification)
   }

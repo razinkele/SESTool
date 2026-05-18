@@ -420,6 +420,27 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       return()
     }
 
+    # Containment check (P0-5): the path arrives from a client-side
+    # Shiny.setInputValue call. A malicious or compromised client could
+    # set it to any path the Shiny process can read. Restrict to files
+    # inside the .autosave subfolder of the configured projects folder.
+    autosave_root <- tryCatch(
+      normalizePath(file.path(get_projects_folder(create_if_missing = FALSE),
+                              ".autosave"),
+                    winslash = "/", mustWork = FALSE),
+      error = function(e) NA_character_
+    )
+    normalized_path <- normalizePath(file_path, winslash = "/", mustWork = FALSE)
+    if (is.na(autosave_root) || !startsWith(normalized_path, autosave_root)) {
+      debug_log(sprintf("[security] Rejected autosave load outside root: %s (root=%s)",
+                        normalized_path, autosave_root), "PROJECT_IO")
+      showNotification(
+        i18n$t("modules.auto_save.autosave_not_found"),
+        type = "error"
+      )
+      return()
+    }
+
     tryCatch({
       loaded_data <- safe_readRDS(file_path, max_size_mb = 50)
       if (is.null(loaded_data)) {

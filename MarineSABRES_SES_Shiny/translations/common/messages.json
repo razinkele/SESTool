@@ -11,6 +11,17 @@
     "el"
   ],
   "translation": {
+    "common.messages.word_export_failed": {
+      "en": "Could not generate Word document.",
+      "es": "No se pudo generar el documento de Word.",
+      "fr": "Impossible de générer le document Word.",
+      "de": "Word-Dokument konnte nicht erstellt werden.",
+      "lt": "Nepavyko sukurti Word dokumento.",
+      "pt": "Não foi possível gerar o documento Word.",
+      "it": "Impossibile generare il documento Word.",
+      "no": "Kunne ikke generere Word-dokument.",
+      "el": "Δεν ήταν δυνατή η δημιουργία του εγγράφου Word."
+    },
     "common.messages.bookmark_restored_successfully": {
       "en": "Bookmark restored successfully!",
       "es": "¡Marcador restaurado con éxito!",

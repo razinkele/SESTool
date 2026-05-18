@@ -687,7 +687,16 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           print(doc, target = file)
         }, error = function(e) {
           debug_log(paste("Priority report export failed:", e$message), "EXPORT")
-          utils::write.csv(translate_levels_for_display(response_data$measures), file, row.names = FALSE)
+          # P0-6: do NOT silently write CSV bytes to a .docx file — Word
+          # refuses to open the result and the user is left guessing.
+          # Surface the error and let the user try a different export.
+          showNotification(
+            paste0(i18n$t("common.messages.word_export_failed") %||%
+                     "Could not generate Word document.",
+                   " (", e$message, ")"),
+            type = "error", duration = NULL
+          )
+          stop(e)  # propagates to downloadHandler, which cleans up the temp file
         })
       }
     )
@@ -726,7 +735,13 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           print(doc, target = file)
         }, error = function(e) {
           debug_log(paste("Implementation plan export failed:", e$message), "EXPORT")
-          utils::write.csv(translate_levels_for_display(response_data$measures), file, row.names = FALSE)
+          showNotification(
+            paste0(i18n$t("common.messages.word_export_failed") %||%
+                     "Could not generate Word document.",
+                   " (", e$message, ")"),
+            type = "error", duration = NULL
+          )
+          stop(e)
         })
       }
     )

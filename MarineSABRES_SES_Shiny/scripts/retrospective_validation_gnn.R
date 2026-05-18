@@ -78,6 +78,9 @@ load_base_model <- function(path, dim) {
     fresh$load_state_dict(state$model_state_dict)
   } else if (is.list(state)) {
     fresh$load_state_dict(state)
+  } else {
+    stop(sprintf("Unrecognized base checkpoint format at %s (class=%s)",
+                 path, paste(class(state), collapse = "/")))
   }
   set_inf(fresh)
   fresh
@@ -94,8 +97,13 @@ gnn_state <- torch_load(CONFIG$gnn_path)
 gnn_model <- connection_predictor_gnn()  # default dims
 if (inherits(gnn_state, "nn_module")) {
   gnn_model$load_state_dict(gnn_state$state_dict())
-} else {
+} else if (is.list(gnn_state) && !is.null(gnn_state$model_state_dict)) {
+  gnn_model$load_state_dict(gnn_state$model_state_dict)
+} else if (is.list(gnn_state)) {
   gnn_model$load_state_dict(gnn_state)
+} else {
+  stop(sprintf("Unrecognized GNN checkpoint format at %s (class=%s)",
+               CONFIG$gnn_path, paste(class(gnn_state), collapse = "/")))
 }
 set_inf(gnn_model)
 cat("Loaded GNN model\n\n")

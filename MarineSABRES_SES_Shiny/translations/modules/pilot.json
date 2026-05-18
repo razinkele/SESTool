@@ -1,0 +1,169 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.pilot.banner.title": {
+      "en": "PILOT STUDY",
+      "es": "ESTUDIO PILOTO",
+      "fr": "ÉTUDE PILOTE",
+      "de": "PILOTSTUDIE",
+      "lt": "PILOTINIS TYRIMAS",
+      "pt": "ESTUDO PILOTO",
+      "it": "STUDIO PILOTA",
+      "no": "PILOTSTUDIE",
+      "el": "ΠΙΛΟΤΙΚΗ ΜΕΛΕΤΗ"
+    },
+    "modules.pilot.banner.condition": {
+      "en": "Condition",
+      "es": "Condición",
+      "fr": "Condition",
+      "de": "Bedingung",
+      "lt": "Sąlyga",
+      "pt": "Condição",
+      "it": "Condizione",
+      "no": "Betingelse",
+      "el": "Συνθήκη"
+    },
+    "modules.pilot.banner.participant": {
+      "en": "Participant",
+      "es": "Participante",
+      "fr": "Participant",
+      "de": "Teilnehmer",
+      "lt": "Dalyvis",
+      "pt": "Participante",
+      "it": "Partecipante",
+      "no": "Deltaker",
+      "el": "Συμμετέχων"
+    },
+    "modules.pilot.tlx.title": {
+      "en": "Workload questionnaire (NASA-TLX)",
+      "es": "Cuestionario de carga de trabajo (NASA-TLX)",
+      "fr": "Questionnaire de charge de travail (NASA-TLX)",
+      "de": "Arbeitsbelastungs-Fragebogen (NASA-TLX)",
+      "lt": "Darbo krūvio klausimynas (NASA-TLX)",
+      "pt": "Questionário de carga de trabalho (NASA-TLX)",
+      "it": "Questionario sul carico di lavoro (NASA-TLX)",
+      "no": "Spørreskjema om arbeidsbelastning (NASA-TLX)",
+      "el": "Ερωτηματολόγιο φόρτου εργασίας (NASA-TLX)"
+    },
+    "modules.pilot.tlx.submit": {
+      "en": "Submit & finish",
+      "es": "Enviar y finalizar",
+      "fr": "Envoyer et terminer",
+      "de": "Absenden & beenden",
+      "lt": "Pateikti ir baigti",
+      "pt": "Enviar e concluir",
+      "it": "Invia e termina",
+      "no": "Send inn og avslutt",
+      "el": "Υποβολή & ολοκλήρωση"
+    },
+    "modules.pilot.tlx.intro": {
+      "en": "Please rate the workload of the task you just performed. 0 = very low, 100 = very high.",
+      "es": "Por favor, valore la carga de trabajo de la tarea que acaba de realizar. 0 = muy baja, 100 = muy alta.",
+      "fr": "Veuillez évaluer la charge de travail de la tâche que vous venez d'effectuer. 0 = très faible, 100 = très élevée.",
+      "de": "Bitte bewerten Sie die Arbeitsbelastung der gerade durchgeführten Aufgabe. 0 = sehr niedrig, 100 = sehr hoch.",
+      "lt": "Įvertinkite ką tik atliktos užduoties darbo krūvį. 0 = labai mažas, 100 = labai didelis.",
+      "pt": "Por favor, avalie a carga de trabalho da tarefa que acabou de realizar. 0 = muito baixa, 100 = muito alta.",
+      "it": "Si prega di valutare il carico di lavoro del compito appena svolto. 0 = molto basso, 100 = molto alto.",
+      "no": "Vennligst vurder arbeidsbelastningen ved oppgaven du nettopp utførte. 0 = svært lav, 100 = svært høy.",
+      "el": "Παρακαλούμε αξιολογήστε τον φόρτο εργασίας της εργασίας που μόλις εκτελέσατε. 0 = πολύ χαμηλός, 100 = πολύ υψηλός."
+    },
+    "modules.pilot.tlx.mental": {
+      "en": "Mental demand",
+      "es": "Exigencia mental",
+      "fr": "Exigence mentale",
+      "de": "Geistige Anforderung",
+      "lt": "Protinis krūvis",
+      "pt": "Exigência mental",
+      "it": "Richiesta mentale",
+      "no": "Mental belastning",
+      "el": "Νοητική απαίτηση"
+    },
+    "modules.pilot.tlx.physical": {
+      "en": "Physical demand",
+      "es": "Exigencia física",
+      "fr": "Exigence physique",
+      "de": "Körperliche Anforderung",
+      "lt": "Fizinis krūvis",
+      "pt": "Exigência física",
+      "it": "Richiesta fisica",
+      "no": "Fysisk belastning",
+      "el": "Σωματική απαίτηση"
+    },
+    "modules.pilot.tlx.temporal": {
+      "en": "Time pressure",
+      "es": "Presión temporal",
+      "fr": "Pression temporelle",
+      "de": "Zeitdruck",
+      "lt": "Laiko spaudimas",
+      "pt": "Pressão temporal",
+      "it": "Pressione temporale",
+      "no": "Tidspress",
+      "el": "Χρονική πίεση"
+    },
+    "modules.pilot.tlx.performance": {
+      "en": "Performance (low = good)",
+      "es": "Rendimiento (bajo = bueno)",
+      "fr": "Performance (faible = bon)",
+      "de": "Leistung (niedrig = gut)",
+      "lt": "Atlikimas (mažas = geras)",
+      "pt": "Desempenho (baixo = bom)",
+      "it": "Prestazioni (basso = buono)",
+      "no": "Ytelse (lav = bra)",
+      "el": "Απόδοση (χαμηλή = καλή)"
+    },
+    "modules.pilot.tlx.effort": {
+      "en": "Effort",
+      "es": "Esfuerzo",
+      "fr": "Effort",
+      "de": "Anstrengung",
+      "lt": "Pastangos",
+      "pt": "Esforço",
+      "it": "Sforzo",
+      "no": "Innsats",
+      "el": "Προσπάθεια"
+    },
+    "modules.pilot.tlx.frustration": {
+      "en": "Frustration",
+      "es": "Frustración",
+      "fr": "Frustration",
+      "de": "Frustration",
+      "lt": "Frustracija",
+      "pt": "Frustração",
+      "it": "Frustrazione",
+      "no": "Frustrasjon",
+      "el": "Απογοήτευση"
+    },
+    "modules.pilot.tlx.saved": {
+      "en": "Pilot session recorded. Thank you!",
+      "es": "Sesión piloto registrada. ¡Gracias!",
+      "fr": "Session pilote enregistrée. Merci !",
+      "de": "Pilotsitzung aufgezeichnet. Vielen Dank!",
+      "lt": "Pilotinė sesija įrašyta. Ačiū!",
+      "pt": "Sessão piloto registada. Obrigado!",
+      "it": "Sessione pilota registrata. Grazie!",
+      "no": "Pilotsesjon registrert. Takk!",
+      "el": "Η πιλοτική συνεδρία καταγράφηκε. Ευχαριστούμε!"
+    },
+    "modules.pilot.tlx.save_failed": {
+      "en": "Could not save pilot session — please notify the researcher.",
+      "es": "No se pudo guardar la sesión piloto — por favor, notifique al investigador.",
+      "fr": "Impossible d'enregistrer la session pilote — veuillez en informer le chercheur.",
+      "de": "Pilotsitzung konnte nicht gespeichert werden — bitte benachrichtigen Sie den Forscher.",
+      "lt": "Nepavyko išsaugoti pilotinės sesijos — praneškite tyrėjui.",
+      "pt": "Não foi possível guardar a sessão piloto — por favor, notifique o investigador.",
+      "it": "Impossibile salvare la sessione pilota — si prega di avvisare il ricercatore.",
+      "no": "Kunne ikke lagre pilotsesjon — vennligst varsle forskeren.",
+      "el": "Δεν ήταν δυνατή η αποθήκευση της πιλοτικής συνεδρίας — παρακαλούμε ενημερώστε τον ερευνητή."
+    }
+  }
+}
