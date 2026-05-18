@@ -459,6 +459,42 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       updateTextAreaInput(session, "rm_stakeholders", value = "")
       updateTextAreaInput(session, "rm_barriers", value = "")
 
+      # v1.16.1: bandit write-side feedback. The user's chosen
+      # Effectiveness × Feasibility IS their priority assignment. Treat
+      # it as a positive-reward signal for the arm that matches the
+      # derived priority bucket. Mirrors the warm-start's strength ×
+      # confidence heuristic, but using user-supplied UI values.
+      if (exists("load_response_bandit", mode = "function") &&
+          exists("update_response_bandit", mode = "function") &&
+          exists("build_response_context", mode = "function") &&
+          exists("save_response_bandit", mode = "function")) {
+        tryCatch({
+          eff <- toupper(as.character(input$rm_effectiveness %||% "MEDIUM"))
+          fea <- toupper(as.character(input$rm_feasibility   %||% "MEDIUM"))
+          chosen_arm <- if (eff == "HIGH" && fea == "HIGH") "high"
+                        else if (eff == "LOW" || fea == "LOW") "low"
+                        else "medium"
+          pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
+          ctx <- build_response_context(
+            target_type = "Responses",
+            effectiveness = eff,
+            feasibility = fea,
+            stakeholder_engagement = 0.5,
+            n_elements = nrow(pd$isa_data$elements %||% data.frame()),
+            n_connections = nrow(pd$isa_data$connections %||% data.frame()),
+            regional_sea = pd$metadata$regional_sea %||% "other",
+            main_issue = pd$metadata$main_issue %||% "other"
+          )
+          state <- load_response_bandit()
+          state <- update_response_bandit(state, chosen_arm, ctx, reward = 1)
+          save_response_bandit(state)
+          debug_log(sprintf("[bandit] user-chosen arm=%s recorded", chosen_arm),
+                    "RESPONSE")
+        }, error = function(e) {
+          debug_log(paste("Bandit feedback skipped:", e$message), "RESPONSE")
+        })
+      }
+
       showNotification(i18n$t("modules.response.measures.response_measure_added"), type = "message")
     })
 
@@ -578,7 +614,17 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
             if (!is.null(ctx)) {
               pred <- tryCatch(predict_response_priority(bandit_state, ctx),
                                error = function(e) NULL)
-              if (!is.null(pred)) bandit_arms[i] <- pred$arm
+              if (!is.null(pred)) {
+                # Use expected-reward best arm, NOT the UCB-best.
+                # pred$arm is UCB-optimal (which arm to *explore next* given
+                # current uncertainty), which can be the most undersampled
+                # arm rather than the most likely correct one. For a
+                # user-facing recommendation we want "best guess given what
+                # we know", which is argmax(expected_per_arm).
+                bandit_arms[i] <- names(pred$expected_per_arm)[
+                  which.max(pred$expected_per_arm)
+                ]
+              }
             }
           }
         }

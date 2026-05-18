@@ -80,16 +80,26 @@ cat(sprintf("Total: %d response-related connections\n\n", length(all_responses))
 # Map KB attributes to (priority arm, reward) tuples
 # ==============================================================================
 
-# Heuristic for "ground truth" priority:
-#   strong + confidence >= 4 + "+" polarity -> high
-#   medium + confidence == 3                -> medium
-#   weak OR confidence <= 2 OR negative pol -> low
+# Heuristic for "ground truth" priority (v1.16.1):
+#
+#   Polarity is NOT a signal of priority. In the DAPSI(W)R(M) framework, a
+#   response with polarity '-' *reduces* its target — e.g. an MPA reduces
+#   overfishing pressure, a nutrient-reduction policy reduces eutrophication.
+#   Those are typically HIGH-priority responses. The previous heuristic
+#   (which sent every polarity='-' connection to "low") was ecologically
+#   backward: it systematically downweighted the most consequential
+#   responses, biasing the bandit to recommend "low priority" for MPAs,
+#   quotas, and emission caps. See P1-1 in docs/CODEBASE_REVIEW_2026-05-18.md.
+#
+# v1.16.1 heuristic uses ONLY strength × confidence:
+#   strong  + confidence >= 4  -> high
+#   weak    OR confidence <= 2 -> low
+#   otherwise                  -> medium
 ground_truth_priority <- function(conn) {
   s <- conn$strength
   c <- conn$confidence
-  pol <- conn$polarity
-  if (s == "strong" && c >= 4 && pol == "+") return("high")
-  if (s == "weak"   || c <= 2 || pol == "-") return("low")
+  if (identical(s, "strong") && !is.na(c) && c >= 4) return("high")
+  if (identical(s, "weak")   || (!is.na(c) && c <= 2)) return("low")
   "medium"
 }
 

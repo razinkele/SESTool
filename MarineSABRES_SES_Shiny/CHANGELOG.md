@@ -5,6 +5,17 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.1] - 2026-05-18
+
+### Fixed (P1-1)
+
+- **Bandit warm-start no longer collapses every reduction-type response into "low priority".** `scripts/warm_start_response_bandit.R`'s `ground_truth_priority()` previously sent every connection with `polarity == "-"` to the `low` arm. In DAPSI(W)R(M), polarity `-` means the response REDUCES its target (e.g. MPAs reduce overfishing pressure; nutrient-reduction policies reduce eutrophication) — those are typically HIGH-priority responses, not low. The bug systematically downweighted the most consequential management interventions. New heuristic uses only strength × confidence (polarity ignored): `strong + conf ≥ 4 → high`; `weak OR conf ≤ 2 → low`; else `medium`. Re-running warm-start rebalances arm updates from 66/75/612 (high/medium/low) to 141/555/57 — a healthy distribution where each arm has enough data to converge.
+- **Bandit suggestion column in the priority table now shows the best-guess arm, not the explore-next arm.** v1.16.0 displayed `pred$arm` which is UCB-optimal (which arm to *explore* given current uncertainty). With warm-start having uneven sample sizes, UCB favoured undersampled arms — a "Strong, high-confidence" fisheries response could display as "low" because the `low` arm needed more data. Switched to `argmax(expected_per_arm)` for user-facing display; exploration logic still drives the underlying bandit state.
+
+### Added
+
+- **Bandit write-side feedback wired into response_module.R add-measure observer.** When a user adds a response measure with Effectiveness/Feasibility values, the resulting derived priority (HIGH/HIGH→high, LOW or LOW→low, else→medium) is fed back to the bandit as a positive reward via `update_response_bandit()`. State persists to `data/ml_response_bandit_state.rds`. The bandit now learns from real production sessions, not just from the KB-derived synthetic warm-start.
+
 ## [1.16.0] - 2026-05-18
 
 ### Added
