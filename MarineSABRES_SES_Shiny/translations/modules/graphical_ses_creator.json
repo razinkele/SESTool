@@ -11,6 +11,39 @@
     "el"
   ],
   "translation": {
+    "modules.graphical_ses_creator.cf_similar_models_title": {
+      "en": "Similar models also included",
+      "es": "Modelos similares también incluyeron",
+      "fr": "Modèles similaires ont aussi inclus",
+      "de": "Ähnliche Modelle enthielten ebenfalls",
+      "lt": "Panašiuose modeliuose taip pat buvo įtraukta",
+      "pt": "Modelos semelhantes também incluíram",
+      "it": "Modelli simili hanno anche incluso",
+      "no": "Lignende modeller inkluderte også",
+      "el": "Παρόμοια μοντέλα περιλάμβαναν επίσης"
+    },
+    "modules.graphical_ses_creator.cf_score_label": {
+      "en": "similarity:",
+      "es": "similitud:",
+      "fr": "similarité :",
+      "de": "Ähnlichkeit:",
+      "lt": "panašumas:",
+      "pt": "similaridade:",
+      "it": "similarità:",
+      "no": "likhet:",
+      "el": "ομοιότητα:"
+    },
+    "modules.graphical_ses_creator.cf_added_element": {
+      "en": "Added element from CF:",
+      "es": "Elemento añadido del CF:",
+      "fr": "Élément ajouté du CF :",
+      "de": "Element aus CF hinzugefügt:",
+      "lt": "Pridėtas elementas iš CF:",
+      "pt": "Elemento adicionado do CF:",
+      "it": "Elemento aggiunto da CF:",
+      "no": "Element lagt til fra CF:",
+      "el": "Προστέθηκε στοιχείο από CF:"
+    },
     "modules.graphical_ses_creator.context_wizard": {
       "en": "Context Wizard",
       "es": "Asistente de Contexto",

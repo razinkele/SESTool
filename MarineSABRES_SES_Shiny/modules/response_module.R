@@ -545,6 +545,46 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
                                 (w_f * measures$FeasScore / 3) +
                                 (w_c * measures$CostScore)
 
+      # LinUCB bandit suggestion (v1.16.0). For each measure, build the
+      # 32-dim context vector and ask the bandit which priority arm has
+      # the highest expected reward. This is a *complementary* signal next
+      # to the rule-based PriorityScore — gives the user a second opinion
+      # that learns from past sessions' accept/reject feedback.
+      bandit_arms <- character(nrow(measures))
+      if (exists("load_response_bandit", mode = "function") &&
+          exists("predict_response_priority", mode = "function") &&
+          exists("build_response_context", mode = "function")) {
+        bandit_state <- tryCatch(load_response_bandit(),
+                                 error = function(e) NULL)
+        if (!is.null(bandit_state)) {
+          # Pull current SES counts from project_data_reactive if available
+          pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
+          n_elements <- nrow(pd$isa_data$elements %||% data.frame())
+          n_conns    <- nrow(pd$isa_data$connections %||% data.frame())
+          regional   <- pd$metadata$regional_sea %||% "other"
+          issue      <- pd$metadata$main_issue %||% "other"
+          for (i in seq_len(nrow(measures))) {
+            ctx <- tryCatch(
+              build_response_context(
+                target_type = "Responses",
+                effectiveness = measures$Effectiveness[i],
+                feasibility = measures$Feasibility[i],
+                stakeholder_engagement = 0.5,
+                n_elements = n_elements,
+                n_connections = n_conns,
+                regional_sea = regional,
+                main_issue = issue
+              ), error = function(e) NULL)
+            if (!is.null(ctx)) {
+              pred <- tryCatch(predict_response_priority(bandit_state, ctx),
+                               error = function(e) NULL)
+              if (!is.null(pred)) bandit_arms[i] <- pred$arm
+            }
+          }
+        }
+      }
+      measures$BanditSuggestion <- bandit_arms
+
       measures <- measures[order(-measures$PriorityScore), ]
       measures$Rank <- 1:nrow(measures)
 
@@ -552,11 +592,16 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       # (scoring already done above against the stable keys).
       measures <- translate_levels_for_display(measures)
 
-      datatable(measures[, c("Rank", "ID", "Name", "Type", "Target",
-                            "Effectiveness", "Feasibility", "Cost",
-                            "PriorityScore", "Status")],
+      visible_cols <- c("Rank", "ID", "Name", "Type", "Target",
+                        "Effectiveness", "Feasibility", "Cost",
+                        "PriorityScore", "BanditSuggestion", "Status")
+      visible_cols <- intersect(visible_cols, names(measures))
+
+      datatable(measures[, visible_cols, drop = FALSE],
                options = list(pageLength = 10, scrollX = TRUE),
-               rownames = FALSE) %>%
+               rownames = FALSE,
+               colnames = c(setNames(visible_cols, visible_cols),
+                            BanditSuggestion = i18n$t("modules.response.measures.bandit_suggestion") %||% "AI suggestion")) %>%
         formatRound("PriorityScore", 3)
     })
 

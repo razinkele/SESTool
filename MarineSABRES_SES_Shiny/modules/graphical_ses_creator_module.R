@@ -967,6 +967,84 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       }
     })
 
+    # v1.16.0: collaborative-filter "add this suggestion" observer.
+    # When the user clicks an item in the "Similar models also included"
+    # panel, we add it as a new node. Type prediction uses the BERT
+    # classifier when available; falls back to "Activities" with a
+    # notification so the user can re-classify after.
+    observeEvent(input$cf_add_item, {
+      suggested_name <- as.character(input$cf_add_item)
+      if (is.null(suggested_name) || nchar(trimws(suggested_name)) == 0) return()
+
+      # Predict type via BERT (graceful fallback to "Activities")
+      predicted_type <- "Activities"
+      bert_confidence <- NA_real_
+      if (exists("predict_element_category", mode = "function") &&
+          file.exists("models/element_classifier_best.pt")) {
+        pred <- tryCatch(predict_element_category(suggested_name, top_k = 1L),
+                         error = function(e) NULL)
+        if (!is.null(pred) && nrow(pred) > 0) {
+          predicted_type <- pred$category[1]
+          bert_confidence <- pred$probability[1]
+        }
+      }
+
+      # Build a node row matching the schema of rv$network_nodes
+      new_id <- paste0("CF_", as.integer(Sys.time()), "_",
+                       sprintf("%03d", sample.int(999, 1)))
+      new_node <- data.frame(
+        id = new_id,
+        name = suggested_name,
+        type = predicted_type,
+        label = suggested_name,
+        group = predicted_type,
+        color.background = ELEMENT_COLORS[[predicted_type]] %||% "#888888",
+        color.border = "#444444",
+        borderWidth = 2,
+        borderWidthSelected = 4,
+        size = 24,
+        font.size = 14,
+        font.color = "#ffffff",
+        is_ghost = FALSE,
+        title = paste0("<b>", htmltools::htmlEscape(suggested_name), "</b><br>",
+                       i18n$t("modules.graphical_ses_creator.node_tooltip_type") %||% "Type:",
+                       " ", htmltools::htmlEscape(predicted_type),
+                       if (!is.na(bert_confidence))
+                         sprintf("<br>BERT confidence: %.2f", bert_confidence)
+                       else ""),
+        hidden = FALSE,
+        physics = TRUE,
+        stringsAsFactors = FALSE
+      )
+
+      # Align columns with existing network_nodes
+      common_cols <- intersect(names(rv$network_nodes), names(new_node))
+      if (length(common_cols) == 0L) {
+        rv$network_nodes <- new_node
+      } else {
+        missing_in_new <- setdiff(names(rv$network_nodes), names(new_node))
+        for (col in missing_in_new) new_node[[col]] <- NA
+        new_node <- new_node[, names(rv$network_nodes), drop = FALSE]
+        rv$network_nodes <- rbind(rv$network_nodes, new_node)
+      }
+
+      save_to_history()
+      showNotification(
+        sprintf(
+          "%s '%s' (%s%s)",
+          i18n$t("modules.graphical_ses_creator.cf_added_element") %||% "Added element from CF:",
+          suggested_name,
+          predicted_type,
+          if (!is.na(bert_confidence))
+            sprintf(", BERT p=%.2f", bert_confidence) else ""
+        ),
+        type = "message", duration = 5
+      )
+      debug_log(sprintf("[CF] added '%s' as %s (BERT p=%.3f)",
+                        suggested_name, predicted_type,
+                        bert_confidence %||% NA_real_), "GRAPHICAL SES")
+    })
+
     accept_ghost_node <- function(ghost_id) {
       # Find ghost node
       ghost_node <- rv$ghost_nodes[rv$ghost_nodes$id == ghost_id, ]
@@ -1152,10 +1230,58 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
     output$details_content <- renderUI({
       if (is.null(rv$selected_node_id)) {
-        div(class = "empty-state",
-          div(class = "empty-icon", icon("mouse-pointer")),
-          div(class = "empty-text", i18n$t("modules.graphical_ses_creator.no_node_selected")),
-          div(class = "empty-hint", i18n$t("modules.graphical_ses_creator.click_node_for_details"))
+        # No node selected: show empty-state hint + (v1.16.0) CF
+        # recommendations driven by what other models with overlapping
+        # elements have also included. Only renders when the network has
+        # ≥3 elements (cold start protection — CF needs seed items).
+        cf_section <- NULL
+        if (nrow(rv$network_nodes) >= 3 &&
+            exists("load_cf_state", mode = "function") &&
+            exists("recommend_cf_items", mode = "function")) {
+          cf_state <- tryCatch(load_cf_state(), error = function(e) NULL)
+          if (!is.null(cf_state)) {
+            recs <- tryCatch(
+              recommend_cf_items(cf_state,
+                                 seed_items = rv$network_nodes$name,
+                                 k = 5L),
+              error = function(e) NULL
+            )
+            if (!is.null(recs) && nrow(recs) > 0) {
+              cf_section <- tagList(
+                hr(),
+                h5(icon("users"), " ",
+                   i18n$t("modules.graphical_ses_creator.cf_similar_models_title") %||%
+                     "Similar models also included"),
+                div(style = "max-height: 280px; overflow-y: auto;",
+                  lapply(seq_len(nrow(recs)), function(i) {
+                    div(class = "ghost-suggestion",
+                      div(
+                        onclick = sprintf(
+                          "Shiny.setInputValue('%s', '%s', {priority: 'event'});",
+                          ns("cf_add_item"), recs$item[i]),
+                        div(class = "suggestion-name", recs$item[i]),
+                        div(class = "suggestion-type",
+                            sprintf("%s %.2f",
+                                    i18n$t("modules.graphical_ses_creator.cf_score_label") %||% "similarity:",
+                                    recs$score[i])),
+                        div(class = "suggestion-connection",
+                            icon("arrow-right"), " ",
+                            i18n$t("modules.graphical_ses_creator.click_to_add"))
+                      )
+                    )
+                  })
+                )
+              )
+            }
+          }
+        }
+        tagList(
+          div(class = "empty-state",
+            div(class = "empty-icon", icon("mouse-pointer")),
+            div(class = "empty-text", i18n$t("modules.graphical_ses_creator.no_node_selected")),
+            div(class = "empty-hint", i18n$t("modules.graphical_ses_creator.click_node_for_details"))
+          ),
+          cf_section
         )
       } else {
         # Show node details

@@ -5,6 +5,23 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.0] - 2026-05-18
+
+### Added
+
+- **LinUCB contextual bandit surfaces in the response-measures priority table.** `modules/response_module.R` `priority_table` renderer now adds a `BanditSuggestion` column showing each measure's predicted priority arm (`high` / `medium` / `low`) from the warm-started LinUCB bandit. Predictions are computed from a 32-dim context vector built per-row via `build_response_context()`. The bandit lives in `functions/ml_response_bandit.R`; state at `data/ml_response_bandit_state.rds` (753 KB-warm-start updates). Write-side feedback loop (update_response_bandit on user accept/reject) deferred to v1.17.0.
+- **Collaborative-filter recommendations in the Graphical SES Creator.** `modules/graphical_ses_creator_module.R` details panel now renders a "Similar models also included" section whenever the user has ≥3 elements in their network. Top-5 recommendations come from truncated-SVD CF (`functions/ml_collaborative_filter.R`) on the 44 × 1458 user × item matrix warm-started from KB contexts + production templates. Clicking a suggestion adds it as a new node; type is predicted via the v1.15.0 BERT classifier (fallback "Activities" if the classifier is unavailable). Cold-start protection: the panel doesn't render below 3 seed items.
+- **3 new translation keys × 9 languages for the CF UI** (`modules.graphical_ses_creator.cf_*`) and **1 new key × 9 languages for the bandit suggestion column** (`modules.response.measures.bandit_suggestion`).
+
+### Fixed
+
+- **`functions/ml_response_bandit.R` and `functions/ml_collaborative_filter.R` are now sourced at startup.** Both files were never wired into `global.R`'s ML startup chain in v1.15.0 — `load_response_bandit` and `load_cf_state` were undefined at runtime even though state files shipped. v1.16.0 explicitly sources both after the BERT classifier load.
+- **`safe_readRDS` was undefined when `functions/ml_ensemble.R` loaded.** `functions/utils.R` was sourced at line ~911 of `global.R`, after the ML block at lines 720-790 that needs it. Pre-sourced `utils.R` inside the ML block before `ml_ensemble.R`. Ensemble predictions are now enabled in production instead of falling back to single-model.
+
+### Notes
+
+- All 8 ML components from the v3 abstract are now consultable from the live UI (not just available as library code). #1 base NN, #2 GraphSAGE GNN, #3 transfer-learning checkpoints (fixed in v1.15.x patch d9239d2), #4 BERT classifier (wired in v1.15.0 P0-8), #5 LinUCB bandit (this release), #6 ensemble + active learning (fixed in this release), #7 collaborative filter (this release), #8 transformer embeddings.
+
 ## [1.15.0] - 2026-05-17
 
 ### Added (Phase 3: closes the original ESP 2026 abstract's 8-component claim)

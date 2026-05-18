@@ -11,6 +11,17 @@
     "el"
   ],
   "translation": {
+    "modules.response.measures.bandit_suggestion": {
+      "en": "AI suggestion",
+      "es": "Sugerencia IA",
+      "fr": "Suggestion IA",
+      "de": "KI-Vorschlag",
+      "lt": "DI pasiūlymas",
+      "pt": "Sugestão IA",
+      "it": "Suggerimento IA",
+      "no": "AI-forslag",
+      "el": "Πρόταση AI"
+    },
     "modules.response.measures.title": {
       "en": "Response Measures (R & M)",
       "es": "Medidas de Respuesta (R y M)",
