@@ -173,7 +173,7 @@ MarineSABRES_SES_Shiny/
 ├── constants.R               # DAPSI(W)R(M) elements, colors, shapes
 ├── VERSION, VERSION_INFO.json
 ├── DESCRIPTION               # Package manifest
-├── modules/                  # 45 Shiny modules (incl. pilot_study_module.R)
+├── modules/                  # 38 root + 9 sub (modules/ai_isa/), incl. pilot_study_module.R
 ├── functions/                # Helpers
 │   ├── ml_models.R                  # Base predictor + GraphSAGE
 │   ├── ml_text_embeddings.R         # 5 embedding strategies
@@ -191,7 +191,7 @@ MarineSABRES_SES_Shiny/
 ├── models/                   # Trained PyTorch checkpoints (gitignored except checksums)
 ├── docs/                     # Architecture, methods, validation, pilot, KB bibliography
 ├── www/                      # Static assets (CSS, images, user-facing markdown guides)
-├── tests/testthat/           # 56+ test files
+├── tests/testthat/           # 92 test files (~7000 assertions)
 └── deployment/               # Deploy scripts, Dockerfile, pre-deploy guard
 ```
 
@@ -260,7 +260,7 @@ Rscript -e "testthat::test_file('tests/testthat/test-i18n-enforcement.R')"
 Rscript tests/run_json_loading_tests.R                       # standalone JSON loader tests
 ```
 
-56+ test files including i18n enforcement (CI), module signature contracts, network analysis, JSON loading, integration, visual regression, and load tests.
+92 test files (~7000 assertions) including i18n enforcement (CI), module signature contracts, network analysis, JSON loading, integration, visual regression, and load tests. Six of the 21 `test-*-module.R` files are currently signature-only (assert function exists but don't exercise behavior — flagged for rewrite in v1.17.x).
 
 ### Code conventions
 

@@ -349,21 +349,51 @@ discover_models <- function(models_dir = "models", pattern = "\\.pt$") {
     model_id <- gsub("_v?\\d+\\.\\d+\\.?\\d*", "", gsub("\\.pt$", "", filename))
     model_id <- gsub("_best$|_final$", "", model_id)
 
-    # Try to detect input dimensions
+    # Try to detect input dimensions. Handles three checkpoint formats:
+    #   1. full nn_module — read input dim from model$parameters[[1]]
+    #   2. state_dict wrapper list with $model_state_dict
+    #   3. raw state_dict list (named tensors, first one's shape[2] = dim)
+    # P2 fix: previously, formats 2 and 3 fell through to the catch-all
+    # default (358) silently — v2 checkpoints (314-dim) and any future
+    # state_dict-saved file would be mis-registered as 358-dim, causing
+    # confused inference. Now we explicitly inspect the loaded object,
+    # warn() on any case we can't interpret, and pick the right dim.
     input_dim <- tryCatch({
-      if (requireNamespace("torch", quietly = TRUE)) {
-        model <- torch::torch_load(file_path)
-        # Try to get input dim from model
-        if (!is.null(model$parameters)) {
-          first_layer <- model$parameters[[1]]
-          if (!is.null(dim(first_layer))) dim(first_layer)[2] else 358
-        } else {
-          358  # Default
-        }
-      } else {
+      if (!requireNamespace("torch", quietly = TRUE)) {
         358
+      } else {
+        loaded <- torch::torch_load(file_path)
+        if (inherits(loaded, "nn_module") &&
+            !is.null(loaded$parameters) &&
+            length(loaded$parameters) > 0) {
+          fl <- loaded$parameters[[1]]
+          if (!is.null(dim(fl)) && length(dim(fl)) >= 2L) dim(fl)[2] else 358
+        } else if (is.list(loaded) && !is.null(loaded$model_state_dict)) {
+          # state_dict wrapper format
+          sd <- loaded$model_state_dict
+          first_tensor <- sd[[1]]
+          if (inherits(first_tensor, "torch_tensor") &&
+              length(first_tensor$shape) >= 2L) {
+            as.integer(first_tensor$shape[[2]])
+          } else 358
+        } else if (is.list(loaded) && length(loaded) > 0 &&
+                   inherits(loaded[[1]], "torch_tensor")) {
+          # raw state_dict (a list of named torch_tensors)
+          fl <- loaded[[1]]
+          if (length(fl$shape) >= 2L) as.integer(fl$shape[[2]]) else 358
+        } else {
+          warning(sprintf(
+            "Could not infer input_dim from checkpoint %s (class=%s) — falling back to 358. If this is a v2 (314-dim) checkpoint or any non-default architecture, register it explicitly via register_model() rather than relying on auto-discovery.",
+            filename, paste(class(loaded), collapse = "/")))
+          358
+        }
       }
-    }, error = function(e) 358)
+    }, error = function(e) {
+      warning(sprintf(
+        "Auto-discovery error reading %s: %s. Registering with default input_dim=358.",
+        filename, conditionMessage(e)))
+      358
+    })
 
     # Register if not already registered
     existing <- get_registered_model(model_id, version)

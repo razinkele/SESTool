@@ -77,7 +77,7 @@ Rscript scripts/add_translation.R
 │   └── ARCHITECTURE.md   # Architecture Decision Records
 ├── scripts/
 │   └── build_offshore_wind_kb.py  # Reproducible KB builder from BibTeX (187 papers)
-└── tests/testthat/       # 92 test files, 6768 assertions passing (21/21 *_module.R covered)
+└── tests/testthat/       # 92 test files, ~7000 assertions passing (21/22 *_module.R covered; pilot_study_module pending)
 ```
 
 ## i18n System (CRITICAL)
@@ -220,7 +220,7 @@ tryCatch({
 ## Testing
 
 - **Unit tests**: `test-global-utils.R`, `test-data-structure.R`
-- **Module signature-contract tests**: `test-<module-name>-module.R` for every `modules/*_module.R` file (21/21 covered). Each asserts UI returns valid shiny tags, namespaces IDs, server function exists with the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` signature.
+- **Module signature-contract tests**: `test-<module-name>-module.R` for 21 of the 22 `modules/*_module.R` files (pilot_study_module.R is a v1.15.0 addition without a signature test yet). Each asserts UI returns valid shiny tags, namespaces IDs, server function exists with the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` signature. **Note:** 6 of these (entry-point, feedback-admin, recent-projects, template-ses, export-reports, prepare-report) are signature-only — they would pass even if the module body were replaced with `function(...) NULL`. v1.17.x backlog item to rewrite them as behavior-exercising tests.
 - **Module integration tests**: `test-modules.R` (pre-existing `testServer()` exercises)
 - **JSON loading**: `test-json-project-loading.R` (standalone runner: `tests/run_json_loading_tests.R`)
 - **Integration**: `test-integration.R`

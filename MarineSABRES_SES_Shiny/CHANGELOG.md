@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.5] - 2026-05-18
+
+### Fixed (P2 cluster)
+
+- **`functions/ml_model_registry.R::register_model_directory` no longer silently mis-tags v2/state_dict checkpoints as 358-dim.** The auto-discovery loop torch-loaded each `.pt` file and read `dim(model$parameters[[1]])[2]`, which works for full-`nn_module` checkpoints but silently falls through to the catch-all default (358) for state_dict-format files. v2 checkpoints (314-dim) and any future format-drifted file would be registered with the wrong input_dim. Now the loader explicitly inspects `inherits(loaded, "nn_module")`, then `is.list(loaded) && !is.null(loaded$model_state_dict)`, then raw state_dict (`list of torch_tensors`), and `warning()`s on any unrecognized case so the operator notices.
+- **`tests/testthat/test-entry-point-module.R` rewritten from signature-only to behavior-exercising.** The old version had 6 tests, all gated on `skip_if_not(exists(...))` and asserting only that the module's UI/server functions existed with the right parameter names. A working module body replaced with `function(...) NULL` would have passed every one. The rewrite drives the actual state machine via `testServer()`: welcome → start_guided → ep0_role_click toggle → ep0_continue → ep1_need_click → ep1_continue → start_over → restart. 12 tests, 0 failures. This is the pattern the remaining 5 brittle module tests (feedback-admin, recent-projects, template-ses, export-reports, prepare-report) should follow in v1.17.x.
+- **README.md and CLAUDE.md count drift fixed.** README "45 Shiny modules" → "38 root + 9 sub". README "56+ test files" → "92 test files (~7000 assertions)". CLAUDE.md "21/21 *_module.R covered" → "21/22 (pilot_study_module pending)". CLAUDE.md "6768 assertions" → "~7000". Added an explicit note in both docs that 6 of the 21 `test-*-module.R` files are signature-only and flagged for behavior rewrite.
+
 ## [1.16.4] - 2026-05-18
 
 ### Fixed (P1-3)
