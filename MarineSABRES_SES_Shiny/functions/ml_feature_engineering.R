@@ -216,10 +216,18 @@ encode_focal_issues <- function(main_issues) {
     idx <- match(issue, FOCAL_ISSUES)
 
     if (is.na(idx)) {
-      # Try partial matching
+      # P1-3: Partial matching now sets a SINGLE bit (matches[1]) instead
+      # of all matches, to stay consistent with encode_ecosystem_types'
+      # policy. The previous implementation set multiple bits on partial
+      # match — e.g. input "fishing" set bits for every FOCAL_ISSUES
+      # entry containing "fishing", while a direct match like
+      # "Overfishing" set exactly one bit. That divergence produced
+      # different feature vectors at training time (KB has clean
+      # direct-match strings) vs inference time (user-typed free text
+      # tends to be partial-match), miscalibrating predictions.
       matches <- grep(issue, FOCAL_ISSUES, ignore.case = TRUE, value = FALSE)
       if (length(matches) > 0) {
-        encoding[matches] <- 1  # Can match multiple
+        encoding[matches[1]] <- 1
       } else {
         encoding[match("Other", FOCAL_ISSUES)] <- 1
       }

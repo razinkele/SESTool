@@ -5,6 +5,12 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.4] - 2026-05-18
+
+### Fixed (P1-3)
+
+- **`functions/ml_feature_engineering.R::encode_focal_issues` now sets a single bit on partial match, consistent with `encode_ecosystem_types`.** The previous implementation set multiple bits — every `FOCAL_ISSUES` entry whose name contained the user's input got a `1` — while direct matches set exactly one bit. This produced different feature vectors for semantically similar inputs ("Overfishing" → 1 bit; "fishing" → many bits) and miscalibrated inference whenever a user typed free-text issue strings that hit the partial-match branch instead of the direct-match branch. Now: partial match picks `matches[1]` (first hit), exactly like `encode_ecosystem_types`. The fix doesn't require retraining existing checkpoints because training data (KB-derived) never hit the partial-match branch — the model was always trained on single-bit encodings; the fix only brings inference into alignment.
+
 ## [1.16.3] - 2026-05-18
 
 ### Fixed (P1 + P2 from codebase review)
