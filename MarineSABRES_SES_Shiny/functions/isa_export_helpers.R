@@ -40,6 +40,29 @@ write_isa_element_sheets <- function(wb, isa_data, include_adjacency = TRUE) {
     }
   }
 
+  # N:M redesign: user_edited side sheets for audit trail.
+  # Detect sheet-name collisions (openxlsx 31-char limit) and add suffix.
+  if (include_adjacency && !is.null(isa_data$user_edited_matrices)) {
+    used_sheet_names <- names(wb)
+    for (mat_name in names(isa_data$user_edited_matrices)) {
+      mat <- isa_data$user_edited_matrices[[mat_name]]
+      if (is.null(mat)) next
+      base_name <- substr(paste0(mat_name, "_user_edited"), 1, 31)
+      sheet_name <- base_name
+      suffix <- 1
+      while (sheet_name %in% used_sheet_names) {
+        suffix_str <- paste0("_", suffix)
+        keep <- 31 - nchar(suffix_str)
+        sheet_name <- paste0(substr(base_name, 1, keep), suffix_str)
+        suffix <- suffix + 1
+        if (suffix > 99) break
+      }
+      addWorksheet(wb, sheet_name)
+      writeData(wb, sheet_name, as.data.frame(mat), rowNames = TRUE)
+      used_sheet_names <- c(used_sheet_names, sheet_name)
+    }
+  }
+
   invisible(wb)
 }
 

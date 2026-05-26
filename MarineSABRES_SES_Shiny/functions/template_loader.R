@@ -230,7 +230,7 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
 .build_template_matrices <- function(elems, connections) {
   matrices <- list()
   if (nrow(elems$drivers) == 0 || nrow(elems$activities) == 0 || length(connections) == 0) {
-    return(matrices)
+    return(list(matrices = matrices, user_edited_matrices = list()))
   }
 
   # Core DAPSI(W)R chain
@@ -347,7 +347,16 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
     }
   }
 
-  matrices
+  # N:M redesign: any non-empty cell in a template-built matrix is user-
+  # intentional. Flag it so element-form save_ex* won't clobber via
+  # rebuild_matrix_from_linked.
+  user_edited_matrices <- lapply(matrices, function(m) {
+    if (is.null(m)) return(NULL)
+    matrix(nzchar(m) & !is.na(m), nrow = nrow(m), ncol = ncol(m),
+           dimnames = dimnames(m))
+  })
+
+  list(matrices = matrices, user_edited_matrices = user_edited_matrices)
 }
 
 #' Determine template category from metadata
@@ -424,7 +433,9 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
 
     # 3. Build adjacency matrices
     connections <- json_data$connections %||% list()
-    adjacency_matrices <- .build_template_matrices(elems, connections)
+    matrices_result <- .build_template_matrices(elems, connections)
+    adjacency_matrices <- matrices_result$matrices
+    user_edited_matrices_result <- matrices_result$user_edited_matrices
 
     # 4. Determine category and icon
     category <- .determine_template_category(json_data)
@@ -450,7 +461,8 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
       goods_benefits = elems$goods_benefits,
       responses = elems$responses,
       connections = connections,
-      adjacency_matrices = adjacency_matrices
+      adjacency_matrices = adjacency_matrices,
+      user_edited_matrices = user_edited_matrices_result
     )
   }, error = function(e) {
     log_warning("TEMPLATE", paste("Error loading template from", json_path, ":", e$message))

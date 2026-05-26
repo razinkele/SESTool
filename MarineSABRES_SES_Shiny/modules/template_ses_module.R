@@ -51,8 +51,8 @@ source(get_project_file("functions/template_loader.R"), local = TRUE)
 # ============================================================================
 
 template_ses_ui <- function(id, i18n) {
-  ns <- NS(id)
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+  ns <- NS(id)
 
   fluidPage(
     # Custom CSS
@@ -809,6 +809,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       project_data$data$isa_data$goods_benefits <- template$goods_benefits
       project_data$data$isa_data$responses <- template$responses
       project_data$data$isa_data$adjacency_matrices <- template$adjacency_matrices
+      project_data$data$isa_data$user_edited_matrices <- template$user_edited_matrices %||% list()
 
       # Update metadata
       project_data$data$metadata$template_used <- i18n$t(template$name_key)
@@ -1074,6 +1075,10 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       project_data$data$isa_data$goods_benefits <- template$goods_benefits
       project_data$data$isa_data$responses <- template$responses
 
+      # Initialize user_edited_matrices tracking (Task 11: template_loader builds it)
+      # Note: We will overwrite this after connection review, but initialize here for safety
+      project_data$data$isa_data$user_edited_matrices <- template$user_edited_matrices %||% list()
+
       # Rebuild adjacency matrices from approved connections
       # Initialize empty matrices with IDs as dimnames for robust assignment
       # Matrix naming convention: from_to (e.g., d_a = drivers to activities)
@@ -1105,6 +1110,10 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
                     dimnames = list(template$responses$ID, template$pressures$ID))
       )
 
+      # Initialize user_edited_matrices tracking (Task 10: lazy-init on first touch)
+      user_edited_matrices <- project_data$data$isa_data$user_edited_matrices
+      if (is.null(user_edited_matrices)) user_edited_matrices <- list()
+
       # Deep diagnostics: print number and structure of connections and matrix names
       debug_log(sprintf("Number of final connections: %d", length(final_connections)), "TEMPLATE-CONN")
       if (length(final_connections) > 0) {
@@ -1135,6 +1144,15 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
           mat <- adj_matrices[[matrix_name]]
           if (!is.na(from_id) && !is.na(to_id) && from_id %in% rownames(mat) && to_id %in% colnames(mat)) {
             adj_matrices[[matrix_name]][from_id, to_id] <- value
+            # N:M redesign: flag this cell user_edited (template defaults
+            # are user-intentional). Lazy-init the slot on first touch.
+            if (is.null(user_edited_matrices[[matrix_name]])) {
+              user_edited_matrices[[matrix_name]] <- matrix(
+                FALSE, nrow = nrow(mat), ncol = ncol(mat),
+                dimnames = dimnames(mat)
+              )
+            }
+            user_edited_matrices[[matrix_name]][from_id, to_id] <- TRUE
             assigned <- TRUE
             break
           }
@@ -1145,6 +1163,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       }
 
       project_data$data$isa_data$adjacency_matrices <- adj_matrices
+      project_data$data$isa_data$user_edited_matrices <- user_edited_matrices
 
       # Update metadata
       project_data$data$metadata$template_used <- i18n$t(template$name_key)

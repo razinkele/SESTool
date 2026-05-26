@@ -643,6 +643,10 @@ sync_cld_to_isa_data <- function(project_data) {
 
   isa <- project_data$data$isa_data %||% list()
 
+  # N:M redesign: lazy-init user_edited from isa, populate it alongside adj
+  user_edited <- isa$user_edited_matrices
+  if (is.null(user_edited)) user_edited <- list()
+
   # Rebuild each element-type data frame from CLD nodes of that group.
   # Preserve indicator/description metadata by name-matching against the
   # pre-sync isa_data where possible.
@@ -773,6 +777,16 @@ sync_cld_to_isa_data <- function(project_data) {
         }
       }
       adj[[mat_name]][from_id, to_id] <- pol
+
+      # N:M redesign: flag this cell user_edited (CLD-drawn edges are
+      # user-intentional). Lazy-init the slot on first touch.
+      if (is.null(user_edited[[mat_name]])) {
+        user_edited[[mat_name]] <- matrix(
+          FALSE, nrow = nrow(adj[[mat_name]]), ncol = ncol(adj[[mat_name]]),
+          dimnames = dimnames(adj[[mat_name]])
+        )
+      }
+      user_edited[[mat_name]][from_id, to_id] <- TRUE
     }
   }
 
@@ -803,6 +817,7 @@ sync_cld_to_isa_data <- function(project_data) {
   }
 
   isa$adjacency_matrices <- adj
+  isa$user_edited_matrices <- user_edited
   project_data$data$isa_data <- isa
   project_data$last_modified <- Sys.time()
   project_data

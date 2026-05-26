@@ -158,6 +158,11 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
         load_feedback_log(log_path),
         error = function(e) {
           debug_log(paste("feedback_admin: load error:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_feedback_admin_load"),
+            type = "error",
+            duration = 8
+          )
           data.frame(
             line_num = integer(0), type = character(0), title = character(0),
             description = character(0), steps = character(0),
@@ -299,6 +304,41 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
         stringsAsFactors = FALSE
       )
 
+      # 2026-05-25: Status badge \u2014 missing resolution_status defaults to "open".
+      status_raw <- if ("resolution_status" %in% names(df)) {
+        ifelse(is.na(df$resolution_status) | !nzchar(df$resolution_status), "open",
+               as.character(df$resolution_status))
+      } else {
+        rep("open", nrow(df))
+      }
+      status_html <- ifelse(status_raw == "fixed",
+        paste0('<span style="background-color:#28a745;color:white;padding:3px 8px;border-radius:3px;font-weight:bold;"><i class="fa fa-check"></i> ',
+               htmltools::htmlEscape(i18n$t("modules.feedback_admin.status_resolved")),
+               '</span>'),
+        paste0('<span style="background-color:#ffc107;color:#212529;padding:3px 8px;border-radius:3px;font-weight:bold;"><i class="fa fa-circle"></i> ',
+               htmltools::htmlEscape(i18n$t("modules.feedback_admin.status_open")),
+               '</span>')
+      )
+
+      # 2026-05-25: Action column \u2014 Mark Resolved (open) or Reopen (fixed).
+      ns_resolve <- ns("resolve_btn")
+      ns_reopen  <- ns("reopen_btn")
+      action_html <- ifelse(status_raw == "fixed",
+        sprintf(
+          '<button class="btn btn-xs btn-outline-secondary" onclick="Shiny.setInputValue(\'%s\', {line: %d, rand: Math.random()}, {priority: \'event\'})"><i class="fa fa-undo"></i> %s</button>',
+          ns_reopen, df$line_num,
+          htmltools::htmlEscape(i18n$t("modules.feedback_admin.reopen_btn"))
+        ),
+        sprintf(
+          '<button class="btn btn-xs btn-success" onclick="Shiny.setInputValue(\'%s\', {line: %d, rand: Math.random()}, {priority: \'event\'})"><i class="fa fa-check-circle"></i> %s</button>',
+          ns_resolve, df$line_num,
+          htmltools::htmlEscape(i18n$t("modules.feedback_admin.mark_resolved_btn"))
+        )
+      )
+
+      disp$Status <- status_html
+      disp$Action <- action_html
+
       DT::datatable(
         disp,
         colnames    = c(
@@ -306,7 +346,9 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           i18n$t("modules.feedback_admin.col_type"),
           i18n$t("modules.feedback_admin.col_title"),
           i18n$t("modules.feedback_admin.col_description"),
-          i18n$t("modules.feedback_admin.col_github")
+          i18n$t("modules.feedback_admin.col_github"),
+          i18n$t("modules.feedback_admin.col_status"),
+          i18n$t("modules.feedback_admin.col_action")
         ),
         escape      = FALSE,
         selection   = "single",
@@ -319,6 +361,107 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
         )
       )
     })
+
+    # ------------------------------------------------------------------
+    # Mark Resolved / Reopen handlers (2026-05-25)
+    # ------------------------------------------------------------------
+    observeEvent(input$resolve_btn, {
+      req(!is.null(input$resolve_btn$line))
+      line_num <- as.integer(input$resolve_btn$line)
+      rv$pending_resolve_line <- line_num
+      df <- rv$feedback_df
+      title_preview <- if (!is.null(df)) {
+        idx <- which(df$line_num == line_num)
+        if (length(idx) > 0L) df$title[idx[1]] else paste0("line ", line_num)
+      } else {
+        paste0("line ", line_num)
+      }
+      showModal(modalDialog(
+        title = tagList(
+          tags$i(class = "fa fa-check-circle", style = "color:#28a745;margin-right:8px;"),
+          i18n$t("modules.feedback_admin.resolve_modal_title")
+        ),
+        tags$p(tags$strong(i18n$t("modules.feedback_admin.resolve_modal_report_label")),
+               " ", htmltools::htmlEscape(title_preview)),
+        textAreaInput(
+          ns("resolve_note"),
+          label = i18n$t("modules.feedback_admin.resolve_note_label"),
+          placeholder = i18n$t("modules.feedback_admin.resolve_note_placeholder"),
+          rows = 3, width = "100%"
+        ),
+        textInput(
+          ns("resolve_version"),
+          label = i18n$t("modules.feedback_admin.resolved_version_label"),
+          value = tryCatch(
+            if (exists("APP_VERSION")) APP_VERSION else "",
+            error = function(e) ""
+          ),
+          placeholder = "1.13.0",
+          width = "100%"
+        ),
+        footer = tagList(
+          modalButton(i18n$t("common.buttons.cancel")),
+          actionButton(ns("confirm_resolve"),
+                       label = tagList(
+                         tags$i(class = "fa fa-check"), " ",
+                         i18n$t("modules.feedback_admin.confirm_resolve_btn")
+                       ),
+                       class = "btn-success")
+        ),
+        easyClose = TRUE,
+        size = "m"
+      ))
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$confirm_resolve, {
+      line_num <- rv$pending_resolve_line
+      req(!is.null(line_num))
+      removeModal()
+      note <- input$resolve_note %||% ""
+      version <- input$resolve_version %||% ""
+      success <- tryCatch(
+        mark_as_resolved(log_path, line_num = line_num,
+                         resolution_note = note,
+                         resolved_app_version = version),
+        error = function(e) {
+          debug_log(paste("feedback_admin resolve error:", e$message), "ERROR")
+          FALSE
+        }
+      )
+      if (isTRUE(success)) {
+        showNotification(i18n$t("modules.feedback_admin.marked_resolved"),
+                         type = "message", duration = 4)
+        df <- tryCatch(load_feedback_log(log_path),
+                       error = function(e) rv$feedback_df)
+        rv$feedback_df <- df
+      } else {
+        showNotification(i18n$t("modules.feedback_admin.resolve_error"),
+                         type = "error", duration = 6)
+      }
+      rv$pending_resolve_line <- NULL
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$reopen_btn, {
+      req(!is.null(input$reopen_btn$line))
+      line_num <- as.integer(input$reopen_btn$line)
+      success <- tryCatch(
+        mark_as_reopened(log_path, line_num = line_num),
+        error = function(e) {
+          debug_log(paste("feedback_admin reopen error:", e$message), "ERROR")
+          FALSE
+        }
+      )
+      if (isTRUE(success)) {
+        showNotification(i18n$t("modules.feedback_admin.marked_reopened"),
+                         type = "message", duration = 4)
+        df <- tryCatch(load_feedback_log(log_path),
+                       error = function(e) rv$feedback_df)
+        rv$feedback_df <- df
+      } else {
+        showNotification(i18n$t("modules.feedback_admin.reopen_error"),
+                         type = "error", duration = 6)
+      }
+    }, ignoreInit = TRUE)
 
     # ------------------------------------------------------------------
     # Row click -> open detail modal
@@ -392,6 +535,11 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
         load_feedback_log(log_path),
         error = function(e) {
           debug_log(paste("feedback_admin recalculate: load error:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_feedback_admin_load"),
+            type = "error",
+            duration = 8
+          )
           rv$feedback_df
         }
       )

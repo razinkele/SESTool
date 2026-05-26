@@ -1111,6 +1111,204 @@
       "no": "lagrer prosjekt",
       "el": "αποθήκευση έργου"
     },
+    "common.messages.confirm_delete_title": {
+      "en": "Confirm Delete",
+      "es": "Confirmar eliminación",
+      "fr": "Confirmer la suppression",
+      "de": "Löschen bestätigen",
+      "lt": "Patvirtinkite ištrynimą",
+      "pt": "Confirmar exclusão",
+      "it": "Conferma eliminazione",
+      "no": "Bekreft sletting",
+      "el": "Επιβεβαίωση διαγραφής"
+    },
+    "common.messages.confirm_delete_message": {
+      "en": "Are you sure you want to delete %d selected item(s)? This action cannot be undone.",
+      "es": "¿Está seguro de que desea eliminar %d elemento(s) seleccionado(s)? Esta acción no se puede deshacer.",
+      "fr": "Êtes-vous sûr de vouloir supprimer %d élément(s) sélectionné(s) ? Cette action est irréversible.",
+      "de": "Möchten Sie wirklich %d ausgewählte(s) Element(e) löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Ar tikrai norite ištrinti %d pasirinktą (-us) elementą (-us)? Šis veiksmas negali būti atšauktas.",
+      "pt": "Tem certeza de que deseja excluir %d item(s) selecionado(s)? Esta ação não pode ser desfeita.",
+      "it": "Sei sicuro di voler eliminare %d elemento(i) selezionato(i)? Questa azione non può essere annullata.",
+      "no": "Er du sikker på at du vil slette %d valgte element(er)? Denne handlingen kan ikke angres.",
+      "el": "Είστε σίγουροι ότι θέλετε να διαγράψετε %d επιλεγμένο(α) στοιχείο(α); Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+    },
+    "common.messages.context_auto_saving": {
+      "en": "auto-saving your work",
+      "es": "guardando automáticamente tu trabajo",
+      "fr": "enregistrement automatique de votre travail",
+      "de": "Ihre Arbeit wird automatisch gespeichert",
+      "lt": "automatiškai išsaugant jūsų darbą",
+      "pt": "salvando automaticamente seu trabalho",
+      "it": "salvataggio automatico del tuo lavoro",
+      "no": "lagrer arbeidet automatisk",
+      "el": "αυτόματη αποθήκευση της εργασίας σας"
+    },
+    "common.messages.context_ai_isa_recovery": {
+      "en": "restoring your AI assistant session",
+      "es": "restaurando su sesión del asistente IA",
+      "fr": "restauration de votre session d'assistant IA",
+      "de": "Ihre KI-Assistenten-Sitzung wird wiederhergestellt",
+      "lt": "atkuriant jūsų DI asistento sesiją",
+      "pt": "restaurando sua sessão do assistente de IA",
+      "it": "ripristino della sessione dell'assistente IA",
+      "no": "gjenoppretter AI-assistent-økten",
+      "el": "ανάκτηση της συνεδρίας του βοηθού AI"
+    },
+    "common.messages.context_feedback_admin_load": {
+      "en": "loading user feedback log",
+      "es": "cargando el registro de comentarios del usuario",
+      "fr": "chargement du journal des commentaires utilisateur",
+      "de": "Benutzerfeedback-Protokoll wird geladen",
+      "lt": "įkeliant vartotojų atsiliepimų žurnalą",
+      "pt": "carregando o registro de feedback do usuário",
+      "it": "caricamento del registro dei commenti utente",
+      "no": "laster loggen over brukertilbakemeldinger",
+      "el": "φόρτωση αρχείου σχολίων χρηστών"
+    },
+    "common.messages.context_dashboard_stats": {
+      "en": "calculating dashboard statistics",
+      "es": "calculando estadísticas del panel",
+      "fr": "calcul des statistiques du tableau de bord",
+      "de": "Dashboard-Statistiken werden berechnet",
+      "lt": "skaičiuojant prietaisų skydelio statistiką",
+      "pt": "calculando estatísticas do painel",
+      "it": "calcolo delle statistiche della dashboard",
+      "no": "beregner dashbordstatistikk",
+      "el": "υπολογισμός στατιστικών πίνακα εργαλείων"
+    },
+    "common.messages.context_language_change_save": {
+      "en": "saving your work before changing the language",
+      "es": "guardando su trabajo antes de cambiar el idioma",
+      "fr": "enregistrement de votre travail avant de changer la langue",
+      "de": "Ihre Arbeit wird gespeichert, bevor die Sprache geändert wird",
+      "lt": "saugant jūsų darbą prieš pakeičiant kalbą",
+      "pt": "salvando seu trabalho antes de alterar o idioma",
+      "it": "salvataggio del lavoro prima di cambiare la lingua",
+      "no": "lagrer arbeidet ditt før språkbytte",
+      "el": "αποθήκευση της εργασίας σας πριν την αλλαγή γλώσσας"
+    },
+    "common.messages.context_language_change_restore": {
+      "en": "restoring your work after language change",
+      "es": "restaurando su trabajo después del cambio de idioma",
+      "fr": "restauration de votre travail après le changement de langue",
+      "de": "Ihre Arbeit wird nach dem Sprachwechsel wiederhergestellt",
+      "lt": "atkuriant jūsų darbą po kalbos pakeitimo",
+      "pt": "restaurando seu trabalho após a alteração do idioma",
+      "it": "ripristino del lavoro dopo il cambio di lingua",
+      "no": "gjenoppretter arbeidet etter språkbytte",
+      "el": "ανάκτηση της εργασίας σας μετά την αλλαγή γλώσσας"
+    },
+    "common.messages.context_isa_download": {
+      "en": "generating your download file",
+      "es": "generando su archivo de descarga",
+      "fr": "génération de votre fichier de téléchargement",
+      "de": "Ihre Download-Datei wird erstellt",
+      "lt": "kuriant jūsų atsisiuntimo failą",
+      "pt": "gerando seu arquivo de download",
+      "it": "creazione del file di download",
+      "no": "genererer nedlastingsfilen",
+      "el": "δημιουργία του αρχείου λήψης σας"
+    },
+    "common.messages.context_saving_exercise_0": {
+      "en": "saving Exercise 0 (Complexity)",
+      "es": "guardando Ejercicio 0 (Complejidad)",
+      "fr": "enregistrement de l'Exercice 0 (Complexité)",
+      "de": "Übung 0 wird gespeichert (Komplexität)",
+      "lt": "saugant 0 pratimą (Sudėtingumas)",
+      "pt": "salvando Exercício 0 (Complexidade)",
+      "it": "salvataggio dell'Esercizio 0 (Complessità)",
+      "no": "lagrer Øvelse 0 (Kompleksitet)",
+      "el": "αποθήκευση Άσκησης 0 (Πολυπλοκότητα)"
+    },
+    "common.messages.context_saving_exercise_1": {
+      "en": "saving Exercise 1 (Goods & Benefits)",
+      "es": "guardando Ejercicio 1 (Bienes y Beneficios)",
+      "fr": "enregistrement de l'Exercice 1 (Biens et Bénéfices)",
+      "de": "Übung 1 wird gespeichert (Güter und Nutzen)",
+      "lt": "saugant 1 pratimą (Gėrybės ir nauda)",
+      "pt": "salvando Exercício 1 (Bens e Benefícios)",
+      "it": "salvataggio dell'Esercizio 1 (Beni e Benefici)",
+      "no": "lagrer Øvelse 1 (Goder og fordeler)",
+      "el": "αποθήκευση Άσκησης 1 (Αγαθά και Οφέλη)"
+    },
+    "common.messages.context_saving_exercise_2a": {
+      "en": "saving Exercise 2a (Ecosystem Services)",
+      "es": "guardando Ejercicio 2a (Servicios Ecosistémicos)",
+      "fr": "enregistrement de l'Exercice 2a (Services Écosystémiques)",
+      "de": "Übung 2a wird gespeichert (Ökosystemleistungen)",
+      "lt": "saugant 2a pratimą (Ekosistemos paslaugos)",
+      "pt": "salvando Exercício 2a (Serviços dos Ecossistemas)",
+      "it": "salvataggio dell'Esercizio 2a (Servizi Ecosistemici)",
+      "no": "lagrer Øvelse 2a (Økosystemtjenester)",
+      "el": "αποθήκευση Άσκησης 2a (Υπηρεσίες Οικοσυστήματος)"
+    },
+    "common.messages.context_saving_exercise_2b": {
+      "en": "saving Exercise 2b (Marine Processes & Functioning)",
+      "es": "guardando Ejercicio 2b (Procesos y Funcionamiento Marino)",
+      "fr": "enregistrement de l'Exercice 2b (Processus et Fonctionnement Marin)",
+      "de": "Übung 2b wird gespeichert (Marine Prozesse und Funktionen)",
+      "lt": "saugant 2b pratimą (Jūros procesai ir funkcijos)",
+      "pt": "salvando Exercício 2b (Processos e Funcionamento Marinho)",
+      "it": "salvataggio dell'Esercizio 2b (Processi e Funzionamento Marino)",
+      "no": "lagrer Øvelse 2b (Marine prosesser og funksjoner)",
+      "el": "αποθήκευση Άσκησης 2b (Θαλάσσιες Διαδικασίες & Λειτουργία)"
+    },
+    "common.messages.context_saving_exercise_3": {
+      "en": "saving Exercise 3 (Pressures)",
+      "es": "guardando Ejercicio 3 (Presiones)",
+      "fr": "enregistrement de l'Exercice 3 (Pressions)",
+      "de": "Übung 3 wird gespeichert (Belastungen)",
+      "lt": "saugant 3 pratimą (Spaudimai)",
+      "pt": "salvando Exercício 3 (Pressões)",
+      "it": "salvataggio dell'Esercizio 3 (Pressioni)",
+      "no": "lagrer Øvelse 3 (Trykk)",
+      "el": "αποθήκευση Άσκησης 3 (Πιέσεις)"
+    },
+    "common.messages.context_saving_exercise_4": {
+      "en": "saving Exercise 4 (Activities)",
+      "es": "guardando Ejercicio 4 (Actividades)",
+      "fr": "enregistrement de l'Exercice 4 (Activités)",
+      "de": "Übung 4 wird gespeichert (Aktivitäten)",
+      "lt": "saugant 4 pratimą (Veiklos)",
+      "pt": "salvando Exercício 4 (Atividades)",
+      "it": "salvataggio dell'Esercizio 4 (Attività)",
+      "no": "lagrer Øvelse 4 (Aktiviteter)",
+      "el": "αποθήκευση Άσκησης 4 (Δραστηριότητες)"
+    },
+    "common.messages.context_saving_exercise_5": {
+      "en": "saving Exercise 5 (Drivers)",
+      "es": "guardando Ejercicio 5 (Impulsores)",
+      "fr": "enregistrement de l'Exercice 5 (Moteurs)",
+      "de": "Übung 5 wird gespeichert (Treiber)",
+      "lt": "saugant 5 pratimą (Varomosios jėgos)",
+      "pt": "salvando Exercício 5 (Impulsionadores)",
+      "it": "salvataggio dell'Esercizio 5 (Motori)",
+      "no": "lagrer Øvelse 5 (Drivkrefter)",
+      "el": "αποθήκευση Άσκησης 5 (Κινητήριες Δυνάμεις)"
+    },
+    "common.messages.context_saving_exercise_6": {
+      "en": "saving Exercise 6 (Closing Loop)",
+      "es": "guardando Ejercicio 6 (Cierre del Bucle)",
+      "fr": "enregistrement de l'Exercice 6 (Boucle de fermeture)",
+      "de": "Übung 6 wird gespeichert (Rückkopplungsschleife)",
+      "lt": "saugant 6 pratimą (Atgalinio ryšio uždarymas)",
+      "pt": "salvando Exercício 6 (Fechamento do Loop)",
+      "it": "salvataggio dell'Esercizio 6 (Chiusura del ciclo)",
+      "no": "lagrer Øvelse 6 (Lukking av sløyfe)",
+      "el": "αποθήκευση Άσκησης 6 (Κλείσιμο Βρόχου)"
+    },
+    "common.messages.context_async_operation": {
+      "en": "performing background operation",
+      "es": "ejecutando operación en segundo plano",
+      "fr": "exécution d'une opération en arrière-plan",
+      "de": "Hintergrundoperation wird ausgeführt",
+      "lt": "vykdant foninę operaciją",
+      "pt": "executando operação em segundo plano",
+      "it": "esecuzione di un'operazione in background",
+      "no": "utfører bakgrunnsoperasjon",
+      "el": "εκτέλεση λειτουργίας παρασκηνίου"
+    },
     "common.messages.context_loading_project": {
       "en": "loading project",
       "es": "cargando proyecto",
@@ -1154,6 +1352,17 @@
       "it": "calcolo delle metriche di rete",
       "no": "beregner nettverksmetrikker",
       "el": "υπολογισμός μετρήσεων δικτύου"
+    },
+    "common.messages.context_matrix_rebuild": {
+      "en": "rebuilding connection matrix from your form entries",
+      "es": "reconstruyendo la matriz de conexiones desde sus entradas",
+      "fr": "reconstruction de la matrice de connexions à partir de vos saisies",
+      "de": "Verbindungsmatrix wird aus Ihren Eingaben neu erstellt",
+      "lt": "perkuriant ryšių matricą iš jūsų įvesčių",
+      "pt": "reconstruindo a matriz de conexões a partir de suas entradas",
+      "it": "ricostruzione della matrice di connessioni dalle tue voci",
+      "no": "bygger opp koblingsmatrisen fra oppføringene dine",
+      "el": "ανακατασκευή πίνακα συνδέσεων από τις καταχωρήσεις σας"
     }
   }
 }

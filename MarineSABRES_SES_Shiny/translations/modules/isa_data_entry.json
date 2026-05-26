@@ -3025,17 +3025,6 @@
       "no": "ISA-veiledning Hva er ISA Tittel",
       "el": "Οδηγός ISA Τι είναι η ISA Τίτλος"
     },
-    "modules.analysis.common.high_degree": {
-      "en": "Find key stakeholders (high degree nodes)",
-      "es": "Encontrar partes interesadas clave (nodos de alto grado)",
-      "fr": "Trouver les parties prenantes clés (nœuds de haut degré)",
-      "de": "Schlüsselakteure finden (Knoten mit hohem Grad)",
-      "lt": "Rasti pagrindinius suinteresuotus subjektus (didelio laipsnio mazgai)",
-      "pt": "Encontrar partes interessadas-chave (nós de alto grau)",
-      "it": "Trovare le parti interessate chiave (nodi ad alto grado)",
-      "no": "Finn nøkkelinteressenter (noder med høy grad)",
-      "el": "Εύρεση βασικών ενδιαφερομένων (κόμβοι υψηλού βαθμού)"
-    },
     "modules.isa.data_entry.common.linked_to_activity": {
       "en": "Linked To Activity",
       "es": "[ES] Linked To Activity",
@@ -3090,17 +3079,6 @@
       "it": "[IT] Linked To Pressure",
       "no": "Koblet til press",
       "el": "Συνδεδεμένο με πίεση"
-    },
-    "modules.response.measures.mechanism_of_action": {
-      "en": "Mechanism of Action:",
-      "es": "Mecanismo de Acción:",
-      "fr": "Mécanisme d'Action:",
-      "de": "Wirkungsmechanismus:",
-      "lt": "Veikimo Mechanizmas:",
-      "pt": "Mecanismo de Ação:",
-      "it": "Meccanismo d'Azione:",
-      "no": "Virkningsmekanisme:",
-      "el": "Μηχανισμός δράσης:"
     },
     "modules.isa.data_entry.common.please_fix_the_following_issues_before_saving": {
       "en": "Please Fix The Following Issues Before Saving",
@@ -3157,6 +3135,17 @@
       "no": "Velg element",
       "el": "Επιλογή Στοιχείο"
     },
+    "modules.isa.data_entry.common.select_one_or_more": {
+      "en": "Select one or more…",
+      "es": "Seleccione uno o más…",
+      "fr": "Sélectionnez un ou plusieurs…",
+      "de": "Wählen Sie einen oder mehrere aus…",
+      "lt": "Pasirinkite vieną ar daugiau…",
+      "pt": "Selecione um ou mais…",
+      "it": "Seleziona uno o più…",
+      "no": "Velg én eller flere…",
+      "el": "Επιλέξτε ένα ή περισσότερα…"
+    },
     "modules.isa.data_entry.common.spatial": {
       "en": "Marine spatial planning",
       "es": "Ordenación del espacio marino",
@@ -3180,26 +3169,15 @@
       "el": "Χωρική κλίμακα"
     },
     "modules.isa.data_entry.common.stakeholder": {
-      "en": "Define your project goals, stakeholders, and timeline",
-      "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
-      "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
-      "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
-      "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
-      "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
-      "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Definer prosjektmål, interessenter og tidsplan",
-      "el": "Καθορίστε τους στόχους του έργου, τους ενδιαφερόμενους και το χρονοδιάγραμμα"
-    },
-    "modules.response.measures.impact_strength": {
-      "en": "Impact Strength:",
-      "es": "Intensidad del Impacto:",
-      "fr": "Force de l'Impact:",
-      "de": "Wirkungsstärke:",
-      "lt": "Poveikio Stiprumas:",
-      "pt": "Força do Impacto:",
-      "it": "Forza dell'Impatto:",
-      "no": "Påvirkningsstyrke:",
-      "el": "Επίπτωση Strength:"
+      "en": "Stakeholder",
+      "es": "Parte interesada",
+      "fr": "Partie prenante",
+      "de": "Stakeholder",
+      "lt": "Suinteresuota šalis",
+      "pt": "Parte interessada",
+      "it": "Stakeholder",
+      "no": "Interessent",
+      "el": "Ενδιαφερόμενο μέρος"
     },
     "modules.isa.data_entry.common.temporal": {
       "en": "Temporal Scope:",
@@ -4498,6 +4476,28 @@
       "it": "Il diagramma del ciclo sarà generato\ndalle tue voci di dati",
       "no": "Sløyfediagram genereres\nfra dataoppføringene dine",
       "el": "Το διάγραμμα βρόχου θα δημιουργηθεί\nαπό τις καταχωρήσεις δεδομένων σας"
+    },
+    "modules.isa.data_entry.common.stale_linked_ids_skipped": {
+      "en": "Some linked IDs no longer exist and were skipped:",
+      "es": "Algunos IDs vinculados ya no existen y se omitieron:",
+      "fr": "Certains IDs liés n'existent plus et ont été ignorés:",
+      "de": "Einige verknüpfte IDs existieren nicht mehr und wurden übersprungen:",
+      "lt": "Kai kurie susieti ID nebeegzistuoja ir buvo praleisti:",
+      "pt": "Alguns IDs vinculados não existem mais e foram ignorados:",
+      "it": "Alcuni ID collegati non esistono più e sono stati ignorati:",
+      "no": "Noen koblede ID-er finnes ikke lenger og ble hoppet over:",
+      "el": "Ορισμένα συνδεδεμένα αναγνωριστικά δεν υπάρχουν πλέον και παραλείφθηκαν:"
+    },
+    "modules.isa.data_entry.common.dropped_user_edits": {
+      "en": "User-edited connections lost due to element removal:",
+      "es": "Conexiones editadas por el usuario perdidas debido a la eliminación de elementos:",
+      "fr": "Connexions modifiées par l'utilisateur perdues en raison de la suppression d'éléments:",
+      "de": "Vom Benutzer bearbeitete Verbindungen aufgrund der Elemententfernung verloren:",
+      "lt": "Vartotojo redaguoti ryšiai prarasti dėl elemento pašalinimo:",
+      "pt": "Conexões editadas pelo usuário perdidas devido à remoção de elementos:",
+      "it": "Connessioni modificate dall'utente perse a causa della rimozione di elementi:",
+      "no": "Brukerredigerte koblinger tapt på grunn av elementfjerning:",
+      "el": "Συνδέσεις που επεξεργάστηκε ο χρήστης χάθηκαν λόγω αφαίρεσης στοιχείου:"
     }
   }
 }

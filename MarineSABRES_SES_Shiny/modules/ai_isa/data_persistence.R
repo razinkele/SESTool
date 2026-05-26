@@ -185,6 +185,20 @@ build_adjacency_matrices <- function(elements, suggested_connections,
     r_p = NULL
   )
 
+  # Track which cells were edited by AI (non-empty)
+  user_edited_matrices <- list(
+    d_a = NULL,
+    a_p = NULL,
+    p_mpf = NULL,
+    mpf_es = NULL,
+    es_gb = NULL,
+    gb_d = NULL,
+    gb_r = NULL,
+    r_d = NULL,
+    r_a = NULL,
+    r_p = NULL
+  )
+
   # 1. Drivers → Activities (D→A)
   if (n_drivers > 0 && n_activities > 0) {
     matrices$d_a <- matrix(
@@ -349,6 +363,12 @@ build_adjacency_matrices <- function(elements, suggested_connections,
         conn$from_index >= 1 && conn$from_index <= nrow(mat) &&
         conn$to_index >= 1 && conn$to_index <= ncol(mat)) {
       matrices[[mat_name]][conn$from_index, conn$to_index] <- value
+      # Track that this cell was edited by AI
+      if (is.null(user_edited_matrices[[mat_name]])) {
+        user_edited_matrices[[mat_name]] <- matrix(FALSE, nrow = nrow(mat), ncol = ncol(mat),
+                                                   dimnames = dimnames(mat))
+      }
+      user_edited_matrices[[mat_name]][conn$from_index, conn$to_index] <- TRUE
     } else if (!is.null(mat)) {
       debug_log(sprintf("Skipping out-of-bounds connection: matrix=%s, from=%d/%d, to=%d/%d",
                  mat_name, conn$from_index, nrow(mat), conn$to_index, ncol(mat)), "AI ISA")
@@ -356,7 +376,10 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   }
 
   debug_log("Adjacency matrices built successfully", "AI ISA")
-  return(matrices)
+  return(list(
+    matrices = matrices,
+    user_edited_matrices = user_edited_matrices
+  ))
 }
 
 #' Save AI ISA Data to Project Format
@@ -432,12 +455,14 @@ save_to_project_format <- function(rv, current_data, CONFIDENCE_DEFAULT = 3) {
     }
   } else {
     # Build matrices from approved connections
-    current_data$data$isa_data$adjacency_matrices <- build_adjacency_matrices(
+    result <- build_adjacency_matrices(
       rv$elements,
       rv$suggested_connections,
       rv$approved_connections,
       CONFIDENCE_DEFAULT
     )
+    current_data$data$isa_data$adjacency_matrices <- result$matrices
+    current_data$data$isa_data$user_edited_matrices <- result$user_edited_matrices
   }
 
   # Update last modified timestamp

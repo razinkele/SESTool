@@ -5,6 +5,109 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.1] - 2026-05-25
+
+### Hotfix + Feedback Resolution Workflow
+
+Same-day patch addressing a v1.13.0 regression discovered via in-app feedback within hours of deploy, plus a new admin dashboard workflow for triaging bug reports.
+
+### Fixed (Critical)
+- **Save Exercise 2a threw "An error occurred saving Exercise 2a (Ecosystem Services)" for valid input** (regression introduced by v1.13.0). Root cause: `functions/matrix_from_linked.R` was created but never added to `global.R`'s source chain — `serialize_linked()` was undefined at runtime; `validate_and_collect_es()` threw; the outer Phase-A tryCatch surfaced the generic error notification. Test suite passed because each test file sourced `matrix_from_linked.R` directly; the production app did not. Fixed by adding `source("functions/matrix_from_linked.R", local = FALSE)` to `global.R` immediately before `isa_form_builders.R` source line, with multi-line incident-context comment. End-to-end verified via Playwright (both GB save + ES save show green success notifications).
+
+### Added
+- **Feedback admin: Mark Resolved / Reopen workflow** for triaging bug reports
+  - `functions/feedback_analyzer.R`: new `mark_as_resolved(log_path, line_num, resolution_note, resolved_app_version)` and `mark_as_reopened(log_path, line_num)` — mirror `mark_as_duplicate`'s atomic-rewrite pattern.
+  - `functions/feedback_analyzer.R::load_feedback_log()` schema extended to read 4 new resolution fields (`resolution_status`, `resolved_at`, `resolution_note`, `resolved_app_version`) — without this, the fields were silently dropped on load.
+  - `modules/feedback_admin_module.R`: feedback table gains **Status** column (green "Resolved" / yellow "Open" badge) and **Action** column (green "Resolve" / outline "Reopen" per-row button). Resolve flow opens a modal with note + app-version inputs.
+- **ADMIN_MODE enabled on laguna**: `/srv/shiny-server/marinesabres/.Renviron` set with `MARINESABRES_ADMIN_MODE=TRUE`. Feedback admin dashboard now visible to expert users. (App-level only; doesn't affect other Shiny apps on the server.)
+
+### Changed
+- `deployment/deploy-remote.ps1`: `.phase-c-bundle/` and `.v1.13.0-bundle/` added to tar exclude list with incident-context comment (prevents future recurrence of the OneDrive-permission-locked release-bundle issue).
+
+### i18n
+- 15 new keys × 9 languages for the Mark Resolved workflow (col_status, col_action, status_open, status_resolved, mark_resolved_btn, reopen_btn, resolve_modal_title, resolve_modal_report_label, resolve_note_label, resolve_note_placeholder, resolved_version_label, confirm_resolve_btn, marked_resolved, marked_reopened, resolve_error, reopen_error).
+
+### Process lesson
+- When adding a new file under `functions/`, the corresponding `source()` line in `global.R` MUST be added in the same change. Tests sourcing the file directly hide the integration gap. Future plan templates should include "Add source() to global.R near related sources" as an explicit task step. Better: CI check listing `functions/*.R` and asserting each is sourced.
+
+## [1.13.0] - 2026-05-25
+
+### ISA Entry: N:M Multi-Link Redesign
+
+Standard Entry workflow now supports N:M relationships at element-entry time. Auto-populates adjacency matrices from inline multi-select widgets. Preserves CLD Ex 7-9 / template / AI ISA cell edits via parallel `user_edited_matrices` state.
+
+### Added
+- All 5 chain-link fields (linkedgb, linkedes, linkedmpf, linkedp, linkeda) are multi-select (`selectizeInput multiple=TRUE` with `remove_button` plugin)
+- `functions/matrix_from_linked.R` with 4 helpers: `parse_linked`, `serialize_linked`, `assert_matrices_aligned`, `rebuild_matrix_from_linked`
+- `isa_data$user_edited_matrices` reactiveValues slot (pre-created with 6 named slots: es_gb, mpf_es, p_mpf, a_p, d_a, gb_d)
+- `save_ex6` also flags `gb_d` cells as user_edited
+- Template loader, AI ISA `data_persistence`, `template_ses` cell-writes, and `cld_interaction_helpers` all flag user_edited
+- Excel export emits `<mat>_user_edited` side sheets with collision detection
+- Auto-hydration on project load: legacy projects get LinkedX-implied edges populated (NULL slot only; tryCatch-wrapped soft-fail)
+- Stale-linked-ID + dropped-user-edit warnings surface as notifications
+
+### Changed
+- `validate_and_collect_es/mpf/p/a/d` serialize multi-value via `serialize_linked()` (filters empty strings — no trailing pipe)
+- `save_ex2a/2b/3/4/5` observers each rebuild matrix with isolated `tryCatch` (rebuild failure doesn't roll back element save)
+- Per-cell confidence defaults to `"Medium"` for Pressures/Activities/Drivers (no semantic-corruption proxy from Intensity/Frequency/Controllability)
+
+### i18n
+- 4 new keys × 9 languages: `select_one_or_more`, `context_matrix_rebuild`, `stale_linked_ids_skipped`, `dropped_user_edits`
+
+### Test infrastructure
+- New `tests/testthat/test-matrix-from-linked.R` (~34 tests for the pure helpers)
+- New per-module tests for template_ses, template_loader, ai_isa, cld_interaction_helpers, export_helpers user_edited flagging
+- New `tests/testthat/test-isa-data-entry-multi-link.R` end-to-end smoke
+
+### Backward-compat
+- Single-value `LinkedX` entries remain valid (length-1 `paste(..., collapse="|")` is unchanged)
+- Legacy projects without `user_edited_matrices` field load fine (initialized all-FALSE)
+- Legacy projects with non-empty LinkedX but NULL adjacency matrix auto-hydrate on first load
+
+### Spec + Plan
+- Spec: `docs/superpowers/specs/2026-05-22-isa-entry-multi-link-redesign-design.md`
+- Plan v2 (executed): `docs/superpowers/plans/2026-05-22-isa-entry-multi-link-redesign-v2.md`
+- Plan v1 (superseded due to 5 BLOCKING design issues found by multi-agent review): `docs/superpowers/plans/_archived/2026-05-22-isa-entry-multi-link-redesign-v1-superseded.md`
+
+## [1.12.1] - 2026-05-22
+
+### Phase C: Silent-Failure Sweep + UX Polish
+
+Closes 6 silent-failure sites (Tier 2 #5-10 from the 2026-05-20 audit) plus 2 UX-polish improvements. Builds on Phase A (G&B-class bugs across all ISA element types) and Phase B (auto-save data-loss + delete-confirmation modals + shared validation helper).
+
+### Fixed (Silent failures)
+- AI ISA recovery init now surfaces translated notification on failure (was silent debug_log only) (modules/ai_isa_assistant_module.R)
+- feedback_admin load-log failure now shows error notification at both error-handler sites (was indistinguishable from "no reports yet") (modules/feedback_admin_module.R)
+- CLD visualization replaces bare `req()` in the renderVisNetwork render block with `validate(need(..., i18n$t("modules.cld.visualization.empty_network_message")))` (was blank tab with no explanation) — bare `req()` retained in pure-reactive contexts where it's appropriate (modules/cld_visualization_module.R)
+- Dashboard value-box failures now emit per-box notification with hardcoded id per value-box (`dashboard_err_box1..box4`) — re-renders of the same box replace its previous toast; distinct boxes have independent visibility; no failure silenced regardless of which box(es) fail (server/dashboard.R)
+- Language change save-before-reload (server/modals.R) now ABORTS the reload entirely on save failure — `MODAL_ANIMATION_DELAY_MS=100ms` is too short for toast to render before reload destroys session; early return preserves both work and visible notification. Post-reload restore handler (server/language_handling.R) also surfaces translated notification via `session_i18n` (was explicitly silent with "Don't show error" comment)
+- 4 ISA download handlers (`export_data`, `download_excel`, `download_kumu`, `download_guidance_pdf`) wrap in `withProgress({ tryCatch({...}, error = function(e) { showNotification; stop(e) }) })` — `withProgress` outer ensures clean progress-indicator cleanup even on failure; `stop(e)` aborts the download (clean browser failure UI, no misleading placeholder file) (modules/isa_data_entry_module.R)
+
+### Added (UX polish)
+- Loading indicator (`withProgress` + `incProgress`) on ISA kumu/excel/export/guidance-PDF downloads + `rmarkdown::render` (PDF/HTML/PowerPoint reports) (modules/isa_data_entry_module.R, modules/export_reports_module.R)
+- Empty-state placeholder ("No entries yet — use the form above to add your first one.") rendered OUTSIDE the DT via `uiOutput + shinyjs::toggle` on `response_table` and `stakeholder_table` — DT wrapped in `div(style = "display: none;")` so it instantiates once with the real schema, no column-count drift on first add (modules/response_module.R, modules/pims_stakeholder_module.R)
+
+### Added (i18n)
+- 9 new translation keys × 9 languages (81 strings) batched in a single i18n commit for one-pass review:
+  - 6 `common.messages.context_*`: ai_isa_recovery, feedback_admin_load, dashboard_stats, language_change_save, language_change_restore, isa_download
+  - 2 `common.misc.*`: generating_file, no_data_yet
+  - 1 `modules.cld.visualization.empty_network_message`
+- Plus 10 additional `modules.graphical_ses_creator.ai_classifier.*` keys for 5 reasoning + 5 confidence strings discovered during T9 verification
+- All Lithuanian translations use the gerund (-ant/-int) form consistent with the dominant `context_*` pattern. "AI" → "DI" per existing convention.
+
+### Test infrastructure
+- Shared `expect_context_key_in_file()` helper in `tests/testthat/helper-source-grep.R` — used by Phase C silent-failure regression tests for DRY.
+
+### Test Status at Release
+- Full testthat suite: ~6781+ pass / 1 fail / ~291 skip
+- The 1 failure is a pre-existing timing regression in `test-ml-ensemble.R:466` ("Disagreement calculation is fast" expects elapsed < 1s; fails on CPU-only ThinkPad X1 Carbon — environment-dependent, not related to Phase C changes)
+- New Phase C regression tests: 13+ new `test_that` blocks across 7 test files
+- i18n audit: `hardcoded=0`, `missing=1` (pre-existing unrelated key `common.labels.error` defined but not referenced in R code)
+- pre-deploy-check.R: 38/38 checks PASSED
+
+### Notes on deployment
+- This release was prepared in an environment without git (OneDrive working copy); commits will be made and deploy executed separately by the project owner using the existing deploy-remote.ps1 workflow.
+
 ## [1.11.2] - 2026-04-23
 
 ### CLD Sync Hardening + i18n Context Migration

@@ -4,7 +4,7 @@
 
 R/Shiny application for Social-Ecological Systems (SES) analysis using the DAPSIWRM framework. Supports 9 languages with reactive i18n, network visualization, and ML-assisted element classification.
 
-**Version**: 1.11.2 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
+**Version**: 1.13.1 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
 
 ## Quick Commands
 
@@ -204,12 +204,14 @@ tryCatch({
 # Use debug_log() not cat() for all debug output
 debug_log("Processing data", "INFO")
 
-# User-facing error messages (use format_user_error, not raw e$message)
+# User-facing error messages (use format_user_error, not raw e$message).
+# Pass `context_key` (i18n key) rather than the deprecated raw-English `context` arg —
+# the helper translates it via i18n$t() so the prefix matches the user's locale.
 tryCatch({
   # risky operation
 }, error = function(e) {
   showNotification(
-    format_user_error(e, i18n = i18n, context = "saving project"),
+    format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_project"),
     type = "error"
   )
 })

@@ -1,80 +1,39 @@
 {
-  "version": "1.11.0",
-  "version_name": "Knowledge Base & Template Overhaul",
-  "release_date": "2026-04-08",
-  "release_type": "minor",
+  "version": "1.13.1",
+  "version_name": "N:M Hotfix + Feedback Resolution Workflow",
+  "release_date": "2026-05-25",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.11.0",
+  "documentation_version": "1.13.1",
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "6 SES templates rebuilt from knowledge base with full DAPSIWRM coverage",
-    "Caribbean template: 87 connections gain polarity, A10 corrected, P13 removed, 5 feedback loops added",
-    "Same-type matrix support (p_p, s_s) for pressure-pressure and state-state connections",
-    "Domain-specific measures added to all 6 rebuilt templates",
-    "KB habitat enrichment: Zostera marina, Cymodocea nodosa, mangrove-seagrass connectivity",
-    "5 new validation tests for template structure, orphans, feedback loops, measures",
-    "Claude Code automations: pre-deploy skill, kb-audit skill, dapsiwrm-validator subagent"
+    "Feedback admin dashboard: Mark Resolved / Reopen workflow with resolution note + fixed-in-version inputs; per-row green Resolve / outline Reopen buttons; new Status column with green Resolved / yellow Open badges; load_feedback_log schema extended to 4 new resolution fields"
   ],
   "fixes": {
     "critical": [
       {
-        "issue": "70+ spurious 'chain completion' connections with no scientific basis",
-        "file": "data/*_SES_Template.json",
-        "impact": "False causal relationships shown to users",
-        "resolution": "Removed all self-documented invalid connections and orphaned elements"
-      },
-      {
-        "issue": "Caribbean A10 mislabeled as 'IUU fishing' — all connections described cruise ships",
-        "file": "data/Caribbean_SES_Template.json",
-        "impact": "Element name contradicted every connection description",
-        "resolution": "Renamed to 'Cruise ship and yacht tourism', fixed metadata"
-      },
-      {
-        "issue": "r_r matrix (measure→response connections) silently dropped in CLD visualization",
-        "file": "modules/template_ses_module.R, modules/ai_isa/connection_generator.R",
-        "impact": "Measures never appeared in causal loop diagrams",
-        "resolution": "Added r_r and r_mpf to all downstream matrix maps"
+        "issue": "Save Exercise 2a (Ecosystem Services) threw 'An error occurred saving Exercise 2a' for valid input after v1.13.0 deploy",
+        "file": "global.R",
+        "impact": "User-reported via in-app feedback within hours of v1.13.0 deploy; ES save flow blocked despite N:M widget rendering correctly",
+        "resolution": "Added missing source('functions/matrix_from_linked.R') line before isa_form_builders.R source. serialize_linked() was undefined at runtime because every test sourced matrix_from_linked.R directly while the production app did not. Test coverage didn't catch the integration gap. Verified end-to-end via Playwright same day."
       }
     ],
-    "improvements": [
-      {
-        "issue": "Templates had 1 element per category (8 total, 8 connections)",
-        "resolution": "Rebuilt from KB: 25-36 elements, 23-39 connections, feedback loops, measures per template"
-      },
-      {
-        "issue": "3 Baltic habitat entries placed Z. marina in freshwater systems",
-        "resolution": "Removed inaccurate entries, kept 4 scientifically verified coastal contexts"
-      },
-      {
-        "issue": "Deployment scripts hardcoded 'razinka' user",
-        "resolution": "Dynamic user fallback for portability"
-      }
-    ]
+    "improvements": []
   },
   "metrics": {
     "knowledge_db_contexts": 33,
-    "knowledge_db_connections": 1120,
-    "knowledge_db_elements": 1119,
-    "template_count": 7,
-    "template_total_elements": 285,
-    "template_total_connections": 300,
-    "orphan_element_rate": "0%",
-    "polarity_coverage": "100%",
-    "cross_ecosystem_links": 20,
     "languages_supported": 9,
     "modules_total": 46,
-    "test_files": 56
+    "i18n_keys_added_in_release": 15
   },
   "migration_notes": [
-    "No breaking changes — fully backward-compatible with v1.10.x data",
-    "Aquaculture template renamed to 'Coastal Lagoon' — filename unchanged",
-    "Template element IDs changed from D1/A1 to D001/A001 format",
-    "Caribbean P13 (H2S emissions) removed — health impacts covered by S1→I10→W4 chain"
+    "Pre-existing feedback log entries (no resolution_status field) display as 'Open' by default — no data migration required.",
+    "Process lesson: when adding a new R file under functions/, the corresponding source() line in global.R MUST be added in the same change. Tests that source the file directly hide this gap. CI check would help — list functions/*.R and assert each is sourced."
   ],
-  "previous_version": "1.10.2"
+  "previous_version": "1.13.0"
 }

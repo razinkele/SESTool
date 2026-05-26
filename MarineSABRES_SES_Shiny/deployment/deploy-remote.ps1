@@ -200,8 +200,28 @@ Write-Header "Creating Deployment Archive"
 $excludes = @(
     "--exclude=.git",
     "--exclude=.claude",
+    "--exclude=.superpowers",
+    "--exclude=.remember",
     "--exclude=.playwright-mcp",
     "--exclude=.Rhistory",
+    # 2026-05-25 incident: .phase-c-bundle/ (from Phase C v1.12.1 release)
+    # and .v1.13.0-bundle/ (from N:M redesign release) hit OneDrive file
+    # locks during tar, causing "Permission denied" and a half-restored
+    # server state (HTTP 500). Recovered by SSH + manual re-extract with
+    # --exclude. Add ALL release-bundle dirs here to prevent recurrence.
+    "--exclude=.phase-c-bundle",
+    "--exclude=.v1.13.0-bundle",
+    "--exclude=.v1.13.1-bundle",
+    # Pattern for any future release bundle: .v<MAJOR>.<MINOR>.<PATCH>-bundle/
+    # OR .<phase>-bundle/. Maintain manually OR migrate to a single root
+    # dir (e.g. .release-bundles/) and exclude that.
+    # .RData MUST be excluded: shipping it auto-loads stale R session state
+    # on the server, including a Windows PROJECT_ROOT that broke the laguna
+    # deploy 2026-05-18 to 2026-05-20 (app exited during initialization
+    # trying to read C:/Users/... paths on Linux). Production restored
+    # 2026-05-20 by deleting the file from /srv/shiny-server/marinesabres/.
+    "--exclude=.RData",
+    "--exclude=.Rprofile",
     "--exclude=.Rproj.user",
     "--exclude=.gitignore",
     "--exclude=.dockerignore",
@@ -212,6 +232,21 @@ $excludes = @(
     "--exclude=tests",
     "--exclude=DTU",
     "--exclude=Documents",
+    # scripts/_archive/ and scripts/kb_audit/output/ are dev-only / audit
+    # output; they don't belong in production AND past deploys have left
+    # them with mode 555 (read-only) on laguna, causing tar to fail with
+    # "Permission denied" when trying to extract into them. Excluding here
+    # avoids both problems. See 2026-05-20 incident log.
+    "--exclude=scripts/_archive",
+    "--exclude=scripts/kb_audit/output",
+    "--exclude=docs/plans",
+    # WP5/ holds deliverable docx drafts (D5.2 etc.) — should not ship to
+    # the running Shiny app. Files are owned by razinka with read-only mode
+    # on the server which also blocks tar overwrite.
+    "--exclude=WP5",
+    # translations/guides/ has a stuck read-only REVIEW_STATUS.md from
+    # past deploys; not used by the running app.
+    "--exclude=translations/guides",
     "--exclude=CLEANUP_SCRIPT.R",
     "--exclude=run_ui_tests.R",
     "--exclude=fixture_list.txt",
@@ -334,15 +369,24 @@ set -e
 echo '==> Preparing target directory...'
 cd ${RemoteTarget}
 
-# Move any shiny-owned subdirectories out of the way (razinka can mv because
-# razinka owns the parent directory, even if subdirs are owned by shiny)
+# Move ALL top-level subdirectories out of the way unconditionally before
+# extract. Earlier versions only moved shiny-owned dirs (skipped razinka-
+# owned), which forced tar to overlay onto pre-existing files in
+# scripts/_archive/, scripts/kb_audit/output/, docs/plans/, etc., producing
+# repeated "Cannot open: File exists" / "Permission denied" errors and a
+# non-zero tar exit that aborted the rest of the deploy (chown, chmod,
+# restart). razinka can mv any of these because razinka owns the parent
+# directory regardless of subdir ownership. The .bak dirs are removed
+# below on successful extract or kept for manual recovery on failure.
 for dir in config data docs functions models modules scripts server SESModels translations www; do
-  if [ -d "`$dir" ] && [ "`$(stat -c '%U' "`$dir")" != "${RemoteOwner}" ]; then
-    mv "`$dir" "`${dir}.bak" 2>/dev/null && echo "  Moved old `$dir -> `${dir}.bak" || true
+  if [ -d "`$dir" ]; then
+    rm -rf "`${dir}.bak" 2>/dev/null || true
+    mv "`$dir" "`${dir}.bak" 2>/dev/null && echo "  Moved `$dir -> `${dir}.bak" || true
   fi
 done
 
-# Remove files in target that razinka owns (top-level .R, .json, etc.)
+# Remove top-level files razinka owns (top-level .R, .json, etc.) so tar
+# can recreate them. (Subdirs are handled by the move loop above.)
 find ${RemoteTarget} -maxdepth 1 -type f -user ${RemoteOwner} -delete 2>/dev/null || true
 
 echo '==> Extracting archive...'
@@ -359,6 +403,15 @@ chmod 775 ${RemoteTarget}/translations/ 2>/dev/null || true
 chmod 775 ${RemoteTarget}/www/ 2>/dev/null || true
 mkdir -p ${RemoteTarget}/www/reports
 chmod 775 ${RemoteTarget}/www/reports/ 2>/dev/null || true
+# data/ MUST be g+w: feedback_reporter.R writes user_feedback_log.ndjson into
+# this dir as the shiny worker user, which is in group `shiny` but not in
+# razinka's group. Without 775 the worker gets "Permission denied" on append
+# and feedback submission silently fails (caught by handler with notification
+# "Failed to save feedback. Please try again."). 2026-05-20 incident — see
+# memory/project_laguna_rdata_deploy_incident.md sibling entry.
+chmod 775 ${RemoteTarget}/data/ 2>/dev/null || true
+# Existing feedback log (if present) needs g+w too so future appends succeed
+chmod g+w ${RemoteTarget}/data/user_feedback_log.ndjson 2>/dev/null || true
 
 # Clean up stale caches
 rm -f ${RemoteTarget}/translations/_merged_translations.json 2>/dev/null || true

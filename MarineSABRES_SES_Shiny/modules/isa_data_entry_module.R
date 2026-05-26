@@ -5,10 +5,9 @@
 
 # Module UI ----
 isa_data_entry_ui <- function(id, i18n) {
-  ns <- NS(id)
-
   # Enable reactive translation updates for this module
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
+  ns <- NS(id)
 
   tagList(
 
@@ -157,7 +156,33 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
       # Exercises 10-12
       clarification = list(),
-      validation = list()
+      validation = list(),
+
+      # Adjacency matrices (source x target character matrices, cell format
+      # "<polarity><strength>:<confidence>"). Populated by save_ex2a..5 via
+      # rebuild_matrix_from_linked, save_ex6 via gb_d builder, and CLD Ex
+      # 7-9 cell edits. Pre-created with all 6 named slots so downstream
+      # code can index by name without checking existence.
+      adjacency_matrices = list(
+        es_gb  = NULL,
+        mpf_es = NULL,
+        p_mpf  = NULL,
+        a_p    = NULL,
+        d_a    = NULL,
+        gb_d   = NULL
+      ),
+
+      # User-edit tracking (parallel logical matrices). Cells flagged TRUE
+      # are preserved verbatim by rebuild_matrix_from_linked during
+      # subsequent element-form re-saves.
+      user_edited_matrices = list(
+        es_gb  = NULL,
+        mpf_es = NULL,
+        p_mpf  = NULL,
+        a_p    = NULL,
+        d_a    = NULL,
+        gb_d   = NULL
+      )
     )
 
     # Initialize ISA data from project_data_reactive if it exists (e.g., from AI Assistant) ----
@@ -839,45 +864,54 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 0: Save case information ----
     observeEvent(input$save_ex0, {
-      # Validate all Exercise 0 inputs
-      validations <- list(
-        validate_text_input(input$case_name, "Case Study Name",
-                           required = TRUE, min_length = 3, max_length = 200,
-                           session = session),
-        validate_text_input(input$case_description, "Case Description",
-                           required = TRUE, min_length = 10, max_length = 1000,
-                           session = session),
-        validate_text_input(input$geographic_scope, "Geographic Scope",
-                           required = TRUE, min_length = 3,
-                           session = session),
-        validate_text_input(input$temporal_scope, "Temporal Scope",
-                           required = TRUE, min_length = 3,
-                           session = session),
-        validate_text_input(input$welfare_impacts, "Welfare Impacts",
-                           required = FALSE, max_length = 2000,
-                           session = session),
-        validate_text_input(input$key_stakeholders, "Key Stakeholders",
-                           required = FALSE, max_length = 1000,
-                           session = session)
-      )
+      tryCatch({
+        # Validate all Exercise 0 inputs
+        validations <- list(
+          validate_text_input(input$case_name, "Case Study Name",
+                             required = TRUE, min_length = 3, max_length = 200,
+                             session = session),
+          validate_text_input(input$case_description, "Case Description",
+                             required = TRUE, min_length = 10, max_length = 1000,
+                             session = session),
+          validate_text_input(input$geographic_scope, "Geographic Scope",
+                             required = TRUE, min_length = 3,
+                             session = session),
+          validate_text_input(input$temporal_scope, "Temporal Scope",
+                             required = TRUE, min_length = 3,
+                             session = session),
+          validate_text_input(input$welfare_impacts, "Welfare Impacts",
+                             required = FALSE, max_length = 2000,
+                             session = session),
+          validate_text_input(input$key_stakeholders, "Key Stakeholders",
+                             required = FALSE, max_length = 1000,
+                             session = session)
+        )
 
-      # Check all validations
-      if (!validate_all(validations, session)) {
-        return()  # Stop if validation fails
-      }
+        # Check all validations
+        if (!validate_all(validations, session)) {
+          return()  # Stop if validation fails
+        }
 
-      # All valid - save data with cleaned values
-      isa_data$case_info <- list(
-        name = validations[[1]]$value,
-        description = validations[[2]]$value,
-        geographic_scope = validations[[3]]$value,
-        temporal_scope = validations[[4]]$value,
-        welfare_impacts = if (!is.null(validations[[5]]$value)) validations[[5]]$value else "",
-        key_stakeholders = if (!is.null(validations[[6]]$value)) validations[[6]]$value else ""
-      )
+        # All valid - save data with cleaned values
+        isa_data$case_info <- list(
+          name = validations[[1]]$value,
+          description = validations[[2]]$value,
+          geographic_scope = validations[[3]]$value,
+          temporal_scope = validations[[4]]$value,
+          welfare_impacts = if (!is.null(validations[[5]]$value)) validations[[5]]$value else "",
+          key_stakeholders = if (!is.null(validations[[6]]$value)) validations[[6]]$value else ""
+        )
 
-      showNotification(i18n$t("modules.isa.data_entry.ex0.exercise_0_saved_successfully"), type = "message")
-      debug_log("Exercise 0 case information saved", "INFO")
+        showNotification(i18n$t("modules.isa.data_entry.ex0.exercise_0_saved_successfully"), type = "message")
+        debug_log("Exercise 0 case information saved", "INFO")
+      }, error = function(e) {
+        debug_log(paste("save_ex0 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_0"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 1: Goods & Benefits ----
@@ -891,37 +925,79 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "gb", current_id, isa_fields_gb(i18n), i18n)
       )
 
-      register_remove_observer(input, ns, "gb", current_id, i18n)
+      register_remove_observer(input, ns, "gb", current_id, i18n, isa_data)
     })
 
     output$gb_table <- renderDT({
-      datatable(isa_data$goods_benefits, options = list(pageLength = 10), rownames = FALSE)
+      # Diagnostic only: snapshot column structure each render so a future
+      # column-mismatch incident produces a clean log line. The primary
+      # bug-killer is the null-coalesce in validate_and_collect_gb; this
+      # render block stays close to the original to avoid introducing
+      # rendering-pipeline bugs (a prior attempt with validate(need(...))
+      # triggered "is.character(txt) is not TRUE" — see commit history).
+      gb <- isa_data$goods_benefits
+      if (exists("debug_log", mode = "function") && is.data.frame(gb)) {
+        debug_log(paste0("gb_table render: ncol=", ncol(gb),
+                         " nrow=", nrow(gb)), "ISA_RENDER")
+      }
+      datatable(gb, options = list(pageLength = 10), rownames = FALSE)
     })
 
     observeEvent(input$save_ex1, {
-      if (isa_data$gb_counter == 0) {
-        showNotification(i18n$t("modules.isa.please_add_at_least_one_goodbenefit_entry_before_s"),
-                        type = "warning", session = session)
-        return()
-      }
+      # Per CLAUDE.md convention: user-visible operations MUST be wrapped in
+      # tryCatch + format_user_error(context_key=...). The 2026-05-20 G&B
+      # "DataTables ajax error" incident was triggered when an uncaught
+      # exception inside this observer (data.frame row-count mismatch from
+      # NULL importance/trend inputs) propagated up the websocket and
+      # corrupted the session state. The null-coalescing fix in
+      # validate_and_collect_gb closes the original throw site; this wrapper
+      # is defense-in-depth so any future validator/data error surfaces as
+      # a localized notification instead of a silent session-killer.
+      tryCatch({
+        if (isa_data$gb_counter == 0) {
+          showNotification(i18n$t("modules.isa.please_add_at_least_one_goodbenefit_entry_before_s"),
+                          type = "warning", session = session)
+          return()
+        }
 
-      result <- validate_and_collect_gb(input, isa_data$gb_counter, session, i18n)
+        result <- validate_and_collect_gb(input, isa_data$gb_counter, session, i18n)
 
-      if (length(result$errors) > 0) {
-        show_validation_error_modal(result$errors, i18n)
-        return()
-      }
+        if (length(result$errors) > 0) {
+          show_validation_error_modal(result$errors, i18n)
+          return()
+        }
 
-      if (result$n_rows == 0) {
-        showNotification(i18n$t("modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry"),
-                        type = "warning", session = session)
-        return()
-      }
+        if (result$n_rows == 0) {
+          showNotification(i18n$t("modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry"),
+                          type = "warning", session = session)
+          return()
+        }
 
-      isa_data$goods_benefits <- result$df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
-                      type = "message", session = session)
-      debug_log(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
+        # Diagnostic logging — gated on MARINESABRES_DEBUG=TRUE via debug_log
+        debug_log(paste0("save_ex1: pre-assign goods_benefits ncol=",
+                         ncol(isa_data$goods_benefits),
+                         " nrow=", nrow(isa_data$goods_benefits)), "ISA_SAVE")
+        debug_log(paste0("save_ex1: result df ncol=", ncol(result$df),
+                         " nrow=", nrow(result$df),
+                         " cols=", paste(colnames(result$df), collapse = ",")), "ISA_SAVE")
+
+        isa_data$goods_benefits <- result$df
+
+        debug_log(paste0("save_ex1: post-assign goods_benefits ncol=",
+                         ncol(isa_data$goods_benefits),
+                         " nrow=", nrow(isa_data$goods_benefits)), "ISA_SAVE")
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
+                        type = "message", session = session)
+        debug_log(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
+      }, error = function(e) {
+        debug_log(paste("save_ex1 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_1"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 2a: Ecosystem Services ----
@@ -936,7 +1012,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "es", current_id, isa_fields_es(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "es", current_id, i18n)
+      register_remove_observer(input, ns, "es", current_id, i18n, isa_data)
     })
 
     output$es_table <- renderDT({
@@ -944,29 +1020,73 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex2a, {
-      if (isa_data$es_counter == 0) {
-        showNotification(i18n$t("modules.isa.please_add_at_least_one_ecosystem_service_entry_be"),
-                        type = "warning", session = session)
-        return()
-      }
+      # Per CLAUDE.md: user-visible operations MUST be wrapped in
+      # tryCatch + format_user_error(context_key=...). Defense-in-depth
+      # against future validator/data errors; the null-coalesce fix in
+      # validate_and_collect_es closes the known throw site.
+      tryCatch({
+        if (isa_data$es_counter == 0) {
+          showNotification(i18n$t("modules.isa.please_add_at_least_one_ecosystem_service_entry_be"),
+                          type = "warning", session = session)
+          return()
+        }
 
-      result <- validate_and_collect_es(input, isa_data$es_counter, session, i18n)
+        result <- validate_and_collect_es(input, isa_data$es_counter, session, i18n)
 
-      if (length(result$errors) > 0) {
-        show_validation_error_modal(result$errors, i18n)
-        return()
-      }
+        if (length(result$errors) > 0) {
+          show_validation_error_modal(result$errors, i18n)
+          return()
+        }
 
-      if (result$n_rows == 0) {
-        showNotification(i18n$t("modules.isa.please_add_at_least_one_valid_ecosystem_service_en"),
-                        type = "warning", session = session)
-        return()
-      }
+        if (result$n_rows == 0) {
+          showNotification(i18n$t("modules.isa.please_add_at_least_one_valid_ecosystem_service_en"),
+                          type = "warning", session = session)
+          return()
+        }
 
-      isa_data$ecosystem_services <- result$df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
-                      type = "message", session = session)
-      debug_log(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
+        isa_data$ecosystem_services <- result$df
+
+        # N:M redesign: rebuild es_gb adjacency from LinkedGB column.
+        tryCatch({
+          rebuilt <- rebuild_matrix_from_linked(
+            element_df = isa_data$ecosystem_services,
+            linked_col = "LinkedGB",
+            source_ids = isa_data$ecosystem_services$ID,
+            target_ids = isa_data$goods_benefits$ID,
+            element_confidence_col = "Confidence",
+            existing_matrix    = isa_data$adjacency_matrices[["es_gb"]],
+            user_edited_matrix = isa_data$user_edited_matrices[["es_gb"]]
+          )
+          isa_data$adjacency_matrices[["es_gb"]] <- rebuilt$matrix
+          isa_data$user_edited_matrices[["es_gb"]] <- rebuilt$user_edited
+          if (length(rebuilt$stale_linked_ids) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                                   paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                             type = "warning", duration = 6, session = session)
+          }
+          if (length(rebuilt$dropped_user_edits) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                                   length(rebuilt$dropped_user_edits)),
+                             type = "warning", duration = 8, session = session)
+          }
+        }, error = function(e) {
+          debug_log(paste("save_ex2a: es_gb rebuild failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n,
+                                              context_key = "common.messages.context_matrix_rebuild"),
+                           type = "warning", duration = 10, session = session)
+        })
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
+                        type = "message", session = session)
+        debug_log(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
+      }, error = function(e) {
+        debug_log(paste("save_ex2a failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_2a"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 2b: Marine Processes and Functioning ----
@@ -981,7 +1101,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "mpf", current_id, isa_fields_mpf(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "mpf", current_id, i18n)
+      register_remove_observer(input, ns, "mpf", current_id, i18n, isa_data)
     })
 
     output$mpf_table <- renderDT({
@@ -989,13 +1109,53 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex2b, {
-      mpf_df <- collect_element_entries(
-        input, "mpf", isa_data$mpf_counter, ELEMENT_ID_PREFIX$states,
-        field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
-        col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
-      )
-      isa_data$marine_processes <- mpf_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
+      tryCatch({
+        mpf_df <- collect_element_entries(
+          input, "mpf", isa_data$mpf_counter, ELEMENT_ID_PREFIX$states,
+          field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
+          col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
+        )
+        isa_data$marine_processes <- mpf_df
+
+        # Rebuild mpf_es matrix from LinkedES column
+        tryCatch({
+          rebuilt <- rebuild_matrix_from_linked(
+            element_df = isa_data$marine_processes,
+            linked_col = "LinkedES",
+            source_ids = isa_data$marine_processes$ID,
+            target_ids = isa_data$ecosystem_services$ID,
+            element_confidence_col = "Confidence",
+            existing_matrix    = isa_data$adjacency_matrices[["mpf_es"]],
+            user_edited_matrix = isa_data$user_edited_matrices[["mpf_es"]]
+          )
+          isa_data$adjacency_matrices[["mpf_es"]] <- rebuilt$matrix
+          isa_data$user_edited_matrices[["mpf_es"]] <- rebuilt$user_edited
+          if (length(rebuilt$stale_linked_ids) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                                   paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                             type = "warning", duration = 6, session = session)
+          }
+          if (length(rebuilt$dropped_user_edits) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                                   length(rebuilt$dropped_user_edits)),
+                             type = "warning", duration = 8, session = session)
+          }
+        }, error = function(e) {
+          debug_log(paste("save_ex2b: mpf_es rebuild failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n,
+                                              context_key = "common.messages.context_matrix_rebuild"),
+                           type = "warning", duration = 10, session = session)
+        })
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
+      }, error = function(e) {
+        debug_log(paste("save_ex2b failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_2b"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 3: Pressures ----
@@ -1010,7 +1170,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "p", current_id, isa_fields_p(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "p", current_id, i18n)
+      register_remove_observer(input, ns, "p", current_id, i18n, isa_data)
     })
 
     output$p_table <- renderDT({
@@ -1018,13 +1178,53 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex3, {
-      p_df <- collect_element_entries(
-        input, "p", isa_data$p_counter, ELEMENT_ID_PREFIX$pressures,
-        field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
-        col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
-      )
-      isa_data$pressures <- p_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
+      tryCatch({
+        p_df <- collect_element_entries(
+          input, "p", isa_data$p_counter, ELEMENT_ID_PREFIX$pressures,
+          field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
+          col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
+        )
+        isa_data$pressures <- p_df
+
+        # Rebuild p_mpf matrix from LinkedMPF column
+        # Note: Pressures don't have Confidence column; defaults to "Medium"
+        tryCatch({
+          rebuilt <- rebuild_matrix_from_linked(
+            element_df = isa_data$pressures,
+            linked_col = "LinkedMPF",
+            source_ids = isa_data$pressures$ID,
+            target_ids = isa_data$marine_processes$ID,
+            existing_matrix    = isa_data$adjacency_matrices[["p_mpf"]],
+            user_edited_matrix = isa_data$user_edited_matrices[["p_mpf"]]
+          )
+          isa_data$adjacency_matrices[["p_mpf"]] <- rebuilt$matrix
+          isa_data$user_edited_matrices[["p_mpf"]] <- rebuilt$user_edited
+          if (length(rebuilt$stale_linked_ids) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                                   paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                             type = "warning", duration = 6, session = session)
+          }
+          if (length(rebuilt$dropped_user_edits) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                                   length(rebuilt$dropped_user_edits)),
+                             type = "warning", duration = 8, session = session)
+          }
+        }, error = function(e) {
+          debug_log(paste("save_ex3: p_mpf rebuild failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n,
+                                              context_key = "common.messages.context_matrix_rebuild"),
+                           type = "warning", duration = 10, session = session)
+        })
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
+      }, error = function(e) {
+        debug_log(paste("save_ex3 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_3"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 4: Activities ----
@@ -1039,7 +1239,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "a", current_id, isa_fields_a(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "a", current_id, i18n)
+      register_remove_observer(input, ns, "a", current_id, i18n, isa_data)
     })
 
     output$a_table <- renderDT({
@@ -1047,13 +1247,53 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex4, {
-      a_df <- collect_element_entries(
-        input, "a", isa_data$a_counter, ELEMENT_ID_PREFIX$activities,
-        field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
-        col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
-      )
-      isa_data$activities <- a_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
+      tryCatch({
+        a_df <- collect_element_entries(
+          input, "a", isa_data$a_counter, ELEMENT_ID_PREFIX$activities,
+          field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
+          col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
+        )
+        isa_data$activities <- a_df
+
+        # Rebuild a_p matrix from LinkedP column
+        # Note: Activities don't have Confidence column; defaults to "Medium"
+        tryCatch({
+          rebuilt <- rebuild_matrix_from_linked(
+            element_df = isa_data$activities,
+            linked_col = "LinkedP",
+            source_ids = isa_data$activities$ID,
+            target_ids = isa_data$pressures$ID,
+            existing_matrix    = isa_data$adjacency_matrices[["a_p"]],
+            user_edited_matrix = isa_data$user_edited_matrices[["a_p"]]
+          )
+          isa_data$adjacency_matrices[["a_p"]] <- rebuilt$matrix
+          isa_data$user_edited_matrices[["a_p"]] <- rebuilt$user_edited
+          if (length(rebuilt$stale_linked_ids) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                                   paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                             type = "warning", duration = 6, session = session)
+          }
+          if (length(rebuilt$dropped_user_edits) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                                   length(rebuilt$dropped_user_edits)),
+                             type = "warning", duration = 8, session = session)
+          }
+        }, error = function(e) {
+          debug_log(paste("save_ex4: a_p rebuild failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n,
+                                              context_key = "common.messages.context_matrix_rebuild"),
+                           type = "warning", duration = 10, session = session)
+        })
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
+      }, error = function(e) {
+        debug_log(paste("save_ex4 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_4"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 5: Drivers ----
@@ -1068,7 +1308,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "d", current_id, isa_fields_d(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "d", current_id, i18n)
+      register_remove_observer(input, ns, "d", current_id, i18n, isa_data)
     })
 
     output$d_table <- renderDT({
@@ -1076,13 +1316,53 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex5, {
-      d_df <- collect_element_entries(
-        input, "d", isa_data$d_counter, ELEMENT_ID_PREFIX$drivers,
-        field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
-        col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
-      )
-      isa_data$drivers <- d_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
+      tryCatch({
+        d_df <- collect_element_entries(
+          input, "d", isa_data$d_counter, ELEMENT_ID_PREFIX$drivers,
+          field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
+          col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
+        )
+        isa_data$drivers <- d_df
+
+        # Rebuild d_a matrix from LinkedA column
+        # Note: Drivers don't have Confidence column; defaults to "Medium"
+        tryCatch({
+          rebuilt <- rebuild_matrix_from_linked(
+            element_df = isa_data$drivers,
+            linked_col = "LinkedA",
+            source_ids = isa_data$drivers$ID,
+            target_ids = isa_data$activities$ID,
+            existing_matrix    = isa_data$adjacency_matrices[["d_a"]],
+            user_edited_matrix = isa_data$user_edited_matrices[["d_a"]]
+          )
+          isa_data$adjacency_matrices[["d_a"]] <- rebuilt$matrix
+          isa_data$user_edited_matrices[["d_a"]] <- rebuilt$user_edited
+          if (length(rebuilt$stale_linked_ids) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                                   paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                             type = "warning", duration = 6, session = session)
+          }
+          if (length(rebuilt$dropped_user_edits) > 0) {
+            showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                                   length(rebuilt$dropped_user_edits)),
+                             type = "warning", duration = 8, session = session)
+          }
+        }, error = function(e) {
+          debug_log(paste("save_ex5: d_a rebuild failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n,
+                                              context_key = "common.messages.context_matrix_rebuild"),
+                           type = "warning", duration = 10, session = session)
+        })
+
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
+      }, error = function(e) {
+        debug_log(paste("save_ex5 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_5"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # Exercise 6: Loop connections UI ----
@@ -1186,41 +1466,60 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Save Exercise 6 ----
     observeEvent(input$save_ex6, {
-      # loop_connections already in isa_data (no need to copy from rv)
+      tryCatch({
+        # loop_connections already in isa_data (no need to copy from rv)
 
-      # Convert loop_connections to gb_d adjacency matrix (NEW: forward causal flow)
-      # GB→D represents how welfare perceptions feed back to drive societal drivers
-      if (nrow(isa_data$loop_connections) > 0) {
-        n_drivers <- nrow(isa_data$drivers)
-        n_gb <- nrow(isa_data$goods_benefits)
+        # Convert loop_connections to gb_d adjacency matrix (NEW: forward causal flow)
+        # GB→D represents how welfare perceptions feed back to drive societal drivers
+        if (nrow(isa_data$loop_connections) > 0) {
+          n_drivers <- nrow(isa_data$drivers)
+          n_gb <- nrow(isa_data$goods_benefits)
 
-        # Initialize empty matrix (SOURCE×TARGET: rows=GB, cols=Drivers)
-        gb_d_matrix <- matrix("", nrow = n_gb, ncol = n_drivers)
-        rownames(gb_d_matrix) <- isa_data$goods_benefits$ID
-        colnames(gb_d_matrix) <- isa_data$drivers$ID
+          # Initialize empty matrix (SOURCE×TARGET: rows=GB, cols=Drivers)
+          gb_d_matrix <- matrix("", nrow = n_gb, ncol = n_drivers)
+          rownames(gb_d_matrix) <- isa_data$goods_benefits$ID
+          colnames(gb_d_matrix) <- isa_data$drivers$ID
 
-        # Fill matrix with connections
-        for (i in seq_len(nrow(isa_data$loop_connections))) {
-          conn <- isa_data$loop_connections[i, ]
-          gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
-          d_idx <- which(isa_data$drivers$ID == conn$DriverID)
+          # Fill matrix with connections
+          for (i in seq_len(nrow(isa_data$loop_connections))) {
+            conn <- isa_data$loop_connections[i, ]
+            gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
+            d_idx <- which(isa_data$drivers$ID == conn$DriverID)
 
-          if (length(gb_idx) > 0 && length(d_idx) > 0) {
-            # Format: "effect+strength:confidence"
-            value <- paste0(conn$Effect, conn$Strength, ":", conn$Confidence)
-            gb_d_matrix[gb_idx, d_idx] <- value
+            if (length(gb_idx) > 0 && length(d_idx) > 0) {
+              # Format: "effect+strength:confidence"
+              value <- paste0(conn$Effect, conn$Strength, ":", conn$Confidence)
+              gb_d_matrix[gb_idx, d_idx] <- value
+            }
           }
+
+          # Store in adjacency_matrices
+          if (is.null(isa_data$adjacency_matrices)) {
+            isa_data$adjacency_matrices <- list()
+          }
+          isa_data$adjacency_matrices$gb_d <- gb_d_matrix
+
+          # N:M redesign: mirror gb_d into user_edited_matrices. Every non-
+          # empty cell save_ex6 wrote is user-intentional (the user explicitly
+          # entered the loop connection in Exercise 6).
+          gb_d_edited <- matrix(
+            nzchar(gb_d_matrix),
+            nrow = nrow(gb_d_matrix), ncol = ncol(gb_d_matrix),
+            dimnames = dimnames(gb_d_matrix)
+          )
+          isa_data$user_edited_matrices[["gb_d"]] <- gb_d_edited
         }
 
-        # Store in adjacency_matrices
-        if (is.null(isa_data$adjacency_matrices)) {
-          isa_data$adjacency_matrices <- list()
-        }
-        isa_data$adjacency_matrices$gb_d <- gb_d_matrix
-      }
-
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex6.exercise_6_saved"), nrow(isa_data$loop_connections), i18n$t("modules.isa.data_entry.ex101112.loop_connections")),
-                      type = "message")
+        showNotification(paste(i18n$t("modules.isa.data_entry.ex6.exercise_6_saved"), nrow(isa_data$loop_connections), i18n$t("modules.isa.data_entry.ex101112.loop_connections")),
+                        type = "message")
+      }, error = function(e) {
+        debug_log(paste("save_ex6 failed:", e$message), "ERROR")
+        showNotification(
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_exercise_6"),
+          type = "error",
+          session = session
+        )
+      })
     })
 
     # BOT Graphs ----
@@ -1273,9 +1572,23 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         paste0(name, ".xlsx")
       },
       content = function(file) {
-        wb <- createWorkbook()
-        write_isa_element_sheets(wb, isa_data, include_adjacency = TRUE)
-        saveWorkbook(wb, file, overwrite = TRUE)
+        withProgress(message = i18n$t("common.misc.generating_file"), value = 0, {
+          tryCatch({
+            incProgress(0.3)
+            wb <- createWorkbook()
+            write_isa_element_sheets(wb, isa_data, include_adjacency = TRUE)
+            saveWorkbook(wb, file, overwrite = TRUE)
+            incProgress(0.7)
+          }, error = function(e) {
+            debug_log(paste("Download export_data failed:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_isa_download"),
+              type = "error",
+              duration = 10
+            )
+            stop(e)
+          })
+        })
       }
     )
 
@@ -1284,8 +1597,22 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         generate_export_filename("ISA_Analysis", ".xlsx")
       },
       content = function(file) {
-        wb <- create_isa_analysis_workbook(isa_data)
-        saveWorkbook(wb, file, overwrite = TRUE)
+        withProgress(message = i18n$t("common.misc.generating_file"), value = 0, {
+          tryCatch({
+            incProgress(0.3)
+            wb <- create_isa_analysis_workbook(isa_data)
+            saveWorkbook(wb, file, overwrite = TRUE)
+            incProgress(0.7)
+          }, error = function(e) {
+            debug_log(paste("Download download_excel failed:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_isa_download"),
+              type = "error",
+              duration = 10
+            )
+            stop(e)
+          })
+        })
       }
     )
 
@@ -1294,11 +1621,25 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         generate_export_filename("Kumu_Export", ".zip")
       },
       content = function(file) {
-        create_kumu_export_zip(isa_data, file)
+        withProgress(message = i18n$t("common.misc.generating_file"), value = 0, {
+          tryCatch({
+            incProgress(0.3)
+            create_kumu_export_zip(isa_data, file)
+            incProgress(0.7)
+          }, error = function(e) {
+            debug_log(paste("Download download_kumu failed:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_isa_download"),
+              type = "error",
+              duration = 10
+            )
+            stop(e)
+          })
+        })
       }
     )
 
-   
+
 
     # Download PDF guidance document
     output$download_guidance_pdf <- downloadHandler(
@@ -1306,7 +1647,21 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         "MarineSABRES_Simple_SES_DRAFT_Guidance.pdf"
       },
       content = function(file) {
-        file.copy("Documents/MarineSABRES_Simple_SES_DRAFT_Guidance.pdf", file)
+        withProgress(message = i18n$t("common.misc.generating_file"), value = 0, {
+          tryCatch({
+            incProgress(0.3)
+            file.copy("Documents/MarineSABRES_Simple_SES_DRAFT_Guidance.pdf", file)
+            incProgress(0.7)
+          }, error = function(e) {
+            debug_log(paste("Download download_guidance_pdf failed:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_isa_download"),
+              type = "error",
+              duration = 10
+            )
+            stop(e)
+          })
+        })
       }
     )
 

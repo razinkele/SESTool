@@ -30,14 +30,19 @@
 load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
   empty_df <- function() {
     data.frame(
-      line_num     = integer(0),
-      type         = character(0),
-      title        = character(0),
-      description  = character(0),
-      steps        = character(0),
-      timestamp    = character(0),
-      github_url   = character(0),
-      duplicate_of = character(0),
+      line_num             = integer(0),
+      type                 = character(0),
+      title                = character(0),
+      description          = character(0),
+      steps                = character(0),
+      timestamp            = character(0),
+      github_url           = character(0),
+      duplicate_of         = character(0),
+      # Resolution-tracking fields (added 2026-05-25)
+      resolution_status    = character(0),
+      resolved_at          = character(0),
+      resolution_note      = character(0),
+      resolved_app_version = character(0),
       stringsAsFactors = FALSE
     )
   }
@@ -74,14 +79,19 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
     }
 
     row <- list(
-      line_num     = i,
-      type         = as.character(parsed$type         %||% NA_character_),
-      title        = as.character(parsed$title        %||% NA_character_),
-      description  = as.character(parsed$description  %||% NA_character_),
-      steps        = as.character(parsed$steps        %||% NA_character_),
-      timestamp    = as.character(parsed$timestamp    %||% NA_character_),
-      github_url   = as.character(parsed$github_url   %||% NA_character_),
-      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_)
+      line_num             = i,
+      type                 = as.character(parsed$type                 %||% NA_character_),
+      title                = as.character(parsed$title                %||% NA_character_),
+      description          = as.character(parsed$description          %||% NA_character_),
+      steps                = as.character(parsed$steps                %||% NA_character_),
+      timestamp            = as.character(parsed$timestamp            %||% NA_character_),
+      github_url           = as.character(parsed$github_url           %||% NA_character_),
+      duplicate_of         = as.character(parsed$duplicate_of         %||% NA_character_),
+      # Resolution-tracking fields (added 2026-05-25). NA when not set.
+      resolution_status    = as.character(parsed$resolution_status    %||% NA_character_),
+      resolved_at          = as.character(parsed$resolved_at          %||% NA_character_),
+      resolution_note      = as.character(parsed$resolution_note      %||% NA_character_),
+      resolved_app_version = as.character(parsed$resolved_app_version %||% NA_character_)
     )
     rows[[length(rows) + 1L]] <- row
   }
@@ -290,6 +300,99 @@ find_duplicate_pairs <- function(df, threshold = 0.7) {
 #' @param duplicate_of_line Character string; typically a GitHub URL or a
 #'                          description of the original entry.
 #' @return TRUE on success, FALSE on any error or out-of-range line_num.
+#'
+#' Sibling functions added 2026-05-25 for resolution tracking:
+#'   mark_as_resolved(log_path, line_num, resolution_note, resolved_app_version)
+#'   mark_as_reopened(log_path, line_num)
+#' Both follow the same atomic-rewrite pattern as mark_as_duplicate.
+
+#' Mark a feedback entry as resolved
+#'
+#' Sets resolution_status="fixed", resolved_at (UTC ISO8601), resolution_note,
+#' and optionally resolved_app_version. Atomic rewrite via temp file + rename.
+#' Preserves all existing fields. Idempotent: re-marking overwrites resolution
+#' fields. See mark_as_reopened to undo.
+#'
+#' @param log_path Path to user_feedback_log.ndjson
+#' @param line_num 1-indexed line number
+#' @param resolution_note Free-text note describing the fix
+#' @param resolved_app_version Optional app version string (e.g. "1.13.0") containing the fix
+#' @return TRUE on success, FALSE on any failure.
+mark_as_resolved <- function(log_path, line_num, resolution_note = "",
+                             resolved_app_version = NA_character_) {
+  tryCatch({
+    if (!file.exists(log_path)) {
+      debug_log("mark_as_resolved: file not found", "ERROR")
+      return(FALSE)
+    }
+    raw_lines <- readLines(log_path, warn = FALSE, encoding = "UTF-8")
+    if (line_num < 1L || line_num > length(raw_lines)) {
+      debug_log(paste("mark_as_resolved: line_num", line_num,
+                      "out of range (1 -", length(raw_lines), ")"), "ERROR")
+      return(FALSE)
+    }
+    target_raw <- trimws(raw_lines[[line_num]])
+    if (nchar(target_raw) == 0L) return(FALSE)
+    parsed <- tryCatch(jsonlite::fromJSON(target_raw, simplifyVector = TRUE),
+                       error = function(e) NULL)
+    if (is.null(parsed) || !is.list(parsed)) return(FALSE)
+    parsed$resolution_status <- "fixed"
+    parsed$resolved_at <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+    parsed$resolution_note <- as.character(resolution_note %||% "")
+    if (!is.na(resolved_app_version) && nzchar(as.character(resolved_app_version))) {
+      parsed$resolved_app_version <- as.character(resolved_app_version)
+    }
+    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE)
+    tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
+    writeLines(raw_lines, con = tmp_path, useBytes = FALSE)
+    rename_ok <- file.rename(tmp_path, log_path)
+    if (!isTRUE(rename_ok)) {
+      try(file.remove(tmp_path), silent = TRUE)
+      return(FALSE)
+    }
+    TRUE
+  }, error = function(e) {
+    debug_log(paste("mark_as_resolved error:", e$message), "ERROR")
+    FALSE
+  })
+}
+
+#' Mark a feedback entry as reopened (clears resolution fields)
+#'
+#' Inverse of mark_as_resolved.
+#'
+#' @param log_path Path to user_feedback_log.ndjson
+#' @param line_num 1-indexed line number
+#' @return TRUE on success, FALSE on failure.
+mark_as_reopened <- function(log_path, line_num) {
+  tryCatch({
+    if (!file.exists(log_path)) return(FALSE)
+    raw_lines <- readLines(log_path, warn = FALSE, encoding = "UTF-8")
+    if (line_num < 1L || line_num > length(raw_lines)) return(FALSE)
+    target_raw <- trimws(raw_lines[[line_num]])
+    if (nchar(target_raw) == 0L) return(FALSE)
+    parsed <- tryCatch(jsonlite::fromJSON(target_raw, simplifyVector = TRUE),
+                       error = function(e) NULL)
+    if (is.null(parsed) || !is.list(parsed)) return(FALSE)
+    parsed$resolution_status <- "open"
+    parsed$resolved_at <- NULL
+    parsed$resolution_note <- NULL
+    parsed$resolved_app_version <- NULL
+    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE)
+    tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
+    writeLines(raw_lines, con = tmp_path, useBytes = FALSE)
+    rename_ok <- file.rename(tmp_path, log_path)
+    if (!isTRUE(rename_ok)) {
+      try(file.remove(tmp_path), silent = TRUE)
+      return(FALSE)
+    }
+    TRUE
+  }, error = function(e) {
+    debug_log(paste("mark_as_reopened error:", e$message), "ERROR")
+    FALSE
+  })
+}
+
 mark_as_duplicate <- function(log_path, line_num, duplicate_of_line) {
   tryCatch({
     if (!file.exists(log_path)) {

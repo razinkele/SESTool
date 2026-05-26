@@ -592,6 +592,16 @@ source("functions/excel_import_helpers.R", local = FALSE)  # FALSE = global scop
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
 
+# N:M LinkedX helpers (v1.13.0). Provides parse_linked, serialize_linked,
+# assert_matrices_aligned, rebuild_matrix_from_linked. Must source BEFORE
+# isa_form_builders.R because validate_and_collect_es/mpf/p/a/d call
+# serialize_linked() during form save — without this load, save_ex2a etc.
+# throw "could not find function 'serialize_linked'" and the outer
+# tryCatch surfaces "An error occurred saving Exercise 2a".
+# Production incident 2026-05-25: forgotten source line caused user bug
+# report 09:22 UTC; fixed same day.
+source("functions/matrix_from_linked.R", local = FALSE)
+
 # ISA form builders and entry collection helpers (extracted from isa_data_entry_module)
 source("functions/isa_form_builders.R", local = TRUE)
 
@@ -612,6 +622,11 @@ source("functions/visnetwork_helpers.R", local = TRUE)
 
 # CLD interaction helpers (manipulation, node/edge creation, highlight logic)
 source("functions/cld_interaction_helpers.R", local = TRUE)
+
+# NOTE: cld_validation.R is sourced further down via get_project_file()
+# (indirect-source pattern). Do not add a direct source() here — it
+# would be a duplicate. test-functions-sourced-in-app.R now matches
+# both patterns.
 
 # Export functions
 source("functions/export_functions.R", local = TRUE)

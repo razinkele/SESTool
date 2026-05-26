@@ -73,3 +73,20 @@ test_that("template_ses_server optional params default to NULL", {
                   info = paste0("user_level_reactive should default to NULL for optional use"))
     }
 })
+
+# ============================================================================
+# TASK 10: Cell-write user_edited_matrices flipping test
+# ============================================================================
+
+test_that("template_ses cell-write flips user_edited_matrices in BOTH local var AND project_data", {
+  td <- getwd()
+  root <- if (basename(td) == "testthat") dirname(dirname(td)) else td
+  src <- paste(readLines(file.path(root, "modules", "template_ses_module.R"),
+                         warn = FALSE), collapse = "\n")
+  expect_true(grepl("adj_matrices\\[\\[matrix_name\\]\\]\\[from_id, to_id\\] <- value", src, perl = TRUE),
+              info = "Original cell-write site at template_ses_module.R must still exist")
+  expect_true(grepl("user_edited_matrices\\[\\[matrix_name\\]\\]\\[from_id, to_id\\] <- TRUE", src, perl = TRUE),
+              info = "Template cell-write must also flip user_edited_matrices")
+  expect_true(grepl("project_data\\$data\\$isa_data\\$user_edited_matrices\\s*<-\\s*user_edited_matrices", src, perl = TRUE),
+              info = "user_edited_matrices must persist to project_data")
+})

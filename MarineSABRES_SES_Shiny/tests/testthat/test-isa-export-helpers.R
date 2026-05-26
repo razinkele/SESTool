@@ -62,6 +62,15 @@ create_mock_isa_data_with_matrices <- function() {
   isa
 }
 
+create_mock_isa_data_with_user_edited <- function() {
+  isa <- create_mock_isa_data_with_matrices()
+  isa$user_edited_matrices <- list(
+    impact = matrix(c(1, 1, 0, 1), nrow = 2,
+                    dimnames = list(c("A", "B"), c("A", "B")))
+  )
+  isa
+}
+
 # ==============================================================================
 # Test: write_isa_element_sheets
 # ==============================================================================
@@ -110,6 +119,18 @@ test_that("write_isa_element_sheets skips adjacency when NULL", {
   sheet_names <- names(wb)
   expect_false(any(grepl("^Matrix_", sheet_names)))
   expect_equal(length(sheet_names), 6)
+})
+
+test_that("Excel export writes user_edited side sheets with collision detection", {
+  wb <- createWorkbook()
+  isa <- create_mock_isa_data_with_user_edited()
+
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+
+  sheet_names <- names(wb)
+  # Should have: 6 element sheets + 1 Matrix_impact + 1 user_edited sheet
+  expect_true(any(grepl("user_edited", sheet_names)))
+  expect_gt(length(sheet_names), 7)
 })
 
 test_that("write_isa_element_sheets data can be saved and read back", {
