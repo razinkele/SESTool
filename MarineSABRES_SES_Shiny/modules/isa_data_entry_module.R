@@ -133,6 +133,17 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       ),
       d_counter = 0,
 
+      # Ordered stable-ID trackers (single source of truth for collection).
+      # A row's ID is allocated once at panel creation and never renumbered,
+      # so removing/reordering panels does not invalidate LinkedX refs or
+      # ID-keyed matrices (fixes feedback #2/#3/#4).
+      gb_panel_ids  = character(0),
+      es_panel_ids  = character(0),
+      mpf_panel_ids = character(0),
+      p_panel_ids   = character(0),
+      a_panel_ids   = character(0),
+      d_panel_ids   = character(0),
+
       # Exercise 6: Loop closure
       loop_connections = data.frame(
         DriverID = character(),
@@ -158,6 +169,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       clarification = list(),
       validation = list()
     )
+
+    # Per-session stable-ID counter store. Isolated per moduleServer instance so
+    # concurrent users never share an id sequence (the load path re-seeds it).
+    id_store <- new_stable_id_store()
 
     # Initialize ISA data from project_data_reactive if it exists (e.g., from AI Assistant) ----
     # This observer loads saved data when the module starts or when project_data_reactive changes
@@ -912,8 +927,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 1: Goods & Benefits ----
     observeEvent(input$add_gb, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$welfare, id_store)
+      isa_data$gb_panel_ids <- c(isa_data$gb_panel_ids, current_id)
       isa_data$gb_counter <- isa_data$gb_counter + 1
-      current_id <- isa_data$gb_counter
 
       insertUI(
         selector = paste0("#", ns("gb_entries")),
@@ -932,13 +948,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex1, {
-      if (isa_data$gb_counter == 0) {
+      if (length(isa_data$gb_panel_ids) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_goodbenefit_entry_before_s"),
                         type = "warning", session = session)
         return()
       }
 
-      result <- validate_and_collect_gb(input, isa_data$gb_counter, session, i18n)
+      result <- validate_and_collect_gb(input, isa_data$gb_panel_ids, session, i18n)
 
       if (length(result$errors) > 0) {
         show_validation_error_modal(result$errors, i18n)
@@ -960,8 +976,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 2a: Ecosystem Services ----
     observeEvent(input$add_es, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$impacts, id_store)
+      isa_data$es_panel_ids <- c(isa_data$es_panel_ids, current_id)
       isa_data$es_counter <- isa_data$es_counter + 1
-      current_id <- isa_data$es_counter
 
       linked_choices <- c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
       insertUI(
@@ -981,13 +998,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex2a, {
-      if (isa_data$es_counter == 0) {
+      if (length(isa_data$es_panel_ids) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_ecosystem_service_entry_be"),
                         type = "warning", session = session)
         return()
       }
 
-      result <- validate_and_collect_es(input, isa_data$es_counter, session, i18n)
+      result <- validate_and_collect_es(input, isa_data$es_panel_ids, session, i18n)
 
       if (length(result$errors) > 0) {
         show_validation_error_modal(result$errors, i18n)
@@ -1009,8 +1026,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 2b: Marine Processes and Functioning ----
     observeEvent(input$add_mpf, {
-      current_id <- isa_data$mpf_counter + 1
-      isa_data$mpf_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$states, id_store)
+      isa_data$mpf_panel_ids <- c(isa_data$mpf_panel_ids, current_id)
+      isa_data$mpf_counter <- isa_data$mpf_counter + 1
 
       linked_choices <- c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name))
       insertUI(
@@ -1031,7 +1049,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex2b, {
       mpf_df <- collect_element_entries(
-        input, "mpf", isa_data$mpf_counter, ELEMENT_ID_PREFIX$states,
+        input, "mpf", isa_data$mpf_panel_ids, ELEMENT_ID_PREFIX$states,
         field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
         col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
       )
@@ -1042,8 +1060,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 3: Pressures ----
     observeEvent(input$add_p, {
-      current_id <- isa_data$p_counter + 1
-      isa_data$p_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$pressures, id_store)
+      isa_data$p_panel_ids <- c(isa_data$p_panel_ids, current_id)
+      isa_data$p_counter <- isa_data$p_counter + 1
 
       linked_choices <- c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name))
       insertUI(
@@ -1064,7 +1083,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex3, {
       p_df <- collect_element_entries(
-        input, "p", isa_data$p_counter, ELEMENT_ID_PREFIX$pressures,
+        input, "p", isa_data$p_panel_ids, ELEMENT_ID_PREFIX$pressures,
         field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
         col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
       )
@@ -1075,8 +1094,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 4: Activities ----
     observeEvent(input$add_a, {
-      current_id <- isa_data$a_counter + 1
-      isa_data$a_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$activities, id_store)
+      isa_data$a_panel_ids <- c(isa_data$a_panel_ids, current_id)
+      isa_data$a_counter <- isa_data$a_counter + 1
 
       linked_choices <- c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name))
       insertUI(
@@ -1097,7 +1117,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex4, {
       a_df <- collect_element_entries(
-        input, "a", isa_data$a_counter, ELEMENT_ID_PREFIX$activities,
+        input, "a", isa_data$a_panel_ids, ELEMENT_ID_PREFIX$activities,
         field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
         col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
       )
@@ -1108,8 +1128,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 5: Drivers ----
     observeEvent(input$add_d, {
-      current_id <- isa_data$d_counter + 1
-      isa_data$d_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$drivers, id_store)
+      isa_data$d_panel_ids <- c(isa_data$d_panel_ids, current_id)
+      isa_data$d_counter <- isa_data$d_counter + 1
 
       linked_choices <- c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name))
       insertUI(
@@ -1130,7 +1151,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex5, {
       d_df <- collect_element_entries(
-        input, "d", isa_data$d_counter, ELEMENT_ID_PREFIX$drivers,
+        input, "d", isa_data$d_panel_ids, ELEMENT_ID_PREFIX$drivers,
         field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
         col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
       )

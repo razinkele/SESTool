@@ -18,24 +18,32 @@ generate_element_id <- function(prefix, n) {
 # Stable, monotonic element IDs. Allocated once per element and never reused
 # within a session, so removing/reordering rows does not reassign survivors'
 # IDs — keeping LinkedX refs and ID-keyed matrices valid across edits.
+#
+# Counters live in an environment. The module-global `.stable_id_counters` is
+# the default (used by unit tests), but each Shiny session creates its OWN
+# store via new_stable_id_store() and threads it through `store=` so concurrent
+# users never clobber each other's id sequence (this app keeps state
+# session-local — see the i18n design).
 .stable_id_counters <- new.env(parent = emptyenv())
 
-reset_stable_id_counter <- function(prefix) {
-  assign(prefix, 0L, envir = .stable_id_counters); invisible(NULL)
+new_stable_id_store <- function() new.env(parent = emptyenv())
+
+reset_stable_id_counter <- function(prefix, store = .stable_id_counters) {
+  assign(prefix, 0L, envir = store); invisible(NULL)
 }
 
-seed_stable_id_counter <- function(prefix, existing_ids) {
+seed_stable_id_counter <- function(prefix, existing_ids, store = .stable_id_counters) {
   nums <- suppressWarnings(as.integer(sub(paste0("^", prefix), "", existing_ids)))
   nums <- nums[!is.na(nums)]
-  assign(prefix, if (length(nums)) max(nums) else 0L, envir = .stable_id_counters)
+  assign(prefix, if (length(nums)) max(nums) else 0L, envir = store)
   invisible(NULL)
 }
 
-generate_stable_element_id <- function(prefix) {
-  cur <- if (exists(prefix, envir = .stable_id_counters, inherits = FALSE))
-    get(prefix, envir = .stable_id_counters) else 0L
+generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
+  cur <- if (exists(prefix, envir = store, inherits = FALSE))
+    get(prefix, envir = store) else 0L
   nxt <- cur + 1L
-  assign(prefix, nxt, envir = .stable_id_counters)
+  assign(prefix, nxt, envir = store)
   paste0(prefix, sprintf("%03d", nxt))
 }
 

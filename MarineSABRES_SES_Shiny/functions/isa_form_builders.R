@@ -89,15 +89,23 @@ register_remove_observer <- function(input, ns, prefix, current_id, i18n,
   observeEvent(input[[paste0(prefix, "_remove_", current_id)]], {
     removeUI(selector = paste0("#", ns(paste0(prefix, "_panel_", current_id))))
 
+    # Drop the stable id from the ordered panel-id tracker (the single source of
+    # truth for collection) so the survivor set no longer references it. Keeps
+    # survivors' IDs stable — no positional renumber (fixes #2/#3/#4).
+    if (!is.null(isa_data)) {
+      tracker <- paste0(prefix, "_panel_ids")
+      isa_data[[tracker]] <- setdiff(isa_data[[tracker]], current_id)
+    }
+
     # If the row was already committed via Save Exercise, delete it from the
-    # stored data.frame so the row doesn't ghost back on next render.
+    # stored data.frame so the row doesn't ghost back on next render. current_id
+    # is already the stable element ID (e.g. "ES001"), so match on it directly.
     if (!is.null(isa_data) && !is.null(data_key) && !is.null(id_prefix)) {
       df <- isa_data[[data_key]]
       if (is.data.frame(df) && nrow(df) > 0) {
         id_col <- if ("ID" %in% names(df)) "ID" else if ("id" %in% names(df)) "id" else NULL
         if (!is.null(id_col)) {
-          target_id <- generate_element_id(id_prefix, current_id)
-          isa_data[[data_key]] <- df[df[[id_col]] != target_id, , drop = FALSE]
+          isa_data[[data_key]] <- df[df[[id_col]] != current_id, , drop = FALSE]
         }
       }
     }
@@ -315,26 +323,29 @@ load_isa_elements_from_saved <- function(isa_data, isa_saved) {
 #'
 #' @param input Shiny input object
 #' @param prefix Element prefix (e.g. "gb", "es", "mpf", "p", "a", "d")
-#' @param counter Number of entries created (max ID)
-#' @param id_prefix Element ID prefix from ELEMENT_ID_PREFIX (e.g. "GB", "ES")
+#' @param panel_ids Ordered character vector of stable element IDs (the survivor
+#'   set, e.g. isa_data$mpf_panel_ids). Field inputs are suffixed with these IDs
+#'   and each row's ID is the panel id itself — never positional.
+#' @param id_prefix Element ID prefix from ELEMENT_ID_PREFIX (retained for
+#'   signature compatibility; no longer used to synthesize IDs).
 #' @param field_ids Character vector of field ID suffixes to collect (e.g. c("name", "type", "desc"))
 #' @param col_names Character vector of column names for the resulting data.frame (same order as field_ids)
 #' @return A data.frame with an ID column plus columns for each field, or an empty data.frame
-collect_element_entries <- function(input, prefix, counter, id_prefix, field_ids, col_names) {
-  if (counter == 0) return(data.frame())
+collect_element_entries <- function(input, prefix, panel_ids, id_prefix, field_ids, col_names) {
+  if (length(panel_ids) == 0) return(data.frame())
 
   rows <- list()
-  for (i in seq_len(counter)) {
-    name_val <- input[[paste0(prefix, "_name_", i)]]
+  for (sid in panel_ids) {
+    name_val <- input[[paste0(prefix, "_name_", sid)]]
 
     # Skip removed entries (NULL) and blank names
     if (is.null(name_val) || name_val == "") next
 
-    # Collect all field values
+    # Collect all field values; the row ID is the stable panel id.
     vals <- list()
-    vals[["ID"]] <- generate_element_id(id_prefix, i)
+    vals[["ID"]] <- sid
     for (j in seq_along(field_ids)) {
-      raw <- input[[paste0(prefix, "_", field_ids[j], "_", i)]]
+      raw <- input[[paste0(prefix, "_", field_ids[j], "_", sid)]]
       vals[[col_names[j]]] <- if (!is.null(raw)) raw else ""
     }
     rows[[length(rows) + 1]] <- as.data.frame(vals, stringsAsFactors = FALSE)
@@ -365,37 +376,39 @@ show_validation_error_modal <- function(validation_errors, i18n) {
 #' Validate and collect Goods & Benefits entries with full validation
 #'
 #' @param input Shiny input object
-#' @param counter Number of GB entries created
+#' @param panel_ids Ordered character vector of stable element IDs (the survivor
+#'   set tracked in isa_data$gb_panel_ids). Field inputs are suffixed with these
+#'   IDs, and each collected row's ID is the panel id itself — never positional.
 #' @param session Shiny session (for notifications)
 #' @param i18n Translation object
 #' @return List with \code{df} (data.frame or NULL on error) and \code{errors} (character vector)
-validate_and_collect_gb <- function(input, counter, session, i18n) {
+validate_and_collect_gb <- function(input, panel_ids, session, i18n) {
   gb_rows <- list()
   validation_errors <- c()
 
-  for (i in seq_len(counter)) {
-    name_val <- input[[paste0("gb_name_", i)]]
-    type_val <- input[[paste0("gb_type_", i)]]
-    desc_val <- input[[paste0("gb_desc_", i)]]
-    stakeholder_val <- input[[paste0("gb_stakeholder_", i)]]
-    importance_val <- input[[paste0("gb_importance_", i)]]
-    trend_val <- input[[paste0("gb_trend_", i)]]
+  for (sid in panel_ids) {
+    name_val <- input[[paste0("gb_name_", sid)]]
+    type_val <- input[[paste0("gb_type_", sid)]]
+    desc_val <- input[[paste0("gb_desc_", sid)]]
+    stakeholder_val <- input[[paste0("gb_stakeholder_", sid)]]
+    importance_val <- input[[paste0("gb_importance_", sid)]]
+    trend_val <- input[[paste0("gb_trend_", sid)]]
 
     if (is.null(name_val)) next
     if (name_val == "") next
 
     entry_validations <- list(
-      validate_text_input(name_val, paste0("G&B ", i, " Name"),
+      validate_text_input(name_val, paste0("G&B ", sid, " Name"),
                          required = TRUE, min_length = 2, max_length = 200,
                          session = NULL),
-      validate_select_input(type_val, paste0("G&B ", i, " Type"),
+      validate_select_input(type_val, paste0("G&B ", sid, " Type"),
                            required = TRUE,
                            valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
                            session = NULL),
-      validate_text_input(desc_val, paste0("G&B ", i, " Description"),
+      validate_text_input(desc_val, paste0("G&B ", sid, " Description"),
                          required = FALSE, max_length = 500,
                          session = NULL),
-      validate_text_input(stakeholder_val, paste0("G&B ", i, " Stakeholder"),
+      validate_text_input(stakeholder_val, paste0("G&B ", sid, " Stakeholder"),
                          required = FALSE, max_length = 200,
                          session = NULL)
     )
@@ -408,7 +421,7 @@ validate_and_collect_gb <- function(input, counter, session, i18n) {
 
     if (all(sapply(entry_validations, function(v) v$valid))) {
       gb_rows[[length(gb_rows) + 1]] <- data.frame(
-        ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, i),
+        ID = sid,
         Name = entry_validations[[1]]$value,
         Type = entry_validations[[2]]$value,
         Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
@@ -427,37 +440,38 @@ validate_and_collect_gb <- function(input, counter, session, i18n) {
 #' Validate and collect Ecosystem Services entries with full validation
 #'
 #' @param input Shiny input object
-#' @param counter Number of ES entries created
+#' @param panel_ids Ordered character vector of stable element IDs
+#'   (isa_data$es_panel_ids); each row's ID is the panel id, never positional.
 #' @param session Shiny session
 #' @param i18n Translation object
 #' @return List with \code{df}, \code{errors}, \code{n_rows}
-validate_and_collect_es <- function(input, counter, session, i18n) {
+validate_and_collect_es <- function(input, panel_ids, session, i18n) {
   es_rows <- list()
   validation_errors <- c()
 
-  for (i in seq_len(counter)) {
-    name_val <- input[[paste0("es_name_", i)]]
-    type_val <- input[[paste0("es_type_", i)]]
-    desc_val <- input[[paste0("es_desc_", i)]]
-    linkedgb_val <- input[[paste0("es_linkedgb_", i)]]
-    mechanism_val <- input[[paste0("es_mechanism_", i)]]
-    confidence_val <- input[[paste0("es_confidence_", i)]]
+  for (sid in panel_ids) {
+    name_val <- input[[paste0("es_name_", sid)]]
+    type_val <- input[[paste0("es_type_", sid)]]
+    desc_val <- input[[paste0("es_desc_", sid)]]
+    linkedgb_val <- input[[paste0("es_linkedgb_", sid)]]
+    mechanism_val <- input[[paste0("es_mechanism_", sid)]]
+    confidence_val <- input[[paste0("es_confidence_", sid)]]
 
     if (is.null(name_val)) next
     if (name_val == "") next
 
     entry_validations <- list(
-      validate_text_input(name_val, paste0("ES ", i, " Name"),
+      validate_text_input(name_val, paste0("ES ", sid, " Name"),
                          required = TRUE, min_length = 2, max_length = 200,
                          session = NULL),
-      validate_select_input(type_val, paste0("ES ", i, " Type"),
+      validate_select_input(type_val, paste0("ES ", sid, " Type"),
                            required = TRUE,
                            valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
                            session = NULL),
-      validate_text_input(desc_val, paste0("ES ", i, " Description"),
+      validate_text_input(desc_val, paste0("ES ", sid, " Description"),
                          required = FALSE, max_length = 500,
                          session = NULL),
-      validate_text_input(mechanism_val, paste0("ES ", i, " Mechanism"),
+      validate_text_input(mechanism_val, paste0("ES ", sid, " Mechanism"),
                          required = FALSE, max_length = 300,
                          session = NULL)
     )
@@ -470,7 +484,7 @@ validate_and_collect_es <- function(input, counter, session, i18n) {
 
     if (all(sapply(entry_validations, function(v) v$valid))) {
       es_rows[[length(es_rows) + 1]] <- data.frame(
-        ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, i),
+        ID = sid,
         Name = entry_validations[[1]]$value,
         Type = entry_validations[[2]]$value,
         Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
