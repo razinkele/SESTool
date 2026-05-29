@@ -34,3 +34,21 @@ test_that("stale_linked_ids fires only for targets outside target_ids", {
   expect_equal(res$stale_linked_ids, "ES999")
   expect_true(nzchar(res$matrix["MPF001", "ES001"]))  # valid edge still written
 })
+
+# --- Task 2: stable (non-positional) element ID generator ---
+source_for_test("functions/data_structure.R")
+
+test_that("generate_stable_element_id never reuses a number for a prefix", {
+  reset_stable_id_counter("ES")
+  ids <- c(generate_stable_element_id("ES"),
+           generate_stable_element_id("ES"),
+           generate_stable_element_id("ES"))
+  expect_equal(ids, c("ES001", "ES002", "ES003"))
+  expect_equal(anyDuplicated(ids), 0)
+})
+
+test_that("seed_stable_id_counter advances the high-water mark from existing ids", {
+  reset_stable_id_counter("GB")
+  seed_stable_id_counter("GB", c("GB001", "GB004", "GB002"))
+  expect_equal(generate_stable_element_id("GB"), "GB005")
+})

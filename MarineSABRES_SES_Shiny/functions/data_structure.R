@@ -15,6 +15,30 @@ generate_element_id <- function(prefix, n) {
   paste0(prefix, sprintf("%03d", n))
 }
 
+# Stable, monotonic element IDs. Allocated once per element and never reused
+# within a session, so removing/reordering rows does not reassign survivors'
+# IDs — keeping LinkedX refs and ID-keyed matrices valid across edits.
+.stable_id_counters <- new.env(parent = emptyenv())
+
+reset_stable_id_counter <- function(prefix) {
+  assign(prefix, 0L, envir = .stable_id_counters); invisible(NULL)
+}
+
+seed_stable_id_counter <- function(prefix, existing_ids) {
+  nums <- suppressWarnings(as.integer(sub(paste0("^", prefix), "", existing_ids)))
+  nums <- nums[!is.na(nums)]
+  assign(prefix, if (length(nums)) max(nums) else 0L, envir = .stable_id_counters)
+  invisible(NULL)
+}
+
+generate_stable_element_id <- function(prefix) {
+  cur <- if (exists(prefix, envir = .stable_id_counters, inherits = FALSE))
+    get(prefix, envir = .stable_id_counters) else 0L
+  nxt <- cur + 1L
+  assign(prefix, nxt, envir = .stable_id_counters)
+  paste0(prefix, sprintf("%03d", nxt))
+}
+
 # ============================================================================
 # DATA STRUCTURE TEMPLATES
 # ============================================================================
