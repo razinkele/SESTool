@@ -34,3 +34,28 @@ test_that("survivor keeps its stable ID after a mid-list removal; adds never reu
     expect_equal(isa()$es_panel_ids, c("ES002", "ES003", "ES004"))
   })
 })
+
+test_that("loading a corrupted project (duplicate ids) repairs without crashing and adopts panel ids", {
+  i18n <- make_test_i18n()
+  # project_id present so the load observer (keyed on project_id) fires.
+  pdr <- reactiveVal(list(project_id = "p1", data = list(isa_data = list(
+    ecosystem_services = data.frame(ID = c("ES001", "ES001"), Name = c("a", "b"),
+                                    LinkedGB = c("GB001", "GB001"), stringsAsFactors = FALSE),
+    goods_benefits = data.frame(ID = "GB001", Name = "x", stringsAsFactors = FALSE),
+    adjacency_matrices = list(), user_edited_matrices = list()
+  ))))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pdr, i18n = i18n, event_bus = NULL), {
+    isa <- function() session$getReturned()()
+    session$flushReact()
+
+    expect_equal(anyDuplicated(isa()$ecosystem_services$ID), 0)        # dup repaired
+    expect_true(all(nzchar(isa()$ecosystem_services$ID)))
+    expect_equal(isa()$es_panel_ids, isa()$ecosystem_services$ID)      # adopted as tracker
+
+    # An add after a repaired load must not collide with an existing id.
+    session$setInputs(add_es = 1)
+    last <- tail(isa()$es_panel_ids, 1)
+    expect_false(last %in% head(isa()$es_panel_ids, -1))
+  })
+})

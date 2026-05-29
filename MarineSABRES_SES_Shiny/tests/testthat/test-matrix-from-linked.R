@@ -52,3 +52,25 @@ test_that("seed_stable_id_counter advances the high-water mark from existing ids
   seed_stable_id_counter("GB", c("GB001", "GB004", "GB002"))
   expect_equal(generate_stable_element_id("GB"), "GB005")
 })
+
+# --- Task 4: legacy-corruption-safe ID repair on load ---
+
+test_that("reconcile_loaded_element_ids uniquifies duplicate ids, preserves first occurrence", {
+  reset_stable_id_counter("ES")
+  df <- data.frame(ID = c("ES001", "ES001", "ES002"), Name = c("a", "b", "c"),
+                   LinkedGB = c("GB001", "", "GB001"), stringsAsFactors = FALSE)
+  res <- reconcile_loaded_element_ids(df, "ES")
+  expect_equal(anyDuplicated(res$df$ID), 0)
+  expect_true(all(nzchar(res$df$ID)))
+  expect_equal(res$df$ID[1], "ES001")          # first kept
+  expect_false(res$df$ID[2] %in% c("ES001"))   # duplicate re-keyed
+  expect_true(isTRUE(res$repaired))
+})
+
+test_that("reconcile_loaded_element_ids is a no-op for clean ids", {
+  reset_stable_id_counter("ES")
+  df <- data.frame(ID = c("ES001", "ES002"), Name = c("a", "b"), stringsAsFactors = FALSE)
+  res <- reconcile_loaded_element_ids(df, "ES")
+  expect_equal(res$df$ID, c("ES001", "ES002"))
+  expect_false(isTRUE(res$repaired))
+})

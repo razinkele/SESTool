@@ -47,6 +47,31 @@ generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
   paste0(prefix, sprintf("%03d", nxt))
 }
 
+#' Repair legacy element IDs that are duplicated or blank (a symptom of the
+#' positional-ID bug — projects saved while it was live can contain dupes).
+#' The FIRST occurrence of an id is preserved (so existing LinkedX refs still
+#' resolve to it); later duplicates and blanks get fresh stable ids seeded past
+#' the high-water mark of the good ids. The counter `store` is always advanced
+#' past the loaded ids so subsequent add_* allocations never collide. Matrices
+#' are left to be rebuilt from LinkedX on next save.
+#' @param element_df loaded element data.frame (or NULL/empty)
+#' @param prefix element ID prefix (e.g. "ES")
+#' @param store counter environment (session-local in the module; global default for tests)
+#' @return list(df = repaired data.frame, repaired = logical scalar)
+reconcile_loaded_element_ids <- function(element_df, prefix, store = .stable_id_counters) {
+  if (is.null(element_df) || !nrow(element_df)) return(list(df = element_df, repaired = FALSE))
+  ids <- as.character(element_df$ID)
+  bad <- duplicated(ids) | is.na(ids) | !nzchar(ids)
+  if (!any(bad)) {
+    seed_stable_id_counter(prefix, ids, store)
+    return(list(df = element_df, repaired = FALSE))
+  }
+  seed_stable_id_counter(prefix, ids[!bad], store)
+  for (k in which(bad)) ids[k] <- generate_stable_element_id(prefix, store)
+  element_df$ID <- ids
+  list(df = element_df, repaired = TRUE)
+}
+
 # ============================================================================
 # DATA STRUCTURE TEMPLATES
 # ============================================================================

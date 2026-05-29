@@ -237,6 +237,38 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         debug_log("Loading saved ISA data on project change", "ISA Module")
         load_isa_elements_from_saved(isa_data, project$data$isa_data)
+
+        # Repair legacy duplicate/blank IDs (a symptom of the old positional-ID
+        # bug) and ADOPT the resulting ids as the stable panel set, seeding the
+        # per-session counter past them so later add_* never collide. Reads the
+        # RAW saved df (uppercase ID) — load_isa_elements_from_saved lowercases
+        # for its table view, but the rest of the module keys on uppercase ID.
+        saved_isa <- project$data$isa_data
+        id_load_map <- list(
+          goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
+          ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
+          marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
+          pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
+          activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
+          drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+        )
+        any_repaired <- FALSE
+        for (key in names(id_load_map)) {
+          saved_df <- saved_isa[[key]]
+          if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+            rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
+            isa_data[[key]] <- rec$df
+            isa_data[[id_load_map[[key]]$panel]] <- as.character(rec$df$ID)
+            if (isTRUE(rec$repaired)) any_repaired <- TRUE
+          } else {
+            isa_data[[id_load_map[[key]]$panel]] <- character(0)
+          }
+        }
+        if (any_repaired) {
+          showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
+                           type = "warning", duration = 8, session = session)
+        }
+
         data_initialized(TRUE)
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
