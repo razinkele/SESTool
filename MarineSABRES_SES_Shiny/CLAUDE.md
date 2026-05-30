@@ -77,7 +77,7 @@ Rscript scripts/add_translation.R
 │   └── ARCHITECTURE.md   # Architecture Decision Records
 ├── scripts/
 │   └── build_offshore_wind_kb.py  # Reproducible KB builder from BibTeX (187 papers)
-└── tests/testthat/       # 92 test files, ~7000 assertions passing (21/22 *_module.R covered; pilot_study_module pending)
+└── tests/testthat/       # 92 test files, ~7000 assertions passing (all 22 *_module.R covered)
 ```
 
 ## i18n System (CRITICAL)
@@ -220,7 +220,7 @@ tryCatch({
 ## Testing
 
 - **Unit tests**: `test-global-utils.R`, `test-data-structure.R`
-- **Module signature-contract tests**: `test-<module-name>-module.R` for 21 of the 22 `modules/*_module.R` files (pilot_study_module.R is a v1.15.0 addition without a signature test yet). Each asserts UI returns valid shiny tags, namespaces IDs, server function exists with the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` signature. The previously signature-only set (entry-point, feedback-admin, recent-projects, template-ses, export-reports, prepare-report) now also carries **behavior tests** that drive the real server via `testServer()` and assert observable effects (so they fail if the module body is `NULL`). Pattern: each re-binds the real server from `.GlobalEnv` before `testServer()` because `helper-stubs.R` defines a stub in testthat's helper env that shadows the `.GlobalEnv` copy `source_for_test()` writes — without the re-bind, `testServer()` drives the stub. Reach internal state via the module's returned reactive (`session$getReturned()`), not module-local vars (testServer does not expose them here).
+- **Module signature-contract tests**: `test-<module-name>-module.R` for all 22 `modules/*_module.R` files. Each asserts UI returns valid shiny tags, namespaces IDs, server function exists with the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` signature. The previously signature-only set (entry-point, feedback-admin, recent-projects, template-ses, export-reports, prepare-report) now also carries **behavior tests** that drive the real server via `testServer()` and assert observable effects (so they fail if the module body is `NULL`). Pattern: each re-binds the real server from `.GlobalEnv` before `testServer()` because `helper-stubs.R` defines a stub in testthat's helper env that shadows the `.GlobalEnv` copy `source_for_test()` writes — without the re-bind, `testServer()` drives the stub. Reach internal state via the module's returned reactive (`session$getReturned()`), not module-local vars (testServer does not expose them here).
 - **Module integration tests**: `test-modules.R` (pre-existing `testServer()` exercises)
 - **JSON loading**: `test-json-project-loading.R` (standalone runner: `tests/run_json_loading_tests.R`)
 - **Integration**: `test-integration.R`
