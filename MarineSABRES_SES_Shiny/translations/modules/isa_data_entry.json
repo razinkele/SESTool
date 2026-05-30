@@ -11,6 +11,39 @@
     "el"
   ],
   "translation": {
+    "modules.isa.data_entry.common.stale_linked_ids_skipped": {
+      "en": "Some linked targets no longer exist and were skipped:",
+      "es": "Algunos destinos vinculados ya no existen y se omitieron:",
+      "fr": "Certaines cibles liées n'existent plus et ont été ignorées :",
+      "de": "Einige verknüpfte Ziele existieren nicht mehr und wurden übersprungen:",
+      "lt": "Kai kurie susieti tikslai nebeegzistuoja ir buvo praleisti:",
+      "pt": "Alguns alvos vinculados já não existem e foram ignorados:",
+      "it": "Alcuni elementi collegati non esistono più e sono stati ignorati:",
+      "no": "Noen koblede mål finnes ikke lenger og ble hoppet over:",
+      "el": "Ορισμένοι συνδεδεμένοι στόχοι δεν υπάρχουν πλέον και παραλείφθηκαν:"
+    },
+    "modules.isa.data_entry.common.dropped_user_edits": {
+      "en": "Manually edited connections removed (their element was deleted):",
+      "es": "Conexiones editadas manualmente eliminadas (su elemento fue eliminado):",
+      "fr": "Connexions modifiées manuellement supprimées (leur élément a été supprimé) :",
+      "de": "Manuell bearbeitete Verbindungen entfernt (ihr Element wurde gelöscht):",
+      "lt": "Rankiniu būdu redaguoti ryšiai pašalinti (jų elementas buvo ištrintas):",
+      "pt": "Conexões editadas manualmente removidas (o seu elemento foi eliminado):",
+      "it": "Connessioni modificate manualmente rimosse (il loro elemento è stato eliminato):",
+      "no": "Manuelt redigerte forbindelser fjernet (elementet deres ble slettet):",
+      "el": "Καταργήθηκαν χειροκίνητα επεξεργασμένες συνδέσεις (το στοιχείο τους διαγράφηκε):"
+    },
+    "modules.isa.data_entry.common.ids_repaired_on_load": {
+      "en": "Some element IDs were repaired on load (duplicates from an older version).",
+      "es": "Se repararon algunos ID de elementos al cargar (duplicados de una versión anterior).",
+      "fr": "Certains identifiants d'éléments ont été réparés au chargement (doublons d'une version antérieure).",
+      "de": "Einige Element-IDs wurden beim Laden repariert (Duplikate aus einer älteren Version).",
+      "lt": "Kai kurie elementų ID buvo pataisyti įkeliant (dublikatai iš senesnės versijos).",
+      "pt": "Alguns IDs de elementos foram reparados ao carregar (duplicados de uma versão anterior).",
+      "it": "Alcuni ID di elementi sono stati riparati al caricamento (duplicati di una versione precedente).",
+      "no": "Noen element-ID-er ble reparert ved innlasting (duplikater fra en eldre versjon).",
+      "el": "Ορισμένα αναγνωριστικά στοιχείων επιδιορθώθηκαν κατά τη φόρτωση (διπλότυπα από παλαιότερη έκδοση)."
+    },
     "modules.isa.ai_assistant.eu_member_states": {
       "en": "EU Member States",
       "es": "Estados miembros de la UE",

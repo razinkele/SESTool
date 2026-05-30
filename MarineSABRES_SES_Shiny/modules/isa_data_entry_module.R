@@ -133,6 +133,17 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       ),
       d_counter = 0,
 
+      # Ordered stable-ID trackers (single source of truth for collection).
+      # A row's ID is allocated once at panel creation and never renumbered,
+      # so removing/reordering panels does not invalidate LinkedX refs or
+      # ID-keyed matrices (fixes feedback #2/#3/#4).
+      gb_panel_ids  = character(0),
+      es_panel_ids  = character(0),
+      mpf_panel_ids = character(0),
+      p_panel_ids   = character(0),
+      a_panel_ids   = character(0),
+      d_panel_ids   = character(0),
+
       # Exercise 6: Loop closure
       loop_connections = data.frame(
         DriverID = character(),
@@ -156,8 +167,18 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
       # Exercises 10-12
       clarification = list(),
-      validation = list()
+      validation = list(),
+
+      # ID-keyed connection matrices, rebuilt from the LinkedX columns on each
+      # save_ex* (the N:M reconciler). user_edited_matrices marks cells the user
+      # hand-edited so a rebuild preserves them.
+      adjacency_matrices = list(),
+      user_edited_matrices = list()
     )
+
+    # Per-session stable-ID counter store. Isolated per moduleServer instance so
+    # concurrent users never share an id sequence (the load path re-seeds it).
+    id_store <- new_stable_id_store()
 
     # Initialize ISA data from project_data_reactive if it exists (e.g., from AI Assistant) ----
     # This observer loads saved data when the module starts or when project_data_reactive changes
@@ -213,6 +234,39 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       project_data_reactive(pd)
     }
 
+    # Rebuild one source->target connection matrix from an element's LinkedX
+    # column, preserving user-edited cells and surfacing stale/dropped edges.
+    # Completes the N:M wiring for es_gb / mpf_es / p_mpf / a_p / d_a (gb_d keeps
+    # its own closing-loop builder). Fixes the "no diagram" symptom (#4) where
+    # only gb_d was ever built.
+    rebuild_transition <- function(element_df, linked_col, target_ids, matrix_key) {
+      tryCatch({
+        rebuilt <- rebuild_matrix_from_linked(
+          element_df = element_df, linked_col = linked_col,
+          source_ids = element_df$ID, target_ids = target_ids,
+          element_confidence_col = "Confidence",
+          existing_matrix    = isa_data$adjacency_matrices[[matrix_key]],
+          user_edited_matrix = isa_data$user_edited_matrices[[matrix_key]])
+        isa_data$adjacency_matrices[[matrix_key]]   <- rebuilt$matrix
+        isa_data$user_edited_matrices[[matrix_key]] <- rebuilt$user_edited
+        if (length(rebuilt$stale_linked_ids) > 0) {
+          showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                           paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                           type = "warning", duration = 6, session = session)
+        }
+        if (length(rebuilt$dropped_user_edits) > 0) {
+          showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                           length(rebuilt$dropped_user_edits)),
+                           type = "warning", duration = 8, session = session)
+        }
+      }, error = function(e) {
+        debug_log(paste(matrix_key, "rebuild failed:", e$message), "ERROR")
+        showNotification(format_user_error(e, i18n = i18n,
+                         context_key = "common.messages.context_matrix_rebuild"),
+                         type = "error", session = session)
+      })
+    }
+
     # Load saved ISA data when a (different) project becomes active. Keyed on
     # project_id so module saves — which don't change project_id — don't
     # re-trigger a load and clobber in-progress edits (this exact loop was the
@@ -222,6 +276,38 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         debug_log("Loading saved ISA data on project change", "ISA Module")
         load_isa_elements_from_saved(isa_data, project$data$isa_data)
+
+        # Repair legacy duplicate/blank IDs (a symptom of the old positional-ID
+        # bug) and ADOPT the resulting ids as the stable panel set, seeding the
+        # per-session counter past them so later add_* never collide. Reads the
+        # RAW saved df (uppercase ID) — load_isa_elements_from_saved lowercases
+        # for its table view, but the rest of the module keys on uppercase ID.
+        saved_isa <- project$data$isa_data
+        id_load_map <- list(
+          goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
+          ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
+          marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
+          pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
+          activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
+          drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+        )
+        any_repaired <- FALSE
+        for (key in names(id_load_map)) {
+          saved_df <- saved_isa[[key]]
+          if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+            rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
+            isa_data[[key]] <- rec$df
+            isa_data[[id_load_map[[key]]$panel]] <- as.character(rec$df$ID)
+            if (isTRUE(rec$repaired)) any_repaired <- TRUE
+          } else {
+            isa_data[[id_load_map[[key]]$panel]] <- character(0)
+          }
+        }
+        if (any_repaired) {
+          showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
+                           type = "warning", duration = 8, session = session)
+        }
+
         data_initialized(TRUE)
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
@@ -912,8 +998,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 1: Goods & Benefits ----
     observeEvent(input$add_gb, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$welfare, id_store)
+      isa_data$gb_panel_ids <- c(isa_data$gb_panel_ids, current_id)
       isa_data$gb_counter <- isa_data$gb_counter + 1
-      current_id <- isa_data$gb_counter
 
       insertUI(
         selector = paste0("#", ns("gb_entries")),
@@ -932,13 +1019,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex1, {
-      if (isa_data$gb_counter == 0) {
+      if (length(isa_data$gb_panel_ids) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_goodbenefit_entry_before_s"),
                         type = "warning", session = session)
         return()
       }
 
-      result <- validate_and_collect_gb(input, isa_data$gb_counter, session, i18n)
+      result <- validate_and_collect_gb(input, isa_data$gb_panel_ids, session, i18n)
 
       if (length(result$errors) > 0) {
         show_validation_error_modal(result$errors, i18n)
@@ -960,8 +1047,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 2a: Ecosystem Services ----
     observeEvent(input$add_es, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$impacts, id_store)
+      isa_data$es_panel_ids <- c(isa_data$es_panel_ids, current_id)
       isa_data$es_counter <- isa_data$es_counter + 1
-      current_id <- isa_data$es_counter
 
       linked_choices <- c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
       insertUI(
@@ -981,13 +1069,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     observeEvent(input$save_ex2a, {
-      if (isa_data$es_counter == 0) {
+      if (length(isa_data$es_panel_ids) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_ecosystem_service_entry_be"),
                         type = "warning", session = session)
         return()
       }
 
-      result <- validate_and_collect_es(input, isa_data$es_counter, session, i18n)
+      result <- validate_and_collect_es(input, isa_data$es_panel_ids, session, i18n)
 
       if (length(result$errors) > 0) {
         show_validation_error_modal(result$errors, i18n)
@@ -1001,6 +1089,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       isa_data$ecosystem_services <- result$df
+      rebuild_transition(isa_data$ecosystem_services, "LinkedGB",
+                         isa_data$goods_benefits$ID, "es_gb")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
@@ -1009,8 +1099,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Exercise 2b: Marine Processes and Functioning ----
     observeEvent(input$add_mpf, {
-      current_id <- isa_data$mpf_counter + 1
-      isa_data$mpf_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$states, id_store)
+      isa_data$mpf_panel_ids <- c(isa_data$mpf_panel_ids, current_id)
+      isa_data$mpf_counter <- isa_data$mpf_counter + 1
 
       linked_choices <- c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name))
       insertUI(
@@ -1031,19 +1122,22 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex2b, {
       mpf_df <- collect_element_entries(
-        input, "mpf", isa_data$mpf_counter, ELEMENT_ID_PREFIX$states,
+        input, "mpf", isa_data$mpf_panel_ids, ELEMENT_ID_PREFIX$states,
         field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
         col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
       )
       isa_data$marine_processes <- mpf_df
+      rebuild_transition(isa_data$marine_processes, "LinkedES",
+                         isa_data$ecosystem_services$ID, "mpf_es")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
 
     # Exercise 3: Pressures ----
     observeEvent(input$add_p, {
-      current_id <- isa_data$p_counter + 1
-      isa_data$p_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$pressures, id_store)
+      isa_data$p_panel_ids <- c(isa_data$p_panel_ids, current_id)
+      isa_data$p_counter <- isa_data$p_counter + 1
 
       linked_choices <- c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name))
       insertUI(
@@ -1064,19 +1158,22 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex3, {
       p_df <- collect_element_entries(
-        input, "p", isa_data$p_counter, ELEMENT_ID_PREFIX$pressures,
+        input, "p", isa_data$p_panel_ids, ELEMENT_ID_PREFIX$pressures,
         field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
         col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
       )
       isa_data$pressures <- p_df
+      rebuild_transition(isa_data$pressures, "LinkedMPF",
+                         isa_data$marine_processes$ID, "p_mpf")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
 
     # Exercise 4: Activities ----
     observeEvent(input$add_a, {
-      current_id <- isa_data$a_counter + 1
-      isa_data$a_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$activities, id_store)
+      isa_data$a_panel_ids <- c(isa_data$a_panel_ids, current_id)
+      isa_data$a_counter <- isa_data$a_counter + 1
 
       linked_choices <- c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name))
       insertUI(
@@ -1097,19 +1194,22 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex4, {
       a_df <- collect_element_entries(
-        input, "a", isa_data$a_counter, ELEMENT_ID_PREFIX$activities,
+        input, "a", isa_data$a_panel_ids, ELEMENT_ID_PREFIX$activities,
         field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
         col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
       )
       isa_data$activities <- a_df
+      rebuild_transition(isa_data$activities, "LinkedP",
+                         isa_data$pressures$ID, "a_p")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
 
     # Exercise 5: Drivers ----
     observeEvent(input$add_d, {
-      current_id <- isa_data$d_counter + 1
-      isa_data$d_counter <- current_id
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$drivers, id_store)
+      isa_data$d_panel_ids <- c(isa_data$d_panel_ids, current_id)
+      isa_data$d_counter <- isa_data$d_counter + 1
 
       linked_choices <- c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name))
       insertUI(
@@ -1130,11 +1230,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     observeEvent(input$save_ex5, {
       d_df <- collect_element_entries(
-        input, "d", isa_data$d_counter, ELEMENT_ID_PREFIX$drivers,
+        input, "d", isa_data$d_panel_ids, ELEMENT_ID_PREFIX$drivers,
         field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
         col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
       )
       isa_data$drivers <- d_df
+      rebuild_transition(isa_data$drivers, "LinkedA",
+                         isa_data$activities$ID, "d_a")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })

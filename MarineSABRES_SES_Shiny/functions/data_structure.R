@@ -15,6 +15,63 @@ generate_element_id <- function(prefix, n) {
   paste0(prefix, sprintf("%03d", n))
 }
 
+# Stable, monotonic element IDs. Allocated once per element and never reused
+# within a session, so removing/reordering rows does not reassign survivors'
+# IDs — keeping LinkedX refs and ID-keyed matrices valid across edits.
+#
+# Counters live in an environment. The module-global `.stable_id_counters` is
+# the default (used by unit tests), but each Shiny session creates its OWN
+# store via new_stable_id_store() and threads it through `store=` so concurrent
+# users never clobber each other's id sequence (this app keeps state
+# session-local — see the i18n design).
+.stable_id_counters <- new.env(parent = emptyenv())
+
+new_stable_id_store <- function() new.env(parent = emptyenv())
+
+reset_stable_id_counter <- function(prefix, store = .stable_id_counters) {
+  assign(prefix, 0L, envir = store); invisible(NULL)
+}
+
+seed_stable_id_counter <- function(prefix, existing_ids, store = .stable_id_counters) {
+  nums <- suppressWarnings(as.integer(sub(paste0("^", prefix), "", existing_ids)))
+  nums <- nums[!is.na(nums)]
+  assign(prefix, if (length(nums)) max(nums) else 0L, envir = store)
+  invisible(NULL)
+}
+
+generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
+  cur <- if (exists(prefix, envir = store, inherits = FALSE))
+    get(prefix, envir = store) else 0L
+  nxt <- cur + 1L
+  assign(prefix, nxt, envir = store)
+  paste0(prefix, sprintf("%03d", nxt))
+}
+
+#' Repair legacy element IDs that are duplicated or blank (a symptom of the
+#' positional-ID bug — projects saved while it was live can contain dupes).
+#' The FIRST occurrence of an id is preserved (so existing LinkedX refs still
+#' resolve to it); later duplicates and blanks get fresh stable ids seeded past
+#' the high-water mark of the good ids. The counter `store` is always advanced
+#' past the loaded ids so subsequent add_* allocations never collide. Matrices
+#' are left to be rebuilt from LinkedX on next save.
+#' @param element_df loaded element data.frame (or NULL/empty)
+#' @param prefix element ID prefix (e.g. "ES")
+#' @param store counter environment (session-local in the module; global default for tests)
+#' @return list(df = repaired data.frame, repaired = logical scalar)
+reconcile_loaded_element_ids <- function(element_df, prefix, store = .stable_id_counters) {
+  if (is.null(element_df) || !nrow(element_df)) return(list(df = element_df, repaired = FALSE))
+  ids <- as.character(element_df$ID)
+  bad <- duplicated(ids) | is.na(ids) | !nzchar(ids)
+  if (!any(bad)) {
+    seed_stable_id_counter(prefix, ids, store)
+    return(list(df = element_df, repaired = FALSE))
+  }
+  seed_stable_id_counter(prefix, ids[!bad], store)
+  for (k in which(bad)) ids[k] <- generate_stable_element_id(prefix, store)
+  element_df$ID <- ids
+  list(df = element_df, repaired = TRUE)
+}
+
 # ============================================================================
 # DATA STRUCTURE TEMPLATES
 # ============================================================================
