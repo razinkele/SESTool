@@ -9,6 +9,12 @@ source_for_test("modules/prepare_report_module.R")
 # Mock i18n
 i18n <- list(t = function(key) key)
 
+# Re-bind the real server over the helper-stubs.R stub, which shadows the
+# .GlobalEnv copy in testthat's helper env (see feedback_testserver_stub_shadowing).
+if (exists("prepare_report_server", envir = .GlobalEnv)) {
+  prepare_report_server <- get("prepare_report_server", envir = .GlobalEnv)
+}
+
 # ============================================================================
 # UI FUNCTION TESTS
 # ============================================================================
@@ -60,6 +66,41 @@ test_that("prepare_report_server has correct parameters", {
   expect_true("id" %in% params)
   expect_true("project_data_reactive" %in% params)
   expect_true("i18n" %in% params)
+})
+
+# ============================================================================
+# SERVER BEHAVIOR TESTS
+# check_prerequisites() reads the project and prerequisite_status renders
+# success/danger icons accordingly. These read the real output and differ by
+# input, so they FAIL if the server body is replaced with NULL. (Report
+# generation itself drives rmarkdown/officer and is covered by the helper
+# tests below, not the server observers.)
+# ============================================================================
+
+test_that("prerequisite_status shows danger icons when loops/leverage are absent", {
+  testServer(prepare_report_server,
+             args = list(project_data_reactive = reactiveVal(list(data = list())),
+                         i18n = i18n), {
+    session$flushReact()
+    html <- paste(as.character(output$prerequisite_status), collapse = "")
+    expect_true(nzchar(html))
+    expect_match(html, "text-danger")             # neither prerequisite met
+    expect_false(grepl("text-success", html, fixed = TRUE))
+  })
+})
+
+test_that("prerequisite_status shows success icons when loops + leverage are present", {
+  ready <- reactiveVal(list(data = list(
+    analysis = list(loops = list(list(1), list(2))),          # has_loops: length > 0
+    cld = list(nodes = data.frame(leverage_score = c(0.5, 0.2)))  # has_leverage: any > 0
+  )))
+  testServer(prepare_report_server,
+             args = list(project_data_reactive = ready, i18n = i18n), {
+    session$flushReact()
+    html <- paste(as.character(output$prerequisite_status), collapse = "")
+    expect_match(html, "text-success")            # both prerequisites met
+    expect_false(grepl("text-danger", html, fixed = TRUE))
+  })
 })
 
 # ============================================================================
