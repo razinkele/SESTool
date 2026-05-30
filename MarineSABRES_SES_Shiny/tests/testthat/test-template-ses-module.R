@@ -10,6 +10,14 @@ library(shiny)
 source_for_test("modules/template_ses_module.R")
 i18n <- list(t = function(key) key)
 
+# source_for_test() writes the real module to .GlobalEnv, but helper-stubs.R
+# defines a stub template_ses_server in testthat's helper env which SHADOWS it
+# during lookup. Re-bind the real server here so testServer() drives the real
+# module, not the stub (see feedback_testserver_stub_shadowing).
+if (exists("template_ses_server", envir = .GlobalEnv)) {
+  template_ses_server <- get("template_ses_server", envir = .GlobalEnv)
+}
+
 # ============================================================================
 # UI FUNCTION TESTS
 # ============================================================================
@@ -72,4 +80,41 @@ test_that("template_ses_server optional params default to NULL", {
       expect_true(is.null(default) || identical(as.character(default), "NULL"),
                   info = paste0("user_level_reactive should default to NULL for optional use"))
     }
+})
+
+# ============================================================================
+# SERVER BEHAVIOR TESTS
+# These drive observers and assert observable effects, so they FAIL if the
+# server body is replaced with NULL (unlike the signature checks above).
+# ============================================================================
+
+# paste(as.character(...), collapse="") flattens a shiny tag / NULL to one
+# string so emptiness and content checks are robust to length.
+.render_chr <- function(x) paste(as.character(x), collapse = "")
+
+test_that("selecting a template flips template_actions from empty to rendered", {
+  testServer(template_ses_server,
+             args = list(project_data_reactive = reactiveVal(init_session_data()),
+                         i18n = i18n), {
+    before <- .render_chr(output$template_actions)
+    expect_false(nzchar(before))                 # nothing selected -> renderUI is empty
+
+    session$setInputs(template_selected = "fisheries")
+
+    after <- .render_chr(output$template_actions)
+    expect_true(nzchar(after))                   # selection observer set rv$selected_template
+    expect_match(after, "well", info = "actions panel (wellPanel) now rendered")
+  })
+})
+
+test_that("template_cards renders a card per available template", {
+  testServer(template_ses_server,
+             args = list(project_data_reactive = reactiveVal(init_session_data()),
+                         i18n = i18n), {
+    cards <- .render_chr(output$template_cards)
+    expect_true(nzchar(cards))
+    # build_entry style: each template renders a div with class 'template-card'
+    n_cards <- length(gregexpr("template-card\"", cards, fixed = TRUE)[[1]])
+    expect_gt(n_cards, 0)
+  })
 })
