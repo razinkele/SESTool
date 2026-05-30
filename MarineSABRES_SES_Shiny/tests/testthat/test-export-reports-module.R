@@ -10,6 +10,12 @@ library(shiny)
 source_for_test("modules/export_reports_module.R")
 i18n <- list(t = function(key) key)
 
+# Re-bind the real server over the helper-stubs.R stub, which shadows the
+# .GlobalEnv copy in testthat's helper env (see feedback_testserver_stub_shadowing).
+if (exists("export_reports_server", envir = .GlobalEnv)) {
+  export_reports_server <- get("export_reports_server", envir = .GlobalEnv)
+}
+
 # ============================================================================
 # UI FUNCTION TESTS
 # ============================================================================
@@ -56,4 +62,23 @@ test_that("export_reports_server event_bus defaults to NULL", {
   default <- formals(export_reports_server)$event_bus
   expect_true(is.null(default) || identical(as.character(default), "NULL"),
               info = "event_bus must default to NULL for backward compatibility")
+})
+
+# ============================================================================
+# SERVER BEHAVIOR TESTS
+# Actual report generation drives rmarkdown (heavy/pandoc) so we don't trigger
+# it here; instead assert the server instantiates and renders its real output,
+# which the stub cannot produce -> FAILS if the server body is NULL.
+# ============================================================================
+
+test_that("server instantiates and renders the namespaced report-status output", {
+  testServer(export_reports_server,
+             args = list(project_data_reactive = reactiveVal(init_session_data()),
+                         i18n = i18n), {
+    session$flushReact()
+    rendered <- paste(as.character(output$report_status), collapse = "")
+    expect_true(nzchar(rendered))
+    # the real renderUI body builds a div with this namespaced id
+    expect_match(rendered, "report_status_div")
+  })
 })
