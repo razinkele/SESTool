@@ -12,6 +12,12 @@ source_for_test("modules/feedback_admin_module.R")
 # Mock i18n
 i18n <- list(t = function(key) key)
 
+# Re-bind the real server over the helper-stubs.R stub, which shadows the
+# .GlobalEnv copy in testthat's helper env (see feedback_testserver_stub_shadowing).
+if (exists("feedback_admin_server", envir = .GlobalEnv)) {
+  feedback_admin_server <- get("feedback_admin_server", envir = .GlobalEnv)
+}
+
 # ============================================================================
 # UI FUNCTION TESTS
 # ============================================================================
@@ -72,4 +78,30 @@ test_that("feedback_admin_server event_bus defaults to NULL", {
   # In R, a NULL default is represented as symbol 'NULL' when retrieved via formals()
   expect_true(is.null(default) || identical(as.character(default), "NULL"),
               info = "event_bus must default to NULL for backward compatibility")
+})
+
+# ============================================================================
+# SERVER BEHAVIOR TESTS
+# The module loads the feedback log on start and renders value boxes + tables.
+# These read the real outputs, so they FAIL if the server body is NULL.
+# ============================================================================
+
+test_that("load-on-start renders the summary value boxes and feedback table", {
+  testServer(feedback_admin_server, args = list(i18n = i18n), {
+    session$flushReact()
+    # value boxes are computed from the loaded feedback log (empty df in test env)
+    expect_false(is.null(output$vbox_total))
+    expect_false(is.null(output$vbox_bugs))
+    expect_false(is.null(output$vbox_suggestions))
+    # the feedback DataTable renders
+    expect_false(is.null(output$feedback_table))
+  })
+})
+
+test_that("find_duplicates observer runs and the duplicates table renders", {
+  testServer(feedback_admin_server, args = list(i18n = i18n), {
+    session$flushReact()
+    session$setInputs(find_duplicates = 1)        # increments run_detection
+    expect_false(is.null(output$duplicates_table))
+  })
 })
