@@ -592,6 +592,11 @@ source("functions/excel_import_helpers.R", local = FALSE)  # FALSE = global scop
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
 
+# N:M LinkedX reconciler — pure helpers used by the ISA form collectors and the
+# save_ex* matrix-rebuild step. MUST load before isa_form_builders.R (its
+# collectors call linked_select_to_ids/serialize_linked).
+source("functions/matrix_from_linked.R", local = TRUE)
+
 # ISA form builders and entry collection helpers (extracted from isa_data_entry_module)
 source("functions/isa_form_builders.R", local = TRUE)
 

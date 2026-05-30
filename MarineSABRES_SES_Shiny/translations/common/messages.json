@@ -1122,6 +1122,17 @@
       "no": "lagrer prosjekt",
       "el": "αποθήκευση έργου"
     },
+    "common.messages.context_matrix_rebuild": {
+      "en": "rebuilding the connection matrix",
+      "es": "reconstruyendo la matriz de conexiones",
+      "fr": "reconstruction de la matrice de connexions",
+      "de": "Verbindungsmatrix wird neu aufgebaut",
+      "lt": "atkuriama ryšių matrica",
+      "pt": "reconstruindo a matriz de conexões",
+      "it": "ricostruzione della matrice di connessione",
+      "no": "gjenoppbygger forbindelsesmatrisen",
+      "el": "ανοικοδόμηση του πίνακα συνδέσεων"
+    },
     "common.messages.context_loading_project": {
       "en": "loading project",
       "es": "cargando proyecto",

@@ -167,7 +167,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
       # Exercises 10-12
       clarification = list(),
-      validation = list()
+      validation = list(),
+
+      # ID-keyed connection matrices, rebuilt from the LinkedX columns on each
+      # save_ex* (the N:M reconciler). user_edited_matrices marks cells the user
+      # hand-edited so a rebuild preserves them.
+      adjacency_matrices = list(),
+      user_edited_matrices = list()
     )
 
     # Per-session stable-ID counter store. Isolated per moduleServer instance so
@@ -226,6 +232,39 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       project_data_reactive(pd)
+    }
+
+    # Rebuild one source->target connection matrix from an element's LinkedX
+    # column, preserving user-edited cells and surfacing stale/dropped edges.
+    # Completes the N:M wiring for es_gb / mpf_es / p_mpf / a_p / d_a (gb_d keeps
+    # its own closing-loop builder). Fixes the "no diagram" symptom (#4) where
+    # only gb_d was ever built.
+    rebuild_transition <- function(element_df, linked_col, target_ids, matrix_key) {
+      tryCatch({
+        rebuilt <- rebuild_matrix_from_linked(
+          element_df = element_df, linked_col = linked_col,
+          source_ids = element_df$ID, target_ids = target_ids,
+          element_confidence_col = "Confidence",
+          existing_matrix    = isa_data$adjacency_matrices[[matrix_key]],
+          user_edited_matrix = isa_data$user_edited_matrices[[matrix_key]])
+        isa_data$adjacency_matrices[[matrix_key]]   <- rebuilt$matrix
+        isa_data$user_edited_matrices[[matrix_key]] <- rebuilt$user_edited
+        if (length(rebuilt$stale_linked_ids) > 0) {
+          showNotification(paste(i18n$t("modules.isa.data_entry.common.stale_linked_ids_skipped"),
+                           paste(rebuilt$stale_linked_ids, collapse = ", ")),
+                           type = "warning", duration = 6, session = session)
+        }
+        if (length(rebuilt$dropped_user_edits) > 0) {
+          showNotification(paste(i18n$t("modules.isa.data_entry.common.dropped_user_edits"),
+                           length(rebuilt$dropped_user_edits)),
+                           type = "warning", duration = 8, session = session)
+        }
+      }, error = function(e) {
+        debug_log(paste(matrix_key, "rebuild failed:", e$message), "ERROR")
+        showNotification(format_user_error(e, i18n = i18n,
+                         context_key = "common.messages.context_matrix_rebuild"),
+                         type = "error", session = session)
+      })
     }
 
     # Load saved ISA data when a (different) project becomes active. Keyed on
@@ -1050,6 +1089,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       isa_data$ecosystem_services <- result$df
+      rebuild_transition(isa_data$ecosystem_services, "LinkedGB",
+                         isa_data$goods_benefits$ID, "es_gb")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
@@ -1086,6 +1127,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
       )
       isa_data$marine_processes <- mpf_df
+      rebuild_transition(isa_data$marine_processes, "LinkedES",
+                         isa_data$ecosystem_services$ID, "mpf_es")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
@@ -1120,6 +1163,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
       )
       isa_data$pressures <- p_df
+      rebuild_transition(isa_data$pressures, "LinkedMPF",
+                         isa_data$marine_processes$ID, "p_mpf")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
@@ -1154,6 +1199,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
       )
       isa_data$activities <- a_df
+      rebuild_transition(isa_data$activities, "LinkedP",
+                         isa_data$pressures$ID, "a_p")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
@@ -1188,6 +1235,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
       )
       isa_data$drivers <- d_df
+      rebuild_transition(isa_data$drivers, "LinkedA",
+                         isa_data$activities$ID, "d_a")
       sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })

@@ -346,7 +346,11 @@ collect_element_entries <- function(input, prefix, panel_ids, id_prefix, field_i
     vals[["ID"]] <- sid
     for (j in seq_along(field_ids)) {
       raw <- input[[paste0(prefix, "_", field_ids[j], "_", sid)]]
-      vals[[col_names[j]]] <- if (!is.null(raw)) raw else ""
+      val <- if (!is.null(raw)) raw else ""
+      # LinkedX columns store bare element IDs for the reconciler; the select
+      # value may be the legacy label form ("ES001: Fish") — normalize it.
+      if (startsWith(col_names[j], "Linked")) val <- linked_select_to_ids(val)
+      vals[[col_names[j]]] <- val
     }
     rows[[length(rows) + 1]] <- as.data.frame(vals, stringsAsFactors = FALSE)
   }
@@ -488,7 +492,7 @@ validate_and_collect_es <- function(input, panel_ids, session, i18n) {
         Name = entry_validations[[1]]$value,
         Type = entry_validations[[2]]$value,
         Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
-        LinkedGB = linkedgb_val,
+        LinkedGB = linked_select_to_ids(linkedgb_val),
         Mechanism = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
         Confidence = confidence_val,
         stringsAsFactors = FALSE

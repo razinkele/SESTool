@@ -59,3 +59,32 @@ test_that("loading a corrupted project (duplicate ids) repairs without crashing 
     expect_false(last %in% head(isa()$es_panel_ids, -1))
   })
 })
+
+test_that("saving ES linked to a GB builds the es_gb matrix with the edge (fixes #4 no-diagram)", {
+  i18n <- make_test_i18n()
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = reactiveVal(NULL),
+                         i18n = i18n, event_bus = NULL), {
+    isa <- function() session$getReturned()()
+
+    # Add a Good/Benefit and commit it (so GB001 is a valid link target).
+    session$setInputs(add_gb = 1)
+    session$setInputs(gb_name_GB001 = "Food", gb_type_GB001 = "Provisioning",
+                      gb_importance_GB001 = "High", gb_trend_GB001 = "Stable")
+    session$setInputs(save_ex1 = 1)
+    expect_true("GB001" %in% isa()$goods_benefits$ID)
+
+    # Add an ES linked to GB001 (legacy label form) and save Exercise 2a.
+    session$setInputs(add_es = 1)
+    session$setInputs(es_name_ES001 = "Fisheries", es_type_ES001 = "Provisioning",
+                      es_linkedgb_ES001 = "GB001: Food", es_confidence_ES001 = "High")
+    session$setInputs(save_ex2a = 1)
+
+    # LinkedGB must be normalized to the bare id, and es_gb must hold the edge.
+    expect_equal(isa()$ecosystem_services$LinkedGB[1], "GB001")
+    m <- isa()$adjacency_matrices[["es_gb"]]
+    expect_false(is.null(m))
+    expect_true("ES001" %in% rownames(m) && "GB001" %in% colnames(m))
+    expect_true(nzchar(m["ES001", "GB001"]))
+  })
+})

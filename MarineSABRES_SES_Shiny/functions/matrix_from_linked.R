@@ -27,6 +27,21 @@ serialize_linked <- function(ids) {
   paste(Filter(nzchar, as.character(ids)), collapse = "|")
 }
 
+#' Normalize an ISA "Linked to..." select value to bare element IDs
+#'
+#' The ISA dropdowns historically stored the LABEL form "GB001: Food" as their
+#' value; the reconciler needs bare IDs ("GB001"). This strips a ": Label"
+#' suffix from each segment, so it accepts BOTH the legacy label form and an
+#' already-bare/pipe-delimited id list — keeping previously-saved projects'
+#' links valid (see feedback #4).
+#' @param x select value: "", "GB001", "GB001: Food", or "GB001|GB002: Tourism"
+#' @return single '|'-delimited string of bare IDs ("" when empty).
+linked_select_to_ids <- function(x) {
+  parts <- parse_linked(x)
+  ids <- trimws(sub(":.*$", "", parts))
+  serialize_linked(ids)
+}
+
 #' Assert two matrices have identical dims and dimnames
 #' @param adj character matrix or NULL
 #' @param edited logical matrix or NULL
