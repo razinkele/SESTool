@@ -196,61 +196,61 @@ if (Test-Path $RCheckScript) {
 
 Write-Header "Creating Deployment Archive"
 
-# Build tar exclude arguments
-$excludes = @(
-    "--exclude=.git",
-    "--exclude=.claude",
-    "--exclude=.playwright-mcp",
-    "--exclude=.Rhistory",
-    "--exclude=.RData",
-    "--exclude=.Rprofile",
-    "--exclude=.Rproj.user",
-    "--exclude=.gitignore",
-    "--exclude=.dockerignore",
-    "--exclude=*.Rproj",
-    "--exclude=*.log",
-    "--exclude=*.tmp",
-    "--exclude=deployment",
-    "--exclude=tests",
-    "--exclude=DTU",
-    "--exclude=Documents",
-    "--exclude=CLEANUP_SCRIPT.R",
-    "--exclude=run_ui_tests.R",
-    "--exclude=fixture_list.txt",
-    "--exclude=abstract.docx",
-    "--exclude=docs/images/*.png"    # README screenshots only; keep www/img/*.png app logos
-)
+# Archive ONLY git-tracked files via `git archive`. This deploys the committed
+# (merged) state and structurally cannot ship untracked working-tree cruft —
+# .phase-c-bundle/, *-bundle/, scratch screenshots, WIP scripts, etc. Shipping
+# such junk took prod DOWN on 2026-05-30: tar hit "Permission denied"/"File
+# exists" on the server, `set -e` aborted the remote script mid-deploy (after
+# extract, before chmod/restart), and the app 500'd. Tracked-only removes that
+# entire failure class. All runtime dirs (models, SESModels, data, www, config,
+# functions, modules, server, translations) are tracked, so the app is complete.
 
-if ($ExcludeModels) {
-    $excludes += "--exclude=SESModels"
-    Write-Status "SESModels directory will be excluded"
+# Resolve the git repo root. The app lives in a subdirectory of the repo, and on
+# this machine `git` won't run from inside the OneDrive-reparsed app dir, so try
+# the parent first, then the app dir itself.
+$RepoRoot = (& git -C (Split-Path -Parent $AppDir) rev-parse --show-toplevel 2>$null)
+if (-not $RepoRoot) { $RepoRoot = (& git -C $AppDir rev-parse --show-toplevel 2>$null) }
+if (-not $RepoRoot) {
+    Write-Err "Could not locate a git repository for $AppDir."
+    Write-Host "  This deploy ships committed (tracked) files via 'git archive' and requires a git repo."
+    exit 1
 }
+$RepoRoot = $RepoRoot.Trim()
 
-Write-Status "Archiving application files..."
+# App path relative to repo root, forward-slashed (git tree-ish spec).
+$repoFull  = (Resolve-Path $RepoRoot).Path
+$appFull   = (Resolve-Path $AppDir).Path
+$AppPrefix = $appFull.Substring($repoFull.Length).Trim('\', '/') -replace '\\', '/'
+$treeish   = if ($AppPrefix) { "HEAD:$AppPrefix" } else { "HEAD" }
+
+Write-Status "Archiving committed files via git ($treeish)..."
+Write-Host "  Repo root:  $RepoRoot"
 
 # Remove old tar if exists
 if (Test-Path $TarPath) {
     Remove-Item $TarPath -Force
 }
 
-# Create tar.gz from the app directory
-# --force-local prevents GNU tar from interpreting C: as a remote host
-# but bsdtar (Windows built-in) does not support it
-$tarVersion = & tar --version 2>&1 | Select-Object -First 1
-if ($tarVersion -match "bsdtar") {
-    $tarArgs = @("-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+if ($ExcludeModels) {
+    # git archive's path args are include-only, so list every top-level tracked
+    # entry except SESModels and archive just those.
+    Write-Status "SESModels directory will be excluded"
+    $tops = (& git -C $RepoRoot ls-tree --name-only $treeish) |
+            Where-Object { $_ -and $_ -ne 'SESModels' }
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish -- @tops
 } else {
-    $tarArgs = @("--force-local", "-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish
 }
-& tar @tarArgs
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Err "Failed to create tar archive"
+    Write-Err "git archive failed (is the work committed? is '$treeish' valid?)"
     exit 1
 }
 
+# $tarVersion is referenced by the DryRun listing below.
+$tarVersion = & tar --version 2>&1 | Select-Object -First 1
 $tarSize = [math]::Round((Get-Item $TarPath).Length / 1MB, 1)
-Write-Success "Archive created: $TarPath ($tarSize MB)"
+Write-Success "Archive created: $TarPath ($tarSize MB, tracked files only)"
 
 # ============================================================================
 # Dry Run -- just list contents
