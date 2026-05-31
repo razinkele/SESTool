@@ -104,7 +104,8 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     # IMPORTANT: Save project data to sessionStorage before reload to preserve user's work
     # This ensures SES creation progress is not lost during language changes
     if (!is.null(project_data)) {
-      tryCatch({
+      save_error <- NULL
+      save_success <- tryCatch({
         data <- project_data()
         if (!is.null(data)) {
           # Convert to JSON and send to JavaScript for sessionStorage
@@ -115,9 +116,26 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
           )
           debug_log("Project data saved before language change reload", "LANGUAGE")
         }
+        TRUE
       }, error = function(e) {
         debug_log(paste("Could not save project data before reload:", e$message), "LANGUAGE")
+        save_error <<- e
+        FALSE
       })
+
+      # ABORT the reload if the save failed. MODAL_ANIMATION_DELAY_MS (100ms) is
+      # too short for the error toast to render before location.reload() fires,
+      # so reloading would both destroy the user's unsaved work AND the toast.
+      # Early-return keeps the notification on screen and the work intact.
+      if (!isTRUE(save_success)) {
+        showNotification(
+          format_user_error(save_error %||% simpleError("project data save failed"),
+                            i18n = i18n,
+                            context_key = "common.messages.context_language_change_save"),
+          type = "error", duration = NULL, session = session
+        )
+        return()
+      }
     }
 
     # Save language to localStorage and reload with URL parameter

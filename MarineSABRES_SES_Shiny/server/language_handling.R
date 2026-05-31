@@ -126,7 +126,15 @@ setup_language_restore_handler <- function(input, project_data, session_i18n) {
       }
     }, error = function(e) {
       debug_log(sprintf("ERROR restoring project data: %s", e$message), "LANG_RESTORE")
-      # Don't show error to user, just log it - the default template will be used
+      # Surface a translated notification so the user knows their in-progress
+      # work could not be restored after the language change (the default
+      # template is used as the fallback). Previously this failed silently.
+      shiny::showNotification(
+        format_user_error(e, i18n = session_i18n,
+                          context_key = "common.messages.context_language_change_restore"),
+        type = "error",
+        duration = 6
+      )
     })
   }, ignoreInit = TRUE)
 }
