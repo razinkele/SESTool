@@ -802,11 +802,27 @@ predict_batch_ml <- function(pairs, context = list(), threshold = 0.5,
     batch_result <- tryCatch({
       # Build element features matrix (n_pairs x 270)
       elem_matrix <- matrix(0, nrow = n_pairs, ncol = 270)
+
+      # Memoize element embeddings by name. create_element_embedding() runs ~100
+      # regex matches (~33ms/call), and the same element recurs across many
+      # candidate pairs (e.g. 300 pairs over 35 elements = 600 calls for 35
+      # distinct embeddings). Caching makes the embedding step — ~66% of
+      # predict_batch_ml — ~15x faster (measured 7.4s -> 0.47s for 300 pairs).
+      # Behaviour is identical: the embedding is a pure function of the name.
+      .emb_cache <- new.env(parent = emptyenv())
+      get_element_embedding <- function(nm) {
+        key <- as.character(nm)
+        if (!exists(key, envir = .emb_cache, inherits = FALSE)) {
+          assign(key, create_element_embedding(key, 128), envir = .emb_cache)
+        }
+        get(key, envir = .emb_cache)
+      }
+
       for (i in 1:n_pairs) {
         # Types already validated up-front; no fallback default needed.
-        src_emb <- create_element_embedding(pairs$source_name[i], 128)
+        src_emb <- get_element_embedding(pairs$source_name[i])
         src_type <- encode_dapsiwrm_type(pairs$source_type[i])
-        tgt_emb <- create_element_embedding(pairs$target_name[i], 128)
+        tgt_emb <- get_element_embedding(pairs$target_name[i])
         tgt_type <- encode_dapsiwrm_type(pairs$target_type[i])
         elem_matrix[i, ] <- c(src_emb, src_type, tgt_emb, tgt_type)
       }
