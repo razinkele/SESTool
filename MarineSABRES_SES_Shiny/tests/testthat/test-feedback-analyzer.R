@@ -164,6 +164,30 @@ test_that("load_feedback_log defaults missing duplicate_of to NA_character_", {
   expect_true(is.na(df$duplicate_of[1L]))
 })
 
+test_that("load_feedback_log defaults missing status to open and surfaces resolution fields", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c(
+    '{"title":"A","type":"bug","timestamp":"t1"}',
+    '{"title":"B","type":"bug","timestamp":"t2","status":"addressed","fix_ref":"pr5"}',
+    '{"title":"C","type":"bug","timestamp":"t3","duplicate_of":"http://x"}'
+  ), tmp)
+  df <- load_feedback_log(tmp)
+  expect_true(all(c("status","resolved_at","resolved_by","resolution_note","fix_ref","fix_deployed") %in% names(df)))
+  expect_equal(df$status[df$title == "A"], "open")
+  expect_equal(df$status[df$title == "B"], "addressed")
+  expect_equal(df$fix_ref[df$title == "B"], "pr5")
+  expect_equal(df$status[df$title == "C"], "duplicate")   # implicit from duplicate_of
+  unlink(tmp)
+})
+
+test_that("load_feedback_log surfaces malformed lines via the skipped_lines attribute", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{"title":"A","type":"bug","timestamp":"t1"}', '{not valid json'), tmp)
+  df <- load_feedback_log(tmp)
+  expect_equal(attr(df, "skipped_lines"), 2L)
+  unlink(tmp)
+})
+
 
 # =============================================================================
 # compute_text_similarity tests

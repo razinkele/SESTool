@@ -38,6 +38,12 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
       timestamp    = character(0),
       github_url   = character(0),
       duplicate_of = character(0),
+      status          = character(0),
+      resolved_at     = character(0),
+      resolved_by     = character(0),
+      resolution_note = character(0),
+      fix_ref         = character(0),
+      fix_deployed    = character(0),
       stringsAsFactors = FALSE
     )
   }
@@ -58,6 +64,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
   if (length(raw_lines) == 0L) return(empty_df())
 
   rows <- list()
+  skipped <- integer(0)
 
   for (i in seq_along(raw_lines)) {
     line <- trimws(raw_lines[[i]])
@@ -70,6 +77,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
 
     if (is.null(parsed) || !is.list(parsed)) {
       debug_log(paste("load_feedback_log: skipping malformed line", i), "WARN")
+      skipped <- c(skipped, i)
       next
     }
 
@@ -81,7 +89,19 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
       steps        = as.character(parsed$steps        %||% NA_character_),
       timestamp    = as.character(parsed$timestamp    %||% NA_character_),
       github_url   = as.character(parsed$github_url   %||% NA_character_),
-      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_)
+      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_),
+      status = {
+        s <- parsed$status
+        if (length(s) == 1L && nzchar(as.character(s))) as.character(s)
+        else if (!is.null(parsed$duplicate_of) &&
+                 !as.character(parsed$duplicate_of) %in% c("NA", "")) "duplicate"
+        else "open"
+      },
+      resolved_at     = as.character(parsed$resolved_at     %||% NA_character_),
+      resolved_by     = as.character(parsed$resolved_by     %||% NA_character_),
+      resolution_note = as.character(parsed$resolution_note %||% NA_character_),
+      fix_ref         = as.character(parsed$fix_ref         %||% NA_character_),
+      fix_deployed    = as.character(parsed$fix_deployed    %||% NA_character_)
     )
     rows[[length(rows) + 1L]] <- row
   }
@@ -101,6 +121,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
   # Reset rownames
   rownames(df) <- NULL
 
+  attr(df, "skipped_lines") <- skipped
   df
 }
 
