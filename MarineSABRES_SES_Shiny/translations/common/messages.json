@@ -1133,6 +1133,39 @@
       "no": "gjenoppbygger forbindelsesmatrisen",
       "el": "ανοικοδόμηση του πίνακα συνδέσεων"
     },
+    "common.messages.context_dashboard_stats": {
+      "en": "loading dashboard statistics",
+      "es": "cargando estadísticas del panel",
+      "fr": "chargement des statistiques du tableau de bord",
+      "de": "Laden der Dashboard-Statistiken",
+      "lt": "įkeliama informacijos suvestinės statistika",
+      "pt": "carregando estatísticas do painel",
+      "it": "caricamento delle statistiche della dashboard",
+      "no": "laster inn dashbordstatistikk",
+      "el": "φόρτωση στατιστικών του πίνακα ελέγχου"
+    },
+    "common.messages.context_language_change_restore": {
+      "en": "restoring your work after the language change",
+      "es": "restaurando su trabajo después del cambio de idioma",
+      "fr": "restauration de votre travail après le changement de langue",
+      "de": "Wiederherstellung Ihrer Arbeit nach dem Sprachwechsel",
+      "lt": "atkuriamas jūsų darbas po kalbos pakeitimo",
+      "pt": "restaurando o seu trabalho após a mudança de idioma",
+      "it": "ripristino del tuo lavoro dopo il cambio di lingua",
+      "no": "gjenoppretter arbeidet ditt etter språkendringen",
+      "el": "επαναφορά της εργασίας σας μετά την αλλαγή γλώσσας"
+    },
+    "common.messages.context_language_change_save": {
+      "en": "saving your work before the language change",
+      "es": "guardando su trabajo antes del cambio de idioma",
+      "fr": "enregistrement de votre travail avant le changement de langue",
+      "de": "Speichern Ihrer Arbeit vor dem Sprachwechsel",
+      "lt": "išsaugomas jūsų darbas prieš kalbos pakeitimą",
+      "pt": "salvando o seu trabalho antes da mudança de idioma",
+      "it": "salvataggio del tuo lavoro prima del cambio di lingua",
+      "no": "lagrer arbeidet ditt før språkendringen",
+      "el": "αποθήκευση της εργασίας σας πριν από την αλλαγή γλώσσας"
+    },
     "common.messages.context_loading_project": {
       "en": "loading project",
       "es": "cargando proyecto",

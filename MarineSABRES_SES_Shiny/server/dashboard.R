@@ -94,6 +94,12 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       stats <- dashboard_stats()
       bs4ValueBox(stats$n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "primary")
     }, error = function(e) {
+      # Per-box notification id keeps each value-box error to a single toast
+      # (re-renders replace it) — bounded to 4 toasts max, no hash collisions.
+      showNotification(
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_dashboard_stats"),
+        type = "error", id = "dashboard_err_box1", session = session
+      )
       bs4ValueBox(0, i18n$t("ui.dashboard.error"), icon = icon("times"), color = "danger")
     })
   })
@@ -104,6 +110,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       stats <- dashboard_stats()
       bs4ValueBox(stats$n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "success")
     }, error = function(e) {
+      showNotification(
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_dashboard_stats"),
+        type = "error", id = "dashboard_err_box2", session = session
+      )
       bs4ValueBox(0, i18n$t("ui.dashboard.error"), icon = icon("times"), color = "danger")
     })
   })
@@ -114,6 +124,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       stats <- dashboard_stats()
       bs4ValueBox(stats$n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
     }, error = function(e) {
+      showNotification(
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_dashboard_stats"),
+        type = "error", id = "dashboard_err_box3", session = session
+      )
       bs4ValueBox(0, i18n$t("ui.dashboard.error"), icon = icon("times"), color = "danger")
     })
   })
@@ -152,6 +166,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         color = if(completion >= 75) "success" else if(completion >= 40) "warning" else "secondary"
       )
     }, error = function(e) {
+      showNotification(
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_dashboard_stats"),
+        type = "error", id = "dashboard_err_box4", session = session
+      )
       bs4ValueBox("0%", i18n$t("ui.dashboard.error"), icon = icon("times"), color = "danger")
     })
   })
