@@ -348,8 +348,12 @@ create_element_embedding <- function(element_name, embedding_dim = 128) {
     if (any(words %in% MARINE_VOCABULARY[i])) {
       vocab_features[i] <- 1
     }
-    # Partial matching
-    if (any(grepl(MARINE_VOCABULARY[i], words))) {
+    # Partial (substring) matching. fixed = TRUE is value-identical here because
+    # MARINE_VOCABULARY entries are plain words with no regex metacharacters (a
+    # regex of a literal string == a literal substring match), but it skips PCRE
+    # compilation — the dominant cost of this embedding (grepl was ~40% of
+    # predict_batch_ml in profiling).
+    if (any(grepl(MARINE_VOCABULARY[i], words, fixed = TRUE))) {
       vocab_features[i] <- 0.5
     }
   }
