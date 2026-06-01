@@ -663,6 +663,37 @@ test_that("import_data_module has no hardcoded English column descriptions", {
   }
 })
 
+# ==============================================================================
+# TEST: Standard Entry import messages exist in all 9 languages
+# ==============================================================================
+
+test_that("Standard Entry import keys exist in all 9 languages", {
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  fp <- file.path(root, "translations", "modules", "isa_data_entry.json")
+  skip_if_not(file.exists(fp), "isa_data_entry.json not found")
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+  keys <- c(
+    "import_success",
+    "import_not_recognized",
+    "import_links_defaulted",
+    "import_no_connections",
+    "import_replace_title",
+    "import_replace_warning"
+  )
+  tr <- jsonlite::fromJSON(fp, simplifyVector = FALSE)
+  for (k in keys) {
+    full <- paste0("modules.isa.data_entry.common.", k)
+    for (lang in langs) {
+      val <- tryCatch(tr[["translation"]][[full]][[lang]], error = function(e) NULL)
+      expect_true(
+        !is.null(val) && nzchar(val),
+        info = paste("missing or empty:", full, "for", lang)
+      )
+    }
+  }
+})
+
 test_that("import_data.json has the 7 new column-description keys", {
   test_dir <- getwd()
   root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
