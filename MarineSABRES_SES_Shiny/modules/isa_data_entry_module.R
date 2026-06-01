@@ -1507,6 +1507,25 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                  function(x) length(x) > 0 && any(nzchar(x)), logical(1)))
     }
 
+    # Clear all editable ISA state so an IMPORT is a true replace — prevents a
+    # fallback-style import (no Matrix_* sheets) from inheriting the previously
+    # loaded project's matrices/elements (stale edges / orphan IDs).
+    .reset_isa_state <- function() {
+      for (k in c("goods_benefits","ecosystem_services","marine_processes",
+                  "pressures","activities","drivers")) {
+        if (is.data.frame(isa_data[[k]])) isa_data[[k]] <- isa_data[[k]][0, , drop = FALSE]
+      }
+      for (p in c("gb_panel_ids","es_panel_ids","mpf_panel_ids",
+                  "p_panel_ids","a_panel_ids","d_panel_ids")) {
+        isa_data[[p]] <- character(0)
+      }
+      isa_data$adjacency_matrices   <- list()
+      isa_data$user_edited_matrices <- list()
+      if (is.data.frame(isa_data$loop_connections)) {
+        isa_data$loop_connections <- isa_data$loop_connections[0, , drop = FALSE]
+      }
+    }
+
     # Core import: read file -> apply -> guard -> notify/navigate.
     do_import <- function(path) {
       saved <- tryCatch(
@@ -1524,6 +1543,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         })
       if (is.null(saved)) return(invisible(NULL))
 
+      .reset_isa_state()
       res <- apply_saved_isa(saved)
 
       n_elems <- sum(vapply(c("goods_benefits","ecosystem_services","marine_processes",

@@ -135,6 +135,62 @@ test_that("import guard: elements but no connections — panels load, no crash (
   })
 })
 
+test_that("import replaces prior project state (no stale matrices/elements)", {
+  source_for_test("functions/isa_export_helpers.R")
+  source_for_test("functions/standard_entry_excel_import.R")
+
+  # Project A loaded first: faithful es_gb "+High:High" AND a driver D001.
+  projA <- list(project_id = "A", name = "A", data = list(isa_data = list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001", Mechanism = "", Confidence = "High", stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = "D001", Name = "Demand", Type = "", Description = "",
+                         LinkedA = "", Trend = "", Controllability = "", stringsAsFactors = FALSE),
+    adjacency_matrices = list(es_gb = matrix("+High:High", 1, 1, dimnames = list("ES001", "GB001")))
+  )))
+
+  # Import B: element sheets only (NO Matrix_*); ES Confidence "Low"; NO drivers.
+  isaB <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001", Mechanism = "", Confidence = "Low", stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character())
+  )
+  wb <- openxlsx::createWorkbook(); write_isa_element_sheets(wb, isaB, include_adjacency = FALSE)
+  tmpB <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmpB, overwrite = TRUE)
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(projA), i18n = fake_i18n, parent_session = NULL), {
+      session$flushReact()  # load project A
+      rvA <- session$getReturned()()
+      expect_equal(rvA$adjacency_matrices$es_gb["ES001", "GB001"], "+High:High")
+      expect_setequal(rvA$d_panel_ids, "D001")
+
+      # Import B; state is non-empty so the confirm modal path is exercised.
+      session$setInputs(import_file = data.frame(
+        name = "b.xlsx", size = 1, type = "", datapath = tmpB, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)     # shows confirm modal
+      session$flushReact()
+      session$setInputs(import_confirm = 1)  # confirm replace
+      session$flushReact()
+
+      rv <- session$getReturned()()
+      # B's fallback es_gb ("+Medium:Low") REPLACED A's faithful "+High:High"
+      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Medium:Low")
+      # A's driver is fully gone (element df cleared, not just the panel tracker)
+      expect_equal(nrow(rv$drivers), 0)
+      expect_length(rv$d_panel_ids, 0)
+  })
+})
+
 test_that("import of an unrecognized workbook is a clean no-op (state unchanged)", {
   source_for_test("functions/standard_entry_excel_import.R")
 

@@ -72,6 +72,9 @@ read_standard_entry_workbook <- function(path) {
     stop(e)
   }
 
+  # NOTE: Case_Info / loop_connections sheets are not imported (out of L5 scope:
+  # elements + adjacency edges only). gb_d closing-loop survives via Matrix_gb_d.
+
   # Optional pass-through sheets
   if ("BOT_Data" %in% sheets) {
     bot <- openxlsx::read.xlsx(path, sheet = "BOT_Data")
