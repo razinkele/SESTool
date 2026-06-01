@@ -41,3 +41,25 @@ test_that("project-load observer populates panel_ids and loads matrices (charact
       expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+High:High")
   })
 })
+
+test_that("apply_saved_isa rebuilds forward matrices from Linked* when none supplied", {
+  saved <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001", Mechanism = "", Confidence = "High", stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character())
+    # NOTE: no adjacency_matrices
+  )
+  proj <- list(project_id = "pX", name = "PX", data = list(isa_data = saved))
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(proj), i18n = fake_i18n), {
+      session$flushReact()
+      rv <- session$getReturned()()
+      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Medium:High")
+  })
+})

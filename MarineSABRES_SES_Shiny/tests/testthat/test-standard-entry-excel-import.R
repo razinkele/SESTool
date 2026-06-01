@@ -100,3 +100,15 @@ test_that("rejects an element sheet that lacks ID/Name columns", {
 test_that("missing file raises a clear error", {
   expect_error(read_standard_entry_workbook(tempfile(fileext = ".xlsx")), "file not found")
 })
+
+test_that("no Matrix_* sheets: reader returns elements with Linked* and no adjacency_matrices", {
+  isa <- make_isa()
+  wb <- openxlsx::createWorkbook()
+  # Element sheets ONLY (mimic create_isa_analysis_workbook: no adjacency)
+  write_isa_element_sheets(wb, isa, include_adjacency = FALSE)
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  out <- read_standard_entry_workbook(tmp)
+  expect_null(out$adjacency_matrices)
+  expect_equal(as.character(out$ecosystem_services$LinkedGB), "GB001")
+})

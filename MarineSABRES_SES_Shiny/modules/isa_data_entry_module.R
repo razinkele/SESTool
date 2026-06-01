@@ -301,6 +301,36 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           isa_data[[id_load_map[[key]]$panel]] <- character(0)
         }
       }
+      # Fallback: if no adjacency_matrices were supplied (e.g. an export without
+      # Matrix_* sheets), rebuild the five forward transitions from the per-category
+      # Linked* columns at default +/Medium. gb_d (closing loop) is NOT recoverable
+      # this way. Caller shows a notice when fell_back is TRUE.
+      fell_back <- FALSE
+      if (is.null(isa_data$adjacency_matrices) || length(isa_data$adjacency_matrices) == 0) {
+        linked_map <- list(
+          es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
+          mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
+          p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
+          a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
+          d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
+        )
+        for (mk in names(linked_map)) {
+          m <- linked_map[[mk]]
+          src_df <- isa_data[[m$src]]
+          tgt_df <- isa_data[[m$tgt]]
+          if (is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
+              is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
+            rb <- rebuild_matrix_from_linked(
+              element_df = src_df, linked_col = m$col,
+              source_ids = as.character(src_df$ID), target_ids = as.character(tgt_df$ID),
+              element_confidence_col = "Confidence")
+            isa_data$adjacency_matrices[[mk]] <- rb$matrix
+            isa_data$user_edited_matrices[[mk]] <- rb$user_edited
+            fell_back <- TRUE
+          }
+        }
+      }
+
       if (any_repaired) {
         showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
                          type = "warning", duration = 8, session = session)
@@ -309,7 +339,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
                          type = "warning", duration = 10, session = session)
       }
-      invisible(NULL)
+      invisible(list(fell_back = fell_back))
     }
 
     # Load saved ISA data when a (different) project becomes active. Keyed on
