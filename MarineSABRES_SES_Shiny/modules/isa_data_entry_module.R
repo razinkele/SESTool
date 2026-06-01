@@ -286,6 +286,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       any_repaired <- FALSE
       any_rows_in <- FALSE
       any_panel_ids_out <- FALSE
+      # NB: reconcile the RAW saved df (uppercase ID), NOT the lowercased copy load_isa_elements_from_saved writes for the table view — keying on lowercase 'id' was the L6 'no elements' bug.
       for (key in names(id_load_map)) {
         saved_df <- saved_isa[[key]]
         if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
