@@ -41,7 +41,7 @@ isa_data_entry_ui <- function(id, i18n) {
 
 # Module Server ----
 # Standardized signature: (id, project_data_reactive, i18n, event_bus)
-isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL, parent_session = NULL) {
   # Legacy alias for backwards compatibility within module
   global_data <- project_data_reactive
   moduleServer(id, function(input, output, session) {
@@ -1498,6 +1498,93 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     )
 
    
+
+    # ---- Excel import (Standard Entry round-trip) ----
+    # Helper: does the module currently hold any elements?
+    .isa_has_elements <- function() {
+      any(vapply(list(isa_data$gb_panel_ids, isa_data$es_panel_ids, isa_data$mpf_panel_ids,
+                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids),
+                 function(x) length(x) > 0 && any(nzchar(x)), logical(1)))
+    }
+
+    # Core import: read file -> apply -> guard -> notify/navigate.
+    do_import <- function(path) {
+      saved <- tryCatch(
+        read_standard_entry_workbook(path),
+        se_import_not_recognized = function(e) {
+          showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                           type = "error", duration = 8, session = session)
+          NULL
+        },
+        error = function(e) {
+          showNotification(format_user_error(e, i18n = i18n,
+                           context_key = "common.messages.context_reading_excel_file"),
+                           type = "error", session = session)
+          NULL
+        })
+      if (is.null(saved)) return(invisible(NULL))
+
+      res <- apply_saved_isa(saved)
+
+      n_elems <- sum(vapply(c("goods_benefits","ecosystem_services","marine_processes",
+                              "pressures","activities","drivers"),
+                            function(k) if (is.data.frame(isa_data[[k]])) nrow(isa_data[[k]]) else 0L,
+                            integer(1)))
+      n_edges <- sum(vapply(isa_data$adjacency_matrices,
+                            function(m) if (is.matrix(m)) sum(nzchar(m), na.rm = TRUE) else 0L,
+                            integer(1)))
+
+      if (n_elems == 0L) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                         type = "error", duration = 8, session = session)
+        return(invisible(NULL))
+      }
+
+      data_initialized(TRUE)
+
+      if (isTRUE(res$fell_back)) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
+                         type = "warning", duration = 10, session = session)
+      }
+
+      if (n_edges == 0L) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_no_connections"),
+                         type = "warning", duration = 10, session = session)
+        return(invisible(NULL))  # do not auto-navigate to an edgeless diagram
+      }
+
+      showNotification(i18n$t("modules.isa.data_entry.common.import_success"),
+                       type = "message", duration = 6, session = session)
+      if (!is.null(parent_session)) {
+        updateTabItems(parent_session, "sidebar_menu", "cld_viz")
+      }
+      invisible(NULL)
+    }
+
+    observeEvent(input$import_data, {
+      req(input$import_file)
+      path <- input$import_file$datapath
+      if (.isa_has_elements()) {
+        showModal(modalDialog(
+          title = i18n$t("modules.isa.data_entry.common.import_replace_title"),
+          i18n$t("modules.isa.data_entry.common.import_replace_warning"),
+          footer = tagList(
+            modalButton(i18n$t("common.buttons.cancel")),
+            actionButton(ns("import_confirm"), i18n$t("modules.isa.data_entry.common.import_data"),
+                         class = "btn-warning")
+          ),
+          easyClose = TRUE
+        ))
+      } else {
+        do_import(path)
+      }
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$import_confirm, {
+      removeModal()
+      req(input$import_file)
+      do_import(input$import_file$datapath)
+    })
 
     # Download PDF guidance document
     output$download_guidance_pdf <- downloadHandler(

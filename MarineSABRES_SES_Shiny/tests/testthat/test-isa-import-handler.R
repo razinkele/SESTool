@@ -63,3 +63,35 @@ test_that("apply_saved_isa rebuilds forward matrices from Linked* when none supp
       expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Medium:High")
   })
 })
+
+test_that("import handler loads a Matrix_* workbook, populates panels + matrices", {
+  source_for_test("functions/isa_export_helpers.R")
+  source_for_test("functions/standard_entry_excel_import.R")
+
+  isa <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001", Mechanism = "", Confidence = "High", stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character()),
+    adjacency_matrices = list(es_gb = matrix("+Strong:High", 1, 1, dimnames = list("ES001", "GB001")))
+  )
+  wb <- openxlsx::createWorkbook(); write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(init_session_data()),
+                i18n = fake_i18n, parent_session = NULL), {
+      session$setInputs(import_file = data.frame(
+        name = "x.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)   # click Import
+      session$flushReact()
+      rv <- session$getReturned()()
+      expect_setequal(rv$es_panel_ids, "ES001")
+      expect_setequal(rv$gb_panel_ids, "GB001")
+      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Strong:High")
+  })
+})
