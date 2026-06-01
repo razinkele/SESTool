@@ -53,6 +53,21 @@ feedback_admin_ui <- function(id, i18n) {
           ),
           column(2,
             bs4ValueBoxOutput(ns("vbox_local"), width = 12)
+          ),
+          column(2,
+            bs4ValueBoxOutput(ns("vbox_resolved"), width = 12)
+          )
+        ),
+
+        # Status filter
+        fluidRow(
+          column(3,
+            selectInput(
+              ns("status_filter"),
+              label = i18n$t("modules.feedback_admin.filter_status"),
+              choices = c("open", "resolved", "all"),
+              selected = "open"
+            )
           )
         ),
 
@@ -142,14 +157,18 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
     } else {
       "data/user_feedback_log.ndjson"
     }
+    # Testability seam: allow tests to point the module at a fixture file.
+    # Inert in production (option is unset).
+    log_path <- getOption("marinesabres.feedback_log_path", log_path)
 
     # ------------------------------------------------------------------
     # Reactive: feedback data (loaded once on session start, refreshable)
     # ------------------------------------------------------------------
     rv <- reactiveValues(
-      feedback_df   = NULL,
-      dup_pairs     = NULL,
-      selected_row  = NULL
+      feedback_df       = NULL,
+      dup_pairs         = NULL,
+      selected_row      = NULL,
+      pending_mark_line = NULL
     )
 
     # Load data once on session start
@@ -258,11 +277,37 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       )
     })
 
+    output$vbox_resolved <- renderbs4ValueBox({
+      df <- rv$feedback_df
+      n  <- if (is.null(df) || !nrow(df)) 0L else sum(df$status != "open", na.rm = TRUE)
+      bs4ValueBox(
+        value    = n,
+        subtitle = i18n$t("modules.feedback_admin.resolved"),
+        icon     = tags$i(class = "fas fa-check-double"),
+        color    = "success",
+        width    = 12
+      )
+    })
+
+    # ------------------------------------------------------------------
+    # Filtered feedback (status filter applied). Exposed as a reactive so the
+    # DT render and tests share one source of truth (DT serializes row data
+    # out-of-band, so the rendered widget JSON can't be grepped for rows).
+    # ------------------------------------------------------------------
+    filtered_feedback <- reactive({
+      df <- rv$feedback_df
+      if (is.null(df) || nrow(df) == 0L) return(df)
+      sel_status <- input$status_filter %||% "open"
+      if (sel_status == "open")          df <- df[df$status == "open", , drop = FALSE]
+      else if (sel_status == "resolved") df <- df[df$status != "open", , drop = FALSE]
+      df
+    })
+
     # ------------------------------------------------------------------
     # Feedback DT table
     # ------------------------------------------------------------------
     output$feedback_table <- DT::renderDataTable({
-      df <- rv$feedback_df
+      df <- filtered_feedback()
 
       if (is.null(df) || nrow(df) == 0L) {
         return(DT::datatable(
@@ -284,6 +329,21 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
         '<i class="fa fa-times-circle text-muted"></i>'
       )
 
+      # Per-row "Mark addressed" button (open rows only). Carries the explicit
+      # line_num (NOT a DataTable row index) so it stays correct under filtering.
+      ns_mark <- ns("mark_addr_click")
+      action_html <- vapply(seq_len(nrow(df)), function(k) {
+        if (!is.na(df$status[k]) && df$status[k] == "open") {
+          sprintf(
+            '<button class="btn btn-xs btn-success" onclick="Shiny.setInputValue(\'%s\', {line: %d, rand: Math.random()})">%s</button>',
+            ns_mark, df$line_num[k],
+            htmltools::htmlEscape(i18n$t("modules.feedback_admin.mark_addressed"))
+          )
+        } else {
+          ""
+        }
+      }, character(1L))
+
       disp <- data.frame(
         Date        = format(suppressWarnings(
           as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")),
@@ -295,7 +355,9 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           paste0(substr(df$description, 1, 100), "\u2026"),
           df$description
         ),
+        Status      = df$status,
         GitHub      = github_html,
+        Action      = action_html,
         stringsAsFactors = FALSE
       )
 
@@ -306,7 +368,9 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           i18n$t("modules.feedback_admin.col_type"),
           i18n$t("modules.feedback_admin.col_title"),
           i18n$t("modules.feedback_admin.col_description"),
-          i18n$t("modules.feedback_admin.col_github")
+          i18n$t("modules.feedback_admin.status"),
+          i18n$t("modules.feedback_admin.col_github"),
+          i18n$t("modules.feedback_admin.col_action")
         ),
         escape      = FALSE,
         selection   = "single",
@@ -317,7 +381,9 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           dom        = "lfrtip",
           scrollX    = TRUE
         )
-      )
+      ) |> DT::formatStyle("Status", backgroundColor = DT::styleEqual(
+            c("open", "addressed", "wont_fix", "duplicate"),
+            c("#e9ecef", "#d4edda", "#e2e3e5", "#fff3cd")))
     })
 
     # ------------------------------------------------------------------
@@ -521,6 +587,62 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       } else {
         showNotification(
           i18n$t("modules.feedback_admin.mark_error"),
+          type = "error"
+        )
+      }
+    }, ignoreInit = TRUE)
+
+    # ------------------------------------------------------------------
+    # Mark-as-addressed workflow (per-row button -> modal -> mark_as_resolved)
+    # Mirrors mark_dup: carries explicit line_num (filter-safe).
+    # ------------------------------------------------------------------
+    observeEvent(input$mark_addr_click, {
+      req(!is.null(input$mark_addr_click$line))
+      rv$pending_mark_line <- as.integer(input$mark_addr_click$line)
+      showModal(modalDialog(
+        title = i18n$t("modules.feedback_admin.mark_addressed"),
+        selectInput(session$ns("mark_addressed_status"),
+                    i18n$t("modules.feedback_admin.status"),
+                    choices = c("addressed", "wont_fix", "duplicate"),
+                    selected = "addressed"),
+        textAreaInput(session$ns("mark_addressed_note"),
+                      i18n$t("modules.feedback_admin.note")),
+        textInput(session$ns("mark_addressed_fix_ref"),
+                  i18n$t("modules.feedback_admin.fix_ref")),
+        footer = tagList(
+          modalButton(i18n$t("common.buttons.cancel")),
+          actionButton(session$ns("do_mark_addressed"),
+                       i18n$t("common.buttons.save"), class = "btn-success")
+        )
+      ))
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$do_mark_addressed, {
+      ln <- rv$pending_mark_line
+      req(!is.null(ln))
+      ok <- tryCatch(
+        mark_as_resolved(
+          log_path, line_num = ln,
+          status      = input$mark_addressed_status %||% "addressed",
+          note        = input$mark_addressed_note %||% "",
+          fix_ref     = input$mark_addressed_fix_ref %||% NA_character_,
+          resolved_by = "admin"
+        ),
+        error = function(e) {
+          debug_log(paste("feedback_admin mark_addressed error:", e$message), "ERROR")
+          FALSE
+        }
+      )
+      removeModal()
+      if (isTRUE(ok)) {
+        rv$feedback_df <- load_feedback_log(log_path)
+        showNotification(
+          i18n$t("modules.feedback_admin.marked_addressed"),
+          type = "message"
+        )
+      } else {
+        showNotification(
+          i18n$t("modules.feedback_admin.mark_failed"),
           type = "error"
         )
       }

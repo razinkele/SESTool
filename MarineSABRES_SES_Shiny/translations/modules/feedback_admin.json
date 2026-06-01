@@ -362,6 +362,94 @@
       "it": "Fatto",
       "no": "Ferdig",
       "el": "Ολοκληρώθηκε"
+    },
+    "modules.feedback_admin.resolved": {
+      "en": "Resolved",
+      "es": "Resueltos",
+      "fr": "Résolus",
+      "de": "Erledigt",
+      "lt": "Išspręsta",
+      "pt": "Resolvidos",
+      "it": "Risolti",
+      "no": "Løst",
+      "el": "Επιλύθηκαν"
+    },
+    "modules.feedback_admin.filter_status": {
+      "en": "Status filter",
+      "es": "Filtro de estado",
+      "fr": "Filtre de statut",
+      "de": "Statusfilter",
+      "lt": "Būsenos filtras",
+      "pt": "Filtro de estado",
+      "it": "Filtro stato",
+      "no": "Statusfilter",
+      "el": "Φίλτρο κατάστασης"
+    },
+    "modules.feedback_admin.status": {
+      "en": "Status",
+      "es": "Estado",
+      "fr": "Statut",
+      "de": "Status",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato",
+      "no": "Status",
+      "el": "Κατάσταση"
+    },
+    "modules.feedback_admin.mark_addressed": {
+      "en": "Mark addressed",
+      "es": "Marcar como atendido",
+      "fr": "Marquer comme traité",
+      "de": "Als bearbeitet markieren",
+      "lt": "Žymėti kaip išspręstą",
+      "pt": "Marcar como tratado",
+      "it": "Segna come gestito",
+      "no": "Merk som behandlet",
+      "el": "Σήμανση ως αντιμετωπισμένο"
+    },
+    "modules.feedback_admin.note": {
+      "en": "Resolution note",
+      "es": "Nota de resolución",
+      "fr": "Note de résolution",
+      "de": "Lösungsnotiz",
+      "lt": "Sprendimo pastaba",
+      "pt": "Nota de resolução",
+      "it": "Nota di risoluzione",
+      "no": "Løsningsnotat",
+      "el": "Σημείωση επίλυσης"
+    },
+    "modules.feedback_admin.fix_ref": {
+      "en": "Fix reference (commit/PR)",
+      "es": "Referencia de corrección (commit/PR)",
+      "fr": "Référence du correctif (commit/PR)",
+      "de": "Fix-Referenz (Commit/PR)",
+      "lt": "Pataisos nuoroda (commit/PR)",
+      "pt": "Referência da correção (commit/PR)",
+      "it": "Riferimento correzione (commit/PR)",
+      "no": "Fiksreferanse (commit/PR)",
+      "el": "Αναφορά διόρθωσης (commit/PR)"
+    },
+    "modules.feedback_admin.marked_addressed": {
+      "en": "Feedback marked addressed.",
+      "es": "Comentario marcado como atendido.",
+      "fr": "Retour marqué comme traité.",
+      "de": "Feedback als bearbeitet markiert.",
+      "lt": "Atsiliepimas pažymėtas kaip išspręstas.",
+      "pt": "Comentário marcado como tratado.",
+      "it": "Feedback contrassegnato come gestito.",
+      "no": "Tilbakemelding merket som behandlet.",
+      "el": "Το σχόλιο σημάνθηκε ως αντιμετωπισμένο."
+    },
+    "modules.feedback_admin.mark_failed": {
+      "en": "Could not update the feedback entry.",
+      "es": "No se pudo actualizar la entrada de comentarios.",
+      "fr": "Impossible de mettre à jour l'entrée de retour.",
+      "de": "Der Feedback-Eintrag konnte nicht aktualisiert werden.",
+      "lt": "Nepavyko atnaujinti atsiliepimo įrašo.",
+      "pt": "Não foi possível atualizar a entrada de comentário.",
+      "it": "Impossibile aggiornare la voce di feedback.",
+      "no": "Kunne ikke oppdatere tilbakemeldingsoppføringen.",
+      "el": "Δεν ήταν δυνατή η ενημέρωση της καταχώρισης σχολίου."
     }
   }
 }
