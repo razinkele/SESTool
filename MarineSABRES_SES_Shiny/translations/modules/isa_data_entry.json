@@ -44,6 +44,17 @@
       "no": "Noen element-ID-er ble reparert ved innlasting (duplikater fra en eldre versjon).",
       "el": "Ορισμένα αναγνωριστικά στοιχείων επιδιορθώθηκαν κατά τη φόρτωση (διπλότυπα από παλαιότερη έκδοση)."
     },
+    "modules.isa.data_entry.common.no_elements_loaded": {
+      "en": "This project loaded with no readable elements — it may be from an older version.",
+      "es": "Este proyecto se cargó sin elementos legibles; puede ser de una versión anterior.",
+      "fr": "Ce projet a été chargé sans éléments lisibles — il provient peut-être d'une version antérieure.",
+      "de": "Dieses Projekt wurde ohne lesbare Elemente geladen — es stammt möglicherweise aus einer älteren Version.",
+      "lt": "Šis projektas įkeltas be perskaitomų elementų — jis gali būti iš senesnės versijos.",
+      "pt": "Este projeto foi carregado sem elementos legíveis — pode ser de uma versão anterior.",
+      "it": "Questo progetto è stato caricato senza elementi leggibili — potrebbe provenire da una versione precedente.",
+      "no": "Dette prosjektet ble lastet inn uten lesbare elementer — det kan være fra en eldre versjon.",
+      "el": "Αυτό το έργο φορτώθηκε χωρίς αναγνώσιμα στοιχεία — μπορεί να προέρχεται από παλαιότερη έκδοση."
+    },
     "modules.isa.ai_assistant.eu_member_states": {
       "en": "EU Member States",
       "es": "Estados miembros de la UE",

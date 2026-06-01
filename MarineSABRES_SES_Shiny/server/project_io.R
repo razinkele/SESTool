@@ -105,8 +105,14 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
         # Normalize uppercase column names and list structures to internal format
         if (!is.null(parsed)) normalize_json_project_data(parsed) else NULL
       } else {
-        # Load RDS file safely with size and type validation
-        safe_readRDS(file_path, max_size_mb = 50)
+        # Load RDS file safely with size and type validation, then normalize
+        # the same way JSON loads are: legacy/fork/re-saved RDS projects can
+        # carry uppercase element columns or list-shaped element types, and
+        # normalize_json_project_data lowercases columns + coerces list->df.
+        # Combined with the case-insensitive reconcile_loaded_element_ids this
+        # lets older projects load with their elements intact.
+        rds_data <- safe_readRDS(file_path, max_size_mb = 50)
+        if (!is.null(rds_data)) normalize_json_project_data(rds_data) else NULL
       }
 
       if (is.null(loaded_data)) {

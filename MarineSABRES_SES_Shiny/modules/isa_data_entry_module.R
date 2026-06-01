@@ -292,12 +292,17 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
         )
         any_repaired <- FALSE
+        any_rows_in <- FALSE
+        any_panel_ids_out <- FALSE
         for (key in names(id_load_map)) {
           saved_df <- saved_isa[[key]]
           if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+            any_rows_in <- TRUE
             rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
             isa_data[[key]] <- rec$df
-            isa_data[[id_load_map[[key]]$panel]] <- as.character(rec$df$ID)
+            panel_ids <- as.character(rec$df$ID)
+            isa_data[[id_load_map[[key]]$panel]] <- panel_ids
+            if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
             if (isTRUE(rec$repaired)) any_repaired <- TRUE
           } else {
             isa_data[[id_load_map[[key]]$panel]] <- character(0)
@@ -306,6 +311,12 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         if (any_repaired) {
           showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
                            type = "warning", duration = 8, session = session)
+        }
+        # Surface the previously-silent failure: rows came in but nothing
+        # resolved to a panel id (e.g. an unrecognized legacy structure).
+        if (any_rows_in && !any_panel_ids_out) {
+          showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
+                           type = "warning", duration = 10, session = session)
         }
 
         data_initialized(TRUE)
