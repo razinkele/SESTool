@@ -79,3 +79,24 @@ test_that("faithful round-trip preserves dimnames + cells for a non-square matri
   expect_equal(m["ES001","GB003"], "+Medium:Medium")
   expect_equal(m["ES002","GB001"], "")   # empty cell round-trips to ""
 })
+
+test_that("rejects a non-Standard-Entry workbook (generic Elements/Connections)", {
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "Elements");    openxlsx::writeData(wb, "Elements", data.frame(Label = "x", type = "Driver"))
+  openxlsx::addWorksheet(wb, "Connections"); openxlsx::writeData(wb, "Connections", data.frame(From = "x", To = "y"))
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  expect_error(read_standard_entry_workbook(tmp), class = "se_import_not_recognized")
+})
+
+test_that("rejects an element sheet that lacks ID/Name columns", {
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "Drivers"); openxlsx::writeData(wb, "Drivers", data.frame(Foo = 1, Bar = 2))
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  expect_error(read_standard_entry_workbook(tmp), class = "se_import_not_recognized")
+})
+
+test_that("missing file raises a clear error", {
+  expect_error(read_standard_entry_workbook(tempfile(fileext = ".xlsx")), "file not found")
+})

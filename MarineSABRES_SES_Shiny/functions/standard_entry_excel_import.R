@@ -13,6 +13,11 @@
   Drivers            = "drivers"
 )
 
+# Returns TRUE when a data frame has the required Standard-Entry columns.
+.se_qualifies <- function(df) {
+  is.data.frame(df) && all(c("ID", "Name") %in% names(df))
+}
+
 #' Read a Standard-Entry-exported .xlsx into an isa_data-shaped list.
 #' @param path path to an .xlsx file written by write_isa_element_sheets().
 #' @return list with the six element data frames (all columns character),
@@ -50,6 +55,21 @@ read_standard_entry_workbook <- function(path) {
       am[[key]] <- mat
     }
     out$adjacency_matrices <- am
+  }
+
+  # Format detection: at least one element sheet must have ID+Name columns,
+  # OR at least one Matrix_* sheet must be present.
+  has_qualified_elements <- any(vapply(
+    .SE_ELEMENT_SHEETS,
+    function(key) .se_qualifies(out[[key]]),
+    logical(1)
+  ))
+  has_matrices <- !is.null(out$adjacency_matrices) && length(out$adjacency_matrices) > 0
+
+  if (!has_qualified_elements && !has_matrices) {
+    e <- simpleError("Not a Standard Entry export (no recognizable element or Matrix_* sheets).")
+    class(e) <- c("se_import_not_recognized", class(e))
+    stop(e)
   }
 
   # Optional pass-through sheets
