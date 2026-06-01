@@ -74,3 +74,20 @@ test_that("reconcile_loaded_element_ids is a no-op for clean ids", {
   expect_equal(res$df$ID, c("ES001", "ES002"))
   expect_false(isTRUE(res$repaired))
 })
+
+test_that("reconcile_loaded_element_ids handles a lowercase 'id' column (load-path bug L6)", {
+  reset_stable_id_counter("ES")
+  df <- data.frame(id = c("ES001","ES002"), name = c("a","b"), stringsAsFactors = FALSE)
+  res <- reconcile_loaded_element_ids(df, "ES")
+  expect_true("ID" %in% names(res$df))
+  expect_equal(as.character(res$df$ID), c("ES001","ES002"))   # NON-empty -> panel_ids will populate
+})
+
+test_that("reconcile_loaded_element_ids generates ids when no id column exists", {
+  reset_stable_id_counter("GB")
+  df <- data.frame(name = c("x","y","z"), stringsAsFactors = FALSE)
+  res <- reconcile_loaded_element_ids(df, "GB")
+  expect_true("ID" %in% names(res$df))
+  expect_equal(sum(nzchar(as.character(res$df$ID))), 3L)       # all rows got an id
+  expect_equal(anyDuplicated(res$df$ID), 0)
+})

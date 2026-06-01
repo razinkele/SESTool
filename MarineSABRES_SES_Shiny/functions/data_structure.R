@@ -60,11 +60,31 @@ generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
 #' @return list(df = repaired data.frame, repaired = logical scalar)
 reconcile_loaded_element_ids <- function(element_df, prefix, store = .stable_id_counters) {
   if (is.null(element_df) || !nrow(element_df)) return(list(df = element_df, repaired = FALSE))
-  ids <- as.character(element_df$ID)
+
+  # Detect the id column case-insensitively. Legacy/fork/JSON-origin/re-saved
+  # projects can carry a lowercase `id` (normalize_json_project_data lowercases
+  # all element columns). Rename it to canonical uppercase `ID` so the caller's
+  # `as.character(rec$df$ID)` is non-empty. If NO id column exists at all, treat
+  # every row as needing a fresh stable id.
+  repaired_structure <- FALSE
+  id_col <- names(element_df)[match("id", tolower(names(element_df)))]
+  if (!is.null(id_col) && !is.na(id_col)) {
+    if (id_col != "ID") {
+      names(element_df)[names(element_df) == id_col] <- "ID"
+      repaired_structure <- TRUE
+    }
+    ids <- as.character(element_df$ID)
+  } else {
+    # No id column present — every row is "bad" and needs an id.
+    ids <- rep(NA_character_, nrow(element_df))
+    repaired_structure <- TRUE
+  }
+
   bad <- duplicated(ids) | is.na(ids) | !nzchar(ids)
   if (!any(bad)) {
     seed_stable_id_counter(prefix, ids, store)
-    return(list(df = element_df, repaired = FALSE))
+    element_df$ID <- ids
+    return(list(df = element_df, repaired = repaired_structure))
   }
   seed_stable_id_counter(prefix, ids[!bad], store)
   for (k in which(bad)) ids[k] <- generate_stable_element_id(prefix, store)
