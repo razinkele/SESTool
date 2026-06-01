@@ -164,6 +164,30 @@ test_that("load_feedback_log defaults missing duplicate_of to NA_character_", {
   expect_true(is.na(df$duplicate_of[1L]))
 })
 
+test_that("load_feedback_log defaults missing status to open and surfaces resolution fields", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c(
+    '{"title":"A","type":"bug","timestamp":"t1"}',
+    '{"title":"B","type":"bug","timestamp":"t2","status":"addressed","fix_ref":"pr5"}',
+    '{"title":"C","type":"bug","timestamp":"t3","duplicate_of":"http://x"}'
+  ), tmp)
+  df <- load_feedback_log(tmp)
+  expect_true(all(c("status","resolved_at","resolved_by","resolution_note","fix_ref","fix_deployed") %in% names(df)))
+  expect_equal(df$status[df$title == "A"], "open")
+  expect_equal(df$status[df$title == "B"], "addressed")
+  expect_equal(df$fix_ref[df$title == "B"], "pr5")
+  expect_equal(df$status[df$title == "C"], "duplicate")   # implicit from duplicate_of
+  unlink(tmp)
+})
+
+test_that("load_feedback_log surfaces malformed lines via the skipped_lines attribute", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{"title":"A","type":"bug","timestamp":"t1"}', '{not valid json'), tmp)
+  df <- load_feedback_log(tmp)
+  expect_equal(attr(df, "skipped_lines"), 2L)
+  unlink(tmp)
+})
+
 
 # =============================================================================
 # compute_text_similarity tests
@@ -375,6 +399,84 @@ test_that("mark_as_duplicate returns FALSE for out-of-range line_num", {
   expect_false(mark_as_duplicate(tmp, line_num = 0L, duplicate_of_line = "ref"))
   # Line 5 (above range - only 1 line exists)
   expect_false(mark_as_duplicate(tmp, line_num = 5L, duplicate_of_line = "ref"))
+})
+
+
+# =============================================================================
+# mark_as_resolved tests
+# =============================================================================
+
+test_that("mark_as_resolved sets status + resolution fields on the target line only", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c(
+    '{"title":"Bug A","type":"bug","description":"x"}',
+    '{"title":"Sug B","type":"suggestion","description":"y"}'
+  ), tmp)
+  ok <- mark_as_resolved(tmp, line_num = 1, status = "addressed",
+                         note = "fixed in PR", fix_ref = "abc123",
+                         resolved_by = "feedback-triage",
+                         now = "2026-05-31T00:00:00Z")
+  expect_true(ok)
+  lines <- readLines(tmp)
+  p1 <- jsonlite::fromJSON(lines[1]); p2 <- jsonlite::fromJSON(lines[2])
+  expect_equal(p1$status, "addressed")
+  expect_equal(p1$fix_ref, "abc123")
+  expect_equal(p1$resolved_by, "feedback-triage")
+  expect_equal(p1$resolution_note, "fixed in PR")
+  expect_equal(p1$resolved_at, "2026-05-31T00:00:00Z")
+  expect_null(p2$status)
+  expect_equal(p2$title, "Sug B")
+  unlink(tmp)
+})
+
+test_that("mark_as_resolved rejects invalid status and out-of-range line_num", {
+  tmp <- tempfile(fileext = ".ndjson"); writeLines('{"title":"A"}', tmp)
+  expect_false(mark_as_resolved(tmp, 1, status = "bogus"))
+  expect_false(mark_as_resolved(tmp, 5, status = "addressed"))
+  expect_false(mark_as_resolved(tmp, 0, status = "addressed"))
+  unlink(tmp)
+})
+
+test_that("mark_as_resolved is idempotent and keeps the file valid", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{"title":"A","type":"bug"}', '{"title":"B"}'), tmp)
+  mark_as_resolved(tmp, 1, status = "addressed", fix_ref = "r1", now = "t1")
+  mark_as_resolved(tmp, 1, status = "addressed", fix_ref = "r2", now = "t2")
+  lines <- readLines(tmp)
+  expect_length(lines, 2)
+  expect_equal(jsonlite::fromJSON(lines[1])$fix_ref, "r2")
+  expect_equal(jsonlite::fromJSON(lines[2])$title, "B")
+  unlink(tmp)
+})
+
+test_that("mark_as_resolved leaves other lines byte-identical", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{"title":"A","type":"bug"}', '{"title":"B","type":"bug"}'), tmp)
+  orig <- readLines(tmp)
+  mark_as_resolved(tmp, 1, status = "addressed", now = "t1")
+  expect_identical(readLines(tmp)[2], orig[2])   # untouched line unchanged
+  unlink(tmp)
+})
+
+test_that("mark_as_resolved returns FALSE on a malformed or blank target line and leaves the file unchanged", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{not json', ''), tmp)
+  orig <- readLines(tmp)
+  expect_false(mark_as_resolved(tmp, 1, status = "addressed"))  # malformed
+  expect_false(mark_as_resolved(tmp, 2, status = "addressed"))  # blank
+  expect_identical(readLines(tmp), orig)
+  unlink(tmp)
+})
+
+test_that("mark_as_resolved round-trips UTF-8 note and fix_deployed", {
+  tmp <- tempfile(fileext = ".ndjson"); writeLines('{"title":"A","type":"bug"}', tmp)
+  ok <- mark_as_resolved(tmp, 1, status = "addressed",
+                         note = "διορθώθηκε", fix_deployed = "1.16.5", now = "t1")
+  expect_true(ok)
+  p <- jsonlite::fromJSON(readLines(tmp)[1])
+  expect_equal(p$resolution_note, "διορθώθηκε")
+  expect_equal(p$fix_deployed, "1.16.5")
+  unlink(tmp)
 })
 
 

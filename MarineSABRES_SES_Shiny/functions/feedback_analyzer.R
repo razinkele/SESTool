@@ -38,6 +38,12 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
       timestamp    = character(0),
       github_url   = character(0),
       duplicate_of = character(0),
+      status          = character(0),
+      resolved_at     = character(0),
+      resolved_by     = character(0),
+      resolution_note = character(0),
+      fix_ref         = character(0),
+      fix_deployed    = character(0),
       stringsAsFactors = FALSE
     )
   }
@@ -58,6 +64,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
   if (length(raw_lines) == 0L) return(empty_df())
 
   rows <- list()
+  skipped <- integer(0)
 
   for (i in seq_along(raw_lines)) {
     line <- trimws(raw_lines[[i]])
@@ -70,6 +77,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
 
     if (is.null(parsed) || !is.list(parsed)) {
       debug_log(paste("load_feedback_log: skipping malformed line", i), "WARN")
+      skipped <- c(skipped, i)
       next
     }
 
@@ -81,7 +89,19 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
       steps        = as.character(parsed$steps        %||% NA_character_),
       timestamp    = as.character(parsed$timestamp    %||% NA_character_),
       github_url   = as.character(parsed$github_url   %||% NA_character_),
-      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_)
+      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_),
+      status = {
+        s <- parsed$status
+        if (length(s) == 1L && nzchar(as.character(s))) as.character(s)
+        else if (!is.null(parsed$duplicate_of) &&
+                 !as.character(parsed$duplicate_of) %in% c("NA", "")) "duplicate"
+        else "open"
+      },
+      resolved_at     = as.character(parsed$resolved_at     %||% NA_character_),
+      resolved_by     = as.character(parsed$resolved_by     %||% NA_character_),
+      resolution_note = as.character(parsed$resolution_note %||% NA_character_),
+      fix_ref         = as.character(parsed$fix_ref         %||% NA_character_),
+      fix_deployed    = as.character(parsed$fix_deployed    %||% NA_character_)
     )
     rows[[length(rows) + 1L]] <- row
   }
@@ -101,6 +121,7 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
   # Reset rownames
   rownames(df) <- NULL
 
+  attr(df, "skipped_lines") <- skipped
   df
 }
 
@@ -339,6 +360,88 @@ mark_as_duplicate <- function(log_path, line_num, duplicate_of_line) {
     TRUE
   }, error = function(e) {
     debug_log(paste("mark_as_duplicate error:", e$message), "ERROR")
+    FALSE
+  })
+}
+
+# Allowed feedback resolution statuses. An entry with no `status` is treated as
+# "open" by load_feedback_log(); "duplicate" is set implicitly when duplicate_of
+# is present (handled in load_feedback_log).
+ALLOWED_FEEDBACK_STATUSES <- c("open", "addressed", "wont_fix", "duplicate")
+
+#' Mark a feedback entry resolved (atomic single-line rewrite)
+#'
+#' Mirrors mark_as_duplicate(): reads the file, parses the target line's JSON,
+#' sets the resolution fields, and atomically replaces the file. `now` is
+#' injectable for deterministic tests.
+#'
+#' @return TRUE on success, FALSE on any error / invalid status / bad line_num.
+mark_as_resolved <- function(log_path, line_num,
+                             status = "addressed",
+                             note = "",
+                             fix_ref = NA_character_,
+                             resolved_by = "admin",
+                             fix_deployed = NA_character_,
+                             now = NULL) {
+  tryCatch({
+    if (!status %in% ALLOWED_FEEDBACK_STATUSES) {
+      debug_log(paste("mark_as_resolved: invalid status", status), "ERROR")
+      return(FALSE)
+    }
+    if (!file.exists(log_path)) {
+      debug_log("mark_as_resolved: file not found", "ERROR")
+      return(FALSE)
+    }
+
+    raw_lines <- readLines(log_path, warn = FALSE, encoding = "UTF-8")
+
+    if (line_num < 1L || line_num > length(raw_lines)) {
+      debug_log(paste("mark_as_resolved: line_num", line_num,
+                      "out of range (1 -", length(raw_lines), ")"), "ERROR")
+      return(FALSE)
+    }
+
+    target_raw <- trimws(raw_lines[[line_num]])
+    if (nchar(target_raw) == 0L) {
+      debug_log(paste("mark_as_resolved: line", line_num, "is empty"), "ERROR")
+      return(FALSE)
+    }
+
+    parsed <- tryCatch(
+      jsonlite::fromJSON(target_raw, simplifyVector = TRUE),
+      error = function(e) NULL
+    )
+    if (is.null(parsed) || !is.list(parsed)) {
+      debug_log(paste("mark_as_resolved: line", line_num, "is not valid JSON"), "ERROR")
+      return(FALSE)
+    }
+
+    parsed$status          <- status
+    # UTC ...Z to match the existing `timestamp` field's format.
+    parsed$resolved_at     <- if (is.null(now)) format(as.POSIXct(Sys.time(), tz = "UTC"), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC") else now
+    parsed$resolved_by     <- as.character(resolved_by)
+    parsed$resolution_note <- as.character(note)
+    if (!is.na(fix_ref))      parsed$fix_ref      <- as.character(fix_ref)
+    if (!is.na(fix_deployed)) parsed$fix_deployed <- as.character(fix_deployed)
+
+    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE)
+
+    tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
+    # Clean up the temp file on ANY exit (write error, rename failure; success
+    # leaves no temp). Prevents leaked .tmp.<pid> files.
+    on.exit(if (file.exists(tmp_path)) try(file.remove(tmp_path), silent = TRUE), add = TRUE)
+    # useBytes=TRUE: lines are already UTF-8 from readLines(encoding="UTF-8");
+    # useBytes=FALSE could mojibake non-ASCII (Greek) in UNTOUCHED lines on a
+    # non-UTF-8 server locale.
+    writeLines(raw_lines, con = tmp_path, useBytes = TRUE)
+    rename_ok <- file.rename(tmp_path, log_path)
+    if (!isTRUE(rename_ok)) {
+      debug_log(paste("mark_as_resolved: file.rename failed for line", line_num), "ERROR")
+      return(FALSE)
+    }
+    TRUE
+  }, error = function(e) {
+    debug_log(paste("mark_as_resolved error:", e$message), "ERROR")
     FALSE
   })
 }

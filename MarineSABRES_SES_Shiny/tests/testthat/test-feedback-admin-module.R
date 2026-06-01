@@ -105,3 +105,54 @@ test_that("find_duplicates observer runs and the duplicates table renders", {
     expect_false(is.null(output$duplicates_table))
   })
 })
+
+# ============================================================================
+# RESOLUTION WORKFLOW TESTS (Task 3)
+# Mark-addressed flips status; status_filter changes the displayed set;
+# the Resolved value box renders. Uses the marinesabres.feedback_log_path
+# seam + the recalculate observer to force the gated load against a fixture.
+# ============================================================================
+
+test_that("mark-addressed flips status to addressed and refreshes", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines('{"title":"Bug A","type":"bug","timestamp":"t1"}', tmp)
+  withr::with_options(list(marinesabres.feedback_log_path = tmp), {
+    testServer(feedback_admin_server, args = list(i18n = i18n), {
+      session$setInputs(recalculate = 1); session$flushReact()
+      expect_false(is.null(output$vbox_total))         # proves fixture loaded
+      session$setInputs(mark_addr_click = list(line = 1, rand = 1))
+      session$setInputs(mark_addressed_status = "addressed",
+                        mark_addressed_note = "fixed in test",
+                        mark_addressed_fix_ref = "pr1")
+      session$setInputs(do_mark_addressed = 1); session$flushReact()
+      p <- jsonlite::fromJSON(readLines(tmp)[1])
+      expect_equal(p$status, "addressed"); expect_equal(p$fix_ref, "pr1")
+      expect_false(is.null(output$vbox_resolved))
+    })
+  })
+  unlink(tmp)
+})
+
+test_that("status_filter changes the displayed set", {
+  tmp <- tempfile(fileext = ".ndjson")
+  writeLines(c('{"title":"Open one","type":"bug","timestamp":"t1"}',
+               '{"title":"Done one","type":"bug","timestamp":"t2","status":"addressed"}'), tmp)
+  withr::with_options(list(marinesabres.feedback_log_path = tmp), {
+    testServer(feedback_admin_server, args = list(i18n = i18n), {
+      session$setInputs(recalculate = 1); session$flushReact()
+      # DT serializes row data out-of-band (server-side processing), so the
+      # rendered widget JSON cannot be grepped for row titles. Assert against
+      # the production `filtered_feedback()` reactive that the render consumes,
+      # and force the render so the reactive is exercised end-to-end.
+      session$setInputs(status_filter = "open"); session$flushReact()
+      invisible(output$feedback_table)
+      t1 <- filtered_feedback()$title
+      expect_true("Open one" %in% t1); expect_false("Done one" %in% t1)
+      session$setInputs(status_filter = "resolved"); session$flushReact()
+      invisible(output$feedback_table)
+      t2 <- filtered_feedback()$title
+      expect_true("Done one" %in% t2); expect_false("Open one" %in% t2)
+    })
+  })
+  unlink(tmp)
+})
