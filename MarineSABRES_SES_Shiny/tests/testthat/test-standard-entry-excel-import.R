@@ -43,3 +43,39 @@ test_that("faithful round-trip: Matrix_* sheets reconstruct exact edge cells", {
   # all element columns coerced to character
   expect_true(all(vapply(out$ecosystem_services, is.character, logical(1))))
 })
+
+test_that("faithful round-trip preserves dimnames + cells for a non-square matrix", {
+  isa <- list(
+    goods_benefits = data.frame(ID = c("GB001","GB002","GB003"), Name = c("A","B","C"),
+                                Type = "", Description = "", Stakeholder = "", Importance = "", Trend = "",
+                                stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = c("ES001","ES002"), Name = c("X","Y"),
+                                    Type = "", Description = "", LinkedGB = c("GB001","GB002"),
+                                    Mechanism = "", Confidence = "Medium", stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character()),
+    adjacency_matrices = list(
+      es_gb = matrix(c("+Strong:High", "",            # ES001->GB001, ES002->GB001
+                       "", "-Weak:Low",               # ES001->GB002, ES002->GB002
+                       "+Medium:Medium", ""),         # ES001->GB003, ES002->GB003
+                     nrow = 2, ncol = 3,
+                     dimnames = list(c("ES001","ES002"), c("GB001","GB002","GB003")))
+    )
+  )
+  wb <- openxlsx::createWorkbook()
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx")
+  openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  out <- read_standard_entry_workbook(tmp)
+  m <- out$adjacency_matrices$es_gb
+
+  expect_equal(rownames(m), c("ES001","ES002"))
+  expect_equal(colnames(m), c("GB001","GB002","GB003"))
+  expect_equal(m["ES001","GB001"], "+Strong:High")
+  expect_equal(m["ES002","GB002"], "-Weak:Low")
+  expect_equal(m["ES001","GB003"], "+Medium:Medium")
+  expect_equal(m["ES002","GB001"], "")   # empty cell round-trips to ""
+})

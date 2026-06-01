@@ -45,6 +45,7 @@ read_standard_entry_workbook <- function(path) {
       m <- openxlsx::read.xlsx(path, sheet = sheet, rowNames = TRUE)
       mat <- as.matrix(m)
       storage.mode(mat) <- "character"
+      # NA replacement must follow the character coercion above (numeric NA -> NA_character_, never the string "NA")
       mat[is.na(mat)] <- ""            # in-app empty-cell convention
       am[[key]] <- mat
     }
