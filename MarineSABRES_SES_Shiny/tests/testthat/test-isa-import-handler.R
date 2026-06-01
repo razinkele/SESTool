@@ -95,3 +95,66 @@ test_that("import handler loads a Matrix_* workbook, populates panels + matrices
       expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Strong:High")
   })
 })
+
+test_that("import guard: elements but no connections — panels load, no crash (L5 defense)", {
+  source_for_test("functions/isa_export_helpers.R")
+  source_for_test("functions/standard_entry_excel_import.R")
+
+  # Two elements in unconnected categories; no Matrix_* sheets, empty/absent links.
+  isa <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = character(), Name = character()),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = "D001", Name = "Demand", Type = "", Description = "",
+                         LinkedA = "", Trend = "", Controllability = "", stringsAsFactors = FALSE)
+    # no adjacency_matrices -> reader writes no Matrix_* sheets; fallback finds no
+    # valid (src,tgt) pair (activities empty), so zero edges.
+  )
+  wb <- openxlsx::createWorkbook(); write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(init_session_data()),
+                i18n = fake_i18n, parent_session = NULL), {
+      session$setInputs(import_file = data.frame(
+        name = "x.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)
+      session$flushReact()
+      rv <- session$getReturned()()
+      # elements loaded (import ran through apply_saved_isa)
+      expect_setequal(rv$gb_panel_ids, "GB001")
+      expect_setequal(rv$d_panel_ids, "D001")
+      # but no edges were produced
+      n_edges <- sum(vapply(rv$adjacency_matrices,
+                            function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L,
+                            integer(1)))
+      expect_equal(n_edges, 0)
+  })
+})
+
+test_that("import of an unrecognized workbook is a clean no-op (state unchanged)", {
+  source_for_test("functions/standard_entry_excel_import.R")
+
+  # A workbook with no Standard-Entry element sheets and no Matrix_* sheets.
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "RandomSheet")
+  openxlsx::writeData(wb, "RandomSheet", data.frame(foo = 1, bar = 2))
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(init_session_data()),
+                i18n = fake_i18n, parent_session = NULL), {
+      session$setInputs(import_file = data.frame(
+        name = "bad.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)
+      session$flushReact()
+      rv <- session$getReturned()()
+      # nothing imported — all panels remain empty
+      expect_length(rv$gb_panel_ids, 0)
+      expect_length(rv$d_panel_ids, 0)
+      expect_length(rv$es_panel_ids, 0)
+  })
+})

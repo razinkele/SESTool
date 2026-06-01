@@ -1531,7 +1531,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                             function(k) if (is.data.frame(isa_data[[k]])) nrow(isa_data[[k]]) else 0L,
                             integer(1)))
       n_edges <- sum(vapply(isa_data$adjacency_matrices,
-                            function(m) if (is.matrix(m)) sum(nzchar(m), na.rm = TRUE) else 0L,
+                            function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L,
                             integer(1)))
 
       if (n_elems == 0L) {
