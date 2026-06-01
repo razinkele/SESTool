@@ -267,58 +267,57 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       })
     }
 
+    # Apply a saved/imported isa_data list into this module's reactiveValues.
+    # = load_isa_elements_from_saved (copies element dfs, adjacency_matrices,
+    #   loop_connections, case_info) + the L6-hardened id reconcile loop that
+    #   canonicalizes IDs and sets *_panel_ids. Shared by the project-load
+    #   observer and the Excel import handler. Caller sets data_initialized().
+    apply_saved_isa <- function(saved_isa) {
+      load_isa_elements_from_saved(isa_data, saved_isa)
+
+      id_load_map <- list(
+        goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
+        ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
+        marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
+        pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
+        activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
+        drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+      )
+      any_repaired <- FALSE
+      any_rows_in <- FALSE
+      any_panel_ids_out <- FALSE
+      for (key in names(id_load_map)) {
+        saved_df <- saved_isa[[key]]
+        if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+          any_rows_in <- TRUE
+          rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
+          isa_data[[key]] <- rec$df
+          panel_ids <- as.character(rec$df$ID)
+          isa_data[[id_load_map[[key]]$panel]] <- panel_ids
+          if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
+          if (isTRUE(rec$repaired)) any_repaired <- TRUE
+        } else {
+          isa_data[[id_load_map[[key]]$panel]] <- character(0)
+        }
+      }
+      if (any_repaired) {
+        showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
+                         type = "warning", duration = 8, session = session)
+      }
+      if (any_rows_in && !any_panel_ids_out) {
+        showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
+                         type = "warning", duration = 10, session = session)
+      }
+      invisible(NULL)
+    }
+
     # Load saved ISA data when a (different) project becomes active. Keyed on
-    # project_id so module saves — which don't change project_id — don't
-    # re-trigger a load and clobber in-progress edits (this exact loop was the
-    # ghost-row + duplicate-ID source before v1.13.0).
+    # project_id so module saves don't re-trigger a load and clobber edits.
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         debug_log("Loading saved ISA data on project change", "ISA Module")
-        load_isa_elements_from_saved(isa_data, project$data$isa_data)
-
-        # Repair legacy duplicate/blank IDs (a symptom of the old positional-ID
-        # bug) and ADOPT the resulting ids as the stable panel set, seeding the
-        # per-session counter past them so later add_* never collide. Reads the
-        # RAW saved df (uppercase ID) — load_isa_elements_from_saved lowercases
-        # for its table view, but the rest of the module keys on uppercase ID.
-        saved_isa <- project$data$isa_data
-        id_load_map <- list(
-          goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
-          ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
-          marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
-          pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
-          activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
-          drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
-        )
-        any_repaired <- FALSE
-        any_rows_in <- FALSE
-        any_panel_ids_out <- FALSE
-        for (key in names(id_load_map)) {
-          saved_df <- saved_isa[[key]]
-          if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
-            any_rows_in <- TRUE
-            rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
-            isa_data[[key]] <- rec$df
-            panel_ids <- as.character(rec$df$ID)
-            isa_data[[id_load_map[[key]]$panel]] <- panel_ids
-            if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
-            if (isTRUE(rec$repaired)) any_repaired <- TRUE
-          } else {
-            isa_data[[id_load_map[[key]]$panel]] <- character(0)
-          }
-        }
-        if (any_repaired) {
-          showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
-                           type = "warning", duration = 8, session = session)
-        }
-        # Surface the previously-silent failure: rows came in but nothing
-        # resolved to a panel id (e.g. an unrecognized legacy structure).
-        if (any_rows_in && !any_panel_ids_out) {
-          showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
-                           type = "warning", duration = 10, session = session)
-        }
-
+        apply_saved_isa(project$data$isa_data)
         data_initialized(TRUE)
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
