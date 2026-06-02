@@ -732,6 +732,15 @@ UI_NETWORK_DEFAULT_HEIGHT <- "600px"
 UI_CARD_BORDER_RADIUS <- "8px"
 
 # ============================================================================
+# WP5 DEMONSTRATION-AREA CONTEXT KEYS
+# ============================================================================
+# Canonical key set used by the WP5 mechanism KB and (in later phases) the
+# indicator registry. Values are lowercase ASCII to match JSON `applies_to_DAs`
+# fields without locale-dependent string handling.
+
+WP5_DA_CONTEXTS <- c("macaronesia", "tuscan", "arctic")
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 
