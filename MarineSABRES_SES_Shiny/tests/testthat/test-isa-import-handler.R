@@ -214,3 +214,68 @@ test_that("import of an unrecognized workbook is a clean no-op (state unchanged)
       expect_length(rv$es_panel_ids, 0)
   })
 })
+
+test_that("legacy import gate: empty forward matrices + label-form LinkedX + duplicate IDs recover edges by NAME", {
+  # Reproduces the real ISA_Export_20260525.xlsx pathology (v1.13.1 export):
+  #  - forward Matrix_* present but EMPTY; only gb_d carries faithful edges
+  #  - forward links live in LinkedX columns in LABEL form ("ID: Name")
+  #  - Marine_Processes has a DUPLICATE id (MPF005 used twice, distinct names)
+  source_for_test("functions/isa_export_helpers.R")
+  source_for_test("functions/standard_entry_excel_import.R")
+  source_for_test("functions/matrix_from_linked.R")
+
+  isa <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001: Food", Mechanism = "", Confidence = "High",
+                                    stringsAsFactors = FALSE),
+    # DUPLICATE id MPF005 across two distinct elements (the old positional-ID bug)
+    marine_processes = data.frame(
+      ID = c("MPF005", "MPF005"),
+      Name = c("Fish biomass", "Biodiversity richness"),
+      Type = "", Description = "", LinkedES = c("ES001: Fish", "ES001: Fish"),
+      Mechanism = "", Spatial = "", stringsAsFactors = FALSE),
+    pressures = data.frame(ID = "P001", Name = "Overfishing", Type = "", Description = "",
+                           # label says MPF005 but the NAME points at "Biodiversity richness"
+                           LinkedMPF = "MPF005: Biodiversity richness",
+                           Intensity = "", Spatial = "", Temporal = "", stringsAsFactors = FALSE),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character()),
+    adjacency_matrices = list(
+      es_gb = matrix("", 1, 1, dimnames = list("ES001", "GB001")),         # present but EMPTY
+      gb_d  = matrix("+Strong:3", 1, 1, dimnames = list("GB001", "D001"))  # faithful, populated
+    )
+  )
+  wb <- openxlsx::createWorkbook(); write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  testServer(isa_data_entry_server,
+    args = list(project_data_reactive = reactiveVal(init_session_data()),
+                i18n = fake_i18n, parent_session = NULL), {
+      session$setInputs(import_file = data.frame(
+        name = "legacy.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)
+      session$flushReact()
+      rv <- session$getReturned()()
+
+      # All elements loaded; the duplicate MPF id is reconciled to two unique ids.
+      expect_equal(nrow(rv$marine_processes), 2)
+      mpf_ids <- as.character(rv$marine_processes$ID)
+      expect_equal(length(unique(mpf_ids)), 2)
+
+      # gb_d (faithful) preserved exactly.
+      expect_equal(rv$adjacency_matrices$gb_d["GB001", "D001"], "+Strong:3")
+
+      # es_gb: present-but-empty matrix was rebuilt from LinkedGB (label "GB001: Food").
+      expect_true(nzchar(rv$adjacency_matrices$es_gb["ES001", "GB001"]))
+
+      # p_mpf: rebuilt from LinkedMPF, resolved BY NAME to "Biodiversity richness"
+      # (NOT the stale duplicate id MPF005 = "Fish biomass").
+      id_biodiv <- mpf_ids[rv$marine_processes$Name == "Biodiversity richness"]
+      id_fish   <- mpf_ids[rv$marine_processes$Name == "Fish biomass"]
+      pm <- rv$adjacency_matrices$p_mpf
+      expect_true(nzchar(pm["P001", id_biodiv]))    # edge on the correct element
+      expect_equal(pm["P001", id_fish], "")          # NOT on the stale-id element
+  })
+})

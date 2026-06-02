@@ -179,3 +179,89 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
     dropped_user_edits = dropped
   )
 }
+
+# ---------------------------------------------------------------------------
+# Name-based recovery of legacy LinkedX values
+# ---------------------------------------------------------------------------
+# Legacy (v1.13.x) Standard Entry exports store forward connections in the
+# LinkedX columns in LABEL form ("MPF005: Biodiversity richness"), and may carry
+# DUPLICATE element IDs (the old positional-ID bug). After reconcile repairs the
+# duplicates, the stale numeric IDs in the labels no longer identify the right
+# element — but the NAME still does. These helpers resolve each link by NAME
+# first (robust to duplicate-ID repair), falling back to a bare-ID match.
+
+# Light normalization for name comparison (trim, collapse internal whitespace,
+# lowercase). Deliberately simple — element names are user text, not metachars.
+.linked_norm_name <- function(x) tolower(trimws(gsub("\\s+", " ", as.character(x))))
+
+#' Resolve a (possibly label-form, possibly pipe-delimited) LinkedX value to
+#' target element IDs, preferring NAME match over a stale ID.
+#'
+#' @param linked_value scalar LinkedX cell, e.g. "MPF005: Biodiversity richness"
+#'   or "GB001" or "GB001: Food|GB002: Energy". NULL/NA/"" -> character(0).
+#' @param target_df data frame of candidate targets with `ID` and (ideally)
+#'   `Name` columns (already reconciled to unique IDs).
+#' @return unique character vector of matched target IDs (order preserved).
+resolve_linked_to_target_ids <- function(linked_value, target_df) {
+  segs <- parse_linked(linked_value)
+  if (length(segs) == 0) return(character(0))
+  if (!is.data.frame(target_df) || nrow(target_df) == 0 || !("ID" %in% names(target_df)))
+    return(character(0))
+
+  tgt_ids   <- as.character(target_df$ID)
+  tgt_names <- if ("Name" %in% names(target_df)) .linked_norm_name(target_df$Name) else rep(NA_character_, length(tgt_ids))
+
+  out <- character(0)
+  for (seg in segs) {
+    has_colon <- grepl(":", seg, fixed = TRUE)
+    id_part   <- trimws(sub(":.*$", "", seg))
+    name_part <- if (has_colon) trimws(sub("^[^:]*:\\s*", "", seg)) else ""
+    resolved  <- NA_character_
+
+    # 1) NAME match (the legacy label carries it; robust to duplicate-ID repair)
+    if (nzchar(name_part)) {
+      hit <- which(tgt_names == .linked_norm_name(name_part))
+      if (length(hit) >= 1) resolved <- tgt_ids[hit[1]]
+    }
+    # 2) fall back to bare-ID match
+    if (is.na(resolved) && nzchar(id_part) && id_part %in% tgt_ids) resolved <- id_part
+
+    if (!is.na(resolved)) out <- c(out, resolved)
+  }
+  unique(out)
+}
+
+#' Rebuild a source x target adjacency matrix from a label-form LinkedX column,
+#' resolving each link by NAME-then-ID. Cells default to
+#' "<polarity><strength>:<confidence>" (confidence taken from the source row's
+#' Confidence column when present, else the default). Edges are written at the
+#' resolved (reconciled) target ID, so duplicate-ID corruption in the source
+#' file does not misplace them.
+#'
+#' @return a character matrix (rows = source_df$ID, cols = target_df$ID).
+rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
+                                           element_confidence_col = "Confidence",
+                                           default_polarity = "+",
+                                           default_strength = "Medium",
+                                           default_confidence = "Medium") {
+  src_ids <- as.character(source_df$ID)
+  tgt_ids <- as.character(target_df$ID)
+  out <- matrix("", nrow = length(src_ids), ncol = length(tgt_ids),
+                dimnames = list(src_ids, tgt_ids))
+  has_conf <- element_confidence_col %in% names(source_df)
+  if (!(linked_col %in% names(source_df))) return(out)
+
+  for (i in seq_len(nrow(source_df))) {
+    sid <- as.character(source_df$ID[i])
+    if (!(sid %in% src_ids)) next
+    confidence <- if (has_conf) {
+      v <- source_df[[element_confidence_col]][i]
+      if (is.null(v) || is.na(v) || !nzchar(as.character(v))) default_confidence else as.character(v)
+    } else default_confidence
+    cell <- paste0(default_polarity, default_strength, ":", confidence)
+    for (tid in resolve_linked_to_target_ids(source_df[[linked_col]][i], target_df)) {
+      out[sid, tid] <- cell
+    }
+  }
+  out
+}

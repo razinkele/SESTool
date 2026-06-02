@@ -301,31 +301,39 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           isa_data[[id_load_map[[key]]$panel]] <- character(0)
         }
       }
-      # Fallback: if no adjacency_matrices were supplied (e.g. an export without
-      # Matrix_* sheets), rebuild the five forward transitions from the per-category
-      # Linked* columns at default +/Medium. gb_d (closing loop) is NOT recoverable
-      # this way. Caller shows a notice when fell_back is TRUE.
+      # Per-transition LinkedX fallback. For EACH forward transition, if its
+      # faithful Matrix_* matrix is absent or has NO non-empty cells, rebuild it
+      # from the per-category LinkedX column. Legacy v1.13.x exports stored
+      # forward links only in the LinkedX columns (label form "ID: Name") and
+      # exported EMPTY forward matrices, so an all-or-nothing gate would leave
+      # the diagram edgeless whenever any one matrix (e.g. gb_d) had data.
+      # Links resolve by NAME first (robust to the old duplicate-ID bug), so an
+      # edge attaches to the correct element after reconcile renames duplicates.
+      # Faithful matrices that DO carry edges (e.g. gb_d) are kept as-is.
       fell_back <- FALSE
-      if (is.null(isa_data$adjacency_matrices) || length(isa_data$adjacency_matrices) == 0) {
-        linked_map <- list(
-          es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
-          mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
-          p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
-          a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
-          d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
-        )
-        for (mk in names(linked_map)) {
-          m <- linked_map[[mk]]
-          src_df <- isa_data[[m$src]]
-          tgt_df <- isa_data[[m$tgt]]
-          if (is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
-              is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
-            rb <- rebuild_matrix_from_linked(
-              element_df = src_df, linked_col = m$col,
-              source_ids = as.character(src_df$ID), target_ids = as.character(tgt_df$ID),
-              element_confidence_col = "Confidence")
-            isa_data$adjacency_matrices[[mk]] <- rb$matrix
-            isa_data$user_edited_matrices[[mk]] <- rb$user_edited
+      linked_map <- list(
+        es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
+        mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
+        p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
+        a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
+        d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
+      )
+      for (mk in names(linked_map)) {
+        m <- linked_map[[mk]]
+        src_df   <- isa_data[[m$src]]
+        tgt_df   <- isa_data[[m$tgt]]
+        existing <- isa_data$adjacency_matrices[[mk]]
+        has_edges <- is.matrix(existing) && any(nzchar(existing) & !is.na(existing))
+        if (!has_edges &&
+            is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
+            is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
+          mat <- rebuild_forward_matrix_by_name(
+            source_df = src_df, linked_col = m$col, target_df = tgt_df,
+            element_confidence_col = "Confidence")
+          if (any(nzchar(mat))) {
+            isa_data$adjacency_matrices[[mk]]   <- mat
+            isa_data$user_edited_matrices[[mk]] <- matrix(
+              FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
             fell_back <- TRUE
           }
         }
