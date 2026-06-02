@@ -41,7 +41,7 @@ isa_data_entry_ui <- function(id, i18n) {
 
 # Module Server ----
 # Standardized signature: (id, project_data_reactive, i18n, event_bus)
-isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL, parent_session = NULL) {
   # Legacy alias for backwards compatibility within module
   global_data <- project_data_reactive
   moduleServer(id, function(input, output, session) {
@@ -267,58 +267,88 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       })
     }
 
+    # Apply a saved/imported isa_data list into this module's reactiveValues.
+    # = load_isa_elements_from_saved (copies element dfs, adjacency_matrices,
+    #   loop_connections, case_info) + the L6-hardened id reconcile loop that
+    #   canonicalizes IDs and sets *_panel_ids. Shared by the project-load
+    #   observer and the Excel import handler. Caller sets data_initialized().
+    apply_saved_isa <- function(saved_isa) {
+      load_isa_elements_from_saved(isa_data, saved_isa)
+
+      id_load_map <- list(
+        goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
+        ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
+        marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
+        pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
+        activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
+        drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+      )
+      any_repaired <- FALSE
+      any_rows_in <- FALSE
+      any_panel_ids_out <- FALSE
+      # NB: reconcile the RAW saved df (uppercase ID), NOT the lowercased copy load_isa_elements_from_saved writes for the table view — keying on lowercase 'id' was the L6 'no elements' bug.
+      for (key in names(id_load_map)) {
+        saved_df <- saved_isa[[key]]
+        if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+          any_rows_in <- TRUE
+          rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
+          isa_data[[key]] <- rec$df
+          panel_ids <- as.character(rec$df$ID)
+          isa_data[[id_load_map[[key]]$panel]] <- panel_ids
+          if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
+          if (isTRUE(rec$repaired)) any_repaired <- TRUE
+        } else {
+          isa_data[[id_load_map[[key]]$panel]] <- character(0)
+        }
+      }
+      # Fallback: if no adjacency_matrices were supplied (e.g. an export without
+      # Matrix_* sheets), rebuild the five forward transitions from the per-category
+      # Linked* columns at default +/Medium. gb_d (closing loop) is NOT recoverable
+      # this way. Caller shows a notice when fell_back is TRUE.
+      fell_back <- FALSE
+      if (is.null(isa_data$adjacency_matrices) || length(isa_data$adjacency_matrices) == 0) {
+        linked_map <- list(
+          es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
+          mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
+          p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
+          a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
+          d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
+        )
+        for (mk in names(linked_map)) {
+          m <- linked_map[[mk]]
+          src_df <- isa_data[[m$src]]
+          tgt_df <- isa_data[[m$tgt]]
+          if (is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
+              is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
+            rb <- rebuild_matrix_from_linked(
+              element_df = src_df, linked_col = m$col,
+              source_ids = as.character(src_df$ID), target_ids = as.character(tgt_df$ID),
+              element_confidence_col = "Confidence")
+            isa_data$adjacency_matrices[[mk]] <- rb$matrix
+            isa_data$user_edited_matrices[[mk]] <- rb$user_edited
+            fell_back <- TRUE
+          }
+        }
+      }
+
+      if (any_repaired) {
+        showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
+                         type = "warning", duration = 8, session = session)
+      }
+      if (any_rows_in && !any_panel_ids_out) {
+        showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
+                         type = "warning", duration = 10, session = session)
+      }
+      invisible(list(fell_back = fell_back))
+    }
+
     # Load saved ISA data when a (different) project becomes active. Keyed on
-    # project_id so module saves — which don't change project_id — don't
-    # re-trigger a load and clobber in-progress edits (this exact loop was the
-    # ghost-row + duplicate-ID source before v1.13.0).
+    # project_id so module saves don't re-trigger a load and clobber edits.
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         debug_log("Loading saved ISA data on project change", "ISA Module")
-        load_isa_elements_from_saved(isa_data, project$data$isa_data)
-
-        # Repair legacy duplicate/blank IDs (a symptom of the old positional-ID
-        # bug) and ADOPT the resulting ids as the stable panel set, seeding the
-        # per-session counter past them so later add_* never collide. Reads the
-        # RAW saved df (uppercase ID) — load_isa_elements_from_saved lowercases
-        # for its table view, but the rest of the module keys on uppercase ID.
-        saved_isa <- project$data$isa_data
-        id_load_map <- list(
-          goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
-          ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
-          marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
-          pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
-          activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
-          drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
-        )
-        any_repaired <- FALSE
-        any_rows_in <- FALSE
-        any_panel_ids_out <- FALSE
-        for (key in names(id_load_map)) {
-          saved_df <- saved_isa[[key]]
-          if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
-            any_rows_in <- TRUE
-            rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
-            isa_data[[key]] <- rec$df
-            panel_ids <- as.character(rec$df$ID)
-            isa_data[[id_load_map[[key]]$panel]] <- panel_ids
-            if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
-            if (isTRUE(rec$repaired)) any_repaired <- TRUE
-          } else {
-            isa_data[[id_load_map[[key]]$panel]] <- character(0)
-          }
-        }
-        if (any_repaired) {
-          showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
-                           type = "warning", duration = 8, session = session)
-        }
-        # Surface the previously-silent failure: rows came in but nothing
-        # resolved to a panel id (e.g. an unrecognized legacy structure).
-        if (any_rows_in && !any_panel_ids_out) {
-          showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
-                           type = "warning", duration = 10, session = session)
-        }
-
+        apply_saved_isa(project$data$isa_data)
         data_initialized(TRUE)
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
@@ -1468,6 +1498,113 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     )
 
    
+
+    # ---- Excel import (Standard Entry round-trip) ----
+    # Helper: does the module currently hold any elements?
+    .isa_has_elements <- function() {
+      any(vapply(list(isa_data$gb_panel_ids, isa_data$es_panel_ids, isa_data$mpf_panel_ids,
+                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids),
+                 function(x) length(x) > 0 && any(nzchar(x)), logical(1)))
+    }
+
+    # Clear all editable ISA state so an IMPORT is a true replace — prevents a
+    # fallback-style import (no Matrix_* sheets) from inheriting the previously
+    # loaded project's matrices/elements (stale edges / orphan IDs).
+    .reset_isa_state <- function() {
+      for (k in c("goods_benefits","ecosystem_services","marine_processes",
+                  "pressures","activities","drivers")) {
+        if (is.data.frame(isa_data[[k]])) isa_data[[k]] <- isa_data[[k]][0, , drop = FALSE]
+      }
+      for (p in c("gb_panel_ids","es_panel_ids","mpf_panel_ids",
+                  "p_panel_ids","a_panel_ids","d_panel_ids")) {
+        isa_data[[p]] <- character(0)
+      }
+      isa_data$adjacency_matrices   <- list()
+      isa_data$user_edited_matrices <- list()
+      if (is.data.frame(isa_data$loop_connections)) {
+        isa_data$loop_connections <- isa_data$loop_connections[0, , drop = FALSE]
+      }
+    }
+
+    # Core import: read file -> apply -> guard -> notify/navigate.
+    do_import <- function(path) {
+      saved <- tryCatch(
+        read_standard_entry_workbook(path),
+        se_import_not_recognized = function(e) {
+          showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                           type = "error", duration = 8, session = session)
+          NULL
+        },
+        error = function(e) {
+          showNotification(format_user_error(e, i18n = i18n,
+                           context_key = "common.messages.context_reading_excel_file"),
+                           type = "error", session = session)
+          NULL
+        })
+      if (is.null(saved)) return(invisible(NULL))
+
+      .reset_isa_state()
+      res <- apply_saved_isa(saved)
+
+      n_elems <- sum(vapply(c("goods_benefits","ecosystem_services","marine_processes",
+                              "pressures","activities","drivers"),
+                            function(k) if (is.data.frame(isa_data[[k]])) nrow(isa_data[[k]]) else 0L,
+                            integer(1)))
+      n_edges <- sum(vapply(isa_data$adjacency_matrices,
+                            function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L,
+                            integer(1)))
+
+      if (n_elems == 0L) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                         type = "error", duration = 8, session = session)
+        return(invisible(NULL))
+      }
+
+      data_initialized(TRUE)
+
+      if (isTRUE(res$fell_back)) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
+                         type = "warning", duration = 10, session = session)
+      }
+
+      if (n_edges == 0L) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_no_connections"),
+                         type = "warning", duration = 10, session = session)
+        return(invisible(NULL))  # do not auto-navigate to an edgeless diagram
+      }
+
+      showNotification(i18n$t("modules.isa.data_entry.common.import_success"),
+                       type = "message", duration = 6, session = session)
+      if (!is.null(parent_session)) {
+        updateTabItems(parent_session, "sidebar_menu", "cld_viz")
+      }
+      invisible(NULL)
+    }
+
+    observeEvent(input$import_data, {
+      req(input$import_file)
+      path <- input$import_file$datapath
+      if (.isa_has_elements()) {
+        showModal(modalDialog(
+          title = i18n$t("modules.isa.data_entry.common.import_replace_title"),
+          i18n$t("modules.isa.data_entry.common.import_replace_warning"),
+          footer = tagList(
+            modalButton(i18n$t("common.buttons.cancel")),
+            actionButton(ns("import_confirm"), i18n$t("modules.isa.data_entry.common.import_data"),
+                         class = "btn-warning")
+          ),
+          easyClose = TRUE
+        ))
+      } else {
+        do_import(path)
+      }
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$import_confirm, {
+      removeModal()
+      req(input$import_file)
+      do_import(input$import_file$datapath)
+    })
 
     # Download PDF guidance document
     output$download_guidance_pdf <- downloadHandler(

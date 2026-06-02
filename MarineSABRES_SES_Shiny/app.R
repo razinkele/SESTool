@@ -1034,7 +1034,7 @@ server <- function(input, output, session) {
   ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session, beginner_max_elements)
 
   # ISA data entry module (Standard Entry)
-  isa_data <- isa_data_entry_server("isa_module", project_data, session_i18n, event_bus)
+  isa_data <- isa_data_entry_server("isa_module", project_data, session_i18n, event_bus, parent_session = session)
 
   # Graphical SES Creator module (AI-powered step-by-step network building)
   graphical_ses_creator_server("graphical_ses_mod", project_data, session_i18n, session)

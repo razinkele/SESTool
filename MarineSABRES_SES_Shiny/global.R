@@ -597,6 +597,9 @@ source("functions/data_structure.R", local = TRUE)
 # collectors call linked_select_to_ids/serialize_linked).
 source("functions/matrix_from_linked.R", local = TRUE)
 
+# Standard Entry Excel import — reader for Matrix_* sheet round-trips
+source("functions/standard_entry_excel_import.R", local = FALSE)  # FALSE = global scope for test/server access
+
 # ISA form builders and entry collection helpers (extracted from isa_data_entry_module)
 source("functions/isa_form_builders.R", local = TRUE)
 

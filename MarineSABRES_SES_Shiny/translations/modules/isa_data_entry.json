@@ -1540,6 +1540,72 @@
       "no": "Importer data",
       "el": "Εισαγωγή Δεδομένα"
     },
+    "modules.isa.data_entry.common.import_links_defaulted": {
+      "en": "Connections were rebuilt with default values (positive, medium strength) because this file did not store link strengths. Re-export to preserve them.",
+      "es": "Las conexiones se reconstruyeron con valores predeterminados (positivo, fuerza media) porque este archivo no almacenaba las intensidades de los vínculos. Vuelva a exportar para conservarlos.",
+      "fr": "Les connexions ont été reconstruites avec des valeurs par défaut (positif, intensité moyenne) car ce fichier ne contenait pas les intensités des liens. Ré-exportez pour les conserver.",
+      "de": "Verbindungen wurden mit Standardwerten (positiv, mittlere Stärke) neu erstellt, da diese Datei keine Verbindungsstärken enthielt. Erneut exportieren, um sie zu erhalten.",
+      "lt": "Ryšiai buvo atstatyti su numatytomis reikšmėmis (teigiami, vidutinis stiprumas), nes šiame faile nebuvo saugomi ryšių stiprumai. Eksportuokite iš naujo, kad juos išsaugotumėte.",
+      "pt": "As conexões foram reconstruídas com valores predefinidos (positivo, força média) porque este ficheiro não armazenava as intensidades dos vínculos. Exporte novamente para as preservar.",
+      "it": "Le connessioni sono state ricostruite con valori predefiniti (positivo, intensità media) perché questo file non memorizzava le intensità dei collegamenti. Riesportare per conservarle.",
+      "no": "Forbindelsene ble gjenoppbygd med standardverdier (positiv, middels styrke) fordi denne filen ikke lagret koblingsstyrker. Eksporter på nytt for å bevare dem.",
+      "el": "Οι συνδέσεις αναδημιουργήθηκαν με προεπιλεγμένες τιμές (θετικές, μέτρια ισχύς) επειδή αυτό το αρχείο δεν αποθήκευε τις εντάσεις των συνδέσεων. Εξαγάγετε ξανά για να τις διατηρήσετε."
+    },
+    "modules.isa.data_entry.common.import_no_connections": {
+      "en": "Imported elements, but no connections were found — the diagram will have no links.",
+      "es": "Se importaron elementos, pero no se encontraron conexiones — el diagrama no tendrá vínculos.",
+      "fr": "Éléments importés, mais aucune connexion n'a été trouvée — le diagramme n'aura pas de liens.",
+      "de": "Elemente importiert, aber keine Verbindungen gefunden — das Diagramm wird keine Verknüpfungen haben.",
+      "lt": "Elementai importuoti, tačiau ryšių nerasta — diagramoje nebus jungčių.",
+      "pt": "Elementos importados, mas não foram encontradas conexões — o diagrama não terá vínculos.",
+      "it": "Elementi importati, ma non sono state trovate connessioni — il diagramma non avrà collegamenti.",
+      "no": "Elementer ble importert, men ingen forbindelser ble funnet — diagrammet vil ikke ha lenker.",
+      "el": "Τα στοιχεία εισήχθησαν, αλλά δεν βρέθηκαν συνδέσεις — το διάγραμμα δεν θα έχει συνδέσμους."
+    },
+    "modules.isa.data_entry.common.import_not_recognized": {
+      "en": "This file isn't a Standard Entry Excel export. Please choose a workbook created with the 'Export to Excel' button.",
+      "es": "Este archivo no es una exportación de Excel de Entrada Estándar. Elija un libro de trabajo creado con el botón 'Exportar a Excel'.",
+      "fr": "Ce fichier n'est pas une exportation Excel d'Entrée Standard. Veuillez choisir un classeur créé avec le bouton 'Exporter vers Excel'.",
+      "de": "Diese Datei ist kein Standard-Eintrag-Excel-Export. Bitte wählen Sie eine Arbeitsmappe aus, die mit der Schaltfläche 'Nach Excel exportieren' erstellt wurde.",
+      "lt": "Šis failas nėra standartinio įrašo Excel eksportas. Pasirinkite darbaknygę, sukurtą mygtuku 'Eksportuoti į Excel'.",
+      "pt": "Este ficheiro não é uma exportação Excel de Entrada Padrão. Escolha um livro de trabalho criado com o botão 'Exportar para Excel'.",
+      "it": "Questo file non è un'esportazione Excel di Inserimento Standard. Scegliere una cartella di lavoro creata con il pulsante 'Esporta in Excel'.",
+      "no": "Denne filen er ikke en Standard Oppføring Excel-eksport. Velg en arbeidsbok opprettet med knappen 'Eksporter til Excel'.",
+      "el": "Αυτό το αρχείο δεν είναι εξαγωγή Excel Τυπικής Καταχώρησης. Επιλέξτε ένα βιβλίο εργασίας που δημιουργήθηκε με το κουμπί 'Εξαγωγή to Excel'."
+    },
+    "modules.isa.data_entry.common.import_replace_title": {
+      "en": "Replace current entries?",
+      "es": "¿Reemplazar entradas actuales?",
+      "fr": "Remplacer les entrées actuelles ?",
+      "de": "Aktuelle Einträge ersetzen?",
+      "lt": "Pakeisti dabartinius įrašus?",
+      "pt": "Substituir entradas atuais?",
+      "it": "Sostituire le voci correnti?",
+      "no": "Erstatte gjeldende oppføringer?",
+      "el": "Αντικατάσταση τρεχουσών καταχωρήσεων;"
+    },
+    "modules.isa.data_entry.common.import_replace_warning": {
+      "en": "Importing will replace your current Standard Entry data. Continue?",
+      "es": "La importación reemplazará sus datos actuales de Entrada Estándar. ¿Continuar?",
+      "fr": "L'importation remplacera vos données d'Entrée Standard actuelles. Continuer ?",
+      "de": "Der Import ersetzt Ihre aktuellen Standard-Eintrag-Daten. Fortfahren?",
+      "lt": "Importavimas pakeis dabartinius standartinio įrašo duomenis. Tęsti?",
+      "pt": "A importação substituirá os seus dados atuais de Entrada Padrão. Continuar?",
+      "it": "L'importazione sostituirà i dati correnti di Inserimento Standard. Continuare?",
+      "no": "Import vil erstatte dine gjeldende Standard Oppføring-data. Fortsette?",
+      "el": "Η εισαγωγή θα αντικαταστήσει τα τρέχοντα δεδομένα Τυπικής Καταχώρησης. Συνέχεια;"
+    },
+    "modules.isa.data_entry.common.import_success": {
+      "en": "ISA data imported. Open the CLD Visualization tab to see the diagram, then the analysis tabs for results.",
+      "es": "Datos ISA importados. Abra la pestaña Visualización CLD para ver el diagrama y luego las pestañas de análisis para los resultados.",
+      "fr": "Données ISA importées. Ouvrez l'onglet Visualisation CLD pour voir le diagramme, puis les onglets d'analyse pour les résultats.",
+      "de": "ISA-Daten importiert. Öffnen Sie die Registerkarte CLD-Visualisierung, um das Diagramm anzuzeigen, dann die Analyseregisterkarten für die Ergebnisse.",
+      "lt": "ISA duomenys importuoti. Atidarykite CLD vizualizacija skirtuką, kad pamatytumėte diagramą, o tada analizės skirtukus rezultatams.",
+      "pt": "Dados ISA importados. Abra o separador Visualização CLD para ver o diagrama e, em seguida, os separadores de análise para os resultados.",
+      "it": "Dati ISA importati. Aprire la scheda Visualizzazione CLD per vedere il diagramma, poi le schede di analisi per i risultati.",
+      "no": "ISA-data importert. Åpne fanen CLD-visualisering for å se diagrammet, deretter analysefanene for resultater.",
+      "el": "Τα δεδομένα ISA εισήχθησαν. Ανοίξτε την καρτέλα Οπτικοποίηση CLD για να δείτε το διάγραμμα και στη συνέχεια τις καρτέλες ανάλυσης για αποτελέσματα."
+    },
     "modules.isa.data_entry.common.importexport_and_data_management": {
       "en": "Import/Export and Data Management",
       "es": "Importación/Exportación y Gestión de Datos",
