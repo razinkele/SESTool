@@ -5,6 +5,20 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added (WP5 Phase 1 — financial-mechanism KB; re-port of PR #10 onto v1.16.5)
+
+- **WP5 financial-mechanism Knowledge Base** (`data/ses_knowledge_db_wp5_mechanisms.json`): 28 mechanisms from D5.2 (16 Macaronesia + 6 Tuscan + 6 Arctic), each with a 13-attribute structure (cost profile, finance flow, design parameters, evidence base, transferable lessons, applies-to-DAs, success metrics, risks/guardrails, use-in-impact-assessment, references). Includes a Posidonia oceanica `valuation_unit_values` block for the later valuation calculator.
+- **`functions/wp5_kb_loader.R`**: JSON loader with cached module-level state and DA-keyed lookup helpers (`load_wp5_mechanisms_kb`, `get_mechanisms_for_da`, `get_mechanism_by_id`, `get_valuation_unit_values`, `wp5_kb_available`). Sourced from `global.R` next to `ses_knowledge_db_loader.R`.
+- **`WP5_DA_CONTEXTS`** constant in `constants.R` (`c("macaronesia", "tuscan", "arctic")`).
+- **Response Measures module reference pane** (`modules/response_module.R`): a new tab surfacing DA-keyed mechanism summaries from the KB; chrome strings i18n-keyed via `translations/modules/wp5_mechanisms.json`.
+- **`min_app_version` project migration UX**: new projects are stamped (`functions/data_structure.R`); load handler (`server/project_io.R`) shows a one-time forward-load toast for legacy projects and a sticky downgrade warning (via `utils::compareVersion`) when a project requires a newer build than is running.
+- **Tooling**: reproducible Python KB builder (`scripts/build_wp5_mechanisms_kb.py`), quality audit script (`scripts/kb_audit/audit_wp5_mechanisms.py`), and an `--allow-english-fallback=<prefix>` flag on `scripts/_i18n_audit.py` for phased i18n delivery.
+- **Tests**: `tests/testthat/test-wp5-kb-loader.R` plus `min_app_version` migration tests in `tests/testthat/test-json-project-loading.R`.
+
+> **Pending partner sign-off** — the WP5 KB carries D5.2 research/deliverable data still awaiting partner validation (see PR for the full list: mac_07/14/9 cost profiles, mac_03 blended finance, tus_04/05/06 inferred-from-practice, arc_05 research-gap, arc_06 ecolabel choice, empty success_metrics). Re-version forward at merge time.
+
 ## [1.16.5] - 2026-05-18
 
 ### Fixed (P2 cluster)
