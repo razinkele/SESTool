@@ -273,71 +273,29 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     #   canonicalizes IDs and sets *_panel_ids. Shared by the project-load
     #   observer and the Excel import handler. Caller sets data_initialized().
     apply_saved_isa <- function(saved_isa) {
+      # Copies counters, loop_connections, case_info, bot_data, and the saved
+      # matrices into the module reactiveValues (element dfs get lowercased here
+      # for the table view, then overwritten below with the reconciled versions).
       load_isa_elements_from_saved(isa_data, saved_isa)
 
-      id_load_map <- list(
-        goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
-        ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
-        marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
-        pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
-        activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
-        drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
-      )
-      any_repaired <- FALSE
-      any_rows_in <- FALSE
-      any_panel_ids_out <- FALSE
-      # NB: reconcile the RAW saved df (uppercase ID), NOT the lowercased copy load_isa_elements_from_saved writes for the table view — keying on lowercase 'id' was the L6 'no elements' bug.
-      for (key in names(id_load_map)) {
-        saved_df <- saved_isa[[key]]
-        if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
-          any_rows_in <- TRUE
-          rec <- reconcile_loaded_element_ids(saved_df, id_load_map[[key]]$prefix, id_store)
-          isa_data[[key]] <- rec$df
-          panel_ids <- as.character(rec$df$ID)
-          isa_data[[id_load_map[[key]]$panel]] <- panel_ids
-          if (length(panel_ids) > 0 && any(nzchar(panel_ids))) any_panel_ids_out <- TRUE
-          if (isTRUE(rec$repaired)) any_repaired <- TRUE
-        } else {
-          isa_data[[id_load_map[[key]]$panel]] <- character(0)
-        }
+      # Reconcile element IDs (repairing legacy duplicates) and rebuild empty
+      # forward matrices from label-form LinkedX (resolved BY NAME) via the
+      # shared pure pipeline — the SAME recovery the sidebar Import Data menu
+      # uses, so both import doors behave identically.
+      # NB: recover_isa_data reconciles the RAW saved df (uppercase ID), NOT the
+      # lowercased copy load_isa_elements_from_saved just wrote — keying on
+      # lowercase 'id' was the L6 'no elements' bug.
+      rec <- recover_isa_data(saved_isa, id_store)
+      for (k in names(rec$elements)) {
+        if (nrow(rec$elements[[k]]) > 0) isa_data[[k]] <- rec$elements[[k]]
       }
-      # Per-transition LinkedX fallback. For EACH forward transition, if its
-      # faithful Matrix_* matrix is absent or has NO non-empty cells, rebuild it
-      # from the per-category LinkedX column. Legacy v1.13.x exports stored
-      # forward links only in the LinkedX columns (label form "ID: Name") and
-      # exported EMPTY forward matrices, so an all-or-nothing gate would leave
-      # the diagram edgeless whenever any one matrix (e.g. gb_d) had data.
-      # Links resolve by NAME first (robust to the old duplicate-ID bug), so an
-      # edge attaches to the correct element after reconcile renames duplicates.
-      # Faithful matrices that DO carry edges (e.g. gb_d) are kept as-is.
-      fell_back <- FALSE
-      linked_map <- list(
-        es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
-        mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
-        p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
-        a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
-        d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
-      )
-      for (mk in names(linked_map)) {
-        m <- linked_map[[mk]]
-        src_df   <- isa_data[[m$src]]
-        tgt_df   <- isa_data[[m$tgt]]
-        existing <- isa_data$adjacency_matrices[[mk]]
-        has_edges <- is.matrix(existing) && any(nzchar(existing) & !is.na(existing))
-        if (!has_edges &&
-            is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
-            is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
-          mat <- rebuild_forward_matrix_by_name(
-            source_df = src_df, linked_col = m$col, target_df = tgt_df,
-            element_confidence_col = "Confidence")
-          if (any(nzchar(mat))) {
-            isa_data$adjacency_matrices[[mk]]   <- mat
-            isa_data$user_edited_matrices[[mk]] <- matrix(
-              FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
-            fell_back <- TRUE
-          }
-        }
-      }
+      for (p in names(rec$panel_ids)) isa_data[[p]] <- rec$panel_ids[[p]]
+      isa_data$adjacency_matrices <- rec$adjacency_matrices
+      isa_data$user_edited_matrices[names(rec$user_edited_matrices)] <- rec$user_edited_matrices
+      any_repaired      <- rec$repaired
+      any_rows_in       <- rec$any_rows_in
+      any_panel_ids_out <- rec$any_panel_ids_out
+      fell_back         <- rec$fell_back
 
       if (any_repaired) {
         showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),

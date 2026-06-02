@@ -253,6 +253,40 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         if (is.null(sheets)) return(NULL)
 
+        # Standard Entry export? (per-category element sheets and/or Matrix_*
+        # sheets — a DIFFERENT format from the Elements/Connections importer
+        # below). Route it through the Standard Entry reader + the shared
+        # recovery pipeline, then import directly, so this menu accepts files
+        # exported from the Standard Entry page — not just edge-list workbooks.
+        .se_sheets <- c("Goods_Benefits", "Ecosystem_Services", "Marine_Processes",
+                        "Pressures", "Activities", "Drivers")
+        .is_se_export <- (any(.se_sheets %in% sheets) || any(startsWith(sheets, "Matrix_"))) &&
+                         !(("Elements" %in% sheets) && ("Connections" %in% sheets))
+        if (.is_se_export) {
+          saved <- read_standard_entry_workbook(file_path)   # may signal se_import_not_recognized -> outer catch
+          recov <- recover_isa_data(saved)
+          isa_for_import <- recov$elements
+          isa_for_import$adjacency_matrices <- recov$adjacency_matrices
+          n_el <- sum(vapply(recov$elements,
+                             function(d) if (is.data.frame(d)) nrow(d) else 0L, integer(1)))
+          n_ed <- sum(vapply(recov$adjacency_matrices,
+                             function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L, integer(1)))
+          if (n_el == 0L) {
+            showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                             type = "error", duration = 8)
+            return(NULL)
+          }
+          perform_import(isa_for_import, n_el, n_ed)   # sets project_data + CLD, navigates
+          if (isTRUE(recov$fell_back)) {
+            showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
+                             type = "warning", duration = 10)
+          }
+          if (!is.null(parent_session)) {
+            updateTabItems(parent_session, "sidebar_menu", "cld_viz")
+          }
+          return(NULL)
+        }
+
         if (!("Elements" %in% sheets) || !("Connections" %in% sheets)) {
           showNotification(
             i18n$t("modules.import.data.missing_sheets"),

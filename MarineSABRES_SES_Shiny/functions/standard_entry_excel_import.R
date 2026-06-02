@@ -83,3 +83,93 @@ read_standard_entry_workbook <- function(path) {
 
   out
 }
+
+# ---------------------------------------------------------------------------
+# recover_isa_data(): the pure recovery pipeline
+# ---------------------------------------------------------------------------
+# Turns a raw saved_isa (from read_standard_entry_workbook OR a saved project)
+# into a clean, app-ready isa_data: reconciles each element category to unique
+# IDs (repairing the old positional-ID duplicates), then for each forward
+# transition rebuilds an absent/empty matrix from the per-category LinkedX
+# column — resolving links BY NAME so edges survive duplicate-ID repair —
+# while KEEPING faithful matrices that already carry edges (e.g. gb_d).
+#
+# Single source of truth shared by the Standard Entry module's apply_saved_isa()
+# (in-page Import button + project-load) and the sidebar Import Data menu, so the
+# two import doors recover identically. Pure: no Shiny/reactives. Requires the
+# globals ELEMENT_ID_PREFIX (constants.R), reconcile_loaded_element_ids /
+# new_stable_id_store (data_structure.R), rebuild_forward_matrix_by_name
+# (matrix_from_linked.R).
+#
+# @return list(elements, panel_ids, adjacency_matrices, user_edited_matrices,
+#   repaired, any_rows_in, any_panel_ids_out, fell_back)
+recover_isa_data <- function(saved_isa, id_store = NULL) {
+  if (is.null(id_store)) id_store <- new_stable_id_store()
+
+  id_load_map <- list(
+    goods_benefits     = list(prefix = ELEMENT_ID_PREFIX$welfare,    panel = "gb_panel_ids"),
+    ecosystem_services = list(prefix = ELEMENT_ID_PREFIX$impacts,    panel = "es_panel_ids"),
+    marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
+    pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
+    activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
+    drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+  )
+
+  elements <- list(); panel_ids <- list()
+  repaired <- FALSE; any_rows_in <- FALSE; any_panel_ids_out <- FALSE
+  for (k in names(id_load_map)) {
+    df <- saved_isa[[k]]
+    if (is.data.frame(df) && nrow(df) > 0) {
+      any_rows_in <- TRUE
+      rec <- reconcile_loaded_element_ids(df, id_load_map[[k]]$prefix, id_store)
+      elements[[k]] <- rec$df
+      pids <- as.character(rec$df$ID)
+      panel_ids[[id_load_map[[k]]$panel]] <- pids
+      if (length(pids) > 0 && any(nzchar(pids))) any_panel_ids_out <- TRUE
+      if (isTRUE(rec$repaired)) repaired <- TRUE
+    } else {
+      elements[[k]] <- if (is.data.frame(df)) df else data.frame()
+      panel_ids[[id_load_map[[k]]$panel]] <- character(0)
+    }
+  }
+
+  am <- if (!is.null(saved_isa$adjacency_matrices)) saved_isa$adjacency_matrices else list()
+  ue <- list()
+  fell_back <- FALSE
+  linked_map <- list(
+    es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
+    mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
+    p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes"),
+    a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
+    d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
+  )
+  for (mk in names(linked_map)) {
+    m <- linked_map[[mk]]
+    src_df <- elements[[m$src]]; tgt_df <- elements[[m$tgt]]
+    existing <- am[[mk]]
+    has_edges <- is.matrix(existing) && any(nzchar(existing) & !is.na(existing))
+    if (!has_edges &&
+        is.data.frame(src_df) && nrow(src_df) > 0 && m$col %in% names(src_df) &&
+        is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
+      mat <- rebuild_forward_matrix_by_name(
+        source_df = src_df, linked_col = m$col, target_df = tgt_df,
+        element_confidence_col = "Confidence")
+      if (any(nzchar(mat))) {
+        am[[mk]] <- mat
+        ue[[mk]] <- matrix(FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
+        fell_back <- TRUE
+      }
+    }
+  }
+
+  list(
+    elements = elements,
+    panel_ids = panel_ids,
+    adjacency_matrices = am,
+    user_edited_matrices = ue,
+    repaired = repaired,
+    any_rows_in = any_rows_in,
+    any_panel_ids_out = any_panel_ids_out,
+    fell_back = fell_back
+  )
+}
