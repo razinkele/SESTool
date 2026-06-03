@@ -95,7 +95,9 @@ test_that("save_feedback_local writes valid NDJSON and returns TRUE", {
   payload <- list(title = "Test entry", type = "bug", count = 1L)
   result  <- save_feedback_local(payload, path = tmp_file)
 
-  expect_true(result)
+  expect_true(result$success)
+  expect_false(result$fellback)
+  expect_equal(result$path, tmp_file)
   expect_true(file.exists(tmp_file))
 
   lines <- readLines(tmp_file, warn = FALSE)
@@ -137,21 +139,48 @@ test_that("save_feedback_local appends without corrupting existing entries", {
 })
 
 # ---------------------------------------------------------------------------
-# Test 4: save_feedback_local returns FALSE on write error
+# Test 4a: falls back to a writable path when the primary is unwritable
+# (so feedback is NEVER silently lost — the laguna read-only data/ case)
 # ---------------------------------------------------------------------------
-test_that("save_feedback_local returns FALSE on write error", {
+test_that("save_feedback_local falls back to a writable path when primary fails", {
   skip_if_not(exists("save_feedback_local", mode = "function"),
               "save_feedback_local not available")
 
-  # Create a real file, then use it AS a directory component so the path is
-  # guaranteed to fail on every OS (file-as-dir is always an error).
-  tmp_file <- tempfile(fileext = ".txt")
-  writeLines("block", tmp_file)
-  on.exit(unlink(tmp_file), add = TRUE)
+  # A real file used AS a directory component → primary write fails on every OS.
+  blocker <- tempfile(fileext = ".txt"); writeLines("block", blocker)
+  on.exit(unlink(blocker), add = TRUE)
+  bad_primary <- file.path(blocker, "subdir", "feedback.ndjson")
 
-  bad_path <- file.path(tmp_file, "subdir", "feedback.ndjson")
-  result   <- save_feedback_local(list(x = 1), path = bad_path)
-  expect_false(result)
+  fallback <- tempfile(fileext = ".ndjson")
+  on.exit(unlink(fallback), add = TRUE)
+
+  result <- save_feedback_local(list(title = "kept"), path = bad_primary,
+                                fallback_path = fallback)
+
+  expect_true(result$success)                 # saved, not lost
+  expect_true(result$fellback)                # via the fallback
+  expect_equal(result$path, fallback)         # reports where it landed
+  expect_true(!is.null(result$reason) && nzchar(result$reason)) # carries the primary failure reason
+  expect_true(file.exists(fallback))
+  expect_equal(jsonlite::fromJSON(readLines(fallback, warn = FALSE)[1])$title, "kept")
+})
+
+# ---------------------------------------------------------------------------
+# Test 4b: success = FALSE only when BOTH primary and fallback fail
+# ---------------------------------------------------------------------------
+test_that("save_feedback_local reports failure when primary AND fallback fail", {
+  skip_if_not(exists("save_feedback_local", mode = "function"),
+              "save_feedback_local not available")
+
+  blocker <- tempfile(fileext = ".txt"); writeLines("block", blocker)
+  on.exit(unlink(blocker), add = TRUE)
+  bad_primary  <- file.path(blocker, "a", "feedback.ndjson")
+  bad_fallback <- file.path(blocker, "b", "feedback.ndjson")
+
+  result <- save_feedback_local(list(x = 1), path = bad_primary,
+                                fallback_path = bad_fallback)
+  expect_false(result$success)
+  expect_true(!is.null(result$reason) && nzchar(result$reason))   # surfaces WHY it failed
 })
 
 # ---------------------------------------------------------------------------

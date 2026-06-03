@@ -2,7 +2,7 @@
 # Admin module: feedback log dashboard and duplicate detection
 # Only loaded/rendered when ADMIN_MODE is TRUE (set in global.R)
 
-feedback_admin_ui <- function(id, i18n) {
+feedback_admin_ui <- function(id, i18n, admin = TRUE) {
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
@@ -17,13 +17,14 @@ feedback_admin_ui <- function(id, i18n) {
       )
     ),
 
-    bs4TabCard(
+    do.call(bs4TabCard, c(list(
       id = ns("admin_tabs"),
       width = 12,
       side = "left",
       status = "primary",
       solidHeader = FALSE,
-      collapsible = FALSE,
+      collapsible = FALSE
+    ), Filter(Negate(is.null), list(
 
       # ================================================================
       # Tab 1 – Feedback Dashboard
@@ -89,9 +90,9 @@ feedback_admin_ui <- function(id, i18n) {
       ),
 
       # ================================================================
-      # Tab 2 – Duplicate Detection
+      # Tab 2 – Duplicate Detection (admin only)
       # ================================================================
-      tabPanel(
+      if (isTRUE(admin)) tabPanel(
         title = tagList(
           tags$i(class = "fas fa-copy", style = "margin-right: 5px;"),
           i18n$t("modules.feedback_admin.duplicates_tab")
@@ -140,12 +141,12 @@ feedback_admin_ui <- function(id, i18n) {
           )
         )
       )
-    )
+    ))))
   )
 }
 
 
-feedback_admin_server <- function(id, i18n, event_bus = NULL) {
+feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -161,6 +162,13 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
     # Inert in production (option is unset).
     log_path <- getOption("marinesabres.feedback_log_path", log_path)
 
+    # Writable fallback used by save_feedback_local() when the primary data/
+    # log is read-only (the laguna case). Merge it on read so those entries
+    # still appear in the dashboard. Same default as save_feedback_local().
+    fallback_log_path <- file.path(
+      tools::R_user_dir("MarineSABRES", "data"), "user_feedback_log.ndjson")
+    load_feedback <- function() load_feedback_logs(c(log_path, fallback_log_path))
+
     # ------------------------------------------------------------------
     # Reactive: feedback data (loaded once on session start, refreshable)
     # ------------------------------------------------------------------
@@ -174,7 +182,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
     # Load data once on session start
     observe({
       df <- tryCatch(
-        load_feedback_log(log_path),
+        load_feedback(),
         error = function(e) {
           debug_log(paste("feedback_admin: load error:", e$message), "ERROR")
           data.frame(
@@ -321,6 +329,44 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       }
 
       # Build display data.frame — validate URL starts with https:// to prevent XSS
+      status_style <- function(dt) DT::formatStyle(dt, "Status",
+        backgroundColor = DT::styleEqual(
+          c("open", "addressed", "wont_fix", "duplicate"),
+          c("#e9ecef", "#d4edda", "#e2e3e5", "#fff3cd")))
+
+      # Columns shown to everyone: date / type / title / status. No system
+      # context, description, github link, or actions for non-admins (privacy).
+      base_disp <- data.frame(
+        Date   = format(suppressWarnings(
+          as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")),
+          "%Y-%m-%d", tz = "UTC"),
+        Type   = df$type,
+        Title  = df$title,
+        Status = df$status,
+        stringsAsFactors = FALSE
+      )
+
+      if (!isTRUE(admin)) {
+        return(
+          DT::datatable(
+            base_disp,
+            colnames  = c(
+              i18n$t("modules.feedback_admin.col_date"),
+              i18n$t("modules.feedback_admin.col_type"),
+              i18n$t("modules.feedback_admin.col_title"),
+              i18n$t("modules.feedback_admin.status")
+            ),
+            escape    = TRUE,
+            selection = "none",
+            rownames  = FALSE,
+            options   = list(pageLength = 15, order = list(list(0, "desc")),
+                             dom = "lfrtip", scrollX = TRUE)
+          ) |> status_style()
+        )
+      }
+
+      # --- admin only: full columns, github link, per-row mark-addressed ----
+      # Validate URL starts with https:// to prevent XSS.
       is_valid_url <- !is.na(df$github_url) & nzchar(df$github_url) &
                       df$github_url != "NA" & grepl("^https://", df$github_url)
       github_html <- ifelse(is_valid_url,
@@ -345,17 +391,15 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       }, character(1L))
 
       disp <- data.frame(
-        Date        = format(suppressWarnings(
-          as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")),
-          "%Y-%m-%d", tz = "UTC"),
-        Type        = df$type,
-        Title       = df$title,
+        Date        = base_disp$Date,
+        Type        = base_disp$Type,
+        Title       = base_disp$Title,
         Description = ifelse(
           nchar(df$description) > 100,
           paste0(substr(df$description, 1, 100), "\u2026"),
           df$description
         ),
-        Status      = df$status,
+        Status      = base_disp$Status,
         GitHub      = github_html,
         Action      = action_html,
         stringsAsFactors = FALSE
@@ -381,15 +425,14 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           dom        = "lfrtip",
           scrollX    = TRUE
         )
-      ) |> DT::formatStyle("Status", backgroundColor = DT::styleEqual(
-            c("open", "addressed", "wont_fix", "duplicate"),
-            c("#e9ecef", "#d4edda", "#e2e3e5", "#fff3cd")))
+      ) |> status_style()
     })
 
     # ------------------------------------------------------------------
     # Row click -> open detail modal
     # ------------------------------------------------------------------
     observeEvent(input$feedback_table_rows_selected, {
+      req(isTRUE(admin))   # detail modal shows system context — admin only
       idx <- input$feedback_table_rows_selected
       req(length(idx) > 0)
 
@@ -455,7 +498,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
     observeEvent(input$recalculate, {
       # Reload data first
       df <- tryCatch(
-        load_feedback_log(log_path),
+        load_feedback(),
         error = function(e) {
           debug_log(paste("feedback_admin recalculate: load error:", e$message), "ERROR")
           rv$feedback_df
@@ -581,7 +624,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
           type = "message"
         )
         # Reload and re-detect
-        df <- tryCatch(load_feedback_log(log_path), error = function(e) rv$feedback_df)
+        df <- tryCatch(load_feedback(), error = function(e) rv$feedback_df)
         rv$feedback_df <- df
         run_detection(run_detection() + 1L)
       } else {
@@ -597,6 +640,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
     # Mirrors mark_dup: carries explicit line_num (filter-safe).
     # ------------------------------------------------------------------
     observeEvent(input$mark_addr_click, {
+      req(isTRUE(admin))   # resolving feedback is an admin action
       req(!is.null(input$mark_addr_click$line))
       rv$pending_mark_line <- as.integer(input$mark_addr_click$line)
       showModal(modalDialog(
@@ -635,7 +679,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       )
       removeModal()
       if (isTRUE(ok)) {
-        rv$feedback_df <- load_feedback_log(log_path)
+        rv$feedback_df <- load_feedback()
         showNotification(
           i18n$t("modules.feedback_admin.marked_addressed"),
           type = "message"
