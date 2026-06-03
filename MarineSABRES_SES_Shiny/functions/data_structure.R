@@ -887,7 +887,7 @@ normalize_json_project_data <- function(data) {
         if (!"name" %in% names(el) && nrow(el) > 0) {
           el$name <- el$id
         }
-        if (!"indicator" %in% names(el)) {
+        if (!"indicator" %in% names(el) && nrow(el) > 0) {
           el$indicator <- NA_character_
         }
       }

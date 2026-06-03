@@ -114,3 +114,13 @@ test_that("normalize_and_reconcile_project normalizes lowercase id column to upp
   expect_true("ID" %in% names(act))
   expect_false("id" %in% names(act))
 })
+
+test_that("normalize_and_reconcile_project handles a 0-row element frame without crashing (normalize indicator guard)", {
+  skip_if_not(exists("normalize_and_reconcile_project", mode = "function"))
+  proj <- list(data = list(isa_data = list(
+    drivers = data.frame(id = character(0), name = character(0), stringsAsFactors = FALSE),
+    goods_benefits = data.frame(ID = "GB001", Name = "x", stringsAsFactors = FALSE)
+  )))
+  expect_error(out <- normalize_and_reconcile_project(proj), NA)   # must not error on 0-row frame
+  expect_equal(nrow(out$data$isa_data$drivers), 0)
+})
