@@ -606,7 +606,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       # Navigate to dashboard using parent session if provided
       if (!is.null(parent_session)) {
-        updateTabItems(session = parent_session, "tabs", "dashboard")
+        updateTabItems(session = parent_session, "sidebar_menu", "dashboard")
       }
     }
 

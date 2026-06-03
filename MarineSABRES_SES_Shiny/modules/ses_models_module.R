@@ -655,6 +655,6 @@ perform_ses_model_import <- function(isa_data, elements, connections,
 
   # Navigate to dashboard
   if (!is.null(parent_session)) {
-    updateTabItems(session = parent_session, "tabs", "dashboard")
+    updateTabItems(session = parent_session, "sidebar_menu", "dashboard")
   }
 }
