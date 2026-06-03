@@ -91,3 +91,37 @@ test_that("reconcile_loaded_element_ids generates ids when no id column exists",
   expect_equal(sum(nzchar(as.character(res$df$ID))), 3L)       # all rows got an id
   expect_equal(anyDuplicated(res$df$ID), 0)
 })
+
+# --- N:M multi-select forward links: one element -> many forward edges ---
+# A multi-select Linked widget hands `input[[...]]` a CHARACTER VECTOR of
+# label-form values. linked_select_to_ids must keep ALL of them (bare-id,
+# '|'-joined) so a single element row carries many edges — removing the need
+# to duplicate the node to express multiple forward links.
+test_that("linked_select_to_ids keeps every value from a multi-select vector", {
+  expect_equal(linked_select_to_ids(c("ES001: Fish", "ES002: Energy")),
+               "ES001|ES002")
+  expect_equal(linked_select_to_ids(c("GB001", "GB002", "GB003")),
+               "GB001|GB002|GB003")
+  # de-dupes repeated picks; drops blanks
+  expect_equal(linked_select_to_ids(c("P001: Overfishing", "", "P001: Overfishing")),
+               "P001")
+})
+
+test_that("linked_select_to_ids still handles legacy single + pipe-joined scalars", {
+  expect_equal(linked_select_to_ids("ES001: Fish"), "ES001")   # single label
+  expect_equal(linked_select_to_ids("GB001|GB002"), "GB001|GB002")  # stored value
+  expect_equal(linked_select_to_ids(NULL), "")
+  expect_equal(linked_select_to_ids(character(0)), "")
+})
+
+test_that("one element with N multi-selected links yields N edges in one matrix row", {
+  # Simulate the save path: a multi-select gives a vector; serialize -> store
+  # in LinkedMPF -> rebuild matrix. The single P001 row must produce 3 edges.
+  linked <- linked_select_to_ids(c("MPF001: A", "MPF002: B", "MPF003: C"))
+  el <- data.frame(ID = "P001", LinkedMPF = linked, Confidence = "Medium",
+                   stringsAsFactors = FALSE)
+  res <- rebuild_matrix_from_linked(el, "LinkedMPF",
+           source_ids = "P001", target_ids = c("MPF001", "MPF002", "MPF003"))
+  expect_equal(sum(nzchar(res$matrix["P001", ])), 3L)
+  expect_equal(nrow(res$matrix), 1L)  # still ONE node, not three duplicates
+})
