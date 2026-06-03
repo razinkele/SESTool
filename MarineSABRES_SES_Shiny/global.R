@@ -177,6 +177,34 @@ VERSION_INFO <- tryCatch({
 })
 
 # ============================================================================
+# DEBUG MODE CONFIGURATION (defined early: used by the i18n block below)
+# ============================================================================
+
+# Enable/disable debug logging via environment variable
+# Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
+# Default is FALSE for production use
+DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
+ADMIN_MODE <- Sys.getenv("MARINESABRES_ADMIN_MODE", "FALSE") == "TRUE"
+
+#' Debug logging helper function
+#'
+#' Conditionally prints debug messages based on DEBUG_MODE flag.
+#' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
+#'
+#' @param message Character string to log
+#' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
+#' @export
+debug_log <- function(message, context = NULL) {
+  if (DEBUG_MODE) {
+    if (!is.null(context)) {
+      cat(sprintf("[%s] %s\n", context, message))
+    } else {
+      cat(message, "\n")
+    }
+  }
+}
+
+# ============================================================================
 # INTERNATIONALIZATION (i18n) CONFIGURATION
 # ============================================================================
 
@@ -413,33 +441,7 @@ AVAILABLE_LANGUAGES <- list(
 # Note: local = FALSE makes constants available globally
 source("constants.R", local = FALSE)
 
-# ============================================================================
-# DEBUG MODE CONFIGURATION (must be early for use by other modules)
-# ============================================================================
-
-# Enable/disable debug logging via environment variable
-# Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
-# Default is FALSE for production use
-DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
-ADMIN_MODE <- Sys.getenv("MARINESABRES_ADMIN_MODE", "FALSE") == "TRUE"
-
-#' Debug logging helper function
-#'
-#' Conditionally prints debug messages based on DEBUG_MODE flag.
-#' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
-#'
-#' @param message Character string to log
-#' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
-#' @export
-debug_log <- function(message, context = NULL) {
-  if (DEBUG_MODE) {
-    if (!is.null(context)) {
-      cat(sprintf("[%s] %s\n", context, message))
-    } else {
-      cat(message, "\n")
-    }
-  }
-}
+# debug_log is defined earlier (load-order: used by the i18n block)
 
 #' P1 FIX: Startup Log Function
 #'
@@ -904,7 +906,7 @@ if (ML_ENABLED) {
 
 # ============================================================================
 # DEBUG MODE STATUS MESSAGE
-# (DEBUG_MODE and debug_log() defined earlier, after constants.R)
+# (DEBUG_MODE and debug_log() defined earlier, before the i18n block)
 # ============================================================================
 
 # Print debug mode status on startup
