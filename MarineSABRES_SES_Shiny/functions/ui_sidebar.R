@@ -456,19 +456,20 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     )
   ))
 
-  # Admin panel (only when ADMIN_MODE is enabled)
-  if (exists("ADMIN_MODE") && ADMIN_MODE) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        bs4SidebarMenuItem(
-          safe_t("modules.feedback_admin.menu_label", i18n_obj = i18n),
-          tabName = "feedback_admin",
-          icon = icon("lock")
-        ),
-        safe_t("modules.feedback_admin.dashboard_tab", i18n_obj = i18n)
-      )
-    ))
-  }
+  # Feedback list (all users). Admins get the lock icon + "Admin" label and the
+  # extra admin tools inside; everyone else sees a read-only "Feedback" list.
+  .fb_admin <- exists("ADMIN_MODE") && ADMIN_MODE
+  menu_items <- c(menu_items, list(
+    add_menu_tooltip(
+      bs4SidebarMenuItem(
+        if (.fb_admin) safe_t("modules.feedback_admin.menu_label", i18n_obj = i18n)
+        else           safe_t("ui.modals.feedback.button_label", i18n_obj = i18n),
+        tabName = "feedback_admin",
+        icon = icon(if (.fb_admin) "lock" else "comment-dots")
+      ),
+      safe_t("modules.feedback_admin.dashboard_tab", i18n_obj = i18n)
+    )
+  ))
 
   # Add horizontal rule and Quick Actions (all levels)
   menu_items <- c(menu_items, list(

@@ -112,29 +112,51 @@ collect_system_context <- function(session     = NULL,
 
 #' Append one feedback payload as an NDJSON line to the local log
 #'
-#' @param payload  Named list to serialise as JSON
-#' @param path     Path to the NDJSON log file
-#' @return TRUE on success, FALSE on error
+#' Tries `path` first; if that directory/file isn't writable (the laguna
+#' read-only `data/` case), it falls back to a guaranteed-writable per-user
+#' location so a submission is NEVER silently lost. The real failure reason is
+#' carried back so callers can surface it instead of a generic error.
+#'
+#' @param payload        Named list to serialise as JSON
+#' @param path           Preferred NDJSON log path
+#' @param fallback_path  Writable path used only if `path` fails. Defaults to a
+#'   per-user data dir (tools::R_user_dir), which is writable on shiny-server.
+#' @return list(success, path, fellback, reason): `success` TRUE if written
+#'   anywhere; `path` where it landed (NA if lost); `fellback` TRUE if the
+#'   fallback was used; `reason` the primary failure message (NA on clean write).
 save_feedback_local <- function(payload,
                                  path = file.path(
                                    if (exists("PROJECT_ROOT")) PROJECT_ROOT else ".",
-                                   "data", "user_feedback_log.ndjson")) {
-  tryCatch({
-    dir_path <- dirname(path)
-    if (!dir.exists(dir_path)) dir.create(dir_path, recursive = TRUE)
+                                   "data", "user_feedback_log.ndjson"),
+                                 fallback_path = file.path(
+                                   tools::R_user_dir("MarineSABRES", "data"),
+                                   "user_feedback_log.ndjson")) {
+  .try_write <- function(p) {
+    tryCatch({
+      dir_path <- dirname(p)
+      if (!dir.exists(dir_path)) dir.create(dir_path, recursive = TRUE)
+      cat(jsonlite::toJSON(payload, auto_unbox = TRUE), "\n",
+          file = p, append = TRUE, sep = "")
+      TRUE
+    }, error = function(e) conditionMessage(e))   # character reason on failure
+  }
 
-    cat(
-      jsonlite::toJSON(payload, auto_unbox = TRUE),
-      "\n",
-      file   = path,
-      append = TRUE,
-      sep    = ""
-    )
-    TRUE
-  }, error = function(e) {
-    debug_log(paste("save_feedback_local failed:", e$message), "ERROR")
-    FALSE
-  })
+  primary <- .try_write(path)
+  if (isTRUE(primary)) {
+    return(list(success = TRUE, path = path, fellback = FALSE, reason = NA_character_))
+  }
+  debug_log(paste("save_feedback_local primary path failed:", primary), "WARN")
+
+  # Primary failed — try the writable fallback so feedback isn't lost.
+  if (!is.null(fallback_path) && !identical(fallback_path, path)) {
+    fb <- .try_write(fallback_path)
+    if (isTRUE(fb)) {
+      debug_log(paste("save_feedback_local wrote to fallback:", fallback_path), "WARN")
+      return(list(success = TRUE, path = fallback_path, fellback = TRUE, reason = primary))
+    }
+    debug_log(paste("save_feedback_local fallback path failed:", fb), "ERROR")
+  }
+  list(success = FALSE, path = NA_character_, fellback = FALSE, reason = primary)
 }
 
 
@@ -262,7 +284,11 @@ submit_feedback <- function(title,
   )
 
   # --- save locally first ---------------------------------------------------
-  local_success <- save_feedback_local(local_payload, path = log_path)
+  local_res      <- save_feedback_local(local_payload, path = log_path)
+  local_success  <- isTRUE(local_res$success)
+  local_path     <- local_res$path
+  local_fellback <- isTRUE(local_res$fellback)
+  local_error    <- local_res$reason
 
   # --- attempt GitHub -------------------------------------------------------
   gh_result     <- create_github_issue(title, issue_body, labels)
@@ -273,13 +299,17 @@ submit_feedback <- function(title,
   if (github_success && local_success) {
     update_payload        <- local_payload
     update_payload$github_url <- github_url
-    # Append a corrected entry; the original entry remains (acceptable for NDJSON)
-    save_feedback_local(update_payload, path = log_path)
+    # Append a corrected entry to wherever the first one landed (may be the
+    # fallback path); the original entry remains (acceptable for NDJSON).
+    save_feedback_local(update_payload, path = local_path)
   }
 
   list(
     local_success  = local_success,
     github_success = github_success,
-    github_url     = github_url
+    github_url     = github_url,
+    local_path     = local_path,
+    local_fellback = local_fellback,
+    local_error    = local_error
   )
 }

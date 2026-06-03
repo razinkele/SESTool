@@ -126,6 +126,33 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
 }
 
 
+#' Load and merge several NDJSON feedback logs into one data frame
+#'
+#' Used so feedback written to a writable FALLBACK path (when the primary
+#' `data/` log is read-only — see save_feedback_local) still shows in the
+#' dashboard. Loads each path via `load_feedback_log`, row-binds, then dedupes
+#' across files by title+timestamp (keeping the last occurrence, matching the
+#' single-file dedup). Missing paths are skipped; all-missing yields the
+#' standard empty frame.
+#'
+#' @param paths character vector of NDJSON log paths.
+#' @return a data.frame with the same columns as `load_feedback_log`.
+load_feedback_logs <- function(paths) {
+  paths <- unique(paths[!is.na(paths) & nzchar(paths)])
+  if (length(paths) == 0L) return(load_feedback_log(""))   # standard empty frame
+
+  dfs <- lapply(paths, load_feedback_log)
+  non_empty <- Filter(function(d) is.data.frame(d) && nrow(d) > 0L, dfs)
+  if (length(non_empty) == 0L) return(load_feedback_log(""))
+
+  combined <- do.call(rbind, non_empty)
+  key <- paste(combined$title, combined$timestamp, sep = "\x01")
+  combined <- combined[!duplicated(key, fromLast = TRUE), , drop = FALSE]
+  rownames(combined) <- NULL
+  combined
+}
+
+
 # ============================================================================
 # compute_text_similarity
 # ============================================================================

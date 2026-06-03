@@ -518,10 +518,11 @@ ui <- bs4DashPage(
       # ==================== GUIDEBOOK ====================
       bs4TabItem(tabName = "guidebook", guidebook_ui("guidebook", i18n)),
 
-      # ==================== FEEDBACK ADMIN (ADMIN_MODE only) ====================
+      # ============ FEEDBACK (list visible to all; admin tools gated) ==========
       bs4TabItem(tabName = "feedback_admin",
-                 if (exists("ADMIN_MODE") && ADMIN_MODE && exists("feedback_admin_ui", mode = "function"))
-                   feedback_admin_ui("feedback_admin", i18n = i18n)
+                 if (exists("feedback_admin_ui", mode = "function"))
+                   feedback_admin_ui("feedback_admin", i18n = i18n,
+                                     admin = (exists("ADMIN_MODE") && ADMIN_MODE))
                  else
                    tags$div()
       )
@@ -1074,10 +1075,10 @@ server <- function(input, output, session) {
   # Guidebook module
   guidebook_server("guidebook", project_data_reactive = project_data, i18n = session_i18n)
 
-  # Feedback admin module (ADMIN_MODE only)
-  if (exists("ADMIN_MODE") && ADMIN_MODE) {
-    feedback_admin_server("feedback_admin", i18n = session_i18n)
-  }
+  # Feedback module — list visible to all users; admin-only tools (resolve,
+  # duplicate detection, system-context detail) gated by the `admin` flag.
+  feedback_admin_server("feedback_admin", i18n = session_i18n,
+                        admin = (exists("ADMIN_MODE") && ADMIN_MODE))
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Automatic propagation: ISA changes -> CLD regeneration -> Analysis invalidation

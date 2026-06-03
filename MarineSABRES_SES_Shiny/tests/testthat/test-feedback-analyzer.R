@@ -571,3 +571,40 @@ test_that("all feedback_admin i18n keys exist for all 9 languages", {
     }
   }
 })
+
+# ---------------------------------------------------------------------------
+# load_feedback_logs: merge primary + fallback logs (so feedback written to a
+# writable fallback path when data/ is read-only still appears in the dashboard)
+# ---------------------------------------------------------------------------
+test_that("load_feedback_logs merges entries from multiple log files", {
+  skip_if_not(exists("load_feedback_logs", mode = "function"),
+              "load_feedback_logs not available")
+
+  p1 <- tempfile(fileext = ".ndjson"); p2 <- tempfile(fileext = ".ndjson")
+  on.exit(unlink(c(p1, p2)), add = TRUE)
+  writeLines('{"title":"A","type":"bug","timestamp":"2026-01-01T00:00:00Z"}', p1)
+  writeLines('{"title":"B","type":"suggestion","timestamp":"2026-01-02T00:00:00Z"}', p2)
+
+  df <- load_feedback_logs(c(p1, p2))
+  expect_equal(nrow(df), 2L)
+  expect_setequal(df$title, c("A", "B"))
+})
+
+test_that("load_feedback_logs dedupes the same entry across files and tolerates missing paths", {
+  skip_if_not(exists("load_feedback_logs", mode = "function"),
+              "load_feedback_logs not available")
+
+  p1 <- tempfile(fileext = ".ndjson"); p2 <- tempfile(fileext = ".ndjson")
+  on.exit(unlink(c(p1, p2)), add = TRUE)
+  same <- '{"title":"Dup","type":"bug","timestamp":"2026-01-01T00:00:00Z"}'
+  writeLines(same, p1); writeLines(same, p2)
+
+  df <- load_feedback_logs(c(p1, p2, file.path(tempdir(), "does-not-exist.ndjson")))
+  expect_equal(nrow(df), 1L)              # cross-file duplicate collapsed
+  expect_equal(df$title, "Dup")
+
+  # all-missing -> empty df with the standard columns (no error)
+  empty <- load_feedback_logs(file.path(tempdir(), "nope.ndjson"))
+  expect_equal(nrow(empty), 0L)
+  expect_true(all(c("line_num", "title", "type", "status", "timestamp") %in% names(empty)))
+})

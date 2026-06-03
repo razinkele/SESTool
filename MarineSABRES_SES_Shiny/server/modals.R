@@ -1785,7 +1785,14 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
 
     # Show result — 3-way check: both failed, github success, or local-only success
     if (!result$local_success && !result$github_success) {
-      showNotification(i18n$t("ui.modals.feedback.error_save_failed"), type = "error", duration = 8)
+      # Surface the REAL reason (e.g. "Permission denied" on a read-only data/)
+      # so the failure is diagnosable instead of a generic message. The reason
+      # is an R error detail — keep the i18n prefix, append the raw cause.
+      msg <- i18n$t("ui.modals.feedback.error_save_failed")
+      if (!is.null(result$local_error) && !is.na(result$local_error) && nzchar(result$local_error)) {
+        msg <- paste0(msg, " (", result$local_error, ")")
+      }
+      showNotification(msg, type = "error", duration = 12)
     } else if (result$github_success) {
       showNotification(
         tagList(
