@@ -387,9 +387,50 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         )
       },
       content = function(file) {
-        # Data export not yet implemented - write placeholder file
-        showNotification(i18n$t("common.messages.data_export_not_implemented"), type = "warning")
-        writeLines("Data export is not yet implemented. Please use the Report generation feature instead.", file)
+        tryCatch({
+          data <- project_data_reactive()
+          if (is.null(data)) {
+            showNotification(i18n$t("common.messages.no_data_to_export"), type = "error")
+            return(NULL)
+          }
+          components <- input$export_data_components
+          export_list <- list()
+          if ("metadata" %in% components) {
+            export_list$metadata <- data$data$metadata
+            export_list$project_info <- list(
+              project_id = data$project_id, project_name = data$project_name,
+              created_at = as.character(data$created_at),
+              last_modified = as.character(data$last_modified))
+          }
+          if ("pims" %in% components) export_list$pims <- data$data$pims
+          if ("isa_data" %in% components) {
+            isa <- data$data$isa_data
+            export_list$goods_benefits     <- isa$goods_benefits
+            export_list$ecosystem_services <- isa$ecosystem_services
+            export_list$marine_processes   <- isa$marine_processes
+            export_list$pressures          <- isa$pressures
+            export_list$activities         <- isa$activities
+            export_list$drivers            <- isa$drivers
+            export_list$bot_data           <- isa$bot_data
+          }
+          if ("cld" %in% components) {
+            export_list$cld_nodes <- data$data$cld$nodes
+            export_list$cld_edges <- data$data$cld$edges
+            export_list$cld_loops <- data$data$cld$loops
+          }
+          if ("analysis" %in% components)  export_list$analysis_results  <- data$data$analysis
+          if ("responses" %in% components) export_list$response_measures <- data$data$responses
+
+          # Drop NULL/empty components so we never emit an empty/garbage file.
+          export_list <- Filter(function(x) !is.null(x) && length(x) > 0, export_list)
+
+          write_data_export(export_list, input$export_data_format, file)
+          showNotification(i18n$t("common.messages.data_exported_successfully"), type = "message")
+        }, error = function(e) {
+          debug_log(paste("Data export error:", conditionMessage(e)), "EXPORT")
+          showNotification(paste(i18n$t("common.messages.export_failed"), conditionMessage(e)),
+                           type = "error", duration = 10)
+        })
       }
     )
 
@@ -405,12 +446,58 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         )
       },
       content = function(file) {
-        # Visualization export not yet implemented - write placeholder file
-        showNotification(
-          "Visualization export not yet implemented",
-          type = "warning"
-        )
-        writeLines("Visualization export is not yet implemented.", file)
+        tryCatch({
+          data <- project_data_reactive()
+          nodes <- data$data$cld$nodes
+          if (is.null(nodes) || !is.data.frame(nodes) || nrow(nodes) == 0) {
+            showNotification(i18n$t("common.misc.no_cld_data_to_export_please_create_a_cld_first"), type = "error")
+            return(NULL)
+          }
+          edges <- data$data$cld$edges
+          if (is.null(edges) || !is.data.frame(edges) || nrow(edges) == 0) {
+            edges <- data.frame(from = character(0), to = character(0), stringsAsFactors = FALSE)
+          }
+          format <- input$export_viz_format
+          width  <- input$export_viz_width  %||% 1200
+          height <- input$export_viz_height %||% 900
+
+          if (format == "HTML (.html)") {
+            viz <- visNetwork(nodes, edges, width = paste0(width, "px"), height = paste0(height, "px")) %>%
+              visNodes(borderWidth = 2, font = list(size = 14)) %>%
+              visEdges(arrows = "to", smooth = list(enabled = TRUE, type = "curvedCW")) %>%
+              visOptions(highlightNearest = list(enabled = TRUE, hover = TRUE), nodesIdSelection = TRUE) %>%
+              visInteraction(navigationButtons = TRUE, hover = TRUE, zoomView = TRUE)
+            # saveWidget wants a real .html path; write to a temp then copy to the
+            # extension-less downloadHandler file.
+            tmp <- tempfile(fileext = ".html")
+            on.exit(unlink(tmp), add = TRUE)
+            visSave(viz, tmp)
+            file.copy(tmp, file, overwrite = TRUE)
+          } else {
+            # Static export via igraph (png/svg/pdf devices are extension-agnostic).
+            g <- graph_from_data_frame(d = edges, vertices = nodes, directed = TRUE)
+            ecol <- if ("link_type" %in% names(edges)) {
+              ifelse(edges$link_type == "positive", "#06D6A0", "#E63946")
+            } else if ("polarity" %in% names(edges)) {
+              ifelse(edges$polarity == "+", "#06D6A0", "#E63946")
+            } else "#999999"
+            if (format == "PNG (.png)")      png(file, width = width, height = height, res = 150)
+            else if (format == "SVG (.svg)") svg(file, width = width / 100, height = height / 100)
+            else                             pdf(file, width = width / 100, height = height / 100)
+            on.exit(tryCatch(grDevices::dev.off(), error = function(e2) NULL), add = TRUE)
+            op <- par(mar = if (exists("PLOT_MARGINS")) PLOT_MARGINS else c(1, 1, 2, 1))
+            plot(g, vertex.label.cex = 0.8, vertex.label.color = "black",
+                 vertex.frame.color = "gray", edge.color = ecol, edge.arrow.size = 0.5,
+                 edge.curved = 0.2, main = i18n$t("modules.export.cld_diagram_title"))
+            par(op)
+          }
+          showNotification(i18n$t("common.messages.visualization_exported_successfully"), type = "message")
+        }, error = function(e) {
+          tryCatch(grDevices::dev.off(), error = function(e2) NULL)
+          debug_log(paste("Visualization export error:", conditionMessage(e)), "EXPORT")
+          showNotification(paste(i18n$t("common.messages.export_failed"), conditionMessage(e)),
+                           type = "error", duration = 10)
+        })
       }
     )
 

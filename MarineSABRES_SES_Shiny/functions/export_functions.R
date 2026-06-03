@@ -38,6 +38,57 @@ save_ggplot_png <- function(plot, file, width = 10, height = 6, dpi = 150) {
   invisible(file)
 }
 
+#' Write a project-data export list to a file in the chosen format
+#'
+#' Replaces the old Export-page placeholder that wrote a text file with a binary
+#' extension (feedback #8 "data export" — downloaded file could not be opened).
+#' Works on Shiny's extension-less downloadHandler temp path: every writer here
+#' is extension-agnostic (openxlsx / jsonlite / save / write.csv all take an
+#' explicit path).
+#'
+#' @param export_list named list of components (data frames and/or plain lists)
+#' @param format one of "Excel (.xlsx)", "CSV (.csv)", "JSON (.json)", "R Data (.RData)"
+#' @param file output path (extension optional)
+#' @return `file`, invisibly
+write_data_export <- function(export_list, format, file) {
+  if (identical(format, "Excel (.xlsx)")) {
+    wb <- openxlsx::createWorkbook()
+    for (name in names(export_list)) {
+      item <- export_list[[name]]
+      sheet <- substr(name, 1, 31)
+      if (is.data.frame(item) && nrow(item) > 0) {
+        openxlsx::addWorksheet(wb, sheet)
+        openxlsx::writeData(wb, sheet, item)
+      } else if (is.list(item) && !is.data.frame(item) && length(item) > 0) {
+        df <- tryCatch(as.data.frame(t(unlist(item)), stringsAsFactors = FALSE),
+                       error = function(e) NULL)
+        if (!is.null(df)) { openxlsx::addWorksheet(wb, sheet); openxlsx::writeData(wb, sheet, df) }
+      }
+    }
+    if (length(openxlsx::sheets(wb)) == 0) {        # never write an empty workbook
+      openxlsx::addWorksheet(wb, "Export")
+      openxlsx::writeData(wb, "Export", data.frame(message = "No data selected to export"))
+    }
+    openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
+
+  } else if (identical(format, "CSV (.csv)")) {
+    # CSV is flat: write the first data-frame component (else a message row).
+    dfs <- Filter(function(x) is.data.frame(x) && nrow(x) > 0, export_list)
+    if (length(dfs) > 0) utils::write.csv(dfs[[1]], file, row.names = FALSE)
+    else utils::write.csv(data.frame(message = "No tabular data to export"), file, row.names = FALSE)
+
+  } else if (identical(format, "JSON (.json)")) {
+    writeLines(jsonlite::toJSON(export_list, pretty = TRUE, auto_unbox = TRUE), file)
+
+  } else if (identical(format, "R Data (.RData)")) {
+    save(export_list, file = file)
+
+  } else {
+    stop(sprintf("write_data_export: unsupported format '%s'", format))
+  }
+  invisible(file)
+}
+
 #' Export CLD as HTML
 #'
 #' @param visnet visNetwork object
