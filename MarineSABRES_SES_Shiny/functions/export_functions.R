@@ -19,8 +19,27 @@ generate_export_filename <- function(prefix, extension) {
 # VISUALIZATION EXPORT FUNCTIONS
 # ============================================================================
 
+#' Save a ggplot as PNG to a (possibly extension-less) path
+#'
+#' Shiny's downloadHandler hands `content = function(file)` an EXTENSION-LESS
+#' temp path. ggsave() infers its device from the filename extension, so on
+#' such a path it errors ("supply `filename` with a file extension or supply
+#' `device`") and Shiny then serves an HTML error page — the file downloads as
+#' HTML (feedback #7 "Can't download tables"). Forcing `device = "png"` makes
+#' the save work regardless of the path's extension.
+#'
+#' @param plot ggplot object
+#' @param file Output path (extension optional)
+#' @param width,height,dpi ggsave dimensions
+#' @return `file`, invisibly (side effect: writes a PNG)
+save_ggplot_png <- function(plot, file, width = 10, height = 6, dpi = 150) {
+  ggplot2::ggsave(file, plot = plot, device = "png",
+                  width = width, height = height, dpi = dpi, bg = "white")
+  invisible(file)
+}
+
 #' Export CLD as HTML
-#' 
+#'
 #' @param visnet visNetwork object
 #' @param file_path Output file path
 #' @return NULL (side effect: saves file)

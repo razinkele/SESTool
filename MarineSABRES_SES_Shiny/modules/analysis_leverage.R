@@ -555,7 +555,10 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
             panel.grid.major.y = element_blank()
           )
 
-        ggsave(file, plot = p, width = 10, height = max(6, nrow(df) * 0.4), dpi = 150, bg = "white")
+        # device = "png" forced via helper: Shiny hands us an extension-less
+        # temp path, which ggsave can't infer a device from (feedback #7 —
+        # chart downloaded as HTML error page).
+        save_ggplot_png(p, file, width = 10, height = max(6, nrow(df) * 0.4), dpi = 150)
       }
     )
 
