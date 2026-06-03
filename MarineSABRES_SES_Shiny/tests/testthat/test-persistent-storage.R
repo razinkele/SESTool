@@ -403,6 +403,17 @@ test_that("set_projects_folder rejects empty string", {
   expect_false(result$success)
 })
 
+test_that("set_projects_folder reports failure when the dir cannot be created", {
+  skip_if_not(exists("set_projects_folder", mode = "function"),
+              "set_projects_folder not available")
+  # A regular file used as a parent directory => dir.create() will fail
+  blocker <- tempfile()
+  writeLines("x", blocker)
+  on.exit(unlink(blocker), add = TRUE)
+  res <- set_projects_folder(file.path(blocker, "sub", "projects"))
+  expect_false(isTRUE(res$success))
+})
+
 # ============================================================================
 # find_recoverable_autosaves TESTS
 # ============================================================================

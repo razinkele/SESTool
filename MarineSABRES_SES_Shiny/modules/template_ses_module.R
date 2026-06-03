@@ -30,14 +30,14 @@ source(get_project_file("functions/template_loader.R"), local = TRUE)
   tryCatch({
     result <- load_all_templates("data")
     if (is.null(result) || length(result) == 0) {
-      debug_log("Warning: No templates loaded from data directory", "TEMPLATE", "WARN")
+      debug_log("Warning: No templates loaded from data directory", "TEMPLATE-WARN")
       list()
     } else {
       debug_log(sprintf("Loaded %d templates: %s", length(result), paste(names(result), collapse=", ")), "TEMPLATE")
       result
     }
   }, error = function(e) {
-    debug_log(paste("Error loading templates:", e$message), "TEMPLATE", "ERROR")
+    debug_log(paste("Error loading templates:", e$message), "TEMPLATE-ERROR")
     list()
   })
 }

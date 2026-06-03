@@ -196,12 +196,21 @@ set_projects_folder <- function(folder_path) {
 
   # Create folder if it doesn't exist
   if (!dir.exists(folder_path)) {
-    tryCatch({
-      dir.create(folder_path, recursive = TRUE)
-      debug_log(sprintf("Created projects folder: %s", folder_path), "PERSISTENT_STORAGE")
+    ok <- tryCatch({
+      dir.create(folder_path, recursive = TRUE, showWarnings = FALSE)
+      dir.exists(folder_path)
     }, error = function(e) {
-      return(list(success = FALSE, error = paste("Cannot create folder:", e$message)))
+      if (exists("debug_log", mode = "function")) {
+        debug_log(sprintf("set_projects_folder: %s", conditionMessage(e)), "STORAGE-ERROR")
+      }
+      FALSE
     })
+    if (!isTRUE(ok)) {
+      return(list(success = FALSE, error = "Could not create projects folder"))
+    }
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("Created projects folder: %s", folder_path), "PERSISTENT_STORAGE")
+    }
   }
 
   # Create README file
