@@ -122,7 +122,7 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
 
         showNotification(i18n$t("common.messages.data_exported_successfully"), type = "message")
       }, error = function(e) {
-        debug_log(paste("Data export error:", e$message), "EXPORT", "ERROR")
+        debug_log(paste("Data export error:", e$message), "EXPORT-ERROR")
         showNotification(
           paste(i18n$t("common.messages.export_failed"), e$message),
           type = "error",
@@ -236,7 +236,7 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
 
         showNotification(i18n$t("common.messages.visualization_exported_successfully"), type = "message")
       }, error = function(e) {
-        debug_log(paste("Visualization export error:", e$message), "EXPORT", "ERROR")
+        debug_log(paste("Visualization export error:", e$message), "EXPORT-ERROR")
         # Ensure graphics device is closed on error
         tryCatch(dev.off(), error = function(e2) NULL)
         showNotification(
