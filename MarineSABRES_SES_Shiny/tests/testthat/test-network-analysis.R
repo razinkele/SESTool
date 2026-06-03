@@ -653,12 +653,12 @@ test_that("build_network_from_isa creates igraph from valid isa", {
     nodes = data.frame(
       id = c("A", "B"),
       label = c("A", "B")
-      
+
     ),
     edges = data.frame(
       from = c("A"),
       to = c("B")
-      
+
     )
   )
 
@@ -666,4 +666,25 @@ test_that("build_network_from_isa creates igraph from valid isa", {
   expect_true(inherits(g, "igraph"))
   expect_equal(igraph::vcount(g), 2)
   expect_equal(igraph::ecount(g), 1)
+})
+
+# ============================================================================
+# detect_feedback_loops tests (L16)
+# ============================================================================
+
+test_that("detect_feedback_loops finds a simple 3-cycle (L16)", {
+  skip_if_not(exists("detect_feedback_loops", mode = "function"))
+  g <- igraph::graph_from_data_frame(
+    data.frame(from = c("A","B","C"), to = c("B","C","A")), directed = TRUE)
+  res <- detect_feedback_loops(g, max_length = 5)
+  expect_true(!is.null(res))
+  expect_gt(NROW(res), 0)
+})
+
+test_that("detect_feedback_loops returns empty for an acyclic graph (L16)", {
+  skip_if_not(exists("detect_feedback_loops", mode = "function"))
+  g <- igraph::graph_from_data_frame(
+    data.frame(from = c("A","B"), to = c("B","C")), directed = TRUE)
+  res <- detect_feedback_loops(g, max_length = 5)
+  expect_equal(NROW(res), 0)
 })

@@ -158,20 +158,46 @@ calculate_centrality <- function(graph) {
 
 #' Detect feedback loops (simple cycles) up to a maximum length
 #'
+#' For each vertex v, finds all simple out-paths from v (up to max_length hops)
+#' and keeps those whose terminal vertex has a direct edge back to v — i.e. the
+#' path closes a cycle.  Duplicate cycles (same set of vertices, different
+#' starting vertex) are suppressed by only recording a cycle when v equals the
+#' lexicographically smallest vertex name in the cycle.
+#'
+#' NOTE: `igraph::all_simple_paths(from = v, to = v)` always returns an empty
+#' set because igraph requires `from != to`.  The previous implementation
+#' relied on that call and therefore always returned zero cycles (L16 bug).
+#'
 #' @param graph igraph directed graph
-#' @param max_length integer maximum cycle length
-#' @return data.frame of cycles (path strings)
+#' @param max_length integer maximum cycle length (number of edges, not nodes)
+#' @return data.frame with one column `path` (character strings, e.g. "A->B->C->A")
 detect_feedback_loops <- function(graph, max_length = 5) {
-  if (!inherits(graph, "igraph")) return(list())
-  nodes <- igraph::V(graph)$name
-  result <- data.frame(path = character(0))
-  for (v in nodes) {
-    paths <- igraph::all_simple_paths(graph, from = v, to = v, mode = "out", cutoff = max_length)
+  if (!inherits(graph, "igraph")) return(data.frame(path = character(0)))
+  node_names <- igraph::V(graph)$name
+  result <- data.frame(path = character(0), stringsAsFactors = FALSE)
+
+  for (v in node_names) {
+    # Find all simple out-paths from v of length 1..(max_length-1) edges.
+    # cutoff is the number of *edges*, so cutoff = max_length - 1 limits path
+    # length to max_length nodes including the start (which is the convention
+    # used by the rest of the app — a "3-cycle" has 3 nodes).
+    paths <- igraph::all_simple_paths(graph, from = v, mode = "out",
+                                      cutoff = max_length - 1L)
+
     for (p in paths) {
-      if (length(p) > 1) {
-        path_str <- paste(igraph::V(graph)$name[as.numeric(p)], collapse = "->")
-        result <- rbind(result, data.frame(path = path_str))
-      }
+      if (length(p) < 2L) next            # need at least 2 nodes
+      path_names <- igraph::V(graph)$name[as.numeric(p)]
+      last_node  <- path_names[length(path_names)]
+
+      # Check whether the last node has a direct edge back to v (closes cycle)
+      if (!igraph::are_adjacent(graph, last_node, v)) next
+
+      # De-duplicate: only record the cycle when v is the lexicographically
+      # smallest vertex in the cycle (canonical representative).
+      if (v != min(path_names)) next
+
+      path_str <- paste(c(path_names, v), collapse = "->")
+      result <- rbind(result, data.frame(path = path_str, stringsAsFactors = FALSE))
     }
   }
   result
