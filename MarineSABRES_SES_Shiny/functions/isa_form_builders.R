@@ -34,7 +34,16 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
   build_field <- function(field) {
     input_id <- ns(paste0(prefix, "_", field$id, "_", current_id))
     if (identical(field$type, "select")) {
-      column(field$width, selectInput(input_id, field$label, choices = field$choices))
+      if (isTRUE(field$multiple)) {
+        # Multi-select forward link (N:M): an element can pick many targets in
+        # one panel. Drop the leading "" placeholder — an empty selection (no
+        # picks) already means "no link", so a blank option is meaningless here.
+        choices <- field$choices[nzchar(field$choices)]
+        column(field$width,
+               selectInput(input_id, field$label, choices = choices, multiple = TRUE))
+      } else {
+        column(field$width, selectInput(input_id, field$label, choices = field$choices))
+      }
     } else {
       column(field$width, textInput(input_id, field$label,
                                      placeholder = if (!is.null(field$placeholder)) field$placeholder else ""))
@@ -153,7 +162,7 @@ isa_fields_es <- function(i18n, linked_choices) {
     list(id = "desc", type = "text", label = i18n$t("common.labels.description"),
          width = 6),
     list(id = "linkedgb", type = "select", label = i18n$t("modules.isa.data_entry.common.linked_to_gb"),
-         width = 3, choices = linked_choices),
+         width = 3, choices = linked_choices, multiple = TRUE),
     list(id = "mechanism", type = "text", label = i18n$t("modules.isa.data_entry.common.mechanism"),
          width = 3),
     list(id = "confidence", type = "select", label = i18n$t("modules.isa.data_entry.common.confidence"),
@@ -174,7 +183,7 @@ isa_fields_mpf <- function(i18n, linked_choices) {
     list(id = "desc", type = "text", label = i18n$t("common.labels.description"),
          width = 6),
     list(id = "linkedes", type = "select", label = i18n$t("modules.isa.data_entry.common.linked_to_es"),
-         width = 3, choices = linked_choices),
+         width = 3, choices = linked_choices, multiple = TRUE),
     list(id = "mechanism", type = "text", label = i18n$t("modules.isa.data_entry.common.mechanism"),
          width = 3),
     list(id = "spatial", type = "text", label = i18n$t("modules.isa.data_entry.common.spatial_scale"),
@@ -195,7 +204,7 @@ isa_fields_p <- function(i18n, linked_choices) {
     list(id = "desc", type = "text", label = i18n$t("common.labels.description"),
          width = 6),
     list(id = "linkedmpf", type = "select", label = i18n$t("modules.isa.data_entry.common.linked_to_mpf"),
-         width = 3, choices = linked_choices),
+         width = 3, choices = linked_choices, multiple = TRUE),
     list(id = "intensity", type = "select", label = i18n$t("modules.isa.data_entry.common.intensity"),
          width = 3, choices = c("High", "Medium", "Low", "Unknown")),
     list(id = "spatial", type = "text", label = i18n$t("modules.isa.data_entry.common.spatial"),
@@ -218,7 +227,7 @@ isa_fields_a <- function(i18n, linked_choices) {
     list(id = "desc", type = "text", label = i18n$t("common.labels.description"),
          width = 6),
     list(id = "linkedp", type = "select", label = i18n$t("modules.isa.data_entry.common.linked_to_pressure"),
-         width = 3, choices = linked_choices),
+         width = 3, choices = linked_choices, multiple = TRUE),
     list(id = "scale", type = "select", label = i18n$t("modules.isa.data_entry.common.scale"),
          width = 3, choices = c("Local", "Regional", "National", "International")),
     list(id = "frequency", type = "select", label = i18n$t("modules.isa.data_entry.common.frequency"),
@@ -239,7 +248,7 @@ isa_fields_d <- function(i18n, linked_choices) {
     list(id = "desc", type = "text", label = i18n$t("common.labels.description"),
          width = 6),
     list(id = "linkeda", type = "select", label = i18n$t("modules.isa.data_entry.common.linked_to_activity"),
-         width = 3, choices = linked_choices),
+         width = 3, choices = linked_choices, multiple = TRUE),
     list(id = "trend", type = "select", label = i18n$t("modules.isa.data_entry.common.trend"),
          width = 3, choices = c("Increasing", "Stable", "Decreasing", "Cyclical", "Uncertain")),
     list(id = "control", type = "select", label = i18n$t("modules.isa.data_entry.common.controllability"),

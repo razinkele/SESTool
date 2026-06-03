@@ -34,11 +34,19 @@ serialize_linked <- function(ids) {
 #' suffix from each segment, so it accepts BOTH the legacy label form and an
 #' already-bare/pipe-delimited id list — keeping previously-saved projects'
 #' links valid (see feedback #4).
-#' @param x select value: "", "GB001", "GB001: Food", or "GB001|GB002: Tourism"
+#' A multi-select widget hands this a character VECTOR of label-form values
+#' ("ES001: Fish", "ES002: Energy"); a legacy/stored value is a single,
+#' possibly '|'-delimited string. Splitting each element on '|' flattens both
+#' shapes to one id list. IDs are de-duplicated (first pick wins) so a node's
+#' repeated selection never inflates the link list — one element can carry many
+#' forward edges without duplicating the node (N:M).
+#' @param x select value(s): "", "GB001", "GB001: Food", "GB001|GB002: Tourism",
+#'   or c("GB001: Food", "GB002: Tourism") from a multi-select.
 #' @return single '|'-delimited string of bare IDs ("" when empty).
 linked_select_to_ids <- function(x) {
-  parts <- parse_linked(x)
-  ids <- trimws(sub(":.*$", "", parts))
+  if (is.null(x) || length(x) == 0) return("")
+  parts <- unlist(lapply(as.character(x), parse_linked), use.names = FALSE)
+  ids <- unique(trimws(sub(":.*$", "", parts)))
   serialize_linked(ids)
 }
 
