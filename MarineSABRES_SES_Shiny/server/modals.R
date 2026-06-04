@@ -69,6 +69,21 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 
     new_lang <- input$language_selector
 
+    # Security: validate that the client-supplied language code is one of the
+    # declared valid codes.  A tampered WebSocket message could otherwise inject
+    # a path-traversal string that propagates into file-path construction (e.g.,
+    # resolve_guidebook_rmd) and ultimately into rmarkdown::render() — RCE risk.
+    if (!(new_lang %in% names(AVAILABLE_LANGUAGES))) {
+      debug_log(paste("Language change rejected: unknown code:", new_lang), "SECURITY")
+      showNotification(
+        i18n$t("common.messages.invalid_language_code"),
+        type = "warning",
+        duration = 5,
+        session = session
+      )
+      return()
+    }
+
     debug_log(paste("Language changed to:", new_lang), "LANGUAGE")
 
     # Close the modal first
@@ -547,16 +562,29 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     } else if (input$ses_models_source == "custom" && !is.null(input$ses_models_custom_path)) {
       custom_path <- input$ses_models_custom_path
       if (nzchar(custom_path)) {
-        if (dir.exists(custom_path)) {
-          ses_models_directory(custom_path)
-          debug_log(sprintf("SES Models directory set to: %s", custom_path), "SETTINGS")
-          settings_changed <- TRUE
-          invalidate_ses_models_cache()
-        } else {
+        # Normalise the client-supplied path before storing it.
+        # This neutralises any ".." traversal in the value and gives us an
+        # absolute canonical path so that the per-file containment check in
+        # ses_models_module.R works correctly regardless of working directory.
+        norm_custom <- tryCatch(
+          normalizePath(custom_path, winslash = "/", mustWork = FALSE),
+          error = function(e) NULL
+        )
+        if (is.null(norm_custom) || !nzchar(norm_custom)) {
           showNotification(
             paste(i18n$t("ui.modals.directory_not_found"), custom_path),
             type = "error", duration = 5
           )
+        } else if (!dir.exists(norm_custom)) {
+          showNotification(
+            paste(i18n$t("ui.modals.directory_not_found"), norm_custom),
+            type = "error", duration = 5
+          )
+        } else {
+          ses_models_directory(norm_custom)
+          debug_log(sprintf("SES Models directory set to: %s", norm_custom), "SETTINGS")
+          settings_changed <- TRUE
+          invalidate_ses_models_cache()
         }
       }
     }

@@ -1155,6 +1155,17 @@
       "no": "gjenoppretter arbeidet ditt etter språkendringen",
       "el": "επαναφορά της εργασίας σας μετά την αλλαγή γλώσσας"
     },
+    "common.messages.invalid_language_code": {
+      "en": "Invalid language code. Please select a supported language.",
+      "es": "Código de idioma no válido. Por favor, seleccione un idioma compatible.",
+      "fr": "Code de langue invalide. Veuillez sélectionner une langue prise en charge.",
+      "de": "Ungültiger Sprachcode. Bitte wählen Sie eine unterstützte Sprache aus.",
+      "lt": "Neteisingas kalbos kodas. Prašome pasirinkti palaikomą kalbą.",
+      "pt": "Código de idioma inválido. Por favor, selecione um idioma suportado.",
+      "it": "Codice lingua non valido. Selezionare una lingua supportata.",
+      "no": "Ugyldig språkkode. Vennligst velg et støttet språk.",
+      "el": "Μη έγκυρος κωδικός γλώσσας. Παρακαλώ επιλέξτε μια υποστηριζόμενη γλώσσα."
+    },
     "common.messages.context_language_change_save": {
       "en": "saving your work before the language change",
       "es": "guardando su trabajo antes del cambio de idioma",
