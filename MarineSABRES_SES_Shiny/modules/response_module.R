@@ -743,16 +743,25 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         generate_export_filename("Response_Measures", ".xlsx")
       },
       content = function(file) {
-        wb <- createWorkbook()
-        addWorksheet(wb, "Response_Measures")
-        addWorksheet(wb, "Impact_Matrix")
-        addWorksheet(wb, "Implementation")
-
-        writeData(wb, "Response_Measures", translate_levels_for_display(response_data$measures))
-        writeData(wb, "Impact_Matrix", response_data$impacts)
-        writeData(wb, "Implementation", response_data$milestones)
-
-        saveWorkbook(wb, file, overwrite = TRUE)
+        tryCatch({
+          build_response_excel(
+            measures   = translate_levels_for_display(response_data$measures),
+            impacts    = response_data$impacts,
+            milestones = response_data$milestones,
+            file       = file
+          )
+        }, error = function(e) {
+          debug_log(paste("Response Excel export failed:", e$message), "EXPORT")
+          # L7: do NOT silently write corrupt bytes to a .xlsx file.
+          # Surface the error so the user knows the download failed.
+          showNotification(
+            paste0(i18n$t("common.messages.excel_export_failed") %||%
+                     "Could not generate Excel file.",
+                   " (", e$message, ")"),
+            type = "error", duration = NULL
+          )
+          stop(e)  # propagates to downloadHandler so it does NOT serve a misleading/partial file
+        })
       }
     )
 
@@ -973,4 +982,43 @@ response_validation_server <- function(id, project_data_reactive, i18n, event_bu
   moduleServer(id, function(input, output, session) {
     # Placeholder
   })
+}
+
+# =============================================================================
+# PURE HELPER — testable outside a Shiny session
+# =============================================================================
+
+#' Build Response Excel Workbook
+#'
+#' Constructs an openxlsx workbook with three sheets (Response_Measures,
+#' Impact_Matrix, Implementation) and saves it to \code{file} via \code{saver}.
+#' Raises on any failure — the caller's \code{tryCatch} handles notification.
+#'
+#' @param measures   data.frame of response measures
+#' @param impacts    data.frame of impact matrix
+#' @param milestones data.frame of implementation milestones
+#' @param file       Path to write the .xlsx to
+#' @param saver      Function(wb, file, overwrite) — defaults to
+#'   \code{openxlsx::saveWorkbook}. Override in tests to inject forced failures.
+#'
+#' @return Invisibly returns \code{file}.
+#' @export
+build_response_excel <- function(
+    measures,
+    impacts,
+    milestones,
+    file,
+    saver = openxlsx::saveWorkbook
+) {
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "Response_Measures")
+  openxlsx::addWorksheet(wb, "Impact_Matrix")
+  openxlsx::addWorksheet(wb, "Implementation")
+
+  openxlsx::writeData(wb, "Response_Measures", measures)
+  openxlsx::writeData(wb, "Impact_Matrix",     impacts)
+  openxlsx::writeData(wb, "Implementation",    milestones)
+
+  saver(wb, file, overwrite = TRUE)
+  invisible(file)
 }

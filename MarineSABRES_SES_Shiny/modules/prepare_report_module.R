@@ -591,6 +591,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
+        req(report_path_is_servable(rv$html_report_path))
         file.copy(rv$html_report_path, file)
       }
     )
@@ -601,6 +602,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
+        req(report_path_is_servable(rv$html_report_path))
         file.copy(rv$html_report_path, file)
       }
     )
@@ -611,6 +613,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".pdf")
       },
       content = function(file) {
+        req(report_path_is_servable(rv$pdf_report_path))
         file.copy(rv$pdf_report_path, file)
       }
     )
@@ -621,6 +624,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".docx")
       },
       content = function(file) {
+        req(report_path_is_servable(rv$word_report_path))
         file.copy(rv$word_report_path, file)
       }
     )
@@ -631,6 +635,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".pptx")
       },
       content = function(file) {
+        req(report_path_is_servable(rv$ppt_report_path))
         file.copy(rv$ppt_report_path, file)
       }
     )
@@ -1260,4 +1265,23 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
 
   # Save presentation
   print(ppt, target = output_file)
+}
+
+# =============================================================================
+# PURE HELPER — testable outside a Shiny session
+# =============================================================================
+
+#' Check Whether a Report Path Is Safe to Serve
+#'
+#' Returns TRUE only when \code{path} is a non-NULL character scalar that points
+#' to an existing file. All five download handlers guard with
+#' \code{req(report_path_is_servable(rv$<x>_report_path))} so that Shiny
+#' silently aborts (no download, no error modal) when the report has not been
+#' generated yet.
+#'
+#' @param path  A candidate file path (any R object accepted).
+#' @return Logical scalar.
+#' @export
+report_path_is_servable <- function(path) {
+  !is.null(path) && is.character(path) && length(path) == 1L && file.exists(path)
 }
