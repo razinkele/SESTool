@@ -928,6 +928,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
           debug_log("First data detected - performing immediate save", "AUTO-SAVE")
           perform_auto_save()
         }
+        # Note: if perform_auto_save() returned early (malformed data / not yet enabled), last_data_hash stays NULL and a subsequent project_data change re-enters this branch and retries — intentional low-cost retry inherited from the original implementation.
         return()
       }
 

@@ -1462,7 +1462,7 @@ test_that("M3: debounce_state$pending_save stays TRUE when save_in_progress", {
                # Simulate a concurrent save still running and backdate the
                # change time so the debounce threshold is already elapsed.
                auto_save$save_in_progress <- TRUE
-               debounce_state$last_change_time <- Sys.time() - 60   # 60 s in the past
+               debounce_state$last_change_time <- Sys.time() - 60   # 60 s ago ensures the debounce threshold is already elapsed without relying on session$elapse() advancing Sys.time(); this test exercises ONLY the save_in_progress guard, not the threshold logic.
                session$flushReact()
 
                # Tick the polling observer by advancing the timer past the
