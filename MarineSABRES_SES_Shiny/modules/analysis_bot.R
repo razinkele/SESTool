@@ -438,7 +438,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
     # Download handler
     output$download_bot_data <- downloadHandler(
       filename = function() {
-        generate_export_filename(paste0("BOT_Data_", input$bot_element), ".csv")
+        generate_export_filename(paste0("BOT_Data_", sanitize_filename(input$bot_element %||% "")), ".csv")
       },
       content = function(file) {
         write.csv(bot_rv$timeseries_data, file, row.names = FALSE)
