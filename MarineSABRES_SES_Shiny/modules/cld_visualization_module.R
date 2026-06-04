@@ -1200,8 +1200,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       req(input$edge_added)
       debug_log(sprintf("Edge added: %s -> %s", input$edge_added$from, input$edge_added$to), "CLD VIZ")
 
-      # Add to internal state using helper
-      new_edge <- create_new_edge_data(input$edge_added$from, input$edge_added$to, nrow(rv$edges))
+      # Add to internal state using helper.
+      # Allocate from the maximum existing id (not count) so the new id stays
+      # unique even when the edge set is sparse after deletes.
+      new_edge <- create_new_edge_data(
+        input$edge_added$from,
+        input$edge_added$to,
+        max(c(0, suppressWarnings(as.numeric(rv$edges$id))), na.rm = TRUE)
+      )
       rv$edges <- bind_rows(rv$edges, new_edge)
 
       # Sync to project_data + propagate to isa_data so analyses refresh.
@@ -1455,6 +1461,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       debug_log(sprintf("Edges deleted: %s", paste(deleted_ids, collapse = ", ")), "CLD VIZ")
 
       rv$edges <- rv$edges %>% filter(!(id %in% deleted_ids))
+      # Reindex edge ids to keep them contiguous (1..n) after deletion.
+      # build_leverage_highlight_data / build_leverage_reset_data use
+      # seq_len(nrow(edges)) for vis.js proxy updates, so sparse ids would
+      # silently mismatch the wrong edges in the network canvas.
+      if (nrow(rv$edges) > 0) {
+        rv$edges$id <- seq_len(nrow(rv$edges))
+      }
 
       # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({

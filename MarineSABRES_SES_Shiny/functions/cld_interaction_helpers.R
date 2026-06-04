@@ -330,11 +330,14 @@ generate_cancel_add_node_js <- function(network_id) {
 #'
 #' @param from_id Character. Source node ID.
 #' @param to_id Character. Target node ID.
-#' @param edge_count Integer. Current number of edges (for generating new ID).
+#' @param max_existing_id Numeric. The maximum id currently present in the edge
+#'   table (pass \code{max(c(0, suppressWarnings(as.numeric(rv$edges$id))), na.rm = TRUE)}).
+#'   The new edge receives \code{max_existing_id + 1}, which is guaranteed to be
+#'   unique even when the id sequence is sparse (e.g., after deletes).
 #' @return Data frame with one row of edge data.
-create_new_edge_data <- function(from_id, to_id, edge_count) {
+create_new_edge_data <- function(from_id, to_id, max_existing_id) {
   data.frame(
-    id = edge_count + 1,
+    id = max_existing_id + 1,
     from = from_id,
     to = to_id,
     arrows = "to",
