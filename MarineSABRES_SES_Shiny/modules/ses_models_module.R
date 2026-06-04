@@ -3,6 +3,74 @@
 # Purpose: Load pre-built SES models from Excel files in the SESModels directory
 
 # ============================================================================
+# SECURITY HELPERS (M5: arbitrary-file-read containment)
+# ============================================================================
+
+#' Check that a candidate file path is strictly inside an allowed root directory.
+#'
+#' Both paths are normalised before comparison so that ".." traversal attacks
+#' and relative-path tricks are neutralised.  The check is fail-closed: any
+#' error in normalisation returns FALSE.
+#'
+#' @param candidate Character(1). Absolute or relative path to validate.
+#' @param root      Character(1). The allowed root directory.
+#' @return Logical scalar: TRUE only if \code{candidate} is inside \code{root}.
+ses_model_path_is_contained <- function(candidate, root) {
+  # Fail-closed on NULL / NA / empty inputs
+  if (is.null(candidate) || length(candidate) != 1 ||
+      is.na(candidate) || !nzchar(candidate)) return(FALSE)
+  if (is.null(root) || length(root) != 1 ||
+      is.na(root) || !nzchar(root)) return(FALSE)
+
+  safe_root <- tryCatch(
+    normalizePath(root,      winslash = "/", mustWork = FALSE),
+    error = function(e) NA_character_
+  )
+  norm_cand <- tryCatch(
+    normalizePath(candidate, winslash = "/", mustWork = FALSE),
+    error = function(e) NA_character_
+  )
+  if (is.na(safe_root) || is.na(norm_cand)) return(FALSE)
+
+  # Append trailing slash so "rootX/ok.xlsx" is not accepted when root is "root"
+  startsWith(norm_cand, paste0(safe_root, "/")) ||
+    norm_cand == safe_root
+}
+
+#' Check that a candidate file path is present in the previously scanned set.
+#'
+#' This is the primary (whitelist) containment gate: if the value sent by the
+#' WebSocket client is not one of the file paths we obtained by scanning the
+#' models directory ourselves, we refuse to open it.
+#'
+#' Both the candidate and every entry in \code{scanned} are normalised to
+#' forward-slash form before comparison so that Windows short-vs-long path or
+#' backslash/forward-slash differences cannot defeat the check.
+#'
+#' @param candidate  Character(1). Path to validate.
+#' @param scanned    Character vector. File paths from the last scan (may be
+#'   already normalised or not — this function normalises them).
+#' @return Logical scalar.
+ses_model_path_is_in_scanned_set <- function(candidate, scanned) {
+  if (is.null(candidate) || length(candidate) != 1 ||
+      is.na(candidate) || !nzchar(candidate)) return(FALSE)
+  if (length(scanned) == 0) return(FALSE)
+
+  norm_cand <- tryCatch(
+    normalizePath(candidate, winslash = "/", mustWork = FALSE),
+    error = function(e) NA_character_
+  )
+  if (is.na(norm_cand)) return(FALSE)
+
+  norm_scanned <- vapply(scanned, function(p) {
+    tryCatch(normalizePath(p, winslash = "/", mustWork = FALSE),
+             error = function(e) NA_character_)
+  }, character(1), USE.NAMES = FALSE)
+
+  norm_cand %in% norm_scanned
+}
+
+# ============================================================================
 # UI FUNCTION
 # ============================================================================
 
@@ -315,7 +383,54 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
     # Update preview when selection changes
     observeEvent(input$model_select, {
       req(input$model_select)
-      rv$selected_model_path <- input$model_select
+
+      # ── Security (M5): validate candidate against the scanned whitelist ──────
+      # The selectInput value arrives over the WebSocket and must not be trusted
+      # as a safe file path without verification.  We apply two complementary
+      # checks (both must pass when the scan has already run):
+      #   1. Whitelist: the path must be in rv$models_grouped (scanned set).
+      #   2. Root containment: the normalised path must sit inside the active
+      #      models directory (defence-in-depth even if rv$models_grouped is
+      #      somehow empty on the first trigger before a scan completes).
+      candidate <- input$model_select
+
+      # Build the scanned whitelist from rv$models_grouped
+      scanned_paths <- character(0)
+      if (!is.null(rv$models_grouped) && length(rv$models_grouped) > 0) {
+        scanned_paths <- unlist(lapply(rv$models_grouped, function(grp) {
+          vapply(grp, function(m) m$file_path, character(1))
+        }), use.names = FALSE)
+      }
+
+      # Determine the active models root so we can apply containment even
+      # before the first scan result is available.
+      models_root <- tryCatch(
+        normalizePath(get_models_dir(), winslash = "/", mustWork = FALSE),
+        error = function(e) NA_character_
+      )
+
+      whitelist_ok   <- length(scanned_paths) > 0 &&
+                          ses_model_path_is_in_scanned_set(candidate, scanned_paths)
+      containment_ok <- !is.na(models_root) &&
+                          ses_model_path_is_contained(candidate, models_root)
+
+      # If the scan has run: require whitelist membership.
+      # If the scan has NOT yet run (scanned_paths is empty): fall back to
+      # containment-only (load_models_on_demand() fires in the prior observer).
+      path_is_safe <- if (length(scanned_paths) > 0) whitelist_ok else containment_ok
+
+      if (!path_is_safe) {
+        debug_log(sprintf("[security] Rejected model_select value outside models root: '%s' (root=%s)",
+                          candidate, if (is.na(models_root)) "NA" else models_root),
+                  "SES_MODELS")
+        rv$selected_model_path <- NULL
+        rv$selected_model_info <- NULL
+        rv$preview_data        <- NULL
+        return()
+      }
+      # ── End security check ───────────────────────────────────────────────────
+
+      rv$selected_model_path <- candidate
       rv$selected_variant <- NULL  # Reset variant selection
 
       # Find full model info from grouped models
@@ -485,6 +600,30 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
     # Confirm Yes - load the model
     observeEvent(input$confirm_yes, {
       req(rv$selected_model_path)
+
+      # ── Security (M5) defence-in-depth: re-validate path before opening ──────
+      # rv$selected_model_path was validated when model_select fired, but we
+      # perform a final containment check here as an extra layer of defence.
+      models_root <- tryCatch(
+        normalizePath(get_models_dir(), winslash = "/", mustWork = FALSE),
+        error = function(e) NA_character_
+      )
+      if (is.na(models_root) ||
+          !ses_model_path_is_contained(rv$selected_model_path, models_root)) {
+        debug_log(sprintf("[security] Blocked model load — path outside models root: '%s' (root=%s)",
+                          rv$selected_model_path,
+                          if (is.na(models_root)) "NA" else models_root),
+                  "SES_MODELS")
+        showNotification(
+          i18n$t("modules.ses_models.model_not_found"),
+          type = "error", duration = 5
+        )
+        rv$selected_model_path <- NULL
+        rv$selected_model_info <- NULL
+        rv$preview_data        <- NULL
+        return()
+      }
+      # ── End security check ───────────────────────────────────────────────────
 
       # Close modal
       toggleModal(session, "confirm_modal", toggle = "close")
