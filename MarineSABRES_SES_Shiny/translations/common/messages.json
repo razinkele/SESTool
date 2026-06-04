@@ -22,6 +22,17 @@
       "no": "Kunne ikke generere Word-dokument.",
       "el": "Δεν ήταν δυνατή η δημιουργία του εγγράφου Word."
     },
+    "common.messages.excel_export_failed": {
+      "en": "Could not generate Excel file.",
+      "es": "No se pudo generar el archivo Excel.",
+      "fr": "Impossible de générer le fichier Excel.",
+      "de": "Excel-Datei konnte nicht erstellt werden.",
+      "lt": "Nepavyko sukurti Excel failo.",
+      "pt": "Não foi possível gerar o arquivo Excel.",
+      "it": "Impossibile generare il file Excel.",
+      "no": "Kunne ikke generere Excel-fil.",
+      "el": "Δεν ήταν δυνατή η δημιουργία του αρχείου Excel."
+    },
     "common.messages.bookmark_restored_successfully": {
       "en": "Bookmark restored successfully!",
       "es": "¡Marcador restaurado con éxito!",

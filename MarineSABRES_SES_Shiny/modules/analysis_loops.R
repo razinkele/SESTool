@@ -947,7 +947,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_total_loops"), nrow(loops)))
           doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_reinforcing_loops"), reinforcing))
           doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_balancing_loops"), balancing))
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_avg_length"), round(mean(loops$Length), 1)))
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_avg_length"), round(mean(as.numeric(loops$Length), na.rm = TRUE), 1)))
           doc <- officer::body_add_par(doc, "")
 
           # All loops table
@@ -964,9 +964,17 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           print(doc, target = file)
 
         }, error = function(e) {
-          # Fallback: write a simple CSV if officer fails
           debug_log(paste("Loop report generation failed:", e$message), "EXPORT")
-          utils::write.csv(loop_data$loops, file, row.names = FALSE)
+          # M8: do NOT silently write CSV bytes to a .docx file — Word refuses
+          # to open the result and the user is left guessing.
+          # Surface the error and let the user try a different export.
+          showNotification(
+            paste0(i18n$t("common.messages.word_export_failed") %||%
+                     "Could not generate Word document.",
+                   " (", e$message, ")"),
+            type = "error", duration = NULL
+          )
+          stop(e)  # propagates to downloadHandler, which cleans up the temp file
         })
       }
     )

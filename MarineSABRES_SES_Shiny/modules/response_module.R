@@ -743,16 +743,29 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         generate_export_filename("Response_Measures", ".xlsx")
       },
       content = function(file) {
-        wb <- createWorkbook()
-        addWorksheet(wb, "Response_Measures")
-        addWorksheet(wb, "Impact_Matrix")
-        addWorksheet(wb, "Implementation")
+        tryCatch({
+          wb <- createWorkbook()
+          addWorksheet(wb, "Response_Measures")
+          addWorksheet(wb, "Impact_Matrix")
+          addWorksheet(wb, "Implementation")
 
-        writeData(wb, "Response_Measures", translate_levels_for_display(response_data$measures))
-        writeData(wb, "Impact_Matrix", response_data$impacts)
-        writeData(wb, "Implementation", response_data$milestones)
+          writeData(wb, "Response_Measures", translate_levels_for_display(response_data$measures))
+          writeData(wb, "Impact_Matrix", response_data$impacts)
+          writeData(wb, "Implementation", response_data$milestones)
 
-        saveWorkbook(wb, file, overwrite = TRUE)
+          saveWorkbook(wb, file, overwrite = TRUE)
+        }, error = function(e) {
+          debug_log(paste("Response Excel export failed:", e$message), "EXPORT")
+          # L7: do NOT silently write corrupt bytes to a .xlsx file.
+          # Surface the error so the user knows the download failed.
+          showNotification(
+            paste0(i18n$t("common.messages.excel_export_failed") %||%
+                     "Could not generate Excel file.",
+                   " (", e$message, ")"),
+            type = "error", duration = NULL
+          )
+          stop(e)  # propagates to downloadHandler so it does NOT serve a misleading/partial file
+        })
       }
     )
 

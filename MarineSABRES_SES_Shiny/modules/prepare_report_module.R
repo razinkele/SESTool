@@ -591,6 +591,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
+        req(!is.null(rv$html_report_path) && file.exists(rv$html_report_path))
         file.copy(rv$html_report_path, file)
       }
     )
@@ -601,6 +602,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
+        req(!is.null(rv$html_report_path) && file.exists(rv$html_report_path))
         file.copy(rv$html_report_path, file)
       }
     )
@@ -611,6 +613,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".pdf")
       },
       content = function(file) {
+        req(!is.null(rv$pdf_report_path) && file.exists(rv$pdf_report_path))
         file.copy(rv$pdf_report_path, file)
       }
     )
@@ -621,6 +624,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".docx")
       },
       content = function(file) {
+        req(!is.null(rv$word_report_path) && file.exists(rv$word_report_path))
         file.copy(rv$word_report_path, file)
       }
     )
@@ -631,6 +635,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         generate_export_filename(sanitize_filename(input$report_title), ".pptx")
       },
       content = function(file) {
+        req(!is.null(rv$ppt_report_path) && file.exists(rv$ppt_report_path))
         file.copy(rv$ppt_report_path, file)
       }
     )
