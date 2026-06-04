@@ -85,7 +85,7 @@ test_that("F1: loop report error handler calls stop(e) to propagate failure [FAI
 # F2 – prepare_report_module.R: each download handler guards against NULL/missing path
 # ===========================================================================
 
-test_that("F2: download_html handler guards against NULL rv$html_report_path [FAILING before fix]", {
+test_that("F2: download_html handler guards against NULL rv$html_report_path [source-grep]", {
   module_path <- file.path(dirname(dirname(getwd())), "modules", "prepare_report_module.R")
   if (!file.exists(module_path)) {
     module_path <- testthat::test_path("../../modules/prepare_report_module.R")
@@ -93,15 +93,17 @@ test_that("F2: download_html handler guards against NULL rv$html_report_path [FA
 
   code_text <- paste(readLines(module_path), collapse = "\n")
 
-  # After fix: req(!is.null(rv$html_report_path) && file.exists(rv$html_report_path))
-  # must appear in the download_html handler
+  # After fix handlers use report_path_is_servable() — the predicate encapsulates
+  # the !is.null + file.exists guard.  Accept EITHER the refactored or inline form.
+  guarded <- grepl("req\\(report_path_is_servable\\(rv\\$html_report_path\\)", code_text) ||
+             grepl("req\\(!is\\.null\\(rv\\$html_report_path\\)", code_text)
   expect_true(
-    grepl("req\\(!is\\.null\\(rv\\$html_report_path\\)", code_text),
-    info = "download_html must guard: req(!is.null(rv$html_report_path) && file.exists(...))"
+    guarded,
+    info = "download_html must guard the path via report_path_is_servable() or inline req(!is.null + file.exists)"
   )
 })
 
-test_that("F2: download_pdf handler guards against NULL rv$pdf_report_path [FAILING before fix]", {
+test_that("F2: download_pdf handler guards against NULL rv$pdf_report_path [source-grep]", {
   module_path <- file.path(dirname(dirname(getwd())), "modules", "prepare_report_module.R")
   if (!file.exists(module_path)) {
     module_path <- testthat::test_path("../../modules/prepare_report_module.R")
@@ -109,13 +111,15 @@ test_that("F2: download_pdf handler guards against NULL rv$pdf_report_path [FAIL
 
   code_text <- paste(readLines(module_path), collapse = "\n")
 
+  guarded <- grepl("req\\(report_path_is_servable\\(rv\\$pdf_report_path\\)", code_text) ||
+             grepl("req\\(!is\\.null\\(rv\\$pdf_report_path\\)", code_text)
   expect_true(
-    grepl("req\\(!is\\.null\\(rv\\$pdf_report_path\\)", code_text),
-    info = "download_pdf must guard: req(!is.null(rv$pdf_report_path) && file.exists(...))"
+    guarded,
+    info = "download_pdf must guard the path via report_path_is_servable() or inline req(!is.null + file.exists)"
   )
 })
 
-test_that("F2: download_word handler guards against NULL rv$word_report_path [FAILING before fix]", {
+test_that("F2: download_word handler guards against NULL rv$word_report_path [source-grep]", {
   module_path <- file.path(dirname(dirname(getwd())), "modules", "prepare_report_module.R")
   if (!file.exists(module_path)) {
     module_path <- testthat::test_path("../../modules/prepare_report_module.R")
@@ -123,13 +127,15 @@ test_that("F2: download_word handler guards against NULL rv$word_report_path [FA
 
   code_text <- paste(readLines(module_path), collapse = "\n")
 
+  guarded <- grepl("req\\(report_path_is_servable\\(rv\\$word_report_path\\)", code_text) ||
+             grepl("req\\(!is\\.null\\(rv\\$word_report_path\\)", code_text)
   expect_true(
-    grepl("req\\(!is\\.null\\(rv\\$word_report_path\\)", code_text),
-    info = "download_word must guard: req(!is.null(rv$word_report_path) && file.exists(...))"
+    guarded,
+    info = "download_word must guard the path via report_path_is_servable() or inline req(!is.null + file.exists)"
   )
 })
 
-test_that("F2: download_ppt handler guards against NULL rv$ppt_report_path [FAILING before fix]", {
+test_that("F2: download_ppt handler guards against NULL rv$ppt_report_path [source-grep]", {
   module_path <- file.path(dirname(dirname(getwd())), "modules", "prepare_report_module.R")
   if (!file.exists(module_path)) {
     module_path <- testthat::test_path("../../modules/prepare_report_module.R")
@@ -137,13 +143,15 @@ test_that("F2: download_ppt handler guards against NULL rv$ppt_report_path [FAIL
 
   code_text <- paste(readLines(module_path), collapse = "\n")
 
+  guarded <- grepl("req\\(report_path_is_servable\\(rv\\$ppt_report_path\\)", code_text) ||
+             grepl("req\\(!is\\.null\\(rv\\$ppt_report_path\\)", code_text)
   expect_true(
-    grepl("req\\(!is\\.null\\(rv\\$ppt_report_path\\)", code_text),
-    info = "download_ppt must guard: req(!is.null(rv$ppt_report_path) && file.exists(...))"
+    guarded,
+    info = "download_ppt must guard the path via report_path_is_servable() or inline req(!is.null + file.exists)"
   )
 })
 
-test_that("F2: all 4 download handlers use file.exists() guard [FAILING before fix]", {
+test_that("F2: all 4 download handlers have a path guard [source-grep]", {
   module_path <- file.path(dirname(dirname(getwd())), "modules", "prepare_report_module.R")
   if (!file.exists(module_path)) {
     module_path <- testthat::test_path("../../modules/prepare_report_module.R")
@@ -151,13 +159,16 @@ test_that("F2: all 4 download handlers use file.exists() guard [FAILING before f
 
   code_text <- paste(readLines(module_path), collapse = "\n")
 
-  # Count occurrences of file.exists() inside req() calls for report paths
-  path_guards <- lengths(regmatches(code_text,
+  # Accept either the refactored form (report_path_is_servable) or the original inline form
+  refactored_guards <- lengths(regmatches(code_text,
+    gregexpr("req\\(report_path_is_servable\\(rv\\$[a-z_]+_report_path\\)", code_text)))
+  inline_guards <- lengths(regmatches(code_text,
     gregexpr("file\\.exists\\(rv\\$[a-z_]+_report_path\\)", code_text)))
 
+  total_guards <- refactored_guards + inline_guards
   expect_true(
-    path_guards >= 4,
-    info = paste("Expected at least 4 file.exists guards for report paths, found:", path_guards)
+    total_guards >= 4,
+    info = paste("Expected at least 4 path guards (report_path_is_servable or file.exists), found:", total_guards)
   )
 })
 
@@ -230,6 +241,211 @@ test_that("F3: download_response_excel error handler uses showNotification [FAIL
     info = "download_response_excel error handler must call showNotification"
   )
 })
+
+# ===========================================================================
+# BEHAVIORAL TESTS — added to satisfy spec (source-grep alone is insufficient)
+# ===========================================================================
+
+# ---------------------------------------------------------------------------
+# F1 BEHAVIORAL – build_loop_report_docx() pure helper
+# ---------------------------------------------------------------------------
+
+# Load the module so the helper is available in .GlobalEnv
+source_for_test("modules/analysis_loops.R")
+
+test_that("F1-BEHAVIORAL: build_loop_report_docx() exists as a callable function", {
+  expect_true(
+    exists("build_loop_report_docx", mode = "function"),
+    info = "build_loop_report_docx() must be defined in analysis_loops.R"
+  )
+})
+
+test_that("F1-BEHAVIORAL: forced writer failure propagates as error and leaves no file", {
+  skip_if(!exists("build_loop_report_docx", mode = "function"),
+    "build_loop_report_docx() not yet extracted — helper missing"
+  )
+
+  loops <- data.frame(
+    ID      = "L1",
+    Type    = "Reinforcing",
+    Length  = 3L,
+    Members = "A -> B -> C",
+    stringsAsFactors = FALSE
+  )
+  tmp <- tempfile(fileext = ".docx")
+  on.exit(unlink(tmp))
+
+  # The forced writer stops — the helper must propagate the error
+  expect_error(
+    build_loop_report_docx(
+      loops  = loops,
+      i18n   = i18n,
+      target = tmp,
+      writer = function(doc, target) stop("forced-writer-failure")
+    ),
+    regexp = "forced-writer-failure"
+  )
+
+  # No misleading file must have been written
+  expect_true(
+    !file.exists(tmp) || file.size(tmp) == 0L,
+    info = "A forced failure must not leave a non-empty .docx file on disk"
+  )
+})
+
+test_that("F1-BEHAVIORAL: non-numeric Length handled via as.numeric + na.rm — builds successfully", {
+  skip_if(!exists("build_loop_report_docx", mode = "function"),
+    "build_loop_report_docx() not yet extracted — helper missing"
+  )
+
+  # Length column is character — would blow up mean() without as.numeric()/na.rm guard
+  loops <- data.frame(
+    ID      = c("L1", "L2"),
+    Type    = c("Reinforcing", "Balancing"),
+    Length  = c("3", NA_character_),   # character + NA
+    Members = c("A -> B -> C", "X -> Y"),
+    stringsAsFactors = FALSE
+  )
+  tmp <- tempfile(fileext = ".docx")
+  on.exit(unlink(tmp))
+
+  # Should complete without error and produce a non-empty file
+  build_loop_report_docx(loops = loops, i18n = i18n, target = tmp)
+
+  expect_true(file.exists(tmp) && file.size(tmp) > 0L,
+    info = "Helper must produce a non-empty .docx even when Length is character/NA"
+  )
+})
+
+# ---------------------------------------------------------------------------
+# F2 BEHAVIORAL – report_path_is_servable() predicate
+# ---------------------------------------------------------------------------
+
+# Load the module so the predicate is available
+source_for_test("modules/prepare_report_module.R")
+
+test_that("F2-BEHAVIORAL: report_path_is_servable() exists as a callable function", {
+  expect_true(
+    exists("report_path_is_servable", mode = "function"),
+    info = "report_path_is_servable() must be defined in prepare_report_module.R"
+  )
+})
+
+test_that("F2-BEHAVIORAL: report_path_is_servable() returns FALSE for NULL", {
+  skip_if(!exists("report_path_is_servable", mode = "function"),
+    "report_path_is_servable() not yet extracted — helper missing"
+  )
+  expect_false(report_path_is_servable(NULL))
+})
+
+test_that("F2-BEHAVIORAL: report_path_is_servable() returns FALSE for non-existent path", {
+  skip_if(!exists("report_path_is_servable", mode = "function"),
+    "report_path_is_servable() not yet extracted — helper missing"
+  )
+  expect_false(report_path_is_servable("/no/such/file_xyz_12345.html"))
+})
+
+test_that("F2-BEHAVIORAL: report_path_is_servable() returns TRUE for an existing file", {
+  skip_if(!exists("report_path_is_servable", mode = "function"),
+    "report_path_is_servable() not yet extracted — helper missing"
+  )
+  tmp <- tempfile()
+  on.exit(unlink(tmp))
+  writeLines("hello", tmp)
+  expect_true(report_path_is_servable(tmp))
+})
+
+# ---------------------------------------------------------------------------
+# F3 BEHAVIORAL – build_response_excel() pure helper
+# ---------------------------------------------------------------------------
+
+# Load the module so the helper is available
+source_for_test("modules/response_module.R")
+
+test_that("F3-BEHAVIORAL: build_response_excel() exists as a callable function", {
+  expect_true(
+    exists("build_response_excel", mode = "function"),
+    info = "build_response_excel() must be defined in response_module.R"
+  )
+})
+
+test_that("F3-BEHAVIORAL: forced saver failure propagates as error and leaves no valid xlsx", {
+  skip_if(!exists("build_response_excel", mode = "function"),
+    "build_response_excel() not yet extracted — helper missing"
+  )
+  skip_if_not_installed("openxlsx")
+
+  measures   <- data.frame(Name = "M1", Type = "R", stringsAsFactors = FALSE)
+  impacts    <- data.frame(Element = "E1", Impact = 1L, stringsAsFactors = FALSE)
+  milestones <- data.frame(Task = "T1", Due = "2026-01", stringsAsFactors = FALSE)
+  tmp <- tempfile(fileext = ".xlsx")
+  on.exit(unlink(tmp))
+
+  expect_error(
+    build_response_excel(
+      measures   = measures,
+      impacts    = impacts,
+      milestones = milestones,
+      file       = tmp,
+      saver      = function(wb, file, overwrite) stop("forced-saver-failure")
+    ),
+    regexp = "forced-saver-failure"
+  )
+
+  # No valid (non-empty) xlsx should have been written
+  expect_true(
+    !file.exists(tmp) || file.size(tmp) == 0L,
+    info = "A forced saver failure must not leave a non-empty .xlsx file on disk"
+  )
+})
+
+test_that("F3-BEHAVIORAL: happy path — build_response_excel() produces a non-empty xlsx", {
+  skip_if(!exists("build_response_excel", mode = "function"),
+    "build_response_excel() not yet extracted — helper missing"
+  )
+  skip_if_not_installed("openxlsx")
+
+  measures   <- data.frame(Name = "M1", Type = "R", stringsAsFactors = FALSE)
+  impacts    <- data.frame(Element = "E1", Impact = 1L, stringsAsFactors = FALSE)
+  milestones <- data.frame(Task = "T1", Due = "2026-01", stringsAsFactors = FALSE)
+  tmp <- tempfile(fileext = ".xlsx")
+  on.exit(unlink(tmp))
+
+  build_response_excel(
+    measures   = measures,
+    impacts    = impacts,
+    milestones = milestones,
+    file       = tmp
+  )
+
+  expect_true(file.exists(tmp) && file.size(tmp) > 0L,
+    info = "Happy-path build_response_excel() must produce a non-empty .xlsx"
+  )
+})
+
+# ---------------------------------------------------------------------------
+# F2 SOURCE-GREP: verify download handlers use report_path_is_servable()
+# ---------------------------------------------------------------------------
+
+test_that("F2: all 5 download handlers use report_path_is_servable() [BEHAVIORAL guard]", {
+  module_path <- testthat::test_path("../../modules/prepare_report_module.R")
+  skip_if_not(file.exists(module_path), "prepare_report_module.R not found")
+
+  code_text <- paste(readLines(module_path), collapse = "\n")
+
+  # Count how many download handlers call report_path_is_servable
+  hits <- lengths(regmatches(code_text,
+    gregexpr("req\\(report_path_is_servable\\(", code_text)))
+
+  expect_true(
+    hits >= 4L,
+    info = paste("Expected >= 4 req(report_path_is_servable(...)) calls, found:", hits)
+  )
+})
+
+# ===========================================================================
+# Original source-grep tests (kept as cheap regression guards)
+# ===========================================================================
 
 test_that("F3: excel_export_failed i18n key exists in messages.json for all 9 languages", {
   messages_path <- file.path(dirname(dirname(getwd())), "translations", "common", "messages.json")

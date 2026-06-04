@@ -933,36 +933,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         req(loop_data$loops)
 
         tryCatch({
-          loops <- loop_data$loops
-          reinforcing <- sum(loops$Type == "Reinforcing")
-          balancing <- sum(loops$Type == "Balancing")
-
-          doc <- officer::read_docx()
-          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_title"), style = "heading 1")
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_generated"), Sys.Date()))
-          doc <- officer::body_add_par(doc, "")
-
-          # Summary section
-          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_summary"), style = "heading 2")
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_total_loops"), nrow(loops)))
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_reinforcing_loops"), reinforcing))
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_balancing_loops"), balancing))
-          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_avg_length"), round(mean(as.numeric(loops$Length), na.rm = TRUE), 1)))
-          doc <- officer::body_add_par(doc, "")
-
-          # All loops table
-          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_detected_loops"), style = "heading 2")
-          ft <- flextable::flextable(loops)
-          ft <- flextable::autofit(ft)
-          doc <- flextable::body_add_flextable(doc, ft)
-          doc <- officer::body_add_par(doc, "")
-
-          # Methodology note
-          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology"), style = "heading 2")
-          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology_text"))
-
-          print(doc, target = file)
-
+          build_loop_report_docx(loops = loop_data$loops, i18n = i18n, target = file)
         }, error = function(e) {
           debug_log(paste("Loop report generation failed:", e$message), "EXPORT")
           # M8: do NOT silently write CSV bytes to a .docx file — Word refuses
@@ -1139,4 +1110,60 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     return(reactive({ loop_data }))
   })
+}
+
+# =============================================================================
+# PURE HELPER — testable outside a Shiny session
+# =============================================================================
+
+#' Build Loop Analysis Report Document
+#'
+#' Constructs an officer Word document from a loop data frame and writes it
+#' to \code{target} via \code{writer}. Raises on any failure — the caller's
+#' \code{tryCatch} is responsible for user notification.
+#'
+#' @param loops   data.frame with columns ID, Type, Length, Members
+#' @param i18n    i18n object (or list with a \code{t()} function)
+#' @param target  File path to write the .docx to
+#' @param writer  Function(doc, target) — defaults to \code{print(doc, target=target)}.
+#'   Override in tests to inject forced failures without touching the filesystem.
+#'
+#' @return Invisibly returns the path written to.
+#' @export
+build_loop_report_docx <- function(
+    loops,
+    i18n,
+    target,
+    writer = function(doc, target) print(doc, target = target)
+) {
+  reinforcing <- sum(loops$Type == "Reinforcing")
+  balancing   <- sum(loops$Type == "Balancing")
+
+  doc <- officer::read_docx()
+  doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_title"), style = "heading 1")
+  doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_generated"), Sys.Date()))
+  doc <- officer::body_add_par(doc, "")
+
+  # Summary section
+  doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_summary"), style = "heading 2")
+  doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_total_loops"), nrow(loops)))
+  doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_reinforcing_loops"), reinforcing))
+  doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_balancing_loops"), balancing))
+  doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_avg_length"),
+    round(mean(as.numeric(loops$Length), na.rm = TRUE), 1)))
+  doc <- officer::body_add_par(doc, "")
+
+  # All loops table
+  doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_detected_loops"), style = "heading 2")
+  ft  <- flextable::flextable(loops)
+  ft  <- flextable::autofit(ft)
+  doc <- flextable::body_add_flextable(doc, ft)
+  doc <- officer::body_add_par(doc, "")
+
+  # Methodology note
+  doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology"), style = "heading 2")
+  doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology_text"))
+
+  writer(doc, target)
+  invisible(target)
 }
