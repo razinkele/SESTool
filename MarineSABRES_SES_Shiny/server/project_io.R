@@ -168,6 +168,11 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
         }
       })
 
+      # Normalize column casing and reconcile element IDs before loading
+      if (exists("normalize_and_reconcile_project", mode = "function")) {
+        loaded_data <- normalize_and_reconcile_project(loaded_data)
+      }
+
       # Load validated data
       project_data(loaded_data)
 
@@ -488,6 +493,11 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
       if (is.list(loaded_data) && !is.null(loaded_data$autosave_metadata)) {
         loaded_data$autosave_metadata <- NULL
+      }
+
+      # Normalize column casing and reconcile element IDs before loading
+      if (exists("normalize_and_reconcile_project", mode = "function")) {
+        loaded_data <- normalize_and_reconcile_project(loaded_data)
       }
 
       project_data(loaded_data)

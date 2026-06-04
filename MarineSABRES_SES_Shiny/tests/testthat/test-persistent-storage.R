@@ -431,3 +431,120 @@ test_that("find_recoverable_autosaves returns data frame", {
   result <- find_recoverable_autosaves()
   expect_true(is.data.frame(result))
 })
+
+# ============================================================================
+# M4 SECURITY HARDENING TESTS (B3)
+# load_project_persistent: safe_readRDS + normalize_and_reconcile_project
+# ============================================================================
+
+test_that("load_project_persistent rejects an R5 reference-class object (returns failure, not usable project)", {
+  skip_if_not(exists("load_project_persistent", mode = "function"),
+              "load_project_persistent not available")
+  skip_if_not(requireNamespace("methods", quietly = TRUE), "methods package not available")
+
+  # R5 / envRefClass objects are rejected by safe_readRDS as an RCE vector
+  B3Ref <- methods::setRefClass("B3LoadRef", fields = list(x = "numeric"))
+  f <- tempfile(fileext = ".rds")
+  on.exit(unlink(f), add = TRUE)
+  saveRDS(B3Ref$new(x = 42), f)
+
+  res <- load_project_persistent(f)
+
+  # Must return the STRUCTURED failure shape (success=FALSE, data=NULL). This is
+  # a true-red assertion: the OLD bare-readRDS code returned a bare NULL on a
+  # non-list object, so requiring the structured non-NULL shape fails on old code
+  # and passes only on the hardened safe_readRDS path.
+  expect_true(
+    !is.null(res) && isFALSE(res$success) && is.null(res$data),
+    info = paste("Expected list(success=FALSE, data=NULL); got:", paste(names(res), collapse = ", "))
+  )
+})
+
+test_that("safe_readRDS (used by load_project_persistent) rejects an over-cap file", {
+  # Unit test of the size-cap helper that load_project_persistent now calls.
+  # (Honest scope: this exercises safe_readRDS directly, not the loader, to avoid
+  # writing a >50 MB fixture; the loader<->safe_readRDS wiring is proven by the
+  # R5-rejection test above, which only the hardened path can satisfy.)
+  skip_if_not(exists("safe_readRDS", mode = "function"), "safe_readRDS not available")
+
+  f <- tempfile(fileext = ".rds")
+  on.exit(unlink(f), add = TRUE)
+  saveRDS(list(project_id = "sz_test", data = list(isa_data = list())), f)
+
+  rejected <- safe_readRDS(f, max_size_mb = 0)   # 0 MB cap forces rejection
+  expect_null(rejected, info = "safe_readRDS must return NULL when file exceeds cap")
+})
+
+test_that("load_project_persistent normalizes lowercase 'id' column to uppercase 'ID' after load", {
+  skip_if_not(exists("load_project_persistent", mode = "function"),
+              "load_project_persistent not available")
+  skip_if_not(exists("normalize_and_reconcile_project", mode = "function"),
+              "normalize_and_reconcile_project not available")
+
+  # Build a project with a lowercase 'id' column (old-format saved file)
+  proj <- list(
+    project_id = "norm_test",
+    project_name = "NormTest",
+    data = list(
+      isa_data = list(
+        drivers = data.frame(
+          id   = c("D001", "D002"),
+          name = c("alpha", "beta"),
+          stringsAsFactors = FALSE
+        )
+      )
+    )
+  )
+
+  f <- tempfile(fileext = ".rds")
+  on.exit(unlink(f), add = TRUE)
+  saveRDS(proj, f)
+
+  res <- load_project_persistent(f)
+  expect_true(res$success, info = "load must succeed for a valid project")
+
+  drivers <- res$data$data$isa_data$drivers
+  expect_true(
+    "ID" %in% names(drivers),
+    info = paste("Expected uppercase 'ID' column; got:", paste(names(drivers), collapse = ", "))
+  )
+})
+
+test_that("load_project_persistent deduplicates element IDs after load", {
+  skip_if_not(exists("load_project_persistent", mode = "function"),
+              "load_project_persistent not available")
+  skip_if_not(exists("normalize_and_reconcile_project", mode = "function"),
+              "normalize_and_reconcile_project not available")
+
+  # Build a project with duplicate IDs (can arise from v1.13.x legacy saves)
+  proj <- list(
+    project_id = "dedup_test",
+    project_name = "DedupTest",
+    data = list(
+      isa_data = list(
+        drivers = data.frame(
+          id   = c("D001", "D001"),   # deliberate duplicate
+          name = c("alpha", "alpha_dup"),
+          stringsAsFactors = FALSE
+        )
+      )
+    )
+  )
+
+  f <- tempfile(fileext = ".rds")
+  on.exit(unlink(f), add = TRUE)
+  saveRDS(proj, f)
+
+  res <- load_project_persistent(f)
+  expect_true(res$success, info = "load must succeed for a valid (if duplicated) project")
+
+  drivers <- res$data$data$isa_data$drivers
+  # True-red: old code returned the un-normalized lowercase `id` column WITH the
+  # duplicate intact. The new path reconciles to a unique uppercase `ID`. Assert
+  # on whichever column is present so old code FAILS (dup remains) rather than skips.
+  id_col <- if ("ID" %in% names(drivers)) "ID" else "id"
+  expect_true("ID" %in% names(drivers),
+              info = "expected reconciled uppercase 'ID' column after load")
+  expect_equal(anyDuplicated(drivers[[id_col]]), 0L,
+               info = "normalize_and_reconcile_project must deduplicate element IDs")
+})

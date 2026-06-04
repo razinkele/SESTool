@@ -459,10 +459,28 @@ load_project_persistent <- function(file_path) {
     is_rds <- grepl("\\.rds$", file_path, ignore.case = TRUE)
 
     if (is_rds) {
-      project_data <- readRDS(file_path)
+      # M4 security hardening: safe_readRDS enforces a size cap (50 MB) and
+      # rejects S4/R5 reference objects that can carry executable code, making
+      # bare readRDS() on user-supplied files an RCE vector.
+      project_data <- safe_readRDS(file_path, max_size_mb = 50)
+      if (is.null(project_data)) {
+        debug_log(
+          paste("Rejected project file (oversized, unsafe object type, or unreadable):", file_path),
+          "SECURITY"
+        )
+        return(list(
+          success = FALSE,
+          error = "Project file rejected: oversized, contains unsafe object type, or could not be read",
+          data = NULL
+        ))
+      }
       if (!is.list(project_data)) {
         debug_log(paste("Invalid project file format:", file_path), "PERSISTENT_STORAGE")
-        return(NULL)
+        return(list(
+          success = FALSE,
+          error = "Invalid project file format (expected a list)",
+          data = NULL
+        ))
       }
     } else {
       # JSON format - use safe parser for user-provided files
@@ -475,6 +493,12 @@ load_project_persistent <- function(file_path) {
           data = NULL
         ))
       }
+    }
+
+    # M4 normalization: reconcile ISA element IDs (uppercase ID column, deduplicate)
+    # so projects saved with lowercase 'id' or duplicate IDs load cleanly.
+    if (exists("normalize_and_reconcile_project", mode = "function")) {
+      project_data <- normalize_and_reconcile_project(project_data)
     }
 
     debug_log(sprintf("Loaded project from: %s", file_path), "PERSISTENT_STORAGE")

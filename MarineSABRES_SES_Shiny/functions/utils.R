@@ -467,6 +467,32 @@ safe_readRDS <- function(file, max_size_mb = 50) {
     return(NULL)
   }
 
+  # Reject reference-class (R5) and S4 objects — they can carry initialize()/
+  # finalizer/active-binding code that runs arbitrary R (L12 security hardening).
+  # NOTE: readRDS() fully CONSTRUCTS the object before these checks run, so this
+  # limits PROPAGATION of a hostile object into the app, not its construction.
+  # True prevention is to never deserialize untrusted .rds/.RData at all.
+  # Check envRefClass first: R5 objects are also S4 (isS4()==TRUE), so the
+  # ordering keeps the message accurate for each class kind.
+  if (methods::is(data, "envRefClass")) {
+    msg <- paste0("RDS file contains a reference-class (R5) object (",
+                  class(data)[1], ") - rejected for security reasons")
+    if (exists("debug_log", mode = "function")) {
+      debug_log(msg, "SECURITY")
+    }
+    warning(msg)
+    return(NULL)
+  }
+  if (isS4(data)) {
+    msg <- paste0("RDS file contains an S4 object (", class(data)[1],
+                  ") - rejected for security reasons")
+    if (exists("debug_log", mode = "function")) {
+      debug_log(msg, "SECURITY")
+    }
+    warning(msg)
+    return(NULL)
+  }
+
   # Validate result is a basic list, not an environment or function
   # These could potentially execute code
   if (is.environment(data)) {

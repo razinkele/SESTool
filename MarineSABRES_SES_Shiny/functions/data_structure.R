@@ -887,7 +887,7 @@ normalize_json_project_data <- function(data) {
         if (!"name" %in% names(el) && nrow(el) > 0) {
           el$name <- el$id
         }
-        if (!"indicator" %in% names(el)) {
+        if (!"indicator" %in% names(el) && nrow(el) > 0) {
           el$indicator <- NA_character_
         }
       }
@@ -917,6 +917,72 @@ normalize_json_project_data <- function(data) {
   }
 
   data
+}
+
+# ============================================================================
+# LOAD-PATH HARDENING HELPER
+# ============================================================================
+
+#' Normalize and reconcile a loaded project (Task B2 — load-path hardening)
+#'
+#' A single pure helper that every load path (rds / json / autosave) can call
+#' to produce app-ready ISA data.  It:
+#'   1. Calls \code{normalize_json_project_data()} to lowercase element columns
+#'      project-wide (repairs the uppercase-ID-reaching-ISA-modules bug).
+#'   2. Runs \code{reconcile_loaded_element_ids()} on each of the 6 element
+#'      data frames to deduplicate IDs and seed the stable-id counter.
+#'
+#' The prefix mapping mirrors \code{recover_isa_data()} in
+#' \code{functions/standard_entry_excel_import.R} exactly so all callers share
+#' the same ELEMENT_ID_PREFIX semantics.
+#'
+#' @param project Top-level project list (as returned by readRDS / fromJSON).
+#'   If NULL or not a list, returned unchanged.
+#' @param id_store Counter environment (session-local in modules; default
+#'   creates a fresh store so the function is safe for tests and standalone
+#'   scripts without side effects on the global store).
+#' @return Modified project list, or the original value when input is invalid.
+#' @seealso \code{\link{normalize_json_project_data}},
+#'   \code{\link{reconcile_loaded_element_ids}}, \code{\link{new_stable_id_store}}
+normalize_and_reconcile_project <- function(project, id_store = NULL) {
+  # Guard: must be a list to do anything useful
+  if (is.null(project) || !is.list(project)) return(project)
+
+  # Step 1: normalize column casing project-wide (id -> id lowercase, etc.)
+  project <- normalize_json_project_data(project)
+
+  # Step 2: reconcile element IDs in the 6 element frames
+  if (is.null(id_store)) id_store <- new_stable_id_store()
+
+  # Prefix mapping mirrors recover_isa_data()'s id_load_map exactly
+  id_load_map <- list(
+    goods_benefits     = ELEMENT_ID_PREFIX$welfare,
+    ecosystem_services = ELEMENT_ID_PREFIX$impacts,
+    marine_processes   = ELEMENT_ID_PREFIX$states,
+    pressures          = ELEMENT_ID_PREFIX$pressures,
+    activities         = ELEMENT_ID_PREFIX$activities,
+    drivers            = ELEMENT_ID_PREFIX$drivers
+  )
+
+  isa <- project$data$isa_data
+  if (is.list(isa)) {
+    for (k in names(id_load_map)) {
+      df <- isa[[k]]
+      if (is.data.frame(df) && nrow(df) > 0) {
+        rec <- reconcile_loaded_element_ids(df, id_load_map[[k]], id_store)
+        isa[[k]] <- rec$df
+        if (isTRUE(rec$repaired) && exists("debug_log", mode = "function")) {
+          debug_log(
+            paste0("normalize_and_reconcile_project: repaired IDs in '", k, "'"),
+            "INFO"
+          )
+        }
+      }
+    }
+    project$data$isa_data <- isa
+  }
+
+  project
 }
 
 # ============================================================================
