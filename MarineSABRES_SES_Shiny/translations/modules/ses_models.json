@@ -275,6 +275,17 @@
       "no": "Ingen Excel-modeller funnet i SESModels-katalogen.",
       "el": "Όχι Excel models found in the SESModels directory."
     },
+    "modules.ses_models.model_not_found": {
+      "en": "Selected model could not be found or is outside the models directory.",
+      "es": "No se pudo encontrar el modelo seleccionado o está fuera del directorio de modelos.",
+      "fr": "Le modèle sélectionné est introuvable ou se trouve en dehors du répertoire des modèles.",
+      "de": "Das ausgewählte Modell wurde nicht gefunden oder liegt außerhalb des Modellverzeichnisses.",
+      "lt": "Pasirinkto modelio nepavyko rasti arba jis yra ne modelių kataloge.",
+      "pt": "O modelo selecionado não foi encontrado ou está fora do diretório de modelos.",
+      "it": "Il modello selezionato non è stato trovato o è esterno alla directory dei modelli.",
+      "no": "Den valgte modellen ble ikke funnet eller er utenfor modellkatalogen.",
+      "el": "Το επιλεγμένο μοντέλο δεν βρέθηκε ή βρίσκεται εκτός του καταλόγου μοντέλων."
+    },
     "modules.ses_models.select_variant": {
       "en": "Select Model Variant",
       "es": "Seleccionar Variante del Modelo",
