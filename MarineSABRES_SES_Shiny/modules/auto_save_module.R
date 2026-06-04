@@ -860,17 +860,18 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
             # If enough time has passed, trigger save
             if (time_since_change >= current_debounce) {
-              # Reset pending flag (stops polling until next change event)
-              debounce_state$pending_save <- FALSE
-              debounce_state$last_change_time <- NULL
-
               # Skip this tick if a previous save is still running (I1a).
-              # pending_save stays TRUE — next 2s tick will retry once the flag clears.
+              # Leave pending_save and last_change_time intact so the next
+              # 2s tick will retry once save_in_progress clears.
               if (isTRUE(auto_save$save_in_progress)) {
                 debug_log("Save already in progress, will retry on next tick", "AUTO-SAVE ADAPTIVE")
-                # Do NOT clear pending_save or last_change_time — let the next tick re-evaluate
                 return()
               }
+
+              # Reset pending flag now that we are committed to proceeding
+              # (stops polling until the next change event sets it again).
+              debounce_state$pending_save <- FALSE
+              debounce_state$last_change_time <- NULL
 
               # Only save if enabled and not in recovery mode
               if (auto_save$is_enabled && !auto_save$recovery_pending) {
@@ -905,25 +906,40 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     }
 
     # Fallback: Mark data as dirty when project_data changes directly (for compatibility)
-    # This handles cases where event bus might not be available or data changes outside ISA
+    # This handles cases where event bus might not be available or data changes outside ISA.
+    #
+    # Two distinct responsibilities that must be kept separate:
+    #   1. FIRST-LOAD immediate save (when last_data_hash is NULL): always run,
+    #      even when event_bus is present, because the event-bus path does NOT
+    #      issue a first-load save.
+    #   2. SUBSEQUENT-CHANGE dirty marking (when last_data_hash is set): only
+    #      run when event_bus is absent.  When event_bus is present it owns
+    #      change detection via on_isa_change(); hashing every project_data
+    #      mutation here would be redundant, expensive CPU work on every
+    #      reactive flush — harmful on single-process multi-user deployments.
     observeEvent(project_data_reactive(), {
       data <- project_data_reactive()
+      if (is.null(data)) return()
 
-      # Calculate hash of current data
-      if (!is.null(data)) {
-        current_hash <- digest::digest(data)
-
-        # Only mark dirty if hash has changed
-        if (is.null(auto_save$last_data_hash) || current_hash != auto_save$last_data_hash) {
-          auto_save$data_dirty <- TRUE
-
-          # Immediate save on first data load (when last_data_hash is NULL)
-          # This ensures newly loaded/imported data is saved immediately
-          if (is.null(auto_save$last_data_hash) && auto_save$is_enabled && !auto_save$recovery_pending) {
-            debug_log("First data detected - performing immediate save", "AUTO-SAVE")
-            perform_auto_save()
-          }
+      # --- First load: perform an immediate save regardless of event_bus ---
+      if (is.null(auto_save$last_data_hash)) {
+        auto_save$data_dirty <- TRUE
+        if (auto_save$is_enabled && !auto_save$recovery_pending) {
+          debug_log("First data detected - performing immediate save", "AUTO-SAVE")
+          perform_auto_save()
         }
+        return()
+      }
+
+      # --- Subsequent changes: skip when event_bus is present ---
+      # The event-bus path (on_isa_change observer + debounce timer) owns
+      # change detection when event_bus is available; avoid redundant hashing.
+      if (!is.null(event_bus)) return()
+
+      # No event_bus: use hash-based dirty marking as the sole save trigger
+      current_hash <- digest::digest(data)
+      if (current_hash != auto_save$last_data_hash) {
+        auto_save$data_dirty <- TRUE
       }
     })
 

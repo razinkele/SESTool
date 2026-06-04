@@ -1386,3 +1386,203 @@ test_that("concurrent writes to different session dirs don't interfere", {
     expect_equal(loaded$value, r$expected_value)
   }
 })
+
+# ============================================================================
+# TESTSERVER BEHAVIOR TESTS (M3 + L5 fixes)
+#
+# These tests drive the real auto_save_server via testServer() and assert
+# observable state after reactive flushes.  They require the full module to
+# be loaded (done via global.R in helper-00-load-functions.R) plus a few
+# lightweight stubs for items that only live in the full app context.
+# ============================================================================
+
+# -- Shared helper: build minimal dependencies needed by auto_save_server ----
+.autosave_test_deps <- function() {
+  # APP_VERSION may not be set if global.R load failed; provide a fallback.
+  if (!exists("APP_VERSION", envir = .GlobalEnv)) {
+    assign("APP_VERSION", "test", envir = .GlobalEnv)
+  }
+
+  # Minimal i18n that returns the key verbatim
+  i18n <- list(
+    t = function(key, ...) key,
+    get_translation_language = function() "en"
+  )
+
+  # Minimal event bus matching the real event_bus_setup.R API
+  eb <- reactiveValues(isa_change_counter = 0L)
+  eb$on_isa_change <- reactive(eb$isa_change_counter)
+
+  list(i18n = i18n, eb = eb)
+}
+
+# ============================================================================
+# M3 — debounce flags must NOT be cleared when save_in_progress is TRUE
+# ============================================================================
+
+test_that("M3: debounce_state$pending_save stays TRUE when save_in_progress", {
+  # Skip if auto_save_server not available (e.g. global.R failed to load)
+  skip_if_not(exists("auto_save_server", envir = .GlobalEnv),
+              "auto_save_server not loaded")
+  skip_if_not(requireNamespace("digest", quietly = TRUE), "digest not available")
+  skip_if_not(requireNamespace("jsonlite", quietly = TRUE), "jsonlite not available")
+
+  # Re-bind from .GlobalEnv in case helper-stubs.R shadowed it
+  auto_save_server <- get("auto_save_server", envir = .GlobalEnv)
+
+  deps <- .autosave_test_deps()
+  i18n <- deps$i18n
+  eb   <- deps$eb
+
+  # Project data with valid ISA structure so perform_auto_save does not abort.
+  # Use shiny::reactiveVal explicitly (helper-stubs.R overrides reactiveVal
+  # with a plain closure that is not reactive — the real shiny version is
+  # needed so observers that depend on project_data_reactive() fire correctly).
+  proj <- list(
+    data     = list(isa_data = list(drivers = data.frame(id = "D1", name = "Test"))),
+    metadata = list()
+  )
+  pdr <- shiny::reactiveVal(proj)
+
+  testServer(auto_save_server,
+             args = list(project_data_reactive = pdr,
+                         i18n = i18n,
+                         event_bus = eb),
+             {
+               session$flushReact()
+
+               # Fire an ISA-change event so the debounce observer marks
+               # pending_save = TRUE and records last_change_time.
+               eb$isa_change_counter <- 1L
+               session$flushReact()
+
+               expect_true(debounce_state$pending_save,
+                           label = "pending_save should be TRUE after a change event")
+
+               # Simulate a concurrent save still running and backdate the
+               # change time so the debounce threshold is already elapsed.
+               auto_save$save_in_progress <- TRUE
+               debounce_state$last_change_time <- Sys.time() - 60   # 60 s in the past
+               session$flushReact()
+
+               # Tick the polling observer by advancing the timer past the
+               # invalidateLater(2000) interval.
+               session$elapse(2001)
+               session$flushReact()
+
+               # BUG (before fix): pending_save was cleared to FALSE by lines
+               # that ran before the save_in_progress guard, so the next poll
+               # would see req(FALSE) and stop — silently losing the change.
+               # CORRECT (after fix): pending_save stays TRUE so the retry
+               # fires on the next tick once save_in_progress clears.
+               expect_true(debounce_state$pending_save,
+                           label = paste(
+                             "pending_save must remain TRUE when save_in_progress=TRUE;",
+                             "got:", debounce_state$pending_save
+                           ))
+             })
+})
+
+# ============================================================================
+# L5 — fallback observer: first-load save preserved; redundant hashing skipped
+# ============================================================================
+
+test_that("L5a: first data load triggers immediate save when event_bus present", {
+  skip_if_not(exists("auto_save_server", envir = .GlobalEnv),
+              "auto_save_server not loaded")
+  skip_if_not(requireNamespace("digest", quietly = TRUE), "digest not available")
+  skip_if_not(requireNamespace("jsonlite", quietly = TRUE), "jsonlite not available")
+
+  auto_save_server <- get("auto_save_server", envir = .GlobalEnv)
+
+  deps <- .autosave_test_deps()
+  i18n <- deps$i18n
+  eb   <- deps$eb
+
+  # Start with NULL so hash is unset (first-load scenario).
+  # Use shiny::reactiveVal explicitly — the stub in helper-stubs.R is a plain
+  # closure that is not reactive, so observeEvent() would never fire on it.
+  pdr <- shiny::reactiveVal(NULL)
+
+  testServer(auto_save_server,
+             args = list(project_data_reactive = pdr,
+                         i18n = i18n,
+                         event_bus = eb),
+             {
+               session$flushReact()
+
+               # Confirm hash is NULL before loading data
+               expect_null(auto_save$last_data_hash,
+                           label = "last_data_hash should be NULL before first load")
+
+               # Simulate first-time data load (e.g. project imported)
+               pdr(list(
+                 data     = list(isa_data = list(drivers = data.frame(id = "D1", name = "Test"))),
+                 metadata = list()
+               ))
+               session$flushReact()
+
+               # An immediate save must have happened:
+               # perform_auto_save() sets last_data_hash after a successful save.
+               expect_false(is.null(auto_save$last_data_hash),
+                            label = paste(
+                              "last_data_hash must be non-NULL after first-load immediate save;",
+                              "got:", auto_save$last_data_hash
+                            ))
+             })
+})
+
+test_that("L5b: subsequent data change does NOT set data_dirty via fallback when event_bus present", {
+  skip_if_not(exists("auto_save_server", envir = .GlobalEnv),
+              "auto_save_server not loaded")
+  skip_if_not(requireNamespace("digest", quietly = TRUE), "digest not available")
+  skip_if_not(requireNamespace("jsonlite", quietly = TRUE), "jsonlite not available")
+
+  auto_save_server <- get("auto_save_server", envir = .GlobalEnv)
+
+  deps <- .autosave_test_deps()
+  i18n <- deps$i18n
+  eb   <- deps$eb
+
+  proj1 <- list(
+    data     = list(isa_data = list(drivers = data.frame(id = "D1", name = "First"))),
+    metadata = list()
+  )
+  # Use shiny::reactiveVal so observeEvent fires correctly — see L5a note.
+  pdr <- shiny::reactiveVal(proj1)
+
+  testServer(auto_save_server,
+             args = list(project_data_reactive = pdr,
+                         i18n = i18n,
+                         event_bus = eb),
+             {
+               session$flushReact()
+
+               # After startup the first-load immediate save sets the hash.
+               expect_false(is.null(auto_save$last_data_hash),
+                            label = "last_data_hash should be set after first load")
+
+               # Reset data_dirty so we can cleanly observe whether the
+               # fallback observer sets it again on a subsequent change.
+               auto_save$data_dirty <- FALSE
+               session$flushReact()
+
+               # Change the project data (different hash)
+               pdr(list(
+                 data     = list(isa_data = list(drivers = data.frame(id = "D2", name = "Second"))),
+                 metadata = list()
+               ))
+               session$flushReact()
+
+               # BUG (before fix): fallback observer always computed digest()
+               # and set data_dirty=TRUE even with event_bus present.
+               # CORRECT (after fix): fallback observer returns early when
+               # event_bus is non-NULL and last_data_hash is already set,
+               # so data_dirty remains FALSE (event-bus path owns this).
+               expect_false(auto_save$data_dirty,
+                            label = paste(
+                              "data_dirty should remain FALSE when event_bus owns change detection;",
+                              "got:", auto_save$data_dirty
+                            ))
+             })
+})
