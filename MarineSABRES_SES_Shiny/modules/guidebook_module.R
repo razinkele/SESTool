@@ -1,11 +1,35 @@
 # modules/guidebook_module.R
 # Guidebook module - displays the user guidebook in-app and provides download links
 
-# Resolve language-specific guidebook path with English fallback
+# Resolve language-specific guidebook path with English fallback.
+# Containment guard: even if a malformed language code slips through the modal
+# validator (defense-in-depth), we verify the resolved path stays inside the
+# guidebook/ directory before returning it.  A traversal like "../modules/evil"
+# would otherwise reach rmarkdown::render() and execute arbitrary R chunks.
 resolve_guidebook_rmd <- function(i18n) {
   lang <- tryCatch(i18n$get_translation_language(), error = function(e) "en")
   rmd_file <- file.path("guidebook", paste0("guidebook_", lang, ".Rmd"))
-  if (!file.exists(rmd_file)) {
+
+  # Normalize both the candidate path and the allowed base directory so that
+  # ".." components are resolved on Windows and Unix alike.  mustWork = FALSE
+  # is required because the language-specific file may not yet exist on disk.
+  guidebook_base <- normalizePath("guidebook", mustWork = FALSE)
+  rmd_normalized  <- normalizePath(rmd_file,  mustWork = FALSE)
+
+  # Containment check: the resolved candidate must start with the guidebook dir.
+  # If it escapes (traversal) or if the file simply doesn't exist, fall back to
+  # the English edition which is guaranteed to be present.
+  path_contained <- startsWith(rmd_normalized, guidebook_base)
+  if (!path_contained || !file.exists(rmd_file)) {
+    if (!path_contained) {
+      # Log at SECURITY level so operators can detect probing attempts.
+      debug_log(
+        paste0("resolve_guidebook_rmd: path traversal detected for lang='",
+               lang, "' — resolved to '", rmd_normalized,
+               "', outside guidebook base '", guidebook_base, "'. Falling back to en."),
+        "SECURITY"
+      )
+    }
     rmd_file <- file.path("guidebook", "guidebook_en.Rmd")
   }
   rmd_file

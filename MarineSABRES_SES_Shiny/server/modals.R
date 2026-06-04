@@ -69,6 +69,21 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 
     new_lang <- input$language_selector
 
+    # Security: validate that the client-supplied language code is one of the
+    # declared valid codes.  A tampered WebSocket message could otherwise inject
+    # a path-traversal string that propagates into file-path construction (e.g.,
+    # resolve_guidebook_rmd) and ultimately into rmarkdown::render() — RCE risk.
+    if (!(new_lang %in% names(AVAILABLE_LANGUAGES))) {
+      debug_log(paste("Language change rejected: unknown code:", new_lang), "SECURITY")
+      showNotification(
+        i18n$t("common.messages.invalid_language_code"),
+        type = "warning",
+        duration = 5,
+        session = session
+      )
+      return()
+    }
+
     debug_log(paste("Language changed to:", new_lang), "LANGUAGE")
 
     # Close the modal first
