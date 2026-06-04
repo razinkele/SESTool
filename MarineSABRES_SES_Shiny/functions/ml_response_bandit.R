@@ -225,10 +225,8 @@ save_response_bandit <- function(state, path = BANDIT_CONFIG$store_path) {
 #' @export
 load_response_bandit <- function(path = BANDIT_CONFIG$store_path) {
   if (!file.exists(path)) return(init_response_bandit())
-  state <- tryCatch(readRDS(path),
-                    error = function(e) { warning(sprintf(
-                      "Bandit state file %s could not be read: %s. Returning fresh init.",
-                      path, conditionMessage(e))); NULL })
+  state <- safe_readRDS(path)
+  if (is.null(state)) return(init_response_bandit())
   if (!is.null(state) && is.list(state) &&
       !is.null(state$arms) && !is.null(state$A)) {
     return(state)

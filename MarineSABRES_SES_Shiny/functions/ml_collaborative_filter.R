@@ -140,10 +140,8 @@ save_cf_state <- function(state, path = CF_CONFIG$store_path) {
 #' @export
 load_cf_state <- function(path = CF_CONFIG$store_path) {
   if (!file.exists(path)) return(NULL)
-  s <- tryCatch(readRDS(path),
-                error = function(e) { warning(sprintf(
-                  "CF state file %s could not be read: %s.",
-                  path, conditionMessage(e))); NULL })
+  s <- safe_readRDS(path)
+  if (is.null(s)) return(NULL)
   if (!is.null(s) && !is.null(s$item_embeddings)) return(s)
   warning(sprintf(
     "CF state file %s exists but is malformed (missing $item_embeddings). Returning NULL.",
