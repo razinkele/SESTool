@@ -28,11 +28,29 @@ generate_element_id <- function(prefix, n) {
 
 new_stable_id_store <- function() new.env(parent = emptyenv())
 
+# Guardrail (L24): the process-global .stable_id_counters is only safe for unit
+# tests / non-Shiny use. If an allocator is called WITHOUT an explicit session
+# store while a Shiny session is active, warn — sharing global counters across
+# concurrent users causes cross-session ID collisions. Pass new_stable_id_store().
+.warn_if_global_store_in_session <- function(store_was_missing) {
+  if (isTRUE(store_was_missing) && !is.null(shiny::getDefaultReactiveDomain())) {
+    warning(
+      "stable-id allocator called without a session-local `store=` inside a Shiny session; ",
+      "the process-global .stable_id_counters risks cross-session ID collisions. ",
+      "Pass a session store, e.g. store = new_stable_id_store().",
+      call. = FALSE
+    )
+  }
+  invisible(NULL)
+}
+
 reset_stable_id_counter <- function(prefix, store = .stable_id_counters) {
+  .warn_if_global_store_in_session(missing(store))
   assign(prefix, 0L, envir = store); invisible(NULL)
 }
 
 seed_stable_id_counter <- function(prefix, existing_ids, store = .stable_id_counters) {
+  .warn_if_global_store_in_session(missing(store))
   nums <- suppressWarnings(as.integer(sub(paste0("^", prefix), "", existing_ids)))
   nums <- nums[!is.na(nums)]
   assign(prefix, if (length(nums)) max(nums) else 0L, envir = store)
@@ -40,6 +58,7 @@ seed_stable_id_counter <- function(prefix, existing_ids, store = .stable_id_coun
 }
 
 generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
+  .warn_if_global_store_in_session(missing(store))
   cur <- if (exists(prefix, envir = store, inherits = FALSE))
     get(prefix, envir = store) else 0L
   nxt <- cur + 1L
@@ -59,6 +78,7 @@ generate_stable_element_id <- function(prefix, store = .stable_id_counters) {
 #' @param store counter environment (session-local in the module; global default for tests)
 #' @return list(df = repaired data.frame, repaired = logical scalar)
 reconcile_loaded_element_ids <- function(element_df, prefix, store = .stable_id_counters) {
+  .warn_if_global_store_in_session(missing(store))
   if (is.null(element_df) || !nrow(element_df)) return(list(df = element_df, repaired = FALSE))
 
   # Detect the id column case-insensitively. Legacy/fork/JSON-origin/re-saved
