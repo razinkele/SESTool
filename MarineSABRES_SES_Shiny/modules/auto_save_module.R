@@ -1035,6 +1035,11 @@ auto_save_server <- function(id, project_data_reactive, i18n,
         # Remove auto-save metadata before returning
         recovered_data$autosave_metadata <- NULL
 
+        # Normalize column casing and reconcile element IDs before restoring
+        if (exists("normalize_and_reconcile_project", mode = "function")) {
+          recovered_data <- normalize_and_reconcile_project(recovered_data)
+        }
+
         # Update the project data reactiveVal
         project_data_reactive(recovered_data)
 
