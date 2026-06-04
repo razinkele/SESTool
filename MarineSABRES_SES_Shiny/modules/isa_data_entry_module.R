@@ -39,6 +39,55 @@ isa_data_entry_ui <- function(id, i18n) {
   )
 }
 
+# ── M12: user_edited_matrices persistence helpers ──────────────────────────────
+#
+# Pure (non-reactive) function exported at module-file scope so it is testable
+# without instantiating a Shiny session.
+#
+# Restores user_edited_matrices from a previously-saved project into the
+# shape of the current (post-reconcile) adjacency_matrices.  For each key:
+#   - If saved_ue has the key AND dimnames have common rows/cols, TRUE cells
+#     are projected into the new (possibly larger/smaller) matrix.
+#   - If saved_ue is NULL / empty / missing a key, falls back to all-FALSE
+#     (safe default for old saves that pre-date M12).
+#
+# @param saved_ue   Named list of logical matrices from saved project
+#                   (project$data$isa_data$user_edited_matrices), or NULL.
+# @param adj_matrices Named list of character matrices (adjacency_matrices),
+#                   used to determine the required dims/dimnames for each key.
+# @return Named list of logical matrices aligned to adj_matrices.
+restore_user_edited_matrices <- function(saved_ue, adj_matrices) {
+  result <- list()
+  if (!is.list(adj_matrices) || length(adj_matrices) == 0) return(result)
+
+  for (mk in names(adj_matrices)) {
+    adj <- adj_matrices[[mk]]
+    if (!is.matrix(adj)) {
+      next
+    }
+    nr <- nrow(adj); nc <- ncol(adj)
+    rn <- rownames(adj); cn <- colnames(adj)
+
+    # Default: all-FALSE matrix with correct dims
+    out_ue <- matrix(FALSE, nrow = nr, ncol = nc, dimnames = list(rn, cn))
+
+    # Overlay from saved_ue where dimnames overlap (safe for size changes)
+    if (is.list(saved_ue) && !is.null(saved_ue[[mk]]) &&
+        is.matrix(saved_ue[[mk]]) && is.logical(saved_ue[[mk]])) {
+      s <- saved_ue[[mk]]
+      common_rows <- intersect(rownames(s), rn)
+      common_cols <- intersect(colnames(s), cn)
+      if (length(common_rows) > 0 && length(common_cols) > 0) {
+        out_ue[common_rows, common_cols] <- s[common_rows, common_cols]
+      }
+    }
+
+    result[[mk]] <- out_ue
+  }
+  result
+}
+# ──────────────────────────────────────────────────────────────────────────────
+
 # Module Server ----
 # Standardized signature: (id, project_data_reactive, i18n, event_bus)
 isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL, parent_session = NULL) {
@@ -223,6 +272,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
       if (!is.null(isa_data$adjacency_matrices)) {
         pd$data$isa_data$adjacency_matrices <- isa_data$adjacency_matrices
+        # M12: persist user-edited-cell flags so they survive a save/reload cycle
+        pd$data$isa_data$user_edited_matrices <- isa_data$user_edited_matrices
       }
       if (!is.null(isa_data$loop_connections)) {
         pd$data$isa_data$loop_connections <- isa_data$loop_connections
@@ -291,7 +342,16 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
       for (p in names(rec$panel_ids)) isa_data[[p]] <- rec$panel_ids[[p]]
       isa_data$adjacency_matrices <- rec$adjacency_matrices
-      isa_data$user_edited_matrices[names(rec$user_edited_matrices)] <- rec$user_edited_matrices
+      # M12: restore saved user-edited flags (fall back to all-FALSE for old saves).
+      # restore_user_edited_matrices() aligns dims to the post-reconcile adjacency_matrices,
+      # then overlays saved TRUE cells by dimname intersection — safe for size changes.
+      # rec$user_edited_matrices only holds all-FALSE entries for fell-back matrices;
+      # the SAVED flags (from project$data$isa_data$user_edited_matrices, written by the
+      # fixed sync_to_project_data) are the authoritative source for user edits.
+      isa_data$user_edited_matrices <- restore_user_edited_matrices(
+        saved_ue     = saved_isa$user_edited_matrices,
+        adj_matrices = isa_data$adjacency_matrices
+      )
       any_repaired      <- rec$repaired
       any_rows_in       <- rec$any_rows_in
       any_panel_ids_out <- rec$any_panel_ids_out
