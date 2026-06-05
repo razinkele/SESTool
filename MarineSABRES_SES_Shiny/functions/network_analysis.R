@@ -363,13 +363,19 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
 
 #' Check if a transition follows valid DAPSIRWRM framework logic
 #'
-#' Implements all 18 rules from DAPSIWRM_FRAMEWORK_RULES.md plus the ExUP
-#' exception (D → P for exogenic unmanaged pressures like climate change).
+#' Implements rules from DAPSIWRM_FRAMEWORK_RULES.md plus the ExUP exception
+#' (D → P for exogenic unmanaged pressures like climate change).
 #' Uses an 8-element model (D, A, P, C/S, ES, GB, R, M) with HW collapsed into GB.
 #' GB→D represents the collapsed pathway of Rules 6 (GB→HW) + 7 (HW→D).
 #' M is kept as a distinct type for template-loaded data (template_loader.R).
 #'
-#' Last validated against literature: 2026-04-10
+#' NOTE: Rule 15 (D → GB/W direct shortcut) was REMOVED 2026-06-05 as non-canonical.
+#' Drivers reach human welfare ONLY via the A → P → S → ES → GB cascade; there is no
+#' direct Driver → Goods&Benefits forward edge. See: Elliott, Burdon & Atkins (2017),
+#' doi:10.1016/j.marpolbul.2017.03.049. This aligns the transition validator with
+#' DAPSIWRM_ADJACENCY_RULES in functions/dapsiwrm_connection_rules.R.
+#'
+#' Last validated against literature: 2026-06-05
 #' See: .claude/skills/scientific-validation-workspace/codebase-audit/MASTER-REPORT.md
 #'
 #' @param from_type Source node type
@@ -421,9 +427,6 @@ is_valid_dapsirwrm_transition <- function(from_type, to_type) {
 
     # Response-Response interactions (Rule 14)
     list(from = responses, to = responses),         # Rule 14: R → R
-
-    # Direct shortcut (Rule 15)
-    list(from = drivers, to = welfare),             # Rule 15: D → GB/W
 
     # Same-type interactions (Rules 16-17)
     list(from = states, to = states),               # Rule 16: C/S → C/S

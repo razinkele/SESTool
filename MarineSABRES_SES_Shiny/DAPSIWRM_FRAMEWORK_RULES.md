@@ -218,11 +218,18 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
 
 ### Special Connections
 
-15. **D → GB/W** (Direct Driver-Welfare shortcuts)
-    - Polarity: Varies
-    - Logic: Some drivers directly affect welfare without intermediate steps
-    - Example: "Climate change" → "Coastal flooding impacts" (-)
-    - Note: Use sparingly, only for truly direct relationships
+15. **D → GB/W** — REMOVED (non-canonical, 2026-06-05)
+    - **This rule has been removed from the framework validator.**
+    - Rationale: Elliott, Burdon & Atkins (2017, doi:10.1016/j.marpolbul.2017.03.049) state
+      that Drivers reach human welfare ONLY via the full A → P → S → ES → GB cascade; there
+      is no direct Driver → Goods&Benefits forward edge in canonical DAPSI(W)R(M). A direct
+      D→GB connection was inconsistent with `DAPSIWRM_ADJACENCY_RULES` and has been removed
+      from `is_valid_dapsirwrm_transition()` in `functions/network_analysis.R`.
+    - The example previously cited here ("Climate change" → "Coastal flooding impacts")
+      is actually a D → P (Exogenic Unmanaged Pressure) case, not a D → GB case. It has
+      been moved under the **D → P (ExUP)** exception in "Documented Exceptions" below.
+    - Any existing connections of this type in a project will be flagged as framework-invalid
+      by the loop validator, and cycles containing them will be treated as non-canonical.
 
 16. **C/S → C/S** (State-to-State interactions)
     - Polarity: Varies
@@ -250,6 +257,7 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
 Climate change and other exogenic drivers can create pressures directly without a locally identifiable activity intermediary. Reference: Elliott 2011 "Exogenic unmanaged pressures."
 
 - Valid use: "Climate change" → "Ocean warming" (the driver produces the pressure without a locally identifiable activity)
+- Valid use: "Climate change" → "Coastal flooding" (-) (the driver produces the pressure; note this is D→P, NOT the formerly mis-labelled D→GB "Rule 15" shortcut — the welfare impact is downstream via the full cascade)
 - Invalid use: "Population growth" → "Coastal urbanization" (urbanization is an Activity, not a Pressure)
 - 3 of the 4 D→P connections in the KB are valid ExUP cases (all climate-driven); the fourth was fixed via element reclassification in the KB cleanup.
 

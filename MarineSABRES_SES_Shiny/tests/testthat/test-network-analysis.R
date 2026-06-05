@@ -382,7 +382,6 @@ test_that("is_valid_dapsirwrm_transition accepts feedback transitions", {
   expect_true(is_valid_dapsirwrm_transition("response", "activity"))
   expect_true(is_valid_dapsirwrm_transition("response", "pressure"))
   expect_true(is_valid_dapsirwrm_transition("welfare", "driver"))
-  expect_true(is_valid_dapsirwrm_transition("driver", "welfare"))
 })
 
 test_that("is_valid_dapsirwrm_transition accepts Rules 12-18 + ExUP transitions", {
@@ -451,6 +450,11 @@ test_that("is_valid_dapsirwrm_transition rejects invalid transitions", {
   # No self-loops for non-state/non-pressure/non-activity types
   expect_false(is_valid_dapsirwrm_transition("measure", "measure"))
   expect_false(is_valid_dapsirwrm_transition("welfare", "welfare"))
+  # D→GB removed 2026-06-05: Drivers reach welfare only via A→P→S→ES→GB (Elliott et al. 2017);
+  # was non-canonical "Rule 15". Aligns with DAPSIWRM_ADJACENCY_RULES.
+  expect_false(is_valid_dapsirwrm_transition("driver", "welfare"))
+  expect_false(is_valid_dapsirwrm_transition("drivers", "welfare"))
+  expect_false(is_valid_dapsirwrm_transition("driver", "gb"))
 })
 
 test_that("is_valid_dapsirwrm_transition handles case and whitespace", {
