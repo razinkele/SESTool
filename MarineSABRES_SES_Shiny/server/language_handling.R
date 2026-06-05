@@ -30,21 +30,16 @@ create_session_i18n <- function(global_i18n, session_language_reactive) {
 
   session_i18n <- list(
     t = function(key) {
-      # Temporarily set the translator's language, translate, then restore
-      # This is thread-safe because Shiny processes one session at a time per worker
+      # Borrow the shared global translator: set this session's language, translate,
+      # then ALWAYS restore (via on.exit) even if a step throws — otherwise a throw
+      # would strand the process-global translator in this session's language for
+      # other sessions on the worker. Atomic under single-threaded R (no async here).
       old_lang <- translator$get_translation_language()
       if (old_lang != env$current_lang) {
+        on.exit(translator$set_translation_language(old_lang), add = TRUE)
         translator$set_translation_language(env$current_lang)
       }
-      result <- tryCatch({
-        global_i18n$t(key)  # Use the wrapper's t() which handles namespaced keys
-      }, error = function(e) {
-        key  # Fallback to key on error
-      })
-      if (old_lang != env$current_lang) {
-        translator$set_translation_language(old_lang)
-      }
-      result
+      tryCatch(global_i18n$t(key), error = function(e) key)
     },
 
     set_translation_language = function(lang) {
