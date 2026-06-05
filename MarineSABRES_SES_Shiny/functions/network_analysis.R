@@ -995,7 +995,7 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
 
     debug_log("Valid DAPSIRWRM transitions:", "NETWORK_ANALYSIS")
     debug_log("Forward: D->A->P->MPF->ES->GB->R", "NETWORK_ANALYSIS")
-    debug_log("Feedback: R->D, R->A, R->P, D->GB", "NETWORK_ANALYSIS")
+    debug_log("Feedback: R->D, R->A, R->P", "NETWORK_ANALYSIS")
   }
 
   # Re-number loop IDs to be sequential

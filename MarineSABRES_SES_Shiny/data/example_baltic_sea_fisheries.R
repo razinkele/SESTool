@@ -463,7 +463,9 @@ create_baltic_sea_example <- function() {
     )
   )
 
-  # Feedback: D → GB (optional - creates feedback loops)
+  # D → GB matrix retained as example data; note: Rule 15 removed 2026-06-05 — D→GB is
+  # no longer a framework-canonical transition. Drivers reach GB only via the cascade
+  # (D→A→P→C→ES→GB). This matrix is kept for backward-compat with saved projects.
   example_data$adjacency_matrices$d_gb <- matrix(
     "", nrow = 6, ncol = 7, byrow = TRUE,
     dimnames = list(
