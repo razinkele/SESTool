@@ -177,7 +177,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       auto_save_enabled = TRUE,  # Auto-save toggle
       auto_saved_step_10 = FALSE,  # Flag to prevent auto-save infinite loop
       show_text_input = FALSE,  # Flag to show text input when "Other" is selected
-      render_counter = 0  # Counter to force UI re-render for selection highlighting
+      render_counter = 0,  # Counter to force UI re-render for selection highlighting
+      pending_sea_key = NULL   # Staging slot for confirm-regional-sea-change once-observer
     )
 
     # ========================================================================
@@ -1756,32 +1757,12 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         )
                       ))
 
-                      # Set up observer for confirmation
-                      observeEvent(input$confirm_regional_sea_change, {
-                        # User confirmed - proceed with change
-                        rv$context$regional_sea <- sea_key
-
-                        # Clear dependent selections
-                        rv$context$ecosystem_type <- NULL
-                        rv$context$ecosystem_subtype <- NULL
-                        rv$context$countries <- character(0)
-                        rv$context$main_issue <- character(0)
-                        rv$selected_countries <- character(0)
-                        rv$selected_issues <- character(0)
-
-                        debug_log(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sea_key))
-
-                        ai_response <- paste0(
-                          i18n$t("modules.isa.ai_assistant.regional_sea_changed_to"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
-                          i18n$t("modules.isa.your_ecosystem_and_issue_selections_have_been_clea")
-                        )
-                        rv$conversation <- c(rv$conversation, list(
-                          list(type = "ai", message = ai_response, timestamp = Sys.time())
-                        ))
-
-                        removeModal()
-                        move_to_next_step()
-                      }, ignoreInit = TRUE)
+                      # Record the pending sea key — the module-level once-observer
+                      # (created after nav_fns are set up) will fire when the user
+                      # clicks "Continue" in the modal.  This avoids stacking a new
+                      # observeEvent on input$confirm_regional_sea_change every time
+                      # the user re-selects a regional sea.
+                      rv$pending_sea_key <- sea_key
 
                     } else {
                       # No conflict - proceed normally
@@ -2441,6 +2422,44 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     nav_fns <- setup_step_navigation(rv, session, i18n, QUESTION_FLOW)
     move_to_next_step <- nav_fns$move_to_next_step
     move_to_previous_step <- nav_fns$move_to_previous_step
+
+    # ========== ONCE-OBSERVER: confirm regional sea change ==========
+    # Created exactly once at module setup (not inside any step-builder loop)
+    # so re-selecting a regional sea cannot stack duplicate observers.
+    # The pending_sea_key reactiveValue acts as a one-shot staging slot:
+    #   - The per-selection handler (lines ~1759) sets rv$pending_sea_key.
+    #   - This observer reads it, applies the change, then clears it so a
+    #     stray re-fire is a no-op (req(!is.null(sk)) short-circuits).
+    observeEvent(input$confirm_regional_sea_change, {
+      sk <- rv$pending_sea_key
+      req(!is.null(sk))
+
+      # Apply change
+      rv$context$regional_sea <- sk
+      rv$context$ecosystem_type <- NULL
+      rv$context$ecosystem_subtype <- NULL
+      rv$context$countries <- character(0)
+      rv$context$main_issue <- character(0)
+      rv$selected_countries <- character(0)
+      rv$selected_issues <- character(0)
+
+      # Consume the pending key so re-fires are no-ops
+      rv$pending_sea_key <- NULL
+
+      debug_log(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sk))
+
+      ai_response <- paste0(
+        i18n$t("modules.isa.ai_assistant.regional_sea_changed_to"), " ",
+        REGIONAL_SEAS[[sk]]$name_i18n, ". ",
+        i18n$t("modules.isa.your_ecosystem_and_issue_selections_have_been_clea")
+      )
+      rv$conversation <- c(rv$conversation, list(
+        list(type = "ai", message = ai_response, timestamp = Sys.time())
+      ))
+
+      removeModal()
+      move_to_next_step()
+    }, ignoreInit = TRUE)
 
     # ========== UI RENDERERS ==========
     # Breadcrumb, progress, counts, diagram, and connection types extracted to modules/ai_isa/ui_renderers.R
