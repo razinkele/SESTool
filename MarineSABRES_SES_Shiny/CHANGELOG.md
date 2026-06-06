@@ -19,6 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Pending partner sign-off** — the WP5 KB carries D5.2 research/deliverable data still awaiting partner validation (see PR for the full list: mac_07/14/9 cost profiles, mac_03 blended finance, tus_04/05/06 inferred-from-practice, arc_05 research-gap, arc_06 ecolabel choice, empty success_metrics). Re-version forward at merge time.
 
+## [1.17.1] - 2026-06-06
+
+### Fixed
+
+- **Standard-Entry Excel import dropped the entire Responses/Measures (R/M) arm.** `functions/standard_entry_excel_import.R` recognised only the six forward DAPSIWR categories, so a `Responses_Measures` element sheet was never read and the `Matrix_r_d` (Responses → Drivers) feedback edges were silently orphaned — corrected DAPSIWRM exports loaded with their response nodes and feedback loop missing. The reader now maps `Responses_Measures → responses` and `recover_isa_data()` reconciles the responses category, so the faithful `Matrix_r_d` edges resolve to real endpoints. Verified end-to-end on a real export (`ISA_Export20260605 - korekcijamax.xlsx`): 39 → 44 nodes (5 Responses) with the 5 Responses → Drivers edges now rendered.
+- **Export/import symmetry restored.** `functions/isa_export_helpers.R::write_isa_element_sheets()` now writes a `Responses_Measures` sheet when the model carries responses (6-category exports are unchanged), so a model with responses round-trips instead of losing the arm on re-export.
+- **Legacy capitalised edge strengths silently mis-weighted.** `functions/utils.R::parse_connection_value()` returned the strength token verbatim, so a matrix cell like `+Medium:3` missed the lowercase-keyed `DYNAMICS_WEIGHT_MAP` / visNetwork width map and fell back to a default weight. The strength token is now lowercased at parse time while the matrix reader stays byte-faithful — normalisation lives at the single consumption point rather than in the faithful reader.
+- **Tests**: `tests/testthat/test-standard-entry-excel-import.R` extended to cover export/read/recover of the responses arm and strength-casing normalisation (16 → 30 passing).
+
 ## [1.16.5] - 2026-05-18
 
 ### Fixed (P2 cluster)
