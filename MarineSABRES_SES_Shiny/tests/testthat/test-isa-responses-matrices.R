@@ -48,10 +48,18 @@ test_that("re-save preserves a user-edited gb_r cell", {
   isa$user_edited_matrices$gb_r["GB002","R001"] <- TRUE
   out2 <- build_response_matrices(isa)
   expect_equal(out2$adjacency_matrices$gb_r["GB002","R001"], "-strong:5")
+  expect_true(out2$user_edited_matrices$gb_r["GB002","R001"])  # flag survives transpose round-trip
 })
 
 test_that("empty responses yields no matrices (no error)", {
   isa <- make_resp_isa(); isa$responses <- isa$responses[0, , drop = FALSE]
+  out <- build_response_matrices(isa)
+  expect_null(out$adjacency_matrices$r_d)
+  expect_null(out$adjacency_matrices$gb_r)
+})
+
+test_that("responses without an ID column returns matrices unchanged", {
+  isa <- make_resp_isa(); isa$responses <- data.frame(Name = "x", stringsAsFactors = FALSE)
   out <- build_response_matrices(isa)
   expect_null(out$adjacency_matrices$r_d)
   expect_null(out$adjacency_matrices$gb_r)

@@ -523,11 +523,17 @@ validate_and_collect_es <- function(input, panel_ids, session, i18n) {
 #'   $goods_benefits, $drivers, $activities, $pressures, $adjacency_matrices,
 #'   $user_edited_matrices.
 #' @return list(adjacency_matrices, user_edited_matrices) updated copies.
+#' @note Builds only gb_r / r_d / r_a / r_p (the in-scope R-arm). r_mpf / r_es
+#'   are intentionally not built. Errors propagate to the caller by design
+#'   (the Shiny save observer is the error boundary); we do not tryCatch here.
+#'   stale_linked_ids / dropped_user_edits from rebuild_matrix_from_linked are
+#'   not surfaced here — the save observer may report them if desired.
 build_response_matrices <- function(isa) {
   am <- if (is.null(isa$adjacency_matrices)) list() else isa$adjacency_matrices
   ue <- if (is.null(isa$user_edited_matrices)) list() else isa$user_edited_matrices
   resp <- isa$responses
-  if (!is.data.frame(resp) || nrow(resp) == 0) {
+  # Need a data frame with rows AND an ID column to source edges from.
+  if (!is.data.frame(resp) || nrow(resp) == 0 || !("ID" %in% names(resp))) {
     return(list(adjacency_matrices = am, user_edited_matrices = ue))
   }
   rid <- as.character(resp$ID)
@@ -544,6 +550,7 @@ build_response_matrices <- function(isa) {
     res <- rebuild_matrix_from_linked(
       element_df = resp, linked_col = s$col,
       source_ids = rid, target_ids = tgt_ids,
+      # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
       default_polarity = "-", default_strength = "medium", default_confidence = "3",
       existing_matrix    = am[[s$key]],
       user_edited_matrix = ue[[s$key]])
@@ -558,6 +565,7 @@ build_response_matrices <- function(isa) {
     res <- rebuild_matrix_from_linked(
       element_df = resp, linked_col = "LinkedGB",
       source_ids = rid, target_ids = gb_ids,
+      # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
       default_polarity = "+", default_strength = "medium", default_confidence = "3",
       existing_matrix    = if (!is.null(am$gb_r)) t(am$gb_r) else NULL,
       user_edited_matrix = if (!is.null(ue$gb_r)) t(ue$gb_r) else NULL)
