@@ -64,3 +64,22 @@ test_that("responses without an ID column returns matrices unchanged", {
   expect_null(out$adjacency_matrices$r_d)
   expect_null(out$adjacency_matrices$gb_r)
 })
+
+test_that("rederive_linked_from_matrix scans rows for R x target matrices", {
+  # r_d: R x D, edge R001 -> D002
+  m <- matrix(c("", "-medium:3"), nrow = 1,
+              dimnames = list("R001", c("D001","D002")))
+  expect_equal(rederive_linked_from_matrix(m, "R001", "row"), "D002")
+})
+
+test_that("rederive_linked_from_matrix scans columns for gb_r (GB x R)", {
+  # gb_r: GB x R, edge GB002 -> R001
+  g <- matrix(c("", "+medium:3"), nrow = 2,
+              dimnames = list(c("GB001","GB002"), "R001"))
+  expect_equal(rederive_linked_from_matrix(g, "R001", "col"), "GB002")
+})
+
+test_that("rederive_linked_from_matrix returns '' when the element has no edges", {
+  m <- matrix("", nrow = 1, ncol = 2, dimnames = list("R001", c("D001","D002")))
+  expect_equal(rederive_linked_from_matrix(m, "R001", "row"), "")
+})
