@@ -192,6 +192,16 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       p_panel_ids   = character(0),
       a_panel_ids   = character(0),
       d_panel_ids   = character(0),
+      r_panel_ids   = character(0),
+      r_counter     = 0,
+      responses     = data.frame(
+        ID = character(), Name = character(), Type = character(),
+        Description = character(), Stakeholder = character(),
+        Importance = character(), Trend = character(),
+        LinkedGB = character(), LinkedD = character(),
+        LinkedA = character(), LinkedP = character(),
+        stringsAsFactors = FALSE
+      ),
 
       # Exercise 6: Loop closure
       loop_connections = data.frame(
@@ -1529,7 +1539,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Helper: does the module currently hold any elements?
     .isa_has_elements <- function() {
       any(vapply(list(isa_data$gb_panel_ids, isa_data$es_panel_ids, isa_data$mpf_panel_ids,
-                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids),
+                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids,
+                      isa_data$r_panel_ids),
                  function(x) length(x) > 0 && any(nzchar(x)), logical(1)))
     }
 
@@ -1538,11 +1549,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # loaded project's matrices/elements (stale edges / orphan IDs).
     .reset_isa_state <- function() {
       for (k in c("goods_benefits","ecosystem_services","marine_processes",
-                  "pressures","activities","drivers")) {
+                  "pressures","activities","drivers","responses")) {
         if (is.data.frame(isa_data[[k]])) isa_data[[k]] <- isa_data[[k]][0, , drop = FALSE]
       }
       for (p in c("gb_panel_ids","es_panel_ids","mpf_panel_ids",
-                  "p_panel_ids","a_panel_ids","d_panel_ids")) {
+                  "p_panel_ids","a_panel_ids","d_panel_ids","r_panel_ids")) {
         isa_data[[p]] <- character(0)
       }
       isa_data$adjacency_matrices   <- list()
