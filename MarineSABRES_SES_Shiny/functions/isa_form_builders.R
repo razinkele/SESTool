@@ -512,3 +512,58 @@ validate_and_collect_es <- function(input, panel_ids, session, i18n) {
   df <- if (length(es_rows) > 0) do.call(rbind, es_rows) else data.frame()
   list(df = df, errors = validation_errors, n_rows = length(es_rows))
 }
+
+#' Build the four Responses-arm adjacency matrices from the responses element
+#' rows' Linked* columns. Pure: no Shiny/reactives. Mirrors the forward-chain
+#' rebuild but (a) builds 4 matrices, (b) seeds sign-aware lowercase/integer
+#' defaults, (c) transposes gb_r to GB x R on store and on read so user edits
+#' survive re-save. See docs/superpowers/specs/2026-06-06-responses-entry-design.md.
+#'
+#' @param isa list/reactiveValues with $responses (cols ID, LinkedGB/D/A/P),
+#'   $goods_benefits, $drivers, $activities, $pressures, $adjacency_matrices,
+#'   $user_edited_matrices.
+#' @return list(adjacency_matrices, user_edited_matrices) updated copies.
+build_response_matrices <- function(isa) {
+  am <- if (is.null(isa$adjacency_matrices)) list() else isa$adjacency_matrices
+  ue <- if (is.null(isa$user_edited_matrices)) list() else isa$user_edited_matrices
+  resp <- isa$responses
+  if (!is.data.frame(resp) || nrow(resp) == 0) {
+    return(list(adjacency_matrices = am, user_edited_matrices = ue))
+  }
+  rid <- as.character(resp$ID)
+
+  # Outgoing R -> target (negative polarity): r_d, r_a, r_p
+  out_specs <- list(
+    list(key = "r_d", col = "LinkedD", tgt = isa$drivers),
+    list(key = "r_a", col = "LinkedA", tgt = isa$activities),
+    list(key = "r_p", col = "LinkedP", tgt = isa$pressures)
+  )
+  for (s in out_specs) {
+    tgt_ids <- if (is.data.frame(s$tgt)) as.character(s$tgt$ID) else character()
+    if (length(tgt_ids) == 0 || !(s$col %in% names(resp))) next
+    res <- rebuild_matrix_from_linked(
+      element_df = resp, linked_col = s$col,
+      source_ids = rid, target_ids = tgt_ids,
+      default_polarity = "-", default_strength = "medium", default_confidence = "3",
+      existing_matrix    = am[[s$key]],
+      user_edited_matrix = ue[[s$key]])
+    am[[s$key]] <- res$matrix
+    ue[[s$key]] <- res$user_edited
+  }
+
+  # Incoming GB -> R (positive). Built R x GB, then transposed to GB x R for
+  # storage; existing/user_edited transposed on the way IN so projection aligns.
+  gb_ids <- if (is.data.frame(isa$goods_benefits)) as.character(isa$goods_benefits$ID) else character()
+  if (length(gb_ids) > 0 && "LinkedGB" %in% names(resp)) {
+    res <- rebuild_matrix_from_linked(
+      element_df = resp, linked_col = "LinkedGB",
+      source_ids = rid, target_ids = gb_ids,
+      default_polarity = "+", default_strength = "medium", default_confidence = "3",
+      existing_matrix    = if (!is.null(am$gb_r)) t(am$gb_r) else NULL,
+      user_edited_matrix = if (!is.null(ue$gb_r)) t(ue$gb_r) else NULL)
+    am$gb_r <- t(res$matrix)
+    ue$gb_r <- t(res$user_edited)
+  }
+
+  list(adjacency_matrices = am, user_edited_matrices = ue)
+}
