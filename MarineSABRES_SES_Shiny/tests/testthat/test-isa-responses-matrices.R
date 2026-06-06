@@ -83,3 +83,24 @@ test_that("rederive_linked_from_matrix returns '' when the element has no edges"
   m <- matrix("", nrow = 1, ncol = 2, dimnames = list("R001", c("D001","D002")))
   expect_equal(rederive_linked_from_matrix(m, "R001", "row"), "")
 })
+
+test_that("isa_fields_r returns name/type/desc + four linked multi-selects", {
+  i18n <- list(t = function(x) x)          # identity stub
+  flds <- isa_fields_r(i18n, gb_choices = c("GB001"), d_choices = c("D001"),
+                       a_choices = character(), p_choices = character())
+  ids <- vapply(flds, function(f) f$id, character(1))
+  expect_true(all(c("name","type","desc","linkedgb","linkedd","linkeda","linkedp") %in% ids))
+  lg <- Filter(function(f) f$id == "linkedgb", flds)[[1]]
+  expect_true(isTRUE(lg$multiple)); expect_equal(lg$type, "select")
+})
+
+test_that("build_response_panel_ui emits inputs suffixed by the panel id", {
+  ns <- function(x) paste0("mod-", x)
+  i18n <- list(t = function(x) x)
+  flds <- isa_fields_r(i18n, "GB001", "D001", character(), character())
+  ui <- build_response_panel_ui(ns, "R001", flds, i18n)
+  html <- as.character(ui)
+  expect_true(grepl("mod-r_name_R001", html, fixed = TRUE))
+  expect_true(grepl("mod-r_linkedgb_R001", html, fixed = TRUE))
+  expect_true(grepl("mod-r_linkedd_R001", html, fixed = TRUE))
+})

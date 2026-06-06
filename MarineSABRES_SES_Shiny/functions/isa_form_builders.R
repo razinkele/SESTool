@@ -575,3 +575,63 @@ build_response_matrices <- function(isa) {
 
   list(adjacency_matrices = am, user_edited_matrices = ue)
 }
+
+#' Field definitions for the Responses/Measures entry form. Display order:
+#' name/type/desc, the prominent linkedgb (loop-closer), stakeholder/importance/
+#' trend, then linkedd/linkeda/linkedp (rendered in the Advanced group by
+#' build_response_panel_ui).
+isa_fields_r <- function(i18n, gb_choices, d_choices, a_choices, p_choices) {
+  list(
+    list(id = "name", type = "text",  label = i18n$t("common.labels.name"), width = 4),
+    list(id = "type", type = "select", label = i18n$t("common.labels.type"), width = 4,
+         choices = c("Policy","Regulation","Economic","Spatial","Technical","Other")),
+    list(id = "desc", type = "text",  label = i18n$t("common.labels.description"), width = 4),
+    list(id = "linkedgb", type = "select", multiple = TRUE, width = 6,
+         label = i18n$t("modules.isa.data_entry.responses.linked_gb"), choices = gb_choices),
+    list(id = "stakeholder", type = "text", label = i18n$t("modules.isa.data_entry.common.stakeholder"), width = 2),
+    list(id = "importance",  type = "select", width = 2,
+         label = i18n$t("modules.isa.data_entry.common.importance"),
+         choices = c("","High","Medium","Low")),
+    list(id = "trend", type = "select", width = 2,
+         label = i18n$t("modules.isa.data_entry.common.trend"),
+         choices = c("","Increasing","Stable","Decreasing")),
+    list(id = "linkedd", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_d"), choices = d_choices),
+    list(id = "linkeda", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_a"), choices = a_choices),
+    list(id = "linkedp", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_p"), choices = p_choices)
+  )
+}
+
+#' Render one Response entry panel. Non-advanced fields render in two rows; the
+#' three advanced link fields render inside a collapsible <details> block.
+build_response_panel_ui <- function(ns, current_id, fields, i18n) {
+  render_field <- function(f) {
+    input_id <- ns(paste0("r_", f$id, "_", current_id))
+    ctl <- if (identical(f$type, "select")) {
+      selectInput(input_id, f$label, choices = f$choices,
+                  multiple = isTRUE(f$multiple), selectize = TRUE)
+    } else {
+      textInput(input_id, f$label)
+    }
+    column(width = if (is.null(f$width)) 4 else f$width, ctl)
+  }
+  main <- Filter(function(f) !isTRUE(f$advanced), fields)
+  adv  <- Filter(function(f)  isTRUE(f$advanced), fields)
+  n_row1 <- min(3L, length(main))
+  row1 <- main[seq_len(n_row1)]
+  row2 <- if (length(main) > n_row1) main[(n_row1 + 1L):length(main)] else list()
+  wellPanel(
+    id = ns(paste0("r_panel_", current_id)),
+    fluidRow(lapply(row1, render_field)),
+    if (length(row2)) fluidRow(lapply(row2, render_field)),
+    tags$details(
+      tags$summary(i18n$t("modules.isa.data_entry.responses.advanced_links")),
+      fluidRow(lapply(adv, render_field))
+    ),
+    actionButton(ns(paste0("r_remove_", current_id)),
+                 i18n$t("common.buttons.remove"),   # existing key (isa_form_builders.R:64)
+                 class = "btn-danger btn-sm")
+  )
+}
