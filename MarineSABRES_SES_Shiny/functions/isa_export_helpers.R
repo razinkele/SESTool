@@ -24,6 +24,13 @@ write_isa_element_sheets <- function(wb, isa_data, include_adjacency = TRUE) {
     "Drivers"            = isa_data$drivers
   )
 
+  # Responses / Measures (R/M) — the DAPSIWRM feedback arm. Only emitted when
+  # the model actually carries responses, so 6-category exports are unchanged.
+  responses <- isa_data$responses
+  if (is.data.frame(responses) && nrow(responses) > 0) {
+    sheet_map[["Responses_Measures"]] <- responses
+  }
+
   for (sheet_name in names(sheet_map)) {
     addWorksheet(wb, sheet_name)
     writeData(wb, sheet_name, sheet_map[[sheet_name]])

@@ -112,3 +112,87 @@ test_that("no Matrix_* sheets: reader returns elements with Linked* and no adjac
   expect_null(out$adjacency_matrices)
   expect_equal(as.character(out$ecosystem_services$LinkedGB), "GB001")
 })
+
+# ---------------------------------------------------------------------------
+# Responses / Measures (R/M) support — the DAPSIWRM feedback arm.
+# Earlier exports stopped at the 6-category forward chain; corrected models add
+# a Responses_Measures element sheet + a Matrix_r_d (Responses -> Drivers) sheet.
+# The reader/recovery must carry these through so the R nodes and r_d feedback
+# edges load instead of being silently dropped.
+# ---------------------------------------------------------------------------
+
+# isa_data with the Responses/Measures arm present (R001 -> D001 via Matrix_r_d).
+make_isa_with_responses <- function() {
+  isa <- make_isa()
+  isa$responses <- data.frame(
+    ID = "R001", Name = "Marine Spatial Planning", Type = "Response Measures",
+    Description = "", Stakeholder = "", Importance = "", Trend = "",
+    stringsAsFactors = FALSE
+  )
+  isa$adjacency_matrices$r_d <- matrix("+strong:4", 1, 1,
+                                       dimnames = list("R001", "D001"))
+  isa
+}
+
+test_that("export writes a Responses_Measures sheet when responses are present", {
+  isa <- make_isa_with_responses()
+  wb <- openxlsx::createWorkbook()
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx")
+  openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  sheets <- openxlsx::getSheetNames(tmp)
+  expect_true("Responses_Measures" %in% sheets)
+  expect_true("Matrix_r_d" %in% sheets)
+})
+
+test_that("export omits Responses_Measures sheet for a 6-category model", {
+  isa <- make_isa()  # no responses
+  wb <- openxlsx::createWorkbook()
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx")
+  openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  expect_false("Responses_Measures" %in% openxlsx::getSheetNames(tmp))
+})
+
+test_that("reader loads Responses_Measures into $responses and keeps Matrix_r_d", {
+  isa <- make_isa_with_responses()
+  wb <- openxlsx::createWorkbook()
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx")
+  openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  out <- read_standard_entry_workbook(tmp)
+
+  expect_true(is.data.frame(out$responses))
+  expect_equal(as.character(out$responses$ID), "R001")
+  expect_equal(out$adjacency_matrices$r_d["R001", "D001"], "+strong:4")
+})
+
+# The reader stays byte-faithful (see round-trip tests above); strength-casing is
+# normalised where cells are consumed, in parse_connection_value, so a legacy
+# capitalised "+Medium:3" still keys the lowercase width / dynamics weight maps.
+test_that("parse_connection_value lowercases capitalised strength", {
+  expect_equal(parse_connection_value("+Medium:3")$strength, "medium")
+  expect_equal(parse_connection_value("-Strong:4")$strength, "strong")
+  # polarity and confidence are untouched
+  expect_equal(parse_connection_value("+Medium:3")$polarity, "+")
+  expect_equal(parse_connection_value("+Medium:3")$confidence, 3L)
+})
+
+test_that("recover_isa_data assigns IDs to responses and carries r_d through", {
+  isa <- make_isa_with_responses()
+  wb <- openxlsx::createWorkbook()
+  write_isa_element_sheets(wb, isa, include_adjacency = TRUE)
+  tmp <- tempfile(fileext = ".xlsx")
+  openxlsx::saveWorkbook(wb, tmp, overwrite = TRUE)
+
+  saved <- read_standard_entry_workbook(tmp)
+  recov <- recover_isa_data(saved)
+
+  expect_true(is.data.frame(recov$elements$responses))
+  expect_equal(nrow(recov$elements$responses), 1L)
+  expect_true(nzchar(as.character(recov$elements$responses$ID)[1]))
+  expect_true(!is.null(recov$adjacency_matrices$r_d))
+})

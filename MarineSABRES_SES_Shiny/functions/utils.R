@@ -90,7 +90,10 @@ parse_connection_value <- function(value) {
   }
 
   polarity <- substr(polarity_strength, 1, 1)
-  strength <- substr(polarity_strength, 2, nchar(polarity_strength))
+  # Lowercase the strength token so legacy capitalised cells ("+Medium:3") still
+  # key the lowercase DYNAMICS_WEIGHT_MAP and visNetwork width map; otherwise the
+  # edge silently mis-weights. (see sestoolbox-strength-casing-bug)
+  strength <- tolower(substr(polarity_strength, 2, nchar(polarity_strength)))
 
   list(polarity = polarity, strength = strength, confidence = confidence,
        delay = delay, delay_years = delay_years)

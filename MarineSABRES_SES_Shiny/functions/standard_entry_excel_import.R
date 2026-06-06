@@ -4,13 +4,16 @@
 # Returns a list shaped like project$data$isa_data. Pure / non-reactive.
 
 # Sheet name -> isa_data element key
+# Responses_Measures is the DAPSIWRM feedback arm (R/M). It is optional: older
+# 6-category exports omit it, corrected models include it.
 .SE_ELEMENT_SHEETS <- c(
   Goods_Benefits     = "goods_benefits",
   Ecosystem_Services = "ecosystem_services",
   Marine_Processes   = "marine_processes",
   Pressures          = "pressures",
   Activities         = "activities",
-  Drivers            = "drivers"
+  Drivers            = "drivers",
+  Responses_Measures = "responses"
 )
 
 # Returns TRUE when a data frame has the required Standard-Entry columns.
@@ -112,7 +115,11 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     marine_processes   = list(prefix = ELEMENT_ID_PREFIX$states,     panel = "mpf_panel_ids"),
     pressures          = list(prefix = ELEMENT_ID_PREFIX$pressures,  panel = "p_panel_ids"),
     activities         = list(prefix = ELEMENT_ID_PREFIX$activities, panel = "a_panel_ids"),
-    drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids")
+    drivers            = list(prefix = ELEMENT_ID_PREFIX$drivers,    panel = "d_panel_ids"),
+    # DAPSIWRM feedback arm. Faithful Matrix_r_d edges survive via `am` below
+    # (no Linked* rebuild needed), but the response elements must be reconciled
+    # here or recov$elements drops them and the r_d edges become orphaned.
+    responses          = list(prefix = ELEMENT_ID_PREFIX$responses,  panel = "r_panel_ids")
   )
 
   elements <- list(); panel_ids <- list()
