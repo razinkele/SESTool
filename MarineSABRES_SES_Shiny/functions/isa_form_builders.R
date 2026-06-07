@@ -635,3 +635,46 @@ build_response_panel_ui <- function(ns, current_id, fields, i18n) {
                  class = "btn-danger btn-sm")
   )
 }
+
+#' Apply a single user edit to an adjacency-matrix cell, with validation and
+#' user_edited flagging. Pure: no Shiny/reactives. Used by the in-module
+#' "Adjacency Matrix Review" editable table so per-edge strength edits persist
+#' and survive a later matrix rebuild (build_response_matrices honours user_edited).
+#'
+#' @param am adjacency_matrices list. @param ue user_edited_matrices list.
+#' @param key matrix name (e.g. "r_d", "d_a"). @param i,j 1-based row/col.
+#' @param value raw typed string: "" clears the edge; otherwise must be a valid
+#'   "+/-<strength>:<confidence>" cell (strength in strong/medium/weak).
+#' @return list(am, ue, error) — error is NULL on success, else a message and
+#'   am/ue are returned unchanged.
+apply_matrix_cell_edit <- function(am, ue, key, i, j, value) {
+  err <- function(msg) list(am = am, ue = ue, error = msg)
+  if (is.null(key) || !(key %in% names(am)) || !is.matrix(am[[key]])) {
+    return(err("Unknown matrix"))
+  }
+  mat <- am[[key]]
+  i <- suppressWarnings(as.integer(i)); j <- suppressWarnings(as.integer(j))
+  if (is.na(i) || is.na(j) || i < 1L || j < 1L || i > nrow(mat) || j > ncol(mat)) {
+    return(err("Cell out of range"))
+  }
+  value <- if (is.null(value)) "" else trimws(as.character(value))
+  normalized <- ""
+  if (nzchar(value)) {
+    conn <- parse_connection_value(value)
+    if (is.null(conn) || !(conn$polarity %in% c("+", "-")) ||
+        !(tolower(conn$strength) %in% c("strong", "medium", "weak"))) {
+      return(err(paste0("Invalid cell '", value,
+                        "': expected e.g. +strong:4, -medium:3, or empty to clear")))
+    }
+    normalized <- paste0(conn$polarity, tolower(conn$strength), ":", conn$confidence)
+  }
+  mat[i, j] <- normalized
+  am[[key]] <- mat
+  uem <- ue[[key]]
+  if (!is.matrix(uem) || !identical(dim(uem), dim(mat))) {
+    uem <- matrix(FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
+  }
+  uem[i, j] <- TRUE          # deliberate edit (incl. clearing) — never re-seeded by rebuild
+  ue[[key]] <- uem
+  list(am = am, ue = ue, error = NULL)
+}
