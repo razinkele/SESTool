@@ -4608,6 +4608,149 @@
       "it": "Il diagramma del ciclo sarà generato\ndalle tue voci di dati",
       "no": "Sløyfediagram genereres\nfra dataoppføringene dine",
       "el": "Το διάγραμμα βρόχου θα δημιουργηθεί\nαπό τις καταχωρήσεις δεδομένων σας"
+    },
+    "modules.isa.data_entry.responses.tab_title": {
+      "en": "Responses & Measures",
+      "es": "Responses & Measures",
+      "fr": "Responses & Measures",
+      "de": "Responses & Measures",
+      "lt": "Responses & Measures",
+      "pt": "Responses & Measures",
+      "it": "Responses & Measures",
+      "no": "Responses & Measures",
+      "el": "Responses & Measures"
+    },
+    "modules.isa.data_entry.responses.purpose": {
+      "en": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "es": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "fr": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "de": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "lt": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "pt": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "it": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "no": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits).",
+      "el": "Responses/Measures (R) are management actions that address the system — distinct from Exercise 6 Closing Loop (Drivers → Goods & Benefits)."
+    },
+    "modules.isa.data_entry.responses.add": {
+      "en": "Add Response",
+      "es": "Add Response",
+      "fr": "Add Response",
+      "de": "Add Response",
+      "lt": "Add Response",
+      "pt": "Add Response",
+      "it": "Add Response",
+      "no": "Add Response",
+      "el": "Add Response"
+    },
+    "modules.isa.data_entry.responses.save": {
+      "en": "Save Responses",
+      "es": "Save Responses",
+      "fr": "Save Responses",
+      "de": "Save Responses",
+      "lt": "Save Responses",
+      "pt": "Save Responses",
+      "it": "Save Responses",
+      "no": "Save Responses",
+      "el": "Save Responses"
+    },
+    "modules.isa.data_entry.responses.saved": {
+      "en": "Saved responses:",
+      "es": "Saved responses:",
+      "fr": "Saved responses:",
+      "de": "Saved responses:",
+      "lt": "Saved responses:",
+      "pt": "Saved responses:",
+      "it": "Saved responses:",
+      "no": "Saved responses:",
+      "el": "Saved responses:"
+    },
+    "modules.isa.data_entry.responses.none_to_save": {
+      "en": "No responses to save.",
+      "es": "No responses to save.",
+      "fr": "No responses to save.",
+      "de": "No responses to save.",
+      "lt": "No responses to save.",
+      "pt": "No responses to save.",
+      "it": "No responses to save.",
+      "no": "No responses to save.",
+      "el": "No responses to save."
+    },
+    "modules.isa.data_entry.responses.advanced_links": {
+      "en": "Advanced: link to Drivers / Activities / Pressures",
+      "es": "Advanced: link to Drivers / Activities / Pressures",
+      "fr": "Advanced: link to Drivers / Activities / Pressures",
+      "de": "Advanced: link to Drivers / Activities / Pressures",
+      "lt": "Advanced: link to Drivers / Activities / Pressures",
+      "pt": "Advanced: link to Drivers / Activities / Pressures",
+      "it": "Advanced: link to Drivers / Activities / Pressures",
+      "no": "Advanced: link to Drivers / Activities / Pressures",
+      "el": "Advanced: link to Drivers / Activities / Pressures"
+    },
+    "modules.isa.data_entry.responses.linked_gb": {
+      "en": "Good(s) & Benefit(s) this response improves",
+      "es": "Good(s) & Benefit(s) this response improves",
+      "fr": "Good(s) & Benefit(s) this response improves",
+      "de": "Good(s) & Benefit(s) this response improves",
+      "lt": "Good(s) & Benefit(s) this response improves",
+      "pt": "Good(s) & Benefit(s) this response improves",
+      "it": "Good(s) & Benefit(s) this response improves",
+      "no": "Good(s) & Benefit(s) this response improves",
+      "el": "Good(s) & Benefit(s) this response improves"
+    },
+    "modules.isa.data_entry.responses.linked_d": {
+      "en": "Linked Drivers",
+      "es": "Linked Drivers",
+      "fr": "Linked Drivers",
+      "de": "Linked Drivers",
+      "lt": "Linked Drivers",
+      "pt": "Linked Drivers",
+      "it": "Linked Drivers",
+      "no": "Linked Drivers",
+      "el": "Linked Drivers"
+    },
+    "modules.isa.data_entry.responses.linked_a": {
+      "en": "Linked Activities",
+      "es": "Linked Activities",
+      "fr": "Linked Activities",
+      "de": "Linked Activities",
+      "lt": "Linked Activities",
+      "pt": "Linked Activities",
+      "it": "Linked Activities",
+      "no": "Linked Activities",
+      "el": "Linked Activities"
+    },
+    "modules.isa.data_entry.responses.linked_p": {
+      "en": "Linked Pressures",
+      "es": "Linked Pressures",
+      "fr": "Linked Pressures",
+      "de": "Linked Pressures",
+      "lt": "Linked Pressures",
+      "pt": "Linked Pressures",
+      "it": "Linked Pressures",
+      "no": "Linked Pressures",
+      "el": "Linked Pressures"
+    },
+    "modules.isa.data_entry.responses.help_title": {
+      "en": "About Responses & Measures",
+      "es": "About Responses & Measures",
+      "fr": "About Responses & Measures",
+      "de": "About Responses & Measures",
+      "lt": "About Responses & Measures",
+      "pt": "About Responses & Measures",
+      "it": "About Responses & Measures",
+      "no": "About Responses & Measures",
+      "el": "About Responses & Measures"
+    },
+    "modules.isa.data_entry.responses.help_body": {
+      "en": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "es": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "fr": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "de": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "lt": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "pt": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "it": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "no": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
+      "el": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets."
     }
   }
 }
