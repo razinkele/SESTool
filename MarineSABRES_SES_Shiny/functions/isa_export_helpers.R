@@ -74,6 +74,20 @@ create_isa_analysis_workbook <- function(isa_data) {
   writeData(wb, "Drivers", isa_data$drivers)
   writeData(wb, "BOT_Data", isa_data$bot_data)
 
+  if (is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
+    addWorksheet(wb, "Responses_Measures")
+    writeData(wb, "Responses_Measures", isa_data$responses)
+    if (!is.null(isa_data$adjacency_matrices)) {
+      for (mat_name in names(isa_data$adjacency_matrices)) {
+        mat <- isa_data$adjacency_matrices[[mat_name]]
+        if (is.matrix(mat)) {
+          sheet <- substr(paste0("Matrix_", mat_name), 1, 31)
+          addWorksheet(wb, sheet); writeData(wb, sheet, as.data.frame(mat), rowNames = TRUE)
+        }
+      }
+    }
+  }
+
   wb
 }
 
@@ -94,6 +108,11 @@ build_kumu_elements <- function(isa_data) {
     data.frame(Label = isa_data$activities$Name,          Type = "Activity",          ID = isa_data$activities$ID),
     data.frame(Label = isa_data$drivers$Name,             Type = "Driver",            ID = isa_data$drivers$ID)
   )
+  if (is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
+    dfs[[length(dfs) + 1]] <- data.frame(
+      Label = isa_data$responses$Name, Type = "Response",
+      ID = isa_data$responses$ID, stringsAsFactors = FALSE)
+  }
   do.call(rbind, dfs)
 }
 

@@ -512,3 +512,126 @@ validate_and_collect_es <- function(input, panel_ids, session, i18n) {
   df <- if (length(es_rows) > 0) do.call(rbind, es_rows) else data.frame()
   list(df = df, errors = validation_errors, n_rows = length(es_rows))
 }
+
+#' Build the four Responses-arm adjacency matrices from the responses element
+#' rows' Linked* columns. Pure: no Shiny/reactives. Mirrors the forward-chain
+#' rebuild but (a) builds 4 matrices, (b) seeds sign-aware lowercase/integer
+#' defaults, (c) transposes gb_r to GB x R on store and on read so user edits
+#' survive re-save. See docs/superpowers/specs/2026-06-06-responses-entry-design.md.
+#'
+#' @param isa list/reactiveValues with $responses (cols ID, LinkedGB/D/A/P),
+#'   $goods_benefits, $drivers, $activities, $pressures, $adjacency_matrices,
+#'   $user_edited_matrices.
+#' @return list(adjacency_matrices, user_edited_matrices) updated copies.
+#' @note Builds only gb_r / r_d / r_a / r_p (the in-scope R-arm). r_mpf / r_es
+#'   are intentionally not built. Errors propagate to the caller by design
+#'   (the Shiny save observer is the error boundary); we do not tryCatch here.
+#'   stale_linked_ids / dropped_user_edits from rebuild_matrix_from_linked are
+#'   not surfaced here — the save observer may report them if desired.
+build_response_matrices <- function(isa) {
+  am <- if (is.null(isa$adjacency_matrices)) list() else isa$adjacency_matrices
+  ue <- if (is.null(isa$user_edited_matrices)) list() else isa$user_edited_matrices
+  resp <- isa$responses
+  # Need a data frame with rows AND an ID column to source edges from.
+  if (!is.data.frame(resp) || nrow(resp) == 0 || !("ID" %in% names(resp))) {
+    return(list(adjacency_matrices = am, user_edited_matrices = ue))
+  }
+  rid <- as.character(resp$ID)
+
+  # Outgoing R -> target (negative polarity): r_d, r_a, r_p
+  out_specs <- list(
+    list(key = "r_d", col = "LinkedD", tgt = isa$drivers),
+    list(key = "r_a", col = "LinkedA", tgt = isa$activities),
+    list(key = "r_p", col = "LinkedP", tgt = isa$pressures)
+  )
+  for (s in out_specs) {
+    tgt_ids <- if (is.data.frame(s$tgt)) as.character(s$tgt$ID) else character()
+    if (length(tgt_ids) == 0 || !(s$col %in% names(resp))) next
+    res <- rebuild_matrix_from_linked(
+      element_df = resp, linked_col = s$col,
+      source_ids = rid, target_ids = tgt_ids,
+      # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
+      default_polarity = "-", default_strength = "medium", default_confidence = "3",
+      existing_matrix    = am[[s$key]],
+      user_edited_matrix = ue[[s$key]])
+    am[[s$key]] <- res$matrix
+    ue[[s$key]] <- res$user_edited
+  }
+
+  # Incoming GB -> R (positive). Built R x GB, then transposed to GB x R for
+  # storage; existing/user_edited transposed on the way IN so projection aligns.
+  gb_ids <- if (is.data.frame(isa$goods_benefits)) as.character(isa$goods_benefits$ID) else character()
+  if (length(gb_ids) > 0 && "LinkedGB" %in% names(resp)) {
+    res <- rebuild_matrix_from_linked(
+      element_df = resp, linked_col = "LinkedGB",
+      source_ids = rid, target_ids = gb_ids,
+      # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
+      default_polarity = "+", default_strength = "medium", default_confidence = "3",
+      existing_matrix    = if (!is.null(am$gb_r)) t(am$gb_r) else NULL,
+      user_edited_matrix = if (!is.null(ue$gb_r)) t(ue$gb_r) else NULL)
+    am$gb_r <- t(res$matrix)
+    ue$gb_r <- t(res$user_edited)
+  }
+
+  list(adjacency_matrices = am, user_edited_matrices = ue)
+}
+
+#' Field definitions for the Responses/Measures entry form. Display order:
+#' name/type/desc, the prominent linkedgb (loop-closer), stakeholder/importance/
+#' trend, then linkedd/linkeda/linkedp (rendered in the Advanced group by
+#' build_response_panel_ui).
+isa_fields_r <- function(i18n, gb_choices, d_choices, a_choices, p_choices) {
+  list(
+    list(id = "name", type = "text",  label = i18n$t("common.labels.name"), width = 4),
+    list(id = "type", type = "select", label = i18n$t("common.labels.type"), width = 4,
+         choices = c("Policy","Regulation","Economic","Spatial","Technical","Other")),
+    list(id = "desc", type = "text",  label = i18n$t("common.labels.description"), width = 4),
+    list(id = "linkedgb", type = "select", multiple = TRUE, width = 6,
+         label = i18n$t("modules.isa.data_entry.responses.linked_gb"), choices = gb_choices),
+    list(id = "stakeholder", type = "text", label = i18n$t("modules.isa.data_entry.common.stakeholder"), width = 2),
+    list(id = "importance",  type = "select", width = 2,
+         label = i18n$t("modules.isa.data_entry.common.importance"),
+         choices = c("","High","Medium","Low")),
+    list(id = "trend", type = "select", width = 2,
+         label = i18n$t("modules.isa.data_entry.common.trend"),
+         choices = c("","Increasing","Stable","Decreasing")),
+    list(id = "linkedd", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_d"), choices = d_choices),
+    list(id = "linkeda", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_a"), choices = a_choices),
+    list(id = "linkedp", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_p"), choices = p_choices)
+  )
+}
+
+#' Render one Response entry panel. Non-advanced fields render in two rows; the
+#' three advanced link fields render inside a collapsible <details> block.
+build_response_panel_ui <- function(ns, current_id, fields, i18n) {
+  render_field <- function(f) {
+    input_id <- ns(paste0("r_", f$id, "_", current_id))
+    ctl <- if (identical(f$type, "select")) {
+      selectInput(input_id, f$label, choices = f$choices,
+                  multiple = isTRUE(f$multiple), selectize = TRUE)
+    } else {
+      textInput(input_id, f$label)
+    }
+    column(width = if (is.null(f$width)) 4 else f$width, ctl)
+  }
+  main <- Filter(function(f) !isTRUE(f$advanced), fields)
+  adv  <- Filter(function(f)  isTRUE(f$advanced), fields)
+  n_row1 <- min(3L, length(main))
+  row1 <- main[seq_len(n_row1)]
+  row2 <- if (length(main) > n_row1) main[(n_row1 + 1L):length(main)] else list()
+  wellPanel(
+    id = ns(paste0("r_panel_", current_id)),
+    fluidRow(lapply(row1, render_field)),
+    if (length(row2)) fluidRow(lapply(row2, render_field)),
+    tags$details(
+      tags$summary(i18n$t("modules.isa.data_entry.responses.advanced_links")),
+      fluidRow(lapply(adv, render_field))
+    ),
+    actionButton(ns(paste0("r_remove_", current_id)),
+                 i18n$t("common.buttons.remove"),   # existing key (isa_form_builders.R:64)
+                 class = "btn-danger btn-sm")
+  )
+}

@@ -192,6 +192,16 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       p_panel_ids   = character(0),
       a_panel_ids   = character(0),
       d_panel_ids   = character(0),
+      r_panel_ids   = character(0),
+      r_counter     = 0,
+      responses     = data.frame(
+        ID = character(), Name = character(), Type = character(),
+        Description = character(), Stakeholder = character(),
+        Importance = character(), Trend = character(),
+        LinkedGB = character(), LinkedD = character(),
+        LinkedA = character(), LinkedP = character(),
+        stringsAsFactors = FALSE
+      ),
 
       # Exercise 6: Loop closure
       loop_connections = data.frame(
@@ -244,6 +254,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       "Exercise 4: Activities",
       "Exercise 5: Drivers",
       "Exercise 6: Closing Loop",
+      "Responses & Measures",
       "Exercises 7-9: CLD",
       "Exercises 10-12: Analysis",
       "BOT Graphs",
@@ -269,6 +280,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       pd$data$isa_data$pressures          <- isa_data$pressures
       pd$data$isa_data$activities         <- isa_data$activities
       pd$data$isa_data$drivers            <- isa_data$drivers
+      pd$data$isa_data$responses          <- isa_data$responses
 
       if (!is.null(isa_data$adjacency_matrices)) {
         pd$data$isa_data$adjacency_matrices <- isa_data$adjacency_matrices
@@ -352,6 +364,25 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         saved_ue     = saved_isa$user_edited_matrices,
         adj_matrices = isa_data$adjacency_matrices
       )
+      # Re-derive LinkedGB/D/A/P columns for responses from the imported matrices.
+      # recover_isa_data reconciles response rows but does NOT populate Linked*
+      # columns — those edges live only in the Matrix_* sheets. Without this, a
+      # re-save of the Responses tab would rebuild matrices from empty Linked*
+      # and wipe the imported edges. Work on a LOCAL copy and reassign once to
+      # avoid per-cell assignment into a reactiveValues slot.
+      r <- isa_data$responses
+      if (is.data.frame(r) && nrow(r) > 0) {
+        am <- isa_data$adjacency_matrices
+        r$LinkedGB <- ""; r$LinkedD <- ""; r$LinkedA <- ""; r$LinkedP <- ""
+        for (i in seq_len(nrow(r))) {
+          rid <- as.character(r$ID[i])
+          r$LinkedGB[i] <- rederive_linked_from_matrix(am$gb_r, rid, "col")
+          r$LinkedD[i]  <- rederive_linked_from_matrix(am$r_d,  rid, "row")
+          r$LinkedA[i]  <- rederive_linked_from_matrix(am$r_a,  rid, "row")
+          r$LinkedP[i]  <- rederive_linked_from_matrix(am$r_p,  rid, "row")
+        }
+        isa_data$responses <- r
+      }
       any_repaired      <- rec$repaired
       any_rows_in       <- rec$any_rows_in
       any_panel_ids_out <- rec$any_panel_ids_out
@@ -418,6 +449,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ),
         tabPanel(i18n$t("modules.isa.data_entry.ex6.exercise_6_closing_loop"),
           uiOutput(ns("exercise_6_content"))
+        ),
+        tabPanel(i18n$t("modules.isa.data_entry.responses.tab_title"),
+          uiOutput(ns("responses_content"))
         ),
         tabPanel(i18n$t("modules.isa.data_entry.common.exercises_7_9_cld"),
           uiOutput(ns("exercise_789_content"))
@@ -792,6 +826,28 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       )
     })
 
+    # Render Responses & Measures content ----
+    output$responses_content <- renderUI({
+      tagList(
+        wellPanel(
+          h4(i18n$t("modules.isa.data_entry.responses.tab_title"),
+             actionButton(ns("help_responses"), label = NULL, icon = icon("circle-question"),
+                          class = "btn-link", style = "padding:0 .4rem;")),
+          p(i18n$t("modules.isa.data_entry.responses.purpose"))
+        ),
+        actionButton(ns("add_response"), i18n$t("modules.isa.data_entry.responses.add"),
+                     class = "btn-primary"),
+        tags$div(id = ns("r_entries")),
+        actionButton(ns("save_responses"), i18n$t("modules.isa.data_entry.responses.save"),
+                     class = "btn-success"),
+        DT::DTOutput(ns("r_table"))
+      )
+    })
+
+    output$r_table <- DT::renderDT({
+      DT::datatable(isa_data$responses, options = list(pageLength = 10), rownames = FALSE)
+    })
+
     # Render Exercises 7-9 content ----
     output$exercise_789_content <- renderUI({
       tagList(
@@ -815,7 +871,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                                  "MPF to Pressures" = "mpf_p",
                                  "Pressures to Activities" = "p_a",
                                  "Activities to Drivers" = "a_d",
-                                 "Drivers to Goods/Benefits" = "d_gb")),
+                                 "Drivers to Goods/Benefits" = "d_gb",
+                                 "Goods/Benefits to Responses" = "gb_r",
+                                 "Responses to Drivers" = "r_d",
+                                 "Responses to Activities" = "r_a",
+                                 "Responses to Pressures" = "r_p")),
             DTOutput(ns("adj_matrix_view"))
           ),
           column(6,
@@ -1308,6 +1368,61 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })
 
+    # Responses & Measures ----
+    observeEvent(input$add_response, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$responses, id_store)
+      isa_data$r_panel_ids <- c(isa_data$r_panel_ids, current_id)
+      isa_data$r_counter   <- isa_data$r_counter + 1
+
+      gb_choices <- c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
+      d_choices  <- c("", paste0(isa_data$drivers$ID,        ": ", isa_data$drivers$Name))
+      a_choices  <- c("", paste0(isa_data$activities$ID,     ": ", isa_data$activities$Name))
+      p_choices  <- c("", paste0(isa_data$pressures$ID,      ": ", isa_data$pressures$Name))
+
+      insertUI(
+        selector = paste0("#", ns("r_entries")),
+        where = "beforeEnd",
+        ui = build_response_panel_ui(
+          ns, current_id,
+          isa_fields_r(i18n, gb_choices, d_choices, a_choices, p_choices), i18n)
+      )
+
+      register_remove_observer(input, ns, "r", current_id, i18n,
+                              isa_data = isa_data, data_key = "responses",
+                              id_prefix = ELEMENT_ID_PREFIX$responses,
+                              on_remove = sync_to_project_data)
+    })
+
+    observeEvent(input$save_responses, {
+      if (length(isa_data$r_panel_ids) == 0) {
+        showNotification(i18n$t("modules.isa.data_entry.responses.none_to_save"),
+                         type = "warning")
+        return(invisible(NULL))
+      }
+      # col_names in the SAME order as the reactiveValues schema (ID is prepended
+      # by collect_element_entries). field_ids zip 1:1 with col_names.
+      r_df <- collect_element_entries(
+        input, "r", isa_data$r_panel_ids, ELEMENT_ID_PREFIX$responses,
+        field_ids = c("name","type","desc","stakeholder","importance","trend",
+                      "linkedgb","linkedd","linkeda","linkedp"),
+        col_names = c("Name","Type","Description","Stakeholder","Importance","Trend",
+                      "LinkedGB","LinkedD","LinkedA","LinkedP")
+      )
+      isa_data$responses <- r_df
+      built <- build_response_matrices(isa_data)
+      isa_data$adjacency_matrices   <- built$adjacency_matrices
+      isa_data$user_edited_matrices <- built$user_edited_matrices
+      if (nrow(r_df) == 0) {                      # all panels blank -> drop stale R-arm matrices
+        for (k in c("r_d","r_a","r_p","gb_r")) {
+          isa_data$adjacency_matrices[[k]]   <- NULL
+          isa_data$user_edited_matrices[[k]] <- NULL
+        }
+      }
+      sync_to_project_data()
+      showNotification(paste(i18n$t("modules.isa.data_entry.responses.saved"), nrow(r_df)),
+                       type = "message")
+    })
+
     # Exercise 6: Loop connections UI ----
     output$loop_connections <- renderUI({
       req(isa_data$drivers, isa_data$goods_benefits)
@@ -1487,6 +1602,19 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       datatable(isa_data$bot_data, options = list(pageLength = 5), rownames = FALSE)
     })
 
+    # Adjacency matrix viewer (read-only) ----
+    output$adj_matrix_view <- renderDT({
+      key <- input$adj_matrix_select
+      mat <- isa_data$adjacency_matrices[[key]]
+      if (is.null(mat)) {
+        DT::datatable(data.frame(Message = "No data available for this matrix."),
+                      options = list(dom = "t"), rownames = FALSE)
+      } else {
+        df <- as.data.frame(mat, stringsAsFactors = FALSE)
+        DT::datatable(df, options = list(pageLength = 15, scrollX = TRUE), rownames = TRUE)
+      }
+    })
+
     # Data export handlers ----
     output$export_data <- downloadHandler(
       filename = function() {
@@ -1529,7 +1657,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Helper: does the module currently hold any elements?
     .isa_has_elements <- function() {
       any(vapply(list(isa_data$gb_panel_ids, isa_data$es_panel_ids, isa_data$mpf_panel_ids,
-                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids),
+                      isa_data$p_panel_ids, isa_data$a_panel_ids, isa_data$d_panel_ids,
+                      isa_data$r_panel_ids),
                  function(x) length(x) > 0 && any(nzchar(x)), logical(1)))
     }
 
@@ -1538,11 +1667,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # loaded project's matrices/elements (stale edges / orphan IDs).
     .reset_isa_state <- function() {
       for (k in c("goods_benefits","ecosystem_services","marine_processes",
-                  "pressures","activities","drivers")) {
+                  "pressures","activities","drivers","responses")) {
         if (is.data.frame(isa_data[[k]])) isa_data[[k]] <- isa_data[[k]][0, , drop = FALSE]
       }
       for (p in c("gb_panel_ids","es_panel_ids","mpf_panel_ids",
-                  "p_panel_ids","a_panel_ids","d_panel_ids")) {
+                  "p_panel_ids","a_panel_ids","d_panel_ids","r_panel_ids")) {
         isa_data[[p]] <- character(0)
       }
       isa_data$adjacency_matrices   <- list()
@@ -1675,6 +1804,15 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     create_help_observer(input, "help_ex4", "ex4_help_title", p(i18n$t("modules.isa.data_entry.common.ex4_help_text")), i18n)
     create_help_observer(input, "help_ex5", "ex5_help_title", p(i18n$t("modules.isa.data_entry.common.ex5_help_text")), i18n)
     create_help_observer(input, "help_ex6", "ex6_help_title", p(i18n$t("modules.isa.data_entry.common.ex6_help_text")), i18n)
+
+    observeEvent(input$help_responses, {
+      showModal(modalDialog(
+        title = i18n$t("modules.isa.data_entry.responses.help_title"),
+        i18n$t("modules.isa.data_entry.responses.help_body"),
+        easyClose = TRUE
+      ))
+    })
+
     create_help_observer(input, "help_ex789", "ex789_help_title", p(i18n$t("modules.isa.data_entry.common.ex789_help_text")), i18n)
     create_help_observer(input, "help_ex101112", "ex101112_help_title", p(i18n$t("modules.isa.data_entry.common.ex101112_help_text")), i18n)
     create_help_observer(input, "help_bot", "bot_help_title", p(i18n$t("modules.isa.data_entry.common.bot_help_text")), i18n)

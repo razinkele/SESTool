@@ -239,6 +239,30 @@ resolve_linked_to_target_ids <- function(linked_value, target_df) {
   unique(out)
 }
 
+#' Inverse of the Linked->Matrix build: for one element ID, collect the IDs of
+#' the cells it connects to and return them as a single '|'-delimited string
+#' (the Linked* column format). orientation="row" for R x target matrices
+#' (r_d/r_a/r_p: scan the row named element_id, collect column names);
+#' orientation="col" for gb_r (GB x R: scan the column named element_id,
+#' collect row names). Returns "" when absent or no edges.
+#' @param mat character adjacency matrix with dimnames; cells "" = no edge.
+#' @param element_id the response ID whose links to recover.
+#' @param orientation "row" or "col".
+rederive_linked_from_matrix <- function(mat, element_id, orientation = c("row", "col")) {
+  orientation <- match.arg(orientation)
+  if (is.null(mat) || !is.matrix(mat)) return("")
+  if (orientation == "row") {
+    if (!(element_id %in% rownames(mat))) return("")
+    cells <- mat[element_id, ]
+    ids <- colnames(mat)[nzchar(cells) & !is.na(cells)]
+  } else {
+    if (!(element_id %in% colnames(mat))) return("")
+    cells <- mat[, element_id]
+    ids <- rownames(mat)[nzchar(cells) & !is.na(cells)]
+  }
+  serialize_linked(ids)
+}
+
 #' Rebuild a source x target adjacency matrix from a label-form LinkedX column,
 #' resolving each link by NAME-then-ID. Cells default to
 #' "<polarity><strength>:<confidence>" (confidence taken from the source row's
