@@ -65,22 +65,26 @@ jobs:
           message(sprintf("Fixtures copied: %d", length(fx)))
         shell: Rscript {0}
 
-      - name: Run testthat unit suite (excludes Chrome-based E2E)
+      - name: Run testthat suite
         run: |
           library(testthat)
-          files <- list.files("tests/testthat", pattern = "^test-.*\\.R$", full.names = TRUE)
-          # E2E/visual tests need a headless browser (shinytest2 + Chrome); out of
-          # scope for this lean workflow.
-          files <- files[!grepl("e2e|shinytest|visual", files, ignore.case = TRUE)]
-          reporter <- testthat::MultiReporter$new(reporters = list(
-            testthat::ProgressReporter$new(), testthat::CheckReporter$new()))
-          any_fail <- FALSE
-          for (f in files) {
-            res <- as.data.frame(test_file(f, reporter = "silent", stop_on_failure = FALSE))
-            n_fail <- sum(res$failed) + sum(res$error)
-            cat(sprintf("%-55s FAIL=%d PASS=%d\n", basename(f), n_fail, sum(res$passed)))
-            if (n_fail > 0) any_fail <- TRUE
+          # Use test_dir (the project's canonical runner): it loads the
+          # helper-00 -> global.R chain ONCE with the correct working directory,
+          # so global.R's translation-merge cache writes successfully (a per-file
+          # loop re-sources global.R at the wrong wd and the cache write fails ->
+          # partial load -> spurious errors). shinytest2 E2E tests skip on CI
+          # automatically (the runner sets CI=true).
+          res <- test_dir("tests/testthat", reporter = "summary", stop_on_failure = FALSE)
+          df <- as.data.frame(res)
+          cat(sprintf("\n=== TOTAL: FAIL=%d ERROR=%d PASS=%d SKIP=%d ===\n",
+                      sum(df$failed), sum(df$error %||% FALSE), sum(df$passed), sum(df$skipped)))
+          bad <- df[df$failed > 0 | (if ("error" %in% names(df)) df$error else FALSE), , drop = FALSE]
+          if (nrow(bad) > 0) {
+            cat("Files with failures/errors:\n")
+            print(bad[, intersect(c("file","failed","error","skipped","passed"), names(bad))])
+            stop("Test failures present")
           }
-          if (any_fail) stop("One or more test files had failures/errors")
-          cat("All unit test files passed.\n")
+          cat("All tests passed.\n")
         shell: Rscript {0}
+        env:
+          CI: "true"
