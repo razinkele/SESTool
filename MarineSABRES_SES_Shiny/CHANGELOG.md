@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Pending partner sign-off** — the WP5 KB carries D5.2 research/deliverable data still awaiting partner validation (see PR for the full list: mac_07/14/9 cost profiles, mac_03 blended finance, tus_04/05/06 inferred-from-practice, arc_05 research-gap, arc_06 ecolabel choice, empty success_metrics). Re-version forward at merge time.
 
+## [1.18.0] - 2026-06-07
+
+### Added — DAPSIWRM Responses/Measures (R) authoring & editing
+
+- **Responses/Measures entry tab** in the Standard-Entry form (`modules/isa_data_entry_module.R`): create/edit/remove Response (R) elements and capture the full feedback arm — `gb_r` (Welfare→Responses), `r_d`/`r_a`/`r_p` (Responses→Drivers/Activities/Pressures). New `functions/isa_form_builders.R::build_response_matrices()` builds the four matrices with sign-aware defaults (`-` outgoing, `+` for gb_r), lowercase strength + integer confidence; `gb_r` is stored GB×R via transpose so it renders and survives re-save. Add/remove/save observers mirror the forward-chain categories; `sync_to_project_data()` now persists `responses` (fixes a silent data-loss gap).
+- **Import re-derivation**: `apply_saved_isa` rebuilds responses' `LinkedGB/D/A/P` columns from imported `Matrix_*` sheets via the new `functions/matrix_from_linked.R::rederive_linked_from_matrix()`, so the form is the single source of truth and a re-save reproduces imported edges.
+- **Export coverage**: `create_isa_analysis_workbook` and `build_kumu_elements` now include the Responses arm when present (guarded by `nrow>0`; 6-category exports unchanged). `write_isa_element_sheets` and `export_isa_to_workbook` already covered it.
+- **Editable adjacency-matrix viewer**: the in-module "Adjacency Matrix Review" pane is now editable. New `functions/isa_form_builders.R::apply_matrix_cell_edit()` validates/normalises a typed `±strength:confidence` cell and flags `user_edited`, so per-edge strength edits persist and survive a later matrix rebuild (closes the prior editing limitation). The pane also gained its previously-missing renderer and lists the R-arm matrices.
+- **Translations**: the 13 new `modules.isa.data_entry.responses.*` keys translated into all 8 non-English locales (es/fr/de/lt/pt/it/no/el).
+- **Tests**: `tests/testthat/test-isa-responses-matrices.R` and `test-isa-responses-entry.R` (~45 assertions) cover the matrix build, transpose round-trip, import re-derivation, save persistence, cell-edit validation/persistence, and exports.
+
 ## [1.17.1] - 2026-06-06
 
 ### Fixed
