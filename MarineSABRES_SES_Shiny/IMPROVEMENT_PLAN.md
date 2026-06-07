@@ -7,6 +7,45 @@
 
 ---
 
+## Status update (2026-06-07, post-v1.18.1) — VERIFIED against current code
+
+The sections below are a **March-2026 snapshot and are now substantially out of
+date** — several P0 items were verified DONE on 2026-06-07 (don't re-implement
+them). Verified state:
+
+**Done / no longer open (confirmed in code):**
+- **P0 #2 JSON import validation** — fully implemented: `safe_parse_json`,
+  `validate_json_project_input` (utils.R), `validate_project_structure`
+  (data_structure.R); both load paths guarded (`server/project_io.R` file-load,
+  `app.R` language-change restore). Covered by `test-json-project-loading.R`
+  (1100+ assertions). **No `validate_project_json` needed.**
+- **P0 #1 XSS** — the 5 `HTML(paste(...))` sites are all safe (htmlEscape on user
+  input; the two `tags$script` sites JSON-encode via a `js_safe()` helper and only
+  interpolate app-controlled i18n strings). A *broad* audit (sprintf/glue/renderUI
+  paths) was not exhaustively done, but no live injection via the obvious sites.
+- **P1 #13 failing ML tests** — `tests/testthat/_problems/` is gone.
+- **DAPSIWRM Responses/Measures (R) arm** — import, authoring tab, per-edge matrix
+  editing (`apply_matrix_cell_edit`), exports, and translations all shipped
+  (v1.17.1 → v1.18.1).
+
+**Still genuinely open (verified):**
+- **P0 #3 ML model checksums** — checksum machinery now present in
+  `ml_model_registry.R`/`ml_inference.R`; confirm it actually gates `torch_load`.
+- **P1 #16 dependency pinning** — no `renv.lock` (DESCRIPTION exists). Deliberate
+  decision needed: full `renv` adoption restructures the project (renv/ infra +
+  `.Rprofile` autoloader), so it should be chosen, not auto-applied.
+- **CI** — repo-root `.github/workflows/test.yml` added 2026-06-07 (closes GitHub
+  issue #7); the comprehensive matrix workflow under the app subdir still only has
+  i18n + the new lean unit job at root.
+- **Export robustness / i18n labels** — fixed in v1.18.1 (`build_kumu_elements`
+  empty-category crash; mislabelled `common.stakeholder`/`.importance`).
+
+**Recommendation:** before acting on any item below, grep the current code — this
+plan predates the entire ML pipeline and the v1.16–v1.18 work and is kept only for
+historical context. A fresh deep-dive should replace it.
+
+---
+
 ## Status update (2026-05-18, post-v1.15.0)
 
 This plan is a March 2026 snapshot. Many P0/P1 items have been worked
