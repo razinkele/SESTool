@@ -56,3 +56,35 @@ test_that("import re-derives responses Linked* from Matrix_* so a re-save reprod
     expect_equal(isa_data$responses$LinkedGB[1], "GB002")
   })
 })
+
+test_that("import-replace clears prior responses", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {
+    isa_data$responses <- data.frame(ID = "R009", Name = "old", stringsAsFactors = FALSE)
+    isa_data$r_panel_ids <- "R009"
+    .reset_isa_state()
+    expect_equal(nrow(isa_data$responses), 0L)
+    expect_equal(length(isa_data$r_panel_ids), 0L)
+  })
+})
+
+test_that("create_edges_df emits R->D and GB->R edges from a built responses model", {
+  # Pure render check (no testServer). create_edges_df is loaded via global.R.
+  isa <- list(
+    goods_benefits     = data.frame(ID = c("GB001","GB002"), Name = c("Food","Tourism"), stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = character(), Name = character()),
+    marine_processes   = data.frame(ID = character(), Name = character()),
+    pressures          = data.frame(ID = character(), Name = character()),
+    activities         = data.frame(ID = character(), Name = character()),
+    drivers            = data.frame(ID = "D001", Name = "Demand", stringsAsFactors = FALSE),
+    responses          = data.frame(ID = "R001", Name = "MSP", LinkedGB = "GB002",
+                                    LinkedD = "D001", LinkedA = "", LinkedP = "",
+                                    stringsAsFactors = FALSE)
+  )
+  built <- build_response_matrices(isa)
+  isa$adjacency_matrices <- built$adjacency_matrices
+  edges <- create_edges_df(isa, isa$adjacency_matrices)   # two args (verified signature)
+  expect_true(any(grepl("^R_", edges$from)  & grepl("^D_", edges$to)))   # r_d edge
+  expect_true(any(grepl("^GB_", edges$from) & grepl("^R_", edges$to)))   # gb_r edge
+})
