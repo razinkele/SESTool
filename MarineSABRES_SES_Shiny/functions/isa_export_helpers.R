@@ -100,18 +100,29 @@ create_isa_analysis_workbook <- function(isa_data) {
 #' @param isa_data Reactive values or list containing ISA element data frames
 #' @return A data.frame with Label, Type, and ID columns
 build_kumu_elements <- function(isa_data) {
-  dfs <- list(
-    data.frame(Label = isa_data$goods_benefits$Name,     Type = "Goods & Benefits",  ID = isa_data$goods_benefits$ID),
-    data.frame(Label = isa_data$ecosystem_services$Name,  Type = "Ecosystem Service", ID = isa_data$ecosystem_services$ID),
-    data.frame(Label = isa_data$marine_processes$Name,    Type = "Marine Process",    ID = isa_data$marine_processes$ID),
-    data.frame(Label = isa_data$pressures$Name,           Type = "Pressure",          ID = isa_data$pressures$ID),
-    data.frame(Label = isa_data$activities$Name,          Type = "Activity",          ID = isa_data$activities$ID),
-    data.frame(Label = isa_data$drivers$Name,             Type = "Driver",            ID = isa_data$drivers$ID)
+  # One (Label, Type, ID) block per category, but ONLY for categories that have
+  # rows — a missing/empty category otherwise yields length-0 Label/ID against a
+  # length-1 Type literal and data.frame() errors ("differing number of rows").
+  cat_specs <- list(
+    list(key = "goods_benefits",     type = "Goods & Benefits"),
+    list(key = "ecosystem_services", type = "Ecosystem Service"),
+    list(key = "marine_processes",   type = "Marine Process"),
+    list(key = "pressures",          type = "Pressure"),
+    list(key = "activities",         type = "Activity"),
+    list(key = "drivers",            type = "Driver"),
+    list(key = "responses",          type = "Response")
   )
-  if (is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
-    dfs[[length(dfs) + 1]] <- data.frame(
-      Label = isa_data$responses$Name, Type = "Response",
-      ID = isa_data$responses$ID, stringsAsFactors = FALSE)
+  dfs <- list()
+  for (s in cat_specs) {
+    df <- isa_data[[s$key]]
+    if (is.data.frame(df) && nrow(df) > 0) {
+      dfs[[length(dfs) + 1]] <- data.frame(
+        Label = df$Name, Type = s$type, ID = df$ID, stringsAsFactors = FALSE)
+    }
+  }
+  if (length(dfs) == 0) {
+    return(data.frame(Label = character(), Type = character(), ID = character(),
+                      stringsAsFactors = FALSE))
   }
   do.call(rbind, dfs)
 }

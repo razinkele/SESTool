@@ -175,3 +175,20 @@ test_that("apply_matrix_cell_edit errors on unknown key or out-of-range cell", {
   expect_false(is.null(apply_matrix_cell_edit(f$am, f$ue, "nope", 1, 1, "+strong:4")$error))
   expect_false(is.null(apply_matrix_cell_edit(f$am, f$ue, "r_d", 2, 1, "+strong:4")$error))
 })
+
+test_that("build_kumu_elements is robust to empty/missing categories", {
+  isa <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE),
+    responses      = data.frame(ID = "R001", Name = "MSP", stringsAsFactors = FALSE)
+    # ecosystem_services/marine_processes/pressures/activities/drivers all absent
+  )
+  el <- build_kumu_elements(isa)              # must not error
+  expect_equal(sort(el$ID), c("GB001", "R001"))
+  expect_true(all(c("Label","Type","ID") %in% names(el)))
+})
+
+test_that("build_kumu_elements returns an empty frame when no categories have rows", {
+  el <- build_kumu_elements(list())
+  expect_equal(nrow(el), 0L)
+  expect_equal(names(el), c("Label","Type","ID"))
+})
