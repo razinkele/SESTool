@@ -254,6 +254,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       "Exercise 4: Activities",
       "Exercise 5: Drivers",
       "Exercise 6: Closing Loop",
+      "Responses & Measures",
       "Exercises 7-9: CLD",
       "Exercises 10-12: Analysis",
       "BOT Graphs",
@@ -428,6 +429,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ),
         tabPanel(i18n$t("modules.isa.data_entry.ex6.exercise_6_closing_loop"),
           uiOutput(ns("exercise_6_content"))
+        ),
+        tabPanel(i18n$t("modules.isa.data_entry.responses.tab_title"),
+          uiOutput(ns("responses_content"))
         ),
         tabPanel(i18n$t("modules.isa.data_entry.common.exercises_7_9_cld"),
           uiOutput(ns("exercise_789_content"))
@@ -802,6 +806,28 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       )
     })
 
+    # Render Responses & Measures content ----
+    output$responses_content <- renderUI({
+      tagList(
+        wellPanel(
+          h4(i18n$t("modules.isa.data_entry.responses.tab_title"),
+             actionButton(ns("help_responses"), label = NULL, icon = icon("circle-question"),
+                          class = "btn-link", style = "padding:0 .4rem;")),
+          p(i18n$t("modules.isa.data_entry.responses.purpose"))
+        ),
+        actionButton(ns("add_response"), i18n$t("modules.isa.data_entry.responses.add"),
+                     class = "btn-primary"),
+        tags$div(id = ns("r_entries")),
+        actionButton(ns("save_responses"), i18n$t("modules.isa.data_entry.responses.save"),
+                     class = "btn-success"),
+        DT::DTOutput(ns("r_table"))
+      )
+    })
+
+    output$r_table <- DT::renderDT({
+      DT::datatable(isa_data$responses, options = list(pageLength = 10), rownames = FALSE)
+    })
+
     # Render Exercises 7-9 content ----
     output$exercise_789_content <- renderUI({
       tagList(
@@ -825,7 +851,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                                  "MPF to Pressures" = "mpf_p",
                                  "Pressures to Activities" = "p_a",
                                  "Activities to Drivers" = "a_d",
-                                 "Drivers to Goods/Benefits" = "d_gb")),
+                                 "Drivers to Goods/Benefits" = "d_gb",
+                                 "Goods/Benefits to Responses" = "gb_r",
+                                 "Responses to Drivers" = "r_d",
+                                 "Responses to Activities" = "r_a",
+                                 "Responses to Pressures" = "r_p")),
             DTOutput(ns("adj_matrix_view"))
           ),
           column(6,
@@ -1497,6 +1527,19 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       datatable(isa_data$bot_data, options = list(pageLength = 5), rownames = FALSE)
     })
 
+    # Adjacency matrix viewer (read-only) ----
+    output$adj_matrix_view <- renderDT({
+      key <- input$adj_matrix_select
+      mat <- isa_data$adjacency_matrices[[key]]
+      if (is.null(mat)) {
+        DT::datatable(data.frame(Message = "No data available for this matrix."),
+                      options = list(dom = "t"), rownames = FALSE)
+      } else {
+        df <- as.data.frame(mat, stringsAsFactors = FALSE)
+        DT::datatable(df, options = list(pageLength = 15, scrollX = TRUE), rownames = TRUE)
+      }
+    })
+
     # Data export handlers ----
     output$export_data <- downloadHandler(
       filename = function() {
@@ -1686,6 +1729,15 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     create_help_observer(input, "help_ex4", "ex4_help_title", p(i18n$t("modules.isa.data_entry.common.ex4_help_text")), i18n)
     create_help_observer(input, "help_ex5", "ex5_help_title", p(i18n$t("modules.isa.data_entry.common.ex5_help_text")), i18n)
     create_help_observer(input, "help_ex6", "ex6_help_title", p(i18n$t("modules.isa.data_entry.common.ex6_help_text")), i18n)
+
+    observeEvent(input$help_responses, {
+      showModal(modalDialog(
+        title = i18n$t("modules.isa.data_entry.responses.help_title"),
+        i18n$t("modules.isa.data_entry.responses.help_body"),
+        easyClose = TRUE
+      ))
+    })
+
     create_help_observer(input, "help_ex789", "ex789_help_title", p(i18n$t("modules.isa.data_entry.common.ex789_help_text")), i18n)
     create_help_observer(input, "help_ex101112", "ex101112_help_title", p(i18n$t("modules.isa.data_entry.common.ex101112_help_text")), i18n)
     create_help_observer(input, "help_bot", "bot_help_title", p(i18n$t("modules.isa.data_entry.common.bot_help_text")), i18n)
