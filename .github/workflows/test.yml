@@ -81,10 +81,12 @@ jobs:
           #   - assert gitignored docs/ or scratch script files exist
           #   - read project-relative paths under testthat's test-dir wd
           #   - rely on local tempfile-as-directory behaviour
+          # p2/p3-fixes now skip_if_not their gitignored docs, so they're CI-safe
+          # and no longer excluded. Remaining exclusions need headless Chrome or
+          # have CI-only path/tempfile divergence (tracked for stabilisation).
           exclude <- c(
             "test-app-e2e.R", "test-dashboard.R", "test-modals.R",
             "test-language-handling.R", "test-shiny-ui-components.R",
-            "test-p2-fixes.R", "test-p3-fixes.R",
             "test-ai-isa-assistant-module.R", "test-modules-comprehensive.R",
             "test-feedback-reporter.R", "test-download-handler-hardening.R",
             "test-ses-model-path-containment.R", "test-user-edited-matrices-persist.R",
