@@ -364,6 +364,25 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         saved_ue     = saved_isa$user_edited_matrices,
         adj_matrices = isa_data$adjacency_matrices
       )
+      # Re-derive LinkedGB/D/A/P columns for responses from the imported matrices.
+      # recover_isa_data reconciles response rows but does NOT populate Linked*
+      # columns — those edges live only in the Matrix_* sheets. Without this, a
+      # re-save of the Responses tab would rebuild matrices from empty Linked*
+      # and wipe the imported edges. Work on a LOCAL copy and reassign once to
+      # avoid per-cell assignment into a reactiveValues slot.
+      r <- isa_data$responses
+      if (is.data.frame(r) && nrow(r) > 0) {
+        am <- isa_data$adjacency_matrices
+        r$LinkedGB <- ""; r$LinkedD <- ""; r$LinkedA <- ""; r$LinkedP <- ""
+        for (i in seq_len(nrow(r))) {
+          rid <- as.character(r$ID[i])
+          r$LinkedGB[i] <- rederive_linked_from_matrix(am$gb_r, rid, "col")
+          r$LinkedD[i]  <- rederive_linked_from_matrix(am$r_d,  rid, "row")
+          r$LinkedA[i]  <- rederive_linked_from_matrix(am$r_a,  rid, "row")
+          r$LinkedP[i]  <- rederive_linked_from_matrix(am$r_p,  rid, "row")
+        }
+        isa_data$responses <- r
+      }
       any_repaired      <- rec$repaired
       any_rows_in       <- rec$any_rows_in
       any_panel_ids_out <- rec$any_panel_ids_out

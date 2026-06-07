@@ -37,3 +37,22 @@ test_that("adding + saving a response builds r_d (-) and gb_r (+) and persists",
     expect_equal(nrow(pd()$data$isa_data$responses), 1L)
   })
 })
+
+test_that("import re-derives responses Linked* from Matrix_* so a re-save reproduces edges", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {
+    saved <- list(
+      goods_benefits = data.frame(ID = c("GB001","GB002"), Name = c("Food","Tourism"), stringsAsFactors = FALSE),
+      drivers   = data.frame(ID = "D001", Name = "Demand", stringsAsFactors = FALSE),
+      responses = data.frame(ID = "R001", Name = "MSP", stringsAsFactors = FALSE),  # no Linked* cols
+      adjacency_matrices = list(
+        r_d  = matrix("-medium:3", 1, 1, dimnames = list("R001","D001")),
+        gb_r = matrix(c("","+medium:3"), 2, 1, dimnames = list(c("GB001","GB002"),"R001"))
+      )
+    )
+    apply_saved_isa(saved)
+    expect_equal(isa_data$responses$LinkedD[1], "D001")
+    expect_equal(isa_data$responses$LinkedGB[1], "GB002")
+  })
+})
