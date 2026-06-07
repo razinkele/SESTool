@@ -1348,6 +1348,31 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })
 
+    # Responses & Measures ----
+    observeEvent(input$add_response, {
+      current_id <- generate_stable_element_id(ELEMENT_ID_PREFIX$responses, id_store)
+      isa_data$r_panel_ids <- c(isa_data$r_panel_ids, current_id)
+      isa_data$r_counter   <- isa_data$r_counter + 1
+
+      gb_choices <- c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
+      d_choices  <- c("", paste0(isa_data$drivers$ID,        ": ", isa_data$drivers$Name))
+      a_choices  <- c("", paste0(isa_data$activities$ID,     ": ", isa_data$activities$Name))
+      p_choices  <- c("", paste0(isa_data$pressures$ID,      ": ", isa_data$pressures$Name))
+
+      insertUI(
+        selector = paste0("#", ns("r_entries")),
+        where = "beforeEnd",
+        ui = build_response_panel_ui(
+          ns, current_id,
+          isa_fields_r(i18n, gb_choices, d_choices, a_choices, p_choices), i18n)
+      )
+
+      register_remove_observer(input, ns, "r", current_id, i18n,
+                              isa_data = isa_data, data_key = "responses",
+                              id_prefix = ELEMENT_ID_PREFIX$responses,
+                              on_remove = sync_to_project_data)
+    })
+
     # Exercise 6: Loop connections UI ----
     output$loop_connections <- renderUI({
       req(isa_data$drivers, isa_data$goods_benefits)
