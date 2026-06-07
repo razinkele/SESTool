@@ -16,7 +16,7 @@ on:
 jobs:
   unit-tests:
     name: testthat unit suite
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04   # matches the posit jammy binary repo used below
     defaults:
       run:
         working-directory: MarineSABRES_SES_Shiny
@@ -39,21 +39,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev \
             libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
-            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
+            libglpk-dev libgmp-dev
         shell: bash
 
       - name: Install R dependencies
         run: |
+          # Use the project's canonical package list — it parses global.R's
+          # library() calls (so it never drifts) plus a fixed augment set, and
+          # excludes the optional torch. Posit binary repo => fast, no compiling.
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"))
-          pkgs <- c(
-            "testthat", "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
-            "shinyFiles", "DT", "openxlsx", "readxl", "jsonlite", "digest",
-            "igraph", "visNetwork", "htmltools", "htmlwidgets", "shiny.i18n",
-            "ggplot2", "dplyr", "stringr", "tidyr", "purrr", "R6", "zoo", "rlang"
-          )
-          install.packages(pkgs)
-          missing <- pkgs[!pkgs %in% rownames(installed.packages())]
+          source("deployment/required_packages.R")  # defines REQUIRED_PACKAGES
+          install.packages(c(REQUIRED_PACKAGES, "testthat"))
+          have <- rownames(installed.packages())
+          missing <- setdiff(c(REQUIRED_PACKAGES, "testthat"), have)
           if (length(missing)) stop("Failed to install: ", paste(missing, collapse = ", "))
+          cat("Installed", length(REQUIRED_PACKAGES), "required packages.\n")
         shell: Rscript {0}
 
       - name: Prepare test fixtures
