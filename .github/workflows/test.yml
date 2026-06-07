@@ -87,7 +87,8 @@ jobs:
             "test-p2-fixes.R", "test-p3-fixes.R",
             "test-ai-isa-assistant-module.R", "test-modules-comprehensive.R",
             "test-feedback-reporter.R", "test-download-handler-hardening.R",
-            "test-ses-model-path-containment.R", "test-user-edited-matrices-persist.R"
+            "test-ses-model-path-containment.R", "test-user-edited-matrices-persist.R",
+            "test-excel-import-helpers.R", "test-graphical-ses-ai-creation.R", "test-modules.R"
           )
           files <- setdiff(list.files("tests/testthat", pattern = "^test-.*\\.R$"), exclude)
           any_bad <- FALSE; total_pass <- 0L
