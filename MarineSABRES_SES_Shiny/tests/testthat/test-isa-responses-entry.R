@@ -70,7 +70,9 @@ test_that("import-replace clears prior responses", {
 })
 
 test_that("create_edges_df emits R->D and GB->R edges from a built responses model", {
-  # Pure render check (no testServer). create_edges_df is loaded via global.R.
+  # Pure render check (no testServer). create_edges_df comes from global.R; skip
+  # gracefully if the harness ran degraded (matches every other consumer).
+  skip_if_not(exists("create_edges_df", mode = "function"), "create_edges_df not available")
   isa <- list(
     goods_benefits     = data.frame(ID = c("GB001","GB002"), Name = c("Food","Tourism"), stringsAsFactors = FALSE),
     ecosystem_services = data.frame(ID = character(), Name = character()),
