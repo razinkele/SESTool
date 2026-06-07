@@ -1611,8 +1611,25 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                       options = list(dom = "t"), rownames = FALSE)
       } else {
         df <- as.data.frame(mat, stringsAsFactors = FALSE)
-        DT::datatable(df, options = list(pageLength = 15, scrollX = TRUE), rownames = TRUE)
+        DT::datatable(df, options = list(pageLength = 15, scrollX = TRUE), rownames = TRUE,
+                      editable = list(target = "cell"))
       }
+    })
+
+    # Per-edge cell edits in the matrix viewer: validate, normalise, flag
+    # user_edited (so a later rebuild preserves the edit), then persist.
+    observeEvent(input$adj_matrix_view_cell_edit, {
+      info <- input$adj_matrix_view_cell_edit
+      res <- apply_matrix_cell_edit(
+        isa_data$adjacency_matrices, isa_data$user_edited_matrices,
+        input$adj_matrix_select, info$row, info$col, info$value)
+      if (!is.null(res$error)) {
+        showNotification(res$error, type = "warning")
+        return(invisible(NULL))    # DT reverts the cell on next render
+      }
+      isa_data$adjacency_matrices   <- res$am
+      isa_data$user_edited_matrices <- res$ue
+      sync_to_project_data()
     })
 
     # Data export handlers ----

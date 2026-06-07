@@ -90,3 +90,41 @@ test_that("create_edges_df emits R->D and GB->R edges from a built responses mod
   expect_true(any(grepl("^R_", edges$from)  & grepl("^D_", edges$to)))   # r_d edge
   expect_true(any(grepl("^GB_", edges$from) & grepl("^R_", edges$to)))   # gb_r edge
 })
+
+test_that("editing a matrix cell persists, flags user_edited, and survives a rebuild", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {
+    # Trigger the first flush so the project_id load-observer runs once (it would
+    # otherwise clear adjacency_matrices), THEN seed state.
+    session$setInputs(adj_matrix_select = "r_d")
+    isa_data$drivers   <- data.frame(ID = "D001", Name = "Demand", stringsAsFactors = FALSE)
+    isa_data$responses <- data.frame(ID = "R001", Name = "MSP", LinkedGB = "",
+                                     LinkedD = "D001", LinkedA = "", LinkedP = "",
+                                     stringsAsFactors = FALSE)
+    isa_data$adjacency_matrices <- list(
+      r_d = matrix("-medium:3", 1, 1, dimnames = list("R001", "D001")))
+
+    session$setInputs(adj_matrix_view_cell_edit = list(row = 1, col = 1, value = "+strong:4"))
+
+    expect_equal(isa_data$adjacency_matrices$r_d["R001","D001"], "+strong:4")  # edit applied
+    expect_true(isa_data$user_edited_matrices$r_d["R001","D001"])              # flagged
+    expect_equal(pd()$data$isa_data$adjacency_matrices$r_d["R001","D001"], "+strong:4")  # synced
+
+    # a rebuild from the same LinkedD must NOT clobber the user edit
+    built <- build_response_matrices(isa_data)
+    expect_equal(built$adjacency_matrices$r_d["R001","D001"], "+strong:4")
+  })
+})
+
+test_that("an invalid cell edit is rejected and leaves the matrix unchanged", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {
+    session$setInputs(adj_matrix_select = "r_d")    # first flush (load-observer runs once)
+    isa_data$adjacency_matrices <- list(
+      r_d = matrix("-medium:3", 1, 1, dimnames = list("R001", "D001")))
+    session$setInputs(adj_matrix_view_cell_edit = list(row = 1, col = 1, value = "nonsense"))
+    expect_equal(isa_data$adjacency_matrices$r_d["R001","D001"], "-medium:3")  # unchanged
+  })
+})
