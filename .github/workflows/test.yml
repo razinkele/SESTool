@@ -1,0 +1,85 @@
+name: R Tests
+
+# Repo-root CI for the testthat unit suite. Closes #7: the comprehensive matrix
+# workflow under MarineSABRES_SES_Shiny/.github/workflows/test.yml never ran
+# because GitHub Actions only reads workflows from the repository root. This is a
+# lean single-target version (ubuntu + R 4.4, no E2E/coverage) chosen to keep the
+# R dependency install (~40 CRAN packages) tractable; expand the matrix later if
+# CI time allows.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-tests:
+    name: testthat unit suite
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: MarineSABRES_SES_Shiny
+    env:
+      R_KEEP_PKG_SOURCE: "no"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4'
+          use-public-rspm: true
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev \
+            libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
+            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+        shell: bash
+
+      - name: Install R dependencies
+        run: |
+          options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"))
+          pkgs <- c(
+            "testthat", "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
+            "shinyFiles", "DT", "openxlsx", "readxl", "jsonlite", "digest",
+            "igraph", "visNetwork", "htmltools", "htmlwidgets", "shiny.i18n",
+            "ggplot2", "dplyr", "stringr", "tidyr", "purrr", "R6", "zoo", "rlang"
+          )
+          install.packages(pkgs)
+          missing <- pkgs[!pkgs %in% rownames(installed.packages())]
+          if (length(missing)) stop("Failed to install: ", paste(missing, collapse = ", "))
+        shell: Rscript {0}
+
+      - name: Prepare test fixtures
+        run: |
+          dir.create("data", showWarnings = FALSE)
+          fx <- list.files("tests/fixtures/templates", pattern = "\\.json$", full.names = TRUE)
+          if (length(fx) > 0) file.copy(fx, "data", overwrite = TRUE)
+          message(sprintf("Fixtures copied: %d", length(fx)))
+        shell: Rscript {0}
+
+      - name: Run testthat unit suite (excludes Chrome-based E2E)
+        run: |
+          library(testthat)
+          files <- list.files("tests/testthat", pattern = "^test-.*\\.R$", full.names = TRUE)
+          # E2E/visual tests need a headless browser (shinytest2 + Chrome); out of
+          # scope for this lean workflow.
+          files <- files[!grepl("e2e|shinytest|visual", files, ignore.case = TRUE)]
+          reporter <- testthat::MultiReporter$new(reporters = list(
+            testthat::ProgressReporter$new(), testthat::CheckReporter$new()))
+          any_fail <- FALSE
+          for (f in files) {
+            res <- as.data.frame(test_file(f, reporter = "silent", stop_on_failure = FALSE))
+            n_fail <- sum(res$failed) + sum(res$error)
+            cat(sprintf("%-55s FAIL=%d PASS=%d\n", basename(f), n_fail, sum(res$passed)))
+            if (n_fail > 0) any_fail <- TRUE
+          }
+          if (any_fail) stop("One or more test files had failures/errors")
+          cat("All unit test files passed.\n")
+        shell: Rscript {0}
