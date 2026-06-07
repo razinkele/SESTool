@@ -3015,15 +3015,15 @@
       "el": "Συχνότητα"
     },
     "modules.isa.data_entry.common.importance": {
-      "en": "Importance based on incoming links (Google algorithm). High values indicate authority.",
-      "es": "Importancia basada en enlaces entrantes (algoritmo de Google). Valores altos indican autoridad.",
-      "fr": "Importance basée sur les liens entrants (algorithme Google). Des valeurs élevées indiquent l'autorité.",
-      "de": "Wichtigkeit basierend auf eingehenden Links (Google-Algorithmus). Hohe Werte weisen auf Autorität hin.",
-      "lt": "Svarba pagrįsta įeinančiais nuorodomis (Google algoritmas). Didelės reikšmės rodo autoritetą.",
-      "pt": "Importância baseada em links de entrada (algoritmo do Google). Valores altos indicam autoridade.",
-      "it": "Importanza basata su link in entrata (algoritmo Google). Valori elevati indicano autorità.",
-      "no": "Viktighet basert på innkommende lenker (Google-algoritme). Høye verdier indikerer autoritet.",
-      "el": "Σημασία βάσει εισερχόμενων συνδέσεων (αλγόριθμος Google). Υψηλές τιμές υποδεικνύουν αυθεντία."
+      "en": "Importance",
+      "es": "Importancia",
+      "fr": "Importance",
+      "de": "Wichtigkeit",
+      "lt": "Svarba",
+      "pt": "Importância",
+      "it": "Importanza",
+      "no": "Viktighet",
+      "el": "Σημασία"
     },
     "modules.isa.data_entry.common.intensity": {
       "en": "Intensity",
@@ -3290,15 +3290,15 @@
       "el": "Χωρική κλίμακα"
     },
     "modules.isa.data_entry.common.stakeholder": {
-      "en": "Define your project goals, stakeholders, and timeline",
-      "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
-      "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
-      "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
-      "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
-      "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
-      "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Definer prosjektmål, interessenter og tidsplan",
-      "el": "Καθορίστε τους στόχους του έργου, τους ενδιαφερόμενους και το χρονοδιάγραμμα"
+      "en": "Stakeholder",
+      "es": "Parte interesada",
+      "fr": "Partie prenante",
+      "de": "Interessengruppe",
+      "lt": "Suinteresuotoji šalis",
+      "pt": "Parte interessada",
+      "it": "Parte interessata",
+      "no": "Interessent",
+      "el": "Ενδιαφερόμενο μέρος"
     },
     "modules.response.measures.impact_strength": {
       "en": "Impact Strength:",

@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Pending partner sign-off** — the WP5 KB carries D5.2 research/deliverable data still awaiting partner validation (see PR for the full list: mac_07/14/9 cost profiles, mac_03 blended finance, tus_04/05/06 inferred-from-practice, arc_05 research-gap, arc_06 ecolabel choice, empty success_metrics). Re-version forward at merge time.
 
+## [1.18.1] - 2026-06-07
+
+### Fixed
+
+- **Mislabelled ISA form fields.** `modules.isa.data_entry.common.stakeholder` and `.importance` resolved to a stray "Define your project goals…" sentence and a PageRank-tooltip sentence respectively, so every element entry form (Goods & Benefits … Responses) showed wrong labels for the Stakeholder and Importance fields. Both keys are used only as field labels; corrected to short labels in all 9 languages.
+- **`build_kumu_elements()` crashed on empty/missing element categories** (`functions/isa_export_helpers.R`): a length-0 `Label`/`ID` against a length-1 `Type` literal raised "arguments imply differing number of rows". Rebuilt to emit one block per non-empty category (and an empty frame when none have rows), so Kumu export works for partial models. Tests added.
+
 ## [1.18.0] - 2026-06-07
 
 ### Added — DAPSIWRM Responses/Measures (R) authoring & editing
