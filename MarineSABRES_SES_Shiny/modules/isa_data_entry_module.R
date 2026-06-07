@@ -280,6 +280,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       pd$data$isa_data$pressures          <- isa_data$pressures
       pd$data$isa_data$activities         <- isa_data$activities
       pd$data$isa_data$drivers            <- isa_data$drivers
+      pd$data$isa_data$responses          <- isa_data$responses
 
       if (!is.null(isa_data$adjacency_matrices)) {
         pd$data$isa_data$adjacency_matrices <- isa_data$adjacency_matrices
@@ -1371,6 +1372,36 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "responses",
                               id_prefix = ELEMENT_ID_PREFIX$responses,
                               on_remove = sync_to_project_data)
+    })
+
+    observeEvent(input$save_responses, {
+      if (length(isa_data$r_panel_ids) == 0) {
+        showNotification(i18n$t("modules.isa.data_entry.responses.none_to_save"),
+                         type = "warning")
+        return(invisible(NULL))
+      }
+      # col_names in the SAME order as the reactiveValues schema (ID is prepended
+      # by collect_element_entries). field_ids zip 1:1 with col_names.
+      r_df <- collect_element_entries(
+        input, "r", isa_data$r_panel_ids, ELEMENT_ID_PREFIX$responses,
+        field_ids = c("name","type","desc","stakeholder","importance","trend",
+                      "linkedgb","linkedd","linkeda","linkedp"),
+        col_names = c("Name","Type","Description","Stakeholder","Importance","Trend",
+                      "LinkedGB","LinkedD","LinkedA","LinkedP")
+      )
+      isa_data$responses <- r_df
+      built <- build_response_matrices(isa_data)
+      isa_data$adjacency_matrices   <- built$adjacency_matrices
+      isa_data$user_edited_matrices <- built$user_edited_matrices
+      if (nrow(r_df) == 0) {                      # all panels blank -> drop stale R-arm matrices
+        for (k in c("r_d","r_a","r_p","gb_r")) {
+          isa_data$adjacency_matrices[[k]]   <- NULL
+          isa_data$user_edited_matrices[[k]] <- NULL
+        }
+      }
+      sync_to_project_data()
+      showNotification(paste(i18n$t("modules.isa.data_entry.responses.saved"), nrow(r_df)),
+                       type = "message")
     })
 
     # Exercise 6: Loop connections UI ----
