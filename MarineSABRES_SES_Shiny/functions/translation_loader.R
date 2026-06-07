@@ -239,8 +239,8 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
   }
 
   # Convert to JSON and write
+  json_text <- jsonlite::toJSON(translations, pretty = TRUE, auto_unbox = TRUE)
   tryCatch({
-    json_text <- jsonlite::toJSON(translations, pretty = TRUE, auto_unbox = TRUE)
     writeLines(json_text, temp_file)
 
     if (debug) {
@@ -251,7 +251,19 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
     return(temp_file)
 
   }, error = function(e) {
-    stop(sprintf("Error saving merged translations: %s", e$message))
+    # A cache write failure (read-only dir, CI sandbox, restricted deploy) must
+    # NOT crash app startup. Fall back to a guaranteed-writable temp file and
+    # warn instead of stopping; shiny.i18n still gets a valid file.
+    warning(sprintf("Could not write merged translations to '%s' (%s); falling back to a temp file.",
+                    temp_file, conditionMessage(e)))
+    fallback <- tempfile(pattern = "marinesabres_translations_", fileext = ".json")
+    tryCatch({
+      writeLines(json_text, fallback)
+      fallback
+    }, error = function(e2) {
+      warning(sprintf("Fallback merged-translations write also failed: %s", conditionMessage(e2)))
+      NULL
+    })
   })
 }
 
