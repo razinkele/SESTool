@@ -104,3 +104,29 @@ test_that("build_response_panel_ui emits inputs suffixed by the panel id", {
   expect_true(grepl("mod-r_linkedgb_R001", html, fixed = TRUE))
   expect_true(grepl("mod-r_linkedd_R001", html, fixed = TRUE))
 })
+
+test_that("create_isa_analysis_workbook includes Responses sheet + r_d matrix when present", {
+  library(openxlsx)
+  isa <- make_resp_isa()
+  isa$adjacency_matrices <- build_response_matrices(isa)$adjacency_matrices
+  wb <- create_isa_analysis_workbook(isa)
+  sheets <- names(wb)
+  expect_true("Responses_Measures" %in% sheets)
+  expect_true("Matrix_r_d" %in% sheets)
+})
+
+test_that("build_kumu_elements includes response nodes when present", {
+  # NB: the existing build_kumu_elements is not robust to empty categories, so
+  # use a full 6-category fixture (its hardening is out of scope here).
+  isa <- list(
+    goods_benefits     = data.frame(ID = "GB001",  Name = "Food",    stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001",  Name = "Fish",    stringsAsFactors = FALSE),
+    marine_processes   = data.frame(ID = "MPF001", Name = "Prod",    stringsAsFactors = FALSE),
+    pressures          = data.frame(ID = "P001",   Name = "Fishing", stringsAsFactors = FALSE),
+    activities         = data.frame(ID = "A001",   Name = "Trawl",   stringsAsFactors = FALSE),
+    drivers            = data.frame(ID = "D001",   Name = "Demand",  stringsAsFactors = FALSE),
+    responses          = data.frame(ID = "R001",   Name = "MSP",     stringsAsFactors = FALSE)
+  )
+  el <- build_kumu_elements(isa)
+  expect_true("R001" %in% el$ID)
+})
