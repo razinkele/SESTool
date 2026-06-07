@@ -130,3 +130,48 @@ test_that("build_kumu_elements includes response nodes when present", {
   el <- build_kumu_elements(isa)
   expect_true("R001" %in% el$ID)
 })
+
+# --- apply_matrix_cell_edit: per-edge strength editing with user_edited persistence ---
+
+ace_fixture <- function() {
+  list(
+    am = list(r_d = matrix("-medium:3", 1, 1, dimnames = list("R001", "D001"))),
+    ue = list()
+  )
+}
+
+test_that("apply_matrix_cell_edit writes a valid cell and flags user_edited", {
+  f <- ace_fixture()
+  out <- apply_matrix_cell_edit(f$am, f$ue, "r_d", 1, 1, "+strong:4")
+  expect_null(out$error)
+  expect_equal(out$am$r_d["R001","D001"], "+strong:4")
+  expect_true(out$ue$r_d["R001","D001"])          # flag created + set
+})
+
+test_that("apply_matrix_cell_edit lowercases strength on accept", {
+  f <- ace_fixture()
+  out <- apply_matrix_cell_edit(f$am, f$ue, "r_d", 1, 1, "+STRONG:4")
+  expect_equal(out$am$r_d["R001","D001"], "+strong:4")
+})
+
+test_that("apply_matrix_cell_edit rejects malformed values without writing", {
+  f <- ace_fixture()
+  out <- apply_matrix_cell_edit(f$am, f$ue, "r_d", 1, 1, "garbage")
+  expect_false(is.null(out$error))
+  expect_equal(out$am$r_d["R001","D001"], "-medium:3")   # unchanged
+  expect_null(out$ue$r_d)                                  # no flag matrix created
+})
+
+test_that("apply_matrix_cell_edit empty value clears the cell but still flags user_edited", {
+  f <- ace_fixture()
+  out <- apply_matrix_cell_edit(f$am, f$ue, "r_d", 1, 1, "")
+  expect_null(out$error)
+  expect_equal(out$am$r_d["R001","D001"], "")
+  expect_true(out$ue$r_d["R001","D001"])
+})
+
+test_that("apply_matrix_cell_edit errors on unknown key or out-of-range cell", {
+  f <- ace_fixture()
+  expect_false(is.null(apply_matrix_cell_edit(f$am, f$ue, "nope", 1, 1, "+strong:4")$error))
+  expect_false(is.null(apply_matrix_cell_edit(f$am, f$ue, "r_d", 2, 1, "+strong:4")$error))
+})
