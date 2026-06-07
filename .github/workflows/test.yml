@@ -92,12 +92,19 @@ jobs:
             "test-ses-model-path-containment.R", "test-user-edited-matrices-persist.R",
             "test-excel-import-helpers.R", "test-graphical-ses-ai-creation.R", "test-modules.R"
           )
-          files <- setdiff(list.files("tests/testthat", pattern = "^test-.*\\.R$"), exclude)
+          testdir <- normalizePath("tests/testthat")          # absolute: survives wd changes
+          files <- setdiff(list.files(testdir, pattern = "^test-.*\\.R$"), exclude)
+          wd0 <- getwd()
           any_bad <- FALSE; total_pass <- 0L
           for (f in files) {
-            r <- as.data.frame(test_file(file.path("tests/testthat", f),
-                                         reporter = "silent", load_helpers = FALSE,
-                                         stop_on_failure = FALSE))
+            r <- tryCatch(
+              as.data.frame(test_file(file.path(testdir, f), reporter = "silent",
+                                      load_helpers = FALSE, stop_on_failure = FALSE)),
+              error = function(e) {
+                cat(sprintf("ERROR %-50s %s\n", f, conditionMessage(e)))
+                data.frame(failed = 1L, passed = 0L)
+              })
+            setwd(wd0)                                          # a test may leave wd changed
             nfail <- sum(r$failed) + (if ("error" %in% names(r)) sum(r$error) else 0L)
             total_pass <- total_pass + sum(r$passed)
             if (nfail > 0) { any_bad <- TRUE; cat(sprintf("FAIL  %-50s fail/err=%d\n", f, nfail)) }
