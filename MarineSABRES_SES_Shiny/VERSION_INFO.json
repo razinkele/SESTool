@@ -1,7 +1,7 @@
 {
-  "version": "1.18.1",
-  "version_name": "ISA Responses polish (labels + export robustness)",
-  "release_date": "2026-06-07",
+  "version": "1.18.2",
+  "version_name": "Path-traversal hardening + full CI suite",
+  "release_date": "2026-06-08",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -10,7 +10,7 @@
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
-  "security_updates": false,
+  "security_updates": true,
   "features": [
     "GraphSAGE-based graph neural network for connection prediction (functions/ml_models.R + scripts/train_connection_predictor_gnn.R). 2-layer encoder produces 32-dim node embeddings; existence head consumes [h_s; h_t; h_s ⊙ h_t]. Retrospective validation: precision@5 = 0.086 vs base 0.057 (+51%); recall@10 = 0.100 vs 0.081 (+23%).",
     "BERT chunk-classification head for SES element extraction (functions/ml_element_classifier.R + scripts/train_element_classifier.R). 7-way classifier on top of frozen sentence-transformer embedding. Test accuracy 61% (4.3× random baseline of 14.3%) on 1367 KB-derived (text, category) pairs.",
@@ -125,5 +125,5 @@
     "data$pims$engagements and data$pims$communications top-level slots added.",
     "VERSION_INFO.json was stale at 1.11.0 through v1.13.3 — Application Info modal now correctly reflects the running version."
   ],
-  "previous_version": "1.18.0"
+  "previous_version": "1.18.1"
 }

@@ -19,6 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Pending partner sign-off** — the WP5 KB carries D5.2 research/deliverable data still awaiting partner validation (see PR for the full list: mac_07/14/9 cost profiles, mac_03 blended finance, tus_04/05/06 inferred-from-practice, arc_05 research-gap, arc_06 ecolabel choice, empty success_metrics). Re-version forward at merge time.
 
+## [1.18.2] - 2026-06-08
+
+### Security
+
+- **Path-traversal containment hardened on Linux** (`modules/ses_models_module.R`): `ses_model_path_is_contained()` now rejects any candidate whose path contains a `..` segment. `normalizePath(mustWork = FALSE)` does not collapse `..` for non-existent targets on non-Windows platforms, so a crafted value like `root/../escape.xlsx` could pass the `startsWith()` containment check — a defense-in-depth gap that surfaced only on the production Linux server (Windows `normalizePath` collapses it, so it was invisible in local testing). The primary whitelist gate `ses_model_path_is_in_scanned_set()` was unaffected.
+
+### Fixed
+
+- **Startup resilience** (`functions/translation_loader.R`): `save_merged_translations()` now falls back to a temp file and warns instead of aborting app startup when the merged-translations cache cannot be written (read-only directory / sandbox / restricted deploy).
+
+### Changed (CI / tests)
+
+- First green repo-root GitHub Actions test workflow (`.github/workflows/test.yml`). The full 126-file testthat suite now runs in CI via per-file process isolation (`tests/ci_run_file.R`), with Chrome + shinytest2 for the end-to-end suite. Supporting fixes: committed previously-untracked `tests/testthat/helper-source-grep.R`; `skip_if_not(file.exists())` for gitignored-`docs/` assertions in `test-p2-fixes`/`test-p3-fixes`; `officer`/`flextable` added to the CI install; and a robust rewrite of `tests/testthat/test-app-e2e.R` (real app launch, beginner-scoped navigation, startup/round-trip race handling).
+
 ## [1.18.1] - 2026-06-07
 
 ### Fixed
