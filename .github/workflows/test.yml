@@ -31,13 +31,22 @@ jobs:
           r-version: '4.4'
           use-public-rspm: true
 
-      # Cache the R user library (set by setup-r as R_LIBS_USER) so the ~45-package
-      # install is skipped on subsequent runs. Key on the files that define the
-      # install set; restore-keys lets a partial/older cache seed a new key.
+      # Pin an explicit, known user-library path (don't rely on setup-r exporting
+      # R_LIBS_USER — it may be empty, which would make the cache a no-op). All
+      # later steps inherit this via $GITHUB_ENV; R adds it to .libPaths at startup.
+      - name: Configure R library path
+        run: |
+          echo "R_LIBS_USER=${{ github.workspace }}/.rlib" >> "$GITHUB_ENV"
+          mkdir -p "${{ github.workspace }}/.rlib"
+        shell: bash
+
+      # Cache that library so the ~45-package install is skipped on repeat runs.
+      # Key on the files that define the install set; restore-keys seeds from an
+      # older cache when the key changes.
       - name: Cache R packages
         uses: actions/cache@v4
         with:
-          path: ${{ env.R_LIBS_USER }}
+          path: ${{ github.workspace }}/.rlib
           key: R-${{ runner.os }}-4.4-${{ hashFiles('MarineSABRES_SES_Shiny/deployment/required_packages.R', '.github/workflows/test.yml') }}
           restore-keys: |
             R-${{ runner.os }}-4.4-
