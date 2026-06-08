@@ -6,8 +6,15 @@
 # order-dependent failures. A fresh process per file removes that entire class.
 suppressMessages(library(testthat))
 f <- commandArgs(trailingOnly = TRUE)[[1]]
+# Source helper-*.R into the global env (helper-00 loads global.R; helper-source-grep
+# defines expect_context_key_in_file, etc.), then run the file WITHOUT re-loading
+# helpers. test_file's own load_helpers doesn't make all helper fns visible here.
+for (h in sort(list.files(dirname(f), pattern = "^helper.*[.]R$", full.names = TRUE))) {
+  try(sys.source(h, envir = globalenv()), silent = TRUE)
+}
 res <- tryCatch(
-  as.data.frame(test_file(f, reporter = "summary", stop_on_failure = FALSE)),
+  as.data.frame(test_file(f, reporter = "summary", load_helpers = FALSE,
+                          stop_on_failure = FALSE)),
   error = function(e) { message("LOAD/RUN ERROR: ", conditionMessage(e)); NULL }
 )
 if (is.null(res)) quit(status = 1L)

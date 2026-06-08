@@ -50,9 +50,13 @@ jobs:
           # excludes the optional torch. Posit binary repo => fast, no compiling.
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"))
           source("deployment/required_packages.R")  # defines REQUIRED_PACKAGES
-          install.packages(c(REQUIRED_PACKAGES, "testthat"))
+          # officer + flextable: Word-export deps exercised by the download-handler
+          # hardening tests (forced-writer-failure paths). Without them those tests
+          # get a "package not available" error instead of the expected one.
+          want <- c(REQUIRED_PACKAGES, "testthat", "officer", "flextable")
+          install.packages(want)
           have <- rownames(installed.packages())
-          missing <- setdiff(c(REQUIRED_PACKAGES, "testthat"), have)
+          missing <- setdiff(want, have)
           if (length(missing)) stop("Failed to install: ", paste(missing, collapse = ", "))
           cat("Installed", length(REQUIRED_PACKAGES), "required packages.\n")
         shell: Rscript {0}

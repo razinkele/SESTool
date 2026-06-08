@@ -22,6 +22,13 @@ ses_model_path_is_contained <- function(candidate, root) {
   if (is.null(root) || length(root) != 1 ||
       is.na(root) || !nzchar(root)) return(FALSE)
 
+  # Reject parent-directory traversal outright. normalizePath(mustWork = FALSE)
+  # does NOT reliably collapse ".." for non-existent targets on Linux (it leaves
+  # "root/../escape.xlsx" intact), which would defeat the startsWith() check
+  # below — a path-traversal gap that surfaces only on non-Windows. Fail closed.
+  cand_parts <- strsplit(gsub("\\\\", "/", candidate), "/", fixed = TRUE)[[1]]
+  if (".." %in% cand_parts) return(FALSE)
+
   safe_root <- tryCatch(
     normalizePath(root,      winslash = "/", mustWork = FALSE),
     error = function(e) NA_character_
