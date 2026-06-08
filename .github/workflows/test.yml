@@ -31,6 +31,17 @@ jobs:
           r-version: '4.4'
           use-public-rspm: true
 
+      # Cache the R user library (set by setup-r as R_LIBS_USER) so the ~45-package
+      # install is skipped on subsequent runs. Key on the files that define the
+      # install set; restore-keys lets a partial/older cache seed a new key.
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: R-${{ runner.os }}-4.4-${{ hashFiles('MarineSABRES_SES_Shiny/deployment/required_packages.R', '.github/workflows/test.yml') }}
+          restore-keys: |
+            R-${{ runner.os }}-4.4-
+
       - name: Setup Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
@@ -55,17 +66,25 @@ jobs:
           # library() calls (so it never drifts) plus a fixed augment set, and
           # excludes the optional torch. Posit binary repo => fast, no compiling.
           options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"))
+          # Ensure the cached user library is present and first on the search path,
+          # so install.packages writes there (and a cache hit is seen as installed).
+          lib <- Sys.getenv("R_LIBS_USER")
+          if (nzchar(lib)) { dir.create(lib, recursive = TRUE, showWarnings = FALSE); .libPaths(c(lib, .libPaths())) }
           source("deployment/required_packages.R")  # defines REQUIRED_PACKAGES
           # officer + flextable: Word-export deps exercised by the download-handler
           # hardening tests (forced-writer-failure paths). Without them those tests
           # get a "package not available" error instead of the expected one.
           want <- c(REQUIRED_PACKAGES, "testthat", "officer", "flextable",
                     "shinytest2", "chromote")   # E2E browser-driver tests
-          install.packages(want)
-          have <- rownames(installed.packages())
-          missing <- setdiff(want, have)
+          # Install only what the cache didn't already provide (install.packages
+          # pulls recursive deps; all land in the cached lib).
+          need <- setdiff(want, rownames(installed.packages()))
+          cat(sprintf("Cache provided %d/%d; installing %d: %s\n",
+                      length(want) - length(need), length(want), length(need),
+                      paste(need, collapse = ", ")))
+          if (length(need)) install.packages(need)
+          missing <- setdiff(want, rownames(installed.packages()))
           if (length(missing)) stop("Failed to install: ", paste(missing, collapse = ", "))
-          cat("Installed", length(REQUIRED_PACKAGES), "required packages.\n")
         shell: Rscript {0}
 
       - name: Prepare test fixtures
