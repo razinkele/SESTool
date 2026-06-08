@@ -34,6 +34,12 @@ jobs:
       - name: Setup Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Setup Chrome (for shinytest2 E2E)
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -53,7 +59,8 @@ jobs:
           # officer + flextable: Word-export deps exercised by the download-handler
           # hardening tests (forced-writer-failure paths). Without them those tests
           # get a "package not available" error instead of the expected one.
-          want <- c(REQUIRED_PACKAGES, "testthat", "officer", "flextable")
+          want <- c(REQUIRED_PACKAGES, "testthat", "officer", "flextable",
+                    "shinytest2", "chromote")   # E2E browser-driver tests
           install.packages(want)
           have <- rownames(installed.packages())
           missing <- setdiff(want, have)
@@ -72,13 +79,11 @@ jobs:
       - name: Run testthat suite (per-file process isolation)
         run: |
           set -uo pipefail
-          # ROOT-CAUSE FIX for the suite's isolation debt: run each test file in
-          # its OWN R process via tests/ci_run_file.R. Many files pass on their own
-          # but leak global state when run together (test_dir / a shared-session
-          # loop), causing order-dependent failures. A fresh process per file
-          # removes that entire class. Only browser-bound suites (headless Chrome +
-          # shinytest2, not installed here) remain excluded.
-          exclude='^(test-app-e2e|test-dashboard|test-modals|test-language-handling|test-shiny-ui-components)\.R$'
+          # Run EVERY test file in its OWN R process via tests/ci_run_file.R.
+          # Per-file isolation removes cross-file global-state leakage; shinytest2
+          # E2E suites run against the Chrome installed above (CHROMOTE_CHROME).
+          # No exclusions — the full suite runs.
+          exclude='^$'   # matches nothing
           ran=0; failed=0; failed_files=""
           for f in tests/testthat/test-*.R; do
             b=$(basename "$f")
@@ -89,9 +94,10 @@ jobs:
             fi
           done
           echo ""
-          echo "Ran $ran files in isolated R processes (excluded 5 browser-bound); failed: $failed"
+          echo "Ran $ran files in isolated R processes; failed: $failed"
           if [ "$failed" -ne 0 ]; then echo "FAILED FILES:$failed_files"; exit 1; fi
-          echo "All isolated test files passed."
+          echo "All test files passed."
         shell: bash
         env:
           CI: "true"
+          CHROMOTE_CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
