@@ -81,12 +81,9 @@ jobs:
           set -uo pipefail
           # Run each test file in its OWN R process via tests/ci_run_file.R
           # (per-file isolation removes cross-file global-state leakage). shinytest2
-          # suites run against the Chrome installed above (CHROMOTE_CHROME).
-          # Only test-app-e2e is excluded: its full-app AppDriver flow calls a
-          # non-existent app$is_running() method and asserts headless-divergent UI
-          # state across 13 checks — needs a dedicated E2E rewrite (it does launch
-          # the app; 19 of its checks pass). Everything else runs.
-          exclude='^test-app-e2e\.R$'
+          # suites (incl. the full-app AppDriver E2E) run against the Chrome
+          # installed above (CHROMOTE_CHROME). No exclusions — the full suite runs.
+          exclude='^$'   # matches nothing
           ran=0; failed=0; failed_files=""
           for f in tests/testthat/test-*.R; do
             b=$(basename "$f")
@@ -97,7 +94,7 @@ jobs:
             fi
           done
           echo ""
-          echo "Ran $ran files in isolated R processes (excluded test-app-e2e only); failed: $failed"
+          echo "Ran $ran files in isolated R processes (full suite, no exclusions); failed: $failed"
           if [ "$failed" -ne 0 ]; then echo "FAILED FILES:$failed_files"; exit 1; fi
           echo "All test files passed."
         shell: bash
