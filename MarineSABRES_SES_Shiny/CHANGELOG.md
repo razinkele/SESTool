@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Decision Lens — QSEM-inspired interpretation layer; PRs #54 + #56, deployed to laguna 2026-06-21)
+
+- **Decision Lens module** (`modules/analysis_decision_lens.R`, pure helpers in `functions/decision_lens.R`): a new analysis tool (Analysis Tools → Decision Lens) that turns existing graph analysis into decision-grade interpretation, in all 9 languages.
+- **Factor classification (impact-vs-control axis)**: surfaces the previously **dormant** MICMAC analysis (`calculate_micmac_safe` — defined and tested but wired to no UI) as an influence-vs-dependence quadrant scatter, **dual-encoded by colour + shape** for accessibility, plus a sortable table. Reading is structural (connection polarity/strength are not used).
+- **System-archetype detection** (`detect_archetypes`): **Tragedy of the Commons** (a shared State/stock drawn on by ≥2 distinct Activities → govern the shared resource, Ostrom) and **Limits to Growth** (the `GB→D` reinforcing engine checked by a Response-mediated balancing loop → leverage the Response, never "intensify the Pressure"). All detections are candidates ("confirm with stakeholders").
+- **"Why this matters" narrative**: deterministic, i18n-templated text fusing a node's quadrant role × loop participation × archetype leverage. Never ML-generated (works on torch-less deployments).
+- Cross-tool "next steps" links to/from the Decision Lens; 30+ new i18n keys × 9 languages; 34 new tests (`test-decision-lens.R`, `test-analysis-decision-lens-module.R`).
+
+> **Scientifically validated** (sign-off via the `scientific-validation` skill): archetypes-as-ecological-lens confirmed (Hallett & Hobbs 2020); these archetypes on a real marine lagoon fishery confirmed (2021); Tragedy-of-the-Commons governance leverage confirmed with the Ostrom non-inevitability correction. **Deliberately deferred:** Fixes-that-Fail (not separable from Limits-to-Growth without delay/temporal data — CLDs are untimed) and Shifting-the-Burden (weak marine-SES support).
+
+> **Release note:** `VERSION`/`VERSION_INFO.json` bumped to **1.19.0** (minor). This `[Unreleased]` section also still holds the pre-existing **WP5 financial-mechanism KB** entry below (marked pending partner sign-off) — decide at tag time whether to fold both under a single `[1.19.0]` release heading or version them separately.
+
 ### Added (WP5 Phase 1 — financial-mechanism KB; re-port of PR #10 onto v1.16.5)
 
 - **WP5 financial-mechanism Knowledge Base** (`data/ses_knowledge_db_wp5_mechanisms.json`): 28 mechanisms from D5.2 (16 Macaronesia + 6 Tuscan + 6 Arctic), each with a 13-attribute structure (cost profile, finance flow, design parameters, evidence base, transferable lessons, applies-to-DAs, success metrics, risks/guardrails, use-in-impact-assessment, references). Includes a Posidonia oceanica `valuation_unit_values` block for the later valuation calculator.
