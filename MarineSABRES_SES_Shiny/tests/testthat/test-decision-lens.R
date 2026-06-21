@@ -105,3 +105,60 @@ test_that("build_decision_narrative omits archetype line when archetypes is empt
   expect_match(html, "modules.analysis.decision_lens.narrative_confirm", fixed = TRUE)
   expect_false(grepl("narrative_archetype_leverage", html, fixed = TRUE))
 })
+
+# ---------------------------------------------------------------------------
+# detect_archetypes — topology-correct (validated 2026-06-21). Ships B + A only.
+# Fixtures use real create_nodes_df-style ids (D_1, MPF_1, R_1, ...).
+# ---------------------------------------------------------------------------
+test_that("detect_archetypes finds Tragedy of the Commons: shared MPF in >=2 loops, >=2 distinct Activities", {
+  # Two activity loops sharing the State/MPF resource, each closing via GB->D->A
+  loop_info <- data.frame(
+    LoopID  = c(1L, 2L),
+    Type    = c("Reinforcing", "Reinforcing"),
+    NodeIDs = c("D_1,A_1,P_1,MPF_1,ES_1,GB_1",
+                "D_1,A_2,P_2,MPF_1,ES_1,GB_1"),
+    stringsAsFactors = FALSE
+  )
+  res <- detect_archetypes(loop_info)
+  keys <- vapply(res, function(x) x$archetype_key, character(1))
+  expect_true("tragedy_of_the_commons" %in% keys)
+  toc <- res[[which(keys == "tragedy_of_the_commons")[1]]]
+  expect_equal(toc$leverage_node_id, "MPF_1")       # govern the shared resource
+  expect_setequal(toc$loop_ids, c(1L, 2L))
+  expect_equal(toc$confidence, "candidate")
+})
+
+test_that("detect_archetypes does NOT fire Commons with only one Activity across the loops", {
+  loop_info <- data.frame(
+    LoopID  = c(1L, 2L),
+    Type    = c("Reinforcing", "Balancing"),
+    NodeIDs = c("D_1,A_1,P_1,MPF_1,ES_1,GB_1",
+                "GB_1,R_1,MPF_1,ES_1"),     # second loop has no distinct second Activity
+    stringsAsFactors = FALSE
+  )
+  res <- detect_archetypes(loop_info)
+  keys <- vapply(res, function(x) x$archetype_key, character(1))
+  expect_false("tragedy_of_the_commons" %in% keys)
+})
+
+test_that("detect_archetypes finds Limits to Growth: reinforcing engine coupled to Response-mediated balancing loop", {
+  loop_info <- data.frame(
+    LoopID  = c(1L, 2L),
+    Type    = c("Reinforcing", "Balancing"),
+    # engine (GB->D closed) shares GB_1/ES_1/MPF_1 with the Response-mediated balancing loop
+    NodeIDs = c("D_1,A_1,P_1,MPF_1,ES_1,GB_1",
+                "GB_1,R_1,P_1,MPF_1,ES_1"),
+    stringsAsFactors = FALSE
+  )
+  res <- detect_archetypes(loop_info)
+  keys <- vapply(res, function(x) x$archetype_key, character(1))
+  expect_true("limits_to_growth" %in% keys)
+  ltg <- res[[which(keys == "limits_to_growth")[1]]]
+  expect_equal(ltg$leverage_node_id, "R_1")          # the management Response, NOT the Pressure
+  expect_setequal(ltg$loop_ids, c(1L, 2L))
+})
+
+test_that("detect_archetypes returns empty list when there are no loops", {
+  expect_equal(detect_archetypes(data.frame()), list())
+  expect_equal(detect_archetypes(NULL), list())
+})

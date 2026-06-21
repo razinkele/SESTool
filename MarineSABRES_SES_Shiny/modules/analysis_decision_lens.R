@@ -32,7 +32,15 @@ analysis_decision_lens_ui <- function(id, i18n) {
           DT::dataTableOutput(ns("factors_table"))
         ),
 
-        # Tab 2: Why This Matters ----
+        # Tab 2: System Archetypes ----
+        tabPanel(i18n$t("modules.analysis.decision_lens.tab_archetypes"),
+          div(class = "alert alert-info",
+              icon("info-circle"), " ",
+              i18n$t("modules.analysis.decision_lens.archetype_candidate_caveat")),
+          uiOutput(ns("archetypes_ui"))
+        ),
+
+        # Tab 3: Why This Matters ----
         tabPanel(i18n$t("modules.analysis.decision_lens.tab_why"),
           p(i18n$t("modules.analysis.decision_lens.why_intro")),
           selectInput(ns("why_node"), NULL, choices = NULL),
@@ -47,7 +55,7 @@ analysis_decision_lens_ui <- function(id, i18n) {
 analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    rv <- reactiveValues(factors = NULL, loop_info = NULL)
+    rv <- reactiveValues(factors = NULL, loop_info = NULL, archetypes = NULL)
 
     # Stale-data observer
     observe({
@@ -100,6 +108,7 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
         loops <- find_all_cycles(g$nodes, g$edges, max_length = 8, max_cycles = 500,
                                  timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS)
         rv$loop_info <- process_cycles_to_loops(loops, g$nodes, g$edges, gph)
+        rv$archetypes <- detect_archetypes(rv$loop_info, g$nodes)
 
         updateSelectInput(session, "why_node",
                           choices = setNames(rv$factors$id, rv$factors$label))
@@ -139,10 +148,37 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
                     rownames = FALSE)
     })
 
+    output$archetypes_ui <- renderUI({
+      req(!is.null(rv$archetypes))
+      if (length(rv$archetypes) == 0) {
+        return(div(class = "alert alert-secondary",
+                   i18n$t("modules.analysis.decision_lens.archetypes_none")))
+      }
+      label_of <- function(id) {
+        m <- rv$factors$label[match(id, rv$factors$id)]
+        if (length(m) == 0 || is.na(m)) id else m
+      }
+      tagList(
+        p(i18n$t("modules.analysis.decision_lens.archetypes_intro")),
+        lapply(rv$archetypes, function(a) {
+          k <- paste0("modules.analysis.decision_lens.archetype.", a$archetype_key)
+          wellPanel(
+            h4(i18n$t(paste0(k, ".name"))),
+            p(i18n$t(paste0(k, ".desc"))),
+            p(strong(i18n$t("modules.analysis.decision_lens.narrative_archetype_leverage")), ": ",
+              label_of(a$leverage_node_id)),
+            p(em(i18n$t(paste0(k, ".leverage")))),
+            tags$small(class = "text-muted",
+                       paste0("Loops: ", paste(a$loop_ids, collapse = ", ")))
+          )
+        })
+      )
+    })
+
     output$why_narrative <- renderUI({
       req(input$why_node, rv$factors)
       HTML(build_decision_narrative(input$why_node, rv$factors, rv$loop_info,
-                                    archetypes = list(), i18n))  # archetypes deferred
+                                    rv$archetypes %||% list(), i18n))
     })
 
     output$next_steps_ui <- renderUI({

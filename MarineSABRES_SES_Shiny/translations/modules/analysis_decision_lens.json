@@ -209,6 +209,116 @@
       "it": "Fai clic su Analizza per classificare i fattori del sistema.",
       "no": "Klikk Analyser for å klassifisere systemfaktorene.",
       "el": "Κάντε κλικ στην Ανάλυση για να ταξινομήσετε τους παράγοντες του συστήματος."
+    },
+    "modules.analysis.decision_lens.tab_archetypes": {
+      "en": "System Archetypes",
+      "es": "Arquetipos del sistema",
+      "fr": "Archétypes du système",
+      "de": "System-Archetypen",
+      "lt": "Sistemos archetipai",
+      "pt": "Arquétipos do sistema",
+      "it": "Archetipi del sistema",
+      "no": "Systemarketyper",
+      "el": "Αρχέτυπα συστήματος"
+    },
+    "modules.analysis.decision_lens.archetypes_intro": {
+      "en": "Candidate system archetypes detected from the feedback-loop structure. Each is a possible pattern to confirm with stakeholders — not an assertion.",
+      "es": "Arquetipos del sistema candidatos detectados a partir de la estructura de bucles de retroalimentación. Cada uno es un patrón posible que debe confirmarse con las partes interesadas, no una afirmación.",
+      "fr": "Archétypes du système candidats détectés à partir de la structure des boucles de rétroaction. Chacun est un schéma possible à confirmer avec les parties prenantes — pas une affirmation.",
+      "de": "Kandidaten-Systemarchetypen, erkannt aus der Rückkopplungsschleifen-Struktur. Jeder ist ein mögliches Muster, das mit den Beteiligten zu bestätigen ist — keine Behauptung.",
+      "lt": "Galimi sistemos archetipai, aptikti iš grįžtamojo ryšio ciklų struktūros. Kiekvienas yra galimas modelis, kurį reikia patvirtinti su suinteresuotosiomis šalimis, o ne teiginys.",
+      "pt": "Arquétipos do sistema candidatos detetados a partir da estrutura de ciclos de retroalimentação. Cada um é um padrão possível a confirmar com as partes interessadas — não uma afirmação.",
+      "it": "Archetipi di sistema candidati rilevati dalla struttura dei cicli di retroazione. Ciascuno è un possibile schema da confermare con le parti interessate — non un'affermazione.",
+      "no": "Kandidat-systemarketyper oppdaget fra tilbakekoblingssløyfe-strukturen. Hver er et mulig mønster som må bekreftes med interessenter — ikke en påstand.",
+      "el": "Υποψήφια αρχέτυπα συστήματος που εντοπίστηκαν από τη δομή των βρόχων ανάδρασης. Καθένα είναι ένα πιθανό μοτίβο προς επιβεβαίωση με τους εμπλεκόμενους — όχι ισχυρισμός."
+    },
+    "modules.analysis.decision_lens.archetypes_none": {
+      "en": "No candidate archetypes detected in the current loop structure.",
+      "es": "No se han detectado arquetipos candidatos en la estructura de bucles actual.",
+      "fr": "Aucun archétype candidat détecté dans la structure de boucles actuelle.",
+      "de": "Keine Kandidaten-Archetypen in der aktuellen Schleifenstruktur erkannt.",
+      "lt": "Dabartinėje ciklų struktūroje galimų archetipų neaptikta.",
+      "pt": "Não foram detetados arquétipos candidatos na estrutura de ciclos atual.",
+      "it": "Nessun archetipo candidato rilevato nell'attuale struttura dei cicli.",
+      "no": "Ingen kandidat-arketyper oppdaget i den nåværende sløyfestrukturen.",
+      "el": "Δεν εντοπίστηκαν υποψήφια αρχέτυπα στην τρέχουσα δομή βρόχων."
+    },
+    "modules.analysis.decision_lens.archetype_candidate_caveat": {
+      "en": "These are structural candidates from causal-loop patterns — confirm with stakeholders before acting on any leverage point.",
+      "es": "Estos son candidatos estructurales a partir de patrones de bucles causales: confírmelos con las partes interesadas antes de actuar sobre cualquier punto de apalancamiento.",
+      "fr": "Ce sont des candidats structurels issus de schémas de boucles causales — à confirmer avec les parties prenantes avant d'agir sur un point de levier.",
+      "de": "Dies sind strukturelle Kandidaten aus Kausalschleifen-Mustern — vor dem Handeln an einem Hebelpunkt mit den Beteiligten bestätigen.",
+      "lt": "Tai struktūriniai kandidatai iš priežastinių ciklų modelių — prieš veikdami su bet kuriuo sverto tašku, patvirtinkite su suinteresuotosiomis šalimis.",
+      "pt": "Estes são candidatos estruturais a partir de padrões de ciclos causais — confirme com as partes interessadas antes de agir sobre qualquer ponto de alavancagem.",
+      "it": "Questi sono candidati strutturali da schemi di cicli causali — confermare con le parti interessate prima di agire su qualsiasi punto di leva.",
+      "no": "Dette er strukturelle kandidater fra årsakssløyfemønstre — bekreft med interessenter før du handler på et brekkstangspunkt.",
+      "el": "Πρόκειται για δομικούς υποψηφίους από μοτίβα αιτιωδών βρόχων — επιβεβαιώστε με τους εμπλεκόμενους πριν ενεργήσετε σε οποιοδήποτε σημείο μόχλευσης."
+    },
+    "modules.analysis.decision_lens.archetype.tragedy_of_the_commons.name": {
+      "en": "Tragedy of the Commons",
+      "es": "Tragedia de los comunes",
+      "fr": "Tragédie des biens communs",
+      "de": "Tragik der Allmende",
+      "lt": "Bendrų išteklių tragedija",
+      "pt": "Tragédia dos comuns",
+      "it": "Tragedia dei beni comuni",
+      "no": "Allmenningens tragedie",
+      "el": "Τραγωδία των κοινών"
+    },
+    "modules.analysis.decision_lens.archetype.tragedy_of_the_commons.desc": {
+      "en": "Several activities draw on the same shared resource, each loop reinforcing its own use until the resource is degraded for all.",
+      "es": "Varias actividades utilizan el mismo recurso compartido, cada bucle reforzando su propio uso hasta que el recurso se degrada para todos.",
+      "fr": "Plusieurs activités puisent dans la même ressource partagée, chaque boucle renforçant son propre usage jusqu'à la dégradation de la ressource pour tous.",
+      "de": "Mehrere Aktivitäten nutzen dieselbe gemeinsame Ressource, jede Schleife verstärkt ihre eigene Nutzung, bis die Ressource für alle verschlechtert ist.",
+      "lt": "Kelios veiklos naudoja tą patį bendrą išteklių, kiekvienas ciklas stiprina savo naudojimą, kol išteklius degraduoja visiems.",
+      "pt": "Várias atividades utilizam o mesmo recurso partilhado, cada ciclo reforçando o seu próprio uso até o recurso se degradar para todos.",
+      "it": "Diverse attività attingono alla stessa risorsa condivisa, ogni ciclo rafforzando il proprio uso finché la risorsa si degrada per tutti.",
+      "no": "Flere aktiviteter trekker på den samme delte ressursen, hver sløyfe forsterker sin egen bruk til ressursen forringes for alle.",
+      "el": "Πολλές δραστηριότητες αντλούν από τον ίδιο κοινό πόρο, κάθε βρόχος ενισχύει τη δική του χρήση μέχρι ο πόρος να υποβαθμιστεί για όλους."
+    },
+    "modules.analysis.decision_lens.archetype.tragedy_of_the_commons.leverage": {
+      "en": "Govern the shared resource collectively (shared limits, monitoring, allocation) — the collapse is not inevitable. Do not simply blame individual activities.",
+      "es": "Gobernar el recurso compartido de forma colectiva (límites compartidos, seguimiento, asignación): el colapso no es inevitable. No culpe simplemente a las actividades individuales.",
+      "fr": "Gouverner collectivement la ressource partagée (limites communes, suivi, allocation) — l'effondrement n'est pas inévitable. Ne blâmez pas simplement les activités individuelles.",
+      "de": "Die gemeinsame Ressource kollektiv steuern (gemeinsame Grenzen, Überwachung, Zuteilung) — der Kollaps ist nicht unvermeidlich. Nicht einfach einzelne Aktivitäten beschuldigen.",
+      "lt": "Bendrą išteklį valdykite kolektyviai (bendros ribos, stebėsena, paskirstymas) — žlugimas nėra neišvengiamas. Nekaltinkite vien atskirų veiklų.",
+      "pt": "Governar o recurso partilhado de forma coletiva (limites partilhados, monitorização, alocação) — o colapso não é inevitável. Não culpe apenas as atividades individuais.",
+      "it": "Governare la risorsa condivisa collettivamente (limiti condivisi, monitoraggio, allocazione) — il collasso non è inevitabile. Non incolpare semplicemente le singole attività.",
+      "no": "Styr den delte ressursen kollektivt (felles grenser, overvåking, fordeling) — kollapsen er ikke uunngåelig. Ikke bare klandre enkeltaktiviteter.",
+      "el": "Διαχειριστείτε τον κοινό πόρο συλλογικά (κοινά όρια, παρακολούθηση, κατανομή) — η κατάρρευση δεν είναι αναπόφευκτη. Μην κατηγορείτε απλώς τις μεμονωμένες δραστηριότητες."
+    },
+    "modules.analysis.decision_lens.archetype.limits_to_growth.name": {
+      "en": "Limits to Growth",
+      "es": "Límites del crecimiento",
+      "fr": "Limites à la croissance",
+      "de": "Grenzen des Wachstums",
+      "lt": "Augimo ribos",
+      "pt": "Limites do crescimento",
+      "it": "Limiti alla crescita",
+      "no": "Grenser for vekst",
+      "el": "Όρια στην ανάπτυξη"
+    },
+    "modules.analysis.decision_lens.archetype.limits_to_growth.desc": {
+      "en": "A reinforcing growth engine runs until a balancing (corrective) loop increasingly constrains it.",
+      "es": "Un motor de crecimiento reforzador funciona hasta que un bucle de equilibrio (correctivo) lo restringe cada vez más.",
+      "fr": "Un moteur de croissance renforçant fonctionne jusqu'à ce qu'une boucle d'équilibrage (corrective) le contraigne de plus en plus.",
+      "de": "Ein verstärkender Wachstumsmotor läuft, bis eine ausgleichende (korrigierende) Schleife ihn zunehmend einschränkt.",
+      "lt": "Stiprinantis augimo variklis veikia, kol balansuojantis (taisomasis) ciklas jį vis labiau riboja.",
+      "pt": "Um motor de crescimento reforçador funciona até que um ciclo de equilíbrio (corretivo) o restrinja cada vez mais.",
+      "it": "Un motore di crescita rinforzante funziona finché un ciclo di bilanciamento (correttivo) lo vincola sempre più.",
+      "no": "En forsterkende vekstmotor går til en balanserende (korrigerende) sløyfe i økende grad begrenser den.",
+      "el": "Ένας ενισχυτικός μηχανισμός ανάπτυξης λειτουργεί μέχρι ένας εξισορροπητικός (διορθωτικός) βρόχος να τον περιορίζει ολοένα και περισσότερο."
+    },
+    "modules.analysis.decision_lens.archetype.limits_to_growth.leverage": {
+      "en": "Do not push growth harder — ease the limiting constraint or strengthen the balancing response that checks it.",
+      "es": "No fuerce más el crecimiento: alivie la restricción limitante o refuerce la respuesta de equilibrio que lo controla.",
+      "fr": "Ne forcez pas davantage la croissance — assouplissez la contrainte limitante ou renforcez la réponse d'équilibrage qui la régule.",
+      "de": "Wachstum nicht stärker antreiben — die begrenzende Einschränkung lockern oder die ausgleichende Reaktion stärken, die es reguliert.",
+      "lt": "Nestumkite augimo dar labiau — sušvelninkite ribojantį suvaržymą arba sustiprinkite balansuojantį atsaką, kuris jį valdo.",
+      "pt": "Não force mais o crescimento — alivie a restrição limitante ou reforce a resposta de equilíbrio que o controla.",
+      "it": "Non spingere di più la crescita — allenta il vincolo limitante o rafforza la risposta di bilanciamento che la controlla.",
+      "no": "Ikke press veksten hardere — lett på den begrensende betingelsen eller styrk den balanserende responsen som demmer opp for den.",
+      "el": "Μην πιέζετε περισσότερο την ανάπτυξη — χαλαρώστε τον περιοριστικό παράγοντα ή ενισχύστε την εξισορροπητική απόκριση που τον ελέγχει."
     }
   }
 }
