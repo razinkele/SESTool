@@ -1,8 +1,8 @@
 {
-  "version": "1.18.2",
-  "version_name": "Path-traversal hardening + full CI suite",
-  "release_date": "2026-06-08",
-  "release_type": "patch",
+  "version": "1.19.0",
+  "version_name": "Decision Lens (QSEM interpretation layer)",
+  "release_date": "2026-06-21",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -10,97 +10,17 @@
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
-  "security_updates": true,
+  "security_updates": false,
   "features": [
-    "GraphSAGE-based graph neural network for connection prediction (functions/ml_models.R + scripts/train_connection_predictor_gnn.R). 2-layer encoder produces 32-dim node embeddings; existence head consumes [h_s; h_t; h_s ⊙ h_t]. Retrospective validation: precision@5 = 0.086 vs base 0.057 (+51%); recall@10 = 0.100 vs 0.081 (+23%).",
-    "BERT chunk-classification head for SES element extraction (functions/ml_element_classifier.R + scripts/train_element_classifier.R). 7-way classifier on top of frozen sentence-transformer embedding. Test accuracy 61% (4.3× random baseline of 14.3%) on 1367 KB-derived (text, category) pairs.",
-    "LinUCB contextual bandit for response-measure prioritization (functions/ml_response_bandit.R + scripts/warm_start_response_bandit.R). 32-dim context vector, 3 priority arms (high/medium/low), warm-started from 251 KB response-related connections.",
-    "Collaborative filtering for SES recommendations (functions/ml_collaborative_filter.R + scripts/warm_start_cf.R). Truncated-SVD on a 44 × 1458 user × item matrix derived from KB contexts + production templates. Density 2.7%; rank 12.",
-    "Pilot study instrumentation (modules/pilot_study_module.R + docs/ml_pilot_protocol.md + docs/ml_pilot_consent_form.md + scripts/pilot_analysis.R). URL-param conditional activation (?pilot_condition=A|B), session timing, NASA-TLX modal, hashed participant IDs, paired Wilcoxon analysis with Bonferroni correction.",
-    "Transformer-based text embeddings (Phase 2A): functions/ml_text_embeddings.R adds a 'transformer' strategy backed by the R `text` package (sentence-transformers/all-MiniLM-L6-v2, 384-dim). Selected at startup via MARINESABRES_EMBEDDING_STRATEGY env var; auto-preferred when the `text` package is available. Cached per-element-name to avoid re-encoding.",
-    "Similarity-guided transfer-learning fine-tuning (Phase 2B): scripts/fine_tune_for_template.R scores target-vs-other template similarity and selects LR + freezing schedule. Ships fine-tuned checkpoints for coastal_lagoon, climate_change, fisheries.",
-    "Retrospective validation pipeline: scripts/retrospective_validation.R masks 20% of human-validated positives per template, ranks all candidate pairs, and reports precision@k / recall@k. Macro-averaged precision@10 ≈ 0.057 (≈7× the ~0.008 random baseline); recall@20 ≈ 0.153.",
-    "docs/ML_METHODS.md: paper-ready pipeline documentation with explicit out-of-scope statements (no GNN, no BERT-from-scratch, no RL, no collaborative filtering).",
-    "docs/RETROSPECTIVE_VALIDATION.md: measured retrieval metrics backing the ESP 2026 abstract.",
-    "PIMS-style persistence pattern applied to three modules (pims_stakeholder, response_module, isa_data_entry): sync_to_project_data() helper + observeEvent on project_id to load. ADR-12 in docs/ARCHITECTURE.md.",
-    "Stable categorical keys for localized selectInputs (Power/Interest in pims, Effectiveness/Feasibility in response): setNames() so internal comparisons stay locale-independent. ADR-11.",
-    "Event-bus emit_* functions wrapped in shiny::isolate() — closes 10 pre-existing test failures and prevents observers from registering reactive dependencies on events they emit. ADR-13.",
-    "Workflow stepper 5 step-name keys added across all 9 languages (45 translation entries).",
-    "Scenario Builder 'Add new link' silent req() aborts replaced with user-visible toasts.",
-    "Feedback modal browser_info input ID renamed to match the post-ef005fb modal JS.",
-    "Deploy-script hardening: docs/images/*.png exclude (instead of *.png blanket), production user-data preservation around the wipe-and-extract."
+    "Decision Lens module (modules/analysis_decision_lens.R): a QSEM-inspired interpretation layer reachable via Analysis Tools -> Decision Lens, in all 9 languages.",
+    "Factor classification (impact-vs-control axis): surfaces the previously dormant MICMAC analysis (calculate_micmac_safe) as an influence-vs-dependence quadrant scatter, dual-encoded by colour + shape for accessibility, plus a sortable table. Reading is structural (polarity/strength discarded).",
+    "System-archetype detection (functions/decision_lens.R::detect_archetypes): Tragedy of the Commons (a shared State/stock drawn on by >=2 distinct Activities -> govern the shared resource, Ostrom) and Limits to Growth (the GB->D reinforcing engine checked by a Response-mediated balancing loop -> leverage the Response). Fixes-that-Fail and Shifting-the-Burden intentionally deferred (not separable without delay/temporal data; weak marine support).",
+    "Deterministic, fully internationalised 'why this matters' narrative fusing a node's quadrant role x loop participation x archetype leverage. Template + i18n, never ML-generated (works on torch-less deployments).",
+    "Scientifically validated: archetype motifs and leverage advice checked against marine-SES / system-dynamics literature via the scientific-validation skill (Hallett & Hobbs 2020; Frischmann et al. 2019; Battersby/Ostrom 2017); valid-loop topology verified against is_valid_dapsirwrm_transition (cycles close via GB->D or R->{D,A,P,S})."
   ],
   "fixes": {
-    "critical": [
-      {
-        "issue": "ISA Data Entry edits never reached the project save file (modules/isa_data_entry_module.R had zero writes to project_data_reactive in 1352 lines).",
-        "file": "modules/isa_data_entry_module.R, functions/isa_form_builders.R",
-        "impact": "Silent data loss — users' Standard Entry work vanished on session restart and never appeared in saved project files.",
-        "resolution": "sync_to_project_data() called after every save_exN observer (8), add_loop, and per-panel Remove (6). project_id-keyed load observer replaces the unguarded observe() that was also re-clobbering in-progress edits."
-      },
-      {
-        "issue": "ISA Data Entry per-panel Remove only deleted the DOM panel, not the stored data.frame row. Ghost rows then re-rendered as visible duplicates.",
-        "file": "functions/isa_form_builders.R:register_remove_observer",
-        "impact": "Deleted elements reappeared with duplicate IDs on the next reactive recompute.",
-        "resolution": "register_remove_observer signature expanded to optionally delete the matching row from the data.frame by ID and invoke a sync callback."
-      },
-      {
-        "issue": "Stakeholder Power-Interest classification silently miscategorized records in any non-English session (modules/pims_stakeholder_module.R).",
-        "file": "modules/pims_stakeholder_module.R",
-        "impact": "Power-Interest grid placement, summary statistics, and Word/PNG export labels all wrong outside English.",
-        "resolution": "setNames() with stable HIGH/MEDIUM/LOW keys; all 7 comparison sites updated; export boundary translates back via power_interest_label() helper."
-      },
-      {
-        "issue": "Response measure priority scoring silently inverted rankings in non-English sessions (modules/response_module.R).",
-        "file": "modules/response_module.R",
-        "impact": "Highest-impact response measures appeared at the BOTTOM of the priority table for any non-English user.",
-        "resolution": "Same stable-key pattern; 12 comparison sites updated; export translates via level_label()."
-      },
-      {
-        "issue": "Scenario Builder 'Add new link' button silently aborted when project_data was null, CLD was empty, or no scenario was selected.",
-        "file": "modules/scenario_builder_module.R:532-590",
-        "impact": "Button appeared dead. User perceived a freeze.",
-        "resolution": "Replaced 3 silent req() calls with explicit guards that call showNotification() telling the user what to do."
-      },
-      {
-        "issue": "Workflow stepper at top of dashboard rendered raw i18n keys (modules.workflow_stepper.step_get_started etc.) instead of translated labels.",
-        "file": "translations/modules/workflow_stepper.json",
-        "impact": "Visible regression — labels read like code identifiers, not localized words.",
-        "resolution": "Added the 5 missing keys × 9 languages."
-      }
-    ],
-    "high": [
-      {
-        "issue": "Two analysis modules called ns('stale_data') from server scope where ns wasn't defined.",
-        "file": "modules/analysis_leverage.R:129, modules/analysis_simplify.R:450",
-        "impact": "Runtime error when an analysis was completed and ISA then changed (stale-data notification path).",
-        "resolution": "Replaced with session$ns('stale_data')."
-      },
-      {
-        "issue": "10 pre-existing test failures in test-reactive-pipeline.R about emit_* reading reactiveVals outside reactive context.",
-        "file": "server/event_bus_setup.R",
-        "impact": "Tests not green; latent risk of observers self-firing on their own emitted events.",
-        "resolution": "Wrapped each of the 8 emit_* function bodies in shiny::isolate()."
-      },
-      {
-        "issue": "Feedback modal submissions always recorded browser_info as 'unknown' after the ef005fb input rename.",
-        "file": "functions/feedback_reporter.R:52",
-        "impact": "Lost diagnostic context on every feedback submission.",
-        "resolution": "Read input$fb_browser_info to match the modal's setInputValue call."
-      },
-      {
-        "issue": "Deploy script *.png exclude was stripping www/img/MSabres.png (navbar logo).",
-        "file": "deployment/remote-deploy.sh, deployment/deploy-remote.ps1",
-        "impact": "A v1.13.2 deploy would have rendered production with a broken navbar logo.",
-        "resolution": "Tightened exclude to docs/images/*.png. App UI assets ship; README screenshots stay excluded."
-      },
-      {
-        "issue": "Deploy script wiped production-accumulated user data (data/ml_training_data.rds ~42KB, data/*_backup.json) without backup.",
-        "file": "deployment/remote-deploy.sh, deployment/deploy-remote.ps1",
-        "impact": "Every production deploy permanently lost ML feedback accumulated since the previous deploy.",
-        "resolution": "tar-based preserve-and-restore step wrapping the rm-rf + extract."
-      }
-    ]
+    "critical": [],
+    "high": []
   },
   "metrics": {
     "knowledge_db_contexts": 33,
@@ -113,17 +33,9 @@
     "polarity_coverage": "100%",
     "cross_ecosystem_links": 20,
     "languages_supported": 9,
-    "modules_total": 46,
-    "test_files": 56,
-    "modules_with_persistence_pattern": 3,
-    "user_reported_bugs_closed_in_release_series": 7,
-    "pre_existing_test_failures_fixed": 10
+    "modules_total": 47,
+    "test_files": 58
   },
-  "migration_notes": [
-    "data$pims$stakeholders schema changed from lowercase numeric (id, power=numeric()) to TitleCase categorical (ID, Power=character()) — only takes effect when a stakeholder is saved; existing empty projects unaffected.",
-    "data$response_measures top-level slot added to canonical schema (measures, impacts, milestones, counter).",
-    "data$pims$engagements and data$pims$communications top-level slots added.",
-    "VERSION_INFO.json was stale at 1.11.0 through v1.13.3 — Application Info modal now correctly reflects the running version."
-  ],
-  "previous_version": "1.18.1"
+  "migration_notes": [],
+  "previous_version": "1.18.2"
 }
