@@ -143,6 +143,17 @@
       "no": "Påvirkningspunktanalyse",
       "el": "Ανάλυση Σημείων Μόχλευσης"
     },
+    "ui.sidebar.decision_lens": {
+      "en": "Decision Lens",
+      "es": "Lente de decisión",
+      "fr": "Loupe de décision",
+      "de": "Entscheidungslinse",
+      "lt": "Sprendimų lęšis",
+      "pt": "Lente de decisão",
+      "it": "Lente decisionale",
+      "no": "Beslutningslinse",
+      "el": "Φακός απόφασης"
+    },
     "ui.sidebar.load_a_previously_saved_project": {
       "en": "Load a previously saved project",
       "es": "Cargar un proyecto guardado anteriormente",
@@ -516,6 +527,17 @@
       "it": "Identifica punti di intervento ad alta leva combinando metriche di centralità e partecipazione ai cicli per trovare nodi dove piccoli cambiamenti possono avere grandi effetti sull'intero sistema",
       "no": "Identifiser høye påvirkningspunkter for intervensjon ved å kombinere sentralitetsmålinger og sløyfedeltakelse for å finne noder der små endringer kan ha store systemomfattende effekter",
       "el": "Εντοπίστε σημεία παρέμβασης υψηλής μόχλευσης συνδυάζοντας μετρικές κεντρικότητας και συμμετοχή σε βρόχους για να βρείτε κόμβους όπου μικρές αλλαγές μπορούν να έχουν μεγάλες επιπτώσεις σε ολόκληρο το σύστημα"
+    },
+    "ui.sidebar.tooltip.decision_lens": {
+      "en": "Classify elements by influence vs dependence (the impact-control axis) and read why each matters — a structural, QSEM-inspired interpretation layer",
+      "es": "Clasifique los elementos por influencia frente a dependencia (el eje impacto-control) y comprenda por qué importa cada uno: una capa de interpretación estructural inspirada en QSEM",
+      "fr": "Classez les éléments par influence vs dépendance (l'axe impact-contrôle) et comprenez pourquoi chacun compte — une couche d'interprétation structurelle inspirée de QSEM",
+      "de": "Klassifizieren Sie Elemente nach Einfluss vs. Abhängigkeit (die Wirkungs-Kontroll-Achse) und verstehen Sie, warum jedes wichtig ist — eine strukturelle, von QSEM inspirierte Interpretationsebene",
+      "lt": "Klasifikuokite elementus pagal įtaką ir priklausomybę (poveikio ir kontrolės ašis) ir supraskite, kodėl kiekvienas svarbus — struktūrinis, QSEM įkvėptas aiškinimo sluoksnis",
+      "pt": "Classifique os elementos por influência vs dependência (o eixo impacto-controlo) e compreenda por que cada um importa — uma camada de interpretação estrutural inspirada no QSEM",
+      "it": "Classifica gli elementi per influenza vs dipendenza (l'asse impatto-controllo) e comprendi perché ciascuno è importante — un livello di interpretazione strutturale ispirato a QSEM",
+      "no": "Klassifiser elementer etter innflytelse mot avhengighet (virkning-kontroll-aksen) og forstå hvorfor hvert er viktig — et strukturelt, QSEM-inspirert tolkningslag",
+      "el": "Ταξινομήστε τα στοιχεία ανά επιρροή έναντι εξάρτησης (ο άξονας επίδρασης-ελέγχου) και κατανοήστε γιατί έχει σημασία το καθένα — ένα δομικό επίπεδο ερμηνείας εμπνευσμένο από το QSEM"
     },
     "ui.sidebar.tooltip.bot_analysis": {
       "en": "Balance Over Time (BOT) analysis identifies structural patterns that may lead to policy resistance, unintended consequences, or system delays requiring careful intervention design",

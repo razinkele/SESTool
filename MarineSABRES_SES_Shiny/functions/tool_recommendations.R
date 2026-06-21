@@ -66,6 +66,22 @@ get_next_steps <- function(current_module) {
         icon            = "sync-alt",
         description_key = "modules.tool_recommendations.metrics.loops_desc"
       )
+    ),
+    # Decision Lens reuses existing leverage/loops recommendation copy to avoid
+    # introducing new i18n keys (the linked tools are the natural next steps).
+    analysis_decision_lens = list(
+      list(
+        label_key       = "modules.tool_recommendations.metrics.leverage_label",
+        tab_id          = "analysis_leverage",
+        icon            = "crosshairs",
+        description_key = "modules.tool_recommendations.metrics.leverage_desc"
+      ),
+      list(
+        label_key       = "modules.tool_recommendations.metrics.loops_label",
+        tab_id          = "analysis_loops",
+        icon            = "sync-alt",
+        description_key = "modules.tool_recommendations.metrics.loops_desc"
+      )
     )
   )
 
