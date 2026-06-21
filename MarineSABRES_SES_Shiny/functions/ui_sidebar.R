@@ -329,6 +329,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
             safe_t("ui.sidebar.leverage_point_analysis", i18n_obj = i18n),
             tabName = "analysis_leverage",
             tooltip_text = safe_t("ui.sidebar.tooltip.leverage_point_analysis", i18n_obj = i18n)
+          ),
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.decision_lens", i18n_obj = i18n),
+            tabName = "analysis_decision_lens",
+            tooltip_text = safe_t("ui.sidebar.tooltip.decision_lens", i18n_obj = i18n)
           )
         )
       ))
