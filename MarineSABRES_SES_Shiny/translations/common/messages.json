@@ -858,6 +858,17 @@
       "no": "analyserer gearingspunkter",
       "el": "ανάλυση σημείων μόχλευσης"
     },
+    "common.messages.context_analyzing_decision_lens": {
+      "en": "running the decision lens",
+      "es": "ejecutando la lente de decisión",
+      "fr": "exécution de la loupe de décision",
+      "de": "Ausführen der Entscheidungslinse",
+      "lt": "vykdant sprendimų lęšį",
+      "pt": "executando a lente de decisão",
+      "it": "esecuzione della lente decisionale",
+      "no": "kjører beslutningslinsen",
+      "el": "εκτέλεση του φακού απόφασης"
+    },
     "common.messages.context_adding_intervention": {
       "en": "adding intervention",
       "es": "agregando intervención",

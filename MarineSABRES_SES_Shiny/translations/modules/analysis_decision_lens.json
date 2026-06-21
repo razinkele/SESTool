@@ -1,0 +1,214 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "translation": {
+    "modules.analysis.decision_lens.title": {
+      "en": "Decision Lens",
+      "es": "Lente de decisión",
+      "fr": "Loupe de décision",
+      "de": "Entscheidungslinse",
+      "lt": "Sprendimų lęšis",
+      "pt": "Lente de decisão",
+      "it": "Lente decisionale",
+      "no": "Beslutningslinse",
+      "el": "Φακός απόφασης"
+    },
+    "modules.analysis.decision_lens.subtitle": {
+      "en": "Factor classification and why-it-matters interpretation",
+      "es": "Clasificación de factores e interpretación de su importancia",
+      "fr": "Classification des facteurs et interprétation de leur importance",
+      "de": "Faktorklassifizierung und Interpretation der Bedeutung",
+      "lt": "Veiksnių klasifikavimas ir reikšmės aiškinimas",
+      "pt": "Classificação de fatores e interpretação da sua importância",
+      "it": "Classificazione dei fattori e interpretazione della loro importanza",
+      "no": "Faktorklassifisering og tolkning av betydning",
+      "el": "Ταξινόμηση παραγόντων και ερμηνεία της σημασίας τους"
+    },
+    "modules.analysis.decision_lens.help_title": {
+      "en": "About the Decision Lens",
+      "es": "Acerca de la Lente de decisión",
+      "fr": "À propos de la Loupe de décision",
+      "de": "Über die Entscheidungslinse",
+      "lt": "Apie Sprendimų lęšį",
+      "pt": "Sobre a Lente de decisão",
+      "it": "Informazioni sulla Lente decisionale",
+      "no": "Om Beslutningslinsen",
+      "el": "Σχετικά με τον Φακό απόφασης"
+    },
+    "modules.analysis.decision_lens.tab_factors": {
+      "en": "Factor Classification",
+      "es": "Clasificación de factores",
+      "fr": "Classification des facteurs",
+      "de": "Faktorklassifizierung",
+      "lt": "Veiksnių klasifikavimas",
+      "pt": "Classificação de fatores",
+      "it": "Classificazione dei fattori",
+      "no": "Faktorklassifisering",
+      "el": "Ταξινόμηση παραγόντων"
+    },
+    "modules.analysis.decision_lens.tab_why": {
+      "en": "Why This Matters",
+      "es": "Por qué es importante",
+      "fr": "Pourquoi c'est important",
+      "de": "Warum das wichtig ist",
+      "lt": "Kodėl tai svarbu",
+      "pt": "Por que isto importa",
+      "it": "Perché è importante",
+      "no": "Hvorfor dette er viktig",
+      "el": "Γιατί έχει σημασία"
+    },
+    "modules.analysis.decision_lens.factors_intro": {
+      "en": "Classify each system element by its structural influence (control) versus dependence (exposure). This surfaces the impact-vs-control axis: which elements drive the system and which mainly respond to it. The reading is structural — connection polarity and strength are not used.",
+      "es": "Clasifica cada elemento del sistema según su influencia estructural (control) frente a su dependencia (exposición). Esto revela el eje impacto-control: qué elementos impulsan el sistema y cuáles responden principalmente a él. La lectura es estructural: no se utilizan la polaridad ni la fuerza de las conexiones.",
+      "fr": "Classez chaque élément du système selon son influence structurelle (contrôle) par rapport à sa dépendance (exposition). Cela fait apparaître l'axe impact-contrôle : quels éléments pilotent le système et lesquels y réagissent surtout. La lecture est structurelle — la polarité et la force des connexions ne sont pas utilisées.",
+      "de": "Klassifizieren Sie jedes Systemelement nach seinem strukturellen Einfluss (Kontrolle) gegenüber seiner Abhängigkeit (Exposition). Dies zeigt die Wirkungs-Kontroll-Achse: welche Elemente das System antreiben und welche überwiegend darauf reagieren. Die Lesart ist strukturell — Polarität und Stärke der Verbindungen werden nicht verwendet.",
+      "lt": "Klasifikuokite kiekvieną sistemos elementą pagal jo struktūrinę įtaką (kontrolę) ir priklausomybę (paveikumą). Taip atskleidžiama poveikio ir kontrolės ašis: kurie elementai valdo sistemą, o kurie daugiausia į ją reaguoja. Vertinimas yra struktūrinis — ryšių poliškumas ir stiprumas nenaudojami.",
+      "pt": "Classifique cada elemento do sistema pela sua influência estrutural (controlo) face à sua dependência (exposição). Isto revela o eixo impacto-controlo: que elementos impulsionam o sistema e quais respondem principalmente a ele. A leitura é estrutural — a polaridade e a força das ligações não são utilizadas.",
+      "it": "Classifica ogni elemento del sistema in base alla sua influenza strutturale (controllo) rispetto alla sua dipendenza (esposizione). Questo evidenzia l'asse impatto-controllo: quali elementi guidano il sistema e quali vi rispondono principalmente. La lettura è strutturale — la polarità e la forza delle connessioni non sono utilizzate.",
+      "no": "Klassifiser hvert systemelement etter dets strukturelle innflytelse (kontroll) mot dets avhengighet (eksponering). Dette viser virkning-mot-kontroll-aksen: hvilke elementer driver systemet og hvilke hovedsakelig reagerer på det. Lesningen er strukturell — koblingenes polaritet og styrke brukes ikke.",
+      "el": "Ταξινομήστε κάθε στοιχείο του συστήματος ανάλογα με τη δομική του επιρροή (έλεγχος) έναντι της εξάρτησής του (έκθεση). Αυτό αναδεικνύει τον άξονα επίδρασης-ελέγχου: ποια στοιχεία κινούν το σύστημα και ποια κυρίως αντιδρούν σε αυτό. Η ανάγνωση είναι δομική — η πολικότητα και η ισχύς των συνδέσεων δεν χρησιμοποιούνται."
+    },
+    "modules.analysis.decision_lens.factors_x_axis": {
+      "en": "Dependence (exposure to other elements)",
+      "es": "Dependencia (exposición a otros elementos)",
+      "fr": "Dépendance (exposition aux autres éléments)",
+      "de": "Abhängigkeit (Exposition gegenüber anderen Elementen)",
+      "lt": "Priklausomybė (paveikumas kitiems elementams)",
+      "pt": "Dependência (exposição a outros elementos)",
+      "it": "Dipendenza (esposizione ad altri elementi)",
+      "no": "Avhengighet (eksponering for andre elementer)",
+      "el": "Εξάρτηση (έκθεση σε άλλα στοιχεία)"
+    },
+    "modules.analysis.decision_lens.factors_y_axis": {
+      "en": "Influence (effect on other elements)",
+      "es": "Influencia (efecto sobre otros elementos)",
+      "fr": "Influence (effet sur les autres éléments)",
+      "de": "Einfluss (Wirkung auf andere Elemente)",
+      "lt": "Įtaka (poveikis kitiems elementams)",
+      "pt": "Influência (efeito sobre outros elementos)",
+      "it": "Influenza (effetto su altri elementi)",
+      "no": "Innflytelse (effekt på andre elementer)",
+      "el": "Επιρροή (επίδραση σε άλλα στοιχεία)"
+    },
+    "modules.analysis.decision_lens.quad_influential": {
+      "en": "High influence, low dependence — structurally upstream; a candidate lever worth prioritising for investigation. (Structural only: polarity and strength are ignored.)",
+      "es": "Alta influencia, baja dependencia: estructuralmente aguas arriba; una palanca candidata que conviene priorizar para su estudio. (Solo estructural: se ignoran la polaridad y la fuerza.)",
+      "fr": "Forte influence, faible dépendance — structurellement en amont ; un levier candidat à prioriser pour l'analyse. (Structurel uniquement : la polarité et la force sont ignorées.)",
+      "de": "Hoher Einfluss, geringe Abhängigkeit — strukturell vorgelagert; ein zu priorisierender Hebelkandidat. (Nur strukturell: Polarität und Stärke werden ignoriert.)",
+      "lt": "Didelė įtaka, maža priklausomybė — struktūriškai aukštupyje; svertas kandidatas, kurį verta tirti pirmiausia. (Tik struktūriškai: poliškumas ir stiprumas nevertinami.)",
+      "pt": "Alta influência, baixa dependência — estruturalmente a montante; uma alavanca candidata a priorizar para investigação. (Apenas estrutural: polaridade e força são ignoradas.)",
+      "it": "Alta influenza, bassa dipendenza — strutturalmente a monte; una leva candidata da prioritizzare per l'analisi. (Solo strutturale: polarità e forza sono ignorate.)",
+      "no": "Høy innflytelse, lav avhengighet — strukturelt oppstrøms; en kandidat-spak verdt å prioritere for undersøkelse. (Kun strukturelt: polaritet og styrke ignoreres.)",
+      "el": "Υψηλή επιρροή, χαμηλή εξάρτηση — δομικά ανάντη· υποψήφιος μοχλός που αξίζει να προτεραιοποιηθεί για διερεύνηση. (Μόνο δομικά: η πολικότητα και η ισχύς αγνοούνται.)"
+    },
+    "modules.analysis.decision_lens.quad_relay": {
+      "en": "High influence and high dependence — structurally central; changes here tend to propagate, so monitor knock-on effects. (Structural only.)",
+      "es": "Alta influencia y alta dependencia: estructuralmente central; los cambios aquí tienden a propagarse, así que vigile los efectos en cadena. (Solo estructural.)",
+      "fr": "Forte influence et forte dépendance — structurellement central ; les changements tendent à s'y propager, surveillez les effets en cascade. (Structurel uniquement.)",
+      "de": "Hoher Einfluss und hohe Abhängigkeit — strukturell zentral; Änderungen breiten sich hier tendenziell aus, beobachten Sie Folgewirkungen. (Nur strukturell.)",
+      "lt": "Didelė įtaka ir didelė priklausomybė — struktūriškai centrinis; pokyčiai čia linkę plisti, todėl stebėkite šalutinį poveikį. (Tik struktūriškai.)",
+      "pt": "Alta influência e alta dependência — estruturalmente central; as mudanças aqui tendem a propagar-se, por isso monitorize os efeitos em cadeia. (Apenas estrutural.)",
+      "it": "Alta influenza e alta dipendenza — strutturalmente centrale; i cambiamenti qui tendono a propagarsi, quindi monitora gli effetti a catena. (Solo strutturale.)",
+      "no": "Høy innflytelse og høy avhengighet — strukturelt sentral; endringer her har en tendens til å forplante seg, så overvåk ringvirkninger. (Kun strukturelt.)",
+      "el": "Υψηλή επιρροή και υψηλή εξάρτηση — δομικά κεντρικό· οι αλλαγές εδώ τείνουν να διαδίδονται, οπότε παρακολουθήστε τις αλυσιδωτές επιδράσεις. (Μόνο δομικά.)"
+    },
+    "modules.analysis.decision_lens.quad_dependent": {
+      "en": "Low influence, high dependence — structurally downstream; often a good outcome indicator, though it can still be a valid target for a restoration response. (Structural only.)",
+      "es": "Baja influencia, alta dependencia: estructuralmente aguas abajo; suele ser un buen indicador de resultados, aunque puede seguir siendo un objetivo válido para una respuesta de restauración. (Solo estructural.)",
+      "fr": "Faible influence, forte dépendance — structurellement en aval ; souvent un bon indicateur de résultat, bien qu'il puisse rester une cible valable pour une réponse de restauration. (Structurel uniquement.)",
+      "de": "Geringer Einfluss, hohe Abhängigkeit — strukturell nachgelagert; oft ein guter Ergebnisindikator, kann aber dennoch ein gültiges Ziel für eine Wiederherstellungsmaßnahme sein. (Nur strukturell.)",
+      "lt": "Maža įtaka, didelė priklausomybė — struktūriškai žemupyje; dažnai geras rezultato rodiklis, tačiau vis tiek gali būti tinkamas atkūrimo atsako objektas. (Tik struktūriškai.)",
+      "pt": "Baixa influência, alta dependência — estruturalmente a jusante; muitas vezes um bom indicador de resultado, embora possa ainda ser um alvo válido para uma resposta de restauro. (Apenas estrutural.)",
+      "it": "Bassa influenza, alta dipendenza — strutturalmente a valle; spesso un buon indicatore di risultato, anche se può restare un obiettivo valido per una risposta di ripristino. (Solo strutturale.)",
+      "no": "Lav innflytelse, høy avhengighet — strukturelt nedstrøms; ofte en god resultatindikator, men kan fortsatt være et gyldig mål for et gjenopprettingstiltak. (Kun strukturelt.)",
+      "el": "Χαμηλή επιρροή, υψηλή εξάρτηση — δομικά κατάντη· συχνά καλός δείκτης αποτελέσματος, αν και μπορεί να παραμένει έγκυρος στόχος για μια απόκριση αποκατάστασης. (Μόνο δομικά.)"
+    },
+    "modules.analysis.decision_lens.quad_autonomous": {
+      "en": "Low influence and low dependence — weakly coupled; typically lower priority. (Structural only.)",
+      "es": "Baja influencia y baja dependencia: débilmente acoplado; normalmente de menor prioridad. (Solo estructural.)",
+      "fr": "Faible influence et faible dépendance — faiblement couplé ; généralement moins prioritaire. (Structurel uniquement.)",
+      "de": "Geringer Einfluss und geringe Abhängigkeit — schwach gekoppelt; in der Regel niedrigere Priorität. (Nur strukturell.)",
+      "lt": "Maža įtaka ir maža priklausomybė — silpnai susijęs; paprastai žemesnio prioriteto. (Tik struktūriškai.)",
+      "pt": "Baixa influência e baixa dependência — fracamente acoplado; normalmente de menor prioridade. (Apenas estrutural.)",
+      "it": "Bassa influenza e bassa dipendenza — debolmente accoppiato; in genere a priorità inferiore. (Solo strutturale.)",
+      "no": "Lav innflytelse og lav avhengighet — svakt koblet; vanligvis lavere prioritet. (Kun strukturelt.)",
+      "el": "Χαμηλή επιρροή και χαμηλή εξάρτηση — ασθενώς συζευγμένο· συνήθως χαμηλότερης προτεραιότητας. (Μόνο δομικά.)"
+    },
+    "modules.analysis.decision_lens.why_intro": {
+      "en": "Select an element to see a plain-language reading of its structural role and loop participation.",
+      "es": "Seleccione un elemento para ver una lectura en lenguaje sencillo de su papel estructural y su participación en bucles.",
+      "fr": "Sélectionnez un élément pour obtenir une lecture en langage clair de son rôle structurel et de sa participation aux boucles.",
+      "de": "Wählen Sie ein Element, um eine verständliche Beschreibung seiner strukturellen Rolle und Schleifenbeteiligung zu sehen.",
+      "lt": "Pasirinkite elementą, kad pamatytumėte aiškų jo struktūrinio vaidmens ir dalyvavimo cikluose aprašymą.",
+      "pt": "Selecione um elemento para ver uma leitura em linguagem simples do seu papel estrutural e participação em ciclos.",
+      "it": "Seleziona un elemento per vedere una lettura in linguaggio semplice del suo ruolo strutturale e della partecipazione ai cicli.",
+      "no": "Velg et element for å se en lettfattelig beskrivelse av dets strukturelle rolle og sløyfedeltakelse.",
+      "el": "Επιλέξτε ένα στοιχείο για να δείτε μια απλή περιγραφή του δομικού του ρόλου και της συμμετοχής του σε βρόχους."
+    },
+    "modules.analysis.decision_lens.narrative_in_loops": {
+      "en": "Participates in %d reinforcing and %d balancing loop(s).",
+      "es": "Participa en %d bucle(s) de refuerzo y %d de equilibrio.",
+      "fr": "Participe à %d boucle(s) de renforcement et %d d'équilibrage.",
+      "de": "Beteiligt an %d verstärkenden und %d ausgleichenden Schleifen.",
+      "lt": "Dalyvauja %d stiprinančiame (-iuose) ir %d balansuojančiame (-iuose) cikle (-uose).",
+      "pt": "Participa em %d ciclo(s) de reforço e %d de equilíbrio.",
+      "it": "Partecipa a %d ciclo/i di rinforzo e %d di bilanciamento.",
+      "no": "Deltar i %d forsterkende og %d balanserende sløyfe(r).",
+      "el": "Συμμετέχει σε %d ενισχυτικό(ούς) και %d εξισορροπητικό(ούς) βρόχο(ους)."
+    },
+    "modules.analysis.decision_lens.narrative_archetype_leverage": {
+      "en": "Possible leverage point for the archetype",
+      "es": "Posible punto de apalancamiento para el arquetipo",
+      "fr": "Point de levier possible pour l'archétype",
+      "de": "Möglicher Hebelpunkt für das Archetyp-Muster",
+      "lt": "Galimas sverto taškas archetipui",
+      "pt": "Possível ponto de alavancagem para o arquétipo",
+      "it": "Possibile punto di leva per l'archetipo",
+      "no": "Mulig brekkstangspunkt for arketypen",
+      "el": "Πιθανό σημείο μόχλευσης για το αρχέτυπο"
+    },
+    "modules.analysis.decision_lens.narrative_confirm": {
+      "en": "Candidate interpretation — confirm with stakeholders before acting.",
+      "es": "Interpretación candidata: confírmela con las partes interesadas antes de actuar.",
+      "fr": "Interprétation candidate — à confirmer avec les parties prenantes avant d'agir.",
+      "de": "Kandidaten-Interpretation — vor dem Handeln mit den Beteiligten bestätigen.",
+      "lt": "Galima interpretacija — prieš veikdami patvirtinkite su suinteresuotosiomis šalimis.",
+      "pt": "Interpretação candidata — confirme com as partes interessadas antes de agir.",
+      "it": "Interpretazione candidata — confermare con le parti interessate prima di agire.",
+      "no": "Kandidattolkning — bekreft med interessenter før du handler.",
+      "el": "Υποψήφια ερμηνεία — επιβεβαιώστε με τους εμπλεκόμενους πριν ενεργήσετε."
+    },
+    "modules.analysis.decision_lens.btn_analyze": {
+      "en": "Analyse",
+      "es": "Analizar",
+      "fr": "Analyser",
+      "de": "Analysieren",
+      "lt": "Analizuoti",
+      "pt": "Analisar",
+      "it": "Analizza",
+      "no": "Analyser",
+      "el": "Ανάλυση"
+    },
+    "modules.analysis.decision_lens.no_network_data": {
+      "en": "No network data available. Build or load a CLD first.",
+      "es": "No hay datos de red disponibles. Cree o cargue primero un DCB.",
+      "fr": "Aucune donnée de réseau disponible. Créez ou chargez d'abord un diagramme causal.",
+      "de": "Keine Netzwerkdaten verfügbar. Erstellen oder laden Sie zuerst ein Kausaldiagramm.",
+      "lt": "Tinklo duomenų nėra. Pirmiausia sukurkite arba įkelkite priežastinį ciklų diagramą.",
+      "pt": "Sem dados de rede disponíveis. Crie ou carregue primeiro um DCB.",
+      "it": "Nessun dato di rete disponibile. Crea o carica prima un diagramma causale.",
+      "no": "Ingen nettverksdata tilgjengelig. Bygg eller last inn et CLD først.",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα δικτύου. Δημιουργήστε ή φορτώστε πρώτα ένα CLD."
+    },
+    "modules.analysis.decision_lens.click_analyze": {
+      "en": "Click Analyse to classify system factors.",
+      "es": "Haga clic en Analizar para clasificar los factores del sistema.",
+      "fr": "Cliquez sur Analyser pour classer les facteurs du système.",
+      "de": "Klicken Sie auf Analysieren, um die Systemfaktoren zu klassifizieren.",
+      "lt": "Spustelėkite Analizuoti, kad klasifikuotumėte sistemos veiksnius.",
+      "pt": "Clique em Analisar para classificar os fatores do sistema.",
+      "it": "Fai clic su Analizza per classificare i fattori del sistema.",
+      "no": "Klikk Analyser for å klassifisere systemfaktorene.",
+      "el": "Κάντε κλικ στην Ανάλυση για να ταξινομήσετε τους παράγοντες του συστήματος."
+    }
+  }
+}

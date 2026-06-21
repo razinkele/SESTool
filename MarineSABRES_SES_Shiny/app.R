@@ -94,6 +94,7 @@ OPTIONAL_MODULES <- c(
   "modules/analysis_bot.R",              # BOT (Behaviour Over Time) Analysis
   "modules/analysis_simplify.R",         # Network Simplification Tools
   "modules/analysis_leverage.R",         # Leverage Point Analysis
+  "modules/analysis_decision_lens.R",    # Decision Lens (QSEM factor classification)
   "modules/response_module.R",           # Response measures (includes response_validation_server())
   "modules/scenario_builder_module.R",   # Scenario Builder
   "modules/prepare_report_module.R",     # Report preparation (comprehensive)
@@ -489,6 +490,7 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met", i18n)),
       bs4TabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop", i18n)),
       bs4TabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
+      bs4TabItem(tabName = "analysis_decision_lens", analysis_decision_lens_ui("analysis_dl", i18n)),
       bs4TabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
       bs4TabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
       bs4TabItem(tabName = "analysis_boolean", analysis_boolean_ui("analysis_bool", i18n)),
@@ -1047,6 +1049,7 @@ server <- function(input, output, session) {
   analysis_metrics_server("analysis_met", project_data, session_i18n, event_bus = event_bus)
   analysis_loops_server("analysis_loop", project_data, session_i18n, event_bus = event_bus)
   analysis_leverage_server("analysis_lev", project_data, session_i18n, event_bus = event_bus)
+  analysis_decision_lens_server("analysis_dl", project_data, session_i18n, event_bus = event_bus)
   analysis_bot_server("analysis_b", project_data, session_i18n, event_bus = event_bus)
   analysis_simplify_server("analysis_simp", project_data, session_i18n, event_bus = event_bus)
 

@@ -668,6 +668,9 @@ source(get_project_file("functions", "async_helpers.R"), local = FALSE)
 # Cross-tool recommendation engine (next-steps links after analysis completion)
 source("functions/tool_recommendations.R", local = FALSE)  # FALSE = global scope for module access
 
+# Decision Lens (QSEM interpretation layer): factor classification helpers
+source("functions/decision_lens.R", local = FALSE)  # FALSE = global scope for module access
+
 # Root utils.R: Network visualization helpers (convert_strength, get_node_colors, get_node_shapes, etc.)
 source("utils.R", local = FALSE)  # FALSE = global scope for get_node_colors, get_node_shapes, etc.
 
