@@ -330,6 +330,24 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       })
     }
 
+    # Merge the rows a collector gathered from LIVE panels with the rows this
+    # category already holds, so a Save after a project load / import keeps the
+    # loaded elements (they have panel ids but no form panels, so collectors
+    # cannot see them — review 2026-10-07 N1). Optionally re-derives a blank
+    # LinkedX of carried-over rows from the stored matrix so rebuild_transition()
+    # does not clear their edges.
+    merge_saved <- function(key, prefix, collected, col_names,
+                            linked_col = NULL, matrix_key = NULL) {
+      pids <- isa_data[[paste0(prefix, "_panel_ids")]]
+      live <- live_panel_ids(input, prefix, pids)
+      df <- merge_collected_with_existing(isa_data[[key]], collected, pids, live, col_names)
+      if (!is.null(linked_col) && !is.null(matrix_key)) {
+        df <- fill_linked_from_matrix(df, linked_col,
+                                      isa_data$adjacency_matrices[[matrix_key]], live)
+      }
+      df
+    }
+
     # Apply a saved/imported isa_data list into this module's reactiveValues.
     # = load_isa_elements_from_saved (copies element dfs, adjacency_matrices,
     #   loop_connections, case_info) + the L6-hardened id reconcile loop that
@@ -399,10 +417,26 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       invisible(list(fell_back = fell_back))
     }
 
-    # Load saved ISA data when a (different) project becomes active. Keyed on
-    # project_id so module saves don't re-trigger a load and clobber edits.
+    # Load saved ISA data when a project becomes active.
+    # NB: observeEvent() never compares values — this handler re-runs on EVERY
+    # write to project_data_reactive (module saves, CLD edits, imports), not only
+    # when project_id changes (review 2026-10-07 N21). So we track the last-seen
+    # project_id ourselves: on a REAL project change (New Project / load another
+    # project) the module state is cleared first, otherwise apply_saved_isa()
+    # only overwrites non-empty categories and the previous project's elements
+    # leak into the new one (review 2026-10-07 N2).
+    last_loaded_project_id <- NULL
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
+      pid <- project$project_id
+      if (!identical(pid, last_loaded_project_id)) {
+        if (!is.null(last_loaded_project_id)) {
+          debug_log("Project changed - clearing ISA module state", "ISA Module")
+          .reset_isa_state()
+          isa_data$case_info <- list()   # Exercise 0 belongs to the old project too
+        }
+        last_loaded_project_id <<- pid
+      }
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         debug_log("Loading saved ISA data on project change", "ISA Module")
         apply_saved_isa(project$data$isa_data)
@@ -1159,17 +1193,19 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         return()
       }
 
-      if (result$n_rows == 0) {
+      gb_df <- merge_saved("goods_benefits", "gb", result$df,
+                           c("Name", "Type", "Description", "Stakeholder", "Importance", "Trend"))
+      if (nrow(gb_df) == 0) {
         showNotification(i18n$t("modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry"),
                         type = "warning", session = session)
         return()
       }
 
-      isa_data$goods_benefits <- result$df
+      isa_data$goods_benefits <- gb_df
       sync_to_project_data()
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
+      showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(gb_df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
                       type = "message", session = session)
-      debug_log(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
+      debug_log(paste("Exercise 1 saved with", nrow(gb_df), "entries"), "INFO")
     })
 
     # Exercise 2a: Ecosystem Services ----
@@ -1209,19 +1245,22 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         return()
       }
 
-      if (result$n_rows == 0) {
+      es_df <- merge_saved("ecosystem_services", "es", result$df,
+                           c("Name", "Type", "Description", "LinkedGB", "Mechanism", "Confidence"),
+                           linked_col = "LinkedGB", matrix_key = "es_gb")
+      if (nrow(es_df) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_valid_ecosystem_service_en"),
                         type = "warning", session = session)
         return()
       }
 
-      isa_data$ecosystem_services <- result$df
+      isa_data$ecosystem_services <- es_df
       rebuild_transition(isa_data$ecosystem_services, "LinkedGB",
                          isa_data$goods_benefits$ID, "es_gb")
       sync_to_project_data()
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
+      showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(es_df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
-      debug_log(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
+      debug_log(paste("Exercise 2a saved with", nrow(es_df), "entries"), "INFO")
     })
 
     # Exercise 2b: Marine Processes and Functioning ----
@@ -1253,6 +1292,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
         col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
       )
+      mpf_df <- merge_saved("marine_processes", "mpf", mpf_df,
+                            c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial"),
+                            linked_col = "LinkedES", matrix_key = "mpf_es")
       isa_data$marine_processes <- mpf_df
       rebuild_transition(isa_data$marine_processes, "LinkedES",
                          isa_data$ecosystem_services$ID, "mpf_es")
@@ -1289,6 +1331,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
         col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
       )
+      p_df <- merge_saved("pressures", "p", p_df,
+                          c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal"),
+                          linked_col = "LinkedMPF", matrix_key = "p_mpf")
       isa_data$pressures <- p_df
       rebuild_transition(isa_data$pressures, "LinkedMPF",
                          isa_data$marine_processes$ID, "p_mpf")
@@ -1325,6 +1370,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
         col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
       )
+      a_df <- merge_saved("activities", "a", a_df,
+                          c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency"),
+                          linked_col = "LinkedP", matrix_key = "a_p")
       isa_data$activities <- a_df
       rebuild_transition(isa_data$activities, "LinkedP",
                          isa_data$pressures$ID, "a_p")
@@ -1361,6 +1409,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
         col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
       )
+      d_df <- merge_saved("drivers", "d", d_df,
+                          c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability"),
+                          linked_col = "LinkedA", matrix_key = "d_a")
       isa_data$drivers <- d_df
       rebuild_transition(isa_data$drivers, "LinkedA",
                          isa_data$activities$ID, "d_a")
@@ -1408,6 +1459,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name","Type","Description","Stakeholder","Importance","Trend",
                       "LinkedGB","LinkedD","LinkedA","LinkedP")
       )
+      # Loaded responses carry Linked* re-derived from the matrices by
+      # apply_saved_isa(), so merging by ID is enough to keep their R-arm edges.
+      r_df <- merge_saved("responses", "r", r_df,
+                          c("Name","Type","Description","Stakeholder","Importance","Trend",
+                            "LinkedGB","LinkedD","LinkedA","LinkedP"))
       isa_data$responses <- r_df
       built <- build_response_matrices(isa_data)
       isa_data$adjacency_matrices   <- built$adjacency_matrices

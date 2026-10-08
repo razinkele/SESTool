@@ -325,6 +325,113 @@ load_isa_elements_from_saved <- function(isa_data, isa_saved) {
 # ENTRY COLLECTION HELPERS
 # ============================================================================
 
+#' Panel ids that have a live form panel in this session
+#'
+#' A panel id is "live" when its name input exists (non-NULL). Elements adopted
+#' from a project load / import have panel ids but NO form panels (apply_saved_isa
+#' never inserts UI for them), so their name input is NULL. Collectors skip
+#' those ids; the save handlers must therefore carry the loaded rows over by ID
+#' instead of replacing the whole category (review 2026-10-07 N1).
+#'
+#' @param input Shiny input object
+#' @param prefix Element prefix (e.g. "gb", "es", "mpf", "p", "a", "d", "r")
+#' @param panel_ids Ordered character vector of stable element IDs
+#' @return Character vector: the subset of panel_ids whose name input is non-NULL
+live_panel_ids <- function(input, prefix, panel_ids) {
+  if (length(panel_ids) == 0) return(character(0))
+  is_live <- vapply(panel_ids, function(sid) {
+    !is.null(input[[paste0(prefix, "_name_", sid)]])
+  }, logical(1))
+  as.character(panel_ids[is_live])
+}
+
+#' Merge the rows collected from live panels with the rows loaded for this
+#' category, so a Save after a project load keeps the loaded elements
+#'
+#' Pure. Row for each id in \code{panel_ids}, in that order:
+#' \itemize{
+#'   \item id is live (has a rendered panel): the row comes from \code{collected}
+#'     if present; a live panel whose name was blanked is absent from
+#'     \code{collected} and is therefore dropped (user cleared it).
+#'   \item id is not live (loaded, never rendered): the row is carried over from
+#'     \code{existing} by ID, with its columns aligned case-insensitively to the
+#'     canonical schema \code{c("ID", col_names)} (loaded frames may arrive
+#'     lowercased); missing columns are filled with "".
+#' }
+#'
+#' @param existing data.frame currently held for the category (may be NULL / 0-row,
+#'   may have lowercase column names and an \code{id} column)
+#' @param collected data.frame returned by a collector (canonical TitleCase
+#'   columns, or a 0-column \code{data.frame()} when nothing was collected)
+#' @param panel_ids Ordered character vector of stable element IDs (the tracker)
+#' @param live_ids Subset of panel_ids with live panels (see live_panel_ids)
+#' @param col_names Canonical non-ID column names for this category, in order
+#' @return data.frame with columns \code{c("ID", col_names)}, possibly 0 rows
+merge_collected_with_existing <- function(existing, collected, panel_ids, live_ids, col_names) {
+  canonical <- c("ID", col_names)
+
+  align <- function(df) {
+    if (!is.data.frame(df) || nrow(df) == 0) {
+      return(as.data.frame(setNames(replicate(length(canonical), character(0), simplify = FALSE),
+                                    canonical), stringsAsFactors = FALSE))
+    }
+    lower_names <- tolower(names(df))
+    out <- lapply(canonical, function(cn) {
+      hit <- which(lower_names == tolower(cn))
+      if (length(hit) == 0) return(rep("", nrow(df)))
+      v <- df[[hit[1]]]
+      v <- as.character(v)
+      v[is.na(v)] <- ""
+      v
+    })
+    names(out) <- canonical
+    as.data.frame(out, stringsAsFactors = FALSE)
+  }
+
+  ex  <- align(existing)
+  col <- align(collected)
+  live_ids <- as.character(live_ids)
+
+  rows <- list()
+  for (pid in as.character(panel_ids)) {
+    src <- if (pid %in% live_ids) col else ex
+    hit <- which(src$ID == pid)
+    if (length(hit) == 0) next           # live-but-blanked, or loaded id with no row
+    rows[[length(rows) + 1]] <- src[hit[1], , drop = FALSE]
+  }
+  if (length(rows) == 0) return(ex[0, , drop = FALSE])
+  out <- do.call(rbind, rows)
+  rownames(out) <- NULL
+  out
+}
+
+#' Fill a blank LinkedX cell of carried-over rows from the stored matrix
+#'
+#' Carried-over (loaded, unrendered) rows may have an empty LinkedX column even
+#' though the stored adjacency matrix holds their edges (edges imported from
+#' Matrix_* sheets, or a legacy save). rebuild_matrix_from_linked() clears any
+#' non-user-edited cell the row does not declare, so re-derive the declaration
+#' from the matrix row before rebuilding. Live rows are left untouched: their
+#' LinkedX comes from the form and is authoritative.
+#'
+#' @param df merged element data.frame (canonical columns)
+#' @param linked_col e.g. "LinkedA"
+#' @param mat the existing SOURCE x TARGET matrix for this transition (or NULL)
+#' @param live_ids ids whose LinkedX must not be overridden
+#' @return df with blank LinkedX cells of non-live rows filled from the matrix
+fill_linked_from_matrix <- function(df, linked_col, mat, live_ids) {
+  if (!is.data.frame(df) || nrow(df) == 0 || !is.matrix(mat)) return(df)
+  if (!(linked_col %in% names(df))) df[[linked_col]] <- ""
+  for (i in seq_len(nrow(df))) {
+    pid <- as.character(df$ID[i])
+    if (pid %in% live_ids) next
+    cur <- df[[linked_col]][i]
+    if (!is.null(cur) && !is.na(cur) && nzchar(cur)) next
+    df[[linked_col]][i] <- rederive_linked_from_matrix(mat, pid, "row")
+  }
+  df
+}
+
 #' Collect entries from dynamic form inputs for a given element type
 #'
 #' Reads all dynamically-created inputs for a given prefix/counter and
