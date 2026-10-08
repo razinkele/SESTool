@@ -285,8 +285,15 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
       )
     })
 
+    # Server-side gate (review 2026-10-07 N9/N10): every folder / project
+    # observer below must be inert outside local mode. The renderUI blocks
+    # already hide the controls in server mode, but inputs can be set from
+    # the browser console, so the observers themselves must refuse.
+    local_only <- function() req(identical(state$deployment_mode, "local"))
+
     # Handle folder confirmation
     observeEvent(input$confirm_folder, {
+      local_only()
       suggested <- state$suggested_folder
       if (!is.null(suggested)) {
         result <- set_projects_folder(suggested)
@@ -312,6 +319,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
     # Handle folder change request
     observeEvent(input$change_folder, {
+      local_only()
       showModal(modalDialog(
         title = i18n$t("ui.recent_projects.choose_folder_title"),
         size = "m",
@@ -344,6 +352,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
     # Handle custom folder save
     observeEvent(input$save_custom_folder, {
+      local_only()
       custom_path <- input$custom_folder_path
       if (!is.null(custom_path) && custom_path != "") {
         result <- set_projects_folder(custom_path)
@@ -527,6 +536,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
     # Handle project click
     observeEvent(input$project_click, {
+      local_only()
       req(input$project_click)
       index <- input$project_click$index
       action <- input$project_click$action
@@ -587,6 +597,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
     # Handle delete confirmation
     observeEvent(input$do_delete, {
+      local_only()
       req(input$do_delete)
       index <- input$do_delete
       projects <- state$projects
@@ -618,21 +629,20 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
     # Handle open folder button
     observeEvent(input$open_folder, {
+      local_only()
       folder <- state$projects_folder
       if (!is.null(folder) && dir.exists(folder)) {
-        # Open folder in file explorer
-        if (.Platform$OS.type == "windows") {
-          shell.exec(normalizePath(folder, mustWork = FALSE))
-        } else if (Sys.info()["sysname"] == "Darwin") {
-          system2("open", folder)
-        } else {
-          system2("xdg-open", folder)
-        }
+        # Open folder in file explorer. The path is user-controlled, so it is
+        # shell-quoted on Unix (review 2026-10-07 N9: system2() pastes args
+        # unquoted into `sh -c`).
+        cmd <- open_folder_command(folder)
+        if (identical(cmd$fn, "shell.exec")) shell.exec(cmd$args) else system2(cmd$fn, cmd$args)
       }
     })
 
     # Handle refresh button
     observeEvent(input$refresh_list, {
+      local_only()
       state$projects <- list_saved_projects(state$projects_folder)
     })
 
@@ -661,4 +671,24 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
       is_local_mode = reactive({ state$deployment_mode == "local" })
     )
   })
+}
+
+#' Build the OS command that opens a folder in the file explorer
+#'
+#' Pure. On Windows the folder is opened with shell.exec() (no shell parsing);
+#' on Unix the folder is shell-quoted because system2() hands its arguments to
+#' `sh -c` unquoted (review 2026-10-07 N9).
+#'
+#' @param folder Folder path (user-controlled)
+#' @param os_type .Platform$OS.type ("windows" / "unix")
+#' @param sysname Sys.info()[["sysname"]]
+#' @return list(fn = "shell.exec" | "open" | "xdg-open", args = character(1))
+open_folder_command <- function(folder,
+                                os_type = .Platform$OS.type,
+                                sysname = Sys.info()[["sysname"]]) {
+  if (identical(os_type, "windows")) {
+    return(list(fn = "shell.exec", args = normalizePath(folder, mustWork = FALSE)))
+  }
+  fn <- if (identical(sysname, "Darwin")) "open" else "xdg-open"
+  list(fn = fn, args = shQuote(folder))
 }

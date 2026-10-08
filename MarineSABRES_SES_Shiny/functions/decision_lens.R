@@ -184,6 +184,9 @@ build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18
 
   row <- micmac[micmac$id == node_id, , drop = FALSE]
   label <- if (nrow(row) > 0 && !is.na(row$label[1])) row$label[1] else node_id
+  # The narrative is rendered through HTML(); labels are user text from
+  # imports/shared files (review 2026-10-07 N15).
+  label <- htmltools::htmlEscape(label)
   parts <- character(0)
 
   # 1. Quadrant role (structural language — see spec §7)

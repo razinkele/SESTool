@@ -424,7 +424,9 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
   )
 }
 
-.build_ses_models_ui <- function(i18n, ses_models_directory) {
+# show_browse: FALSE when shinyDirChoose has no roots (server mode, review
+# 2026-10-07 N12) so the Browse button is not rendered as a dead control.
+.build_ses_models_ui <- function(i18n, ses_models_directory, show_browse = TRUE) {
   tagList(
     tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.ses_models_directory")),
     tags$div(
@@ -452,7 +454,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
                 placeholder = i18n$t("ui.modals.ses_models_path_placeholder")
               )
             ),
-            column(3,
+            if (show_browse) column(3,
               tags$div(style = "margin-top: 25px;",
                 shinyDirButton("ses_models_dir_select",
                   label = i18n$t("ui.modals.browse"),
@@ -562,27 +564,23 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     } else if (input$ses_models_source == "custom" && !is.null(input$ses_models_custom_path)) {
       custom_path <- input$ses_models_custom_path
       if (nzchar(custom_path)) {
-        # Normalise the client-supplied path before storing it.
-        # This neutralises any ".." traversal in the value and gives us an
-        # absolute canonical path so that the per-file containment check in
-        # ses_models_module.R works correctly regardless of working directory.
-        norm_custom <- tryCatch(
-          normalizePath(custom_path, winslash = "/", mustWork = FALSE),
-          error = function(e) NULL
-        )
-        if (is.null(norm_custom) || !nzchar(norm_custom)) {
+        # Canonicalise the client-supplied path (neutralises ".." traversal so
+        # the per-file containment check in ses_models_module.R holds) and
+        # refuse it altogether outside local mode (review 2026-10-07 N12).
+        res <- resolve_ses_models_custom_dir(custom_path)
+        if (!res$ok && identical(res$reason, "server_mode")) {
+          showNotification(
+            i18n$t("ui.modals.custom_directory_server_disabled"),
+            type = "warning", duration = 6
+          )
+        } else if (!res$ok) {
           showNotification(
             paste(i18n$t("ui.modals.directory_not_found"), custom_path),
             type = "error", duration = 5
           )
-        } else if (!dir.exists(norm_custom)) {
-          showNotification(
-            paste(i18n$t("ui.modals.directory_not_found"), norm_custom),
-            type = "error", duration = 5
-          )
         } else {
-          ses_models_directory(norm_custom)
-          debug_log(sprintf("SES Models directory set to: %s", norm_custom), "SETTINGS")
+          ses_models_directory(res$path)
+          debug_log(sprintf("SES Models directory set to: %s", res$path), "SETTINGS")
           settings_changed <- TRUE
           invalidate_ses_models_cache()
         }
@@ -653,7 +651,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         tags$hr(),
         .build_general_settings_ui(i18n),
         tags$hr(),
-        .build_ses_models_ui(i18n, ses_models_directory),
+        .build_ses_models_ui(i18n, ses_models_directory, show_browse = !is.null(volumes)),
         tags$hr(),
         .build_reset_settings_ui(i18n)
       )

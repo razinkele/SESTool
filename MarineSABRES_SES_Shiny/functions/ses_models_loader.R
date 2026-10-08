@@ -13,6 +13,7 @@
 .ses_models_cache <- new.env(parent = emptyenv())
 .ses_models_cache$models <- NULL
 .ses_models_cache$last_scan <- NULL
+.ses_models_cache$base_dir <- NULL   # directory the cached listing belongs to
 
 #' Invalidate the SES models cache
 #'
@@ -21,6 +22,7 @@
 invalidate_ses_models_cache <- function() {
   .ses_models_cache$models <- NULL
   .ses_models_cache$last_scan <- NULL
+  .ses_models_cache$base_dir <- NULL
 }
 
 # Source universal loader if not already loaded
@@ -60,7 +62,11 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
   }
 
   # Check cache validity
-  if (use_cache && !is.null(.ses_models_cache$models)) {
+  # The cache is process-global (one R process serves every session on Shiny
+  # Server OSS), so it must be keyed by the resolved directory or one user's
+  # custom-directory listing is served to the next (review 2026-10-07 N13).
+  if (use_cache && !is.null(.ses_models_cache$models) &&
+      identical(.ses_models_cache$base_dir, ses_models_path)) {
     cache_age <- difftime(Sys.time(), .ses_models_cache$last_scan, units = "secs")
     if (as.numeric(cache_age) < 60) {  # Cache valid for 60 seconds
       debug_log(paste("Using cached models list (age:", round(as.numeric(cache_age)), "s)"), "SES_MODELS")
@@ -172,6 +178,7 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
   # Update cache
   .ses_models_cache$models <- models_grouped
   .ses_models_cache$last_scan <- Sys.time()
+  .ses_models_cache$base_dir <- ses_models_path
 
   debug_log(paste("Scan complete. Found", length(models_grouped), "groups with", sum(sapply(models_grouped, length)), "total models"), "SES_MODELS")
 
@@ -827,4 +834,30 @@ diagnose_ses_models <- function(base_dir = "SESModels") {
   debug_log("========== END DIAGNOSTICS ==========", "SES_MODELS")
 
   return(invisible(diagnostics))
+}
+
+#' Resolve a user-supplied custom SES Models directory
+#'
+#' Pure apart from dir.exists(). Refuses every custom directory outside local
+#' mode: on the shared server deployment a custom root lets any visitor
+#' enumerate and load every .xlsx the shiny user can read (review 2026-10-07
+#' N12). In local mode the path is canonicalised and must exist.
+#'
+#' @param custom_path Client-supplied path
+#' @param deployment_mode "local" or "server" (see detect_deployment_mode())
+#' @return list(ok = logical, path = canonical path or NULL,
+#'   reason = NULL | "server_mode" | "invalid" | "not_found")
+resolve_ses_models_custom_dir <- function(custom_path,
+                                          deployment_mode = detect_deployment_mode()) {
+  if (!identical(deployment_mode, "local")) {
+    return(list(ok = FALSE, path = NULL, reason = "server_mode"))
+  }
+  if (is.null(custom_path) || !nzchar(custom_path)) {
+    return(list(ok = FALSE, path = NULL, reason = "invalid"))
+  }
+  norm <- tryCatch(normalizePath(custom_path, winslash = "/", mustWork = FALSE),
+                   error = function(e) NULL)
+  if (is.null(norm) || !nzchar(norm)) return(list(ok = FALSE, path = NULL, reason = "invalid"))
+  if (!dir.exists(norm)) return(list(ok = FALSE, path = NULL, reason = "not_found"))
+  list(ok = TRUE, path = norm, reason = NULL)
 }

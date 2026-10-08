@@ -632,13 +632,20 @@ server <- function(input, output, session) {
   # SES Models directory setting (empty = use default app directory)
   ses_models_directory <- reactiveVal("")
 
-  # Define root directories for shinyFiles (used in directory selection)
-  volumes <- c(
-    Home = Sys.getenv("HOME"),
-    Documents = file.path(Sys.getenv("HOME"), "Documents"),
-    App = normalizePath("."),
-    getVolumes()()  # System volumes (drives)
-  )
+  # Define root directories for shinyFiles (used in directory selection).
+  # Local mode only: on the shared server deployment getVolumes() includes
+  # the filesystem root, which would let any visitor browse the server
+  # (review 2026-10-07 N12). NULL disables shinyDirChoose in modals.R.
+  volumes <- if (identical(detect_deployment_mode(), "local")) {
+    c(
+      Home = Sys.getenv("HOME"),
+      Documents = file.path(Sys.getenv("HOME"), "Documents"),
+      App = normalizePath("."),
+      getVolumes()()  # System volumes (drives)
+    )
+  } else {
+    NULL
+  }
 
   # ========== REACTIVE EVENT BUS ==========
   # Create event bus for reactive data pipeline (pass session ID for debugging)

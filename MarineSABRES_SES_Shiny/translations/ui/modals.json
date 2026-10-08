@@ -429,6 +429,17 @@
       "no": "Gjeldende Katalog",
       "el": "Τρέχων Κατάλογος"
     },
+    "ui.modals.custom_directory_server_disabled": {
+      "en": "Custom model directories are not available on the shared server deployment.",
+      "es": "Los directorios de modelos personalizados no están disponibles en la implementación de servidor compartido.",
+      "fr": "Les répertoires de modèles personnalisés ne sont pas disponibles sur le déploiement serveur partagé.",
+      "de": "Benutzerdefinierte Modellverzeichnisse sind in der gemeinsamen Serverbereitstellung nicht verfügbar.",
+      "lt": "Pasirinktiniai modelių katalogai bendrame serverio diegime nepasiekiami.",
+      "pt": "Diretórios de modelos personalizados não estão disponíveis na implantação em servidor partilhado.",
+      "it": "Le directory dei modelli personalizzate non sono disponibili nella distribuzione su server condiviso.",
+      "no": "Egendefinerte modellkataloger er ikke tilgjengelige i den delte serverinstallasjonen.",
+      "el": "Οι προσαρμοσμένοι κατάλογοι μοντέλων δεν είναι διαθέσιμοι στην κοινόχρηστη εγκατάσταση διακομιστή."
+    },
     "ui.modals.directory_not_found": {
       "en": "Directory not found:",
       "es": "Directorio no encontrado:",

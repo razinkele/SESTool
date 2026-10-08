@@ -261,7 +261,9 @@ set_projects_folder <- function(folder_path) {
     )
     saveRDS(config, config_path)
     debug_log(sprintf("Storage configured: %s", folder_path), "PERSISTENT_STORAGE")
-    return(list(success = TRUE, path = folder_path))
+    # Return the canonical absolute path (review 2026-10-07 N9): callers store
+    # it and hand it to list.files()/system2(), so never echo the raw input.
+    return(list(success = TRUE, path = normalizePath(folder_path, winslash = "/")))
   }, error = function(e) {
     return(list(success = FALSE, error = paste("Cannot save config:", e$message)))
   })
