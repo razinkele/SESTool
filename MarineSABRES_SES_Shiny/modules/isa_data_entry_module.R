@@ -433,6 +433,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         if (!is.null(last_loaded_project_id)) {
           debug_log("Project changed - clearing ISA module state", "ISA Module")
           .reset_isa_state()
+          isa_data$case_info <- list()   # Exercise 0 belongs to the old project too
         }
         last_loaded_project_id <<- pid
       }
@@ -1751,7 +1752,6 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       if (is.data.frame(isa_data$loop_connections)) {
         isa_data$loop_connections <- isa_data$loop_connections[0, , drop = FALSE]
       }
-      isa_data$case_info <- list()
     }
 
     # Core import: read file -> apply -> guard -> notify/navigate.
