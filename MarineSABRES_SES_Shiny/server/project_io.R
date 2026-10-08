@@ -471,7 +471,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       error = function(e) NA_character_
     )
     normalized_path <- normalizePath(file_path, winslash = "/", mustWork = FALSE)
-    if (is.na(autosave_root) || !startsWith(normalized_path, autosave_root)) {
+    if (!path_is_within_root(normalized_path, autosave_root)) {
       debug_log(sprintf("[security] Rejected autosave load outside root: %s (root=%s)",
                         normalized_path, autosave_root), "PROJECT_IO")
       showNotification(

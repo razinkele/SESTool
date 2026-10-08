@@ -516,3 +516,25 @@ safe_readRDS <- function(file, max_size_mb = 50) {
 
   return(data)
 }
+
+# ============================================================================
+# PATH CONTAINMENT
+# ============================================================================
+
+#' Is `path` inside `root` (or equal to it)?
+#'
+#' Pure string check on already-normalised paths. Requires a path separator
+#' after the root so a sibling such as "/srv/app/.autosave-evil" does not pass
+#' a bare startsWith() against "/srv/app/.autosave" (review 2026-10-07 N56).
+#'
+#' @param path normalised candidate path
+#' @param root normalised root directory (NA/NULL -> FALSE)
+#' @return logical(1)
+path_is_within_root <- function(path, root) {
+  if (is.null(root) || length(root) != 1 || is.na(root) || !nzchar(root)) return(FALSE)
+  if (is.null(path) || length(path) != 1 || is.na(path)) return(FALSE)
+  # Callers pass normalizePath(winslash = "/") output, so "/" is the only separator.
+  root <- sub("/+$", "", root)
+  path <- sub("/+$", "", path)
+  identical(path, root) || startsWith(path, paste0(root, "/"))
+}

@@ -404,6 +404,9 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
         Action      = action_html,
         stringsAsFactors = FALSE
       )
+      # escape = FALSE below is needed for the GitHub/Action HTML columns only;
+      # user-submitted text must be escaped by hand (review 2026-10-07 N19).
+      disp <- escape_feedback_display_cols(disp, c("Title", "Description"))
 
       DT::datatable(
         disp,
@@ -492,10 +495,12 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
     run_detection <- reactiveVal(0)
 
     observeEvent(input$find_duplicates, {
+      req(isTRUE(admin))   # review 2026-10-07 N18
       run_detection(run_detection() + 1L)
     })
 
     observeEvent(input$recalculate, {
+      req(isTRUE(admin))   # review 2026-10-07 N18
       # Reload data first
       df <- tryCatch(
         load_feedback(),
@@ -572,6 +577,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
         Action     = action_btns,
         stringsAsFactors = FALSE
       )
+      disp <- escape_feedback_display_cols(disp, c("Report_A", "Report_B"))
 
       DT::datatable(
         disp,
@@ -596,6 +602,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
     # Handle mark-as-duplicate button clicks (set via JS onclick)
     # ------------------------------------------------------------------
     observeEvent(input$mark_dup, {
+      req(isTRUE(admin))   # rewriting the shared log is an admin action (N18)
       req(!is.null(input$mark_dup$line))
 
       line_num <- as.integer(input$mark_dup$line)
@@ -693,4 +700,20 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL, admin = TRUE) {
     }, ignoreInit = TRUE)
 
   })
+}
+
+#' HTML-escape the user-text columns of a DT display frame
+#'
+#' The admin tables use escape = FALSE so the GitHub-link / action-button
+#' columns render as HTML; every column holding user-submitted text must
+#' therefore be escaped explicitly (review 2026-10-07 N19).
+#'
+#' @param df display data.frame
+#' @param cols columns to escape (missing ones are ignored)
+#' @return df with those columns escaped
+escape_feedback_display_cols <- function(df, cols) {
+  for (cn in intersect(cols, names(df))) {
+    df[[cn]] <- htmltools::htmlEscape(as.character(df[[cn]]))
+  }
+  df
 }
