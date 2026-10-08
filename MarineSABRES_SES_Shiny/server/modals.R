@@ -424,7 +424,9 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
   )
 }
 
-.build_ses_models_ui <- function(i18n, ses_models_directory) {
+# show_browse: FALSE when shinyDirChoose has no roots (server mode, review
+# 2026-10-07 N12) so the Browse button is not rendered as a dead control.
+.build_ses_models_ui <- function(i18n, ses_models_directory, show_browse = TRUE) {
   tagList(
     tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.ses_models_directory")),
     tags$div(
@@ -452,7 +454,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
                 placeholder = i18n$t("ui.modals.ses_models_path_placeholder")
               )
             ),
-            column(3,
+            if (show_browse) column(3,
               tags$div(style = "margin-top: 25px;",
                 shinyDirButton("ses_models_dir_select",
                   label = i18n$t("ui.modals.browse"),
@@ -649,7 +651,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         tags$hr(),
         .build_general_settings_ui(i18n),
         tags$hr(),
-        .build_ses_models_ui(i18n, ses_models_directory),
+        .build_ses_models_ui(i18n, ses_models_directory, show_browse = !is.null(volumes)),
         tags$hr(),
         .build_reset_settings_ui(i18n)
       )
