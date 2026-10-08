@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.19.1] - 2026-10-08
+
+Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.
+
+### Fixed
+
+- **ISA Standard Entry data loss on Save after load** (PR #60, review N1): `apply_saved_isa()` adopted loaded element IDs but never rendered form panels for them, so every collector skipped them and each `save_ex*` / `save_responses` did a full replace. Save handlers now merge by ID (`merge_collected_with_existing()`, `live_panel_ids()`, `fill_linked_from_matrix()` in `functions/isa_form_builders.R`); loaded rows and their matrix edges survive a save. Loaded rows still cannot be edited through the form (no panel rehydration) — known gap.
+- **Project switch leaked the previous project's elements** (PR #60, review N2): the ISA load observer now tracks the last-seen `project_id` and clears module state (incl. Exercise 0 case info) on a real project change. Note: Shiny's `bindEvent` never compares values, so this observer re-fires on every `project_data` write (review N21, documented, deliberately kept).
+- **Server-mode hardening** (PR #61, review N9/N10/N12/N13/N15/N18/N19/N56): Recent Projects folder/project observers gated to local mode and the open-folder shell call quotes its path (`open_folder_command()`); Settings → SES Models custom directory refused outside local mode (`resolve_ses_models_custom_dir()`, new i18n key `ui.modals.custom_directory_server_disabled`) with no filesystem browse roots on the server; `.ses_models_cache` keyed by directory; Decision Lens narrative escapes labels; feedback admin tables escape user text (`escape_feedback_display_cols()`) and `mark_dup` / `find_duplicates` / `recalculate` require admin; autosave-load containment via `path_is_within_root()`.
+- `version_manager.R`: bump crashed on a nonexistent `Sys.POSIXct()`; replaced with `Sys.time()`.
+- `DESCRIPTION` version brought back in step with `VERSION` (was 1.17.0).
+
+### Tests
+
+- `tests/testthat/test-isa-load-save-integrity.R` (33 assertions) and `tests/testthat/test-server-mode-hardening.R` (34 assertions), both red before the fixes. Full suite at merge: 128 files, 7989 pass, 0 fail.
+
+
+## [1.19.0] - 2026-06-21
+
 ### Added (Decision Lens — QSEM-inspired interpretation layer; PRs #54 + #56, deployed to laguna 2026-06-21)
 
 - **Decision Lens module** (`modules/analysis_decision_lens.R`, pure helpers in `functions/decision_lens.R`): a new analysis tool (Analysis Tools → Decision Lens) that turns existing graph analysis into decision-grade interpretation, in all 9 languages.
@@ -17,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Scientifically validated** (sign-off via the `scientific-validation` skill): archetypes-as-ecological-lens confirmed (Hallett & Hobbs 2020); these archetypes on a real marine lagoon fishery confirmed (2021); Tragedy-of-the-Commons governance leverage confirmed with the Ostrom non-inevitability correction. **Deliberately deferred:** Fixes-that-Fail (not separable from Limits-to-Growth without delay/temporal data — CLDs are untimed) and Shifting-the-Burden (weak marine-SES support).
 
-> **Release note:** `VERSION`/`VERSION_INFO.json` bumped to **1.19.0** (minor). This `[Unreleased]` section also still holds the pre-existing **WP5 financial-mechanism KB** entry below (marked pending partner sign-off) — decide at tag time whether to fold both under a single `[1.19.0]` release heading or version them separately.
+> **Release note:** `VERSION`/`VERSION_INFO.json` bumped to **1.19.0** (minor). The **WP5 financial-mechanism KB** entry below (shipped as 1.17.0 with partner sign-off, see 1.17.0) is kept here under the 1.19.0 heading, where it was originally recorded, when this section was given its release heading at the 1.19.1 tag.
 
 ### Added (WP5 Phase 1 — financial-mechanism KB; re-port of PR #10 onto v1.16.5)
 

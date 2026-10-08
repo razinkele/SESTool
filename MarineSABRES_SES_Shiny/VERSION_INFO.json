@@ -1,8 +1,8 @@
 {
-  "version": "1.19.0",
-  "version_name": "Decision Lens (QSEM interpretation layer)",
-  "release_date": "2026-06-21",
-  "release_type": "minor",
+  "version": "1.19.1",
+  "version_name": "Review fixes: ISA load/save integrity + server-mode hardening",
+  "release_date": "2026-10-08",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -10,17 +10,19 @@
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
-  "security_updates": false,
-  "features": [
-    "Decision Lens module (modules/analysis_decision_lens.R): a QSEM-inspired interpretation layer reachable via Analysis Tools -> Decision Lens, in all 9 languages.",
-    "Factor classification (impact-vs-control axis): surfaces the previously dormant MICMAC analysis (calculate_micmac_safe) as an influence-vs-dependence quadrant scatter, dual-encoded by colour + shape for accessibility, plus a sortable table. Reading is structural (polarity/strength discarded).",
-    "System-archetype detection (functions/decision_lens.R::detect_archetypes): Tragedy of the Commons (a shared State/stock drawn on by >=2 distinct Activities -> govern the shared resource, Ostrom) and Limits to Growth (the GB->D reinforcing engine checked by a Response-mediated balancing loop -> leverage the Response). Fixes-that-Fail and Shifting-the-Burden intentionally deferred (not separable without delay/temporal data; weak marine support).",
-    "Deterministic, fully internationalised 'why this matters' narrative fusing a node's quadrant role x loop participation x archetype leverage. Template + i18n, never ML-generated (works on torch-less deployments).",
-    "Scientifically validated: archetype motifs and leverage advice checked against marine-SES / system-dynamics literature via the scientific-validation skill (Hallett & Hobbs 2020; Frischmann et al. 2019; Battersby/Ostrom 2017); valid-loop topology verified against is_valid_dapsirwrm_transition (cycles close via GB->D or R->{D,A,P,S})."
-  ],
+  "security_updates": true,
+  "features": [],
   "fixes": {
-    "critical": [],
-    "high": []
+    "critical": [
+      "ISA Standard Entry: Save on any exercise after a project load / autosave recovery / Excel import no longer replaces the loaded rows of that category with only the rows added this session; the Responses Save no longer drops the R arm (review N1, PR #60).",
+      "ISA Standard Entry: New Project / loading another project no longer inherits the previous project's elements, loop connections and case info (review N2, PR #60)."
+    ],
+    "high": [
+      "Recent Projects: folder/project observers are inert outside local mode and the open-folder shell call quotes its path (review N9/N10, PR #61).",
+      "Settings > SES Models: custom directories are refused outside local mode and the server filesystem is never offered as a browse root; models cache is keyed by directory (review N12/N13, PR #61).",
+      "Decision Lens narrative escapes element labels; feedback admin tables escape user text and the duplicate-marking endpoints require admin (review N15/N18/N19, PR #61).",
+      "Autosave-load containment requires a path separator after the root (review N56, PR #61)."
+    ]
   },
   "metrics": {
     "knowledge_db_contexts": 33,
@@ -37,5 +39,5 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.18.2"
+  "previous_version": "1.19.0"
 }
