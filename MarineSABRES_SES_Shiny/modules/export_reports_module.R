@@ -185,9 +185,8 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
       include_data <- input$report_include_data
 
       tryCatch({
-        # Create a temporary Rmd file
-        rmd_file <- tempfile(fileext = ".Rmd")
-        on.exit(unlink(rmd_file), add = TRUE)
+        # No Rmd is written from user content any more (review 2026-10-07 N11):
+        # render_report_safely() knits only the static templates/report_template.Rmd.
 
         # Generate report content using the fixed function
         debug_log("Calling generate_report_content()...", "EXPORT")
@@ -203,20 +202,17 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         debug_log("Report content generated successfully!", "EXPORT")
         debug_log(paste("Content length:", nchar(report_content), "characters"), "EXPORT")
 
-        writeLines(report_content, rmd_file)
-        debug_log(paste("Written to temp Rmd file:", rmd_file), "EXPORT")
-
         # Render the report
         # Ensure report_format is a simple character string
         report_format_safe <- as.character(report_format)[1]
         debug_log(paste("report_format:", report_format, "class:", class(report_format)), "EXPORT")
         debug_log(paste("report_format_safe:", report_format_safe), "EXPORT")
 
-        output_format <- switch(report_format_safe,
-          "HTML" = "html_document",
-          "PDF" = rmarkdown::pdf_document(latex_engine = "lualatex"),
-          "Word" = "word_document",
-          "html_document"  # default
+        render_fmt <- switch(report_format_safe,
+          "HTML" = "html",
+          "PDF"  = "pdf",
+          "Word" = "docx",
+          "html"  # default
         )
 
         output_ext <- switch(report_format_safe,
@@ -232,31 +228,12 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         }
         output_file <- tempfile(fileext = output_ext)
 
-        debug_log(paste("output_format:", output_format, "class:", class(output_format)), "EXPORT")
-        debug_log(paste("output_file:", output_file, "class:", class(output_file)), "EXPORT")
-        debug_log(paste("rmd_file:", rmd_file, "class:", class(rmd_file)), "EXPORT")
-
-        debug_log("About to call rmarkdown::render()...", "EXPORT")
+        debug_log(paste("render format:", render_fmt, "output_file:", output_file), "EXPORT")
 
         # Special handling for PDF - check if LaTeX is available
         if (report_format_safe == "PDF") {
-          # Check if tinytex or other LaTeX is installed
-          latex_available <- tryCatch({
-            tinytex::tinytex_root()
-            TRUE
-          }, error = function(e) {
-            FALSE
-          })
-
-          if (!latex_available) {
-            # Check system LaTeX
-            latex_available <- tryCatch({
-              system("pdflatex --version", intern = TRUE, ignore.stderr = TRUE)
-              TRUE
-            }, error = function(e) {
-              FALSE
-            })
-          }
+          # review 2026-10-07 N41: probe the engine actually used for PDFs
+          latex_available <- latex_engine_available("lualatex")
 
           if (!latex_available) {
             removeModal()
@@ -269,12 +246,8 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
           }
         }
 
-        rmarkdown::render(
-          input = rmd_file,
-          output_format = output_format,
-          output_file = output_file,
-          quiet = FALSE  # Changed to FALSE to see rendering errors
-        )
+        render_report_safely(report_content, output_file, format = render_fmt,
+                             pdf_engine = "lualatex", quiet = FALSE, i18n = i18n)
         debug_log("Report rendered successfully!", "EXPORT")
 
         # Store file path for download
@@ -287,24 +260,8 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         if (report_format == "HTML") {
           debug_log("Opening HTML report in new window...", "EXPORT")
 
-          # Copy to www directory so it can be served by Shiny
-          www_dir <- file.path(getwd(), "www", "reports")
-          if (!dir.exists(www_dir)) {
-            dir.create(www_dir, recursive = TRUE)
-          }
-
-          # Create unique filename
-          report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
-          www_file <- file.path(www_dir, report_filename)
-          file.copy(output_file, www_file, overwrite = TRUE)
-
-          # Clean up old reports (older than 1 hour)
-          old_reports <- list.files(www_dir, pattern = "\\.html$", full.names = TRUE)
-          old_reports <- old_reports[difftime(Sys.time(), file.mtime(old_reports), units = "hours") > 1]
-          if (length(old_reports) > 0) file.remove(old_reports)
-
-          # Create relative URL for Shiny
-          report_url <- paste0("reports/", report_filename)
+          # Session-scoped URL instead of the shared www/reports tree (review N14)
+          report_url <- register_session_report(session, output_file)
 
           # Open in new window using JavaScript
           session$sendCustomMessage(

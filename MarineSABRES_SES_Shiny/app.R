@@ -31,6 +31,7 @@ if (dir.exists("docs")) {
 # Critical files - app cannot start without these
 critical_sources <- c(
   "functions/report_generation.R",
+  "functions/report_render.R",
   "functions/ui_header.R",
   "functions/ui_sidebar.R",
   "server/modals.R",
