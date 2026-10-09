@@ -17,6 +17,8 @@ injected_report <- function() paste(c(
   "**Focal Issue:** Overfishing", "", "```{r}", "stop('PWNED-CHUNK')", "```", "",
   "Cod <script>alert('PWNED-XSS')</script> & <b>bold</b> stock", "",
   "---", "title: HIJACKED", "header-includes: '<script>alert(2)</script>'", "---", "",
+  "```{=html}", "<script>alert('PWNED-RAWATTR')</script>", "```", "",
+  "Species \\input{PWNED-RAWTEX} list", "",
   "## Section two", "", "- a & b < c"
 ), collapse = "\n")
 
@@ -72,6 +74,12 @@ test_that("N11: render_report_safely never evaluates user text and escapes raw H
   # in-body YAML block cannot hijack the document metadata
   expect_true(grepl("<title>MarineSABRES SES Analysis Report</title>", h, fixed = TRUE))
   expect_false(grepl("alert(2)</script>", h, fixed = TRUE))
+  # fenced raw blocks ({=html}) are not passed through (raw_attribute disabled)
+  expect_false(grepl("<script>alert('PWNED-RAWATTR')", h, fixed = TRUE))
+  expect_false(grepl("<script>alert(&#39;PWNED-RAWATTR", h, fixed = TRUE))
+  # raw TeX is not interpreted: with raw_tex on, pandoc silently DROPS raw TeX
+  # from HTML output, so literal survival is the discriminator
+  expect_true(grepl("PWNED-RAWTEX", h, fixed = TRUE))
   # ordinary content still renders
   expect_true(grepl("Section two", h, fixed = TRUE))
   expect_true(grepl("full Report", h, fixed = TRUE))

@@ -150,7 +150,17 @@ render_report_safely <- function(report_md, output_file,
   tpl <- file.path(work_dir, "report_template.Rmd")
   file.copy(template, tpl, overwrite = TRUE)
 
-  ext <- "-raw_html"
+  # Disable every raw-passthrough reader extension: raw_html (inline/block
+  # HTML), raw_attribute (```{=html} / {=latex} fenced raw blocks) and raw_tex
+  # (raw LaTeX reaching the PDF path, e.g. \input{...} file disclosure).
+  ext <- "-raw_html-raw_tex-raw_attribute"
+  # Template params are interpolated into the template's YAML header: strip
+  # the characters that could break or extend it.
+  yaml_safe <- function(x) {
+    x <- as.character(x %||% "")
+    if (length(x) == 0) x <- ""
+    gsub("[\"\\\\\r\n]", " ", x[1])
+  }
   output_format <- switch(format,
     html = rmarkdown::html_document(toc = TRUE, toc_float = TRUE, md_extensions = ext),
     pdf  = rmarkdown::pdf_document(latex_engine = pdf_engine, md_extensions = ext),
@@ -164,9 +174,9 @@ render_report_safely <- function(report_md, output_file,
     output_file   = basename(output_file),
     output_dir    = dirname(output_file),
     params = list(
-      title     = parts$meta$title    %||% "MarineSABRES SES Analysis Report",
-      subtitle  = parts$meta$subtitle %||% "",
-      date      = parts$meta$date     %||% format(Sys.Date(), "%B %d, %Y"),
+      title     = yaml_safe(parts$meta$title    %||% "MarineSABRES SES Analysis Report"),
+      subtitle  = yaml_safe(parts$meta$subtitle %||% ""),
+      date      = yaml_safe(parts$meta$date     %||% format(Sys.Date(), "%B %d, %Y")),
       body_file = body_file
     ),
     envir = new.env(parent = globalenv()),
