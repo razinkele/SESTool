@@ -899,17 +899,21 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           column(6,
             h5(i18n$t("modules.isa.data_entry.common.adjacency_matrix_review")),
             p(i18n$t("modules.isa.data_entry.ex101112.review_the_connections_between_dapsiwrm_elements")),
+            # Values are the stored SOURCE x TARGET matrix keys (review N38);
+            # labels come from i18n (see ISA_MATRIX_REVIEW_CHOICES).
+            # i18n-ref: modules.isa.data_entry.matrix.es_gb
+            # i18n-ref: modules.isa.data_entry.matrix.mpf_es
+            # i18n-ref: modules.isa.data_entry.matrix.p_mpf
+            # i18n-ref: modules.isa.data_entry.matrix.a_p
+            # i18n-ref: modules.isa.data_entry.matrix.d_a
+            # i18n-ref: modules.isa.data_entry.matrix.gb_d
+            # i18n-ref: modules.isa.data_entry.matrix.gb_r
+            # i18n-ref: modules.isa.data_entry.matrix.r_d
+            # i18n-ref: modules.isa.data_entry.matrix.r_a
+            # i18n-ref: modules.isa.data_entry.matrix.r_p
             selectInput(ns("adj_matrix_select"), i18n$t("common.labels.select_matrix_type"),
-                       choices = c("Goods/Benefits to ES" = "gb_es",
-                                 "ES to MPF" = "es_mpf",
-                                 "MPF to Pressures" = "mpf_p",
-                                 "Pressures to Activities" = "p_a",
-                                 "Activities to Drivers" = "a_d",
-                                 "Drivers to Goods/Benefits" = "d_gb",
-                                 "Goods/Benefits to Responses" = "gb_r",
-                                 "Responses to Drivers" = "r_d",
-                                 "Responses to Activities" = "r_a",
-                                 "Responses to Pressures" = "r_p")),
+                       choices = setNames(unname(ISA_MATRIX_REVIEW_CHOICES),
+                                          vapply(names(ISA_MATRIX_REVIEW_CHOICES), i18n$t, character(1)))),
             DTOutput(ns("adj_matrix_view"))
           ),
           column(6,
@@ -1770,6 +1774,15 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           NULL
         })
       if (is.null(saved)) return(invisible(NULL))
+
+      # Reject an empty-but-recognised workbook BEFORE clearing the module
+      # (review 2026-10-07 N49): previously the reset ran first and an empty
+      # export wiped the loaded project while reporting 'not recognized'.
+      if (!saved_isa_has_elements(saved)) {
+        showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
+                         type = "error", duration = 8, session = session)
+        return(invisible(NULL))
+      }
 
       .reset_isa_state()
       res <- apply_saved_isa(saved)

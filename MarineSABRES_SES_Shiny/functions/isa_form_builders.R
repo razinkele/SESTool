@@ -119,6 +119,17 @@ register_remove_observer <- function(input, ns, prefix, current_id, i18n,
       }
     }
 
+    # Drop the element's row/column from every adjacency + user_edited matrix
+    # (review 2026-10-07 N5): the CLD builder maps matrix positions onto the
+    # element frame by index, so a frame one row shorter than its matrix
+    # re-wires surviving edges to the wrong neighbours.
+    if (!is.null(isa_data)) {
+      pr <- prune_element_from_matrices(isa_data$adjacency_matrices,
+                                        isa_data$user_edited_matrices, current_id)
+      isa_data$adjacency_matrices   <- pr$am
+      isa_data$user_edited_matrices <- pr$ue
+    }
+
     if (is.function(on_remove)) on_remove()
 
     showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
@@ -784,4 +795,67 @@ apply_matrix_cell_edit <- function(am, ue, key, i, j, value) {
   uem[i, j] <- TRUE          # deliberate edit (incl. clearing) — never re-seeded by rebuild
   ue[[key]] <- uem
   list(am = am, ue = ue, error = NULL)
+}
+
+# ============================================================================
+# MATRIX MAINTENANCE HELPERS (review 2026-10-07 N5 / N38 / N49)
+# ============================================================================
+
+#' Remove an element's row and column from every matrix in two matrix lists
+#'
+#' Pure. Matches by dimname; entries that are not matrices pass through
+#' untouched. Used by register_remove_observer() so the element frames and the
+#' SOURCE x TARGET matrices stay aligned after a panel is removed (N5).
+#'
+#' @param am named list of adjacency matrices (may be NULL / empty)
+#' @param ue named list of logical user_edited matrices (may be NULL / empty)
+#' @param element_id the removed element's stable ID
+#' @return list(am = , ue = )
+prune_element_from_matrices <- function(am, ue, element_id) {
+  drop_from <- function(m) {
+    if (!is.matrix(m)) return(m)
+    rn <- rownames(m); cn <- colnames(m)
+    keep_r <- if (is.null(rn)) rep(TRUE, nrow(m)) else rn != element_id
+    keep_c <- if (is.null(cn)) rep(TRUE, ncol(m)) else cn != element_id
+    if (all(keep_r) && all(keep_c)) return(m)
+    m[keep_r, keep_c, drop = FALSE]
+  }
+  am <- if (is.list(am)) lapply(am, drop_from) else am
+  ue <- if (is.list(ue)) lapply(ue, drop_from) else ue
+  list(am = am, ue = ue)
+}
+
+#' Matrix-review selector choices (SOURCE -> TARGET), values = stored matrix keys
+#'
+#' The stored matrices are keyed SOURCE x TARGET (es_gb, mpf_es, ...). The old
+#' selector used the reversed keys (gb_es, es_mpf, ...) that matched nothing,
+#' so six matrices could neither be viewed nor cell-edited (N38). Labels are
+#' translated by the caller through i18n$t() on the names.
+ISA_MATRIX_REVIEW_CHOICES <- c(
+  "modules.isa.data_entry.matrix.es_gb"  = "es_gb",
+  "modules.isa.data_entry.matrix.mpf_es" = "mpf_es",
+  "modules.isa.data_entry.matrix.p_mpf"  = "p_mpf",
+  "modules.isa.data_entry.matrix.a_p"    = "a_p",
+  "modules.isa.data_entry.matrix.d_a"    = "d_a",
+  "modules.isa.data_entry.matrix.gb_d"   = "gb_d",
+  "modules.isa.data_entry.matrix.gb_r"   = "gb_r",
+  "modules.isa.data_entry.matrix.r_d"    = "r_d",
+  "modules.isa.data_entry.matrix.r_a"    = "r_a",
+  "modules.isa.data_entry.matrix.r_p"    = "r_p"
+)
+
+#' Does a saved / imported isa_data list hold any element rows?
+#'
+#' Pure. Used by the Excel import so an empty-but-recognised workbook is
+#' rejected BEFORE the module state is cleared (N49).
+#' @param saved list as produced by read_standard_entry_workbook() / a project file
+#' @return logical(1)
+saved_isa_has_elements <- function(saved) {
+  keys <- c("goods_benefits", "ecosystem_services", "marine_processes",
+            "pressures", "activities", "drivers", "responses")
+  if (!is.list(saved)) return(FALSE)
+  any(vapply(keys, function(k) {
+    df <- saved[[k]]
+    is.data.frame(df) && nrow(df) > 0
+  }, logical(1)))
 }

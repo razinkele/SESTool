@@ -150,6 +150,20 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures"),
     d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
   )
+  # DAPSIWRM feedback arm (review 2026-10-07 N50): same name-based fallback for
+  # the R-arm matrices. r_d / r_a / r_p are R x TARGET with negative default
+  # polarity; gb_r is stored GB x R, so it is built R x GB and transposed.
+  # Cell format mirrors build_response_matrices() (lowercase strength, integer
+  # confidence) so DYNAMICS_WEIGHT_MAP keys resolve.
+  linked_map$r_d  <- list(src = "responses", col = "LinkedD",  tgt = "drivers",
+                          polarity = "-", strength = "medium", confidence = "3")
+  linked_map$r_a  <- list(src = "responses", col = "LinkedA",  tgt = "activities",
+                          polarity = "-", strength = "medium", confidence = "3")
+  linked_map$r_p  <- list(src = "responses", col = "LinkedP",  tgt = "pressures",
+                          polarity = "-", strength = "medium", confidence = "3")
+  linked_map$gb_r <- list(src = "responses", col = "LinkedGB", tgt = "goods_benefits",
+                          polarity = "+", strength = "medium", confidence = "3",
+                          transpose = TRUE)
   for (mk in names(linked_map)) {
     m <- linked_map[[mk]]
     src_df <- elements[[m$src]]; tgt_df <- elements[[m$tgt]]
@@ -160,7 +174,11 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
         is.data.frame(tgt_df) && nrow(tgt_df) > 0) {
       mat <- rebuild_forward_matrix_by_name(
         source_df = src_df, linked_col = m$col, target_df = tgt_df,
-        element_confidence_col = "Confidence")
+        element_confidence_col = "Confidence",
+        default_polarity   = m$polarity   %||% "+",
+        default_strength   = m$strength   %||% "Medium",
+        default_confidence = m$confidence %||% "Medium")
+      if (isTRUE(m$transpose)) mat <- t(mat)
       if (any(nzchar(mat))) {
         am[[mk]] <- mat
         ue[[mk]] <- matrix(FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
