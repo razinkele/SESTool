@@ -1787,8 +1787,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       .reset_isa_state()
       res <- apply_saved_isa(saved)
 
+      # Same seven categories as saved_isa_has_elements() (incl. responses), so a
+      # responses-only workbook is not rejected AFTER the reset (review N49).
       n_elems <- sum(vapply(c("goods_benefits","ecosystem_services","marine_processes",
-                              "pressures","activities","drivers"),
+                              "pressures","activities","drivers","responses"),
                             function(k) if (is.data.frame(isa_data[[k]])) nrow(isa_data[[k]]) else 0L,
                             integer(1)))
       n_edges <- sum(vapply(isa_data$adjacency_matrices,

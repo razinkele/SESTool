@@ -127,6 +127,11 @@ test_that("N38: a saved ES->GB link is viewable under its selector key", {
     stored <- names(isa()$adjacency_matrices)
     expect_true("es_gb" %in% stored)
     expect_true("es_gb" %in% ISA_MATRIX_REVIEW_CHOICES)
+    # ...and cell-editable under that key (the user-facing half of N38)
+    session$setInputs(adj_matrix_select = "es_gb")
+    session$setInputs(adj_matrix_view_cell_edit = list(row = 1, col = 1, value = "+strong:4"))
+    expect_equal(isa()$adjacency_matrices$es_gb["ES001", "GB001"], "+strong:4")
+    expect_true(isa()$user_edited_matrices$es_gb["ES001", "GB001"])
   })
 })
 
