@@ -633,6 +633,11 @@ sync_cld_to_isa_data <- function(project_data) {
   nodes <- project_data$data$cld$nodes
   edges <- project_data$data$cld$edges
   if (!is.data.frame(edges)) edges <- data.frame()
+  # Malformed CLD (no id/group columns): nothing to sync, return unchanged.
+  if (!is.data.frame(nodes) || !all(c("id", "group") %in% names(nodes))) return(project_data)
+  if (!"label" %in% names(nodes)) nodes$label <- as.character(nodes$id)
+  # Drop rows that cannot be placed (NA id or group) before resolving.
+  nodes <- nodes[!is.na(nodes$id) & nzchar(as.character(nodes$id)) & !is.na(nodes$group), , drop = FALSE]
 
   # Review 2026-10-07 N3. This sync used to (a) replace element IDs with the
   # positional node ids ("GB_1") and names with the wrapped labels, (b) rebuild
@@ -738,16 +743,19 @@ sync_cld_to_isa_data <- function(project_data) {
       eid <- NA_character_
       # (a) element id carried on the node
       if (!is.na(carried[i]) && nzchar(carried[i]) && !(carried[i] %in% used)) eid <- carried[i]
-      # (b) positional: create_nodes_df numbers nodes by row within the group
+      # (b) name match against the previous frame. Comes BEFORE positional so
+      #     a legacy CLD (no element_id) stays correct across repeated syncs
+      #     after a deletion, when node numbers no longer equal frame rows.
+      if (is.na(eid) && length(prev_names)) {
+        m <- which(tolower(trimws(prev_names)) == tolower(trimws(raw_names[i])) & !(prev_ids %in% used))
+        if (length(m)) eid <- prev_ids[m[1]]
+      }
+      # (c) positional: create_nodes_df numbers nodes by row within the group
+      #     (covers a renamed legacy node)
       if (is.na(eid)) {
         k <- suppressWarnings(as.integer(sub(paste0("^", prefix, "_"), "", nid)))
         if (grepl(paste0("^", prefix, "_[0-9]+$"), nid) && !is.na(k) && k >= 1 && k <= length(prev_ids) &&
             !(prev_ids[k] %in% used)) eid <- prev_ids[k]
-      }
-      # (c) name match against the previous frame
-      if (is.na(eid) && length(prev_names)) {
-        m <- which(tolower(trimws(prev_names)) == tolower(trimws(raw_names[i])) & !(prev_ids %in% used))
-        if (length(m)) eid <- prev_ids[m[1]]
       }
       # (d) brand-new element (added in the CLD)
       if (is.na(eid) || !nzchar(eid)) eid <- next_free_id(prefix, c(prev_ids, used))
@@ -810,25 +818,42 @@ sync_cld_to_isa_data <- function(project_data) {
         adj[[mat_name]] <- blank_matrix(src_grp, tgt_grp, "")
         ue[[mat_name]]  <- blank_matrix(src_grp, tgt_grp, FALSE)
       }
-      pol <- norm_pol(if ("polarity" %in% names(edges)) edges$polarity[i] else edges$label[i])
+      lbl_pol <- if ("label" %in% names(edges)) trimws(as.character(edges$label[i])) else NA_character_
+      pol <- if (!is.na(lbl_pol) && lbl_pol %in% c("+", "-")) lbl_pol
+             else norm_pol(if ("polarity" %in% names(edges)) edges$polarity[i] else lbl_pol)
       prev_m <- prev_am[[mat_name]]
       prev_cell <- if (is.matrix(prev_m) && src_e %in% rownames(prev_m) && tgt_e %in% colnames(prev_m)) prev_m[src_e, tgt_e] else ""
       if (!is.na(prev_cell) && nzchar(prev_cell)) {
         # keep strength / confidence / delay; update only the polarity character
         cell <- if (substr(prev_cell, 1, 1) %in% c("+", "-")) paste0(pol, substr(prev_cell, 2, nchar(prev_cell))) else paste0(pol, prev_cell)
       } else {
-        cell <- paste0(pol, pick(edges, "strength", i, "Medium"), ":", pick(edges, "confidence", i, "Medium"))
+        # New edge: defaults by matrix family (the R arm keys DYNAMICS_WEIGHT_MAP
+        # with lowercase strength + integer confidence, see build_response_matrices)
+        r_arm <- mat_name %in% c("r_d", "r_a", "r_p", "gb_r")
+        cell <- paste0(pol,
+                       pick(edges, "strength", i, if (r_arm) "medium" else "Medium"), ":",
+                       pick(edges, "confidence", i, if (r_arm) "3" else "Medium"))
       }
       adj[[mat_name]][src_e, tgt_e] <- cell
     }
   }
 
-  # Carry user_edited flags over by dimname (prunes removed elements)
+  # Carry user_edited flags over by dimname (prunes removed elements), then
+  # mark every cell the CLD changed (new, altered or cleared edge) as user
+  # edited: a CLD edit IS a user edit, and rebuild_matrix_from_linked() only
+  # respects cells that disagree with LinkedX when they are flagged.
   for (mat_name in names(adj)) {
     pu <- prev_ue[[mat_name]]
     if (is.matrix(pu) && is.logical(pu)) {
       rr <- intersect(rownames(pu), rownames(ue[[mat_name]])); cc <- intersect(colnames(pu), colnames(ue[[mat_name]]))
       if (length(rr) && length(cc)) ue[[mat_name]][rr, cc] <- pu[rr, cc]
+    }
+    pm <- prev_am[[mat_name]]
+    cur <- adj[[mat_name]]
+    for (rn in rownames(cur)) for (cn in colnames(cur)) {
+      before <- if (is.matrix(pm) && rn %in% rownames(pm) && cn %in% colnames(pm)) pm[rn, cn] else ""
+      if (is.na(before)) before <- ""
+      if (!identical(as.character(before), as.character(cur[rn, cn]))) ue[[mat_name]][rn, cn] <- TRUE
     }
   }
 
@@ -850,6 +875,20 @@ sync_cld_to_isa_data <- function(project_data) {
 
   isa$adjacency_matrices   <- adj
   isa$user_edited_matrices <- ue
+  # Write the resolved element ids / raw names back onto the CLD nodes so the
+  # next sync (the module re-reads cld$nodes from project_data) maps directly.
+  nid_all <- as.character(nodes$id)
+  nodes$element_id <- unname(node_elem[nid_all])
+  resolved_name <- character(length(nid_all))
+  for (grp in names(group_to_key)) {
+    key <- group_to_key[[grp]]; df <- isa[[key]]
+    idc <- col_of(df, c("ID", "id")); nmc <- col_of(df, c("Name", "name"))
+    if (is.null(idc) || is.null(nmc)) next
+    sel <- which(nodes$group == grp)
+    resolved_name[sel] <- as.character(df[[nmc]])[match(nodes$element_id[sel], as.character(df[[idc]]))]
+  }
+  nodes$name_raw <- ifelse(is.na(resolved_name) | !nzchar(resolved_name), unwrap(nodes$label), resolved_name)
+  project_data$data$cld$nodes <- nodes
   project_data$data$isa_data <- isa
   project_data$last_modified <- Sys.time()
   project_data

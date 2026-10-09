@@ -100,6 +100,83 @@ test_that("N3: deleting a node in the CLD removes its element and matrix row/col
   expect_equal(out$adjacency_matrices$es_gb["ES001", "GB002"], "-weak:2")
 })
 
+test_that("N3: a label-only polarity edit (what the module writes first) is honoured", {
+  out <- round_trip(fixture_isa(), function(cld) {
+    i <- which(cld$edges$from == "ES_1" & cld$edges$to == "GB_1")
+    cld$edges$label[i] <- "-"                      # polarity column left stale on purpose
+    cld
+  })
+  expect_equal(out$adjacency_matrices$es_gb["ES001", "GB001"], "-strong:4")
+})
+
+test_that("N3: the sync writes element_id / name_raw back onto the CLD nodes", {
+  isa <- fixture_isa()
+  nodes <- create_nodes_df(isa); edges <- create_edges_df(isa, isa$adjacency_matrices)
+  nodes$element_id <- NULL; nodes$name_raw <- NULL
+  pd <- list(project_id = "p", data = list(cld = list(nodes = nodes, edges = edges), isa_data = isa))
+  res <- sync_cld_to_isa_data(pd)
+  n2 <- res$data$cld$nodes
+  expect_equal(n2$element_id[n2$id == "GB_2"], "GB002")
+  expect_equal(n2$name_raw[n2$id == "GB_2"], long_name)
+})
+
+test_that("N3: a legacy CLD survives TWO syncs across a deletion (name match beats position)", {
+  isa <- fixture_isa()
+  nodes <- create_nodes_df(isa); edges <- create_edges_df(isa, isa$adjacency_matrices)
+  nodes$element_id <- NULL; nodes$name_raw <- NULL
+  # delete GB_1 (= GB001) in the CLD, sync once
+  nodes1 <- nodes[nodes$id != "GB_1", ]; edges1 <- edges[!(edges$from == "GB_1" | edges$to == "GB_1"), ]
+  pd1 <- list(project_id = "p", data = list(cld = list(nodes = nodes1, edges = edges1), isa_data = isa))
+  res1 <- sync_cld_to_isa_data(pd1)
+  expect_equal(res1$data$isa_data$goods_benefits$ID, "GB002")
+  # second edit on the same (legacy-shaped) nodes: strip the written-back ids to
+  # simulate a module that still holds the old rv$nodes, then sync again
+  nodes2 <- res1$data$cld$nodes; nodes2$element_id <- NULL; nodes2$name_raw <- NULL
+  pd2 <- res1; pd2$data$cld$nodes <- nodes2
+  res2 <- sync_cld_to_isa_data(pd2)
+  expect_equal(res2$data$isa_data$goods_benefits$ID, "GB002")           # not GB003 / not a fresh id
+  expect_equal(res2$data$isa_data$goods_benefits$Name, long_name)
+  expect_equal(res2$data$isa_data$adjacency_matrices$es_gb["ES001", "GB002"], "-weak:2")
+})
+
+test_that("N3: CLD-made edge changes are flagged user-edited so the next ISA save keeps them", {
+  isa <- fixture_isa()
+  # add ES001 -> GB002? already exists; instead DELETE ES001 -> GB002 and ADD GB002 -> D001 in the CLD
+  out <- round_trip(isa, function(cld) {
+    cld$edges <- cld$edges[!(cld$edges$from == "ES_1" & cld$edges$to == "GB_2"), ]
+    cld$edges <- rbind(cld$edges, transform(cld$edges[1, ], from = "GB_2", to = "D_1", label = "+", polarity = "+"))
+    cld
+  })
+  expect_equal(out$adjacency_matrices$es_gb["ES001", "GB002"], "")
+  expect_true(out$user_edited_matrices$es_gb["ES001", "GB002"])         # cleared cell is a user edit
+  expect_true(nzchar(out$adjacency_matrices$gb_d["GB002", "D001"]))
+  expect_true(out$user_edited_matrices$gb_d["GB002", "D001"])
+  expect_false(out$user_edited_matrices$gb_d["GB001", "D001"])          # unchanged cell keeps its flag
+  # The ISA module's rebuild with the (stale) LinkedGB = "GB001|GB002" must respect both edits
+  skip_if_not(exists("rebuild_matrix_from_linked", mode = "function"))
+  rb <- rebuild_matrix_from_linked(out$ecosystem_services, "LinkedGB",
+                                   source_ids = out$ecosystem_services$ID,
+                                   target_ids = out$goods_benefits$ID,
+                                   existing_matrix = out$adjacency_matrices$es_gb,
+                                   user_edited_matrix = out$user_edited_matrices$es_gb)
+  expect_equal(rb$matrix["ES001", "GB002"], "")                          # deleted edge stays deleted
+  expect_equal(rb$matrix["ES001", "GB001"], "+strong:4")
+})
+
+test_that("N3: new R-arm edges from the CLD use the dynamics-friendly cell format", {
+  isa <- fixture_isa()
+  isa$responses <- data.frame(ID = "R001", Name = "Quota", Type = "", Description = "", Stakeholder = "",
+                              Importance = "", Trend = "", LinkedGB = "", LinkedD = "", LinkedA = "",
+                              LinkedP = "", stringsAsFactors = FALSE)
+  out <- round_trip(isa, function(cld) {
+    # a genuinely new edge carries no strength/confidence yet (unlike a copied row)
+    cld$edges <- rbind(cld$edges, transform(cld$edges[1, ], from = "R_1", to = "D_1", label = "-", polarity = "-",
+                                            strength = NA_character_, confidence = NA))
+    cld
+  })
+  expect_equal(out$adjacency_matrices$r_d["R001", "D001"], "-medium:3")
+})
+
 test_that("N3: legacy CLD nodes without element_id still resolve positionally to the saved IDs", {
   isa <- fixture_isa()
   nodes <- create_nodes_df(isa); edges <- create_edges_df(isa, isa$adjacency_matrices)
