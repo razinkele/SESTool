@@ -318,6 +318,138 @@
       "it": "Questo file contiene più varianti del modello (ad esempio, regioni diverse). Seleziona la variante che vuoi caricare.",
       "no": "Denne filen inneholder flere modellvarianter (f.eks. forskjellige regioner). Velg varianten du vil laste inn.",
       "el": "Αυτό το αρχείο περιέχει πολλαπλές παραλλαγές μοντέλου (π.χ. διαφορετικές περιοχές). Επιλέξτε την παραλλαγή που θέλετε να φορτώσετε."
+    },
+    "modules.ses_models.dir_not_found": {
+      "en": "The SES models folder was not found: %s",
+      "es": "No se encontró la carpeta de modelos SES: %s",
+      "fr": "Le dossier des modèles SES est introuvable : %s",
+      "de": "Der Ordner mit den SES-Modellen wurde nicht gefunden: %s",
+      "lt": "SES modelių aplankas nerastas: %s",
+      "pt": "A pasta de modelos SES não foi encontrada: %s",
+      "it": "La cartella dei modelli SES non è stata trovata: %s",
+      "no": "Mappen med SES-modeller ble ikke funnet: %s",
+      "el": "Ο φάκελος μοντέλων SES δεν βρέθηκε: %s"
+    },
+    "modules.ses_models.models_reloaded_count": {
+      "en": "Models reloaded: %d available.",
+      "es": "Modelos recargados: %d disponibles.",
+      "fr": "Modèles rechargés : %d disponibles.",
+      "de": "Modelle neu geladen: %d verfügbar.",
+      "lt": "Modeliai įkelti iš naujo: pasiekiama %d.",
+      "pt": "Modelos recarregados: %d disponíveis.",
+      "it": "Modelli ricaricati: %d disponibili.",
+      "no": "Modeller lastet inn på nytt: %d tilgjengelige.",
+      "el": "Τα μοντέλα φορτώθηκαν ξανά: %d διαθέσιμα."
+    },
+    "modules.ses_models.err_file_not_found": {
+      "en": "File not found: %s",
+      "es": "Archivo no encontrado: %s",
+      "fr": "Fichier introuvable : %s",
+      "de": "Datei nicht gefunden: %s",
+      "lt": "Failas nerastas: %s",
+      "pt": "Ficheiro não encontrado: %s",
+      "it": "File non trovato: %s",
+      "no": "Fant ikke filen: %s",
+      "el": "Το αρχείο δεν βρέθηκε: %s"
+    },
+    "modules.ses_models.err_missing_elements_sheet": {
+      "en": "The file has no 'Elements' sheet (sheets found: %s).",
+      "es": "El archivo no tiene una hoja 'Elements' (hojas encontradas: %s).",
+      "fr": "Le fichier n'a pas de feuille « Elements » (feuilles trouvées : %s).",
+      "de": "Die Datei hat kein Blatt „Elements“ (gefundene Blätter: %s).",
+      "lt": "Faile nėra lapo „Elements“ (rasti lapai: %s).",
+      "pt": "O ficheiro não tem a folha 'Elements' (folhas encontradas: %s).",
+      "it": "Il file non contiene il foglio 'Elements' (fogli trovati: %s).",
+      "no": "Filen har ikke noe «Elements»-ark (ark funnet: %s).",
+      "el": "Το αρχείο δεν έχει φύλλο «Elements» (φύλλα που βρέθηκαν: %s)."
+    },
+    "modules.ses_models.err_missing_connections_sheet": {
+      "en": "The file has no 'Connections' sheet (sheets found: %s).",
+      "es": "El archivo no tiene una hoja 'Connections' (hojas encontradas: %s).",
+      "fr": "Le fichier n'a pas de feuille « Connections » (feuilles trouvées : %s).",
+      "de": "Die Datei hat kein Blatt „Connections“ (gefundene Blätter: %s).",
+      "lt": "Faile nėra lapo „Connections“ (rasti lapai: %s).",
+      "pt": "O ficheiro não tem a folha 'Connections' (folhas encontradas: %s).",
+      "it": "Il file non contiene il foglio 'Connections' (fogli trovati: %s).",
+      "no": "Filen har ikke noe «Connections»-ark (ark funnet: %s).",
+      "el": "Το αρχείο δεν έχει φύλλο «Connections» (φύλλα που βρέθηκαν: %s)."
+    },
+    "modules.ses_models.err_elements_empty": {
+      "en": "The model has no elements.",
+      "es": "El modelo no tiene elementos.",
+      "fr": "Le modèle ne contient aucun élément.",
+      "de": "Das Modell enthält keine Elemente.",
+      "lt": "Modelyje nėra elementų.",
+      "pt": "O modelo não tem elementos.",
+      "it": "Il modello non contiene elementi.",
+      "no": "Modellen har ingen elementer.",
+      "el": "Το μοντέλο δεν έχει στοιχεία."
+    },
+    "modules.ses_models.err_elements_label_column": {
+      "en": "The Elements sheet needs a 'Label' column (columns found: %s).",
+      "es": "La hoja Elements necesita una columna 'Label' (columnas encontradas: %s).",
+      "fr": "La feuille Elements doit avoir une colonne « Label » (colonnes trouvées : %s).",
+      "de": "Das Blatt Elements benötigt eine Spalte „Label“ (gefundene Spalten: %s).",
+      "lt": "Lape Elements turi būti stulpelis „Label“ (rasti stulpeliai: %s).",
+      "pt": "A folha Elements precisa de uma coluna 'Label' (colunas encontradas: %s).",
+      "it": "Il foglio Elements richiede una colonna 'Label' (colonne trovate: %s).",
+      "no": "Elements-arket må ha en «Label»-kolonne (kolonner funnet: %s).",
+      "el": "Το φύλλο Elements χρειάζεται στήλη «Label» (στήλες που βρέθηκαν: %s)."
+    },
+    "modules.ses_models.err_elements_type_column": {
+      "en": "The Elements sheet needs a 'type' column (columns found: %s).",
+      "es": "La hoja Elements necesita una columna 'type' (columnas encontradas: %s).",
+      "fr": "La feuille Elements doit avoir une colonne « type » (colonnes trouvées : %s).",
+      "de": "Das Blatt Elements benötigt eine Spalte „type“ (gefundene Spalten: %s).",
+      "lt": "Lape Elements turi būti stulpelis „type“ (rasti stulpeliai: %s).",
+      "pt": "A folha Elements precisa de uma coluna 'type' (colunas encontradas: %s).",
+      "it": "Il foglio Elements richiede una colonna 'type' (colonne trovate: %s).",
+      "no": "Elements-arket må ha en «type»-kolonne (kolonner funnet: %s).",
+      "el": "Το φύλλο Elements χρειάζεται στήλη «type» (στήλες που βρέθηκαν: %s)."
+    },
+    "modules.ses_models.err_connections_columns": {
+      "en": "The Connections sheet is missing columns: %s.",
+      "es": "A la hoja Connections le faltan columnas: %s.",
+      "fr": "Il manque des colonnes dans la feuille Connections : %s.",
+      "de": "Im Blatt Connections fehlen Spalten: %s.",
+      "lt": "Lape Connections trūksta stulpelių: %s.",
+      "pt": "Faltam colunas na folha Connections: %s.",
+      "it": "Nel foglio Connections mancano colonne: %s.",
+      "no": "Connections-arket mangler kolonner: %s.",
+      "el": "Στο φύλλο Connections λείπουν στήλες: %s."
+    },
+    "modules.ses_models.err_duplicate_ids": {
+      "en": "Duplicate element IDs: %s.",
+      "es": "ID de elementos duplicados: %s.",
+      "fr": "Identifiants d'éléments en double : %s.",
+      "de": "Doppelte Element-IDs: %s.",
+      "lt": "Pasikartojantys elementų ID: %s.",
+      "pt": "IDs de elementos duplicados: %s.",
+      "it": "ID di elementi duplicati: %s.",
+      "no": "Dupliserte element-ID-er: %s.",
+      "el": "Διπλότυπα αναγνωριστικά στοιχείων: %s."
+    },
+    "modules.ses_models.err_dangling_connections": {
+      "en": "%s connection(s) refer to elements that do not exist.",
+      "es": "%s conexión(es) hacen referencia a elementos que no existen.",
+      "fr": "%s connexion(s) font référence à des éléments inexistants.",
+      "de": "%s Verbindung(en) verweisen auf nicht vorhandene Elemente.",
+      "lt": "%s ryšys (-iai) nurodo neegzistuojančius elementus.",
+      "pt": "%s ligação(ões) referem-se a elementos que não existem.",
+      "it": "%s collegamento/i si riferiscono a elementi inesistenti.",
+      "no": "%s kobling(er) viser til elementer som ikke finnes.",
+      "el": "%s σύνδεση(-εις) αναφέρονται σε στοιχεία που δεν υπάρχουν."
+    },
+    "modules.ses_models.err_read_failed": {
+      "en": "The file could not be read (%s).",
+      "es": "No se pudo leer el archivo (%s).",
+      "fr": "Le fichier n'a pas pu être lu (%s).",
+      "de": "Die Datei konnte nicht gelesen werden (%s).",
+      "lt": "Failo nepavyko perskaityti (%s).",
+      "pt": "Não foi possível ler o ficheiro (%s).",
+      "it": "Impossibile leggere il file (%s).",
+      "no": "Filen kunne ikke leses (%s).",
+      "el": "Δεν ήταν δυνατή η ανάγνωση του αρχείου (%s)."
     }
   }
 }

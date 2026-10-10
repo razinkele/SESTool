@@ -1667,7 +1667,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       key <- input$adj_matrix_select
       mat <- isa_data$adjacency_matrices[[key]]
       if (is.null(mat)) {
-        DT::datatable(data.frame(Message = "No data available for this matrix."),
+        DT::datatable(data.frame(Message = i18n$t("modules.isa.data_entry.matrix.no_matrix_data")),
                       options = list(dom = "t"), rownames = FALSE)
       } else {
         df <- as.data.frame(mat, stringsAsFactors = FALSE)
@@ -1684,7 +1684,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         isa_data$adjacency_matrices, isa_data$user_edited_matrices,
         input$adj_matrix_select, info$row, info$col, info$value)
       if (!is.null(res$error)) {
-        showNotification(res$error, type = "warning")
+        showNotification(matrix_cell_error_message(res, i18n), type = "warning")   # translated (N47)
         return(invisible(NULL))    # DT reverts the cell on next render
       }
       isa_data$adjacency_matrices   <- res$am

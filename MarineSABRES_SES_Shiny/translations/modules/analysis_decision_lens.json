@@ -319,6 +319,193 @@
       "it": "Non spingere di più la crescita — allenta il vincolo limitante o rafforza la risposta di bilanciamento che la controlla.",
       "no": "Ikke press veksten hardere — lett på den begrensende betingelsen eller styrk den balanserende responsen som demmer opp for den.",
       "el": "Μην πιέζετε περισσότερο την ανάπτυξη — χαλαρώστε τον περιοριστικό παράγοντα ή ενισχύστε την εξισορροπητική απόκριση που τον ελέγχει."
+    },
+    "modules.analysis.decision_lens.col_label": {
+      "en": "Element",
+      "es": "Elemento",
+      "fr": "Élément",
+      "de": "Element",
+      "lt": "Elementas",
+      "pt": "Elemento",
+      "it": "Elemento",
+      "no": "Element",
+      "el": "Στοιχείο"
+    },
+    "modules.analysis.decision_lens.col_group": {
+      "en": "Category",
+      "es": "Categoría",
+      "fr": "Catégorie",
+      "de": "Kategorie",
+      "lt": "Kategorija",
+      "pt": "Categoria",
+      "it": "Categoria",
+      "no": "Kategori",
+      "el": "Κατηγορία"
+    },
+    "modules.analysis.decision_lens.col_influence": {
+      "en": "Influence",
+      "es": "Influencia",
+      "fr": "Influence",
+      "de": "Einfluss",
+      "lt": "Įtaka",
+      "pt": "Influência",
+      "it": "Influenza",
+      "no": "Innflytelse",
+      "el": "Επιρροή"
+    },
+    "modules.analysis.decision_lens.col_dependence": {
+      "en": "Dependence",
+      "es": "Dependencia",
+      "fr": "Dépendance",
+      "de": "Abhängigkeit",
+      "lt": "Priklausomybė",
+      "pt": "Dependência",
+      "it": "Dipendenza",
+      "no": "Avhengighet",
+      "el": "Εξάρτηση"
+    },
+    "modules.analysis.decision_lens.col_quadrant": {
+      "en": "Role",
+      "es": "Rol",
+      "fr": "Rôle",
+      "de": "Rolle",
+      "lt": "Vaidmuo",
+      "pt": "Papel",
+      "it": "Ruolo",
+      "no": "Rolle",
+      "el": "Ρόλος"
+    },
+    "modules.analysis.decision_lens.quad_name_influential": {
+      "en": "Influential",
+      "es": "Influyente",
+      "fr": "Influent",
+      "de": "Einflussreich",
+      "lt": "Įtakingas",
+      "pt": "Influente",
+      "it": "Influente",
+      "no": "Innflytelsesrik",
+      "el": "Επιδραστικό"
+    },
+    "modules.analysis.decision_lens.quad_name_relay": {
+      "en": "Relay",
+      "es": "Enlace",
+      "fr": "Relais",
+      "de": "Relais",
+      "lt": "Tarpinis",
+      "pt": "Ligação",
+      "it": "Di collegamento",
+      "no": "Formidler",
+      "el": "Αναμεταδότης"
+    },
+    "modules.analysis.decision_lens.quad_name_dependent": {
+      "en": "Dependent",
+      "es": "Dependiente",
+      "fr": "Dépendant",
+      "de": "Abhängig",
+      "lt": "Priklausomas",
+      "pt": "Dependente",
+      "it": "Dipendente",
+      "no": "Avhengig",
+      "el": "Εξαρτημένο"
+    },
+    "modules.analysis.decision_lens.quad_name_autonomous": {
+      "en": "Autonomous",
+      "es": "Autónomo",
+      "fr": "Autonome",
+      "de": "Autonom",
+      "lt": "Autonominis",
+      "pt": "Autónomo",
+      "it": "Autonomo",
+      "no": "Autonom",
+      "el": "Αυτόνομο"
+    },
+    "modules.analysis.decision_lens.group_drivers": {
+      "en": "Drivers",
+      "es": "Conductores",
+      "fr": "Facteurs",
+      "de": "Treiber",
+      "lt": "Veiksniai",
+      "pt": "Fatores",
+      "it": "Fattori",
+      "no": "Drivkrefter",
+      "el": "Κινητήριες δυνάμεις"
+    },
+    "modules.analysis.decision_lens.group_activities": {
+      "en": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività",
+      "no": "Aktiviteter",
+      "el": "Δραστηριότητες"
+    },
+    "modules.analysis.decision_lens.group_pressures": {
+      "en": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Belastungen",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni",
+      "no": "Belastninger",
+      "el": "Πιέσεις"
+    },
+    "modules.analysis.decision_lens.group_marine_processes": {
+      "en": "Marine Processes & Functioning",
+      "es": "Procesos Marinos y Funcionamiento",
+      "fr": "Processus Marins et Fonctionnement",
+      "de": "Marine Prozesse und Funktionsweise",
+      "lt": "Jūriniai procesai ir funkcionavimas",
+      "pt": "Processos Marinhos e Funcionamento",
+      "it": "Processi Marini e Funzionamento",
+      "no": "Marine prosesser og funksjon",
+      "el": "Θαλάσσιες διεργασίες και λειτουργία"
+    },
+    "modules.analysis.decision_lens.group_ecosystem_services": {
+      "en": "Ecosystem Services",
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemos paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici",
+      "no": "Økosystemtjenester",
+      "el": "Υπηρεσίες οικοσυστήματος"
+    },
+    "modules.analysis.decision_lens.group_goods_benefits": {
+      "en": "Goods & Benefits",
+      "es": "Bienes y Beneficios",
+      "fr": "Biens et Avantages",
+      "de": "Güter und Vorteile",
+      "lt": "Prekės ir nauda",
+      "pt": "Bens e Benefícios",
+      "it": "Beni e Benefici",
+      "no": "Goder og fordeler",
+      "el": "Αγαθά και οφέλη"
+    },
+    "modules.analysis.decision_lens.group_responses": {
+      "en": "Responses",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Reaktionen",
+      "lt": "Atsakai",
+      "pt": "Respostas",
+      "it": "Risposte",
+      "no": "Responser",
+      "el": "Αποκρίσεις"
+    },
+    "modules.analysis.decision_lens.archetype_loops_label": {
+      "en": "Loops",
+      "es": "Bucles",
+      "fr": "Boucles",
+      "de": "Schleifen",
+      "lt": "Kilpos",
+      "pt": "Ciclos",
+      "it": "Cicli",
+      "no": "Sløyfer",
+      "el": "Βρόχοι"
     }
   }
 }
