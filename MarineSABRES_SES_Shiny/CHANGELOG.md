@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Root-run scripts stay within this app** (N43): no more server-wide `pkill -9 -f 'shiny.*R'`, no wiping of the shared `/var/lib/shiny-server/bookmarks` and `/tmp/shiny-server`, and the global `shiny-server.conf` is only replaced with `FORCE_SHINY_CONF=1` (otherwise the diff is shown); `force-restart-shiny.sh` now also removes `.RData`; `check-deployment-status.sh` recommends the app-scoped commands.
 - **Deploy archive excludes non-runtime trees** (N80): `.gitattributes` `export-ignore` for `tests/`, `.claude/`, `DTU/`, `Documents/` (except the guidance PDF the ISA module serves) and `deployment/` (except `required_packages.R`, sourced on the server).
 
+### Fixed (bookmark restore — review 2026-10-07 N81 / N82)
+
+- **Bookmark links can no longer crash a session or inject metadata.** With URL bookmarking the restored values come from the link itself; `onRestore` copied them with only an `is.null()` check. A non-logical autosave flag crashed the session on the first reactive flush (N82), and arbitrary metadata strings of any JSON type were stored into the project and later used in reports (N81). New `sanitize_bookmark_values()` (`server/bookmarking.R`) admits only well-typed scalars: user level from the three levels, a logical autosave flag, a plain tab id, a demonstration area from the PIMS choices, and a focal issue of at most 1000 characters with control characters removed.
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.
