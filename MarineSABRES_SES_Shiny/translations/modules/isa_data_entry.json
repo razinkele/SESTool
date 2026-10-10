@@ -1210,6 +1210,116 @@
       "no": "Legg til tidsseriedata",
       "el": "Προσθήκη Ώρα Series Data"
     },
+    "modules.isa.data_entry.matrix.es_gb": {
+      "en": "Ecosystem Services → Goods/Benefits",
+      "es": "Servicios ecosistémicos → Bienes/Beneficios",
+      "fr": "Services écosystémiques → Biens/Bénéfices",
+      "de": "Ökosystemleistungen → Güter/Nutzen",
+      "lt": "Ekosistemų paslaugos → Gėrybės/Nauda",
+      "pt": "Serviços ecossistémicos → Bens/Benefícios",
+      "it": "Servizi ecosistemici → Beni/Benefici",
+      "no": "Økosystemtjenester → Goder/Fordeler",
+      "el": "Οικοσυστημικές υπηρεσίες → Αγαθά/Οφέλη"
+    },
+    "modules.isa.data_entry.matrix.mpf_es": {
+      "en": "Marine Processes → Ecosystem Services",
+      "es": "Procesos marinos → Servicios ecosistémicos",
+      "fr": "Processus marins → Services écosystémiques",
+      "de": "Marine Prozesse → Ökosystemleistungen",
+      "lt": "Jūriniai procesai → Ekosistemų paslaugos",
+      "pt": "Processos marinhos → Serviços ecossistémicos",
+      "it": "Processi marini → Servizi ecosistemici",
+      "no": "Marine prosesser → Økosystemtjenester",
+      "el": "Θαλάσσιες διεργασίες → Οικοσυστημικές υπηρεσίες"
+    },
+    "modules.isa.data_entry.matrix.p_mpf": {
+      "en": "Pressures → Marine Processes",
+      "es": "Presiones → Procesos marinos",
+      "fr": "Pressions → Processus marins",
+      "de": "Belastungen → Marine Prozesse",
+      "lt": "Spaudimai → Jūriniai procesai",
+      "pt": "Pressões → Processos marinhos",
+      "it": "Pressioni → Processi marini",
+      "no": "Påvirkninger → Marine prosesser",
+      "el": "Πιέσεις → Θαλάσσιες διεργασίες"
+    },
+    "modules.isa.data_entry.matrix.a_p": {
+      "en": "Activities → Pressures",
+      "es": "Actividades → Presiones",
+      "fr": "Activités → Pressions",
+      "de": "Aktivitäten → Belastungen",
+      "lt": "Veiklos → Spaudimai",
+      "pt": "Atividades → Pressões",
+      "it": "Attività → Pressioni",
+      "no": "Aktiviteter → Påvirkninger",
+      "el": "Δραστηριότητες → Πιέσεις"
+    },
+    "modules.isa.data_entry.matrix.d_a": {
+      "en": "Drivers → Activities",
+      "es": "Impulsores → Actividades",
+      "fr": "Facteurs → Activités",
+      "de": "Treiber → Aktivitäten",
+      "lt": "Veiksniai → Veiklos",
+      "pt": "Fatores → Atividades",
+      "it": "Driver → Attività",
+      "no": "Drivere → Aktiviteter",
+      "el": "Κινητήριες δυνάμεις → Δραστηριότητες"
+    },
+    "modules.isa.data_entry.matrix.gb_d": {
+      "en": "Goods/Benefits → Drivers",
+      "es": "Bienes/Beneficios → Impulsores",
+      "fr": "Biens/Bénéfices → Facteurs",
+      "de": "Güter/Nutzen → Treiber",
+      "lt": "Gėrybės/Nauda → Veiksniai",
+      "pt": "Bens/Benefícios → Fatores",
+      "it": "Beni/Benefici → Driver",
+      "no": "Goder/Fordeler → Drivere",
+      "el": "Αγαθά/Οφέλη → Κινητήριες δυνάμεις"
+    },
+    "modules.isa.data_entry.matrix.gb_r": {
+      "en": "Goods/Benefits → Responses",
+      "es": "Bienes/Beneficios → Respuestas",
+      "fr": "Biens/Bénéfices → Réponses",
+      "de": "Güter/Nutzen → Maßnahmen",
+      "lt": "Gėrybės/Nauda → Atsakai",
+      "pt": "Bens/Benefícios → Respostas",
+      "it": "Beni/Benefici → Risposte",
+      "no": "Goder/Fordeler → Tiltak",
+      "el": "Αγαθά/Οφέλη → Αποκρίσεις"
+    },
+    "modules.isa.data_entry.matrix.r_d": {
+      "en": "Responses → Drivers",
+      "es": "Respuestas → Impulsores",
+      "fr": "Réponses → Facteurs",
+      "de": "Maßnahmen → Treiber",
+      "lt": "Atsakai → Veiksniai",
+      "pt": "Respostas → Fatores",
+      "it": "Risposte → Driver",
+      "no": "Tiltak → Drivere",
+      "el": "Αποκρίσεις → Κινητήριες δυνάμεις"
+    },
+    "modules.isa.data_entry.matrix.r_a": {
+      "en": "Responses → Activities",
+      "es": "Respuestas → Actividades",
+      "fr": "Réponses → Activités",
+      "de": "Maßnahmen → Aktivitäten",
+      "lt": "Atsakai → Veiklos",
+      "pt": "Respostas → Atividades",
+      "it": "Risposte → Attività",
+      "no": "Tiltak → Aktiviteter",
+      "el": "Αποκρίσεις → Δραστηριότητες"
+    },
+    "modules.isa.data_entry.matrix.r_p": {
+      "en": "Responses → Pressures",
+      "es": "Respuestas → Presiones",
+      "fr": "Réponses → Pressions",
+      "de": "Maßnahmen → Belastungen",
+      "lt": "Atsakai → Spaudimai",
+      "pt": "Respostas → Pressões",
+      "it": "Risposte → Pressioni",
+      "no": "Tiltak → Påvirkninger",
+      "el": "Αποκρίσεις → Πιέσεις"
+    },
     "modules.isa.data_entry.common.adjacency_matrix_review": {
       "en": "Adjacency Matrix Review",
       "es": "Revisión de Matriz de Adyacencia",

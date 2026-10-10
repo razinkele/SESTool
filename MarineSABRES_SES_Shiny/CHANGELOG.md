@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (report pipeline — review 2026-10-07 N11 / N14 / N41)
+
+- **Reports no longer knit user text** (N11): the Markdown returned by `generate_report_content()` (project name, focal issue, element and stakeholder names) was written to an `.Rmd` and passed to `rmarkdown::render()`, so inline `` `r ...` `` or a fenced R chunk inside any of those fields ran R on the server. New `functions/report_render.R::render_report_safely()` knits only the static, user-text-free `templates/report_template.Rmd`, which emits the body with `results='asis'`; pandoc runs with `-raw_html-raw_tex-raw_attribute` and in-body YAML delimiters are escaped, so raw HTML / raw TeX / fenced raw blocks / metadata blocks are shown as text. HTML, PDF and Word all go through this path.
+- **HTML reports are served per session** (N14): `register_session_report()` hands the rendered file to `session$registerDataObj()`; nothing is written to the shared, statically served `www/reports/` any more (the old timestamp-named files were readable by any client). The `app.R` session-end `www/reports` sweep is now dead code and left in place.
+- **Honest LaTeX / pandoc probes** (N41): `latex_engine_available("lualatex")` replaces probes that treated `tinytex::tinytex_root() == ""` and a failing `pdflatex --version` as success; pandoc availability is checked before rendering. New translated messages `common.messages.pandoc_required` / `common.messages.latex_required`.
+
+### Fixed (ISA batch-1 remainder — review 2026-10-07 N5 / N22 / N38 / N49 / N50)
+
+- **Removing an element now prunes its row/column from every adjacency and user-edited matrix** (N5, `prune_element_from_matrices()` in `register_remove_observer`), so the element frames and the SOURCE×TARGET matrices stay aligned and the positional CLD builder no longer re-wires surviving edges to the wrong neighbours.
+- **CLD edits reach the event bus** (N22): `app.R` now passes `event_bus` to `cld_viz_server`, and the seven edit sites emit through `notify_cld_edit()`, which sets the pipeline's skip-regeneration flag first so autosave and the stale-analysis notices fire without the CLD being rebuilt from the lossy CLD→ISA sync.
+- **Adjacency Matrix Review selector uses the stored matrix keys** (N38): `ISA_MATRIX_REVIEW_CHOICES` (`es_gb`, `mpf_es`, `p_mpf`, `a_p`, `d_a`, `gb_d`, `gb_r`, `r_d`, `r_a`, `r_p`) with translated SOURCE → TARGET labels; the six forward matrices can be viewed and cell-edited again.
+- **Excel import rejects an empty-but-recognised workbook before clearing module state** (N49, `saved_isa_has_elements()`).
+- **R-arm name-based recovery** (N50): `recover_isa_data()` rebuilds `r_d` / `r_a` / `r_p` / `gb_r` from the responses' `Linked*` columns when the saved matrices are absent (same fallback the forward chain already had; `gb_r` built R×GB and transposed; faithful saved matrices are kept).
+
+### Fixed (CLD→ISA sync fidelity — review 2026-10-07 N3)
+
+- **CLD edits no longer degrade the ISA data** (`sync_cld_to_isa_data()` rewritten). Previously any CLD edit (add/merge/rename/delete node, add/delete edge, polarity change) rebuilt every adjacency matrix from the edge label alone (strength, confidence and delay lost), replaced element IDs with the positional node ids (`GB_1`), replaced names with the wrapped labels, dropped the user-edited flags and lowercased the element frames. Now: `create_nodes_df()` carries `element_id` and `name_raw` on every node; the sync resolves each node back to its ISA element (carried id → position → name match → fresh id for nodes added in the CLD), keeps the previous matrix cell and only updates its polarity, carries `user_edited_matrices` over by dimname, and preserves the previous frame's columns and case. Legacy saves whose CLD nodes lack `element_id` resolve positionally.
+
+### Fixed (deploy + CI hygiene — review 2026-10-07 N8 / N42 / N43 / N44 / N80)
+
+- **CI no longer passes files that test nothing** (N44): `tests/ci_run_file.R` fails a file with zero passing expectations unless it is listed with a reason in `tests/ci_allow_zero_pass.txt` (torch-only ML files, browser-driven files); `helper-00` stops under `CI=true` when `global.R` fails to load. This exposed a real gap: `functions/template_versioning.R` was sourced only inside the torch-gated ML block, so all 54 template-versioning tests skipped in CI; it is now sourced unconditionally.
+- **Deploys keep the live feedback log and a writable `data/`** (N8, N42): both deploy paths preserve `data/user_feedback_log*.ndjson`, set `data/` to 775 after the permission reset, and fall back to touching `restart.txt` when `sudo` is unavailable (the manual post-deploy step). `remote-deploy.sh` now archives committed files with `git archive` like `deploy-remote.ps1`, and its `--dry-run` works without SSH. `deploy-remote.ps1 -Force` no longer prompts at the end.
+- **Root-run scripts stay within this app** (N43): no more server-wide `pkill -9 -f 'shiny.*R'`, no wiping of the shared `/var/lib/shiny-server/bookmarks` and `/tmp/shiny-server`, and the global `shiny-server.conf` is only replaced with `FORCE_SHINY_CONF=1` (otherwise the diff is shown); `force-restart-shiny.sh` now also removes `.RData`; `check-deployment-status.sh` recommends the app-scoped commands.
+- **Deploy archive excludes non-runtime trees** (N80): `.gitattributes` `export-ignore` for `tests/`, `.claude/`, `DTU/`, `Documents/` (except the guidance PDF the ISA module serves) and `deployment/` (except `required_packages.R`, sourced on the server).
+
+### Fixed (bookmark restore — review 2026-10-07 N81 / N82)
+
+- **Bookmark links can no longer crash a session or inject metadata.** With URL bookmarking the restored values come from the link itself; `onRestore` copied them with only an `is.null()` check. A non-logical autosave flag crashed the session on the first reactive flush (N82), and arbitrary metadata strings of any JSON type were stored into the project and later used in reports (N81). New `sanitize_bookmark_values()` (`server/bookmarking.R`) admits only well-typed scalars: user level from the three levels, a logical autosave flag, a plain tab id, a demonstration area from the PIMS choices, and a focal issue of at most 1000 characters with control characters removed.
+
 ### Fixed (analysis bounding — review 2026-10-07 N16 / N17)
 
 - **Boolean attractor search respects its hard cap** (N16): the exhaustive 2^n search was bounded only by the client-supplied node limit (the slider allowed 30; a crafted input allowed anything), and `DYNAMICS_MAX_BOOLEAN_NODES` was only a default. The module clamps the input (`clamp_boolean_max_nodes()`), the slider stops at the cap, and `ses_boolean_attractors()` enforces it independently (size check now runs before the BoolNet check). The unused 2^n-vertex state-transition graph is no longer built (`transition_graph` stays in the result as `NULL`).

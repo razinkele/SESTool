@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================================
-# MarineSABRES Remote Deployment v3.0 (tar + scp)
+# MarineSABRES Remote Deployment v3.1 (git archive + scp)
 # ============================================================================
 #
 # Deploys to laguna.ku.lt using tar + scp (no rsync dependency).
@@ -61,80 +61,48 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 TAR_PATH="/tmp/$TAR_FILENAME"
 
-echo -e "${CYAN}=== MarineSABRES Remote Deployment v3.0 (tar + scp) ===${NC}"
+echo -e "${CYAN}=== MarineSABRES Remote Deployment v3.1 (git archive + scp) ===${NC}"
 echo "Local:     $APP_DIR"
 echo "Remote:    $REMOTE_USER@$REMOTE_HOST:$REMOTE_TARGET"
 echo "Ownership: $REMOTE_OWNER:$REMOTE_GROUP"
 echo "Version:   $(cat "$APP_DIR/VERSION" 2>/dev/null || echo 'unknown')"
 echo ""
 
-# Test SSH
-echo -e "${BLUE}==>${NC} Testing SSH..."
-if ssh -o ConnectTimeout=10 -o BatchMode=yes "$REMOTE_USER@$REMOTE_HOST" "echo OK" >/dev/null 2>&1; then
-    echo -e "${GREEN}[OK]${NC} SSH connected"
-else
-    echo -e "${RED}[ERROR]${NC} SSH failed. Check your SSH key for $REMOTE_USER@$REMOTE_HOST"
+# Archive ONLY committed (tracked) files via `git archive`, exactly like
+# deploy-remote.ps1 (review 2026-10-07 N8). The old working-tree tar with a
+# hand-maintained exclude list shipped untracked user exports, bundles and
+# scratch files -- the failure class behind the 2026-05-30 outage. Paths that
+# must not reach the server are excluded via .gitattributes export-ignore.
+REPO_ROOT="$(git -C "$APP_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -z "$REPO_ROOT" ]; then
+    echo -e "${RED}[ERROR]${NC} $APP_DIR is not inside a git repository; this deploy ships committed files via git archive"
     exit 1
 fi
+APP_PREFIX="$(git -C "$APP_DIR" rev-parse --show-prefix 2>/dev/null || true)"
+APP_PREFIX="${APP_PREFIX%/}"
+TREEISH="HEAD${APP_PREFIX:+:$APP_PREFIX}"
+# Archive HEAD restricted to the app PATH (not the HEAD:<prefix> subtree): git
+# only honours the app's .gitattributes export-ignore rules when entries keep
+# their repo-relative prefix; it is stripped again on extraction.
+if [ -n "$APP_PREFIX" ]; then STRIP=$(echo "$APP_PREFIX" | awk -F/ '{print NF}'); else STRIP=0; fi
 
-# Build tar excludes
-EXCLUDES=(
-    # Version control and tooling
-    --exclude=.git
-    --exclude=.github
-    --exclude=.claude
-    --exclude=.playwright-mcp
-    --exclude=.remember
-    --exclude=.superpowers
-    --exclude=.Rhistory
-    --exclude='*-Dell-PCn.Rhistory'
-    --exclude='*-Dell-PCn.json'
-    --exclude='*-Dell-PCn.*'
-    --exclude=.Rproj.user
-    --exclude=.gitignore
-    --exclude=.dockerignore
-    --exclude='*.Rproj'
-    # Runtime artifacts
-    --exclude='*.log'
-    --exclude='*.tmp'
-    --exclude='*.bak'
-    --exclude='*.backup'
-    --exclude='*.backup-*'
-    --exclude=.RData
-    --exclude=.Rapp.history
-    # Deployment infrastructure
-    --exclude=deployment
-    --exclude=tests
-    --exclude=DTU
-    --exclude=Documents
-    --exclude=docs/superpowers
-    # Development/test/debug files
-    --exclude=CLEANUP_SCRIPT.R
-    --exclude=run_ui_tests.R
-    --exclude=fixture_list.txt
-    --exclude=abstract.docx
-    --exclude=klaidoos.docx
-    --exclude='__*.py'
-    --exclude='docs/images/*.png'    # README screenshots only; keep www/img/*.png app logos
-    --exclude='*.ipynb'
-    --exclude='test-*.R'
-    --exclude='update_polarities.R'
-)
-
+echo -e "${BLUE}==>${NC} Creating deployment archive from committed files ($TREEISH)..."
+rm -f "$TAR_PATH"
 if [ "$EXCLUDE_MODELS" = true ]; then
-    EXCLUDES+=(--exclude=SESModels)
     echo -e "${YELLOW}[NOTE]${NC} SESModels directory will be excluded"
+    TOPS=$(git -C "$REPO_ROOT" ls-tree --name-only "$TREEISH" | grep -vx 'SESModels' | sed "s|^|${APP_PREFIX:+$APP_PREFIX/}|")
+    # shellcheck disable=SC2086
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD -- $TOPS
+elif [ -n "$APP_PREFIX" ]; then
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD -- "$APP_PREFIX"
+else
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD
 fi
 
-# Create tar archive
-echo -e "${BLUE}==>${NC} Creating deployment archive..."
-rm -f "$TAR_PATH"
-tar -czf "$TAR_PATH" "${EXCLUDES[@]}" -C "$APP_DIR" .
-
 TAR_SIZE=$(du -h "$TAR_PATH" | cut -f1)
-echo -e "${GREEN}[OK]${NC} Archive created: $TAR_PATH ($TAR_SIZE)"
+echo -e "${GREEN}[OK]${NC} Archive created: $TAR_PATH ($TAR_SIZE, tracked files only)"
 
-# Dry run — list contents and exit
+# Dry run — list contents and exit (no SSH needed, so it works offline)
 if [ "$DRY_RUN" = true ]; then
     echo ""
     echo -e "${BLUE}==>${NC} Archive contents (DRY RUN):"
@@ -144,6 +112,16 @@ if [ "$DRY_RUN" = true ]; then
     echo "  Archive size: $TAR_SIZE"
     rm -f "$TAR_PATH"
     exit 0
+fi
+
+# Test SSH
+echo -e "${BLUE}==>${NC} Testing SSH..."
+if ssh -o ConnectTimeout=10 -o BatchMode=yes "$REMOTE_USER@$REMOTE_HOST" "echo OK" >/dev/null 2>&1; then
+    echo -e "${GREEN}[OK]${NC} SSH connected"
+else
+    echo -e "${RED}[ERROR]${NC} SSH failed. Check your SSH key for $REMOTE_USER@$REMOTE_HOST"
+    rm -f "$TAR_PATH"
+    exit 1
 fi
 
 # Confirmation
@@ -174,15 +152,16 @@ echo -e "${BLUE}==>${NC} Deploying on remote server..."
 PRESERVE_TGZ="/tmp/marinesabres-preserve-$$.tgz"
 ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     set -e && \
-    echo '==> Preserving accumulated user data (ml_*, *_backup.json)...' && \
+    echo '==> Preserving accumulated user data (ml_*, *_backup.json, user_feedback_log*.ndjson)...' && \
     (cd $REMOTE_TARGET && \
        tar czf $PRESERVE_TGZ \
-         \$(find data -maxdepth 2 \\( -name 'ml_*' -o -name '*_backup.json' \\) 2>/dev/null | tr '\\n' ' ') \
+         \$(find data -maxdepth 2 \\( -name 'ml_*' -o -name '*_backup.json' -o -name 'user_feedback_log*.ndjson' \\) 2>/dev/null | tr '\\n' ' ') \
          2>/dev/null) || echo '   (no preserve files found, continuing)' && \
     echo '==> Clearing target directory...' && \
     rm -rf $REMOTE_TARGET/* && \
     echo '==> Extracting archive...' && \
-    tar -xzf /tmp/$TAR_FILENAME -C $REMOTE_TARGET/ && \
+    tar -xzf /tmp/$TAR_FILENAME --strip-components=$STRIP -C $REMOTE_TARGET/ && \
+    ( (cd $REMOTE_TARGET && find tests .claude DTU -depth -type d -empty -delete 2>/dev/null) || true ) && \
     echo '==> Verifying extraction...' && \
     EXTRACTED_COUNT=\$(find $REMOTE_TARGET -type f | wc -l) && \
     if [ \$EXTRACTED_COUNT -lt 100 ]; then echo 'FAIL: only' \$EXTRACTED_COUNT 'files extracted (expected >=100)'; exit 1; fi && \
@@ -197,10 +176,12 @@ ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     (rm -f $REMOTE_TARGET/translations/_merged_translations.json 2>/dev/null || true) && \
     chmod g+w $REMOTE_TARGET/translations && \
     mkdir -p $REMOTE_TARGET/www/reports && chmod g+w $REMOTE_TARGET/www/reports && \
+    chmod 775 $REMOTE_TARGET/data && \
+    (find $REMOTE_TARGET/data -maxdepth 1 -type f \\( -name 'ml_*' -o -name 'user_feedback_log*.ndjson' \\) -exec chmod g+w {} + 2>/dev/null || true) && \
     echo '==> Cleaning up...' && \
     rm -f /tmp/$TAR_FILENAME && \
     echo '==> Restarting Shiny Server...' && \
-    sudo systemctl restart shiny-server && \
+    (sudo systemctl restart shiny-server || (touch $REMOTE_TARGET/restart.txt && echo '  sudo restart unavailable -- touched restart.txt (app respawns on next request)')) && \
     sleep 2 && \
     echo '' && \
     echo 'Version:' && cat $REMOTE_TARGET/VERSION 2>/dev/null && \

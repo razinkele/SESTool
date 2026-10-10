@@ -57,12 +57,15 @@ test_that("sync_cld_to_isa_data populates each element-type data frame from node
   result <- sync_cld_to_isa_data(pd)
   isa <- result$data$isa_data
 
+  # Review 2026-10-07 N3: element IDs are ISA ids (fresh ones when the CLD node
+  # has no element to map to), never the positional node id; columns are
+  # canonical ID / Name when there is no previous frame to mirror.
   expect_true(nrow(isa$drivers) == 1)
-  expect_equal(isa$drivers$name, "driver1")
-  expect_equal(isa$drivers$id, "D_1")
+  expect_equal(isa$drivers$Name, "driver1")
+  expect_match(isa$drivers$ID, "^D[0-9]+$")
 
   expect_true(nrow(isa$activities) == 1)
-  expect_equal(isa$activities$name, "activity1")
+  expect_equal(isa$activities$Name, "activity1")
 
   expect_true(nrow(isa$pressures) == 1)
   expect_true(nrow(isa$marine_processes) == 1)
@@ -83,13 +86,17 @@ test_that("sync_cld_to_isa_data builds all 6 adjacency matrices with correct pol
                 info = paste0("missing matrix: ", m))
   }
 
-  # Polarities placed in the right cells
-  expect_equal(adj$d_a["D_1", "A_1"], "+")
-  expect_equal(adj$a_p["A_1", "P_1"], "+")
-  expect_equal(adj$p_mpf["P_1", "MPF_1"], "-")
-  expect_equal(adj$mpf_es["MPF_1", "ES_1"], "+")
-  expect_equal(adj$es_gb["ES_1", "GB_1"], "+")
-  expect_equal(adj$gb_d["GB_1", "D_1"], "-")
+  # Matrices are keyed by ELEMENT ids and cells carry the full
+  # polarity+strength:confidence value (defaults when the CLD edge is new).
+  isa <- result$data$isa_data
+  d <- isa$drivers$ID; a <- isa$activities$ID; pr <- isa$pressures$ID
+  m <- isa$marine_processes$ID; e <- isa$ecosystem_services$ID; g <- isa$goods_benefits$ID
+  expect_equal(adj$d_a[d, a], "+Medium:Medium")
+  expect_equal(adj$a_p[a, pr], "+Medium:Medium")
+  expect_equal(adj$p_mpf[pr, m], "-Medium:Medium")
+  expect_equal(adj$mpf_es[m, e], "+Medium:Medium")
+  expect_equal(adj$es_gb[e, g], "+Medium:Medium")
+  expect_equal(adj$gb_d[g, d], "-Medium:Medium")
 })
 
 test_that("sync_cld_to_isa_data preserves existing indicator metadata by name-match", {
@@ -213,8 +220,10 @@ test_that("sync_cld_to_isa_data leaves metadata NA for nodes added via CLD only"
   expect_equal(nrow(drivers), 2)
   # Metadata columns still present on both rows
   expect_true("description" %in% names(drivers))
-  # New row's description is NA (no pre-existing match)
-  new_idx <- which(drivers$id == "D_2")
+  # New row's description is NA (no pre-existing match); it gets a fresh ISA id
+  new_idx <- which(drivers$name == "new_driver_from_cld")
+  expect_length(new_idx, 1)
+  expect_false(drivers$id[new_idx] %in% c("D_1", "D_2"))
   expect_true(is.na(drivers$description[new_idx]))
   # Existing row's description preserved
   old_idx <- which(drivers$id == "D_1")
@@ -254,10 +263,12 @@ test_that("sync_cld_to_isa_data preserves Response-related matrices (r_a, r_p, g
   expect_true(!is.null(adj$r_p), info = "r_p matrix missing")
   expect_true(!is.null(adj$gb_r), info = "gb_r matrix missing")
 
-  expect_equal(adj$r_d["R_1", "D_1"], "-")
-  expect_equal(adj$r_a["R_1", "A_1"], "-")
-  expect_equal(adj$r_p["R_1", "P_1"], "-")
-  expect_equal(adj$gb_r["GB_1", "R_1"], "+")
+  isa <- result$data$isa_data
+  r <- isa$responses$ID; d <- isa$drivers$ID; a <- isa$activities$ID; pr <- isa$pressures$ID; g <- isa$goods_benefits$ID
+  expect_true(startsWith(adj$r_d[r, d], "-"))
+  expect_true(startsWith(adj$r_a[r, a], "-"))
+  expect_true(startsWith(adj$r_p[r, pr], "-"))
+  expect_true(startsWith(adj$gb_r[g, r], "+"))
 })
 
 test_that("sync_cld_to_isa_data handles non-data.frame edges defensively", {
@@ -297,7 +308,8 @@ test_that("sync_cld_to_isa_data coerces unknown polarity strings to '+'", {
                          isa_data = list()))
   result <- sync_cld_to_isa_data(pd)
   # Coerced to "+"
-  expect_equal(result$data$isa_data$adjacency_matrices$d_a["D_1", "A_1"], "+")
+  isa <- result$data$isa_data
+  expect_true(startsWith(isa$adjacency_matrices$d_a[isa$drivers$ID, isa$activities$ID], "+"))
 })
 
 test_that("sync_cld_to_isa_data does not throw on malformed nodes", {
