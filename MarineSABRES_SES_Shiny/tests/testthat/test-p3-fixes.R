@@ -22,22 +22,16 @@ project_root <- if (exists("PROJECT_ROOT") && !is.null(PROJECT_ROOT)) {
 # Issue #13: Server Function Extraction
 # ============================================================================
 
-test_that("P3 - server/session_management.R exists and has required functions", {
-  file_path <- file.path(project_root, "server/session_management.R")
-  expect_true(file.exists(file_path), info = "session_management.R should exist")
-
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for key functions
-  expect_true(grepl("init_session_isolation", content_text),
-              info = "Should have init_session_isolation function")
-  expect_true(grepl("init_session_reactive_values", content_text),
-              info = "Should have init_session_reactive_values function")
-  expect_true(grepl("clear_server_autosaves", content_text),
-              info = "Should have clear_server_autosaves function")
-  expect_true(grepl("log_session_diagnostics", content_text),
-              info = "Should have log_session_diagnostics function")
+test_that("P3 - session lifecycle lives in app.R; the unused session_management.R is gone", {
+  # Review 2026-10-07 N70: server/session_management.R had zero call sites (app.R
+  # carries the live inline code) and its clear_server_autosaves() targeted the
+  # wrong folder ("autosave" instead of ".autosave"). It was deleted.
+  expect_false(file.exists(file.path(project_root, "server/session_management.R")))
+  app_src <- paste(readLines(file.path(project_root, "app.R"), warn = FALSE), collapse = "
+")
+  expect_false(grepl("session_management.R", app_src, fixed = TRUE))
+  expect_true(grepl('file.path(persistent_folder, ".autosave")', app_src, fixed = TRUE))
+  expect_true(file.exists(file.path(project_root, "functions/session_isolation.R")))
 })
 
 test_that("P3 - server/language_handling.R exists and has required functions", {
@@ -86,8 +80,7 @@ test_that("P3 - app.R includes new server files in critical_sources", {
   content_text <- paste(content, collapse = "\n")
 
   # Check that critical_sources includes the new files
-  expect_true(grepl("server/session_management\\.R", content_text),
-              info = "app.R should include session_management.R in critical_sources")
+  # (server/session_management.R was deleted as dead code -- review 2026-10-07 N70)
   expect_true(grepl("server/language_handling\\.R", content_text),
               info = "app.R should include language_handling.R in critical_sources")
   expect_true(grepl("server/event_bus_setup\\.R", content_text),

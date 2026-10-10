@@ -101,6 +101,7 @@ country_governance_db_available <- function() {
 #'   governance_group, and regional_conventions. Returns empty list if sea not found.
 #' @export
 get_countries_for_sea <- function(regional_sea) {
+  if (is.null(regional_sea) || length(regional_sea) != 1 || is.na(regional_sea)) return(list())
   if (!.country_gov_env$loaded) load_country_governance_db()
   db <- .country_gov_env$db
   if (is.null(db)) return(list())

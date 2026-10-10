@@ -1375,7 +1375,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                 actionButton(
                   inputId = session$ns(paste0("country_", country_code, render_suffix)),
-                  label = tagList(country$name, eu_badge),
+                  label = tagList(country$name_en %||% country$code, eu_badge),
                   class = button_class,
                   style = "margin: 3px; min-width: 150px;"
                 )
@@ -1853,7 +1853,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               new_obs <- lapply(countries_list, function(country) {
                 local({
                   country_code <- country$code
-                  country_name <- country$name
+                  country_name <- country$name_en %||% country$code
                   button_id <- paste0("country_", country_code, "_s", current_step)
 
                   observeEvent(input[[button_id]], {
@@ -2123,7 +2123,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             )
             country_names <- if (!is.null(countries_list)) {
               sapply(countries_list[sapply(countries_list, function(c) c$code %in% rv$selected_countries)],
-                     function(c) c$name)
+                     function(c) c$name_en %||% c$code)
             } else {
               rv$selected_countries
             }

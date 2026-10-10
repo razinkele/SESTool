@@ -311,50 +311,8 @@ assign_default_groups <- function(g, seed = DEFAULT_RANDOM_SEED) {
   sample(MARINE_SES_CATEGORIES, vcount(g), replace = TRUE)
 }
 
-#' Safe Scaling Function with Zero-Variance Protection
-#'
-#' Wrapper around base::scale() that handles edge cases:
-#' - Single-value vectors (returns 0)
-#' - Zero-variance vectors (returns vector of 0s)
-#' - Normal cases (applies standard scaling)
-#'
-#' This prevents NaN values that occur when scale() encounters zero variance.
-#'
-#' @param x Numeric vector to scale
-#'
-#' @return Numeric vector of scaled values (mean=0, sd=1), or zeros if variance is 0
-#'
-#' @details
-#' The standard scale() function produces NaN when all values are equal (zero variance).
-#' This causes crashes in composite score calculations when all nodes have identical
-#' centrality values. safe_scale() returns 0 for all elements in such cases, which
-#' correctly represents "no variance in importance" for downstream analyses.
-#'
-#' @examples
-#' \dontrun{
-#' # Normal case
-#' safe_scale(c(1, 2, 3, 4, 5))  # Returns scaled values
-#'
-#' # Zero variance case (would crash with regular scale())
-#' safe_scale(c(3, 3, 3, 3))     # Returns c(0, 0, 0, 0)
-#'
-#' # Single value case
-#' safe_scale(5)                 # Returns 0
-#' }
-#'
-#' @export
-safe_scale <- function(x) {
-  # Handle single value
-  if (length(x) == 1) return(0)
-
-  # Handle zero variance
-  if (sd(x, na.rm = TRUE) == 0) {
-    return(rep(0, length(x)))
-  }
-
-  # Normal scaling
-  as.numeric(scale(x))
-}
+# safe_scale() lives in functions/network_analysis.R (one definition; this
+# copy used to shadow it with different NA semantics -- review 2026-10-07 N65).
 
 #' Check if a data frame is empty
 #'
@@ -385,4 +343,4 @@ is_empty_isa_data <- function(isa_data) {
 # ============================================================================
 
 message("Marine SES Utility Functions loaded successfully")
-message("Available functions: convert_strength_to_numeric, get_node_colors, get_node_shapes, ensure_edge_attributes, validate_igraph, assign_default_groups, safe_scale")
+message("Available functions: convert_strength_to_numeric, get_node_colors, get_node_shapes, ensure_edge_attributes, validate_igraph, assign_default_groups")
