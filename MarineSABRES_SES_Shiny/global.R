@@ -770,10 +770,6 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_template_matching.R")) {
       source("functions/ml_template_matching.R", local = TRUE)
     }
-    if (file.exists("functions/template_versioning.R")) {
-      source("functions/template_versioning.R", local = TRUE)
-    }
-
     source("functions/ml_models.R", local = TRUE)
     cat("✓ ML model architecture loaded\n")
 
@@ -906,6 +902,13 @@ if (ML_ENABLED) {
   cat("\nML Enhancement: Disabled (using rule-based AI only)\n")
   cat("Set MARINESABRES_ML_ENABLED=TRUE to enable ML features\n\n")
 }
+
+# Template versioning has no torch dependency (it only records the torch
+# version when present), so it is sourced unconditionally. It used to live
+# inside the ML block above, which meant CI (torch deliberately absent) never
+# loaded it and all of test-template-versioning.R skipped silently while CI
+# reported success (review 2026-10-07 N44).
+source("functions/template_versioning.R", local = TRUE)
 
 # ============================================================================
 # DEBUG MODE STATUS MESSAGE

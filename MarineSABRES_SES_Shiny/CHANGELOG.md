@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (deploy + CI hygiene — review 2026-10-07 N8 / N42 / N43 / N44 / N80)
+
+- **CI no longer passes files that test nothing** (N44): `tests/ci_run_file.R` fails a file with zero passing expectations unless it is listed with a reason in `tests/ci_allow_zero_pass.txt` (torch-only ML files, browser-driven files); `helper-00` stops under `CI=true` when `global.R` fails to load. This exposed a real gap: `functions/template_versioning.R` was sourced only inside the torch-gated ML block, so all 54 template-versioning tests skipped in CI; it is now sourced unconditionally.
+- **Deploys keep the live feedback log and a writable `data/`** (N8, N42): both deploy paths preserve `data/user_feedback_log*.ndjson`, set `data/` to 775 after the permission reset, and fall back to touching `restart.txt` when `sudo` is unavailable (the manual post-deploy step). `remote-deploy.sh` now archives committed files with `git archive` like `deploy-remote.ps1`, and its `--dry-run` works without SSH. `deploy-remote.ps1 -Force` no longer prompts at the end.
+- **Root-run scripts stay within this app** (N43): no more server-wide `pkill -9 -f 'shiny.*R'`, no wiping of the shared `/var/lib/shiny-server/bookmarks` and `/tmp/shiny-server`, and the global `shiny-server.conf` is only replaced with `FORCE_SHINY_CONF=1` (otherwise the diff is shown); `force-restart-shiny.sh` now also removes `.RData`; `check-deployment-status.sh` recommends the app-scoped commands.
+- **Deploy archive excludes non-runtime trees** (N80): `.gitattributes` `export-ignore` for `tests/`, `.claude/`, `DTU/`, `Documents/` (except the guidance PDF the ISA module serves) and `deployment/` (except `required_packages.R`, sourced on the server).
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.

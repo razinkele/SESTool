@@ -28,6 +28,11 @@ tryCatch({
     source("global.R", local = FALSE)
   }
 }, error = function(e) {
+  # In CI a global.R failure must not silently turn every exists()-guarded
+  # test into a skip (review 2026-10-07 N44).
+  if (identical(tolower(Sys.getenv("CI")), "true")) {
+    stop("global.R failed to load in CI: ", conditionMessage(e), call. = FALSE)
+  }
   message("Warning: Could not load global.R: ", e$message)
 })
 

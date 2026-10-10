@@ -272,15 +272,18 @@ print_success "Shiny Server stopped"
 
 # --- Kill any running R processes ---
 print_status "Killing any running Shiny R processes..."
+# Only this app's R processes -- a global 'shiny.*R' pattern SIGKILLed every
+# app's sessions on the shared server (review 2026-10-07 N43).
 pkill -9 -f 'marinesabres.*R' 2>/dev/null || true
-pkill -9 -f 'shiny.*R' 2>/dev/null || true
 sleep 2
 print_success "R processes terminated"
 
 # --- Clear caches ---
 print_status "Clearing Shiny Server caches..."
-rm -rf /var/lib/shiny-server/bookmarks/* 2>/dev/null || true
-rm -rf /tmp/shiny-server/* 2>/dev/null || true
+# This app uses URL bookmarking (nothing stored server-side), and
+# /var/lib/shiny-server/bookmarks and /tmp/shiny-server are shared by
+# every app on the server, so they are not wiped (review 2026-10-07 N43).
+rm -f /srv/shiny-server/marinesabres/translations/_merged_translations.json 2>/dev/null || true
 print_success "Caches cleared"
 
 # ============================================================================
@@ -368,9 +371,22 @@ print_header "PHASE 4: Starting Shiny Server"
 # --- Update Shiny Server config if needed ---
 if [ -f "$SCRIPT_DIR/shiny-server.conf" ]; then
     print_status "Updating Shiny Server configuration..."
-    cp /etc/shiny-server/shiny-server.conf /etc/shiny-server/shiny-server.conf.backup 2>/dev/null || true
-    cp "$SCRIPT_DIR/shiny-server.conf" /etc/shiny-server/shiny-server.conf
-    print_success "Configuration updated (backup saved)"
+    if [ -f /etc/shiny-server/shiny-server.conf ] && ! cmp -s "$SCRIPT_DIR/shiny-server.conf" /etc/shiny-server/shiny-server.conf; then
+        if [ "${FORCE_SHINY_CONF:-0}" = "1" ]; then
+            cp /etc/shiny-server/shiny-server.conf /etc/shiny-server/shiny-server.conf.backup
+            cp "$SCRIPT_DIR/shiny-server.conf" /etc/shiny-server/shiny-server.conf
+            echo "  shiny-server.conf replaced (FORCE_SHINY_CONF=1; backup saved)"
+        else
+            # The server-wide config may declare other apps; never overwrite it
+            # silently (review 2026-10-07 N43). Show the diff and require opt-in.
+            echo "  shiny-server.conf differs from the repo copy -- NOT replacing it."
+            diff -u /etc/shiny-server/shiny-server.conf "$SCRIPT_DIR/shiny-server.conf" || true
+            echo "  Re-run with FORCE_SHINY_CONF=1 to replace it (a backup is kept)."
+        fi
+    elif [ ! -f /etc/shiny-server/shiny-server.conf ]; then
+        cp "$SCRIPT_DIR/shiny-server.conf" /etc/shiny-server/shiny-server.conf
+    fi
+    print_success "Configuration checked"
 fi
 
 # --- Start Shiny Server ---
