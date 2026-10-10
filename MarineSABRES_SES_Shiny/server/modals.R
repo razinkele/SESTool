@@ -124,7 +124,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
         data <- project_data()
         if (!is.null(data)) {
           # Convert to JSON and send to JavaScript for sessionStorage
-          data_json <- jsonlite::toJSON(data, auto_unbox = TRUE, null = "null", na = "null")
+          data_json <- jsonlite::toJSON(with_matrix_dimnames_sidecar(data), auto_unbox = TRUE, null = "null", na = "null")
           session$sendCustomMessage(
             type = "saveProjectDataBeforeReload",
             message = list(data = as.character(data_json))

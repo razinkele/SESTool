@@ -933,10 +933,158 @@ normalize_json_project_data <- function(data) {
       }
     }
 
+    # Rebuild matrices (nested lists / dimname-less) after a JSON round trip
+    isa <- restore_isa_matrices(isa)
+
     data$data$isa_data <- isa
   }
 
   data
+}
+
+# ============================================================================
+# JSON ROUND-TRIP OF ADJACENCY MATRICES (review 2026-10-07 N4)
+# ============================================================================
+# jsonlite writes a character matrix as nested row arrays WITHOUT dimnames.
+# Read back with simplifyVector = FALSE (local storage, language switch) it is
+# a list of lists; with simplifyVector = TRUE (.json project load) a matrix
+# without dimnames. Either way the CLD saw no edges, user-edited flags were
+# lost and rebuilds wiped the arms. Writers now add a small dimnames sidecar
+# (with_matrix_dimnames_sidecar) and the reader rebuilds real matrices
+# (restore_isa_matrices), falling back to the element ID order for older files.
+
+#' Element categories behind each SOURCE x TARGET matrix key
+#' @return named list key -> c(source_category, target_category)
+matrix_key_categories <- function() {
+  list(
+    d_a = c("drivers", "activities"), a_p = c("activities", "pressures"),
+    p_mpf = c("pressures", "marine_processes"), p_mp = c("pressures", "marine_processes"),
+    mpf_es = c("marine_processes", "ecosystem_services"), mp_es = c("marine_processes", "ecosystem_services"),
+    es_gb = c("ecosystem_services", "goods_benefits"), gb_d = c("goods_benefits", "drivers"),
+    gb_r = c("goods_benefits", "responses"), r_d = c("responses", "drivers"),
+    r_a = c("responses", "activities"), r_p = c("responses", "pressures")
+  )
+}
+
+#' Rebuild a matrix from what jsonlite produced (matrix, list of rows, empty)
+#' @param x matrix / list-of-row-lists / NULL
+#' @param logical TRUE for user_edited flags
+#' @return matrix (character or logical) or NULL when x cannot be read
+.json_to_matrix <- function(x, logical = FALSE) {
+  if (is.null(x)) return(NULL)
+  m <- if (is.matrix(x)) x else if (is.list(x) || is.atomic(x)) {
+    if (length(x) == 0) return(if (logical) matrix(FALSE, 0, 0) else matrix("", 0, 0))
+    rows <- lapply(x, function(r) {
+      r <- if (is.list(r)) lapply(r, function(v) if (is.null(v) || length(v) == 0) NA else v[[1]]) else as.list(r)
+      unlist(r, use.names = FALSE)
+    })
+    lens <- vapply(rows, length, integer(1))
+    if (length(unique(lens)) != 1) return(NULL)            # ragged -> unreadable
+    do.call(rbind, rows)
+  } else return(NULL)
+  dn <- dimnames(m)
+  if (logical) {
+    m2 <- matrix(as.logical(m), nrow(m), ncol(m)); m2[is.na(m2)] <- FALSE
+  } else {
+    m2 <- matrix(as.character(m), nrow(m), ncol(m)); m2[is.na(m2)] <- ""
+  }
+  dimnames(m2) <- dn
+  m2
+}
+
+.element_ids_of <- function(isa, category) {
+  df <- isa[[category]]
+  if (!is.data.frame(df) || nrow(df) == 0) return(character(0))
+  col <- names(df)[match("id", tolower(names(df)))]
+  if (is.na(col)) return(character(0))
+  as.character(df[[col]])
+}
+
+#' Rebuild adjacency / user_edited matrices after a JSON round trip
+#'
+#' Keeps matrices that already carry dimnames; otherwise attaches dimnames from
+#' the writer's sidecar (isa$matrix_dimnames) or, for older files, from the
+#' element ID order when the dimensions match. A matrix that cannot be placed
+#' is dropped with a warning rather than attached positionally to the wrong
+#' elements.
+#' @param isa isa_data list
+#' @return isa with real matrices and the sidecar removed
+restore_isa_matrices <- function(isa) {
+  if (!is.list(isa)) return(isa)
+  side <- isa$matrix_dimnames
+  cats <- matrix_key_categories()
+  fix_list <- function(lst, kind, logical) {
+    if (!is.list(lst) || length(lst) == 0) return(lst)
+    out <- list()
+    for (k in names(lst)) {
+      m <- .json_to_matrix(lst[[k]], logical = logical)
+      if (is.null(m)) {
+        if (exists("debug_log", mode = "function")) debug_log(sprintf("JSON load: matrix '%s' unreadable, dropped", k), "WARN")
+        next
+      }
+      if (is.null(rownames(m)) || is.null(colnames(m))) {
+        dn <- side[[kind]][[k]]
+        rn <- if (is.list(dn)) unlist(dn$rows %||% dn[[1]]) else NULL
+        cn <- if (is.list(dn)) unlist(dn$cols %||% dn[[2]]) else NULL
+        if (is.null(rn) || length(rn) != nrow(m) || length(cn) != ncol(m)) {
+          cc <- cats[[k]]
+          rn <- if (!is.null(cc)) .element_ids_of(isa, cc[1]) else character(0)
+          cn <- if (!is.null(cc)) .element_ids_of(isa, cc[2]) else character(0)
+        }
+        if (length(rn) == nrow(m) && length(cn) == ncol(m) && nrow(m) > 0 && ncol(m) > 0) {
+          dimnames(m) <- list(as.character(rn), as.character(cn))
+        } else if (nrow(m) > 0 && ncol(m) > 0) {
+          if (exists("debug_log", mode = "function")) {
+            debug_log(sprintf("JSON load: cannot place matrix '%s' (%dx%d) on the elements, dropped", k, nrow(m), ncol(m)), "WARN")
+          }
+          next
+        }
+      }
+      out[[k]] <- m
+    }
+    out
+  }
+  isa$adjacency_matrices   <- fix_list(isa$adjacency_matrices,   "adjacency",   FALSE)
+  isa$user_edited_matrices <- fix_list(isa$user_edited_matrices, "user_edited", TRUE)
+  isa$matrix_dimnames <- NULL
+  isa
+}
+
+#' Add the matrix dimnames sidecar before serialising a project to JSON
+#' @param project_data project list
+#' @return project_data with data$isa_data$matrix_dimnames set (no-op if absent)
+with_matrix_dimnames_sidecar <- function(project_data) {
+  isa <- project_data$data$isa_data
+  if (!is.list(isa)) return(project_data)
+  grab <- function(lst) {
+    if (!is.list(lst)) return(list())
+    out <- list()
+    for (k in names(lst)) {
+      m <- lst[[k]]
+      if (is.matrix(m) && !is.null(rownames(m)) && !is.null(colnames(m))) {
+        out[[k]] <- list(rows = I(rownames(m)), cols = I(colnames(m)))
+      }
+    }
+    out
+  }
+  project_data$data$isa_data$matrix_dimnames <- list(adjacency = grab(isa$adjacency_matrices),
+                                                     user_edited = grab(isa$user_edited_matrices))
+  project_data
+}
+
+#' Parse + validate + normalise a project serialised to JSON in the browser
+#'
+#' Used by the language-switch restore (sessionStorage round trip), which used
+#' to skip normalisation and left element tables as lists and matrices as
+#' nested lists after every language change.
+#' @param json_text JSON string
+#' @return normalised project list, or NULL when invalid
+restore_project_from_json_text <- function(json_text) {
+  parsed <- safe_parse_json(json_text)
+  if (is.null(parsed)) return(NULL)
+  v <- validate_json_project_input(parsed)
+  if (!isTRUE(v$valid)) return(NULL)
+  normalize_json_project_data(v$data)
 }
 
 # ============================================================================

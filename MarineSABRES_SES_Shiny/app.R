@@ -724,19 +724,15 @@ server <- function(input, output, session) {
     tryCatch({
       debug_log("Restoring project data after language change...", "LANG_RESTORE")
 
-      # Parse the JSON data sent from JavaScript (safely)
-      saved_data <- safe_parse_json(input$restore_project_data_from_lang_change)
+      # Parse, validate AND normalise (review 2026-10-07 N4: without the
+      # normalisation every language change left element tables as lists and
+      # matrices as nested lists)
+      restored <- restore_project_from_json_text(input$restore_project_data_from_lang_change)
 
-      if (!is.null(saved_data)) {
-        # Validate JSON input for security and structure
-        validation_result <- validate_json_project_input(saved_data)
-        if (!validation_result$valid) {
-          debug_log(paste("Invalid project data in restored data:", paste(validation_result$errors, collapse = "; ")), "LANG_RESTORE")
-          return()
-        }
-
-        # Restore the validated project data
-        project_data(validation_result$data)
+      if (is.null(restored)) {
+        debug_log("Invalid or unreadable project data in language-change restore", "LANG_RESTORE")
+      } else {
+        project_data(restored)
         debug_log("Project data restored successfully after language change", "LANG_RESTORE")
 
         # Show notification to user
