@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.20.0] - 2026-10-10
+
+Minor release collecting the 2026-10-07 deep-review fixes merged as PRs #63-#71 (all HIGH findings except N7). Deployed to laguna 2026-10-10.
+
 ### Fixed (Graphical SES export — review 2026-10-07 N6)
 
 - **"Export to ISA" from the Graphical SES Creator works and produces canonical ISA data.** It could not run at all (a trailing comma inside `data.frame()` made every non-empty category throw "argument is missing, with no default"; the existing tests exercised a stub), and behind that it wrote keys nothing reads (`state`/`impact`/`welfare`, matrices `p_s`/`s_i`/`i_w`/`w_d`) in a cell format the parser cannot use. `convert_graphical_to_isa()` now emits the Standard Entry schema: stable element IDs, canonical columns with `Linked*` derived from the edges, canonical SOURCE×TARGET matrices keyed by element ID with `+strong:4`-style cells, and user-edited flags so a later ISA save keeps the canvas strength/confidence. Management nodes become Responses of type "Measure"; edges outside the canonical matrices are counted in the export metadata. `app.R` now passes the event bus to the creator, which emits an ISA change after export so the CLD regenerates.
