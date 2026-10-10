@@ -14,10 +14,12 @@
 #     test-i18n-enforcement.R, and the per-level menu logic in functions/ui_sidebar.R).
 
 library(testthat)
-library(shinytest2)
 
+# Skip BEFORE attaching shinytest2: library() first made the whole file error
+# (instead of skip) where the package is absent (review 2026-10-07 N76).
 skip_if_not_installed("shinytest2")
 skip_on_cran()
+library(shinytest2)
 
 E2E_TIMEOUT <- 20000   # ms, per AppDriver operation
 SETTLE      <- 1.3     # s, buffer for client-side tab switch + Shiny round-trip
@@ -63,6 +65,17 @@ qs_count <- function(app, sel) {
   as.numeric(app$get_js(sprintf("document.querySelectorAll('%s').length", sel)))
 }
 
+# Did THIS tab's pane render? `.content-wrapper` (used before) is the bs4Dash
+# body wrapper present on every page, so a module UI that threw still passed
+# (N76). Check the tab's own pane is the active one, has content, and shows no
+# Shiny output error (validation messages excepted).
+tab_rendered <- function(app, tab) {
+  isTRUE(app$get_js(sprintf(paste0(
+    "(function(){var p=document.getElementById('shiny-tab-%s');",
+    "return !!p && p.classList.contains('active') && p.textContent.trim().length > 0 &&",
+    " !p.querySelector('.shiny-output-error:not(.shiny-output-error-validation)');})()"), tab)))
+}
+
 # ==============================================================================
 # TEST 1: App launch + dashboard
 # ==============================================================================
@@ -86,11 +99,11 @@ test_that("E2E: Create SES method pages are reachable", {
 
   expect_true(nav_to(app, "create_ses_template"),
               info = "Should reach template-based creation")
-  expect_true(qs_exists(app, ".content-wrapper"))
+  expect_true(tab_rendered(app, "create_ses_template"))
 
   expect_true(nav_to(app, "create_ses_ai"),
               info = "Should reach AI-assistant creation")
-  expect_true(qs_exists(app, ".content-wrapper"))
+  expect_true(tab_rendered(app, "create_ses_ai"))
 })
 
 # ==============================================================================
@@ -100,7 +113,7 @@ test_that("E2E: CLD visualization page renders", {
   app <- launch_app("cld-viz"); on.exit(app$stop(), add = TRUE)
 
   expect_true(nav_to(app, "cld_viz"), info = "Should reach CLD visualization")
-  expect_true(qs_exists(app, ".content-wrapper"))
+  expect_true(tab_rendered(app, "cld_viz"))
 
   # The CLD module renders several elements whose id starts with "cld_visual";
   # get_html returns a character vector, so collapse with any().
@@ -118,7 +131,7 @@ test_that("E2E: Navigation across major sections works", {
                 "cld_viz", "import_data", "ses_models", "export", "guidebook")
   for (s in sections) {
     expect_true(nav_to(app, s), info = paste("Should navigate to", s))
-    expect_true(qs_exists(app, ".content-wrapper"),
+    expect_true(tab_rendered(app, s),
                 info = paste(s, "content should render"))
   }
 
