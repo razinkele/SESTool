@@ -93,8 +93,14 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
                          type = "warning", duration = 5)
         return()
       }
+      # Reset results first so a failure further down cannot leave the previous
+      # run's loops/archetypes on screen (review 2026-10-07 N36)
+      rv$loop_info <- NULL
+      rv$archetypes <- NULL
       tryCatch({
         rv$factors <- classify_factors_micmac(g$nodes, g$edges)
+        updateSelectInput(session, "why_node",
+                          choices = setNames(rv$factors$id, rv$factors$label))
 
         # Loops feed archetype detection and the narrative's loop-participation line
         gph <- g$graph
@@ -105,11 +111,10 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
         }
         loops <- find_all_cycles(g$nodes, g$edges, max_length = 8, max_cycles = 500,
                                  timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS)
+        # Same defaults as the Loops tab: no self-loops or 2-node cycles (N35)
+        loops <- Filter(function(l) length(l) > 2, loops)
         rv$loop_info <- process_cycles_to_loops(loops, g$nodes, g$edges, gph)
         rv$archetypes <- detect_archetypes(rv$loop_info, g$nodes)
-
-        updateSelectInput(session, "why_node",
-                          choices = setNames(rv$factors$id, rv$factors$label))
       }, error = function(e) {
         showNotification(
           format_user_error(e, i18n = i18n,

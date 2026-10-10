@@ -25,6 +25,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **"Download Excel" always includes the matrices and loop connections** (N23), and the importer reads the loop sheet back; **a blank `Matrix_*` sheet no longer aborts the import** and cells are trimmed (N28).
 - **Excel loader**: sheet-name prefixes are matched literally, and an edges sheet with no usable rows no longer errors (N57).
 
+### Fixed (analysis modules — review 2026-10-07 N30–N36)
+
+- **Connection review buttons no longer run their handler several times.** The per-batch and per-connection observers were recreated after every approval without destroying the previous ones, so after k approvals each click ran k+1 handlers. Old observers are now destroyed before regeneration (N30).
+- **Simulation and intervention analysis always use the current CLD.** Simulation reused the Boolean module's cached matrix, which went stale after CLD edits and carried that module's confidence setting; interventions froze their matrices when added. Both now rebuild at run time, and each intervention is rebuilt from its stored specification (N31).
+- **Highlighting a feedback loop on the CLD selects the right nodes** after the CLD has been edited, using the loop's stored node IDs instead of positions (N32).
+- **Scenario builder loop counts are real.** It counted feedback-arc-set edges instead of cycles, the "Affected loops" panel errored on that shape, and the baseline column read a slot nothing writes (always 0). Baseline and scenario now use the shared cycle finder with the Loops tab defaults (N33).
+- **Saved interventions can be removed** (the delete button had no handler), and comparisons that fail are listed in the results panel instead of disappearing (N34).
+- **Decision Lens** clears the previous run's loops and archetypes before re-running, fills the "why" node picker before the loop step can fail, and ignores self-loops and 2-node cycles like the Loops tab (N35 mechanical part, N36).
+
 ## [1.20.1] - 2026-10-10
 
 Patch release: server-side autosave recovery (N7, PR #73) and the lower Boolean node cap (PR #74). Deployed to laguna 2026-10-10.
