@@ -222,6 +222,11 @@ $repoFull  = (Resolve-Path $RepoRoot).Path
 $appFull   = (Resolve-Path $AppDir).Path
 $AppPrefix = $appFull.Substring($repoFull.Length).Trim('\', '/') -replace '\\', '/'
 $treeish   = if ($AppPrefix) { "HEAD:$AppPrefix" } else { "HEAD" }
+# The archive is built from HEAD restricted to the app PATH, not from the
+# HEAD:<prefix> subtree: git only honours the app's .gitattributes
+# export-ignore rules when entries keep their repo-relative prefix (verified
+# empirically, review 2026-10-07 N80). The prefix is stripped on extraction.
+$StripComponents = if ($AppPrefix) { ($AppPrefix -split '/').Count } else { 0 }
 
 Write-Status "Archiving committed files via git ($treeish)..."
 Write-Host "  Repo root:  $RepoRoot"
@@ -237,9 +242,12 @@ if ($ExcludeModels) {
     Write-Status "SESModels directory will be excluded"
     $tops = (& git -C $RepoRoot ls-tree --name-only $treeish) |
             Where-Object { $_ -and $_ -ne 'SESModels' }
-    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish -- @tops
+    $paths = $tops | ForEach-Object { if ($AppPrefix) { "$AppPrefix/$_" } else { $_ } }
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD -- @paths
+} elseif ($AppPrefix) {
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD -- $AppPrefix
 } else {
-    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD
 }
 
 if ($LASTEXITCODE -ne 0) {
@@ -335,10 +343,13 @@ set -e
 
 PRESERVE_TGZ="/tmp/marinesabres-preserve-`$`$.tgz"
 
-echo '==> Preserving accumulated user data (ml_*, *_backup.json)...'
+# Runtime files the app writes into data/ (review 2026-10-07 N8): ML state,
+# template backups and the LIVE user feedback log, which is gitignored and so
+# not in the archive -- without this it was deleted with data.bak below.
+echo '==> Preserving accumulated user data (ml_*, *_backup.json, user_feedback_log*.ndjson)...'
 (cd ${RemoteTarget} && \
   tar czf `$PRESERVE_TGZ \
-    `$(find data -maxdepth 2 \( -name 'ml_*' -o -name '*_backup.json' \) 2>/dev/null | tr '\n' ' ') \
+    `$(find data -maxdepth 2 \( -name 'ml_*' -o -name '*_backup.json' -o -name 'user_feedback_log*.ndjson' \) 2>/dev/null | tr '\n' ' ') \
     2>/dev/null) || echo '   (no preserve files found, continuing)'
 
 echo '==> Preparing target directory...'
@@ -356,7 +367,9 @@ done
 find ${RemoteTarget} -maxdepth 1 -type f -user ${RemoteOwner} -delete 2>/dev/null || true
 
 echo '==> Extracting archive...'
-tar -xzf /tmp/${TarFilename} -C ${RemoteTarget}/
+tar -xzf /tmp/${TarFilename} --strip-components=${StripComponents} -C ${RemoteTarget}/
+# export-ignore leaves empty directory stubs for the excluded trees
+(cd ${RemoteTarget} && find tests .claude DTU -depth -type d -empty -delete 2>/dev/null) || true
 
 echo '==> Restoring preserved user data...'
 (test -s `$PRESERVE_TGZ && tar xzf `$PRESERVE_TGZ -C ${RemoteTarget}/ && \
@@ -374,6 +387,10 @@ chmod 775 ${RemoteTarget}/translations/ 2>/dev/null || true
 chmod 775 ${RemoteTarget}/www/ 2>/dev/null || true
 mkdir -p ${RemoteTarget}/www/reports
 chmod 775 ${RemoteTarget}/www/reports/ 2>/dev/null || true
+# data/ must stay group-writable for the shiny user: feedback log and ML state
+# (review 2026-10-07 N42 -- the 755 reset above used to undo this every deploy)
+chmod 775 ${RemoteTarget}/data/ 2>/dev/null || true
+find ${RemoteTarget}/data -maxdepth 1 -type f \( -name 'ml_*' -o -name 'user_feedback_log*.ndjson' \) -exec chmod g+w {} + 2>/dev/null || true
 
 # Clean up stale caches
 rm -f ${RemoteTarget}/translations/_merged_translations.json 2>/dev/null || true
@@ -404,10 +421,15 @@ else
   if sudo -n kill -HUP `$(cat /var/run/shiny-server.pid 2>/dev/null) 2>/dev/null; then
     echo 'sighup' > `$RESTART_STATUS_FILE
     echo '  SIGHUP delivered -- workers reload; existing browser sessions keep old code until refresh'
+  elif touch ${RemoteTarget}/restart.txt 2>/dev/null; then
+    # Shiny Server watches restart.txt and respawns the app's R processes on
+    # the next request -- works without sudo (was a manual post-deploy step).
+    echo 'restart_txt' > `$RESTART_STATUS_FILE
+    echo '  touched restart.txt -- the app respawns on the next request (no sudo needed)'
   else
     echo 'passive' > `$RESTART_STATUS_FILE
-    echo '  SIGHUP also failed -- files on disk are new but server reload is passive'
-    echo '  Existing sessions remain on old code; new connections will load v1.16.x'
+    echo '  SIGHUP and restart.txt both failed -- files on disk are new but server reload is passive'
+    echo '  Existing sessions remain on old code; new connections will load the new version'
     echo '  To force-evict existing sessions, run: ssh -t '`${RemoteUser}@${RemoteHost}'` "sudo systemctl restart shiny-server"'
   fi
 fi
@@ -476,6 +498,9 @@ if ($deployExitCode -eq 0) {
         "sighup" {
             Write-Host "Shiny Server restart: SIGHUP -- new worker processes will load new code; existing browser sessions keep old code until refresh" -ForegroundColor Yellow
         }
+        "restart_txt" {
+            Write-Success "Shiny Server restart: restart.txt touched -- the app respawns on the next request; open sessions keep old code until they reconnect"
+        }
         "passive" {
             Write-Host "Shiny Server restart: PASSIVE -- neither systemctl nor SIGHUP succeeded" -ForegroundColor Yellow
             Write-Host "                       Existing sessions remain on old code." -ForegroundColor Yellow
@@ -494,9 +519,12 @@ if ($deployExitCode -eq 0) {
     Write-Host "  3. Test application functionality"
     Write-Host ""
 
-    $openBrowser = Read-Host "Open application in browser? (y/N)"
-    if ($openBrowser -eq "y" -or $openBrowser -eq "Y") {
-        Start-Process "https://laguna.ku.lt/marinesabres/"
+    # -Force deploys are often non-interactive; Read-Host throws there.
+    if (-not $Force) {
+        $openBrowser = Read-Host "Open application in browser? (y/N)"
+        if ($openBrowser -eq "y" -or $openBrowser -eq "Y") {
+            Start-Process "https://laguna.ku.lt/marinesabres/"
+        }
     }
 } else {
     Write-Err "Deployment failed with exit code: $deployExitCode"

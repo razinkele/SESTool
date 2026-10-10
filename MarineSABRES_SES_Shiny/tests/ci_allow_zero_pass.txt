@@ -1,0 +1,17 @@
+# Test files that may legitimately produce ZERO passing expectations in CI.
+# tests/ci_run_file.R fails any other file that passes nothing (review 2026-10-07 N44).
+# One basename per line; '#' starts a comment. Keep a reason on every entry.
+
+# torch is deliberately not installed in CI (.github/workflows/test.yml); these
+# files start with skip_if_not_installed("torch") or depend on torch-only code.
+test-ml-active-learning.R
+test-ml-context-embeddings.R
+test-ml-ensemble.R
+test-ml-explainability.R
+test-ml-model-registry.R
+test-ml-models.R
+test-ml-text-embeddings.R
+
+# Browser-driven (shinytest2 / Chrome); skip_on_ci() by design.
+test-shiny-ui-components.R
+test-visual-regression.R

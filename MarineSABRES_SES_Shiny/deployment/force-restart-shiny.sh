@@ -32,9 +32,10 @@ echo " MarineSABRES - Force Restart Shiny Server"
 echo "================================================================================"
 echo ""
 
-# Step 1: Kill all Shiny R processes
-echo -e "${BLUE}==>${NC} Killing all Shiny R processes..."
-pkill -9 -f 'shiny.*R' 2>/dev/null || echo "   No processes to kill"
+# Step 1: Kill this app's R processes only (review 2026-10-07 N43: a global
+# 'shiny.*R' pattern killed every app's sessions on the shared server)
+echo -e "${BLUE}==>${NC} Killing MarineSABRES R processes..."
+pkill -9 -f 'marinesabres.*R' 2>/dev/null || echo "   No processes to kill"
 sleep 2
 echo -e "${GREEN}✓${NC} Done"
 
@@ -49,17 +50,10 @@ echo -e "${GREEN}✓${NC} Done"
 echo ""
 echo -e "${BLUE}==>${NC} Clearing Shiny Server cache..."
 
-cache_locations=(
-    "/var/lib/shiny-server/bookmarks"
-    "/tmp/shiny-server"
-)
-
-for cache_dir in "${cache_locations[@]}"; do
-    if [ -d "$cache_dir" ]; then
-        echo "   Clearing $cache_dir..."
-        rm -rf "$cache_dir"/*
-    fi
-done
+# This app uses URL bookmarking (nothing stored server-side), and
+# /var/lib/shiny-server/bookmarks and /tmp/shiny-server are shared by
+# every app on the server, so they are not wiped (review 2026-10-07 N43).
+echo "   Shared server caches left intact"
 echo -e "${GREEN}✓${NC} Done"
 
 # Step 4: Clear app-specific temporary files
@@ -68,7 +62,8 @@ echo -e "${BLUE}==>${NC} Clearing app-specific temporary files..."
 app_dir="/srv/shiny-server/marinesabres"
 if [ -d "$app_dir" ]; then
     # Remove any .Rdata or .RDS temp files
-    find "$app_dir" -name ".Rdata" -delete 2>/dev/null || true
+    # -iname: the real file is .RData (a stale .RData once took prod down)
+    find "$app_dir" -iname ".rdata" -delete 2>/dev/null || true
     find "$app_dir" -name "*.rds" -path "*/tmp/*" -delete 2>/dev/null || true
 
     # Remove any _merged_translations.json if it's stale
