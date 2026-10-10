@@ -164,9 +164,22 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
   linked_map$gb_r <- list(src = "responses", col = "LinkedGB", tgt = "goods_benefits",
                           polarity = "+", strength = "medium", confidence = "3",
                           transpose = TRUE)
+  # JSON / normalised projects carry lowercase element columns (linkedgb,
+  # name): resolve the canonical names case-insensitively (review N4).
+  canon <- function(df, cols) {
+    if (!is.data.frame(df)) return(df)
+    for (cn in cols) {
+      if (!(cn %in% names(df))) {
+        hit <- names(df)[match(tolower(cn), tolower(names(df)))]
+        if (!is.na(hit)) names(df)[names(df) == hit] <- cn
+      }
+    }
+    df
+  }
   for (mk in names(linked_map)) {
     m <- linked_map[[mk]]
-    src_df <- elements[[m$src]]; tgt_df <- elements[[m$tgt]]
+    src_df <- canon(elements[[m$src]], c("ID", "Name", m$col, "Confidence"))
+    tgt_df <- canon(elements[[m$tgt]], c("ID", "Name"))
     existing <- am[[mk]]
     has_edges <- is.matrix(existing) && any(nzchar(existing) & !is.na(existing))
     if (!has_edges &&

@@ -664,7 +664,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
         }
 
         # Save to localStorage via JavaScript (as JSON backup)
-        json_data <- jsonlite::toJSON(current_data, auto_unbox = TRUE, null = "null")
+        json_data <- jsonlite::toJSON(with_matrix_dimnames_sidecar(current_data), auto_unbox = TRUE, null = "null")
         session$sendCustomMessage(
           type = "autosave_to_localstorage",
           message = list(

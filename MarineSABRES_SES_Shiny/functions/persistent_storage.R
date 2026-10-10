@@ -418,7 +418,7 @@ save_project_persistent <- function(project_data, project_name = NULL,
       saveRDS(project_data, file_path)
     } else {
       # JSON format
-      json_data <- jsonlite::toJSON(project_data, auto_unbox = TRUE,
+      json_data <- jsonlite::toJSON(with_matrix_dimnames_sidecar(project_data), auto_unbox = TRUE,
                                      null = "null", pretty = TRUE)
       writeLines(json_data, file_path)
     }
