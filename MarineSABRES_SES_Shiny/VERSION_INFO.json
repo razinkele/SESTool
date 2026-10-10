@@ -1,8 +1,8 @@
 {
-  "version": "1.20.0",
-  "version_name": "Review fixes: reports, ISA integrity, CLD sync, JSON round trips, deploy/CI hygiene",
+  "version": "1.20.1",
+  "version_name": "Server-side autosave recovery (N7); Boolean node cap 20",
   "release_date": "2026-10-10",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -10,21 +10,14 @@
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
-  "security_updates": true,
+  "security_updates": false,
   "features": [],
   "fixes": {
     "critical": [
-      "Reports render through a static template and never knit user text (N11); reports are served per session, not from the shared www/reports (N14) - PR #63.",
-      "CLD edits keep ISA element IDs, names, full cell values and user-edited flags (N3) - PR #65.",
-      "JSON round trips (local storage, .json load, language switch) keep matrices and element tables intact (N4) - PR #70.",
-      "Graphical SES Export to ISA works and writes the canonical schema (N6) - PR #69.",
-      "Boolean attractor search enforces its node cap; Limits-to-Growth aggregated per Response (N16, N17) - PR #68."
+      "Server-mode autosaves are recoverable across sessions via a per-browser token (review N7) - PR #73."
     ],
     "high": [
-      "ISA: removing an element prunes its matrices; CLD edits reach the event bus; matrix selector keys; import guard; R-arm recovery (N5, N22, N38, N49, N50) - PR #64.",
-      "Deploys preserve the feedback log and a writable data/, touch restart.txt; CI fails zero-pass test files; root scripts stay app-scoped; export-ignore (N8, N42, N43, N44, N80) - PR #66.",
-      "Bookmark restore validates URL values (N81, N82) - PR #67.",
-      "User-level settings are per session (N20) - PR #71."
+      "Boolean attractor search limited to 20 nodes (was 25) - PR #74."
     ]
   },
   "metrics": {
@@ -42,8 +35,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.19.1",
+  "previous_version": "1.20.0",
   "build_info": {
-    "build_date": "2026-10-10 22:21:23.215592"
+    "build_date": "2026-10-10 23:39:12.339211"
   }
 }

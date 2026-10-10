@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.20.1] - 2026-10-10
+
+Patch release: server-side autosave recovery (N7, PR #73) and the lower Boolean node cap (PR #74). Deployed to laguna 2026-10-10.
+
 ### Fixed (autosave recovery on the server — review 2026-10-07 N7)
 
 - **Unsaved work on laguna can now be recovered after a disconnect or tab crash.** In server mode the autosave lived only in the per-session temp directory, which is deleted when the session ends, so the recovery dialog could never appear. Each browser now keeps a random token in localStorage and sends it on connect; the autosave is also written atomically to the app's per-user data directory under that token (directory readable only by the app user, copies older than 72 hours pruned), and the next session from the same browser is offered it. No server copy is written before that browser's recovery check has run, or for an empty project, so a fresh session cannot overwrite earlier work.
