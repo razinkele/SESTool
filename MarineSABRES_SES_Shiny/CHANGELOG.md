@@ -18,6 +18,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`tests/run_all_tests.R` runs like CI** (N77): one R process per test file via `tests/ci_run_file.R`, correct paths for the standalone scripts, warnings no longer abort a suite. An optional name filter is accepted.
 - **Unused app-level workflow copies removed** (N78); `.github/workflows/README.md` points to the live root workflows.
 
+### Fixed (translations — review 2026-10-07 N46, N47, N63, N64)
+
+- **Decision Lens is fully translated** (N46): the factor table headers, element categories and roles, the plot legend and the archetype "Loops" footer were English in every language. Dynamic keys now carry `# i18n-ref:` markers for the enforcement scan.
+- **Adjacency-matrix cell errors are translated** (N47): typing an invalid value such as `strong` now explains the expected format in the user's language, and the "no data" message is translated.
+- **SES models messages are translated** (N63): the missing-folder and reload toasts, and the common model-file problems (missing sheet or columns, empty model, duplicate IDs, dangling connections), keeping their sheet names and IDs.
+- **Regional-sea choices are shown in the user's language** (N64); the stored value is unchanged.
+- The "Responses" label in the AI assistant had `[ES]`-style placeholders in six languages; it is now translated.
+
+17 + 4 + 12 + 12 new keys, each in all 9 languages; the CI i18n audit reports 0 missing and 0 hard-coded strings.
+
 ### Removed / consolidated (dead code and duplicate definitions — review 2026-10-07 N39, N65, N67, N69, N70, N71)
 
 - **One `get_countries_for_sea()`** (N39): the hard-coded copy in the AI ISA knowledge base was removed; the JSON-backed loader is the single definition (now NULL-safe), and the AI ISA country buttons and confirmation read `name_en` instead of relying on `$name` partial matching.

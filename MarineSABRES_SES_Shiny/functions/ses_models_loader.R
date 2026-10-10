@@ -861,3 +861,49 @@ resolve_ses_models_custom_dir <- function(custom_path,
   if (!dir.exists(norm)) return(list(ok = FALSE, path = NULL, reason = "not_found"))
   list(ok = TRUE, path = norm, reason = NULL)
 }
+
+# ============================================================================
+# USER-FACING MODEL ERRORS (review 2026-10-07 N63)
+# ============================================================================
+# The loaders/validators return app-authored English messages that were shown
+# verbatim behind a translated prefix. This maps the user-relevant ones to i18n
+# keys, keeping their data (sheet names, IDs, counts) as the argument; anything
+# unrecognised (technical detail) is passed through unchanged.
+
+.SES_MODEL_ERROR_PATTERNS <- list(
+  list(re = "^File not found: (.*)$",                                     key = "modules.ses_models.err_file_not_found"),
+  list(re = "^File does not exist$",                                      key = "modules.ses_models.err_file_not_found", arg = ""),
+  list(re = "^Missing 'Elements' sheet\\. Available: (.*)$",              key = "modules.ses_models.err_missing_elements_sheet"),
+  list(re = "^Missing 'Connections' sheet\\. Available: (.*)$",           key = "modules.ses_models.err_missing_connections_sheet"),
+  list(re = "^(Elements sheet is empty|No elements/nodes found|Nodes dataframe is empty)$",
+       key = "modules.ses_models.err_elements_empty", arg = ""),
+  list(re = "^Elements sheet must have 'Label' column\\. Found: (.*)$",   key = "modules.ses_models.err_elements_label_column"),
+  list(re = "^Elements must have 'Label' column$",                       key = "modules.ses_models.err_elements_label_column", arg = "-"),
+  list(re = "^Elements sheet must have 'type' column\\. Found: (.*)$",    key = "modules.ses_models.err_elements_type_column"),
+  list(re = "^Connections sheet missing columns: (.*?)\\. Found: .*$",    key = "modules.ses_models.err_connections_columns"),
+  list(re = "^(Connections must|Edge sheet must) have 'From' and 'To' columns$",
+       key = "modules.ses_models.err_connections_columns", arg = "From, To"),
+  list(re = "^Duplicate node IDs found: (.*)$",                           key = "modules.ses_models.err_duplicate_ids"),
+  list(re = "^([0-9]+) edges reference non-existent nodes$",              key = "modules.ses_models.err_dangling_connections"),
+  list(re = "^Error reading file: (.*)$",                                 key = "modules.ses_models.err_read_failed")
+)
+
+#' Translate model loader/validator messages for display
+#' @param errors character vector of messages from load_ses_model_file() etc.
+#' @param i18n translator (list with $t); NULL returns errors unchanged
+#' @return character vector, same length
+translate_model_errors <- function(errors, i18n) {
+  if (length(errors) == 0 || is.null(i18n) || !is.function(i18n$t)) return(as.character(errors))
+  vapply(as.character(errors), function(msg) {
+    for (p in .SES_MODEL_ERROR_PATTERNS) {
+      if (grepl(p$re, msg, perl = TRUE)) {
+        arg <- if (!is.null(p$arg)) p$arg else sub(p$re, "\\1", msg, perl = TRUE)
+        tmpl <- as.character(i18n$t(p$key))
+        pos <- regexpr("%s", tmpl, fixed = TRUE)
+        if (pos > 0) tmpl <- paste0(substr(tmpl, 1, pos - 1), arg, substr(tmpl, pos + 2, nchar(tmpl)))
+        return(tmpl)
+      }
+    }
+    msg
+  }, character(1), USE.NAMES = FALSE)
+}

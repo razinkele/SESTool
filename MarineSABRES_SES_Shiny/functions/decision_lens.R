@@ -196,6 +196,19 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
 #' @export
 build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18n) {
   K <- "modules.analysis.decision_lens"
+  # Keys built with paste0(K, ...) below, listed for the i18n enforcement
+  # scan (review 2026-10-07 N46):
+  # i18n-ref: modules.analysis.decision_lens.quad_influential
+  # i18n-ref: modules.analysis.decision_lens.quad_relay
+  # i18n-ref: modules.analysis.decision_lens.quad_dependent
+  # i18n-ref: modules.analysis.decision_lens.quad_autonomous
+  # i18n-ref: modules.analysis.decision_lens.narrative_in_loops
+  # i18n-ref: modules.analysis.decision_lens.narrative_archetype_leverage
+  # i18n-ref: modules.analysis.decision_lens.narrative_confirm
+  # i18n-ref: modules.analysis.decision_lens.archetype.tragedy_of_the_commons.name
+  # i18n-ref: modules.analysis.decision_lens.archetype.tragedy_of_the_commons.leverage
+  # i18n-ref: modules.analysis.decision_lens.archetype.limits_to_growth.name
+  # i18n-ref: modules.analysis.decision_lens.archetype.limits_to_growth.leverage
   t <- if (!is.null(i18n) && is.function(i18n$t)) i18n$t else function(k, ...) k
 
   row <- micmac[micmac$id == node_id, , drop = FALSE]
@@ -266,4 +279,63 @@ format_loop_ids <- function(ids, max_show = 20L) {
   ids <- sort(unique(ids))
   if (length(ids) <= max_show) return(paste(ids, collapse = ", "))
   paste0(paste(ids[seq_len(max_show)], collapse = ", "), " \u2026 (+", length(ids) - max_show, ")")
+}
+
+# =============================================================================
+# DISPLAY LABELS (review 2026-10-07 N46)
+# =============================================================================
+# The factor table, plot legend and group column showed the internal English
+# values. These map them to translated labels at display time; the stored
+# values (used by the narrative and archetype logic) are unchanged.
+
+.DL_QUADRANT_KEYS <- c(
+  Influential = "modules.analysis.decision_lens.quad_name_influential",
+  Relay       = "modules.analysis.decision_lens.quad_name_relay",
+  Dependent   = "modules.analysis.decision_lens.quad_name_dependent",
+  Autonomous  = "modules.analysis.decision_lens.quad_name_autonomous"
+)
+.DL_GROUP_KEYS <- c(
+  "Drivers"                        = "modules.analysis.decision_lens.group_drivers",
+  "Activities"                     = "modules.analysis.decision_lens.group_activities",
+  "Pressures"                      = "modules.analysis.decision_lens.group_pressures",
+  "Marine Processes & Functioning" = "modules.analysis.decision_lens.group_marine_processes",
+  "Ecosystem Services"             = "modules.analysis.decision_lens.group_ecosystem_services",
+  "Goods & Benefits"               = "modules.analysis.decision_lens.group_goods_benefits",
+  "Responses"                      = "modules.analysis.decision_lens.group_responses"
+)
+
+.dl_translate_values <- function(x, keys, i18n) {
+  out <- as.character(x)
+  hit <- !is.na(out) & out %in% names(keys)
+  if (any(hit) && !is.null(i18n) && is.function(i18n$t)) {
+    out[hit] <- vapply(keys[out[hit]], function(k) as.character(i18n$t(k)), character(1))
+  }
+  out
+}
+
+#' Translated MICMAC quadrant names (Influential / Relay / Dependent / Autonomous)
+dl_quadrant_label <- function(q, i18n) .dl_translate_values(q, .DL_QUADRANT_KEYS, i18n)
+
+#' Translated DAPSIWRM category names for the group column
+dl_group_label <- function(g, i18n) .dl_translate_values(g, .DL_GROUP_KEYS, i18n)
+
+#' Factor table for display: translated headers and values, id column dropped
+#' @param factors data.frame from classify_factors_micmac()
+#' @return data.frame with translated column names
+dl_display_factors <- function(factors, i18n) {
+  t <- function(k) as.character(i18n$t(k))
+  df <- data.frame(
+    label      = factors$label,
+    group      = dl_group_label(factors$group, i18n),
+    influence  = round(factors$influence, 3),
+    dependence = round(factors$dependence, 3),
+    quadrant   = dl_quadrant_label(factors$quadrant, i18n),
+    stringsAsFactors = FALSE, check.names = FALSE
+  )
+  names(df) <- c(t("modules.analysis.decision_lens.col_label"),
+                 t("modules.analysis.decision_lens.col_group"),
+                 t("modules.analysis.decision_lens.col_influence"),
+                 t("modules.analysis.decision_lens.col_dependence"),
+                 t("modules.analysis.decision_lens.col_quadrant"))
+  df
 }

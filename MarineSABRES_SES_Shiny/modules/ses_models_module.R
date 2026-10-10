@@ -354,7 +354,7 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
       # Check directory exists
       if (!dir.exists(models_dir)) {
         showNotification(
-          paste("SESModels directory not found:", models_dir),
+          sprintf(i18n$t("modules.ses_models.dir_not_found"), models_dir),   # N63
           type = "error",
           duration = 5
         )
@@ -374,7 +374,7 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
           choices = rv$models_list
         )
         showNotification(
-          paste(i18n$t("modules.ses_models.models_reloaded"), "-", length(rv$models_list), "models"),
+          sprintf(i18n$t("modules.ses_models.models_reloaded_count"), length(rv$models_list)),   # N63
           type = "message",
           duration = 3
         )
@@ -652,7 +652,8 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
         if (length(model_data$errors) > 0) {
           debug_log(paste("Model has errors:", paste(model_data$errors, collapse = "; ")), "SES_MODELS")
           showNotification(
-            paste(i18n$t("modules.ses_models.load_error"), paste(model_data$errors, collapse = "; ")),
+            paste(i18n$t("modules.ses_models.load_error"),
+                  paste(translate_model_errors(model_data$errors, i18n), collapse = "; ")),   # N63
             type = "error",
             duration = 10
           )

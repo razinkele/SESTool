@@ -33,6 +33,24 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     "Arctic Ocean" = "arctic",
     "Caribbean Sea" = "caribbean"
   )
+  # Translated dropdown labels, parallel to REGIONAL_SEA_KB_KEYS (review
+  # 2026-10-07 N64: the English names were shown in every language). The stored
+  # value stays the KB key; regional_sea_display keeps the English name.
+  REGIONAL_SEA_LABEL_KEYS <- c(
+    "modules.report_context.sea_baltic_sea",
+    "modules.report_context.sea_north_sea",
+    "modules.report_context.sea_celtic_seas",
+    "modules.report_context.sea_bay_of_biscay_iberian",
+    "modules.report_context.sea_western_mediterranean",
+    "modules.report_context.sea_adriatic",
+    "modules.report_context.sea_ionian_central_mediterranean",
+    "modules.report_context.sea_aegean_levantine",
+    "modules.report_context.sea_black_sea",
+    "modules.report_context.sea_macaronesia",
+    "modules.report_context.sea_arctic_ocean",
+    "modules.report_context.sea_caribbean_sea"
+  )
+  stopifnot(length(REGIONAL_SEA_LABEL_KEYS) == length(REGIONAL_SEA_KB_KEYS))
 
   # ========== CACHED STATS (shared by value boxes, status, and timeline) ==========
   dashboard_stats <- reactive({
@@ -212,7 +230,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         selectInput("regional_sea_select",
           i18n$t("modules.report_context.regional_sea_label"),
           choices = c(setNames("", i18n$t("modules.report_context.not_set")),
-                      setNames(unname(REGIONAL_SEA_KB_KEYS), names(REGIONAL_SEA_KB_KEYS))),
+                      setNames(unname(REGIONAL_SEA_KB_KEYS),
+                               vapply(REGIONAL_SEA_LABEL_KEYS, function(k) as.character(i18n$t(k)), character(1)))),
           selected = isolate(project_data()$data$metadata$regional_sea) %||% ""
         ),
         selectInput("ecosystem_type_select",

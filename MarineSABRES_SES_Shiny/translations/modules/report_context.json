@@ -54,6 +54,138 @@
       "it": "Includi Contesto Regionale",
       "no": "Inkluder Regionalt Kontekst",
       "el": "Συμπερίληψη Περιφερειακού Πλαισίου"
+    },
+    "modules.report_context.sea_baltic_sea": {
+      "en": "Baltic Sea",
+      "es": "Mar Báltico",
+      "fr": "Mer Baltique",
+      "de": "Ostsee",
+      "lt": "Baltijos jūra",
+      "pt": "Mar Báltico",
+      "it": "Mar Baltico",
+      "no": "Østersjøen",
+      "el": "Βαλτική Θάλασσα"
+    },
+    "modules.report_context.sea_north_sea": {
+      "en": "North Sea",
+      "es": "Mar del Norte",
+      "fr": "Mer du Nord",
+      "de": "Nordsee",
+      "lt": "Šiaurės jūra",
+      "pt": "Mar do Norte",
+      "it": "Mare del Nord",
+      "no": "Nordsjøen",
+      "el": "Βόρεια Θάλασσα"
+    },
+    "modules.report_context.sea_celtic_seas": {
+      "en": "Celtic Seas",
+      "es": "Mares Célticos",
+      "fr": "Mers Celtiques",
+      "de": "Keltische See",
+      "lt": "Keltų jūros",
+      "pt": "Mares Célticos",
+      "it": "Mari Celtici",
+      "no": "Keltiske hav",
+      "el": "Κελτικές Θάλασσες"
+    },
+    "modules.report_context.sea_bay_of_biscay_iberian": {
+      "en": "Bay of Biscay and Iberian Coast",
+      "es": "Golfo de Vizcaya y costa ibérica",
+      "fr": "Golfe de Gascogne et côte ibérique",
+      "de": "Golf von Biskaya und Iberische Küste",
+      "lt": "Biskajos įlanka ir Iberijos pakrantė",
+      "pt": "Golfo da Biscaia e costa ibérica",
+      "it": "Golfo di Biscaglia e costa iberica",
+      "no": "Biscayabukta og Den iberiske kysten",
+      "el": "Βισκαϊκός Κόλπος και Ιβηρική ακτή"
+    },
+    "modules.report_context.sea_western_mediterranean": {
+      "en": "Western Mediterranean Sea",
+      "es": "Mediterráneo occidental",
+      "fr": "Méditerranée occidentale",
+      "de": "Westliches Mittelmeer",
+      "lt": "Vakarų Viduržemio jūra",
+      "pt": "Mediterrâneo Ocidental",
+      "it": "Mediterraneo occidentale",
+      "no": "Vestlige Middelhavet",
+      "el": "Δυτική Μεσόγειος"
+    },
+    "modules.report_context.sea_adriatic": {
+      "en": "Adriatic Sea",
+      "es": "Mar Adriático",
+      "fr": "Mer Adriatique",
+      "de": "Adriatisches Meer",
+      "lt": "Adrijos jūra",
+      "pt": "Mar Adriático",
+      "it": "Mare Adriatico",
+      "no": "Adriaterhavet",
+      "el": "Αδριατική Θάλασσα"
+    },
+    "modules.report_context.sea_ionian_central_mediterranean": {
+      "en": "Ionian Sea and Central Mediterranean Sea",
+      "es": "Mar Jónico y Mediterráneo central",
+      "fr": "Mer Ionienne et Méditerranée centrale",
+      "de": "Ionisches Meer und zentrales Mittelmeer",
+      "lt": "Jonijos jūra ir centrinė Viduržemio jūra",
+      "pt": "Mar Jónico e Mediterrâneo Central",
+      "it": "Mar Ionio e Mediterraneo centrale",
+      "no": "Det joniske hav og sentrale Middelhavet",
+      "el": "Ιόνιο Πέλαγος και Κεντρική Μεσόγειος"
+    },
+    "modules.report_context.sea_aegean_levantine": {
+      "en": "Aegean-Levantine Sea",
+      "es": "Mar Egeo-Levantino",
+      "fr": "Mer Égée-Levantine",
+      "de": "Ägäisch-Levantinisches Meer",
+      "lt": "Egėjo–Levanto jūra",
+      "pt": "Mar Egeu-Levantino",
+      "it": "Mar Egeo-Levantino",
+      "no": "Egeerhavet og Levanthavet",
+      "el": "Αιγαίο-Λεβαντίνη Θάλασσα"
+    },
+    "modules.report_context.sea_black_sea": {
+      "en": "Black Sea",
+      "es": "Mar Negro",
+      "fr": "Mer Noire",
+      "de": "Schwarzes Meer",
+      "lt": "Juodoji jūra",
+      "pt": "Mar Negro",
+      "it": "Mar Nero",
+      "no": "Svartehavet",
+      "el": "Μαύρη Θάλασσα"
+    },
+    "modules.report_context.sea_macaronesia": {
+      "en": "Macaronesia",
+      "es": "Macaronesia",
+      "fr": "Macaronésie",
+      "de": "Makaronesien",
+      "lt": "Makaronezija",
+      "pt": "Macaronésia",
+      "it": "Macaronesia",
+      "no": "Makaronesia",
+      "el": "Μακαρονησία"
+    },
+    "modules.report_context.sea_arctic_ocean": {
+      "en": "Arctic Ocean",
+      "es": "Océano Ártico",
+      "fr": "Océan Arctique",
+      "de": "Arktischer Ozean",
+      "lt": "Arkties vandenynas",
+      "pt": "Oceano Ártico",
+      "it": "Oceano Artico",
+      "no": "Polhavet",
+      "el": "Αρκτικός Ωκεανός"
+    },
+    "modules.report_context.sea_caribbean_sea": {
+      "en": "Caribbean Sea",
+      "es": "Mar Caribe",
+      "fr": "Mer des Caraïbes",
+      "de": "Karibisches Meer",
+      "lt": "Karibų jūra",
+      "pt": "Mar das Caraíbas",
+      "it": "Mar dei Caraibi",
+      "no": "Det karibiske hav",
+      "el": "Καραϊβική Θάλασσα"
     }
   }
 }

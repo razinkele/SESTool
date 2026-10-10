@@ -763,17 +763,21 @@ build_response_panel_ui <- function(ns, current_id, fields, i18n) {
 #' @param key matrix name (e.g. "r_d", "d_a"). @param i,j 1-based row/col.
 #' @param value raw typed string: "" clears the edge; otherwise must be a valid
 #'   "+/-<strength>:<confidence>" cell (strength in strong/medium/weak).
-#' @return list(am, ue, error) — error is NULL on success, else a message and
-#'   am/ue are returned unchanged.
+#' @return list(am, ue, error, error_key, error_value) — error is NULL on
+#'   success, else an English message for logs; error_key is the i18n key to
+#'   show users (review 2026-10-07 N47) and error_value the offending input.
+#'   am/ue are returned unchanged on error.
 apply_matrix_cell_edit <- function(am, ue, key, i, j, value) {
-  err <- function(msg) list(am = am, ue = ue, error = msg)
+  err <- function(msg, error_key, error_value = NULL) {
+    list(am = am, ue = ue, error = msg, error_key = error_key, error_value = error_value)
+  }
   if (is.null(key) || !(key %in% names(am)) || !is.matrix(am[[key]])) {
-    return(err("Unknown matrix"))
+    return(err("Unknown matrix", "modules.isa.data_entry.matrix.cell_unknown_matrix"))
   }
   mat <- am[[key]]
   i <- suppressWarnings(as.integer(i)); j <- suppressWarnings(as.integer(j))
   if (is.na(i) || is.na(j) || i < 1L || j < 1L || i > nrow(mat) || j > ncol(mat)) {
-    return(err("Cell out of range"))
+    return(err("Cell out of range", "modules.isa.data_entry.matrix.cell_out_of_range"))
   }
   value <- if (is.null(value)) "" else trimws(as.character(value))
   normalized <- ""
@@ -782,7 +786,8 @@ apply_matrix_cell_edit <- function(am, ue, key, i, j, value) {
     if (is.null(conn) || !(conn$polarity %in% c("+", "-")) ||
         !(tolower(conn$strength) %in% c("strong", "medium", "weak"))) {
       return(err(paste0("Invalid cell '", value,
-                        "': expected e.g. +strong:4, -medium:3, or empty to clear")))
+                        "': expected e.g. +strong:4, -medium:3, or empty to clear"),
+                 "modules.isa.data_entry.matrix.cell_invalid", value))
     }
     normalized <- paste0(conn$polarity, tolower(conn$strength), ":", conn$confidence)
   }
@@ -795,6 +800,22 @@ apply_matrix_cell_edit <- function(am, ue, key, i, j, value) {
   uem[i, j] <- TRUE          # deliberate edit (incl. clearing) — never re-seeded by rebuild
   ue[[key]] <- uem
   list(am = am, ue = ue, error = NULL)
+}
+
+#' User-facing (translated) message for a failed apply_matrix_cell_edit() (N47)
+#' @param res result of apply_matrix_cell_edit()
+#' @param i18n translator
+matrix_cell_error_message <- function(res, i18n) {
+  if (is.null(res$error)) return(NULL)
+  key <- res$error_key
+  if (is.null(key) || is.null(i18n) || !is.function(i18n$t)) return(res$error)
+  msg <- as.character(i18n$t(key))
+  if (!is.null(res$error_value) && grepl("%s", msg, fixed = TRUE)) {
+    pos <- regexpr("%s", msg, fixed = TRUE)   # splice by position: no escaping of the user value
+    msg <- paste0(substr(msg, 1, pos - 1), as.character(res$error_value),
+                  substr(msg, pos + 2, nchar(msg)))
+  }
+  msg
 }
 
 # ============================================================================
