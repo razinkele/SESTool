@@ -539,6 +539,28 @@
       "no": "Økt gjenopprettet!",
       "el": "Η συνεδρία αποκαταστάθηκε επιτυχώς!"
     },
+    "common.messages.pandoc_required": {
+      "en": "Report generation requires pandoc, which is not available on this server.",
+      "es": "La generación de informes requiere pandoc, que no está disponible en este servidor.",
+      "fr": "La génération de rapports nécessite pandoc, qui n'est pas disponible sur ce serveur.",
+      "de": "Die Berichterstellung benötigt pandoc, das auf diesem Server nicht verfügbar ist.",
+      "lt": "Ataskaitų generavimui reikia pandoc, kurio šiame serveryje nėra.",
+      "pt": "A geração de relatórios requer o pandoc, que não está disponível neste servidor.",
+      "it": "La generazione dei report richiede pandoc, che non è disponibile su questo server.",
+      "no": "Rapportgenerering krever pandoc, som ikke er tilgjengelig på denne serveren.",
+      "el": "Η δημιουργία αναφορών απαιτεί το pandoc, το οποίο δεν είναι διαθέσιμο σε αυτόν τον διακομιστή."
+    },
+    "common.messages.latex_required": {
+      "en": "PDF generation requires a LaTeX engine (lualatex), which is not available.",
+      "es": "La generación de PDF requiere un motor LaTeX (lualatex), que no está disponible.",
+      "fr": "La génération de PDF nécessite un moteur LaTeX (lualatex), qui n'est pas disponible.",
+      "de": "Die PDF-Erstellung benötigt eine LaTeX-Engine (lualatex), die nicht verfügbar ist.",
+      "lt": "PDF generavimui reikia LaTeX variklio (lualatex), kurio nėra.",
+      "pt": "A geração de PDF requer um motor LaTeX (lualatex), que não está disponível.",
+      "it": "La generazione di PDF richiede un motore LaTeX (lualatex), che non è disponibile.",
+      "no": "PDF-generering krever en LaTeX-motor (lualatex), som ikke er tilgjengelig.",
+      "el": "Η δημιουργία PDF απαιτεί μηχανή LaTeX (lualatex), η οποία δεν είναι διαθέσιμη."
+    },
     "common.messages.generating_html_report": {
       "en": "Generating HTML report...",
       "es": "Generando informe HTML...",

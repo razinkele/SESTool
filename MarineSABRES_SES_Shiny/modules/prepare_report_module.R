@@ -277,40 +277,15 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         )
         debug_log("Markdown content generated successfully", "REPORT")
 
-        # Convert markdown to HTML using rmarkdown
+        # Convert markdown to HTML WITHOUT knitting user text (review 2026-10-07
+        # N11: the body carries project/element names) and serve it through a
+        # session-scoped URL instead of the shared www/reports tree (N14).
         debug_log("Converting to HTML", "REPORT")
-        rmd_file <- tempfile(fileext = ".Rmd")
-        writeLines(report_md, rmd_file)
-
         cleanup_old_report(rv$html_report_path)
         temp_file <- tempfile(fileext = ".html")
-        rmarkdown::render(
-          input = rmd_file,
-          output_format = "html_document",
-          output_file = temp_file,
-          quiet = TRUE
-        )
+        render_report_safely(report_md, temp_file, format = "html", i18n = i18n)
         debug_log("Report rendered to HTML successfully", "REPORT")
-        unlink(rmd_file)
-
-        # Copy to www directory so it can be served by Shiny
-        www_dir <- file.path(getwd(), "www", "reports")
-        if (!dir.exists(www_dir)) {
-          dir.create(www_dir, recursive = TRUE)
-        }
-
-        # Create unique filename
-        report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
-        www_file <- file.path(www_dir, report_filename)
-        file.copy(temp_file, www_file, overwrite = TRUE)
-
-        # Clean up old reports (older than 1 hour)
-        old_reports <- list.files(www_dir, pattern = "\\.html$", full.names = TRUE)
-        old_reports <- old_reports[difftime(Sys.time(), file.mtime(old_reports), units = "hours") > 1]
-        if (length(old_reports) > 0) file.remove(old_reports)
-
-        # Create relative URL for Shiny
-        report_url <- paste0("reports/", report_filename)
+        report_url <- register_session_report(session, temp_file)
 
         # Open in new window using JavaScript
         session$sendCustomMessage(
@@ -352,19 +327,9 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
       tryCatch({
         data <- project_data_reactive()
 
-        # Check if LaTeX is available
-        latex_available <- tryCatch({
-          tinytex::tinytex_root()
-          TRUE
-        }, error = function(e) {
-          # Check system LaTeX
-          tryCatch({
-            system("pdflatex --version", intern = TRUE, ignore.stderr = TRUE)
-            TRUE
-          }, error = function(e2) {
-            FALSE
-          })
-        })
+        # Check if the PDF engine is really usable (review 2026-10-07 N41: the
+        # old probe treated tinytex_root() == "" and a failing pdflatex as success)
+        latex_available <- latex_engine_available("lualatex")
 
         if (!latex_available) {
           # LaTeX not available - show helpful message
@@ -406,19 +371,11 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           options = opts
         )
 
-        # Render to PDF
-        rmd_file <- tempfile(fileext = ".Rmd")
-        writeLines(report_md, rmd_file)
-
+        # Render to PDF without knitting user text (review 2026-10-07 N11)
         cleanup_old_report(rv$pdf_report_path)
         temp_pdf <- tempfile(fileext = ".pdf")
-        rmarkdown::render(
-          input = rmd_file,
-          output_format = rmarkdown::pdf_document(latex_engine = "lualatex"),
-          output_file = temp_pdf,
-          quiet = FALSE
-        )
-        unlink(rmd_file)
+        render_report_safely(report_md, temp_pdf, format = "pdf",
+                             pdf_engine = "lualatex", quiet = FALSE, i18n = i18n)
 
         showModal(modalDialog(
           title = i18n$t("modules.prepare.report.pdf_success"),
