@@ -76,32 +76,9 @@ test_that("common labels translation file exists with required keys", {
 
 context("P2 Fixes: Module Signature Standardization")
 
-test_that("module signature standard document exists", {
-  standard_file <- file.path(project_root, "docs/MODULE_SIGNATURE_STANDARD.md")
-  skip_if_not(file.exists(standard_file), "docs/ is not version-controlled; doc absent in CI")
-  expect_true(file.exists(standard_file), info = "MODULE_SIGNATURE_STANDARD.md should exist")
-
-  content <- readLines(standard_file, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check key content exists
-  expect_true(grepl("project_data_reactive", content_text),
-              info = "Standard should document project_data_reactive parameter")
-  expect_true(grepl("i18n", content_text),
-              info = "Standard should document i18n parameter")
-})
-
-test_that("module signature validation script exists", {
-  script_file <- file.path(project_root, "scripts/validate_module_signatures.R")
-  skip_if_not(file.exists(script_file), "validate_module_signatures.R not version-controlled; absent in CI")
-  expect_true(file.exists(script_file), info = "validate_module_signatures.R should exist")
-
-  content <- readLines(script_file, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  expect_true(grepl("validate_module_signatures", content_text),
-              info = "Script should define validate_module_signatures function")
-})
+# (Review 2026-10-07 N75: tests that only checked that gitignored docs/ or
+#  scripts/ files exist and contain certain headings were removed -- they
+#  skipped in every CI run and asserted nothing about the app.)
 
 # ============================================================================
 # Issue #12: Data Accessor Functions
@@ -268,16 +245,10 @@ test_that("CLAUDE.md exists and documents i18n", {
 context("P2 Fixes: Summary")
 
 test_that("all P2 fix components are in place", {
-  # docs/ and the validation script are not version-controlled, so this
-  # all-present meta-check only applies where they exist (local, not CI).
-  skip_if_not(
-    file.exists(file.path(project_root, "docs/MODULE_SIGNATURE_STANDARD.md")) &&
-    file.exists(file.path(project_root, "scripts/validate_module_signatures.R")),
-    "P2 doc/script artifacts not version-controlled; absent in CI")
+  # Only version-controlled components (N75: the gitignored doc/script made
+  # this whole test skip in CI)
   components <- c(
     "Data accessors" = file.exists(file.path(project_root, "functions/data_accessors.R")),
-    "Module standard" = file.exists(file.path(project_root, "docs/MODULE_SIGNATURE_STANDARD.md")),
-    "Validation script" = file.exists(file.path(project_root, "scripts/validate_module_signatures.R")),
     "Integration tests" = file.exists(file.path(project_root, "tests/testthat/test-module-integration.R")),
     "Translation common" = dir.exists(file.path(project_root, "translations/common"))
   )

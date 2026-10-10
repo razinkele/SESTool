@@ -108,81 +108,13 @@ test_that("P3 - lazy_loading.R has been removed (modules are eagerly loaded)", {
 # ============================================================================
 # Issue #15: Documentation Updates
 # ============================================================================
-
-test_that("P3 - docs/ML_ARCHITECTURE.md exists and is comprehensive", {
-  file_path <- file.path(project_root, "docs/ML_ARCHITECTURE.md")
-  skip_if_not(file.exists(file_path), "docs/ is not version-controlled; doc absent in CI")
-  expect_true(file.exists(file_path), info = "ML_ARCHITECTURE.md should exist")
-
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for key sections
-  expect_true(grepl("## Overview", content_text),
-              info = "Should have Overview section")
-  expect_true(grepl("## File Structure", content_text),
-              info = "Should have File Structure section")
-  expect_true(grepl("## Feature Engineering", content_text),
-              info = "Should have Feature Engineering section")
-  expect_true(grepl("## Model Architecture", content_text),
-              info = "Should have Model Architecture section")
-  expect_true(grepl("## Ensemble System", content_text),
-              info = "Should have Ensemble System section")
-  expect_true(grepl("## API Reference", content_text),
-              info = "Should have API Reference section")
-
-  # Check for key technical content
-  expect_true(grepl("ensemble_predict", content_text),
-              info = "Should document ensemble_predict function")
-  expect_true(grepl("ml_feature_engineering", content_text),
-              info = "Should document feature engineering module")
-})
-
-test_that("P3 - docs/MOCKING_STRATEGY.md exists and is comprehensive", {
-  file_path <- file.path(project_root, "docs/MOCKING_STRATEGY.md")
-  skip_if_not(file.exists(file_path), "docs/ is not version-controlled; doc absent in CI")
-  expect_true(file.exists(file_path), info = "MOCKING_STRATEGY.md should exist")
-
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for key sections
-  expect_true(grepl("## Overview", content_text),
-              info = "Should have Overview section")
-  expect_true(grepl("Mock Data Factories", content_text),
-              info = "Should document Mock Data Factories")
-  expect_true(grepl("Module Stubs", content_text),
-              info = "Should document Module Stubs")
-  expect_true(grepl("Session Mock", content_text),
-              info = "Should document Session Mocks")
-  expect_true(grepl("ReactiveVal", content_text),
-              info = "Should document ReactiveVal override")
-
-  # Check for code examples
-  expect_true(grepl("create_mock_isa_data", content_text),
-              info = "Should show create_mock_isa_data example")
-  expect_true(grepl("MockShinySession", content_text),
-              info = "Should show MockShinySession example")
-})
+# (Review 2026-10-07 N75: tests that only checked that gitignored docs/ or
+#  scripts/ files exist and contain certain headings were removed -- they
+#  skipped in every CI run and asserted nothing about the app.)
 
 # ============================================================================
 # Server Function Tests (Functional)
 # ============================================================================
-
-test_that("P3 - session_management functions are syntactically correct", {
-  file_path <- file.path(project_root, "server/session_management.R")
-  skip_if_not(file.exists(file_path), "session_management.R not found")
-
-  # Try to parse the file - will error if syntax is invalid
-  result <- tryCatch({
-    parse(file_path)
-    TRUE
-  }, error = function(e) {
-    FALSE
-  })
-
-  expect_true(result, info = "session_management.R should have valid R syntax")
-})
 
 test_that("P3 - language_handling functions are syntactically correct", {
   file_path <- file.path(project_root, "server/language_handling.R")
@@ -335,15 +267,16 @@ test_that("P3 - get_ml_cache_stats returns cache statistics", {
 # ============================================================================
 
 test_that("P3 - All P3 files are valid R code", {
+  # (server/session_management.R was deleted in N70; leaving it here made the
+  #  skip below abort the whole loop, so the other files were never parsed)
   p3_files <- c(
-    "server/session_management.R",
     "server/language_handling.R",
     "server/event_bus_setup.R"
   )
 
   for (rel_path in p3_files) {
     file_path <- file.path(project_root, rel_path)
-    skip_if_not(file.exists(file_path), paste(rel_path, "not found"))
+    expect_true(file.exists(file_path), info = rel_path)
 
     result <- tryCatch({
       parse(file_path)
@@ -357,25 +290,3 @@ test_that("P3 - All P3 files are valid R code", {
   }
 })
 
-test_that("P3 - Documentation files contain required metadata", {
-  doc_files <- c(
-    "docs/ML_ARCHITECTURE.md",
-    "docs/MOCKING_STRATEGY.md"
-  )
-
-  for (rel_path in doc_files) {
-    file_path <- file.path(project_root, rel_path)
-    skip_if_not(file.exists(file_path), paste(rel_path, "not found"))
-
-    content <- readLines(file_path, warn = FALSE)
-    content_text <- paste(content, collapse = "\n")
-
-    # Check for version info
-    expect_true(grepl("Version", content_text, ignore.case = TRUE),
-                info = sprintf("%s should have version info", rel_path))
-
-    # Check for last updated
-    expect_true(grepl("Updated", content_text, ignore.case = TRUE),
-                info = sprintf("%s should have last updated info", rel_path))
-  }
-})
