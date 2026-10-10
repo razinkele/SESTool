@@ -81,16 +81,22 @@ fi
 APP_PREFIX="$(git -C "$APP_DIR" rev-parse --show-prefix 2>/dev/null || true)"
 APP_PREFIX="${APP_PREFIX%/}"
 TREEISH="HEAD${APP_PREFIX:+:$APP_PREFIX}"
+# Archive HEAD restricted to the app PATH (not the HEAD:<prefix> subtree): git
+# only honours the app's .gitattributes export-ignore rules when entries keep
+# their repo-relative prefix; it is stripped again on extraction.
+if [ -n "$APP_PREFIX" ]; then STRIP=$(echo "$APP_PREFIX" | awk -F/ '{print NF}'); else STRIP=0; fi
 
 echo -e "${BLUE}==>${NC} Creating deployment archive from committed files ($TREEISH)..."
 rm -f "$TAR_PATH"
 if [ "$EXCLUDE_MODELS" = true ]; then
     echo -e "${YELLOW}[NOTE]${NC} SESModels directory will be excluded"
-    TOPS=$(git -C "$REPO_ROOT" ls-tree --name-only "$TREEISH" | grep -vx 'SESModels')
+    TOPS=$(git -C "$REPO_ROOT" ls-tree --name-only "$TREEISH" | grep -vx 'SESModels' | sed "s|^|${APP_PREFIX:+$APP_PREFIX/}|")
     # shellcheck disable=SC2086
-    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" "$TREEISH" -- $TOPS
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD -- $TOPS
+elif [ -n "$APP_PREFIX" ]; then
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD -- "$APP_PREFIX"
 else
-    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" "$TREEISH"
+    git -C "$REPO_ROOT" archive --format=tar.gz -o "$TAR_PATH" HEAD
 fi
 
 TAR_SIZE=$(du -h "$TAR_PATH" | cut -f1)
@@ -154,7 +160,8 @@ ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     echo '==> Clearing target directory...' && \
     rm -rf $REMOTE_TARGET/* && \
     echo '==> Extracting archive...' && \
-    tar -xzf /tmp/$TAR_FILENAME -C $REMOTE_TARGET/ && \
+    tar -xzf /tmp/$TAR_FILENAME --strip-components=$STRIP -C $REMOTE_TARGET/ && \
+    ( (cd $REMOTE_TARGET && find tests .claude DTU -depth -type d -empty -delete 2>/dev/null) || true ) && \
     echo '==> Verifying extraction...' && \
     EXTRACTED_COUNT=\$(find $REMOTE_TARGET -type f | wc -l) && \
     if [ \$EXTRACTED_COUNT -lt 100 ]; then echo 'FAIL: only' \$EXTRACTED_COUNT 'files extracted (expected >=100)'; exit 1; fi && \

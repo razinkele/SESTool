@@ -222,6 +222,11 @@ $repoFull  = (Resolve-Path $RepoRoot).Path
 $appFull   = (Resolve-Path $AppDir).Path
 $AppPrefix = $appFull.Substring($repoFull.Length).Trim('\', '/') -replace '\\', '/'
 $treeish   = if ($AppPrefix) { "HEAD:$AppPrefix" } else { "HEAD" }
+# The archive is built from HEAD restricted to the app PATH, not from the
+# HEAD:<prefix> subtree: git only honours the app's .gitattributes
+# export-ignore rules when entries keep their repo-relative prefix (verified
+# empirically, review 2026-10-07 N80). The prefix is stripped on extraction.
+$StripComponents = if ($AppPrefix) { ($AppPrefix -split '/').Count } else { 0 }
 
 Write-Status "Archiving committed files via git ($treeish)..."
 Write-Host "  Repo root:  $RepoRoot"
@@ -237,9 +242,12 @@ if ($ExcludeModels) {
     Write-Status "SESModels directory will be excluded"
     $tops = (& git -C $RepoRoot ls-tree --name-only $treeish) |
             Where-Object { $_ -and $_ -ne 'SESModels' }
-    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish -- @tops
+    $paths = $tops | ForEach-Object { if ($AppPrefix) { "$AppPrefix/$_" } else { $_ } }
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD -- @paths
+} elseif ($AppPrefix) {
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD -- $AppPrefix
 } else {
-    & git -C $RepoRoot archive --format=tar.gz -o $TarPath $treeish
+    & git -C $RepoRoot archive --format=tar.gz -o $TarPath HEAD
 }
 
 if ($LASTEXITCODE -ne 0) {
@@ -359,7 +367,9 @@ done
 find ${RemoteTarget} -maxdepth 1 -type f -user ${RemoteOwner} -delete 2>/dev/null || true
 
 echo '==> Extracting archive...'
-tar -xzf /tmp/${TarFilename} -C ${RemoteTarget}/
+tar -xzf /tmp/${TarFilename} --strip-components=${StripComponents} -C ${RemoteTarget}/
+# export-ignore leaves empty directory stubs for the excluded trees
+(cd ${RemoteTarget} && find tests .claude DTU -depth -type d -empty -delete 2>/dev/null) || true
 
 echo '==> Restoring preserved user data...'
 (test -s `$PRESERVE_TGZ && tar xzf `$PRESERVE_TGZ -C ${RemoteTarget}/ && \

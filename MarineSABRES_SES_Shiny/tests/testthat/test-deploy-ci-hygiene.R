@@ -77,14 +77,20 @@ test_that("N80: the deploy archive excludes non-runtime trees but keeps runtime 
   skip_if(length(top) == 0 || !nzchar(top[1]), "not a git checkout")
   prefix <- suppressWarnings(system2(git, c("-C", shQuote(root), "rev-parse", "--show-prefix"), stdout = TRUE, stderr = FALSE))
   prefix <- sub("/$", "", prefix[1] %||% "")
-  treeish <- if (nzchar(prefix)) paste0("HEAD:", prefix) else "HEAD"
-  has_attr <- suppressWarnings(system2(git, c("-C", shQuote(top[1]), "cat-file", "-e",
-                                              paste0(treeish, "/.gitattributes")), stdout = FALSE, stderr = FALSE))
+  attr_path <- if (nzchar(prefix)) paste0("HEAD:", prefix, "/.gitattributes") else "HEAD:.gitattributes"
+  has_attr <- suppressWarnings(system2(git, c("-C", shQuote(top[1]), "cat-file", "-e", attr_path),
+                                       stdout = FALSE, stderr = FALSE))
   skip_if(!identical(as.integer(has_attr), 0L), ".gitattributes not committed in HEAD yet")
+  # Same command shape as the deploy scripts: HEAD restricted to the app path
+  # (a HEAD:<prefix> subtree archive ignores the app .gitattributes).
   zip <- tempfile(fileext = ".zip")
-  st <- system2(git, c("-C", shQuote(top[1]), "archive", "--format=zip", "-o", shQuote(zip), treeish))
+  args <- c("-C", shQuote(top[1]), "archive", "--format=zip", "-o", shQuote(zip), "HEAD")
+  if (nzchar(prefix)) args <- c(args, "--", prefix)
+  st <- system2(git, args)
   expect_equal(as.integer(st), 0L)
   files <- utils::unzip(zip, list = TRUE)$Name
+  if (nzchar(prefix)) files <- sub(paste0("^", prefix, "/"), "", files)
+  files <- files[!grepl("/$", files)]          # directory stubs left by export-ignore
   expect_false(any(startsWith(files, "tests/")))
   expect_false(any(startsWith(files, ".claude/")))
   expect_false(any(startsWith(files, "DTU/")))
@@ -103,7 +109,8 @@ test_that("N8: remote-deploy.sh --dry-run builds the archive from committed file
   status <- attr(out, "status") %||% 0L
   skip_if(any(grepl("not inside a git repository", out)), "not a git checkout")
   expect_equal(status, 0L, info = paste(tail(out, 20), collapse = "\n"))
-  listing <- out[grepl("^[A-Za-z0-9_.]", out)]
+  listing <- out[grepl("^[A-Za-z0-9_.]", out) & !grepl("/$", out)]
+  listing <- sub("^[^/]*MarineSABRES_SES_Shiny/", "", listing)   # entries keep the repo prefix
   expect_true("app.R" %in% listing)
   expect_false(any(startsWith(listing, "tests/")))
   # untracked user exports / archived bundles in the working tree never ship
