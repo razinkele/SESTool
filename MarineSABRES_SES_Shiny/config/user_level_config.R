@@ -55,12 +55,35 @@ USER_LEVEL_CONFIG_KEYS <- names(USER_LEVEL_DEFAULTS[["beginner"]])
 # RUNTIME CONFIG STORAGE (per-session, populated from localStorage on start)
 # ============================================================================
 
-# Environment to hold the active level config for the current session.
-# This is populated once at startup from localStorage overrides, then
-# updated when the user changes settings via the modal.
+# Process-level DEFAULT store, used only outside a Shiny session (startup,
+# scripts, tests). Inside a session the store lives in session$userData, so
+# one browser's level and overrides never leak into another session served by
+# the same R process (review 2026-10-07 N20: every connecting session used to
+# overwrite this one global environment).
 .user_level_config_env <- new.env(parent = emptyenv())
 .user_level_config_env$overrides <- list()
 .user_level_config_env$active_level <- "beginner"
+
+#' The level-config store for the current context
+#'
+#' Shiny makes the running session the default reactive domain while any
+#' observer, render or the server function executes, so callers need not pass
+#' the session. Module session proxies share the root session's userData.
+#' @return environment with `active_level` and `overrides`
+.level_config_store <- function() {
+  s <- tryCatch(shiny::getDefaultReactiveDomain(), error = function(e) NULL)
+  ud <- if (!is.null(s)) tryCatch(s$userData, error = function(e) NULL) else NULL
+  if (is.environment(ud)) {
+    if (!is.environment(ud$.level_config)) {
+      e <- new.env(parent = emptyenv())
+      e$overrides <- list()
+      e$active_level <- "beginner"
+      ud$.level_config <- e
+    }
+    return(ud$.level_config)
+  }
+  .user_level_config_env
+}
 
 # ============================================================================
 # PUBLIC API
@@ -78,7 +101,7 @@ USER_LEVEL_CONFIG_KEYS <- names(USER_LEVEL_DEFAULTS[["beginner"]])
 get_level_config <- function(level = NULL, overrides = NULL) {
   # Fallback to active level if not specified
   if (is.null(level)) {
-    level <- .user_level_config_env$active_level %||% "beginner"
+    level <- .level_config_store()$active_level %||% "beginner"
   }
 
   # Validate level
@@ -92,8 +115,8 @@ get_level_config <- function(level = NULL, overrides = NULL) {
 
   config <- USER_LEVEL_DEFAULTS[[level]]
 
-  # Merge session overrides (from .user_level_config_env)
-  session_overrides <- .user_level_config_env$overrides
+  # Merge this session's overrides
+  session_overrides <- .level_config_store()$overrides
   if (length(session_overrides) > 0) {
     for (key in intersect(names(session_overrides), USER_LEVEL_CONFIG_KEYS)) {
       config[[key]] <- session_overrides[[key]]
@@ -136,11 +159,12 @@ set_active_level_config <- function(level, overrides = NULL) {
     return(invisible(NULL))
   }
 
-  .user_level_config_env$active_level <- level
-  .user_level_config_env$overrides <- if (!is.null(overrides)) overrides else list()
+  store <- .level_config_store()
+  store$active_level <- level
+  store$overrides <- if (!is.null(overrides)) overrides else list()
 
   debug_log(sprintf("Active level config set: %s (overrides: %d)",
-                     level, length(.user_level_config_env$overrides)), "LEVEL_CONFIG")
+                     level, length(store$overrides)), "LEVEL_CONFIG")
   invisible(get_level_config(level))
 }
 
@@ -149,9 +173,10 @@ set_active_level_config <- function(level, overrides = NULL) {
 #' @param level Character: user level to reset
 #' @export
 reset_level_config <- function(level = NULL) {
-  .user_level_config_env$overrides <- list()
+  store <- .level_config_store()
+  store$overrides <- list()
   if (!is.null(level)) {
-    .user_level_config_env$active_level <- level
+    store$active_level <- level
   }
   debug_log("Level config overrides reset to defaults", "LEVEL_CONFIG")
   invisible(get_level_config())
