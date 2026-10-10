@@ -91,12 +91,12 @@ test_that("sync_cld_to_isa_data builds all 6 adjacency matrices with correct pol
   isa <- result$data$isa_data
   d <- isa$drivers$ID; a <- isa$activities$ID; pr <- isa$pressures$ID
   m <- isa$marine_processes$ID; e <- isa$ecosystem_services$ID; g <- isa$goods_benefits$ID
-  expect_equal(adj$d_a[d, a], "+Medium:Medium")
-  expect_equal(adj$a_p[a, pr], "+Medium:Medium")
-  expect_equal(adj$p_mpf[pr, m], "-Medium:Medium")
-  expect_equal(adj$mpf_es[m, e], "+Medium:Medium")
-  expect_equal(adj$es_gb[e, g], "+Medium:Medium")
-  expect_equal(adj$gb_d[g, d], "-Medium:Medium")
+  expect_equal(adj$d_a[d, a], "+medium:3")
+  expect_equal(adj$a_p[a, pr], "+medium:3")
+  expect_equal(adj$p_mpf[pr, m], "-medium:3")
+  expect_equal(adj$mpf_es[m, e], "+medium:3")
+  expect_equal(adj$es_gb[e, g], "+medium:3")
+  expect_equal(adj$gb_d[g, d], "-medium:3")
 })
 
 test_that("sync_cld_to_isa_data preserves existing indicator metadata by name-match", {

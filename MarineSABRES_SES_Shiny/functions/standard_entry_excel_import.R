@@ -51,10 +51,14 @@ read_standard_entry_workbook <- function(path) {
     for (sheet in matrix_sheets) {
       key <- sub("^Matrix_", "", sheet)
       m <- openxlsx::read.xlsx(path, sheet = sheet, rowNames = TRUE)
+      # a present-but-empty sheet returns NULL: skip it instead of crashing
+      # the whole import (review 2026-10-07 N28)
+      if (is.null(m) || !is.data.frame(m) || ncol(m) == 0 || nrow(m) == 0) next
       mat <- as.matrix(m)
       storage.mode(mat) <- "character"
       # NA replacement must follow the character coercion above (numeric NA -> NA_character_, never the string "NA")
       mat[is.na(mat)] <- ""            # in-app empty-cell convention
+      mat[] <- trimws(mat)             # ' +strong:4' must not become an opposing edge
       am[[key]] <- mat
     }
     out$adjacency_matrices <- am
@@ -75,8 +79,11 @@ read_standard_entry_workbook <- function(path) {
     stop(e)
   }
 
-  # NOTE: Case_Info / loop_connections sheets are not imported (out of L5 scope:
-  # elements + adjacency edges only). gb_d closing-loop survives via Matrix_gb_d.
+  # Loop connections (Exercise 6), written by both exporters since N23
+  if ("Loop_Connections" %in% sheets) {
+    lc <- openxlsx::read.xlsx(path, sheet = "Loop_Connections")
+    if (is.data.frame(lc) && nrow(lc) > 0) out$loop_connections <- as.data.frame(lc, stringsAsFactors = FALSE)
+  }
 
   # Optional pass-through sheets
   if ("BOT_Data" %in% sheets) {
@@ -124,10 +131,26 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
 
   elements <- list(); panel_ids <- list()
   repaired <- FALSE; any_rows_in <- FALSE; any_panel_ids_out <- FALSE
+  deduped_rows <- 0L
   for (k in names(id_load_map)) {
     df <- saved_isa[[k]]
     if (is.data.frame(df) && nrow(df) > 0) {
       any_rows_in <- TRUE
+      # canonical column case for every door (review N24)
+      df <- canonicalize_element_columns(df)
+      # Legacy exact duplicates (same ID and same name) are the same element
+      # written twice by the old positional-ID bug: collapse them instead of
+      # re-keying the copies into edgeless orphans (review N27). Rows that
+      # share an ID but differ by name are still re-keyed by the reconciler.
+      if (all(c("ID", "Name") %in% names(df))) {
+        key <- paste(trimws(as.character(df$ID)), tolower(trimws(as.character(df$Name))), sep = "\r")
+        dup <- duplicated(key) & nzchar(trimws(as.character(df$ID)))
+        if (any(dup)) {
+          deduped_rows <- deduped_rows + sum(dup)
+          df <- df[!dup, , drop = FALSE]
+          repaired <- TRUE
+        }
+      }
       rec <- reconcile_loaded_element_ids(df, id_load_map[[k]]$prefix, id_store)
       elements[[k]] <- rec$df
       pids <- as.character(rec$df$ID)
@@ -189,8 +212,8 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
         source_df = src_df, linked_col = m$col, target_df = tgt_df,
         element_confidence_col = "Confidence",
         default_polarity   = m$polarity   %||% "+",
-        default_strength   = m$strength   %||% "Medium",
-        default_confidence = m$confidence %||% "Medium")
+        default_strength   = m$strength   %||% "medium",
+        default_confidence = m$confidence %||% "3")
       if (isTRUE(m$transpose)) mat <- t(mat)
       if (any(nzchar(mat))) {
         am[[mk]] <- mat
@@ -206,6 +229,7 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     adjacency_matrices = am,
     user_edited_matrices = ue,
     repaired = repaired,
+    deduped_rows = deduped_rows,
     any_rows_in = any_rows_in,
     any_panel_ids_out = any_panel_ids_out,
     fell_back = fell_back

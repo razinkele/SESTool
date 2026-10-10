@@ -46,8 +46,8 @@ test_that("rebuild_forward_matrix_by_name builds an ID-keyed matrix from label-f
   expect_equal(rownames(m), c("P001", "P002"))
   expect_equal(colnames(m), c("MPF005", "MPF019"))
   # P001 -> "Biodiversity richness" = MPF019 (NOT the stale MPF005); conf High
-  expect_equal(m["P001", "MPF019"], "+Medium:High")
+  expect_equal(m["P001", "MPF019"], "+medium:5")
   expect_equal(m["P001", "MPF005"], "")
   # P002 -> "Fish biomass" = MPF005; no Confidence -> default Medium
-  expect_equal(m["P002", "MPF005"], "+Medium:Medium")
+  expect_equal(m["P002", "MPF005"], "+medium:3")
 })
