@@ -525,20 +525,26 @@ ses_create_boolean_rules <- function(mat) {
 #'   }
 #' @export
 ses_boolean_attractors <- function(boolean_rules, max_nodes = NULL) {
-  if (is.null(max_nodes)) {
-    max_nodes <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
-  }
+  # The exhaustive search enumerates 2^n states in the single shared R process,
+  # so the documented hard cap applies whatever the caller passes (review
+  # 2026-10-07 N16: it used to be only the default, and the module forwarded
+  # the client-supplied slider value).
+  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+  max_nodes <- suppressWarnings(as.integer(max_nodes))
+  if (length(max_nodes) != 1 || is.na(max_nodes)) max_nodes <- hard_cap
+  max_nodes <- min(max_nodes, hard_cap)
 
-  if (!requireNamespace("BoolNet", quietly = TRUE)) {
-    stop("Package 'BoolNet' is required for Boolean analysis. Install with: install.packages('BoolNet')")
-  }
-
+  # Size check first: cheap, and must not depend on BoolNet being installed
   n_genes <- nrow(boolean_rules)
   if (n_genes > max_nodes) {
     stop(sprintf(
       "Network has %d nodes, exceeding the maximum of %d for exhaustive Boolean analysis. Consider simplifying the network or increasing the limit.",
       n_genes, max_nodes
     ))
+  }
+
+  if (!requireNamespace("BoolNet", quietly = TRUE)) {
+    stop("Package 'BoolNet' is required for Boolean analysis. Install with: install.packages('BoolNet')")
   }
 
   tryCatch({
@@ -570,15 +576,10 @@ ses_boolean_attractors <- function(boolean_rules, max_nodes = NULL) {
       }
     }
 
-    # State transition graph
-    transition_graph <- tryCatch({
-      BoolNet::plotStateGraph(attractors,
-                              layout = igraph::layout.fruchterman.reingold,
-                              plotIt = FALSE)
-    }, error = function(e) {
-      .dyn_log(sprintf("Could not create state transition graph: %s", e$message), "WARN")
-      NULL
-    })
+    # The state transition graph (2^n vertices) is no longer built: nothing in
+    # the app reads it and it doubled the memory of every run (review N16).
+    # The field stays in the result as NULL for API compatibility.
+    transition_graph <- NULL
 
     .dyn_log(sprintf("Boolean analysis complete: %d attractors found in %d states",
                       n_attractors, n_states))

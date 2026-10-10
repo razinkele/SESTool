@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (analysis bounding — review 2026-10-07 N16 / N17)
+
+- **Boolean attractor search respects its hard cap** (N16): the exhaustive 2^n search was bounded only by the client-supplied node limit (the slider allowed 30; a crafted input allowed anything), and `DYNAMICS_MAX_BOOLEAN_NODES` was only a default. The module clamps the input (`clamp_boolean_max_nodes()`), the slider stops at the cap, and `ses_boolean_attractors()` enforces it independently (size check now runs before the BoolNet check). The unused 2^n-vertex state-transition graph is no longer built (`transition_graph` stays in the result as `NULL`).
+- **Limits-to-Growth archetypes aggregate per leverage Response** (N17): one record per (reinforcing × balancing) loop pair reached tens of thousands of rendered panels on real projects; it is now one record per Response with the coupled loops merged, and long loop lists are truncated for display (`format_loop_ids()`).
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.

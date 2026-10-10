@@ -140,8 +140,13 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
   # --- A. Limits to Growth ----------------------------------------------
   # Reinforcing loop (engine; contains D or A) coupled (shares >=1 node) to a
   # Balancing loop that contains a Response (R). Leverage = the Response.
+  # One record per leverage Response (review 2026-10-07 N17): in DAPSIWRM CLDs
+  # almost every loop shares the core A->P->MPF->ES->GB chain, so one record
+  # per (reinforcing x balancing) pair reached tens of thousands. The advice is
+  # per Response anyway; the coupled loops are aggregated into that record.
   rein <- which(types == "Reinforcing")
   bal  <- which(types == "Balancing")
+  ltg <- list()   # keyed by leverage Response id, in first-seen order
   for (ri in rein) {
     if (!any(loop_codes[[ri]] %in% c("D", "A"))) next
     for (bi in bal) {
@@ -149,15 +154,24 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
       if (length(r_in_bal) == 0) next
       shared <- intersect(loop_nodes[[ri]], loop_nodes[[bi]])
       if (length(shared) == 0) next
-      out[[length(out) + 1]] <- list(
-        archetype_key    = "limits_to_growth",
-        loop_ids         = c(loop_info$LoopID[ri], loop_info$LoopID[bi]),
-        node_ids         = sort(unique(c(loop_nodes[[ri]], loop_nodes[[bi]]))),
-        shared_node_ids  = sort(shared),
-        leverage_node_id = r_in_bal[1],   # the management Response (deterministic: first in loop order)
-        confidence       = "candidate"
+      lev <- r_in_bal[1]   # the management Response (deterministic: first in loop order)
+      cur <- ltg[[lev]]
+      ltg[[lev]] <- list(
+        loop_ids = c(cur$loop_ids, loop_info$LoopID[ri], loop_info$LoopID[bi]),
+        node_ids = c(cur$node_ids, loop_nodes[[ri]], loop_nodes[[bi]]),
+        shared   = c(cur$shared, shared)
       )
     }
+  }
+  for (lev in names(ltg)) {
+    out[[length(out) + 1]] <- list(
+      archetype_key    = "limits_to_growth",
+      loop_ids         = sort(unique(ltg[[lev]]$loop_ids)),
+      node_ids         = sort(unique(ltg[[lev]]$node_ids)),
+      shared_node_ids  = sort(unique(ltg[[lev]]$shared)),
+      leverage_node_id = lev,
+      confidence       = "candidate"
+    )
   }
 
   out
@@ -237,4 +251,17 @@ build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18
   parts <- c(parts, paste0("<p><em>", t(paste0(K, ".narrative_confirm")), "</em></p>"))
 
   paste(parts, collapse = "\n")
+}
+
+#' Format a loop-id list for display, truncating long lists
+#'
+#' Archetype records can aggregate hundreds of loops (review 2026-10-07 N17);
+#' the card shows the first `max_show` ids and a "+N" count for the rest.
+#' @param ids loop ids
+#' @param max_show how many ids to show
+#' @return character(1)
+format_loop_ids <- function(ids, max_show = 20L) {
+  ids <- sort(unique(ids))
+  if (length(ids) <= max_show) return(paste(ids, collapse = ", "))
+  paste0(paste(ids[seq_len(max_show)], collapse = ", "), " \u2026 (+", length(ids) - max_show, ")")
 }
