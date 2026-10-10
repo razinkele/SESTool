@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (report pipeline — review 2026-10-07 N11 / N14 / N41)
+
+- **Reports no longer knit user text** (N11): the Markdown returned by `generate_report_content()` (project name, focal issue, element and stakeholder names) was written to an `.Rmd` and passed to `rmarkdown::render()`, so inline `` `r ...` `` or a fenced R chunk inside any of those fields ran R on the server. New `functions/report_render.R::render_report_safely()` knits only the static, user-text-free `templates/report_template.Rmd`, which emits the body with `results='asis'`; pandoc runs with `-raw_html-raw_tex-raw_attribute` and in-body YAML delimiters are escaped, so raw HTML / raw TeX / fenced raw blocks / metadata blocks are shown as text. HTML, PDF and Word all go through this path.
+- **HTML reports are served per session** (N14): `register_session_report()` hands the rendered file to `session$registerDataObj()`; nothing is written to the shared, statically served `www/reports/` any more (the old timestamp-named files were readable by any client). The `app.R` session-end `www/reports` sweep is now dead code and left in place.
+- **Honest LaTeX / pandoc probes** (N41): `latex_engine_available("lualatex")` replaces probes that treated `tinytex::tinytex_root() == ""` and a failing `pdflatex --version` as success; pandoc availability is checked before rendering. New translated messages `common.messages.pandoc_required` / `common.messages.latex_required`.
+
 ### Fixed (ISA batch-1 remainder — review 2026-10-07 N5 / N22 / N38 / N49 / N50)
 
 - **Removing an element now prunes its row/column from every adjacency and user-edited matrix** (N5, `prune_element_from_matrices()` in `register_remove_observer`), so the element frames and the SOURCE×TARGET matrices stay aligned and the positional CLD builder no longer re-wires surviving edges to the wrong neighbours.
