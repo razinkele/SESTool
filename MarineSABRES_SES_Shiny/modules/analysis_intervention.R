@@ -211,12 +211,10 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
       data <- project_data_reactive()
       req(data, has_valid_cld(data))
 
-      # Build numeric matrix if needed
-      if (is.null(rv$numeric_matrix)) {
-        rv$numeric_matrix <- cld_to_numeric_matrix(
-          data$data$cld$nodes, data$data$cld$edges, use_labels = TRUE
-        )
-      }
+      # Build from the current CLD (N31: never reuse a matrix from before CLD edits)
+      rv$numeric_matrix <- cld_to_numeric_matrix(
+        data$data$cld$nodes, data$data$cld$edges, use_labels = TRUE
+      )
 
       # Map IDs to labels for affected and indicator nodes
       nodes_df <- data$data$cld$nodes
@@ -284,11 +282,25 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
             ),
             actionButton(
               ns(paste0("remove_", gsub("[^a-zA-Z0-9]", "_", name))),
-              icon("trash"), class = "btn-sm btn-outline-danger"
+              icon("trash"), class = "btn-sm btn-outline-danger",
+              # one delegated input carries the intervention name (N34: these
+              # buttons had no handler at all)
+              onclick = sprintf("Shiny.setInputValue('%s', %s, {priority: 'event'})",
+                                ns("remove_intervention"),
+                                jsonlite::toJSON(name, auto_unbox = TRUE))
             )
           )
         })
       )
+    })
+
+    # ── Remove an intervention (N34) ─────────────────────────────────────
+    observeEvent(input$remove_intervention, {
+      name <- input$remove_intervention
+      req(is.character(name), length(name) == 1, name %in% names(rv$interventions))
+      rv$interventions[[name]] <- NULL
+      rv$comparison_results[[name]] <- NULL
+      if (length(rv$interventions) == 0) rv$analysis_complete <- FALSE
     })
 
     # ── Run analysis ─────────────────────────────────────────────────────
@@ -305,11 +317,12 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
       rv$analysis_complete <- FALSE
       rv$error_message <- NULL
 
-      if (is.null(rv$numeric_matrix)) {
-        rv$numeric_matrix <- cld_to_numeric_matrix(
-          data$data$cld$nodes, data$data$cld$edges, use_labels = TRUE
-        )
-      }
+      # Rebuild the baseline from the current CLD and each intervention from
+      # its stored specification, so both reflect CLD edits made since they
+      # were added (N31).
+      rv$numeric_matrix <- cld_to_numeric_matrix(
+        data$data$cld$nodes, data$data$cld$edges, use_labels = TRUE
+      )
 
       n_interventions <- length(rv$interventions)
 
@@ -324,13 +337,19 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
             detail = paste(i, "/", n_interventions, "-", name))
 
           tryCatch({
+            int$matrix <- ses_add_intervention(
+              rv$numeric_matrix, name = name,
+              affected_nodes = int$affected_nodes,
+              indicator_nodes = int$indicator_nodes,
+              effect_range = int$effect_range
+            )
             comparison <- ses_compare_interventions(
               rv$numeric_matrix, int$matrix, n_iter = input$n_iter
             )
             rv$comparison_results[[name]] <- comparison
           }, error = function(e) {
             rv$comparison_results[[name]] <- NULL
-            rv$error_message <- paste(name, ":", e$message)
+            rv$error_message <- c(rv$error_message, paste0(name, ": ", conditionMessage(e)))
           })
         }
 
@@ -356,7 +375,14 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
 
     # ── Results UI ───────────────────────────────────────────────────────
     output$results_ui <- renderUI({
+      # Failed comparisons used to vanish silently (N34)
+      err_ui <- if (length(rv$error_message) > 0) {
+        div(class = "alert alert-warning",
+            tags$strong(i18n$t("common.messages.error")), " ",
+            lapply(rv$error_message, function(m) tags$div(m)))
+      }
       if (!rv$analysis_complete || length(rv$comparison_results) == 0) {
+        if (!is.null(err_ui)) return(err_ui)
         return(div(
           style = "text-align: center; padding: 60px; color: #999;",
           icon("syringe", class = "fa-3x"), tags$br(), tags$br(),

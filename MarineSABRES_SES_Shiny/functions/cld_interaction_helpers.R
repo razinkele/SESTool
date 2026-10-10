@@ -1003,3 +1003,25 @@ notify_cld_edit <- function(event_bus, source) {
   event_bus$emit_isa_change(source)
   invisible(TRUE)
 }
+
+#' Node ids of a detected loop, for CLD highlighting (review 2026-10-07 N32)
+#'
+#' Prefers loop_info$NodeIDs (stable node ids written by
+#' process_cycles_to_loops) and keeps only ids present in the current CLD;
+#' falls back to the legacy positional indices into the CLD's node order.
+#' @param loop_info data.frame from the Loops tab (may be NULL)
+#' @param loop_idx selected loop row
+#' @param indices legacy positional node indices of that loop
+#' @param current_ids ids of the nodes currently in the CLD
+#' @return character vector of node ids
+loop_highlight_node_ids <- function(loop_info, loop_idx, indices, current_ids) {
+  if (is.data.frame(loop_info) && "NodeIDs" %in% names(loop_info) &&
+      loop_idx >= 1 && loop_idx <= nrow(loop_info)) {
+    ids <- trimws(strsplit(as.character(loop_info$NodeIDs[loop_idx]), "[,;|]")[[1]])
+    ids <- ids[nzchar(ids) & ids %in% current_ids]
+    if (length(ids) > 0) return(ids)
+  }
+  idx <- suppressWarnings(as.integer(indices))
+  idx <- idx[!is.na(idx) & idx >= 1 & idx <= length(current_ids)]
+  as.character(current_ids[idx])
+}

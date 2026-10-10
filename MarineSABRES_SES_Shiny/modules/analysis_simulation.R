@@ -193,11 +193,9 @@ analysis_simulation_server <- function(id, project_data_reactive, i18n, event_bu
 
     # ── Build numeric matrix helper ──────────────────────────────────────
     .get_matrix <- function(data) {
-      # Check if we already have a cached matrix from Boolean module
-      cached <- safe_get_nested(data, "data", "analysis", "dynamics", "numeric_matrix",
-                                 default = NULL)
-      if (!is.null(cached) && is.matrix(cached)) return(cached)
-
+      # Always build from the CURRENT CLD with THIS module's include_confidence
+      # setting (review 2026-10-07 N31: the Boolean module's cached matrix went
+      # stale after CLD edits and carried that module's own setting). Cheap.
       cld_to_numeric_matrix(
         data$data$cld$nodes,
         data$data$cld$edges,
