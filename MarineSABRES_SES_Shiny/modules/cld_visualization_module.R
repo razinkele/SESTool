@@ -1615,8 +1615,10 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             # Need to convert to actual node IDs (ES_1, P_1, MPF_2, etc.)
             loop_node_indices <- as.integer(selected_loop)
 
-            # Convert indices to actual node IDs
-            loop_node_ids <- rv$nodes$id[loop_node_indices]
+            # Resolve by node ID (review 2026-10-07 N32): the analysis indexes
+            # nodes in create_nodes_df order, which diverges from rv$nodes after
+            # any CLD edit. Fall back to positions only for old saves.
+            loop_node_ids <- loop_highlight_node_ids(loop_info, loop_idx, loop_node_indices, rv$nodes$id)
 
             debug_log(paste("Loop indices from analysis:", paste(loop_node_indices, collapse=", ")), "CLD VIZ")
             debug_log(paste("Converted to node IDs:", paste(loop_node_ids, collapse=", ")), "CLD VIZ")

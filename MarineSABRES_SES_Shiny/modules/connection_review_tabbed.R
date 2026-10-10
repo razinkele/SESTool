@@ -779,10 +779,19 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       })
     })
 
+    # Handles of the per-batch / per-connection observers, destroyed before each
+    # regeneration (review 2026-10-07 N30: they stacked, so after k approvals
+    # every button ran k+1 handlers -- same class as the June H3 fix).
+    obs_env <- new.env(parent = emptyenv())
+    obs_env$batch <- list()
+    obs_env$conn  <- list()
+    destroy_all <- function(lst) { for (o in lst) try(o$destroy(), silent = TRUE); list() }
+
     # Set up observers for batch-level approve/reject all buttons
     observe({
       batched <- batched_connections()
       batch_lists <- batched$batches
+      obs_env$batch <- destroy_all(obs_env$batch)
 
       lapply(names(batch_lists), function(batch_id) {
         local({
@@ -790,7 +799,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           batch <- batch_lists[[local_batch_id]]
 
           # Approve All button for this batch
-          observeEvent(input[[paste0("approve_all_", local_batch_id)]], {
+          obs_env$batch[[length(obs_env$batch) + 1L]] <- observeEvent(input[[paste0("approve_all_", local_batch_id)]], {
             # Approve all connections in this batch
             rv$approved <- union(rv$approved, batch$indices)
             # Remove any from rejected list
@@ -810,7 +819,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           })
 
           # Reject All button for this batch
-          observeEvent(input[[paste0("reject_all_", local_batch_id)]], {
+          obs_env$batch[[length(obs_env$batch) + 1L]] <- observeEvent(input[[paste0("reject_all_", local_batch_id)]], {
             # Reject all connections in this batch
             rv$rejected <- union(rv$rejected, batch$indices)
             # Remove any from approved list
@@ -830,7 +839,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           })
 
           # Next Category button - switches to next tab
-          observeEvent(input[[paste0("goto_next_", local_batch_id)]], {
+          obs_env$batch[[length(obs_env$batch) + 1L]] <- observeEvent(input[[paste0("goto_next_", local_batch_id)]], {
             batch_names <- names(batch_lists)
             current_idx <- which(batch_names == local_batch_id)
 
@@ -898,6 +907,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       # Create all observers for current session
       # Using session number ensures old observers are effectively ignored
       current_session <- observer_session()
+      obs_env$conn <- destroy_all(obs_env$conn)
 
       lapply(seq_along(conns), function(conn_idx) {
         local({
@@ -979,7 +989,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           })
 
           # Approve button - reads current slider values and applies them
-          observeEvent(input[[paste0("approve_", local_idx)]], {
+          obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(input[[paste0("approve_", local_idx)]], {
             # Read current slider values
             strength_value <- input[[paste0("strength_", local_idx)]]
             conf_value <- input[[paste0("confidence_", local_idx)]]
@@ -1033,7 +1043,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           })
 
           # Reject button
-          observeEvent(input[[paste0("reject_", local_idx)]], {
+          obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(input[[paste0("reject_", local_idx)]], {
             rv$rejected <- union(rv$rejected, local_idx)
             rv$approved <- setdiff(rv$approved, local_idx)
 
@@ -1046,7 +1056,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           })
 
           # Swap direction button - toggle the from/to direction
-          observeEvent(input[[paste0("swap_direction_", local_idx)]], {
+          obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(input[[paste0("swap_direction_", local_idx)]], {
             # Debounce: ignore if fired within 500ms of last action
             now <- as.numeric(Sys.time())
             if (!is.null(rv$last_action_time) && (now - rv$last_action_time) < 0.5) return()

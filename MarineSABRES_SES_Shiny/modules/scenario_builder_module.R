@@ -871,8 +871,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
         setProgress(0.6, detail = i18n$t("modules.scenario.builder.scenario_detecting_feedback_loops"))
 
-        # Detect loops
-        loops <- detect_feedback_loops(modified_network)
+        # Detect loops (real cycles, comparable with the baseline -- N33)
+        loops <- scenario_loops(modified_network)$loops
+        baseline_loop_count <- scenario_loops(project_data_reactive()$data$cld)$count
 
         setProgress(0.8, detail = i18n$t("modules.scenario.builder.scenario_predicting_impacts"))
 
@@ -891,6 +892,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
         scenario_list[[idx]]$results <- list(
           network_stats = network_stats,
           loops = loops,
+          baseline_loop_count = baseline_loop_count,
           impact_predictions = impact_predictions,
           impact_summary = list(
             nodes_affected = sum(impact_predictions$impact_magnitude != 0),
@@ -917,11 +919,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
       baseline_stats <- list(
         total_nodes = nrow(baseline$nodes),
         total_links = nrow(baseline$edges),
-        total_loops = if (!is.null(project_data_reactive()$data$loop_detection)) {
-          nrow(project_data_reactive()$data$loop_detection$loops)
-        } else {
-          0
-        }
+        # computed with the same method as the scenario at analysis time
+        # (N33: it used to read a loop_detection slot that nothing writes, so it was always 0)
+        total_loops = active_scenario$results$baseline_loop_count %||% NA_integer_
       )
 
       scenario_stats <- active_scenario$results$network_stats
@@ -1301,44 +1301,15 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Calculate network statistics
     calculate_network_stats <- function(network) {
-      loops <- detect_feedback_loops(network)
       list(
         total_nodes = nrow(network$nodes),
         total_links = nrow(network$edges),
-        total_loops = loops$count
+        total_loops = scenario_loops(network)$count
       )
     }
 
-    # Detect feedback loops
-    detect_feedback_loops <- function(network) {
-      # Convert to igraph
-      if (is.null(network$edges) || nrow(network$edges) == 0) {
-        return(list(count = 0, edges = list()))
-      }
-
-      tryCatch({
-        g <- igraph::graph_from_data_frame(
-          d = network$edges[, c("from", "to")],
-          directed = TRUE,
-          vertices = network$nodes$id
-        )
-
-        # Find feedback arcs (creates cycle basis)
-        feedback_arcs <- igraph::feedback_arc_set(g, algo = "approx_eades")
-
-        if (length(feedback_arcs) > 0) {
-          list(
-            count = length(feedback_arcs),
-            edges = feedback_arcs
-          )
-        } else {
-          list(count = 0, edges = list())
-        }
-      }, error = function(e) {
-        debug_log(sprintf("Loop detection error: %s", e$message), "SCENARIO-BUILDER")
-        list(count = 0, edges = list())
-      })
-    }
+    # (module-local detect_feedback_loops removed: it shadowed the global
+    #  function with an incompatible contract -- see scenario_loops(), N33)
 
     # Predict impacts
     predict_impacts <- function(baseline, scenario, modifications) {
@@ -1440,5 +1411,35 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Return reactive project data
     return(reactive(project_data_reactive()))
+  })
+}
+
+#' Feedback loops of a scenario network (review 2026-10-07 N33)
+#'
+#' Uses the shared cycle finder with the Loops tab defaults (no self-loops or
+#' 2-node cycles) and returns loop objects the "Affected loops" panel can show.
+#' @param network list(nodes, edges) in CLD shape
+#' @return list(count = integer, loops = list of list(type, nodes))
+scenario_loops <- function(network) {
+  empty <- list(count = 0L, loops = list())
+  if (is.null(network) || !is.data.frame(network$edges) || nrow(network$edges) == 0 ||
+      !is.data.frame(network$nodes) || nrow(network$nodes) == 0) return(empty)
+  tryCatch({
+    cycles <- find_all_cycles(network$nodes, network$edges, max_length = 8, max_cycles = 500,
+                              timeout_seconds = if (exists("LOOP_ANALYSIS_TIMEOUT_SECONDS")) LOOP_ANALYSIS_TIMEOUT_SECONDS else 30)
+    cycles <- Filter(function(l) length(l) > 2, cycles)
+    if (length(cycles) == 0) return(empty)
+    # same builder find_all_cycles uses, so cycle vertex indices line up
+    g <- create_igraph_from_data(network$nodes, network$edges)
+    info <- process_cycles_to_loops(cycles, network$nodes, network$edges, g, validate_dapsirwrm = FALSE)
+    if (!is.data.frame(info) || nrow(info) == 0) return(empty)
+    loops <- lapply(seq_len(nrow(info)), function(i) list(
+      type = as.character(info$Type[i]),
+      nodes = trimws(strsplit(as.character(info$Elements[i]), "→", fixed = TRUE)[[1]])
+    ))
+    list(count = length(loops), loops = loops)
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(sprintf("scenario_loops: %s", conditionMessage(e)), "SCENARIO-BUILDER")
+    empty
   })
 }
