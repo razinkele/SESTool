@@ -1,8 +1,8 @@
 {
-  "version": "1.19.1",
-  "version_name": "Review fixes: ISA load/save integrity + server-mode hardening",
-  "release_date": "2026-10-08",
-  "release_type": "patch",
+  "version": "1.20.0",
+  "version_name": "Review fixes: reports, ISA integrity, CLD sync, JSON round trips, deploy/CI hygiene",
+  "release_date": "2026-10-10",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -14,14 +14,17 @@
   "features": [],
   "fixes": {
     "critical": [
-      "ISA Standard Entry: Save on any exercise after a project load / autosave recovery / Excel import no longer replaces the loaded rows of that category with only the rows added this session; the Responses Save no longer drops the R arm (review N1, PR #60).",
-      "ISA Standard Entry: New Project / loading another project no longer inherits the previous project's elements, loop connections and case info (review N2, PR #60)."
+      "Reports render through a static template and never knit user text (N11); reports are served per session, not from the shared www/reports (N14) - PR #63.",
+      "CLD edits keep ISA element IDs, names, full cell values and user-edited flags (N3) - PR #65.",
+      "JSON round trips (local storage, .json load, language switch) keep matrices and element tables intact (N4) - PR #70.",
+      "Graphical SES Export to ISA works and writes the canonical schema (N6) - PR #69.",
+      "Boolean attractor search enforces its node cap; Limits-to-Growth aggregated per Response (N16, N17) - PR #68."
     ],
     "high": [
-      "Recent Projects: folder/project observers are inert outside local mode and the open-folder shell call quotes its path (review N9/N10, PR #61).",
-      "Settings > SES Models: custom directories are refused outside local mode and the server filesystem is never offered as a browse root; models cache is keyed by directory (review N12/N13, PR #61).",
-      "Decision Lens narrative escapes element labels; feedback admin tables escape user text and the duplicate-marking endpoints require admin (review N15/N18/N19, PR #61).",
-      "Autosave-load containment requires a path separator after the root (review N56, PR #61)."
+      "ISA: removing an element prunes its matrices; CLD edits reach the event bus; matrix selector keys; import guard; R-arm recovery (N5, N22, N38, N49, N50) - PR #64.",
+      "Deploys preserve the feedback log and a writable data/, touch restart.txt; CI fails zero-pass test files; root scripts stay app-scoped; export-ignore (N8, N42, N43, N44, N80) - PR #66.",
+      "Bookmark restore validates URL values (N81, N82) - PR #67.",
+      "User-level settings are per session (N20) - PR #71."
     ]
   },
   "metrics": {
@@ -39,5 +42,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.19.0"
+  "previous_version": "1.19.1",
+  "build_info": {
+    "build_date": "2026-10-10 22:21:23.215592"
+  }
 }
