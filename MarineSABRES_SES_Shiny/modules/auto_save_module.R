@@ -366,6 +366,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       recovery_file = NULL,       # the file offered in the recovery modal (temp or server copy)
       server_recovery_checked = FALSE,  # this browser's server copy has been checked (N7)
       server_autosaves_pruned = FALSE,
+      persistent_autosaves_pruned = FALSE,  # local .autosave pruned this session (N54)
       data_dirty = FALSE,  # Track if data has changed since last save
       save_in_progress = FALSE,  # Prevents concurrent saves from overlapping (I1a)
       last_data_hash = NULL,  # Hash of last saved data to detect changes
@@ -641,6 +642,11 @@ auto_save_server <- function(id, project_data_reactive, i18n,
           debug_log("WARNING: isa_data is NULL or missing", "AUTO-SAVE")
         }
 
+        # Hash the project itself, before the timestamped metadata is attached:
+        # the skip-if-unchanged checks hash the raw project, so hashing after
+        # adding save_time meant they never matched (review 2026-10-07 N55)
+        data_hash <- digest::digest(current_data)
+
         # Add auto-save metadata
         current_data$autosave_metadata <- list(
           session_id = session_id,
@@ -668,6 +674,10 @@ auto_save_server <- function(id, project_data_reactive, i18n,
           tryCatch({
             saveRDS(current_data, persistent_path)
             debug_log(sprintf("Persistent autosave: %s", persistent_path), "AUTO-SAVE")
+            if (!isTRUE(auto_save$persistent_autosaves_pruned)) {
+              prune_persistent_autosaves(dirname(persistent_path), max_age_hours = 72)
+              auto_save$persistent_autosaves_pruned <- TRUE
+            }
           }, error = function(e) {
             # Non-fatal: continue even if persistent save fails
             debug_log(sprintf("Persistent autosave failed (non-fatal): %s", e$message), "AUTO-SAVE")
@@ -711,7 +721,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
         auto_save$save_count <- auto_save$save_count + 1
 
         # Update hash and clear dirty flag after successful save
-        auto_save$last_data_hash <- digest::digest(current_data)
+        auto_save$last_data_hash <- data_hash
         auto_save$data_dirty <- FALSE
 
         updateSaveIndicator()
@@ -954,6 +964,10 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
       # --- First load: perform an immediate save regardless of event_bus ---
       if (is.null(auto_save$last_data_hash)) {
+        # Nothing to protect yet: the empty startup project used to be saved on
+        # every session start, filling .autosave (review 2026-10-07 N54). The
+        # hash stays NULL, so the first change with content saves immediately.
+        if (!project_has_content(data)) return()
         auto_save$data_dirty <- TRUE
         if (auto_save$is_enabled && !auto_save$recovery_pending) {
           debug_log("First data detected - performing immediate save", "AUTO-SAVE")

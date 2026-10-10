@@ -80,7 +80,11 @@ test_that("N7: a new session with the same browser token is offered the server c
       expect_false(auto_save$recovery_pending)
     })
   })
-  expect_false(file.exists(saved))                                # consumed, rewritten by later autosaves
+  # The recovered project is the session's first content, so (since N54 skips
+  # the empty first-load save) it is autosaved at once: the server copy now
+  # holds the recovered work again rather than the pre-recovery file.
+  expect_true(file.exists(saved))
+  expect_equal(nrow(readRDS(saved)$data$isa_data$drivers), 4)
 })
 
 test_that("N7: discarding removes the server copy", {

@@ -23,7 +23,21 @@ read_feedback_cached <- function() {
       identical(current_mtime, .feedback_cache$mtime)) {
     return(.feedback_cache$data)
   }
-  .feedback_cache$data <- readRDS(FEEDBACK_LOG_FILE)
+  # Corruption-safe read (review 2026-10-07 N58: a truncated file used to make
+  # every log_*_feedback throw, and logging went permanently dead). An
+  # unreadable log is moved aside so init_feedback_log() can start a new one.
+  data <- tryCatch(suppressWarnings(readRDS(FEEDBACK_LOG_FILE)), error = function(e) NULL)
+  if (!is.data.frame(data)) {
+    aside <- paste0(FEEDBACK_LOG_FILE, ".corrupt-", format(Sys.time(), "%Y%m%d%H%M%S"))
+    suppressWarnings(file.rename(FEEDBACK_LOG_FILE, aside))
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("Unreadable feedback log moved to %s; starting a new one", aside), "ML_FEEDBACK")
+    }
+    .feedback_cache$data <- NULL
+    .feedback_cache$mtime <- NULL
+    return(NULL)
+  }
+  .feedback_cache$data <- data
   .feedback_cache$mtime <- current_mtime
   .feedback_cache$data
 }
@@ -31,7 +45,13 @@ read_feedback_cached <- function() {
 #' Write feedback log and update cache
 #' @param feedback_log Feedback log dataframe
 write_feedback_and_cache <- function(feedback_log) {
-  saveRDS(feedback_log, FEEDBACK_LOG_FILE)
+  # Atomic write: a crash mid-save can no longer leave a truncated log (N58)
+  tmp <- paste0(FEEDBACK_LOG_FILE, ".tmp", Sys.getpid())
+  saveRDS(feedback_log, tmp)
+  if (!isTRUE(suppressWarnings(file.rename(tmp, FEEDBACK_LOG_FILE)))) {
+    file.copy(tmp, FEEDBACK_LOG_FILE, overwrite = TRUE)
+    unlink(tmp)
+  }
   write.csv(feedback_log, FEEDBACK_CSV_FILE, row.names = FALSE)
   .feedback_cache$data <- feedback_log
   .feedback_cache$mtime <- file.mtime(FEEDBACK_LOG_FILE)
@@ -104,11 +124,30 @@ init_feedback_log <- function() {
     debug_log(paste("Initialized feedback log:", FEEDBACK_LOG_FILE), "ML_FEEDBACK")
     return(feedback_log)
   } else {
-    # Load existing log (cached)
+    # Load existing log (cached); an unreadable file is moved aside by
+    # read_feedback_cached(), so start a fresh log in that case
     feedback_log <- read_feedback_cached()
+    if (is.null(feedback_log)) return(init_feedback_log())
     debug_log(paste("Loaded existing feedback log:", nrow(feedback_log), "entries"), "ML_FEEDBACK")
     return(feedback_log)
   }
+}
+
+#' Append one entry to the feedback log, aligning columns first
+#'
+#' Classification entries carry fewer columns than connection entries, and
+#' older logs may predate newer columns; plain rbind() failed with "numbers of
+#' columns of arguments do not match", silently dropping one feedback channel
+#' (review 2026-10-07 N40). Missing columns on either side are filled with NA.
+#' @param feedback_log existing log data.frame (may be NULL or 0 rows)
+#' @param new_entry one-row data.frame
+#' @return combined data.frame with the union of columns (log's order first)
+append_feedback_entry <- function(feedback_log, new_entry) {
+  if (is.null(feedback_log) || !is.data.frame(feedback_log)) return(new_entry)
+  cols <- union(names(feedback_log), names(new_entry))
+  for (cl in setdiff(cols, names(feedback_log))) feedback_log[[cl]] <- if (nrow(feedback_log)) NA else logical(0)
+  for (cl in setdiff(cols, names(new_entry))) new_entry[[cl]] <- NA
+  rbind(feedback_log[, cols, drop = FALSE], new_entry[, cols, drop = FALSE])
 }
 
 #' Log Classification Feedback
@@ -169,13 +208,17 @@ log_classification_feedback <- function(element_name,
 
     # Session metadata
     session_id = session_id %||% "unknown",
-    user_id = Sys.info()["user"]
+    # Not tracked: on the server Sys.info()["user"] was the service account
+    # ("shiny") for everyone, which looked like an identity but was not one.
+    # Feedback/bandit state is deployment-global (review 2026-10-07 N59).
+    user_id = NA_character_,
+    stringsAsFactors = FALSE
 
     
   )
 
   # Append to log
-  feedback_log <- rbind(feedback_log, new_entry)
+  feedback_log <- append_feedback_entry(feedback_log, new_entry)
 
   # Save (cached)
   write_feedback_and_cache(feedback_log)
@@ -272,13 +315,17 @@ log_connection_feedback <- function(source_element,
 
     # Session metadata
     session_id = session_id %||% "unknown",
-    user_id = Sys.info()["user"]
+    # Not tracked: on the server Sys.info()["user"] was the service account
+    # ("shiny") for everyone, which looked like an identity but was not one.
+    # Feedback/bandit state is deployment-global (review 2026-10-07 N59).
+    user_id = NA_character_,
+    stringsAsFactors = FALSE
 
     
   )
 
   # Append to log
-  feedback_log <- rbind(feedback_log, new_entry)
+  feedback_log <- append_feedback_entry(feedback_log, new_entry)
 
   # Save (cached)
   write_feedback_and_cache(feedback_log)

@@ -756,3 +756,25 @@ project_has_content <- function(pd) {
   nodes <- pd$data$cld$nodes
   has_el || (is.data.frame(nodes) && nrow(nodes) > 0)
 }
+
+#' Remove local autosave files older than the recovery window (review 2026-10-07 N54)
+#'
+#' Nothing pruned <projects folder>/.autosave, so one file per session piled up
+#' and buried real autosaves in "Recent Autosaves".
+#' @param folder autosave folder (default: the projects folder's .autosave)
+#' @param max_age_hours files older than this are deleted
+#' @return invisible(number of files removed)
+prune_persistent_autosaves <- function(folder = NULL, max_age_hours = 72) {
+  if (is.null(folder)) {
+    base <- get_projects_folder(create_if_missing = FALSE)
+    if (is.null(base)) return(invisible(0L))
+    folder <- file.path(base, ".autosave")
+  }
+  if (!dir.exists(folder)) return(invisible(0L))
+  files <- list.files(folder, pattern = "^autosave_.*[.]rds$", full.names = TRUE)
+  if (length(files) == 0) return(invisible(0L))
+  age_h <- as.numeric(difftime(Sys.time(), file.mtime(files), units = "hours"))
+  old <- files[!is.na(age_h) & age_h > max_age_hours]
+  if (length(old)) unlink(old)
+  invisible(length(old))
+}

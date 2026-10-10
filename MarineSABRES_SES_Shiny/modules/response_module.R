@@ -488,15 +488,16 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
                         else if (eff == "LOW" || fea == "LOW") "low"
                         else "medium"
           pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
+          pctx <- project_bandit_context(pd)   # N53: real project paths
           ctx <- build_response_context(
             target_type = "Responses",
             effectiveness = eff,
             feasibility = fea,
             stakeholder_engagement = 0.5,
-            n_elements = nrow(pd$isa_data$elements %||% data.frame()),
-            n_connections = nrow(pd$isa_data$connections %||% data.frame()),
-            regional_sea = pd$metadata$regional_sea %||% "other",
-            main_issue = pd$metadata$main_issue %||% "other"
+            n_elements = pctx$n_elements,
+            n_connections = pctx$n_connections,
+            regional_sea = pctx$regional_sea,
+            main_issue = pctx$main_issue
           )
           state <- load_response_bandit()
           state <- update_response_bandit(state, chosen_arm, ctx, reward = 1)
@@ -608,10 +609,11 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         if (!is.null(bandit_state)) {
           # Pull current SES counts from project_data_reactive if available
           pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
-          n_elements <- nrow(pd$isa_data$elements %||% data.frame())
-          n_conns    <- nrow(pd$isa_data$connections %||% data.frame())
-          regional   <- pd$metadata$regional_sea %||% "other"
-          issue      <- pd$metadata$main_issue %||% "other"
+          pctx <- project_bandit_context(pd)   # N53: real project paths
+          n_elements <- pctx$n_elements
+          n_conns    <- pctx$n_connections
+          regional   <- pctx$regional_sea
+          issue      <- pctx$main_issue
           for (i in seq_len(nrow(measures))) {
             ctx <- tryCatch(
               build_response_context(
