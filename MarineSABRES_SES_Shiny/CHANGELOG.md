@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Tests (review 2026-10-07 N45, N72–N78)
+
+- **Entry-point behaviour tests drive the real module** (N45): they ran against the helper stub and ended in `expect_true(TRUE)`; they now bind the real server and assert screen, step and selection state. CLAUDE.md's testing note was corrected.
+- **The source-chain guard is stricter** (N72): only real `source()` lines and `critical_sources` entries count, and a non-ML file loaded only inside the torch-gated block (undefined on laguna and in CI) now fails.
+- **Decision Lens server is exercised** (N73): Analyze on a fixture network, valid-loop detection without 2-node cycles, and the empty-network warning.
+- **Load-path normalisation is tested by behaviour** (N74) instead of a source grep, including the normalise → ISA-import chain and call ordering.
+- **Always-skipped p2/p3 tests removed** (N75): they checked gitignored docs and scripts. The P3 parse check no longer aborts on the deleted session-management file.
+- **E2E**: the skip now runs before `library(shinytest2)`, and each tab check asserts that tab's own pane rendered without a Shiny output error (N76).
+- **`tests/run_all_tests.R` runs like CI** (N77): one R process per test file via `tests/ci_run_file.R`, correct paths for the standalone scripts, warnings no longer abort a suite. An optional name filter is accepted.
+- **Unused app-level workflow copies removed** (N78); `.github/workflows/README.md` points to the live root workflows.
+
 ### Fixed (translations — review 2026-10-07 N46, N47, N63, N64)
 
 - **Decision Lens is fully translated** (N46): the factor table headers, element categories and roles, the plot legend and the archetype "Loops" footer were English in every language. Dynamic keys now carry `# i18n-ref:` markers for the enforcement scan.

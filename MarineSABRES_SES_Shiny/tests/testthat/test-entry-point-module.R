@@ -33,98 +33,90 @@ test_that("entry_point_ui returns shiny tags and namespaces the id", {
 })
 
 # ============================================================================
-# Server behavior — uses shiny::testServer() to drive observers and
-# assert reactive state transitions. These tests would FAIL if the
-# observer bodies were replaced with NULL.
+# Server behavior — drives the REAL server with shiny::testServer() and
+# asserts the module's reactive state.
+#
+# Review 2026-10-07 N45: these tests used to call testServer() on the bare
+# symbol `entry_point_server`, which resolves to the helper-stubs.R stub (the
+# helper env shadows the .GlobalEnv copy source_for_test() writes), and ended
+# in expect_true(TRUE) -- so they passed with the module body deleted. Bind
+# the real server explicitly and assert on rv.
 # ============================================================================
 
-test_that("initial state is welcome screen at step 0", {
-  testServer(entry_point_server,
-             args = list(project_data_reactive = reactive(list()),
-                         i18n = i18n),
-             {
-               # The internal rv is module-private. Verify state via the
-               # rendered output instead: with current_screen="welcome",
-               # the module renders the welcome screen.
-               session$flushReact()
-               # If the module reaches this point without erroring,
-               # the welcome-state initialization succeeded.
-               expect_true(TRUE)
-             })
+real_entry_point_server <- get("entry_point_server", envir = .GlobalEnv)
+
+
+test_that("the behaviour tests drive the real module, not the helper stub", {
+  expect_true(any(grepl("current_screen", deparse(body(real_entry_point_server)), fixed = TRUE)))
 })
 
-test_that("clicking start_guided advances to the guided screen", {
-  testServer(entry_point_server,
-             args = list(project_data_reactive = reactive(list()),
-                         i18n = i18n),
-             {
-               session$setInputs(start_guided = 1)
-               # After start_guided, the module's renderUI for main_content
-               # should switch to the guided-step branch. We can't read
-               # private rv directly, but we can confirm the observer ran
-               # without error and the next input flow works.
-               session$setInputs(ep0_role_click = "researcher")
-               session$setInputs(ep0_continue = 1)
-               # If we got here without the module erroring, the
-               # welcome → guided → EP0-continue transition worked.
-               expect_true(TRUE)
-             })
+test_that("initial state is the welcome screen at step 0", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$flushReact()
+    expect_identical(rv$current_screen, "welcome")
+    expect_equal(rv$current_step, 0)
+  })
 })
 
-test_that("ep0_role_click toggles selection (click twice = deselect)", {
-  # We test the underlying selection logic by driving the observer
-  # twice with the same id and confirming the second click produces
-  # the deselect notification path rather than the continue path.
-  testServer(entry_point_server,
-             args = list(project_data_reactive = reactive(list()),
-                         i18n = i18n),
-             {
-               session$setInputs(start_guided = 1)
-               session$setInputs(ep0_role_click = "researcher")
-               # Second click on same role should deselect
-               session$setInputs(ep0_role_click = "researcher")
-               # ep0_continue without any selection should show a warning
-               # notification and NOT advance the step. We can't easily
-               # capture showNotification calls in testServer, but we can
-               # at least confirm the click path doesn't error.
-               session$setInputs(ep0_continue = 1)
-               expect_true(TRUE)
-             })
+test_that("start_guided enters the guided flow; a chosen role lets EP0 continue", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    expect_identical(rv$current_screen, "guided")
+    expect_equal(rv$current_step, 0)
+    session$setInputs(ep0_role_click = "researcher")
+    expect_identical(rv$ep0_selected, "researcher")
+    session$setInputs(ep0_continue = 1)
+    expect_equal(rv$current_step, 1)
+  })
 })
 
-test_that("ep0_skip advances to EP1 even without selection", {
-  testServer(entry_point_server,
-             args = list(project_data_reactive = reactive(list()),
-                         i18n = i18n),
-             {
-               session$setInputs(start_guided = 1)
-               session$setInputs(ep0_skip = 1)
-               # If ep0_skip didn't advance the step, ep1_need_click below
-               # would have no effect and ep1_continue would error or
-               # short-circuit. The test passing confirms the transition.
-               session$setInputs(ep1_need_click = "fisheries")
-               session$setInputs(ep1_continue = 1)
-               expect_true(TRUE)
-             })
+test_that("clicking a role twice deselects it, and EP0 cannot continue empty", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    session$setInputs(ep0_role_click = "researcher")
+    session$setInputs(ep0_role_click = "policy")
+    expect_setequal(rv$ep0_selected, c("researcher", "policy"))
+    # same value twice does not re-fire an input, so toggle via a different
+    # value first and then back
+    session$setInputs(ep0_role_click = "researcher")
+    expect_identical(rv$ep0_selected, "policy")
+    session$setInputs(ep0_role_click = "policy")
+    expect_length(rv$ep0_selected, 0)
+    session$setInputs(ep0_continue = 1)
+    expect_equal(rv$current_step, 0)   # stays on EP0 (warning shown instead)
+  })
 })
 
-test_that("start_over from any guided step returns to welcome", {
-  testServer(entry_point_server,
-             args = list(project_data_reactive = reactive(list()),
-                         i18n = i18n),
-             {
-               session$setInputs(start_guided = 1)
-               session$setInputs(ep0_role_click = "researcher")
-               session$setInputs(ep0_continue = 1)
-               # Now in EP1
-               session$setInputs(start_over = 1)
-               # After start_over, we should be back at welcome — verify
-               # by being able to click start_guided again to enter the
-               # flow from the beginning.
-               session$setInputs(start_guided = 2)
-               session$setInputs(ep0_role_click = "policy")
-               expect_true(TRUE)
-             })
+test_that("ep0_skip clears the selection and advances to EP1", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    session$setInputs(ep0_role_click = "researcher")
+    session$setInputs(ep0_skip = 1)
+    expect_equal(rv$current_step, 1)
+    expect_length(rv$ep0_selected, 0)
+    session$setInputs(ep1_need_click = "fisheries")
+    expect_identical(rv$ep1_selected, "fisheries")
+  })
+})
+
+test_that("start_over from a guided step returns to welcome and clears selections", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    session$setInputs(ep0_role_click = "researcher")
+    session$setInputs(ep0_continue = 1)
+    session$setInputs(ep1_need_click = "fisheries")
+    expect_equal(rv$current_step, 1)
+    session$setInputs(start_over = 1)
+    expect_identical(rv$current_screen, "welcome")
+    expect_equal(rv$current_step, 0)
+    expect_length(rv$ep0_selected, 0)
+    expect_length(rv$ep1_selected, 0)
+  })
 })
 
 # ============================================================================
@@ -133,9 +125,9 @@ test_that("start_over from any guided step returns to welcome", {
 # ============================================================================
 
 test_that("entry_point_server has the conventional signature", {
-  params <- names(formals(entry_point_server))
+  params <- names(formals(real_entry_point_server))
   for (p in c("id", "project_data_reactive", "i18n", "event_bus")) {
     expect_true(p %in% params, info = paste0("Missing parameter: ", p))
   }
-  expect_true(is.null(formals(entry_point_server)$event_bus))
+  expect_true(is.null(formals(real_entry_point_server)$event_bus))
 })
