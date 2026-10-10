@@ -1,0 +1,14 @@
+# Paths excluded from `git archive`, i.e. from the laguna deploy archive built by
+# deployment/deploy-remote.ps1 and deployment/remote-deploy.sh (review 2026-10-07 N80).
+# Runtime needs: docs/ (user manuals served via addResourcePath), the guidance PDF
+# under Documents/, and deployment/required_packages.R (sourced on the server
+# after extraction to verify packages) -- those stay.
+tests/** export-ignore
+.claude/** export-ignore
+SESModels/.claude/** export-ignore
+DTU/** export-ignore
+Documents/** export-ignore
+Documents/MarineSABRES_Simple_SES_DRAFT_Guidance.pdf -export-ignore
+deployment/** export-ignore
+deployment/required_packages.R -export-ignore
+.gitattributes export-ignore
