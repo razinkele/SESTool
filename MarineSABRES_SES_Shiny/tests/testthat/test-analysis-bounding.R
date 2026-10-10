@@ -10,7 +10,11 @@
 source_for_test(c("functions/ses_dynamics.R", "functions/decision_lens.R",
                   "modules/analysis_boolean.R"))
 
-hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 20L
+
+test_that("the Boolean hard cap is 20 nodes (2^20 states; lowered from 25 on 2026-10-10)", {
+  expect_identical(DYNAMICS_MAX_BOOLEAN_NODES, 20L)
+})
 
 # ---------------------------------------------------------------------------
 # N16

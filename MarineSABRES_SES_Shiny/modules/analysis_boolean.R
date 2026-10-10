@@ -18,7 +18,7 @@
 #' @param x requested limit (any type)
 #' @return integer(1) in [1, DYNAMICS_MAX_BOOLEAN_NODES]
 clamp_boolean_max_nodes <- function(x) {
-  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 20L
   v <- suppressWarnings(as.integer(x))
   if (length(v) != 1 || is.na(v)) return(as.integer(hard_cap))
   as.integer(max(1L, min(v, hard_cap)))
@@ -190,7 +190,7 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n, event_bus =
       data <- project_data_reactive()
       req(data, data$data$cld$nodes)
       n <- nrow(data$data$cld$nodes)
-      max_n <- input$max_boolean_nodes %||% DYNAMICS_MAX_BOOLEAN_NODES
+      max_n <- clamp_boolean_max_nodes(input$max_boolean_nodes)
 
       if (n > max_n) {
         div(

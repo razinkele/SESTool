@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Boolean attractor search is limited to 20 nodes** (was 25). The exhaustive search enumerates 2^n states in the single shared R process; 20 nodes is about one million states, 25 was about 33 million and could take gigabytes of memory on laguna. The slider, the server-side clamp and `ses_boolean_attractors()` all follow `DYNAMICS_MAX_BOOLEAN_NODES`.
+
 ## [1.20.0] - 2026-10-10
 
 Minor release collecting the 2026-10-07 deep-review fixes merged as PRs #63-#71 (all HIGH findings except N7). Deployed to laguna 2026-10-10.
