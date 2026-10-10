@@ -690,8 +690,8 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
           project_name <- gsub("[^a-zA-Z0-9_-]", "_", project_name)
           filename <- sprintf("%s_%s.json", project_name, format(Sys.time(), "%Y%m%d_%H%M%S"))
           
-          # Convert to JSON
-          json_data <- jsonlite::toJSON(data, auto_unbox = TRUE, null = "null", pretty = TRUE)
+          # Convert to JSON (sidecar keeps matrix dimnames, review N4)
+          json_data <- jsonlite::toJSON(with_matrix_dimnames_sidecar(data), auto_unbox = TRUE, null = "null", pretty = TRUE)
           
           session$sendCustomMessage("save_to_local_directory", list(
             filename = filename,
@@ -761,7 +761,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
         }
         
         # Convert to JSON
-        json_data <- jsonlite::toJSON(data, auto_unbox = TRUE, null = "null", pretty = TRUE)
+        json_data <- jsonlite::toJSON(with_matrix_dimnames_sidecar(data), auto_unbox = TRUE, null = "null", pretty = TRUE)
         
         session$sendCustomMessage("save_to_local_directory", list(
           filename = filename,

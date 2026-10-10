@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (JSON round trips — review 2026-10-07 N4, plus the language switch)
+
+- **Projects survive JSON round trips with their matrices intact.** jsonlite writes matrices without dimnames, so Save-to-Local → Load-from-Local came back with nested lists (zero CLD edges, user-edited flags dropped) and a `.json` project load with dimname-less matrices (flags lost, Responses links blank). The same JSON round trip runs on **every language change** (the project is parked in sessionStorage across the reload), and that restore also skipped normalisation, leaving element tables as plain lists. Writers now add a small dimnames sidecar (`with_matrix_dimnames_sidecar()`), `normalize_json_project_data()` rebuilds real matrices (`restore_isa_matrices()`, falling back to the element ID order for older files and dropping, with a log line, matrices that cannot be placed), the language-switch restore uses the new `restore_project_from_json_text()`, and `recover_isa_data()`'s `Linked*` fallback now finds lowercased columns.
+
 ### Fixed (report pipeline — review 2026-10-07 N11 / N14 / N41)
 
 - **Reports no longer knit user text** (N11): the Markdown returned by `generate_report_content()` (project name, focal issue, element and stakeholder names) was written to an `.Rmd` and passed to `rmarkdown::render()`, so inline `` `r ...` `` or a fenced R chunk inside any of those fields ran R on the server. New `functions/report_render.R::render_report_safely()` knits only the static, user-text-free `templates/report_template.Rmd`, which emits the body with `results='asis'`; pandoc runs with `-raw_html-raw_tex-raw_attribute` and in-body YAML delimiters are escaped, so raw HTML / raw TeX / fenced raw blocks / metadata blocks are shown as text. HTML, PDF and Word all go through this path.
