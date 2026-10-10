@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (user-level settings per session — review 2026-10-07 N20)
+
+- **Experience-level settings no longer leak between users.** The active level and per-setting overrides were held in one process-wide environment that every connecting browser rewrote on connect, so the last visitor dictated visible menus and AI element caps for everyone served by the same R process. The store now lives in each session's `session$userData` (resolved through Shiny's current reactive domain, so `get_level_config()` / `set_active_level_config()` keep their signatures); the process-level store remains only as the default outside a session.
+
 ### Fixed (report pipeline — review 2026-10-07 N11 / N14 / N41)
 
 - **Reports no longer knit user text** (N11): the Markdown returned by `generate_report_content()` (project name, focal issue, element and stakeholder names) was written to an `.Rmd` and passed to `rmarkdown::render()`, so inline `` `r ...` `` or a fenced R chunk inside any of those fields ran R on the server. New `functions/report_render.R::render_report_safely()` knits only the static, user-text-free `templates/report_template.Rmd`, which emits the body with `results='asis'`; pandoc runs with `-raw_html-raw_tex-raw_attribute` and in-body YAML delimiters are escaped, so raw HTML / raw TeX / fenced raw blocks / metadata blocks are shown as text. HTML, PDF and Word all go through this path.
