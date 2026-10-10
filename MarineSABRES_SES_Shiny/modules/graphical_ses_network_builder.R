@@ -235,174 +235,180 @@ generate_suggestion_reasoning <- function(from_name, to_name, from_type,
 #' @return ISA data structure
 #' @export
 convert_graphical_to_isa <- function(nodes, edges, context) {
-
+  # Review 2026-10-07 N6. The previous converter (a) could not run at all:
+  # convert_nodes_to_element_df() had a trailing comma inside data.frame(), so
+  # any non-empty category threw "argument is missing, with no default"; and
+  # (b) wrote keys nothing reads (isa_data$state/$impact/$welfare, matrices
+  # p_s/s_i/i_w/w_d/...) in a 'polarity|strength|confidence' cell format the
+  # parser cannot use. This version emits the canonical Standard Entry schema:
+  # element frames keyed by stable IDs (D001, MPF001, ...), Linked* columns
+  # derived from the edges, SOURCE x TARGET matrices keyed by element IDs with
+  # '<polarity><strength>:<confidence>' cells, and user_edited flags on every
+  # canvas-authored cell so a later ISA save keeps their strength/confidence.
   debug_log("Converting graphical network to ISA format", "ISA EXPORT")
+  if (!is.data.frame(nodes)) nodes <- data.frame()
+  if (!is.data.frame(edges)) edges <- data.frame()
   debug_log(paste0("Nodes: ", nrow(nodes), ", Edges: ", nrow(edges)), "ISA EXPORT")
 
-  # Group nodes by DAPSIWRM type
-  drivers <- nodes[nodes$type == "Drivers", ]
-  activities <- nodes[nodes$type == "Activities", ]
-  pressures <- nodes[nodes$type == "Pressures", ]
-  marine_proc <- nodes[nodes$type == "Marine Processes & Functioning", ]
-  eco_services <- nodes[nodes$type == "Ecosystem Services", ]
-  goods_benefits <- nodes[nodes$type == "Goods & Benefits", ]
-  responses <- nodes[nodes$type == "Responses", ]
-  management <- nodes[nodes$type == "Management", ]
+  spec <- graphical_isa_spec()
+  node_type <- if ("type" %in% names(nodes)) as.character(nodes$type) else character(nrow(nodes))
+  node_key  <- vapply(node_type, graphical_type_to_isa_key, character(1), USE.NAMES = FALSE)
+  node_name <- if ("name" %in% names(nodes)) as.character(nodes$name) else as.character(nodes$label %||% nodes$id)
+  node_ind  <- if ("indicator" %in% names(nodes)) as.character(nodes$indicator) else rep("", nrow(nodes))
+  node_ind[is.na(node_ind)] <- ""
 
-  # Create element dataframes for each category
-  isa_data <- list(
-    drivers = convert_nodes_to_element_df(drivers, "Drivers"),
-    activities = convert_nodes_to_element_df(activities, "Activities"),
-    pressures = convert_nodes_to_element_df(pressures, "Pressures"),
-    state = convert_nodes_to_element_df(marine_proc, "State"),
-    impact = convert_nodes_to_element_df(eco_services, "Impact"),
-    welfare = convert_nodes_to_element_df(goods_benefits, "Welfare"),
-    responses = convert_nodes_to_element_df(responses, "Responses"),
-    management = convert_nodes_to_element_df(management, "Management")
-  )
+  # ---- element frames + canvas id -> element id map ------------------------
+  isa_data <- list()
+  id_map <- character(0)
+  for (key in names(spec)) {
+    sel <- which(node_key == key)
+    cols <- c("ID", "Name", spec[[key]]$cols, "Indicator")
+    df <- as.data.frame(setNames(replicate(length(cols), character(length(sel)), simplify = FALSE), cols),
+                        stringsAsFactors = FALSE)
+    if (length(sel) > 0) {
+      ids <- sprintf("%s%03d", spec[[key]]$prefix, seq_along(sel))
+      df$ID <- ids
+      df$Name <- node_name[sel]
+      df$Indicator <- node_ind[sel]
+      if ("Type" %in% cols) df$Type <- ifelse(node_type[sel] == "Management", "Measure", "")
+      id_map[as.character(nodes$id[sel])] <- ids
+    }
+    isa_data[[key]] <- df
+  }
+  unmapped <- sum(is.na(node_key))
+  if (unmapped > 0) debug_log(sprintf("%d node(s) of unknown type not exported", unmapped), "ISA EXPORT")
 
-  # Create adjacency matrices from edges
-  isa_data$adjacency_matrices <- create_adjacency_matrices_from_edges(
-    edges, drivers, activities, pressures, marine_proc,
-    eco_services, goods_benefits, responses, management
-  )
+  # ---- matrices -----------------------------------------------------------
+  pairs <- graphical_isa_matrix_pairs()
+  am <- list(); ue <- list()
+  dropped <- 0L
+  if (nrow(edges) > 0 && all(c("from", "to") %in% names(edges))) {
+    for (i in seq_len(nrow(edges))) {
+      f <- as.character(edges$from[i]); t <- as.character(edges$to[i])
+      fe <- id_map[f]; te <- id_map[t]
+      if (is.na(fe) || is.na(te)) { dropped <- dropped + 1L; next }
+      fk <- node_key[match(f, as.character(nodes$id))]
+      tk <- node_key[match(t, as.character(nodes$id))]
+      mk <- pairs$key[pairs$src == fk & pairs$tgt == tk]
+      if (length(mk) == 0) { dropped <- dropped + 1L; next }   # non-canonical transition
+      mk <- mk[1]
+      if (is.null(am[[mk]])) {
+        r <- isa_data[[fk]]$ID; c <- isa_data[[tk]]$ID
+        am[[mk]] <- matrix("", length(r), length(c), dimnames = list(r, c))
+        ue[[mk]] <- matrix(FALSE, length(r), length(c), dimnames = list(r, c))
+      }
+      am[[mk]][fe, te] <- graphical_edge_cell(edges, i)
+      ue[[mk]][fe, te] <- TRUE
+    }
+  }
+  if (dropped > 0) debug_log(sprintf("%d edge(s) outside the canonical DAPSIWRM matrices not exported", dropped), "ISA EXPORT")
 
-  # Add metadata
+  # matrices are stored GB x R for gb_r; everything else SOURCE x TARGET
+  # ---- Linked* columns, so a later ISA save does not clear the edges --------
+  linked_of_row <- function(mk, id) {
+    m <- am[[mk]]
+    if (is.null(m) || !(id %in% rownames(m))) return("")
+    paste(colnames(m)[nzchar(m[id, ])], collapse = "|")
+  }
+  linked_of_col <- function(mk, id) {
+    m <- am[[mk]]
+    if (is.null(m) || !(id %in% colnames(m))) return("")
+    paste(rownames(m)[nzchar(m[, id])], collapse = "|")
+  }
+  fwd <- list(drivers = c("LinkedA", "d_a"), activities = c("LinkedP", "a_p"),
+              pressures = c("LinkedMPF", "p_mpf"), marine_processes = c("LinkedES", "mpf_es"),
+              ecosystem_services = c("LinkedGB", "es_gb"))
+  for (key in names(fwd)) {
+    df <- isa_data[[key]]
+    if (nrow(df) > 0) df[[fwd[[key]][1]]] <- vapply(df$ID, function(id) linked_of_row(fwd[[key]][2], id), "")
+    isa_data[[key]] <- df
+  }
+  r <- isa_data$responses
+  if (nrow(r) > 0) {
+    r$LinkedD  <- vapply(r$ID, function(id) linked_of_row("r_d", id), "")
+    r$LinkedA  <- vapply(r$ID, function(id) linked_of_row("r_a", id), "")
+    r$LinkedP  <- vapply(r$ID, function(id) linked_of_row("r_p", id), "")
+    r$LinkedGB <- vapply(r$ID, function(id) linked_of_col("gb_r", id), "")
+    isa_data$responses <- r
+  }
+
+  isa_data$adjacency_matrices   <- am
+  isa_data$user_edited_matrices <- ue
+  isa_data$loop_connections <- data.frame(DriverID = character(), GBID = character(), Effect = character(),
+                                          Strength = character(), Confidence = integer(), Mechanism = character(),
+                                          stringsAsFactors = FALSE)
   isa_data$metadata <- list(
     creation_method = "graphical_ses_creator",
     context = context,
     created_at = Sys.time(),
     node_count = nrow(nodes),
-    edge_count = nrow(edges)
+    edge_count = nrow(edges),
+    edges_not_exported = dropped,
+    nodes_not_exported = unmapped
   )
-
   debug_log("Export complete", "ISA EXPORT")
-
-  return(isa_data)
+  isa_data
 }
 
 
-#' Convert Nodes to Element Dataframe
+#' Canonical ISA categories for the graphical export
 #'
-#' Converts graphical network nodes to ISA element dataframe format
-#'
-#' @param nodes Subset of nodes for this type
-#' @param type_name DAPSIWRM type name
-#' @return Element dataframe
-convert_nodes_to_element_df <- function(nodes, type_name) {
-
-  if (nrow(nodes) == 0) {
-    # Return empty dataframe with correct structure
-    return(data.frame(
-      id = character(0),
-      name = character(0),
-      indicator = character(0)
-      
-    ))
-  }
-
-  # Create element dataframe
-  df <- data.frame(
-    id = nodes$id,
-    name = nodes$name,
-    indicator = nodes$indicator %||% "",  # Optional indicator field
-    
+#' @return named list key -> list(prefix, cols) where cols are the canonical
+#'   Standard Entry columns besides ID / Name (Indicator is appended)
+graphical_isa_spec <- function() {
+  p <- function(k, d) if (exists("ELEMENT_ID_PREFIX") && !is.null(ELEMENT_ID_PREFIX[[k]])) ELEMENT_ID_PREFIX[[k]] else d
+  list(
+    drivers            = list(prefix = p("drivers", "D"),    cols = c("Type", "Description", "LinkedA", "Trend", "Controllability")),
+    activities         = list(prefix = p("activities", "A"), cols = c("Sector", "Description", "LinkedP", "Scale", "Frequency")),
+    pressures          = list(prefix = p("pressures", "P"),  cols = c("Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")),
+    marine_processes   = list(prefix = p("states", "MPF"),   cols = c("Type", "Description", "LinkedES", "Mechanism", "Spatial")),
+    ecosystem_services = list(prefix = p("impacts", "ES"),   cols = c("Type", "Description", "LinkedGB", "Mechanism", "Confidence")),
+    goods_benefits     = list(prefix = p("welfare", "GB"),   cols = c("Type", "Description", "Stakeholder", "Importance", "Trend")),
+    responses          = list(prefix = p("responses", "R"),  cols = c("Type", "Description", "Stakeholder", "Importance", "Trend",
+                                                                       "LinkedGB", "LinkedD", "LinkedA", "LinkedP"))
   )
-
-  return(df)
 }
 
-
-#' Create Adjacency Matrices from Edges
-#'
-#' Converts edge list to adjacency matrices for each type pair
-#'
-#' @param edges Network edges dataframe
-#' @param drivers, activities, ...: Node dataframes for each type
-#' @return List of adjacency matrices
-create_adjacency_matrices_from_edges <- function(edges, drivers, activities,
-                                                 pressures, marine_proc,
-                                                 eco_services, goods_benefits,
-                                                 responses, management) {
-
-  matrices <- list()
-
-  # Helper function to create single matrix
-  create_matrix <- function(source_nodes, target_nodes, source_type, target_type) {
-    if (nrow(source_nodes) == 0 || nrow(target_nodes) == 0) {
-      return(NULL)
-    }
-
-    # Filter edges for this type pair
-    relevant_edges <- edges[
-      edges$from %in% source_nodes$id &
-      edges$to %in% target_nodes$id,
-    ]
-
-    if (nrow(relevant_edges) == 0) {
-      return(NULL)
-    }
-
-    # Create empty matrix
-    mat <- matrix(
-      "",
-      nrow = nrow(source_nodes),
-      ncol = nrow(target_nodes),
-      dimnames = list(source_nodes$name, target_nodes$name)
-    )
-
-    # Fill matrix with connection values
-    for (i in seq_len(nrow(relevant_edges))) {
-      edge <- relevant_edges[i, ]
-
-      from_name <- source_nodes$name[source_nodes$id == edge$from]
-      to_name <- target_nodes$name[target_nodes$id == edge$to]
-
-      if (length(from_name) > 0 && length(to_name) > 0) {
-        # Format: polarity|strength|confidence
-        value <- paste0(
-          edge$polarity, "|",
-          edge$strength %||% "medium", "|",
-          edge$confidence %||% "3"
-        )
-
-        mat[from_name, to_name] <- value
-      }
-    }
-
-    return(mat)
-  }
-
-  # Create all standard DAPSIWRM matrices
-  matrices$d_a <- create_matrix(drivers, activities, "Drivers", "Activities")
-  matrices$a_p <- create_matrix(activities, pressures, "Activities", "Pressures")
-  matrices$p_s <- create_matrix(pressures, marine_proc, "Pressures", "State")
-  matrices$s_i <- create_matrix(marine_proc, eco_services, "State", "Impact")
-  matrices$i_w <- create_matrix(eco_services, goods_benefits, "Impact", "Welfare")
-
-  # Feedback loops
-  matrices$w_d <- create_matrix(goods_benefits, drivers, "Welfare", "Drivers")
-  matrices$w_r <- create_matrix(goods_benefits, responses, "Welfare", "Responses")
-
-  # Response connections
-  matrices$r_d <- create_matrix(responses, drivers, "Responses", "Drivers")
-  matrices$r_a <- create_matrix(responses, activities, "Responses", "Activities")
-  matrices$r_p <- create_matrix(responses, pressures, "Responses", "Pressures")
-  matrices$r_s <- create_matrix(responses, marine_proc, "Responses", "State")
-
-  # Management connections (if any)
-  if (nrow(management) > 0) {
-    matrices$m_r <- create_matrix(management, responses, "Management", "Responses")
-  }
-
-  # Remove NULL matrices
-  matrices <- Filter(Negate(is.null), matrices)
-
-  debug_log(paste0("Created ", length(matrices), " adjacency matrices"), "ISA EXPORT")
-
-  return(matrices)
+#' Map a canvas node type (incl. legacy DPSIR names) to its ISA key
+#' @param type canvas type string
+#' @return ISA element-list key, or NA_character_
+graphical_type_to_isa_key <- function(type) {
+  t <- tolower(trimws(as.character(type)))
+  switch(t,
+    "drivers" = "drivers", "driver" = "drivers",
+    "activities" = "activities", "activity" = "activities",
+    "pressures" = "pressures", "pressure" = "pressures",
+    "marine processes & functioning" = "marine_processes", "state" = "marine_processes",
+    "state changes" = "marine_processes", "states" = "marine_processes",
+    "ecosystem services" = "ecosystem_services", "impact" = "ecosystem_services", "impacts" = "ecosystem_services",
+    "goods & benefits" = "goods_benefits", "welfare" = "goods_benefits",
+    "responses" = "responses", "response" = "responses", "management" = "responses", "measures" = "responses",
+    NA_character_)
 }
 
+#' Canonical SOURCE x TARGET matrices (gb_r is stored GB x R)
+graphical_isa_matrix_pairs <- function() {
+  data.frame(
+    key = c("d_a", "a_p", "p_mpf", "mpf_es", "es_gb", "gb_d", "gb_r", "r_d", "r_a", "r_p"),
+    src = c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services",
+            "goods_benefits", "goods_benefits", "responses", "responses", "responses"),
+    tgt = c("activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits",
+            "drivers", "responses", "drivers", "activities", "pressures"),
+    stringsAsFactors = FALSE)
+}
+
+#' Matrix cell for one canvas edge: '<+|-><strong|medium|weak>:<1-5>'
+#' @param edges edge data.frame; @param i row index
+graphical_edge_cell <- function(edges, i) {
+  g <- function(col) if (col %in% names(edges)) as.character(edges[[col]][i]) else NA_character_
+  pol <- tolower(trimws(g("polarity")))
+  pol <- if (!is.na(pol) && pol %in% c("-", "negative", "opposing", "minus")) "-" else "+"
+  st <- tolower(trimws(g("strength")))
+  st <- if (is.na(st)) "medium" else switch(st, "strong" = , "high" = "strong", "weak" = , "low" = "weak", "medium")
+  conf <- suppressWarnings(as.integer(g("confidence")))
+  if (is.na(conf) || conf < 1 || conf > 5) conf <- 3L
+  paste0(pol, st, ":", conf)
+}
 
 #' Validate Network Before Export
 #'

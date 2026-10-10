@@ -1590,6 +1590,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       current_data <- isolate(project_data_reactive())
       current_data$data$isa_data <- isa_data
       project_data_reactive(current_data)
+      # Regenerate the CLD from the exported ISA and flag analyses stale
+      if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+        event_bus$emit_isa_change("graphical_export")
+      }
 
       showNotification(
         i18n$t("common.messages.exported_to_isa"),
