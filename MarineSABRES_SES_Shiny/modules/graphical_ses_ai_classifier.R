@@ -5,7 +5,9 @@
 
 # Try to load ML inference if available
 .ml_classifier_available <- tryCatch({
-  source("functions/ml_inference.R", local = TRUE)
+  if (!exists("load_ml_model", mode = "function")) {
+    source("functions/ml_inference.R", local = TRUE)
+  }
   load_ml_model()
   TRUE
 }, error = function(e) {

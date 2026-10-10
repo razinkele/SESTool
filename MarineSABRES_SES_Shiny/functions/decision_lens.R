@@ -3,10 +3,12 @@
 # File: functions/decision_lens.R
 # =============================================================================
 # Pure, Shiny-free helpers composing existing network analysis functions.
-# Phase 1 (shipping): classify_factors_micmac() — factor classification
-#   (impact-vs-control axis), surfacing the dormant MICMAC analysis.
-# Archetype detection + fused narrative are DEFERRED pending re-derivation
-# against valid DAPSIWRM loop topology + scientific validation.
+# - classify_factors_micmac(): factor classification (impact-vs-control axis),
+#   surfacing the dormant MICMAC analysis.
+# - detect_archetypes(): candidate system archetypes (Tragedy of the Commons,
+#   Limits to Growth); Fixes-that-Fail / Shifting-the-Burden are not
+#   implemented. Results are flagged confidence = "candidate".
+# - build_decision_narrative(): deterministic, i18n-keyed node narrative.
 # See docs/superpowers/specs/2026-06-21-decision-lens-qsem.md (§0, §5, §6).
 #
 # DATA MODEL (verified against functions/visnetwork_helpers.R:71-225):
@@ -180,10 +182,10 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
 #' Build a deterministic "why this matters" narrative for one node
 #'
 #' Fuses the node's MICMAC quadrant role, loop participation, and (when the
-#' archetype layer ships) archetype leverage membership into one HTML block.
+#' node is an archetype's leverage node) archetype membership into one HTML block.
 #' All text is emitted via i18n keys — deterministic, translatable, reviewable;
-#' never ML-generated. While archetype detection is deferred, callers pass
-#' `archetypes = list()` and only the quadrant + loop lines render.
+#' never ML-generated. Pass `archetypes = list()` to render only the quadrant
+#' and loop lines.
 #'
 #' @param node_id character id (prefixed, e.g. "MPF_1")
 #' @param micmac data.frame from classify_factors_micmac
@@ -236,7 +238,7 @@ build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18
     }
   }
 
-  # 3. Archetype leverage (deferred: archetypes is list() for now)
+  # 3. Archetype leverage (records from detect_archetypes())
   for (a in archetypes) {
     if (!is.null(a$leverage_node_id) && a$leverage_node_id == node_id) {
       parts <- c(parts, paste0(

@@ -1662,7 +1662,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       datatable(isa_data$bot_data, options = list(pageLength = 5), rownames = FALSE)
     })
 
-    # Adjacency matrix viewer (read-only) ----
+    # Adjacency matrix viewer (cells are editable; edits persist below) ----
     output$adj_matrix_view <- renderDT({
       key <- input$adj_matrix_select
       mat <- isa_data$adjacency_matrices[[key]]

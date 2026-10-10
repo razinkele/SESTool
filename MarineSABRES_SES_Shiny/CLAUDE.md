@@ -56,15 +56,14 @@ Rscript scripts/add_translation.R
 │   ├── cld_interaction_helpers.R  # CLD network interaction helpers
 │   ├── isa_form_builders.R        # ISA form generation per element type
 │   └── isa_export_helpers.R       # ISA Excel/Kumu export logic
-├── server/               # Server-side components (8 files)
+├── server/               # Server-side components (7 files)
 │   ├── bookmarking.R         # URL bookmarking + query params
 │   ├── dashboard.R           # Dashboard observers
 │   ├── event_bus_setup.R     # Event bus initialization
 │   ├── export_handlers.R     # Export download handlers
 │   ├── language_handling.R   # Language change observers
 │   ├── modals.R              # Modal dialogs
-│   ├── project_io.R          # Project save/load
-│   └── session_management.R  # Session lifecycle
+│   └── project_io.R          # Project save/load
 ├── translations/         # Modular i18n system
 │   ├── common/           # Shared translations (buttons, labels, messages)
 │   ├── modules/          # Module-specific translations
