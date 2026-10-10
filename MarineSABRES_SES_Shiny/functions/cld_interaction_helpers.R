@@ -632,8 +632,22 @@ sync_cld_to_isa_data <- function(project_data) {
 
   nodes <- project_data$data$cld$nodes
   edges <- project_data$data$cld$edges
+  if (!is.data.frame(edges)) edges <- data.frame()
+  # Malformed CLD (no id/group columns): nothing to sync, return unchanged.
+  if (!is.data.frame(nodes) || !all(c("id", "group") %in% names(nodes))) return(project_data)
+  if (!"label" %in% names(nodes)) nodes$label <- as.character(nodes$id)
+  # Drop rows that cannot be placed (NA id or group) before resolving.
+  nodes <- nodes[!is.na(nodes$id) & nzchar(as.character(nodes$id)) & !is.na(nodes$group), , drop = FALSE]
 
-  # DAPSIWRM group name -> isa_data element-list key
+  # Review 2026-10-07 N3. This sync used to (a) replace element IDs with the
+  # positional node ids ("GB_1") and names with the wrapped labels, (b) rebuild
+  # every matrix from the edge label alone (bare polarity: strength /
+  # confidence / delay lost), (c) drop user_edited_matrices and (d) lowercase
+  # the frames. It now resolves every node back to its ISA element ID (carried
+  # element_id -> positional -> name match -> fresh id), keeps the previous
+  # matrix cell and only updates its polarity, carries user_edited flags over,
+  # and preserves the previous frame's columns.
+
   group_to_key <- c(
     "Drivers" = "drivers",
     "Activities" = "activities",
@@ -643,145 +657,207 @@ sync_cld_to_isa_data <- function(project_data) {
     "Goods & Benefits" = "goods_benefits",
     "Responses" = "responses"
   )
+  # node-id prefix used by create_nodes_df() / create_new_node_data()
+  group_to_prefix <- c(
+    "Drivers" = "D", "Activities" = "A", "Pressures" = "P",
+    "Marine Processes & Functioning" = "MPF", "Ecosystem Services" = "ES",
+    "Goods & Benefits" = "GB", "Responses" = "R"
+  )
+  # matrix-key prefix (SOURCE x TARGET naming)
+  group_to_mat <- c(
+    "Drivers" = "d", "Activities" = "a", "Pressures" = "p",
+    "Marine Processes & Functioning" = "mpf", "Ecosystem Services" = "es",
+    "Goods & Benefits" = "gb", "Responses" = "r"
+  )
 
-  isa <- project_data$data$isa_data %||% list()
+  isa     <- project_data$data$isa_data %||% list()
+  prev_am <- isa$adjacency_matrices   %||% list()
+  prev_ue <- isa$user_edited_matrices %||% list()
 
-  # Rebuild each element-type data frame from CLD nodes of that group.
-  # Preserve indicator/description metadata by name-matching against the
-  # pre-sync isa_data where possible.
+  col_of <- function(df, candidates) {
+    if (!is.data.frame(df)) return(NULL)
+    hit <- candidates[candidates %in% names(df)]
+    if (length(hit)) hit[1] else NULL
+  }
+  unwrap <- function(x) gsub("\\s*\n\\s*", " ", as.character(x))
+  next_free_id <- function(prefix, taken) {
+    nums <- suppressWarnings(as.integer(sub(paste0("^", prefix), "", taken[grepl(paste0("^", prefix, "[0-9]+$"), taken)])))
+    n <- if (length(nums) && any(!is.na(nums))) max(nums, na.rm = TRUE) + 1L else 1L
+    repeat {
+      cand <- sprintf("%s%03d", prefix, n)
+      if (!(cand %in% taken)) return(cand)
+      n <- n + 1L
+    }
+  }
+
+  node_elem <- character(0)   # node id -> element id
+
   for (grp in names(group_to_key)) {
-    key <- group_to_key[[grp]]
+    key    <- group_to_key[[grp]]
+    prefix <- group_to_prefix[[grp]]
     subset <- nodes[nodes$group == grp, , drop = FALSE]
+    prev   <- isa[[key]]
+    id_col   <- col_of(prev, c("ID", "id"))
+    name_col <- col_of(prev, c("Name", "name"))
+    prev_ids   <- if (!is.null(id_col))   as.character(prev[[id_col]])   else character(0)
+    prev_names <- if (!is.null(name_col)) as.character(prev[[name_col]]) else character(0)
+
+    # Canonical output columns: the previous frame's (so Type/Description/... and
+    # their case survive), else ID / Name / Indicator.
+    if (is.data.frame(prev) && !is.null(id_col)) {
+      out_cols <- names(prev)
+      out_id <- id_col; out_name <- name_col %||% "Name"
+      if (!(out_name %in% out_cols)) out_cols <- c(out_cols, out_name)
+    } else {
+      out_cols <- c("ID", "Name", "Indicator"); out_id <- "ID"; out_name <- "Name"
+      prev <- NULL
+    }
 
     if (nrow(subset) == 0) {
-      isa[[key]] <- data.frame(
-        id = character(0), name = character(0), indicator = character(0),
-        stringsAsFactors = FALSE
-      )
+      empty <- lapply(out_cols, function(cn) {
+        if (is.data.frame(prev) && cn %in% names(prev)) prev[[cn]][0] else character(0)
+      })
+      names(empty) <- out_cols
+      isa[[key]] <- as.data.frame(empty, stringsAsFactors = FALSE)
       next
     }
 
-    # Discover extra columns present on the pre-sync isa_data frame -
-    # we want to preserve ALL of them (description, stakeholder,
-    # importance, trend, etc.), not just the three we hardcoded before.
-    prev <- isa[[key]]
-    extra_cols <- if (is.data.frame(prev)) {
-      setdiff(names(prev), c("id", "name", "group", "label", "x", "y", "color", "shape"))
-    } else {
-      "indicator"  # minimum sensible default
-    }
-    if (!"indicator" %in% extra_cols) extra_cols <- c(extra_cols, "indicator")
-
-    # Build new frame with id/name. Preallocate extra_cols using the pre-sync
-    # column type when available so Date / numeric / logical columns round-trip
-    # without silent coercion to character.
-    new_df <- data.frame(
-      id = as.character(subset$id),
-      name = as.character(subset$label),
-      stringsAsFactors = FALSE
-    )
-    n <- nrow(new_df)
-    for (col in extra_cols) {
-      if (is.data.frame(prev) && col %in% names(prev)) {
-        # Type-safe NA fill: one NA of prev[[col]]'s class, replicated.
-        new_df[[col]] <- rep(prev[[col]][NA_integer_], n)
-      } else {
-        new_df[[col]] <- rep(NA_character_, n)
+    # Element name: the carried raw name wins only while its wrapped form still
+    # equals the node label; a label edited in the CLD (rename) takes over.
+    labels <- as.character(subset$label)
+    carried_names <- if ("name_raw" %in% names(subset)) as.character(subset$name_raw) else rep(NA_character_, nrow(subset))
+    raw_names <- vapply(seq_len(nrow(subset)), function(i) {
+      nr <- carried_names[i]; lb <- labels[i]
+      if (!is.na(nr) && nzchar(nr)) {
+        wrapped <- if (exists("wrap_label", mode = "function")) tryCatch(wrap_label(nr), error = function(e) nr) else nr
+        if (identical(as.character(wrapped), lb) || identical(nr, lb)) return(nr)
       }
-    }
+      unwrap(lb)
+    }, character(1))
+    carried <- if ("element_id" %in% names(subset)) as.character(subset$element_id) else rep(NA_character_, nrow(subset))
 
-    # Name-match rows against pre-sync data to preserve metadata
-    if (is.data.frame(prev) && "name" %in% names(prev)) {
-      prev_names_lower <- tolower(trimws(prev$name))
-      for (i in seq_len(nrow(subset))) {
-        match_idx <- which(prev_names_lower == tolower(trimws(subset$label[i])))
-        if (length(match_idx) > 0) {
-          j <- match_idx[1]  # first-match-wins; names expected unique per type
-          for (col in extra_cols) {
-            if (col %in% names(prev)) {
-              # No as.character() here — preserve the prev column's type.
-              new_df[[col]][i] <- prev[[col]][j]
-            }
-          }
-        }
+    used <- character(0)
+    rows <- vector("list", nrow(subset))
+    for (i in seq_len(nrow(subset))) {
+      nid <- as.character(subset$id[i])
+      eid <- NA_character_
+      # (a) element id carried on the node
+      if (!is.na(carried[i]) && nzchar(carried[i]) && !(carried[i] %in% used)) eid <- carried[i]
+      # (b) name match against the previous frame. Comes BEFORE positional so
+      #     a legacy CLD (no element_id) stays correct across repeated syncs
+      #     after a deletion, when node numbers no longer equal frame rows.
+      if (is.na(eid) && length(prev_names)) {
+        m <- which(tolower(trimws(prev_names)) == tolower(trimws(raw_names[i])) & !(prev_ids %in% used))
+        if (length(m)) eid <- prev_ids[m[1]]
       }
-    }
+      # (c) positional: create_nodes_df numbers nodes by row within the group
+      #     (covers a renamed legacy node)
+      if (is.na(eid)) {
+        k <- suppressWarnings(as.integer(sub(paste0("^", prefix, "_"), "", nid)))
+        if (grepl(paste0("^", prefix, "_[0-9]+$"), nid) && !is.na(k) && k >= 1 && k <= length(prev_ids) &&
+            !(prev_ids[k] %in% used)) eid <- prev_ids[k]
+      }
+      # (d) brand-new element (added in the CLD)
+      if (is.na(eid) || !nzchar(eid)) eid <- next_free_id(prefix, c(prev_ids, used))
+      used <- c(used, eid)
+      node_elem[nid] <- eid
 
+      j <- if (length(prev_ids)) match(eid, prev_ids) else NA_integer_
+      row <- lapply(out_cols, function(cn) {
+        if (!is.na(j) && is.data.frame(prev) && cn %in% names(prev)) prev[[cn]][j]
+        else if (is.data.frame(prev) && cn %in% names(prev)) prev[[cn]][NA_integer_]
+        else NA_character_
+      })
+      names(row) <- out_cols
+      row[[out_id]]   <- eid
+      row[[out_name]] <- raw_names[i]
+      rows[[i]] <- as.data.frame(row, stringsAsFactors = FALSE)
+    }
+    new_df <- do.call(rbind, rows)
+    rownames(new_df) <- NULL
     isa[[key]] <- new_df
   }
 
-  # Rebuild adjacency matrices from edges.
-  # Matrix naming: SOURCE x TARGET. We route each edge DYNAMICALLY to the
-  # correct matrix based on the node groups at both ends — NOT a hardcoded
-  # list of 6 pairs. Real projects include Response-connection matrices
-  # (gb_r, r_d, r_a, r_p) that a hardcoded list would drop on every sync,
-  # erasing the user's response-intervention links. (Review found this bug.)
-  group_to_prefix <- c(
-    "Drivers" = "d",
-    "Activities" = "a",
-    "Pressures" = "p",
-    "Marine Processes & Functioning" = "mpf",
-    "Ecosystem Services" = "es",
-    "Goods & Benefits" = "gb",
-    "Responses" = "r"
-  )
-
-  adj <- list()
-
-  # Handle NULL/non-dataframe edges defensively (empty list, NA, etc.)
-  if (!is.data.frame(edges)) edges <- data.frame()
-
-  # Pre-build an id -> group map for O(1) lookup inside the edge loop
+  # ---- adjacency matrices, keyed by ELEMENT ids ------------------------------------
+  group_ids <- lapply(names(group_to_key), function(grp) {
+    nid <- as.character(nodes$id[nodes$group == grp])
+    unname(node_elem[nid])
+  })
+  names(group_ids) <- names(group_to_key)
   id_to_group <- if (nrow(nodes) > 0) setNames(nodes$group, nodes$id) else character(0)
 
+  norm_pol <- function(x) {
+    x <- as.character(x)
+    if (length(x) == 0 || is.na(x) || !nzchar(x)) return("+")
+    x <- trimws(x)
+    if (x %in% c("+", "-")) return(x)
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("sync_cld_to_isa_data: unknown polarity '%s'; coercing to '+'", x), "CLD SYNC")
+    }
+    "+"
+  }
+  pick <- function(df, col, i, default) {
+    if (col %in% names(df)) { v <- df[[col]][i]; if (!is.null(v) && !is.na(v) && nzchar(as.character(v))) return(as.character(v)) }
+    default
+  }
+  blank_matrix <- function(src_grp, tgt_grp, fill) {
+    r <- group_ids[[src_grp]]; c <- group_ids[[tgt_grp]]
+    matrix(fill, nrow = length(r), ncol = length(c), dimnames = list(r, c))
+  }
+
+  adj <- list(); ue <- list()
   if (nrow(edges) > 0) {
     for (i in seq_len(nrow(edges))) {
-      from_id <- as.character(edges$from[i])
-      to_id   <- as.character(edges$to[i])
-      src_grp <- id_to_group[from_id]
-      tgt_grp <- id_to_group[to_id]
+      from_id <- as.character(edges$from[i]); to_id <- as.character(edges$to[i])
+      src_grp <- id_to_group[from_id]; tgt_grp <- id_to_group[to_id]
       if (is.na(src_grp) || is.na(tgt_grp)) next
-
-      src_prefix <- group_to_prefix[src_grp]
-      tgt_prefix <- group_to_prefix[tgt_grp]
-      if (is.na(src_prefix) || is.na(tgt_prefix)) next
-
-      mat_name <- paste0(src_prefix, "_", tgt_prefix)
-
-      # Lazily initialize the matrix on first edge that needs it
+      src_e <- node_elem[from_id]; tgt_e <- node_elem[to_id]
+      if (is.na(src_e) || is.na(tgt_e)) next
+      mat_name <- paste0(group_to_mat[[src_grp]], "_", group_to_mat[[tgt_grp]])
       if (is.null(adj[[mat_name]])) {
-        src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
-        tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
-        adj[[mat_name]] <- matrix(
-          "",
-          nrow = nrow(src_nodes),
-          ncol = nrow(tgt_nodes),
-          dimnames = list(src_nodes$id, tgt_nodes$id)
-        )
+        adj[[mat_name]] <- blank_matrix(src_grp, tgt_grp, "")
+        ue[[mat_name]]  <- blank_matrix(src_grp, tgt_grp, FALSE)
       }
-
-      # Normalize polarity to "+" / "-" / "" — log & skip corrupted values
-      pol <- edges$label[i]
-      if (is.null(pol) || is.na(pol) || !nzchar(as.character(pol))) {
-        pol <- "+"
+      lbl_pol <- if ("label" %in% names(edges)) trimws(as.character(edges$label[i])) else NA_character_
+      pol <- if (!is.na(lbl_pol) && lbl_pol %in% c("+", "-")) lbl_pol
+             else norm_pol(if ("polarity" %in% names(edges)) edges$polarity[i] else lbl_pol)
+      prev_m <- prev_am[[mat_name]]
+      prev_cell <- if (is.matrix(prev_m) && src_e %in% rownames(prev_m) && tgt_e %in% colnames(prev_m)) prev_m[src_e, tgt_e] else ""
+      if (!is.na(prev_cell) && nzchar(prev_cell)) {
+        # keep strength / confidence / delay; update only the polarity character
+        cell <- if (substr(prev_cell, 1, 1) %in% c("+", "-")) paste0(pol, substr(prev_cell, 2, nchar(prev_cell))) else paste0(pol, prev_cell)
       } else {
-        pol <- as.character(pol)
-        if (!pol %in% c("+", "-")) {
-          # Unknown polarity; coerce to "+" (reinforcing) and log
-          if (exists("debug_log", mode = "function")) {
-            debug_log(sprintf("sync_cld_to_isa_data: unknown polarity '%s' on edge %s->%s; coercing to '+'",
-                              pol, from_id, to_id), "CLD SYNC")
-          }
-          pol <- "+"
-        }
+        # New edge: defaults by matrix family (the R arm keys DYNAMICS_WEIGHT_MAP
+        # with lowercase strength + integer confidence, see build_response_matrices)
+        r_arm <- mat_name %in% c("r_d", "r_a", "r_p", "gb_r")
+        cell <- paste0(pol,
+                       pick(edges, "strength", i, if (r_arm) "medium" else "Medium"), ":",
+                       pick(edges, "confidence", i, if (r_arm) "3" else "Medium"))
       }
-      adj[[mat_name]][from_id, to_id] <- pol
+      adj[[mat_name]][src_e, tgt_e] <- cell
     }
   }
 
-  # Always ensure the 6 primary-chain matrices exist (even if 0x0) so
-  # downstream code that assumes them (create_edges_df, analysis_loops)
-  # doesn't NPE on a fresh or empty CLD.
+  # Carry user_edited flags over by dimname (prunes removed elements), then
+  # mark every cell the CLD changed (new, altered or cleared edge) as user
+  # edited: a CLD edit IS a user edit, and rebuild_matrix_from_linked() only
+  # respects cells that disagree with LinkedX when they are flagged.
+  for (mat_name in names(adj)) {
+    pu <- prev_ue[[mat_name]]
+    if (is.matrix(pu) && is.logical(pu)) {
+      rr <- intersect(rownames(pu), rownames(ue[[mat_name]])); cc <- intersect(colnames(pu), colnames(ue[[mat_name]]))
+      if (length(rr) && length(cc)) ue[[mat_name]][rr, cc] <- pu[rr, cc]
+    }
+    pm <- prev_am[[mat_name]]
+    cur <- adj[[mat_name]]
+    for (rn in rownames(cur)) for (cn in colnames(cur)) {
+      before <- if (is.matrix(pm) && rn %in% rownames(pm) && cn %in% colnames(pm)) pm[rn, cn] else ""
+      if (is.na(before)) before <- ""
+      if (!identical(as.character(before), as.character(cur[rn, cn]))) ue[[mat_name]][rn, cn] <- TRUE
+    }
+  }
+
+  # Always ensure the 6 primary-chain matrices exist (even if 0x0)
   canonical_pairs <- list(
     d_a = c("Drivers", "Activities"),
     a_p = c("Activities", "Pressures"),
@@ -792,20 +868,27 @@ sync_cld_to_isa_data <- function(project_data) {
   )
   for (mat_name in names(canonical_pairs)) {
     if (is.null(adj[[mat_name]])) {
-      src_grp <- canonical_pairs[[mat_name]][1]
-      tgt_grp <- canonical_pairs[[mat_name]][2]
-      src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
-      tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
-      adj[[mat_name]] <- matrix(
-        "",
-        nrow = nrow(src_nodes),
-        ncol = nrow(tgt_nodes),
-        dimnames = list(src_nodes$id, tgt_nodes$id)
-      )
+      adj[[mat_name]] <- blank_matrix(canonical_pairs[[mat_name]][1], canonical_pairs[[mat_name]][2], "")
+      ue[[mat_name]]  <- blank_matrix(canonical_pairs[[mat_name]][1], canonical_pairs[[mat_name]][2], FALSE)
     }
   }
 
-  isa$adjacency_matrices <- adj
+  isa$adjacency_matrices   <- adj
+  isa$user_edited_matrices <- ue
+  # Write the resolved element ids / raw names back onto the CLD nodes so the
+  # next sync (the module re-reads cld$nodes from project_data) maps directly.
+  nid_all <- as.character(nodes$id)
+  nodes$element_id <- unname(node_elem[nid_all])
+  resolved_name <- character(length(nid_all))
+  for (grp in names(group_to_key)) {
+    key <- group_to_key[[grp]]; df <- isa[[key]]
+    idc <- col_of(df, c("ID", "id")); nmc <- col_of(df, c("Name", "name"))
+    if (is.null(idc) || is.null(nmc)) next
+    sel <- which(nodes$group == grp)
+    resolved_name[sel] <- as.character(df[[nmc]])[match(nodes$element_id[sel], as.character(df[[idc]]))]
+  }
+  nodes$name_raw <- ifelse(is.na(resolved_name) | !nzchar(resolved_name), unwrap(nodes$label), resolved_name)
+  project_data$data$cld$nodes <- nodes
   project_data$data$isa_data <- isa
   project_data$last_modified <- Sys.time()
   project_data
@@ -897,4 +980,26 @@ merge_cld_nodes <- function(nodes, edges, node_ids, primary_id) {
     removed_ids = secondary_ids,
     primary_id = primary_id
   )
+}
+
+# ============================================================================
+# EVENT BUS NOTIFICATION FOR CLD EDITS (review 2026-10-07 N22)
+# ============================================================================
+
+#' Tell the event bus that the CLD was edited, without forcing a CLD rebuild
+#'
+#' CLD edits already hold the authoritative diagram, so the reactive pipeline
+#' must NOT regenerate the CLD from the synced ISA data (that would re-layout
+#' the diagram and bake in the lossy CLD->ISA sync). The skip flag is set first,
+#' then isa_change is emitted so autosave and the analysis modules' stale-data
+#' notices fire. Pure apart from the bus calls; tolerant of NULL/partial buses.
+#'
+#' @param event_bus the app event bus (or NULL)
+#' @param source short source tag, e.g. "cld_edit_add_node"
+#' @return invisible TRUE when an event was emitted, FALSE otherwise
+notify_cld_edit <- function(event_bus, source) {
+  if (is.null(event_bus) || !is.function(event_bus$emit_isa_change)) return(invisible(FALSE))
+  if (is.function(event_bus$skip_next_cld_regen)) event_bus$skip_next_cld_regen(TRUE)
+  event_bus$emit_isa_change(source)
+  invisible(TRUE)
 }

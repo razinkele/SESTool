@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (report pipeline — review 2026-10-07 N11 / N14 / N41)
+
+- **Reports no longer knit user text** (N11): the Markdown returned by `generate_report_content()` (project name, focal issue, element and stakeholder names) was written to an `.Rmd` and passed to `rmarkdown::render()`, so inline `` `r ...` `` or a fenced R chunk inside any of those fields ran R on the server. New `functions/report_render.R::render_report_safely()` knits only the static, user-text-free `templates/report_template.Rmd`, which emits the body with `results='asis'`; pandoc runs with `-raw_html-raw_tex-raw_attribute` and in-body YAML delimiters are escaped, so raw HTML / raw TeX / fenced raw blocks / metadata blocks are shown as text. HTML, PDF and Word all go through this path.
+- **HTML reports are served per session** (N14): `register_session_report()` hands the rendered file to `session$registerDataObj()`; nothing is written to the shared, statically served `www/reports/` any more (the old timestamp-named files were readable by any client). The `app.R` session-end `www/reports` sweep is now dead code and left in place.
+- **Honest LaTeX / pandoc probes** (N41): `latex_engine_available("lualatex")` replaces probes that treated `tinytex::tinytex_root() == ""` and a failing `pdflatex --version` as success; pandoc availability is checked before rendering. New translated messages `common.messages.pandoc_required` / `common.messages.latex_required`.
+
+### Fixed (ISA batch-1 remainder — review 2026-10-07 N5 / N22 / N38 / N49 / N50)
+
+- **Removing an element now prunes its row/column from every adjacency and user-edited matrix** (N5, `prune_element_from_matrices()` in `register_remove_observer`), so the element frames and the SOURCE×TARGET matrices stay aligned and the positional CLD builder no longer re-wires surviving edges to the wrong neighbours.
+- **CLD edits reach the event bus** (N22): `app.R` now passes `event_bus` to `cld_viz_server`, and the seven edit sites emit through `notify_cld_edit()`, which sets the pipeline's skip-regeneration flag first so autosave and the stale-analysis notices fire without the CLD being rebuilt from the lossy CLD→ISA sync.
+- **Adjacency Matrix Review selector uses the stored matrix keys** (N38): `ISA_MATRIX_REVIEW_CHOICES` (`es_gb`, `mpf_es`, `p_mpf`, `a_p`, `d_a`, `gb_d`, `gb_r`, `r_d`, `r_a`, `r_p`) with translated SOURCE → TARGET labels; the six forward matrices can be viewed and cell-edited again.
+- **Excel import rejects an empty-but-recognised workbook before clearing module state** (N49, `saved_isa_has_elements()`).
+- **R-arm name-based recovery** (N50): `recover_isa_data()` rebuilds `r_d` / `r_a` / `r_p` / `gb_r` from the responses' `Linked*` columns when the saved matrices are absent (same fallback the forward chain already had; `gb_r` built R×GB and transposed; faithful saved matrices are kept).
+
+### Fixed (CLD→ISA sync fidelity — review 2026-10-07 N3)
+
+- **CLD edits no longer degrade the ISA data** (`sync_cld_to_isa_data()` rewritten). Previously any CLD edit (add/merge/rename/delete node, add/delete edge, polarity change) rebuilt every adjacency matrix from the edge label alone (strength, confidence and delay lost), replaced element IDs with the positional node ids (`GB_1`), replaced names with the wrapped labels, dropped the user-edited flags and lowercased the element frames. Now: `create_nodes_df()` carries `element_id` and `name_raw` on every node; the sync resolves each node back to its ISA element (carried id → position → name match → fresh id for nodes added in the CLD), keeps the previous matrix cell and only updates its polarity, carries `user_edited_matrices` over by dimname, and preserves the previous frame's columns and case. Legacy saves whose CLD nodes lack `element_id` resolve positionally.
+
 ### Fixed (deploy + CI hygiene — review 2026-10-07 N8 / N42 / N43 / N44 / N80)
 
 - **CI no longer passes files that test nothing** (N44): `tests/ci_run_file.R` fails a file with zero passing expectations unless it is listed with a reason in `tests/ci_allow_zero_pass.txt` (torch-only ML files, browser-driven files); `helper-00` stops under `CI=true` when `global.R` fails to load. This exposed a real gap: `functions/template_versioning.R` was sourced only inside the torch-gated ML block, so all 54 template-versioning tests skipped in CI; it is now sourced unconditionally.

@@ -1012,7 +1012,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             pd <- sync_cld_to_isa_data(pd)
             project_data_reactive(pd)
             if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-              event_bus$emit_isa_change("cld_edit_add_node")
+              notify_cld_edit(event_bus, "cld_edit_add_node")
             }
             debug_log(sprintf("Node '%s' added and synced to isa_data", node_label), "CLD VIZ")
           }, error = function(e) {
@@ -1134,7 +1134,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_merge_nodes")
+            notify_cld_edit(event_bus, "cld_edit_merge_nodes")
           }
         }, error = function(e) {
           debug_log(paste("sync_cld_to_isa_data failed on merge_nodes:", e$message), "ERROR")
@@ -1218,7 +1218,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_add_edge")
+            notify_cld_edit(event_bus, "cld_edit_add_edge")
           }
           debug_log(sprintf("Edge %s -> %s added and synced to isa_data",
                             input$edge_added$from, input$edge_added$to), "CLD VIZ")
@@ -1257,7 +1257,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             pd <- sync_cld_to_isa_data(pd)
             project_data_reactive(pd)
             if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-              event_bus$emit_isa_change("cld_edit_rename_node")
+              notify_cld_edit(event_bus, "cld_edit_rename_node")
             }
             debug_log(sprintf("Node '%s' label updated and synced to isa_data", new_label), "CLD VIZ")
           }, error = function(e) {
@@ -1386,7 +1386,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
               pd <- sync_cld_to_isa_data(pd)
               project_data_reactive(pd)
               if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-                event_bus$emit_isa_change("cld_edit_edge_polarity")
+                notify_cld_edit(event_bus, "cld_edit_edge_polarity")
               }
               debug_log("Edge updated and synced to isa_data", "CLD VIZ")
             }, error = function(e) {
@@ -1437,7 +1437,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_delete_nodes")
+            notify_cld_edit(event_bus, "cld_edit_delete_nodes")
           }
           debug_log("Deleted nodes synced to isa_data", "CLD VIZ")
         }, error = function(e) {
@@ -1477,7 +1477,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_delete_edges")
+            notify_cld_edit(event_bus, "cld_edit_delete_edges")
           }
           debug_log("Deleted edges synced to isa_data", "CLD VIZ")
         }, error = function(e) {
