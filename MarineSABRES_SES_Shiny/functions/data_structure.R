@@ -90,8 +90,10 @@ reconcile_loaded_element_ids <- function(element_df, prefix, store = .stable_id_
   id_col <- names(element_df)[match("id", tolower(names(element_df)))]
   if (!is.null(id_col) && !is.na(id_col)) {
     if (id_col != "ID") {
+      # A pure case rename changes no data, so it is NOT reported as a repair
+      # (it used to raise the 'IDs repaired ... duplicates from an older
+      # version' toast on every autosave recovery of a template project).
       names(element_df)[names(element_df) == id_col] <- "ID"
-      repaired_structure <- TRUE
     }
     ids <- as.character(element_df$ID)
   } else {
@@ -1129,7 +1131,10 @@ normalize_and_reconcile_project <- function(project, id_store = NULL) {
     marine_processes   = ELEMENT_ID_PREFIX$states,
     pressures          = ELEMENT_ID_PREFIX$pressures,
     activities         = ELEMENT_ID_PREFIX$activities,
-    drivers            = ELEMENT_ID_PREFIX$drivers
+    drivers            = ELEMENT_ID_PREFIX$drivers,
+    # responses were missing, so they kept a lowercase 'id' through every
+    # load / autosave recovery (review 2026-10-07 N24)
+    responses          = ELEMENT_ID_PREFIX$responses
   )
 
   isa <- project$data$isa_data
@@ -1601,4 +1606,35 @@ delete_element_safe <- function(isa_data, elem_name, id) {
   df <- df[df$id != id, , drop = FALSE]
   isa_data[[elem_name]] <- df
   isa_data
+}
+
+# ============================================================================
+# CANONICAL ELEMENT COLUMN CASE (review 2026-10-07 N24)
+# ============================================================================
+#' Canonical Standard Entry column names (the ISA module's schema)
+ISA_CANONICAL_COLUMNS <- c("ID", "Name", "Type", "Description", "Stakeholder", "Importance",
+                           "Trend", "LinkedGB", "LinkedES", "LinkedMPF", "LinkedP", "LinkedA",
+                           "LinkedD", "Mechanism", "Confidence", "Spatial", "Intensity",
+                           "Temporal", "Sector", "Scale", "Frequency", "Controllability",
+                           "Indicator")
+
+#' Rename element columns to their canonical case
+#'
+#' normalize_json_project_data() lowercases element columns, so project files,
+#' autosaves and JSON loads reached the ISA module as `ID + name + linkedgb`
+#' while the module reads `Name` / `LinkedGB` (empty link labels, dropped Kumu
+#' labels, by-name rebuild skipped). Pure; unknown columns are left alone and a
+#' canonical column that already exists is never overwritten.
+#' @param df element data.frame
+#' @return df with canonical column names
+canonicalize_element_columns <- function(df) {
+  if (!is.data.frame(df) || ncol(df) == 0) return(df)
+  nm <- names(df)
+  for (cn in ISA_CANONICAL_COLUMNS) {
+    if (cn %in% nm) next
+    hit <- which(tolower(nm) == tolower(cn))
+    if (length(hit) >= 1) nm[hit[1]] <- cn
+  }
+  names(df) <- nm
+  df
 }

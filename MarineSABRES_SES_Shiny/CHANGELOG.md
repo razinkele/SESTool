@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (load and round-trip integrity — review 2026-10-07 N23 / N24 / N25 / N27 / N28 / N51 / N57)
+
+- **No more false "IDs repaired (duplicates from an older version)" message** when recovering an autosaved template project: the autosave-recovery normalisation skipped Responses, and the ID reconciler counted a pure `id`→`ID` rename as a repair.
+- **Canonical column case on every load path** (N24): project files, autosaves and JSON loads reached the ISA module with lowercased columns (empty link labels, dropped Kumu labels, by-name rebuild skipped); `recover_isa_data()` now canonicalises element columns (`canonicalize_element_columns()`).
+- **One parseable matrix-cell format** (N25): forward-chain and by-name rebuilds wrote the confidence label (`+Medium:High`), which parses as missing, so every rebuilt edge lost its confidence; cells are now `+medium:5`-style (High/Medium/Low → 5/3/1, `normalize_confidence_level()`), as the Responses arm, the cell editor and new CLD edges already expected.
+- **Legacy exact duplicate rows collapse** instead of becoming edgeless orphan copies (N27); a label's exact ID now wins over the first same-name row (N51).
+- **"Download Excel" always includes the matrices and loop connections** (N23), and the importer reads the loop sheet back; **a blank `Matrix_*` sheet no longer aborts the import** and cells are trimmed (N28).
+- **Excel loader**: sheet-name prefixes are matched literally, and an edges sheet with no usable rows no longer errors (N57).
+
 ### Fixed (analysis modules — review 2026-10-07 N30–N36)
 
 - **Connection review buttons no longer run their handler several times.** The per-batch and per-connection observers were recreated after every approval without destroying the previous ones, so after k approvals each click ran k+1 handlers. Old observers are now destroyed before regeneration (N30).

@@ -60,7 +60,7 @@ test_that("apply_saved_isa rebuilds forward matrices from Linked* when none supp
     args = list(project_data_reactive = reactiveVal(proj), i18n = fake_i18n), {
       session$flushReact()
       rv <- session$getReturned()()
-      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Medium:High")
+      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+medium:5")
   })
 })
 
@@ -184,7 +184,7 @@ test_that("import replaces prior project state (no stale matrices/elements)", {
 
       rv <- session$getReturned()()
       # B's fallback es_gb ("+Medium:Low") REPLACED A's faithful "+High:High"
-      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+Medium:Low")
+      expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+medium:1")
       # A's driver is fully gone (element df cleared, not just the panel tracker)
       expect_equal(nrow(rv$drivers), 0)
       expect_length(rv$d_panel_ids, 0)
