@@ -1048,7 +1048,10 @@ server <- function(input, output, session) {
   isa_data <- isa_data_entry_server("isa_module", project_data, session_i18n, event_bus, parent_session = session)
 
   # Graphical SES Creator module (AI-powered step-by-step network building)
-  graphical_ses_creator_server("graphical_ses_mod", project_data, session_i18n, session)
+  # event_bus wired (review 2026-10-07 N6) so an Export to ISA regenerates the
+  # CLD and flags analyses stale.
+  graphical_ses_creator_server("graphical_ses_mod", project_data, session_i18n, session,
+                               event_bus = event_bus)
 
   # CLD visualization
   # event_bus wired (review 2026-10-07 N22) so CLD edits trigger autosave and
