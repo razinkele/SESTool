@@ -512,7 +512,7 @@ ses_create_boolean_rules <- function(mat) {
 #' @param boolean_rules Data frame with 'targets' and 'factors' columns
 #'   (from \code{\link{ses_create_boolean_rules}})
 #' @param max_nodes Maximum number of nodes for exhaustive search (default from
-#'   DYNAMICS_MAX_BOOLEAN_NODES constant = 25). Exhaustive search is O(2^n).
+#'   DYNAMICS_MAX_BOOLEAN_NODES constant = 20). Exhaustive search is O(2^n).
 #' @return Named list with:
 #'   \describe{
 #'     \item{n_states}{Total number of states (2^n)}
@@ -529,7 +529,7 @@ ses_boolean_attractors <- function(boolean_rules, max_nodes = NULL) {
   # so the documented hard cap applies whatever the caller passes (review
   # 2026-10-07 N16: it used to be only the default, and the module forwarded
   # the client-supplied slider value).
-  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 20L
   max_nodes <- suppressWarnings(as.integer(max_nodes))
   if (length(max_nodes) != 1 || is.na(max_nodes)) max_nodes <- hard_cap
   max_nodes <- min(max_nodes, hard_cap)
@@ -617,7 +617,7 @@ ses_boolean_attractors <- function(boolean_rules, max_nodes = NULL) {
 #' @export
 boolean_model <- function(mat, max_nodes = NULL) {
   if (is.null(max_nodes)) {
-    max_nodes <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+    max_nodes <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 20L
   }
 
   tryCatch({

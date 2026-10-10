@@ -593,7 +593,9 @@ BEGINNER_MAX_ELEMENTS_MAX     <- 10L  # Maximum allowed (slider range)
 # DTU DYNAMICS ANALYSIS CONSTANTS
 # ============================================================================
 
-DYNAMICS_MAX_BOOLEAN_NODES    <- 25L     # Hard limit for exhaustive Boolean analysis
+DYNAMICS_MAX_BOOLEAN_NODES    <- 20L     # Hard limit for exhaustive Boolean analysis: 2^20 ~ 1M states.
+                                         # Was 25 (2^25 ~ 33M states, GBs of RAM in the single shared
+                                         # R process on laguna); lowered 2026-10-10 (review N16 follow-up).
 DYNAMICS_DEFAULT_ITER         <- 500L    # Default simulation iterations
 DYNAMICS_MIN_ITER             <- 50L     # Minimum iterations
 DYNAMICS_MAX_ITER             <- 5000L   # Maximum iterations
