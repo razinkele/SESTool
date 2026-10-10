@@ -77,15 +77,22 @@ create_isa_analysis_workbook <- function(isa_data) {
   if (is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
     addWorksheet(wb, "Responses_Measures")
     writeData(wb, "Responses_Measures", isa_data$responses)
-    if (!is.null(isa_data$adjacency_matrices)) {
-      for (mat_name in names(isa_data$adjacency_matrices)) {
-        mat <- isa_data$adjacency_matrices[[mat_name]]
-        if (is.matrix(mat)) {
-          sheet <- substr(paste0("Matrix_", mat_name), 1, 31)
-          addWorksheet(wb, sheet); writeData(wb, sheet, as.data.frame(mat), rowNames = TRUE)
-        }
+  }
+  # Matrices and loop connections are written for EVERY model, not only those
+  # with responses: without them a re-import rebuilt edges with default
+  # strengths and silently lost gb_d (review 2026-10-07 N23).
+  if (!is.null(isa_data$adjacency_matrices)) {
+    for (mat_name in names(isa_data$adjacency_matrices)) {
+      mat <- isa_data$adjacency_matrices[[mat_name]]
+      if (is.matrix(mat) && nrow(mat) > 0 && ncol(mat) > 0) {
+        sheet <- substr(paste0("Matrix_", mat_name), 1, 31)
+        addWorksheet(wb, sheet); writeData(wb, sheet, as.data.frame(mat), rowNames = TRUE)
       }
     }
+  }
+  if (is.data.frame(isa_data$loop_connections) && nrow(isa_data$loop_connections) > 0) {
+    addWorksheet(wb, "Loop_Connections")
+    writeData(wb, "Loop_Connections", isa_data$loop_connections)
   }
 
   wb

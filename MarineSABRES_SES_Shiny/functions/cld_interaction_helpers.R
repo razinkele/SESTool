@@ -830,9 +830,9 @@ sync_cld_to_isa_data <- function(project_data) {
         # New edge: defaults by matrix family (the R arm keys DYNAMICS_WEIGHT_MAP
         # with lowercase strength + integer confidence, see build_response_matrices)
         r_arm <- mat_name %in% c("r_d", "r_a", "r_p", "gb_r")
-        cell <- paste0(pol,
-                       pick(edges, "strength", i, if (r_arm) "medium" else "Medium"), ":",
-                       pick(edges, "confidence", i, if (r_arm) "3" else "Medium"))
+        # one cell grammar everywhere: '<pol><strength>:<1-5>' (review N25)
+        cell <- paste0(pol, tolower(pick(edges, "strength", i, "medium")), ":",
+                       normalize_confidence_level(pick(edges, "confidence", i, "3"), "3"))
       }
       adj[[mat_name]][src_e, tgt_e] <- cell
     }

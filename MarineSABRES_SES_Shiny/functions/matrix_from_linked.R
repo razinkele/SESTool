@@ -86,8 +86,8 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
                                        existing_matrix = NULL,
                                        user_edited_matrix = NULL,
                                        default_polarity = "+",
-                                       default_strength = "Medium",
-                                       default_confidence = "Medium") {
+                                       default_strength = "medium",
+                                       default_confidence = "3") {
   if (!is.null(existing_matrix) && !is.null(user_edited_matrix)) {
     assert_matrices_aligned(existing_matrix, user_edited_matrix)
   }
@@ -155,7 +155,7 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
     linked_ids <- parse_linked(element_df[[linked_col]][i])
     confidence <- if (has_conf_col) {
       val <- element_df[[element_confidence_col]][i]
-      if (is.null(val) || is.na(val) || !nzchar(val)) default_confidence else as.character(val)
+      normalize_confidence_level(val, default_confidence)
     } else {
       default_confidence
     }
@@ -226,8 +226,14 @@ resolve_linked_to_target_ids <- function(linked_value, target_df) {
     name_part <- if (has_colon) trimws(sub("^[^:]*:\\s*", "", seg)) else ""
     resolved  <- NA_character_
 
+    # 0) exact ID whose row also carries the label's name (review N51: with two
+    #    same-name rows the label's own ID must win over the first name hit)
+    if (nzchar(id_part) && id_part %in% tgt_ids && nzchar(name_part)) {
+      j <- match(id_part, tgt_ids)
+      if (!is.na(tgt_names[j]) && tgt_names[j] == .linked_norm_name(name_part)) resolved <- id_part
+    }
     # 1) NAME match (the legacy label carries it; robust to duplicate-ID repair)
-    if (nzchar(name_part)) {
+    if (is.na(resolved) && nzchar(name_part)) {
       hit <- which(tgt_names == .linked_norm_name(name_part))
       if (length(hit) >= 1) resolved <- tgt_ids[hit[1]]
     }
@@ -274,8 +280,8 @@ rederive_linked_from_matrix <- function(mat, element_id, orientation = c("row", 
 rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
                                            element_confidence_col = "Confidence",
                                            default_polarity = "+",
-                                           default_strength = "Medium",
-                                           default_confidence = "Medium") {
+                                           default_strength = "medium",
+                                           default_confidence = "3") {
   src_ids <- as.character(source_df$ID)
   tgt_ids <- as.character(target_df$ID)
   out <- matrix("", nrow = length(src_ids), ncol = length(tgt_ids),
@@ -288,7 +294,7 @@ rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
     if (!(sid %in% src_ids)) next
     confidence <- if (has_conf) {
       v <- source_df[[element_confidence_col]][i]
-      if (is.null(v) || is.na(v) || !nzchar(as.character(v))) default_confidence else as.character(v)
+      normalize_confidence_level(v, default_confidence)
     } else default_confidence
     cell <- paste0(default_polarity, default_strength, ":", confidence)
     for (tid in resolve_linked_to_target_ids(source_df[[linked_col]][i], target_df)) {
@@ -296,4 +302,24 @@ rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
     }
   }
   out
+}
+
+#' Map an element confidence to the integer grammar of matrix cells
+#'
+#' Cells are parsed as '<polarity><strength>:<integer 1-5>' (utils.R
+#' parse_connection_value); the forward chain used to write the form label
+#' ('High'), which parses as NA and silently fell back to the default
+#' (review 2026-10-07 N25). High/Medium/Low map to 5/3/1; integers 1-5 pass.
+#' @param x confidence value (label, number or empty)
+#' @param default value used when x is empty or unrecognised
+#' @return character(1)
+normalize_confidence_level <- function(x, default = "3") {
+  if (is.null(x) || length(x) == 0 || is.na(x[1])) return(as.character(default))
+  v <- tolower(trimws(as.character(x[1])))
+  if (!nzchar(v)) return(as.character(default))
+  map <- c("very high" = "5", "high" = "5", "medium" = "3", "moderate" = "3", "low" = "1", "very low" = "1")
+  if (v %in% names(map)) return(unname(map[v]))
+  n <- suppressWarnings(as.integer(v))
+  if (!is.na(n) && n >= 1 && n <= 5) return(as.character(n))
+  as.character(default)
 }

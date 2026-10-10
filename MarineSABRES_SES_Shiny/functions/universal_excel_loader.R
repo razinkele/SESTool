@@ -71,7 +71,7 @@ detect_excel_format <- function(file_path) {
     prefix_clean <- trimws(prefix)
 
     # Look for matching edge sheet with same prefix
-    matching_edges <- sheets[grepl(paste0("^", prefix_clean, ".*edge|^", prefix_clean, ".*kumu"), sheets, ignore.case = TRUE)]
+    matching_edges <- .sheets_after_prefix(sheets, prefix_clean, "edge|kumu")
     if (length(matching_edges) > 0) {
       variant_name <- if (nzchar(prefix_clean)) prefix_clean else "Default"
       variants[[length(variants) + 1]] <- list(
@@ -99,7 +99,7 @@ detect_excel_format <- function(file_path) {
       prefix_clean <- trimws(prefix)
 
       # Look for matching "Node Data" sheet (which is actually edges)
-      matching_node_data <- sheets[grepl(paste0("^", prefix_clean, ".*node.*data"), sheets, ignore.case = TRUE)]
+      matching_node_data <- .sheets_after_prefix(sheets, prefix_clean, "node.*data")
       if (length(matching_node_data) > 0) {
         variant_name <- if (nzchar(prefix_clean)) prefix_clean else "Default"
 
@@ -133,7 +133,7 @@ detect_excel_format <- function(file_path) {
       prefix_clean <- trimws(prefix)
 
       # Look for node sheet with same prefix
-      matching_nodes <- sheets[grepl(paste0("^", prefix_clean, ".*label|^", prefix_clean, ".*element"), sheets, ignore.case = TRUE)]
+      matching_nodes <- .sheets_after_prefix(sheets, prefix_clean, "label|element")
 
       if (length(matching_nodes) > 0) {
         variant_name <- if (nzchar(prefix_clean)) prefix_clean else "Default"
@@ -595,8 +595,8 @@ infer_nodes_from_edges <- function(edges) {
   # Try to get type information from edges if available
   nodes <- data.frame(
     Label = all_labels,
-    type = NA_character_
-    
+    type = rep(NA_character_, length(all_labels)),  # length 0 when no usable rows (N57)
+    stringsAsFactors = FALSE
   )
 
   # If edges have a 'type' column, try to map types to nodes
@@ -857,4 +857,16 @@ get_variant_choices <- function(file_path) {
   )
 
   return(choices)
+}
+
+#' Sheets that start with `prefix` (literally, case-insensitive) and whose
+#' remainder matches `pattern` (review 2026-10-07 N57: the prefix used to be
+#' pasted into a regex, so sheet names with metacharacters failed to match or,
+#' when unbalanced, raised an uncaught regex error).
+.sheets_after_prefix <- function(sheets, prefix, pattern) {
+  if (length(sheets) == 0) return(character(0))
+  lp <- tolower(prefix)
+  starts <- startsWith(tolower(sheets), lp)
+  rest <- substring(sheets, nchar(prefix) + 1L)
+  sheets[starts & grepl(pattern, rest, ignore.case = TRUE)]
 }
