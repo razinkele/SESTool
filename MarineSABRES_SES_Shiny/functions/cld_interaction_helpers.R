@@ -898,3 +898,25 @@ merge_cld_nodes <- function(nodes, edges, node_ids, primary_id) {
     primary_id = primary_id
   )
 }
+
+# ============================================================================
+# EVENT BUS NOTIFICATION FOR CLD EDITS (review 2026-10-07 N22)
+# ============================================================================
+
+#' Tell the event bus that the CLD was edited, without forcing a CLD rebuild
+#'
+#' CLD edits already hold the authoritative diagram, so the reactive pipeline
+#' must NOT regenerate the CLD from the synced ISA data (that would re-layout
+#' the diagram and bake in the lossy CLD->ISA sync). The skip flag is set first,
+#' then isa_change is emitted so autosave and the analysis modules' stale-data
+#' notices fire. Pure apart from the bus calls; tolerant of NULL/partial buses.
+#'
+#' @param event_bus the app event bus (or NULL)
+#' @param source short source tag, e.g. "cld_edit_add_node"
+#' @return invisible TRUE when an event was emitted, FALSE otherwise
+notify_cld_edit <- function(event_bus, source) {
+  if (is.null(event_bus) || !is.function(event_bus$emit_isa_change)) return(invisible(FALSE))
+  if (is.function(event_bus$skip_next_cld_regen)) event_bus$skip_next_cld_regen(TRUE)
+  event_bus$emit_isa_change(source)
+  invisible(TRUE)
+}

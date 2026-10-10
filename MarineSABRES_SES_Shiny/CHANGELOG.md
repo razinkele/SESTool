@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **HTML reports are served per session** (N14): `register_session_report()` hands the rendered file to `session$registerDataObj()`; nothing is written to the shared, statically served `www/reports/` any more (the old timestamp-named files were readable by any client). The `app.R` session-end `www/reports` sweep is now dead code and left in place.
 - **Honest LaTeX / pandoc probes** (N41): `latex_engine_available("lualatex")` replaces probes that treated `tinytex::tinytex_root() == ""` and a failing `pdflatex --version` as success; pandoc availability is checked before rendering. New translated messages `common.messages.pandoc_required` / `common.messages.latex_required`.
 
+### Fixed (ISA batch-1 remainder — review 2026-10-07 N5 / N22 / N38 / N49 / N50)
+
+- **Removing an element now prunes its row/column from every adjacency and user-edited matrix** (N5, `prune_element_from_matrices()` in `register_remove_observer`), so the element frames and the SOURCE×TARGET matrices stay aligned and the positional CLD builder no longer re-wires surviving edges to the wrong neighbours.
+- **CLD edits reach the event bus** (N22): `app.R` now passes `event_bus` to `cld_viz_server`, and the seven edit sites emit through `notify_cld_edit()`, which sets the pipeline's skip-regeneration flag first so autosave and the stale-analysis notices fire without the CLD being rebuilt from the lossy CLD→ISA sync.
+- **Adjacency Matrix Review selector uses the stored matrix keys** (N38): `ISA_MATRIX_REVIEW_CHOICES` (`es_gb`, `mpf_es`, `p_mpf`, `a_p`, `d_a`, `gb_d`, `gb_r`, `r_d`, `r_a`, `r_p`) with translated SOURCE → TARGET labels; the six forward matrices can be viewed and cell-edited again.
+- **Excel import rejects an empty-but-recognised workbook before clearing module state** (N49, `saved_isa_has_elements()`).
+- **R-arm name-based recovery** (N50): `recover_isa_data()` rebuilds `r_d` / `r_a` / `r_p` / `gb_r` from the responses' `Linked*` columns when the saved matrices are absent (same fallback the forward chain already had; `gb_r` built R×GB and transposed; faithful saved matrices are kept).
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.
