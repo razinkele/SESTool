@@ -1412,3 +1412,20 @@ $(document).ready(function() {
 // position correctly using their default absolute positioning. The network canvas
 // sits directly inside .content-wrapper with minimal nesting.
 
+// Per-browser token for server-side autosave recovery (review 2026-10-07 N7).
+// A random 128-bit id kept in localStorage; the server stores this browser's
+// autosave under it so work survives a disconnect or tab crash. Never contains
+// personal data; private/blocked storage just means no cross-session recovery.
+$(document).on('shiny:connected', function() {
+  var key = 'marinesabres_browser_token', tok = null;
+  try { tok = window.localStorage.getItem(key); } catch (e) {}
+  if (!tok || !/^[a-f0-9]{32}$/.test(tok)) {
+    var bytes = new Uint8Array(16);
+    (window.crypto || window.msCrypto).getRandomValues(bytes);
+    tok = Array.prototype.map.call(bytes, function(b) {
+      return ('0' + b.toString(16)).slice(-2);
+    }).join('');
+    try { window.localStorage.setItem(key, tok); } catch (e) {}
+  }
+  Shiny.setInputValue('marinesabres_browser_token', tok, {priority: 'event'});
+});

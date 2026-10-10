@@ -805,7 +805,9 @@ server <- function(input, output, session) {
   # Pass advanced autosave settings for customizable behavior
   auto_save_server("auto_save", project_data, session_i18n, autosave_enabled, event_bus,
                    autosave_delay, autosave_notifications,
-                   autosave_indicator, autosave_triggers)
+                   autosave_indicator, autosave_triggers,
+                   # per-browser token for server-side autosave recovery (N7)
+                   browser_token_reactive = reactive(input$marinesabres_browser_token))
 
   # ========== LOCAL STORAGE MODULE ==========
   # Initialize local storage functionality for saving/loading to user's computer
