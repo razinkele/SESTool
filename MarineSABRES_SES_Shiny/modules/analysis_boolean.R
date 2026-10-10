@@ -11,6 +11,19 @@
 #             functions/ui_helpers.R
 # =============================================================================
 
+#' Clamp the client-supplied Boolean node limit to the hard cap
+#'
+#' input$max_boolean_nodes comes from the browser (slider or setInputValue), so
+#' it is never trusted beyond DYNAMICS_MAX_BOOLEAN_NODES (review 2026-10-07 N16).
+#' @param x requested limit (any type)
+#' @return integer(1) in [1, DYNAMICS_MAX_BOOLEAN_NODES]
+clamp_boolean_max_nodes <- function(x) {
+  hard_cap <- if (exists("DYNAMICS_MAX_BOOLEAN_NODES")) DYNAMICS_MAX_BOOLEAN_NODES else 25L
+  v <- suppressWarnings(as.integer(x))
+  if (length(v) != 1 || is.na(v)) return(as.integer(hard_cap))
+  as.integer(max(1L, min(v, hard_cap)))
+}
+
 # ============================================================================
 # UI FUNCTION
 # ============================================================================
@@ -129,7 +142,7 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n, event_bus =
               sliderInput(
                 ns("max_boolean_nodes"),
                 i18n$t("modules.analysis_boolean.max_nodes"),
-                min = 5, max = 30, value = DYNAMICS_MAX_BOOLEAN_NODES, step = 1
+                min = 5, max = DYNAMICS_MAX_BOOLEAN_NODES, value = DYNAMICS_MAX_BOOLEAN_NODES, step = 1
               ),
 
               # Boolean feasibility warning
@@ -246,7 +259,7 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Step 4: Boolean attractors (if within node limit)
         n_nodes <- nrow(rv$numeric_matrix)
-        max_nodes <- input$max_boolean_nodes %||% DYNAMICS_MAX_BOOLEAN_NODES
+        max_nodes <- clamp_boolean_max_nodes(input$max_boolean_nodes)
 
         if (!is.null(rv$boolean_rules) && n_nodes <= max_nodes) {
           incProgress(0.3, detail = i18n$t("modules.analysis_boolean.finding_attractors"))

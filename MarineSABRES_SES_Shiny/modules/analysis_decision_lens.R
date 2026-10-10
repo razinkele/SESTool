@@ -169,7 +169,7 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
               label_of(a$leverage_node_id)),
             p(em(i18n$t(paste0(k, ".leverage")))),
             tags$small(class = "text-muted",
-                       paste0("Loops: ", paste(a$loop_ids, collapse = ", ")))
+                       paste0("Loops: ", format_loop_ids(a$loop_ids)))
           )
         })
       )

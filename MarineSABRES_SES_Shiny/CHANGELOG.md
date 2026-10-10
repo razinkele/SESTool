@@ -36,6 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Bookmark links can no longer crash a session or inject metadata.** With URL bookmarking the restored values come from the link itself; `onRestore` copied them with only an `is.null()` check. A non-logical autosave flag crashed the session on the first reactive flush (N82), and arbitrary metadata strings of any JSON type were stored into the project and later used in reports (N81). New `sanitize_bookmark_values()` (`server/bookmarking.R`) admits only well-typed scalars: user level from the three levels, a logical autosave flag, a plain tab id, a demonstration area from the PIMS choices, and a focal issue of at most 1000 characters with control characters removed.
 
+### Fixed (analysis bounding — review 2026-10-07 N16 / N17)
+
+- **Boolean attractor search respects its hard cap** (N16): the exhaustive 2^n search was bounded only by the client-supplied node limit (the slider allowed 30; a crafted input allowed anything), and `DYNAMICS_MAX_BOOLEAN_NODES` was only a default. The module clamps the input (`clamp_boolean_max_nodes()`), the slider stops at the cap, and `ses_boolean_attractors()` enforces it independently (size check now runs before the BoolNet check). The unused 2^n-vertex state-transition graph is no longer built (`transition_graph` stays in the result as `NULL`).
+- **Limits-to-Growth archetypes aggregate per leverage Response** (N17): one record per (reinforcing × balancing) loop pair reached tens of thousands of rendered panels on real projects; it is now one record per Response with the coupled loops merged, and long loop lists are truncated for display (`format_loop_ids()`).
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.
