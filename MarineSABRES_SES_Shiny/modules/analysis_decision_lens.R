@@ -133,22 +133,27 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
     output$factors_plot <- renderPlot({
       req(rv$factors); req(nrow(rv$factors) > 0)
       df <- rv$factors
+      # translated legend values (N46)
+      df$quadrant_label <- dl_quadrant_label(df$quadrant, i18n)
       # Quadrant dual-encoded (color + shape) so it does not rely on colour alone
-      ggplot(df, aes(x = dependence, y = influence, color = quadrant, shape = quadrant)) +
+      ggplot(df, aes(x = dependence, y = influence, color = quadrant_label, shape = quadrant_label)) +
         geom_vline(xintercept = median(df$dependence), linetype = "dashed", color = "grey60") +
         geom_hline(yintercept = median(df$influence),  linetype = "dashed", color = "grey60") +
         geom_point(size = 4, alpha = 0.85) +
         geom_text(aes(label = label), size = 3.5, vjust = -1, check_overlap = TRUE,
                   show.legend = FALSE) +
         labs(x = i18n$t("modules.analysis.decision_lens.factors_x_axis"),
-             y = i18n$t("modules.analysis.decision_lens.factors_y_axis")) +
+             y = i18n$t("modules.analysis.decision_lens.factors_y_axis"),
+             color = i18n$t("modules.analysis.decision_lens.col_quadrant"),
+             shape = i18n$t("modules.analysis.decision_lens.col_quadrant")) +
         theme_minimal(base_size = 13)
     })
 
     output$factors_table <- DT::renderDataTable({
       req(rv$factors)
-      DT::datatable(rv$factors, options = list(pageLength = 15, scrollX = TRUE),
-                    rownames = FALSE)
+      # translated headers, categories and roles (N46)
+      DT::datatable(dl_display_factors(rv$factors, i18n),
+                    options = list(pageLength = 15, scrollX = TRUE), rownames = FALSE)
     })
 
     output$archetypes_ui <- renderUI({
@@ -163,6 +168,13 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
       }
       tagList(
         p(i18n$t("modules.analysis.decision_lens.archetypes_intro")),
+        # Dynamic keys, listed for the i18n enforcement scan (N46):
+        # i18n-ref: modules.analysis.decision_lens.archetype.tragedy_of_the_commons.name
+        # i18n-ref: modules.analysis.decision_lens.archetype.tragedy_of_the_commons.desc
+        # i18n-ref: modules.analysis.decision_lens.archetype.tragedy_of_the_commons.leverage
+        # i18n-ref: modules.analysis.decision_lens.archetype.limits_to_growth.name
+        # i18n-ref: modules.analysis.decision_lens.archetype.limits_to_growth.desc
+        # i18n-ref: modules.analysis.decision_lens.archetype.limits_to_growth.leverage
         lapply(rv$archetypes, function(a) {
           k <- paste0("modules.analysis.decision_lens.archetype.", a$archetype_key)
           wellPanel(
@@ -172,7 +184,8 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
               label_of(a$leverage_node_id)),
             p(em(i18n$t(paste0(k, ".leverage")))),
             tags$small(class = "text-muted",
-                       paste0("Loops: ", format_loop_ids(a$loop_ids)))
+                       paste0(i18n$t("modules.analysis.decision_lens.archetype_loops_label"), ": ",
+                              format_loop_ids(a$loop_ids)))
           )
         })
       )

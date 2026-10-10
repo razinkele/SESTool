@@ -3907,12 +3907,12 @@
     },
     "modules.isa.ai_assistant.responses": {
       "en": "Responses",
-      "es": "[ES] Responses",
-      "fr": "[FR] Responses",
-      "de": "[DE] Responses",
-      "lt": "[LT] Responses",
-      "pt": "[PT] Responses",
-      "it": "[IT] Responses",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Reaktionen",
+      "lt": "Atsakai",
+      "pt": "Respostas",
+      "it": "Risposte",
       "no": "Responser",
       "el": "Αποκρίσεις"
     },
@@ -4861,6 +4861,50 @@
       "it": "Aggiungi risposte di gestione e collega ciascuna ai beni e benefici che migliora e, facoltativamente, ai driver, attività o pressioni a cui è rivolta.",
       "no": "Legg til forvaltningsresponser og koble hver enkelt til godene og fordelene den forbedrer, og eventuelt til drivkreftene, aktivitetene eller påvirkningene den retter seg mot.",
       "el": "Προσθέστε αποκρίσεις διαχείρισης και συνδέστε καθεμία με τα αγαθά και οφέλη που βελτιώνει και, προαιρετικά, με τις κινητήριες δυνάμεις, δραστηριότητες ή πιέσεις στις οποίες στοχεύει."
+    },
+    "modules.isa.data_entry.matrix.cell_unknown_matrix": {
+      "en": "This matrix is not available.",
+      "es": "Esta matriz no está disponible.",
+      "fr": "Cette matrice n'est pas disponible.",
+      "de": "Diese Matrix ist nicht verfügbar.",
+      "lt": "Ši matrica nepasiekiama.",
+      "pt": "Esta matriz não está disponível.",
+      "it": "Questa matrice non è disponibile.",
+      "no": "Denne matrisen er ikke tilgjengelig.",
+      "el": "Αυτός ο πίνακας δεν είναι διαθέσιμος."
+    },
+    "modules.isa.data_entry.matrix.cell_out_of_range": {
+      "en": "That cell is outside the matrix.",
+      "es": "Esa celda está fuera de la matriz.",
+      "fr": "Cette cellule est en dehors de la matrice.",
+      "de": "Diese Zelle liegt außerhalb der Matrix.",
+      "lt": "Šis langelis yra už matricos ribų.",
+      "pt": "Essa célula está fora da matriz.",
+      "it": "Quella cella è fuori dalla matrice.",
+      "no": "Den cellen er utenfor matrisen.",
+      "el": "Αυτό το κελί βρίσκεται εκτός του πίνακα."
+    },
+    "modules.isa.data_entry.matrix.cell_invalid": {
+      "en": "Invalid cell \"%s\": use e.g. +strong:4 or -medium:3, or leave it empty to remove the link.",
+      "es": "Celda no válida \"%s\": use p. ej. +strong:4 o -medium:3, o déjela vacía para eliminar el vínculo.",
+      "fr": "Cellule non valide « %s » : utilisez par ex. +strong:4 ou -medium:3, ou laissez-la vide pour supprimer le lien.",
+      "de": "Ungültige Zelle „%s“: z. B. +strong:4 oder -medium:3 verwenden oder leer lassen, um die Verbindung zu entfernen.",
+      "lt": "Netinkamas langelis „%s“: naudokite, pvz., +strong:4 arba -medium:3, arba palikite tuščią, kad pašalintumėte ryšį.",
+      "pt": "Célula inválida \"%s\": use, por ex., +strong:4 ou -medium:3, ou deixe-a vazia para remover a ligação.",
+      "it": "Cella non valida \"%s\": usa ad es. +strong:4 o -medium:3, oppure lasciala vuota per rimuovere il collegamento.",
+      "no": "Ugyldig celle «%s»: bruk f.eks. +strong:4 eller -medium:3, eller la den stå tom for å fjerne koblingen.",
+      "el": "Μη έγκυρο κελί «%s»: χρησιμοποιήστε π.χ. +strong:4 ή -medium:3, ή αφήστε το κενό για να αφαιρέσετε τη σύνδεση."
+    },
+    "modules.isa.data_entry.matrix.no_matrix_data": {
+      "en": "No data available for this matrix.",
+      "es": "No hay datos disponibles para esta matriz.",
+      "fr": "Aucune donnée disponible pour cette matrice.",
+      "de": "Für diese Matrix sind keine Daten verfügbar.",
+      "lt": "Šiai matricai duomenų nėra.",
+      "pt": "Não há dados disponíveis para esta matriz.",
+      "it": "Nessun dato disponibile per questa matrice.",
+      "no": "Ingen data tilgjengelig for denne matrisen.",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτόν τον πίνακα."
     }
   }
 }
