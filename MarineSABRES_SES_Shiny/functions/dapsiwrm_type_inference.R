@@ -284,103 +284,9 @@ infer_dapsiwrm_types <- function(element_names, keywords = NULL, verbose = FALSE
   return(types)
 }
 
-#' Add inferred types to elements dataframe
-#'
-#' Adds or fills missing types in an elements dataframe using inference.
-#'
-#' @param elements Data frame with element data
-#' @param label_col Name of the label column (default: "Label")
-#' @param type_col Name of the type column (default: "Type")
-#' @param overwrite If TRUE, replaces all types; if FALSE, only fills NA values
-#' @param verbose If TRUE, prints progress information
-#' @return Updated data frame with inferred types
-#' @export
-add_inferred_types <- function(elements, label_col = "Label", type_col = "Type",
-                                overwrite = FALSE, verbose = TRUE) {
-  if (!label_col %in% names(elements)) {
-    stop("Label column '", label_col, "' not found in elements data")
-  }
-
-  # Ensure type column exists
-  if (!type_col %in% names(elements)) {
-    elements[[type_col]] <- NA_character_
-  }
-
-  # Get indices to update
-  if (overwrite) {
-    indices <- seq_len(nrow(elements))
-  } else {
-    indices <- which(is.na(elements[[type_col]]) | !nzchar(trimws(elements[[type_col]])))
-  }
-
-  if (length(indices) == 0) {
-    if (verbose) debug_log("No elements need type inference.", "TYPE_INFERENCE")
-    return(elements)
-  }
-
-  if (verbose) {
-    debug_log(sprintf("Inferring types for %d elements...", length(indices)), "TYPE_INFERENCE")
-  }
-
-  # Infer types for selected elements
-  names_to_infer <- elements[[label_col]][indices]
-  inferred <- infer_dapsiwrm_types(names_to_infer, verbose = verbose)
-
-  # Update dataframe
-  elements[[type_col]][indices] <- inferred
-
-  # Report results
-  if (verbose) {
-    na_count <- sum(is.na(elements[[type_col]]))
-    debug_log(sprintf("Result: %d elements still without type (%.1f%%)",
-                na_count, 100 * na_count / nrow(elements)), "TYPE_INFERENCE")
-  }
-
-  return(elements)
-}
-
 # ============================================================================
 # ANALYSIS FUNCTIONS
 # ============================================================================
-
-#' Analyze type inference results
-#'
-#' Provides detailed analysis of type inference for a set of elements.
-#'
-#' @param element_names Vector of element names
-#' @param actual_types Optional vector of actual types for comparison
-#' @return Data frame with inference results
-#' @export
-analyze_type_inference <- function(element_names, actual_types = NULL) {
-  keywords <- get_dapsiwrm_keywords()
-
-  results <- data.frame(
-    element = element_names,
-    inferred_type = character(length(element_names)),
-    score = integer(length(element_names)),
-    matched_keywords = character(length(element_names))
-    
-  )
-
-  if (!is.null(actual_types)) {
-    results$actual_type <- actual_types
-    results$match <- logical(length(element_names))
-  }
-
-  for (i in seq_along(element_names)) {
-    result <- infer_dapsiwrm_type(element_names[i], keywords, return_score = TRUE)
-    results$inferred_type[i] <- if (is.na(result$type)) "" else result$type
-    results$score[i] <- result$score
-    results$matched_keywords[i] <- paste(result$matches, collapse = "; ")
-
-    if (!is.null(actual_types)) {
-      results$match[i] <- !is.na(result$type) && !is.na(actual_types[i]) &&
-        tolower(result$type) == tolower(actual_types[i])
-    }
-  }
-
-  return(results)
-}
 
 #' Print type inference summary
 #'
@@ -406,3 +312,6 @@ print_type_inference_summary <- function(elements, label_col = "Label", type_col
   cat(rep("-", 40), "\n", sep = "")
   cat(sprintf("Total: %d elements\n", nrow(elements)))
 }
+
+# (Review 2026-10-07 N68: add_inferred_types() and analyze_type_inference()
+#  were removed -- never called and untested.)

@@ -10,7 +10,8 @@
 source("modules/ai_isa/connection_generator.R", local = TRUE)
 source("modules/ai_isa/ui_components.R", local = TRUE)
 source("modules/ai_isa/question_flow.R", local = TRUE)
-source("modules/ai_isa/answer_processor.R", local = TRUE)
+# (modules/ai_isa/answer_processor.R removed -- its process_answer() was never
+#  called; the live one is inline below. Review 2026-10-07 N66.)
 source("modules/ai_isa/data_persistence.R", local = TRUE)
 source("modules/ai_isa/ui_renderers.R", local = TRUE)
 source("modules/ai_isa/template_handlers.R", local = TRUE)
@@ -2253,12 +2254,21 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Process answer function
     # NOTE: Equivalent function extracted to modules/ai_isa/answer_processor.R
-    # Future refactoring can replace this with: process_answer(answer, step_info, rv, i18n, move_to_next_step, REGIONAL_SEAS)
     process_answer <- function(answer) {
+      # Input validation, ported from the unused answer_processor.R copy (N66)
+      if (is.null(answer) || !is.character(answer) || length(answer) != 1 ||
+          is.na(answer) || !nzchar(trimws(answer))) {
+        debug_log("process_answer: invalid answer (NULL, non-character, or empty)", "AI ISA PROCESS WARN")
+        return(invisible(NULL))
+      }
       debug_log(sprintf("[AI ISA PROCESS] process_answer called with: '%s'\n", answer))
 
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
+        if (!is.list(step_info) || is.null(step_info$target) || is.null(step_info$type)) {
+          debug_log("process_answer: invalid step_info (missing target/type)", "AI ISA PROCESS WARN")
+          return(invisible(NULL))
+        }
         debug_log(sprintf("[AI ISA PROCESS] Current step %d, type: %s, target: %s\n",
                     rv$current_step, step_info$type, step_info$target))
 
