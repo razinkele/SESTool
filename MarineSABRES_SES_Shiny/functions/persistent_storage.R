@@ -680,3 +680,79 @@ get_display_path <- function(path) {
 
   return(path)
 }
+
+# ============================================================================
+# SERVER-MODE AUTOSAVE RECOVERY (review 2026-10-07 N7)
+# ============================================================================
+# On the shared server the autosave lived only in the per-session temp dir,
+# which session_isolation deletes when the session ends -- exactly when
+# recovery is needed. Each browser now holds a random token (localStorage,
+# sent on connect) and the autosave is also kept under
+# <R_user_dir>/autosave/<token>/latest_autosave.rds, readable only by the app
+# user and pruned after 72 h.
+
+#' Root directory for server-side autosaves (option override for tests)
+server_autosave_root <- function() {
+  getOption("marinesabres.server_autosave_root",
+            file.path(tools::R_user_dir("MarineSABRES", "data"), "autosave"))
+}
+
+#' Is x a well-formed browser token (32 lowercase hex chars)?
+valid_browser_token <- function(x) {
+  is.character(x) && length(x) == 1 && !is.na(x) && grepl("^[a-f0-9]{32}$", x)
+}
+
+#' Path of a browser's server-side autosave (creates the private dir if asked)
+#' @return path, or NULL for an invalid token
+server_autosave_path <- function(token, root = server_autosave_root(), create = TRUE) {
+  if (!valid_browser_token(token)) return(NULL)
+  d <- file.path(root, token)
+  if (create && !dir.exists(d)) {
+    dir.create(d, recursive = TRUE, showWarnings = FALSE, mode = "0700")
+    suppressWarnings(Sys.chmod(d, "0700"))
+  }
+  file.path(d, "latest_autosave.rds")
+}
+
+#' Atomically write a browser's server-side autosave
+#' @return invisible(path) or invisible(NULL)
+write_server_autosave <- function(data, token, root = server_autosave_root()) {
+  path <- server_autosave_path(token, root, create = TRUE)
+  if (is.null(path)) return(invisible(NULL))
+  tmp <- paste0(path, ".tmp", Sys.getpid())
+  saveRDS(data, tmp)
+  if (!isTRUE(suppressWarnings(file.rename(tmp, path)))) {
+    file.copy(tmp, path, overwrite = TRUE)
+    unlink(tmp)
+  }
+  suppressWarnings(Sys.chmod(path, "0600"))
+  invisible(path)
+}
+
+#' Remove server-side autosaves whose newest file is older than max_age_hours
+#' @return invisible(number of browser directories removed)
+prune_server_autosaves <- function(root = server_autosave_root(), max_age_hours = 72) {
+  if (!dir.exists(root)) return(invisible(0L))
+  dirs <- list.dirs(root, recursive = FALSE, full.names = TRUE)
+  dirs <- dirs[grepl("^[a-f0-9]{32}$", basename(dirs))]
+  removed <- 0L
+  for (d in dirs) {
+    f <- list.files(d, full.names = TRUE)
+    newest <- if (length(f)) max(file.mtime(f)) else file.mtime(d)
+    if (as.numeric(difftime(Sys.time(), newest, units = "hours")) > max_age_hours) {
+      unlink(d, recursive = TRUE)
+      removed <- removed + 1L
+    }
+  }
+  invisible(removed)
+}
+
+#' Does a project hold anything worth recovering (elements or CLD nodes)?
+project_has_content <- function(pd) {
+  isa <- pd$data$isa_data
+  keys <- c("drivers", "activities", "pressures", "marine_processes",
+            "ecosystem_services", "goods_benefits", "responses")
+  has_el <- is.list(isa) && any(vapply(keys, function(k) is.data.frame(isa[[k]]) && nrow(isa[[k]]) > 0, logical(1)))
+  nodes <- pd$data$cld$nodes
+  has_el || (is.data.frame(nodes) && nrow(nodes) > 0)
+}

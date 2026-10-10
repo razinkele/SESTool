@@ -350,7 +350,8 @@ auto_save_server <- function(id, project_data_reactive, i18n,
                              autosave_delay_reactive = NULL,
                              autosave_notifications_reactive = NULL,
                              autosave_indicator_reactive = NULL,
-                             autosave_triggers_reactive = NULL) {
+                             autosave_triggers_reactive = NULL,
+                             browser_token_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -362,6 +363,9 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       save_count = 0,
       is_enabled = TRUE,
       recovery_pending = FALSE,  # Prevents auto-save until user handles recovery modal
+      recovery_file = NULL,       # the file offered in the recovery modal (temp or server copy)
+      server_recovery_checked = FALSE,  # this browser's server copy has been checked (N7)
+      server_autosaves_pruned = FALSE,
       data_dirty = FALSE,  # Track if data has changed since last save
       save_in_progress = FALSE,  # Prevents concurrent saves from overlapping (I1a)
       last_data_hash = NULL,  # Hash of last saved data to detect changes
@@ -380,6 +384,13 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       show_indicator = TRUE,  # Show visual indicator
       enabled_triggers = c("elements", "context", "connections", "steps")  # Active triggers
     )
+
+    # This browser's validated token, read without taking a reactive dependency
+    current_browser_token <- function() {
+      if (is.null(browser_token_reactive)) return(NULL)
+      tok <- tryCatch(isolate(browser_token_reactive()), error = function(e) NULL)
+      if (valid_browser_token(tok)) tok else NULL
+    }
 
     # Get session-scoped temp directory for auto-saves
     # CRITICAL: Use session-isolated temp directory to prevent cross-session data leakage
@@ -661,6 +672,26 @@ auto_save_server <- function(id, project_data_reactive, i18n,
             # Non-fatal: continue even if persistent save fails
             debug_log(sprintf("Persistent autosave failed (non-fatal): %s", e$message), "AUTO-SAVE")
           })
+        }
+
+        # SERVER MODE (no local persistent folder): keep a copy per browser
+        # outside the session temp dir, which is deleted at session end (N7).
+        # Only after this browser's recovery check, and never for an empty
+        # project, so a fresh session cannot overwrite the previous work.
+        if (is.null(persistent_path)) {
+          tok <- current_browser_token()
+          if (!is.null(tok) && isTRUE(auto_save$server_recovery_checked) &&
+              project_has_content(current_data)) {
+            tryCatch({
+              write_server_autosave(current_data, tok)
+              if (!isTRUE(auto_save$server_autosaves_pruned)) {
+                prune_server_autosaves(max_age_hours = 72)
+                auto_save$server_autosaves_pruned <- TRUE
+              }
+            }, error = function(e) {
+              debug_log(sprintf("Server autosave failed (non-fatal): %s", e$message), "AUTO-SAVE")
+            })
+          }
         }
 
         # Save to localStorage via JavaScript (as JSON backup)
@@ -958,7 +989,11 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     })
 
     # Check for recoverable session on startup
-    check_for_recovery <- function() {
+    # source = "server": only this browser's server-side copy. The token-
+    # triggered check must ignore this session's own temp file, which the
+    # first-load save writes immediately at startup (N7).
+    check_for_recovery <- function(source = c("any", "server")) {
+      source <- match.arg(source)
       # First, check session temp directory (immediate session recovery)
       current_temp_dir <- isolate(temp_dir())
       latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
@@ -967,16 +1002,24 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       persistent_autosaves <- find_recoverable_autosaves(max_age_hours = 72)
       has_persistent_recovery <- nrow(persistent_autosaves) > 0
 
-      # Prefer session temp file if it exists, otherwise use persistent
-      if (file.exists(latest_file)) {
+      # Candidate: this session's temp file, else this browser's server-side
+      # copy (N7: the temp dir is deleted when a session ends, so on the
+      # server it was never there when recovery was needed).
+      candidate <- if (source == "any" && file.exists(latest_file)) latest_file else {
+        tok <- current_browser_token()
+        sp <- if (!is.null(tok)) server_autosave_path(tok, create = FALSE) else NULL
+        if (!is.null(sp) && file.exists(sp)) sp else NULL
+      }
+      if (!is.null(candidate)) {
         # Get file modification time
-        file_time <- file.mtime(latest_file)
+        file_time <- file.mtime(candidate)
         time_diff <- as.numeric(difftime(Sys.time(), file_time, units = "hours"))
 
         # Only offer recovery if file is within recovery window
         if (time_diff < AUTOSAVE_RECOVERY_WINDOW_HOURS) {
           # CRITICAL: Set flag to prevent auto-save from overwriting recovery file
           auto_save$recovery_pending <- TRUE
+          auto_save$recovery_file <- candidate
           debug_log("Recovery file found - blocking auto-save until user decision", "AUTO-SAVE")
 
           # Show recovery modal
@@ -1035,8 +1078,9 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       auto_save$recovery_pending <- FALSE
       debug_log("Recovery confirmed - auto-save will resume after page reload", "AUTO-SAVE")
 
-      current_temp_dir <- temp_dir()
-      latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
+      # The file offered in the modal: this session's temp file or this
+      # browser's server-side copy (N7)
+      latest_file <- auto_save$recovery_file %||% file.path(temp_dir(), "latest_autosave.rds")
 
       tryCatch({
         recovered_data <- safe_readRDS(latest_file)
@@ -1106,8 +1150,9 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     # Handle recovery dismissal
     observeEvent(input$discard_recovery, {
       # Derive the file path first (was previously after the flag reset)
-      current_temp_dir <- temp_dir()
-      latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
+      # The file offered in the modal: this session's temp file or this
+      # browser's server-side copy (N7)
+      latest_file <- auto_save$recovery_file %||% file.path(temp_dir(), "latest_autosave.rds")
 
       # Attempt removal INSIDE tryCatch BEFORE clearing the flag — I1b.
       # If removal fails, recovery_pending stays TRUE so the user can retry.
@@ -1137,6 +1182,17 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     isolate({
       check_for_recovery()
     })
+
+    # The browser token arrives just after connect: check this browser's
+    # server-side copy once, then allow server copies to be written (N7).
+    if (!is.null(browser_token_reactive)) {
+      observeEvent(browser_token_reactive(), {
+        if (isTRUE(auto_save$server_recovery_checked)) return()
+        if (is.null(current_browser_token())) return()
+        if (!isTRUE(auto_save$recovery_pending)) check_for_recovery("server")
+        auto_save$server_recovery_checked <- TRUE
+      }, ignoreNULL = TRUE)
+    }
 
     # Update indicator shortly after initialization to clear "Initializing..." message
     # Use shinyjs::delay for one-shot deferred execution (no polling loop)
