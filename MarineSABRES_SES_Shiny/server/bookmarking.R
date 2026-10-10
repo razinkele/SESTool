@@ -2,6 +2,47 @@
 # Extracted from app.R for better maintainability
 # Handles URL-based bookmarking: save state, restore state, bookmark modal
 
+#' Validate values restored from a bookmark URL
+#'
+#' With enableBookmarking = "url", state$values is deserialised from the
+#' `_values_` query parameter, so whoever wrote the link controls every field
+#' and its JSON type (review 2026-10-07 N81 / N82). Pure: returns only the
+#' fields that pass, each as a well-typed scalar; anything else is dropped.
+#'
+#' @param values state$values from onRestore()
+#' @param levels allowed user levels
+#' @param da_sites allowed demonstration areas (the PIMS select's choices)
+#' @param max_focal maximum focal-issue length in characters
+#' @return named list with any of user_level, autosave_enabled, active_tab,
+#'   metadata_da_site, metadata_focal_issue
+sanitize_bookmark_values <- function(values,
+                                     levels = c("beginner", "intermediate", "expert"),
+                                     da_sites = if (exists("DA_SITES")) DA_SITES else character(0),
+                                     max_focal = 1000L) {
+  out <- list()
+  if (!is.list(values)) return(out)
+  scalar_chr <- function(x) is.character(x) && length(x) == 1 && !is.na(x)
+
+  v <- values$user_level
+  if (scalar_chr(v) && v %in% levels) out$user_level <- v
+
+  v <- values$autosave_enabled
+  if (is.logical(v) && length(v) == 1 && !is.na(v)) out$autosave_enabled <- v
+
+  v <- values$active_tab
+  if (scalar_chr(v) && nchar(v) <= 64 && grepl("^[A-Za-z0-9_]+$", v)) out$active_tab <- v
+
+  v <- values$metadata_da_site
+  if (scalar_chr(v) && v %in% c("", da_sites)) out$metadata_da_site <- v
+
+  v <- values$metadata_focal_issue
+  if (scalar_chr(v) && nchar(v) <= max_focal) {
+    # drop control characters other than ordinary line breaks / tabs
+    out$metadata_focal_issue <- gsub("[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F]", "", v, perl = TRUE)
+  }
+  out
+}
+
 #' Setup Bookmarking Handlers
 #'
 #' Configures URL-based bookmarking for the Shiny app, including
@@ -169,35 +210,47 @@ setup_bookmarking <- function(input, output, session, project_data, user_level,
   onRestore(function(state) {
     debug_log("Restoring app state...", "BOOKMARK")
 
+    # Every value comes from the URL: validate type and content first
+    # (review 2026-10-07 N81 / N82). A non-logical autosave flag used to crash
+    # the session on the first flush; unvalidated metadata reached reports.
+    vals <- sanitize_bookmark_values(state$values)
+    dropped <- setdiff(intersect(names(state$values),
+                                 c("user_level", "autosave_enabled", "active_tab",
+                                   "metadata_da_site", "metadata_focal_issue")),
+                       names(vals))
+    if (length(dropped) > 0) {
+      debug_log(paste("Ignored invalid bookmark values:", paste(dropped, collapse = ", ")), "BOOKMARK")
+    }
+
     # Restore user level
-    if (!is.null(state$values$user_level)) {
-      user_level(state$values$user_level)
-      debug_log(paste("Restored user level:", state$values$user_level), "BOOKMARK")
+    if (!is.null(vals$user_level)) {
+      user_level(vals$user_level)
+      debug_log(paste("Restored user level:", vals$user_level), "BOOKMARK")
     }
 
     # Restore autosave setting
-    if (!is.null(state$values$autosave_enabled)) {
-      autosave_enabled(state$values$autosave_enabled)
-      debug_log(paste("Restored autosave setting:", state$values$autosave_enabled), "BOOKMARK")
+    if (!is.null(vals$autosave_enabled)) {
+      autosave_enabled(vals$autosave_enabled)
+      debug_log(paste("Restored autosave setting:", vals$autosave_enabled), "BOOKMARK")
     }
 
     # Restore metadata if saved
-    if (!is.null(state$values$metadata_da_site) || !is.null(state$values$metadata_focal_issue)) {
+    if (!is.null(vals$metadata_da_site) || !is.null(vals$metadata_focal_issue)) {
       data <- project_data()
-      if (!is.null(state$values$metadata_da_site)) {
-        data$data$metadata$da_site <- state$values$metadata_da_site
+      if (!is.null(vals$metadata_da_site)) {
+        data$data$metadata$da_site <- vals$metadata_da_site
       }
-      if (!is.null(state$values$metadata_focal_issue)) {
-        data$data$metadata$focal_issue <- state$values$metadata_focal_issue
+      if (!is.null(vals$metadata_focal_issue)) {
+        data$data$metadata$focal_issue <- vals$metadata_focal_issue
       }
       project_data(data)
       debug_log("Restored metadata", "BOOKMARK")
     }
 
     # Restore active tab
-    if (!is.null(state$values$active_tab)) {
-      updateTabItems(session, "sidebar_menu", state$values$active_tab)
-      debug_log(paste("Restored active tab:", state$values$active_tab), "BOOKMARK")
+    if (!is.null(vals$active_tab)) {
+      updateTabItems(session, "sidebar_menu", vals$active_tab)
+      debug_log(paste("Restored active tab:", vals$active_tab), "BOOKMARK")
     }
 
     # Show restoration notification
