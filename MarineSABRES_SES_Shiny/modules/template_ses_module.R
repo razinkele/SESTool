@@ -6,7 +6,11 @@
 
 # Source dependencies using project root (reliable from any working directory)
 # NOTE: connection_review_tabbed.R is sourced globally in global.R
-source(get_project_file("functions/template_loader.R"), local = TRUE)
+# global.R already sources template_loader.R; re-sourcing it here created a
+# second, independent .template_cache (review 2026-10-07 N69)
+if (!exists("clear_template_cache", mode = "function")) {
+  source(get_project_file("functions/template_loader.R"), local = TRUE)
+}
 
 # ============================================================================
 # TEMPLATE LIBRARY

@@ -5,10 +5,8 @@
 # Surfaces the dormant MICMAC factor classification (impact-vs-control axis) and
 # a deterministic "why this matters" narrative. Composes functions/decision_lens.R.
 #
-# Phase 1 scope: Factor Classification + Why This Matters tabs.
-# Archetype detection is DEFERRED (see the design spec §0/§6) pending
-# re-derivation against valid DAPSIWRM topology + scientific validation; the
-# Archetypes tab is intentionally omitted until that lands.
+# Tabs: Factor Classification, System Archetypes (candidate Commons / Limits
+# to Growth detections, shown with a caveat) and Why This Matters.
 # =============================================================================
 
 analysis_decision_lens_ui <- function(id, i18n) {
@@ -104,7 +102,7 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
         updateSelectInput(session, "why_node",
                           choices = setNames(rv$factors$id, rv$factors$label))
 
-        # Loops feed the narrative's loop-participation line (archetypes deferred)
+        # Loops feed archetype detection and the narrative's loop-participation line
         gph <- g$graph
         if (is.null(gph)) {
           gph <- graph_from_data_frame(g$edges %>% select(from, to, polarity),

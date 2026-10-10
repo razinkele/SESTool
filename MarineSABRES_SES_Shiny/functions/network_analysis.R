@@ -1269,12 +1269,16 @@ get_neighborhood <- function(nodes, edges, node_id, degree = 1) {
 #' @param x Numeric vector to scale
 #' @return Scaled vector (or original if sd is 0)
 safe_scale <- function(x) {
-  x_clean <- x[!is.na(x)]
-  if (length(x_clean) == 0 || sd(x_clean) == 0) {
+  # Single definition (review 2026-10-07 N65: a second copy in utils.R shadowed
+  # this one, crashed on all-NA input and let NAs reach Composite_Score).
+  # Length-0/1, all-NA and zero-variance input all give zeros; NAs become 0.
+  x <- suppressWarnings(as.numeric(x))
+  x_clean <- x[is.finite(x)]
+  if (length(x_clean) < 2 || stats::sd(x_clean) == 0) {
     return(rep(0, length(x)))
   }
-  result <- scale(x)[,1]
-  result[is.na(result) | is.nan(result)] <- 0
+  result <- (x - mean(x_clean)) / stats::sd(x_clean)
+  result[!is.finite(result)] <- 0
   result
 }
 

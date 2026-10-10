@@ -151,80 +151,8 @@ pims_project_server <- function(id, project_data_reactive, i18n, event_bus = NUL
   })
 }
 
-# ============================================================================
-# STAKEHOLDERS MODULE
-# ============================================================================
-
-pims_stakeholders_ui <- function(id, i18n) {
-  ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
-
-  fluidPage(
-    create_module_header(ns, "modules.pims.stakeholders.title", "modules.pims.stakeholders.subtitle", "pims_stakeholders_help", i18n),
-    hr(),
-    
-    fluidRow(
-      column(12,
-        actionButton(ns("add_stakeholder"), i18n$t("modules.pims.add_stakeholder"),
-                    icon = icon("plus"), class = "btn-success"),
-        br(), br(),
-        DTOutput(ns("stakeholders_table"))
-      )
-    )
-  )
-}
-
-pims_stakeholders_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
-  moduleServer(id, function(input, output, session) {
-
-    # Display stakeholders table with NULL checks
-    output$stakeholders_table <- renderDT({
-      req(project_data_reactive())
-      data <- project_data_reactive()
-
-      # Safely access nested stakeholders data
-      stakeholders <- NULL
-      if (!is.null(data$data) &&
-          !is.null(data$data$pims) &&
-          !is.null(data$data$pims$stakeholders)) {
-        stakeholders <- data$data$pims$stakeholders
-      }
-
-      # If no stakeholders, return empty dataframe with expected columns
-      if (is.null(stakeholders) || !is.data.frame(stakeholders) || nrow(stakeholders) == 0) {
-        stakeholders <- data.frame(
-          Name = character(0),
-          Role = character(0),
-          Organization = character(0)
-          
-        )
-      }
-
-      datatable(
-        stakeholders,
-        selection = "single",
-        options = list(pageLength = 10)
-      )
-    })
-
-    # Placeholder for add/edit/delete functionality
-    observeEvent(input$add_stakeholder, {
-      showNotification(i18n$t("common.messages.feature_coming_soon"),
-                      type = "message")
-    })
-    
-    # ========== HELP MODAL ==========
-    create_help_observer(
-      input,
-      "pims_stakeholders_help",
-      "pims_stakeholders_help_title",
-      i18n$t("common.misc.pims_stakeholders_help_content"),
-      i18n
-    )
-    
-    return(reactive(project_data_reactive()))
-  })
-}
+# (pims_stakeholders_ui/_server removed: the app wires the singular
+#  pims_stakeholder_* module -- review 2026-10-07 N67)
 
 # ============================================================================
 # RESOURCES MODULE

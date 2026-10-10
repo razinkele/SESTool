@@ -199,18 +199,14 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
           incProgress(0.4, detail = i18n$t("modules.analysis.leverage.progress_creating_graph"))
 
-          all_centralities <- calculate_all_centralities(g)
-
-          # Add composite scores
-          all_centralities$Composite_Score <- safe_scale(all_centralities$Betweenness) +
-                                               safe_scale(all_centralities$Eigenvector) +
-                                               safe_scale(all_centralities$PageRank)
+          # All nodes, ranked by composite score, via the shared (tested)
+          # function -- this used to be an inline copy (review 2026-10-07 N67)
+          all_centralities <- identify_leverage_points(g, top_n = igraph::vcount(g))
 
           incProgress(0.6, detail = i18n$t("modules.analysis.leverage.progress_ranking"))
 
           # Get top leverage points
-          leverage_df <- all_centralities[order(-all_centralities$Composite_Score), ]
-          leverage_df <- head(leverage_df, min(input$top_n, nrow(leverage_df)))
+          leverage_df <- head(all_centralities, min(input$top_n, nrow(all_centralities)))
 
           # Store results
           rv$leverage_results <- leverage_df

@@ -33,13 +33,12 @@ critical_sources <- c(
   "functions/report_generation.R",
   "functions/report_render.R",
   "functions/ui_header.R",
-  "functions/ui_sidebar.R",
+  # functions/ui_sidebar.R is sourced by global.R (N69: was sourced twice)
   "server/modals.R",
   "server/dashboard.R",
   "server/project_io.R",
   "server/export_handlers.R",
   "server/bookmarking.R",
-  "server/session_management.R",
   "server/language_handling.R",
   "server/event_bus_setup.R"
 )

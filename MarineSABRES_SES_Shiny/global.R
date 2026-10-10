@@ -740,11 +740,15 @@ if (ML_ENABLED) {
     cat("✓ torch package loaded\n")
 
     # Load ML functions
-    source("functions/ml_feature_engineering.R", local = TRUE)
+    # exists()-guarded: graphical_ses_ai_classifier.R (sourced above) may
+    # already have loaded it via ml_inference.R (review 2026-10-07 N69)
+    if (!exists("create_feature_vector", mode = "function")) {
+      source("functions/ml_feature_engineering.R", local = TRUE)
+    }
     cat("✓ ML feature engineering functions loaded\n")
 
     # Load Phase 2 ML modules (context embeddings, graph features, active learning, ensemble)
-    if (file.exists("functions/ml_context_embeddings.R")) {
+    if (!exists("context_embeddings") && file.exists("functions/ml_context_embeddings.R")) {
       source("functions/ml_context_embeddings.R", local = TRUE)
     }
     if (file.exists("functions/ml_graph_features.R")) {
@@ -770,10 +774,14 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_template_matching.R")) {
       source("functions/ml_template_matching.R", local = TRUE)
     }
-    source("functions/ml_models.R", local = TRUE)
+    if (!exists("connection_predictor")) {
+      source("functions/ml_models.R", local = TRUE)
+    }
     cat("✓ ML model architecture loaded\n")
 
-    source("functions/ml_inference.R", local = TRUE)
+    if (!exists("load_ml_model", mode = "function")) {
+      source("functions/ml_inference.R", local = TRUE)
+    }
     cat("✓ ML inference API loaded\n")
 
     source("modules/graphical_ses_ml_enhancer.R", local = TRUE)
@@ -948,10 +956,14 @@ source(get_project_file("config", "entry_points.R"), local = FALSE)
 # NOTE: Default visualization constants (DEFAULT_NODE_SIZE, DEFAULT_EDGE_WIDTH, etc.)
 # are defined in constants.R — the single source of truth for all constants.
 # functions/utils.R: Core utilities (generate_id, format_date, parse_connection_value, safe_readRDS, etc.)
-source("functions/utils.R", local = FALSE)
+# Already sourced inside the ML block when torch is present (ml_ensemble.R
+# needs safe_readRDS at load time); do not source it twice (review 2026-10-07 N69).
+if (!exists("safe_readRDS", mode = "function")) {
+  source("functions/utils.R", local = FALSE)
+}
 
 # Sidebar UI helpers (includes ARIA accessibility functions)
-# NOTE: Also sourced in app.R, but needed here for test availability
+# (sourced only here; app.R no longer re-sources it -- review 2026-10-07 N69)
 source("functions/ui_sidebar.R", local = FALSE)
 
 # NOTE: validate_element_data() defined in functions/data_structure.R

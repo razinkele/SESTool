@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed / consolidated (dead code and duplicate definitions — review 2026-10-07 N39, N65, N67, N69, N70, N71)
+
+- **One `get_countries_for_sea()`** (N39): the hard-coded copy in the AI ISA knowledge base was removed; the JSON-backed loader is the single definition (now NULL-safe), and the AI ISA country buttons and confirmation read `name_en` instead of relying on `$name` partial matching.
+- **One `safe_scale()`** (N65): the copy in `utils.R` shadowed the network-analysis one and crashed on all-NA input. The merged version returns zeros for empty, length-1, all-NA and constant input and never lets NA reach the leverage composite score.
+- **Dead entry points removed** (N67): `pims_stakeholders_ui/_server`, `local_storage_settings_ui`, the 245-line unused `generate_html_report()` and its tests. The leverage module now calls the tested `identify_leverage_points()` instead of an inline copy.
+- **No file is sourced twice** (N69): `functions/utils.R`, the ML feature/model/inference files, `ui_sidebar.R` and `template_loader.R` (which created a second template cache) are sourced once or `exists()`-guarded.
+- **`server/session_management.R` deleted** (N70): none of its functions were called (app.R has the live code), and its autosave cleanup targeted the wrong folder.
+- **Stale "DEFERRED" / "read-only" comments rewritten** above the implemented Decision Lens archetypes and the editable adjacency-matrix viewer (N71).
+
 ### Fixed (load and round-trip integrity — review 2026-10-07 N23 / N24 / N25 / N27 / N28 / N51 / N57)
 
 - **No more false "IDs repaired (duplicates from an older version)" message** when recovering an autosaved template project: the autosave-recovery normalisation skipped Responses, and the ID reconciler counted a pure `id`→`ID` rename as a repair.
