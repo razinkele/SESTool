@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Excel import rejects an empty-but-recognised workbook before clearing module state** (N49, `saved_isa_has_elements()`).
 - **R-arm name-based recovery** (N50): `recover_isa_data()` rebuilds `r_d` / `r_a` / `r_p` / `gb_r` from the responses' `Linked*` columns when the saved matrices are absent (same fallback the forward chain already had; `gb_r` built R×GB and transposed; faithful saved matrices are kept).
 
+### Fixed (CLD→ISA sync fidelity — review 2026-10-07 N3)
+
+- **CLD edits no longer degrade the ISA data** (`sync_cld_to_isa_data()` rewritten). Previously any CLD edit (add/merge/rename/delete node, add/delete edge, polarity change) rebuilt every adjacency matrix from the edge label alone (strength, confidence and delay lost), replaced element IDs with the positional node ids (`GB_1`), replaced names with the wrapped labels, dropped the user-edited flags and lowercased the element frames. Now: `create_nodes_df()` carries `element_id` and `name_raw` on every node; the sync resolves each node back to its ISA element (carried id → position → name match → fresh id for nodes added in the CLD), keeps the previous matrix cell and only updates its polarity, carries `user_edited_matrices` over by dimname, and preserves the previous frame's columns and case. Legacy saves whose CLD nodes lack `element_id` resolve positionally.
+
 ## [1.19.1] - 2026-10-08
 
 Patch release: the first two fix batches of the 2026-10-07 deep code review. Deployed to laguna 2026-10-08.

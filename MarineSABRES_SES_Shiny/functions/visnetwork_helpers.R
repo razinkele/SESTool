@@ -80,6 +80,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("GB_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Goods & Benefits"),
@@ -93,7 +97,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
   
   # Ecosystem Services (Level 1)
@@ -102,6 +106,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("ES_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Ecosystem Services"),
@@ -115,7 +123,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # Marine Processes & Functioning (Level 2)
@@ -124,6 +132,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("MPF_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Marine Processes & Functioning"),
@@ -137,7 +149,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # Pressures (Level 3)
@@ -146,6 +158,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("P_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(
@@ -162,7 +178,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # Activities (Level 4)
@@ -171,6 +187,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("A_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(
@@ -187,7 +207,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # Drivers (Level 5) - Using custom octagon SVG
@@ -196,6 +216,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("D_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Drivers"),
@@ -209,7 +233,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # Responses (Level 3 - positioned in middle, will be offset to the right)
@@ -219,6 +243,10 @@ create_nodes_df <- function(isa_data) {
       mutate(
         id = paste0("R_", row_number()),
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        # Stable ISA element id + unwrapped name travel with the node so the
+        # CLD->ISA sync can map nodes back to elements (review 2026-10-07 N3).
+        element_id = as.character(if("ID" %in% names(.)) ID else if("id" %in% names(.)) id else NA_character_),
+        name_raw = as.character(label_raw),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Responses"),
@@ -232,7 +260,7 @@ create_nodes_df <- function(isa_data) {
         leverage_score = NA_real_,
         x = 400  # Offset to the right of the main DAPSIWRM flow
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x, element_id, name_raw)
   }
 
   # OPTIMIZATION: Single bind_rows call instead of 7 repeated calls
