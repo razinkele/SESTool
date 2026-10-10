@@ -134,7 +134,11 @@ if (length(critical_load_errors) > 0) {
   ))
 }
 
-# Load optional modules - continue even if some fail
+# Load the remaining feature modules. They used to be "optional" (warn and
+# continue), but every one of them is called unconditionally by the UI and
+# server below, so a failed load made the app fail later with "could not find
+# function" -- or crash every session. Fail fast with a clear message instead
+# (review 2026-10-07 N29).
 optional_load_errors <- list()
 LOADED_OPTIONAL_MODULES <- c()  # Track which optional modules loaded successfully
 
@@ -144,7 +148,9 @@ for (module_file in OPTIONAL_MODULES) {
       stop(sprintf("Module file not found: %s", module_file))
     }
     source(module_file, local = TRUE)
-    LOADED_OPTIONAL_MODULES <<- c(LOADED_OPTIONAL_MODULES, basename(module_file))
+    # plain `<-`: tryCatch evaluates this in the app's own frame (`<<-` wrote to
+    # the global env, so the summary always reported 0 loaded)
+    LOADED_OPTIONAL_MODULES <- c(LOADED_OPTIONAL_MODULES, basename(module_file))
     debug_log(sprintf("Loaded optional module: %s", basename(module_file)), "MODULE_LOAD")
   }, error = function(e) {
     module_name <- basename(module_file)
@@ -154,14 +160,14 @@ for (module_file in OPTIONAL_MODULES) {
   })
 }
 
-# Report optional module loading failures (warning only, don't stop app)
 if (length(optional_load_errors) > 0) {
-  warning(sprintf(
-    "Failed to load %d optional module(s): %s. These features will be unavailable.",
+  debug_log(sprintf("Feature modules failed: %s", paste(names(optional_load_errors), collapse = ", ")), "MODULE_LOAD")
+  stop(sprintf(
+    "Failed to load %d feature module(s): %s. Application cannot start.\nErrors: %s",
     length(optional_load_errors),
-    paste(names(optional_load_errors), collapse = ", ")
+    paste(names(optional_load_errors), collapse = ", "),
+    paste(sprintf("\n  - %s: %s", names(optional_load_errors), unlist(optional_load_errors)), collapse = "")
   ))
-  debug_log(sprintf("Optional modules failed: %s", paste(names(optional_load_errors), collapse = ", ")), "MODULE_LOAD")
 }
 
 # Summary of module loading
@@ -717,38 +723,10 @@ server <- function(input, output, session) {
   # ========== RESTORE PROJECT DATA AFTER LANGUAGE CHANGE ==========
   # When user changes language, the page reloads. To preserve their work,
   # we save project data to sessionStorage before reload and restore it here.
-  observeEvent(input$restore_project_data_from_lang_change, {
-    req(input$restore_project_data_from_lang_change)
-
-    tryCatch({
-      debug_log("Restoring project data after language change...", "LANG_RESTORE")
-
-      # Parse, validate AND normalise (review 2026-10-07 N4: without the
-      # normalisation every language change left element tables as lists and
-      # matrices as nested lists)
-      restored <- restore_project_from_json_text(input$restore_project_data_from_lang_change)
-
-      if (is.null(restored)) {
-        debug_log("Invalid or unreadable project data in language-change restore", "LANG_RESTORE")
-      } else {
-        project_data(restored)
-        debug_log("Project data restored successfully after language change", "LANG_RESTORE")
-
-        # Show notification to user
-        showNotification(
-          HTML(paste0(
-            icon("check-circle"), " ",
-            session_i18n$t("common.messages.progress_restored_after_language_change")
-          )),
-          type = "message",
-          duration = 4
-        )
-      }
-    }, error = function(e) {
-      debug_log(sprintf("ERROR restoring project data: %s", e$message), "LANG_RESTORE")
-      # Don't show error to user, just log it - the default template will be used
-    })
-  }, ignoreInit = TRUE)
+  # One handler, in server/language_handling.R: validates + normalises the
+  # payload and tells the user when it cannot be restored (review
+  # 2026-10-07 N60: this inline copy only logged failures).
+  setup_language_restore_handler(input, project_data, session_i18n)
 
   # ========== CLEAR SERVER AUTOSAVES ==========
   # Handler for "Clear Session & Start Fresh" button
@@ -1090,8 +1068,11 @@ server <- function(input, output, session) {
 
   # Feedback module — list visible to all users; admin-only tools (resolve,
   # duplicate detection, system-context detail) gated by the `admin` flag.
-  feedback_admin_server("feedback_admin", i18n = session_i18n,
-                        admin = (exists("ADMIN_MODE") && ADMIN_MODE))
+  # guarded like its UI (N29)
+  if (exists("feedback_admin_server", mode = "function")) {
+    feedback_admin_server("feedback_admin", i18n = session_i18n,
+                          admin = (exists("ADMIN_MODE") && ADMIN_MODE))
+  }
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Automatic propagation: ISA changes -> CLD regeneration -> Analysis invalidation

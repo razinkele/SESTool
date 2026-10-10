@@ -238,3 +238,37 @@ load_response_bandit <- function(path = BANDIT_CONFIG$store_path) {
 }
 
 debug_log("Response bandit module loaded", "ML_BANDIT")
+
+#' Project-level inputs for build_response_context() (review 2026-10-07 N53)
+#'
+#' The response module read pd$isa_data / pd$metadata, which do not exist (the
+#' project shape is pd$data$...), so every context was 0 / 0 / "other" /
+#' "other" and the bandit never learned anything project-specific.
+#' @param pd project data list (as held by project_data_reactive)
+#' @return list(n_elements, n_connections, regional_sea, main_issue)
+project_bandit_context <- function(pd) {
+  isa <- pd$data$isa_data
+  cats <- c("drivers", "activities", "pressures", "marine_processes",
+            "ecosystem_services", "goods_benefits", "responses")
+  n_el <- if (is.list(isa)) sum(vapply(cats, function(k) {
+    d <- isa[[k]]; if (is.data.frame(d)) nrow(d) else 0L
+  }, integer(1))) else 0L
+  edges <- pd$data$cld$edges
+  n_conn <- if (is.data.frame(edges) && nrow(edges) > 0) nrow(edges) else {
+    mats <- if (is.list(isa)) isa$adjacency_matrices else NULL
+    if (is.list(mats)) sum(vapply(mats, function(m) {
+      if (is.null(m)) return(0L)
+      v <- as.character(unlist(m)); sum(!is.na(v) & nzchar(trimws(v)))
+    }, integer(1))) else 0L
+  }
+  first_chr <- function(...) {
+    for (x in list(...)) if (length(x) > 0 && !is.na(x[[1]]) && nzchar(as.character(x[[1]]))) return(as.character(x[[1]]))
+    "other"
+  }
+  list(
+    n_elements = as.integer(n_el),
+    n_connections = as.integer(n_conn),
+    regional_sea = first_chr(pd$data$metadata$regional_sea, isa$metadata$regional_sea),
+    main_issue = first_chr(pd$data$metadata$main_issue, isa$metadata$main_issue)
+  )
+}

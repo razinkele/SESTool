@@ -1143,6 +1143,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       prediction_id <- feedback$id
       vote <- feedback$vote  # "up" or "down"
       user_action <- if (vote == "up") "accepted" else "rejected"
+      # Only thank the user / advance the retrain counter when the feedback was
+      # actually stored (review 2026-10-07 N40: failures were swallowed and
+      # still counted, so retraining could trigger on rows that do not exist)
+      logged <- FALSE
 
       # Determine if this is a classification or connection feedback
       if (grepl("^classification_", prediction_id)) {
@@ -1158,6 +1162,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
               context = rv$context,
               session_id = session$token
             )
+            logged <- TRUE
           }, error = function(e) {
             debug_log(paste("Classification feedback logging failed:", e$message), "GRAPHICAL SES")
           })
@@ -1191,11 +1196,17 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 context = rv$context,
                 session_id = session$token
               )
+              logged <- TRUE
             }, error = function(e) {
               debug_log(paste("Connection feedback logging failed:", e$message), "GRAPHICAL SES")
             })
           }
         }
+      }
+
+      if (!logged) {
+        debug_log(paste("ML feedback not stored for", prediction_id), "GRAPHICAL SES")
+        return()
       }
 
       # Increment feedback counter

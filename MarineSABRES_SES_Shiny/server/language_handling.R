@@ -94,31 +94,35 @@ setup_language_restore_handler <- function(input, project_data, session_i18n) {
     tryCatch({
       debug_log("Restoring project data after language change...", "LANG_RESTORE")
 
-      # Parse the JSON data sent from JavaScript (safely)
-      saved_data <- safe_parse_json(input$restore_project_data_from_lang_change)
+      # Parse, validate AND normalise (review 2026-10-07 N4) -- the same path
+      # as every other JSON load
+      restored <- restore_project_from_json_text(input$restore_project_data_from_lang_change)
 
-      if (!is.null(saved_data)) {
-        # Validate JSON input for security and structure
-        validation_result <- validate_json_project_input(saved_data)
-        if (!validation_result$valid) {
-          debug_log(paste("Invalid project data in restored data:", paste(validation_result$errors, collapse = "; ")), "LANG_RESTORE")
-          return()
-        }
-
-        # Restore the validated project data
-        project_data(validation_result$data)
-        debug_log("Project data restored successfully after language change", "LANG_RESTORE")
-
-        # Show notification to user
+      if (is.null(restored)) {
+        # Invalid or unreadable payload: tell the user instead of silently
+        # starting from an empty project (review 2026-10-07 N60)
+        debug_log("Invalid or unreadable project data in language-change restore", "LANG_RESTORE")
         shiny::showNotification(
-          shiny::HTML(paste0(
-            shiny::icon("check-circle"), " ",
-            session_i18n$t("common.messages.progress_restored_after_language_change")
-          )),
-          type = "message",
-          duration = 4
+          format_user_error(simpleError("invalid project data"), i18n = session_i18n,
+                            context_key = "common.messages.context_language_change_restore"),
+          type = "error",
+          duration = 6
         )
+        return()
       }
+
+      project_data(restored)
+      debug_log("Project data restored successfully after language change", "LANG_RESTORE")
+
+      # Show notification to user
+      shiny::showNotification(
+        shiny::HTML(paste0(
+          shiny::icon("check-circle"), " ",
+          session_i18n$t("common.messages.progress_restored_after_language_change")
+        )),
+        type = "message",
+        duration = 4
+      )
     }, error = function(e) {
       debug_log(sprintf("ERROR restoring project data: %s", e$message), "LANG_RESTORE")
       # Surface a translated notification so the user knows their in-progress

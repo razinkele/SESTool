@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`server/session_management.R` deleted** (N70): none of its functions were called (app.R has the live code), and its autosave cleanup targeted the wrong folder.
 - **Stale "DEFERRED" / "read-only" comments rewritten** above the implemented Decision Lens archetypes and the editable adjacency-matrix viewer (N71).
 
+### Fixed (autosave, ML feedback and session — review 2026-10-07 N29, N40, N53, N54, N55, N58, N59, N60)
+
+- **ML feedback is no longer silently dropped** (N40): classification and connection entries had different column sets, so whichever came second failed to append. Entries are now column-aligned before appending, and the graphical creator only thanks the user and advances the retrain counter when the feedback was actually stored.
+- **A damaged feedback log no longer stops all logging** (N58): an unreadable log is moved aside and a new one started; writes are atomic.
+- **No pseudo-identity in ML state** (N59): `user_id` recorded the server's service account for everyone; it is now left empty. Feedback and bandit state are deployment-global.
+- **The response-priority bandit sees the real project** (N53): it read element/connection counts and regional sea from paths that do not exist, so every context was identical.
+- **Autosave no longer saves the empty startup project** (N54), and old files in the local `.autosave` folder are pruned after 72 hours.
+- **"Unchanged, skip" works** (N55): the autosave hash was taken after a timestamp was attached, so it never matched and every debounce rewrote all copies.
+- **Restoring work after a language change reports failures** (N60): `app.R` now uses the shared handler, which normalises the payload and shows a translated error when it cannot be restored.
+- **Startup fails clearly if a feature module cannot load** (N29): these modules were labelled optional but are used unconditionally, so a failure surfaced later as "could not find function" or a crash in every session.
+
 ### Fixed (load and round-trip integrity — review 2026-10-07 N23 / N24 / N25 / N27 / N28 / N51 / N57)
 
 - **No more false "IDs repaired (duplicates from an older version)" message** when recovering an autosaved template project: the autosave-recovery normalisation skipped Responses, and the ID reconciler counted a pure `id`→`ID` rename as a repair.
