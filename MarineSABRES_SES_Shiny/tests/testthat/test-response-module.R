@@ -186,3 +186,30 @@ test_that("tenet levels are saved per tenet; intermediate offered only for ecol_
   expect_match(ecol, 'value="intermediate"', fixed = TRUE)
   expect_false(grepl('value="intermediate"', comm, fixed = TRUE))
 })
+
+# ---- final-review fix I1: Word reports show labels, curated columns -------------------
+rm_docx_text <- function(output_id) {
+  proj <- create_empty_project("t"); pd <- reactiveVal(proj); txt <- NULL
+  testServer(real_response_measures_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    do.call(session$setInputs, c(base_inputs, list(rm_tenet_communicable = "full")))
+    session$setInputs(add_response = 1)
+    path <- output[[output_id]]
+    txt <<- officer::docx_summary(officer::read_docx(path))$text
+  })
+  txt
+}
+
+test_that("priority report shows translated Type/Status, not raw codes", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  txt <- rm_docx_text("download_priority_report")
+  expect_true(any(grepl("modules.response.measures.regulatory", txt, fixed = TRUE)))
+  expect_false(any(txt %in% c("regulatory", "proposed", "multiple")))
+})
+
+test_that("implementation plan uses the curated columns (no Tenet_/ID-list columns)", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  txt <- rm_docx_text("download_implementation_plan")
+  expect_false(any(grepl("^Tenet_|ImplementingStakeholders|PairedWith", txt)))
+  expect_true(any(grepl("modules.response.measures.regulatory", txt, fixed = TRUE)))
+})

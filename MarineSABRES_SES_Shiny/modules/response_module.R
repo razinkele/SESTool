@@ -432,15 +432,13 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     # Returns a measures data frame with Effectiveness/Feasibility stable keys
     # translated for display (tables, plots, exports). Internal storage keeps
     # stable keys for correctness.
-    translate_levels_for_display <- function(df) {
-      if (is.null(df) || nrow(df) == 0) return(df)
-      if ("Effectiveness" %in% names(df)) df$Effectiveness <- vapply(df$Effectiveness, level_label, character(1))
-      if ("Feasibility"   %in% names(df)) df$Feasibility   <- vapply(df$Feasibility,   level_label, character(1))
-      for (pair in list(c("Type", "type"), c("Target", "target"), c("Status", "status"), c("Kind", "kind"),
-                        c("EbmCode", "ebm_code"), c("GovernanceLevel", "governance_level"))) {
-        if (pair[1] %in% names(df)) df[[pair[1]]] <- rm_display_label(pair[2], df[[pair[1]]], i18n)
-      }
-      df
+    # WS-3a: all coded columns incl. Tenet_* (functions/response_measures_schema.R)
+    translate_levels_for_display <- function(df) rm_translate_for_display(df, i18n)
+    # Curated, translated view for the register table and Word reports
+    display_view <- function(df) {
+      df <- translate_levels_for_display(df)
+      if (is.null(df) || !is.data.frame(df)) return(df)
+      df[, intersect(RM_DISPLAY_COLUMNS, names(df)), drop = FALSE]
     }
 
     # Reactive values for response data
@@ -500,10 +498,15 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     }, ignoreInit = TRUE)
 
     # WS-3a: implementing stakeholders come from PIMS; pairing from this register
+    # Update only when the PIMS stakeholder list really changes, keeping the
+    # user's current picks (WS-3a review I3: any project write re-ran this).
+    last_sh_choices <- reactiveVal(NULL)
     observe({
       sh <- tryCatch(project_data_reactive()$data$pims$stakeholders, error = function(e) NULL)
-      ch <- if (is.data.frame(sh) && nrow(sh) > 0) setNames(as.character(sh$ID), paste0(sh$Name, " (", sh$ID, ")")) else character(0)
-      updateSelectizeInput(session, "rm_impl_stakeholders", choices = ch, server = FALSE)
+      u <- stakeholder_picker_update(sh, isolate(input$rm_impl_stakeholders), isolate(last_sh_choices()))
+      if (u$skip) return()
+      last_sh_choices(u$choices)
+      updateSelectizeInput(session, "rm_impl_stakeholders", choices = u$choices, selected = u$selected, server = FALSE)
     })
 
     observe({
@@ -594,7 +597,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
     # Response Table ----
     output$response_table <- renderDT({
-      datatable(translate_levels_for_display(response_data$measures),
+      datatable(display_view(response_data$measures),
                selection = 'multiple',
                options = list(pageLength = 10, scrollX = TRUE),
                rownames = FALSE)
@@ -854,8 +857,8 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       },
       content = function(file) {
         tryCatch({
-          measures <- response_data$measures
-          req(nrow(measures) > 0)
+          req(nrow(response_data$measures) > 0)
+          measures <- display_view(response_data$measures)   # WS-3a: labels, curated columns
 
           doc <- officer::read_docx()
           doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.priority_report_title"), style = "heading 1")
@@ -903,9 +906,9 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       },
       content = function(file) {
         tryCatch({
-          measures <- response_data$measures
+          req(nrow(response_data$measures) > 0)
+          measures <- display_view(response_data$measures)   # WS-3a: labels, curated columns
           milestones <- response_data$milestones
-          req(nrow(measures) > 0)
 
           doc <- officer::read_docx()
           doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.implementation_plan_title"), style = "heading 1")

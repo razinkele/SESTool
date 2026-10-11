@@ -138,3 +138,63 @@ test_that("legacy Lithuanian-label register is migrated on project load", {
   out <- normalize_and_reconcile_project(p)$data$response_measures$measures
   expect_equal(c(out$Type, out$Target, out$Status), c("regulatory", "state", "planned"))
 })
+
+# ---- final-review fix C1: ragged list-of-rows must never empty the register --------
+test_that("C1: local-storage-style JSON (no na='null') with an NA Cost keeps every row", {
+  p <- create_empty_project("t")
+  p$data$response_measures$measures <- normalize_response_measures(data.frame(
+    ID = c("RM_1", "RM_2"), Name = c("a", "b"), Type = c("regulatory", "economic"), Cost = c(NA, 3),
+    stringsAsFactors = FALSE))
+  js <- jsonlite::toJSON(p, auto_unbox = TRUE, null = "null")   # as local_storage_module.R serialised before the fix
+  m <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = FALSE))$data$response_measures$measures
+  expect_equal(m$ID, c("RM_1", "RM_2"))
+  expect_true(is.na(m$Cost[1]))
+  expect_equal(m$Cost[2], 3)
+})
+
+test_that("C1: ragged legacy list-of-rows keeps every row", {
+  out <- normalize_response_measures(list(list(ID = "RM_1", Name = "a", Type = "regulatory", Cost = 2),
+                                          list(ID = "RM_2", Name = "b", Type = "economic")))
+  expect_equal(out$ID, c("RM_1", "RM_2"))
+  expect_true(is.na(out$Cost[2]))
+})
+
+test_that("C1: local storage serialises NA as null", {
+  src <- readLines(file.path(PROJECT_ROOT, "modules", "local_storage_module.R"), warn = FALSE)
+  tj <- grep("toJSON(", src, value = TRUE, fixed = TRUE)
+  expect_gt(length(tj), 0)
+  expect_true(all(grepl('na = "null"', tj, fixed = TRUE)))
+})
+
+# ---- final-review fixes I1/I2: display translation incl. tenets; curated columns ------
+test_that("rm_translate_for_display translates codes and tenet levels; raw values pass through", {
+  lab <- list(t = function(k) paste0("T:", k))
+  df <- normalize_response_measures(data.frame(ID = "RM_1", Name = "x", Type = "regulatory", Status = "planned",
+    Effectiveness = "HIGH", Tenet_ecol_effective = "intermediate", Tenet_communicable = "full",
+    stringsAsFactors = FALSE))
+  out <- rm_translate_for_display(df, lab)
+  expect_equal(out$Type, "T:modules.response.measures.regulatory")
+  expect_equal(out$Effectiveness, "T:modules.response.measures.high")
+  expect_equal(out$Tenet_ecol_effective, "T:modules.response.governance.tenet_level.intermediate")
+  expect_equal(out$Tenet_communicable, "T:modules.response.governance.tenet_level.full")
+  expect_equal(out$Tenet_econ_viable, "")
+})
+
+test_that("register display/report column set excludes tenet, stakeholder-ID and pairing columns", {
+  expect_false(any(startsWith(RM_DISPLAY_COLUMNS, "Tenet_")))
+  expect_false(any(c("ImplementingStakeholders", "PairedWith") %in% RM_DISPLAY_COLUMNS))
+  expect_true(all(c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel", "Status") %in% RM_DISPLAY_COLUMNS))
+})
+
+# ---- final-review fix I3: stakeholder picker keeps the selection ---------------------
+test_that("stakeholder_picker_update keeps current selection and skips no-op updates", {
+  sh <- data.frame(ID = c("SH_1", "SH_2"), Name = c("Park", "Fishers"), stringsAsFactors = FALSE)
+  u1 <- stakeholder_picker_update(sh, current = c("SH_2"), previous_choices = NULL)
+  expect_false(u1$skip)
+  expect_equal(unname(u1$choices), c("SH_1", "SH_2"))
+  expect_equal(u1$selected, "SH_2")
+  expect_true(stakeholder_picker_update(sh, current = "SH_2", previous_choices = u1$choices)$skip)
+  u3 <- stakeholder_picker_update(sh[1, ], current = c("SH_1", "SH_2"), previous_choices = u1$choices)
+  expect_equal(u3$selected, "SH_1")   # removed stakeholder dropped, kept one retained
+  expect_false(stakeholder_picker_update(NULL, current = NULL, previous_choices = u1$choices)$skip)
+})

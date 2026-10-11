@@ -49,11 +49,20 @@ rm_reverse_label_map <- function(force = FALSE) {
 normalize_response_measures <- function(df) {
   if (is.null(df) || (is.list(df) && !is.data.frame(df) && length(df) == 0)) return(empty_measures_df())
   if (is.list(df) && !is.data.frame(df)) {
-    df <- tryCatch(do.call(rbind, lapply(df, function(r) {
-      r <- lapply(r, function(v) if (is.null(v) || length(v) == 0) NA else if (length(v) > 1) paste(v, collapse = ";") else v)
-      as.data.frame(r, stringsAsFactors = FALSE)
-    })), error = function(e) NULL)
-    if (is.null(df)) return(empty_measures_df())
+    # Column-wise build: rows may carry different keys (jsonlite drops NA fields
+    # unless na = "null"), so never rbind per-row frames (WS-3a review C1).
+    rows <- Filter(is.list, df)
+    keys <- union(RM_REGISTER_COLUMNS, unique(unlist(lapply(rows, names))))
+    cols <- lapply(keys, function(cl) vapply(rows, function(r) {
+      v <- r[[cl]]
+      if (is.null(v) || length(v) == 0 || all(is.na(unlist(v)))) NA_character_
+      else paste(unlist(v), collapse = ";")
+    }, character(1)))
+    n_dropped <- length(df) - length(rows)
+    df <- as.data.frame(setNames(cols, keys), stringsAsFactors = FALSE)
+    if (n_dropped > 0 && exists("debug_log", mode = "function")) {
+      debug_log(sprintf("normalize_response_measures: dropped %d non-row item(s)", n_dropped), "WARN")
+    }
   }
   if (!is.data.frame(df)) return(empty_measures_df())
   n <- nrow(df)
@@ -104,6 +113,8 @@ rm_display_label <- function(vocab, code, i18n) {
       status = if (cd %in% names(RM_STATUS_CODES)) paste0("modules.response.measures.", RM_STATUS_CODES[[cd]]),
       kind   = if (cd %in% c("instrument", "measure")) paste0("modules.response.governance.kind.", cd),
       governance_level = if (cd %in% GOVERNANCE_LEVELS) paste0("modules.response.governance.level.", cd),
+      tenet_level = if (cd %in% TENET_LEVELS) paste0("modules.response.governance.tenet_level.", cd),
+      level  = if (cd %in% c("HIGH", "MEDIUM", "LOW", "UNKNOWN")) paste0("modules.response.measures.", tolower(cd)),
       NULL)
   }
   vapply(code, function(cd) {
@@ -128,4 +139,35 @@ encode_ids <- function(x) {
 decode_ids <- function(s) {
   if (is.null(s) || is.na(s) || !nzchar(s)) return(character(0))
   strsplit(s, ";", fixed = TRUE)[[1]]
+}
+
+#' Translate every coded register column for display (tables, Word/Excel exports)
+#' Effectiveness/Feasibility, Type/Target/Status, Kind/EbmCode/GovernanceLevel and
+#' Tenet_* are mapped to labels; unknown values pass through (WS-3a review I1/I2).
+rm_translate_for_display <- function(df, i18n) {
+  if (is.null(df) || !is.data.frame(df) || nrow(df) == 0) return(df)
+  # i18n-ref: modules.response.measures.high
+  # i18n-ref: modules.response.measures.medium
+  # i18n-ref: modules.response.measures.low
+  # i18n-ref: modules.response.measures.unknown
+  pairs <- list(c("Effectiveness", "level"), c("Feasibility", "level"), c("Type", "type"),
+                c("Target", "target"), c("Status", "status"), c("Kind", "kind"),
+                c("EbmCode", "ebm_code"), c("GovernanceLevel", "governance_level"))
+  for (p in pairs) if (p[1] %in% names(df)) df[[p[1]]] <- rm_display_label(p[2], df[[p[1]]], i18n)
+  for (cl in grep("^Tenet_", names(df), value = TRUE)) df[[cl]] <- rm_display_label("tenet_level", df[[cl]], i18n)
+  df
+}
+
+#' Stakeholder picker update that keeps the user's selection (WS-3a review I3)
+#' @param sh PIMS stakeholders data.frame (ID, Name) or NULL
+#' @param current Currently selected IDs
+#' @param previous_choices Choices last sent to the client (NULL = none yet)
+#' @return list(skip, choices, selected); skip = TRUE when choices are unchanged
+stakeholder_picker_update <- function(sh, current, previous_choices) {
+  ch <- if (is.data.frame(sh) && nrow(sh) > 0) {
+    setNames(as.character(sh$ID), paste0(sh$Name, " (", sh$ID, ")"))
+  } else character(0)
+  list(skip = !is.null(previous_choices) && identical(ch, previous_choices),
+       choices = ch,
+       selected = intersect(as.character(unlist(current)), unname(ch)))
 }

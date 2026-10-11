@@ -838,6 +838,12 @@ RM_REGISTER_COLUMNS <- c(
                      "legally_permissible", "admin_achievable", "communicable", "politically_expedient"))
 )
 
+# Columns shown in the register table and Word reports (codes translated);
+# tenet / stakeholder-ID / pairing columns stay in data and in the Excel export.
+RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel",
+                        "CompetentAuthority", "LegalBasis", "Effectiveness", "Feasibility", "Cost",
+                        "Status", "DateAdded")
+
 # ============================================================================
 # END OF CONSTANTS
 # ============================================================================
