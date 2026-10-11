@@ -134,12 +134,12 @@
     },
     "common.messages.error_network_too_large_300_nodes_or_1500_edges_lo": {
       "en": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "es": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "fr": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "de": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "lt": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "pt": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
-      "it": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
+      "es": "Error: la red es demasiado grande (>300 nodos o >1500 aristas). La detección de bucles se ha desactivado para evitar bloqueos.",
+      "fr": "Erreur : réseau trop grand (>300 nœuds ou >1500 arêtes). La détection des boucles est désactivée pour éviter un blocage.",
+      "de": "Fehler: Netzwerk zu groß (>300 Knoten oder >1500 Kanten). Schleifenerkennung deaktiviert, um ein Hängenbleiben zu verhindern.",
+      "lt": "Klaida: tinklas per didelis (>300 mazgų arba >1500 briaunų). Ciklų aptikimas išjungtas, kad programa nestrigtų.",
+      "pt": "Erro: rede demasiado grande (>300 nós ou >1500 arestas). A deteção de ciclos foi desativada para evitar bloqueios.",
+      "it": "Errore: rete troppo grande (>300 nodi o >1500 archi). Il rilevamento dei cicli è stato disattivato per evitare blocchi.",
       "no": "Feil: Nettverket er for stort (>300 noder eller >1500 kanter). Sløyfedeteksjon deaktivert for å forhindre henging.",
       "el": "Σφάλμα: Το δίκτυο είναι πολύ μεγάλο (>300 κόμβοι ή >1500 ακμές). Η ανίχνευση βρόχων απενεργοποιήθηκε για αποφυγή κολλήματος."
     },

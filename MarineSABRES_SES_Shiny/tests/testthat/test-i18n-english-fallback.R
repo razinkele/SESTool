@@ -36,11 +36,9 @@ test_that("WP5 mechanism pane strings are translated (no English sentences in ot
   expect_length(wp5, 0)
 })
 
-test_that("untranslated English sentences do not grow (ratchet)", {
-  # 42 on 2026-10-11, after the WP5 pane was translated (mostly analysis_bot,
-  # response_measures, scenario_builder). Lower this number when you translate
-  # some; never raise it.
+test_that("no untranslated English sentences anywhere", {
+  # Was 42 on 2026-10-11 before the placeholder clean-up; now zero. Keep it there.
   hits <- long_fallbacks()
-  expect_lte(length(hits), 42L)
-  expect_gt(length(hits), 0L)   # the scan is not vacuous while the backlog exists
+  expect_length(hits, 0)
+  if (length(hits)) message(paste(head(hits, 20), collapse = "; "))
 })
