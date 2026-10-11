@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (Response register stored translated labels — spec 2026-10-11 WS-3a)
+- **Response type, target and status are stored as language-independent codes.** Previously the saved value was whatever language the user had active, so a project saved in Lithuanian showed Lithuanian values in other languages and could not be compared. Existing projects are converted on load, from labels in any of the 9 languages. Text that matches no label is kept unchanged.
+
+### Added (Response register — EBM classification and governance, WS-3a)
+- New collapsible section in "Add response measure":
+  - EBM classification: policy instrument or management measure, with the WP5 EBM type. Choosing a measure type suggests the DAPSIWRM target.
+  - Governance level, competent authority and legal basis.
+  - Implementing stakeholders, linked to PIMS stakeholders.
+  - Pairing into a management strategy (instrument + measure).
+  - Appraisal against the 11 tenets (minimal / intermediate / full compliance).
+- All fields are saved in projects and survive JSON save/load.
+
 ### Changed (WP5 mechanism KB v2 — spec 2026-10-11 WS-2)
 - **The WP5 financial-mechanism catalogue is rebuilt from the FINAL D5.2 (v5, 23 Jun 2026):** 31 mechanisms (Arctic 8, Tuscan 7, Macaronesia 16; previously 28 from April drafts). Mechanism texts are quoted verbatim from D5.2 Tables 9, 20 and 22, and each card shows its source.
 - Macaronesia cards also show details from the Blue Corridor toolkit. That toolkit is an April 2026 annex that is **not part of the final D5.2**, and its details are badged "pre-final draft".
