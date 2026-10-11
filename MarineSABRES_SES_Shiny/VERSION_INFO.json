@@ -1,8 +1,8 @@
 {
-  "version": "1.22.0",
-  "version_name": "Review decisions: Decision Lens rules, transition rules, matrix alignment check, WP5 translations",
+  "version": "1.22.1",
+  "version_name": "Placeholder translations fixed; template link signs corrected",
   "release_date": "2026-10-11",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -14,13 +14,8 @@
   "features": [],
   "fixes": {
     "high": [
-      "Decision Lens: MICMAC quadrants vs the mean with an Undifferentiated guard; Limits to Growth needs an MPF/ES balancing loop; one Commons record per commons (N35, N37, N52) - PR #88.",
-      "Transition rules aligned to the framework doc; P->MPF default polarity '-'; Standard Entry edits R->MPF and R->R (N26, N61, N62) - PR #91.",
-      "Project load warns when a connection matrix does not line up with its element list (CLD reads matrices by position) - PR #90."
-    ],
-    "medium": [
-      "WP5 mechanism pane translated (flagged for native review); English-fallback ratchet (N48) - PR #89.",
-      "Dashboard ecosystem-type labels translated; P3 tests un-skipped - PR #87."
+      "About 410 keys showed literal '[XX] English' placeholders in es/fr/de/lt/pt/it (PIMS, Scenario Builder, analysis tools, ISA help, entry point, templates); translated, plus 37 English fallbacks; CI guards against both - PR #93.",
+      "Five template link signs corrected after a polarity review; Fisheries (Baltic) no longer shows Limits to Growth, which came from a sign error - PR #94."
     ]
   },
   "metrics": {
@@ -38,8 +33,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.21.1",
+  "previous_version": "1.22.0",
   "build_info": {
-    "build_date": "2026-10-11 14:58:25.716595"
+    "build_date": "2026-10-11 16:51:13.416792"
   }
 }
