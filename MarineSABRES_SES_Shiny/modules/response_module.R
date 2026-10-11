@@ -925,27 +925,75 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         ))
       }
 
-      lapply(mechs, function(m) {
+      # KB v2 (spec 2026-10-11 WS-2): fields quoted from FINAL D5.2 tables;
+      # Macaronesia toolkit details are a pre-final annex (badged); impact-assessment
+      # guidance is not shipped until WP5 partners decide (spec Q1).
+      # i18n-ref: modules.wp5_mechanisms.attr.how_it_works
+      # i18n-ref: modules.wp5_mechanisms.attr.what_it_delivers
+      # i18n-ref: modules.wp5_mechanisms.attr.who_pays
+      # i18n-ref: modules.wp5_mechanisms.attr.finance_flow_text
+      # i18n-ref: modules.wp5_mechanisms.attr.governance_interface
+      # i18n-ref: modules.wp5_mechanisms.attr.applicability
+      # i18n-ref: modules.wp5_mechanisms.attr.cost_band
+      # i18n-ref: modules.wp5_mechanisms.attr.success_statement
+      # i18n-ref: modules.wp5_mechanisms.attr.cost_profile
+      # i18n-ref: modules.wp5_mechanisms.attr.what_it_funds
+      # i18n-ref: modules.wp5_mechanisms.attr.design_parameters
+      # i18n-ref: modules.wp5_mechanisms.attr.transferable_lessons
+      # i18n-ref: modules.wp5_mechanisms.attr.risks_and_guardrails
+      # i18n-ref: modules.wp5_mechanisms.attr.success_metrics
+      # i18n-ref: modules.wp5_mechanisms.attr.references
+      field <- function(key, value, badge = NULL) {
+        v <- paste(unlist(value), collapse = "; ")
+        if (!nzchar(v)) return(NULL)
+        p(strong(paste0(i18n$t(paste0("modules.wp5_mechanisms.attr.", key)), ": ")), span(v), badge)
+      }
+      src_line <- function(ref) {
+        if (is.null(ref)) return(NULL)
+        tags$small(class = "text-muted d-block",
+          paste0(i18n$t("modules.wp5_mechanisms.attr.source"), ": ", ref$document %||% "",
+                 if (!is.null(ref$table)) paste0(", ", ref$table) else "",
+                 if (!is.null(ref$row)) paste0(" #", ref$row) else ""))
+      }
+      legacy <- isTRUE(wp5_kb_schema() < 2L)
+      cards <- lapply(mechs, function(m) {
+        tk <- m$toolkit; d <- m$derived
+        band <- m$cost_band
+        if (isTRUE(d$cost_band_flagged)) band <- paste(band, i18n$t("modules.wp5_mechanisms.attr.cost_band_flag"))
         div(class = "card mb-3",
-          div(class = "card-header",
-              strong(m$name %||% "")),
+          div(class = "card-header", strong(m$name %||% "")),
           div(class = "card-body",
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.cost_profile"), ": ")),
-              span(m$cost_profile %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.what_it_funds"), ": ")),
-              span(m$what_it_funds %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.payer"), ": ")),
-              span(paste(unlist(m$finance_flow$payer %||% character(0)), collapse = "; "))),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.receiver"), ": ")),
-              span(m$finance_flow$receiver %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.use_in_impact_assessment"), ": ")),
-              span(m$use_in_impact_assessment %||% "")),
-            tags$small(class = "text-muted",
-                       paste(i18n$t("modules.wp5_mechanisms.attr.references"), ":",
-                             paste(unlist(m$references %||% character(0)), collapse = "; ")))
+            field("how_it_works", m$how_it_works),
+            field("what_it_delivers", m$what_it_delivers),
+            field("who_pays", m$who_pays),
+            field("finance_flow_text", m$finance_flow_text),
+            field("governance_interface", m$governance_interface),
+            field("applicability", m$applicability_text),
+            field("cost_band", band),
+            field("success_statement", m$success_statement),
+            field("success_metrics", d$success_metrics, provenance_badge(d$provenance, i18n)),
+            src_line(m$source_ref),
+            if (!is.null(tk)) tags$details(
+              tags$summary(i18n$t("modules.wp5_mechanisms.attr.toolkit_details"),
+                           provenance_badge(tk$provenance, i18n)),
+              field("cost_profile", tk$cost_profile),
+              field("what_it_funds", tk$what_it_funds),
+              field("design_parameters", tk$design_parameters),
+              field("transferable_lessons", tk$transferable_lessons),
+              field("risks_and_guardrails", tk$risks_and_guardrails_text),
+              field("references", vapply(unlist(tk$reference_numbers %||% list()), get_wp5_reference, character(1))),
+              src_line(tk$source_ref)
+            )
           )
         )
       })
+      tagList(
+        if (legacy) div(class = "alert alert-warning", i18n$t("modules.wp5_mechanisms.pane.legacy_kb_warning")),
+        p(class = "text-muted small", i18n$t("modules.wp5_mechanisms.pane.english_only_note")),
+        if (identical(da_key, "macaronesia") && nzchar(get_cost_band_legend()))
+          p(class = "small", get_cost_band_legend()),
+        cards
+      )
     })
 
     return(reactive({ response_data }))
