@@ -1093,6 +1093,50 @@ restore_project_from_json_text <- function(json_text) {
 # LOAD-PATH HARDENING HELPER
 # ============================================================================
 
+#' Move legacy project$data$scenarios into project$data$analysis$scenarios
+#'
+#' The scenario builder historically saved to data$scenarios while the schema
+#' (create_empty_project) declares data$analysis$scenarios. Merge by id;
+#' entries already at the canonical location win. Non-list items are dropped.
+#' Pure and idempotent. (WP5 spec WS-0)
+#' @param project Project list
+#' @return Project list with data$scenarios removed
+migrate_legacy_scenarios <- function(project) {
+  if (!is.list(project) || !is.list(project$data)) return(project)
+  if (!"scenarios" %in% names(project$data)) return(project)
+
+  legacy <- project$data$scenarios
+  canonical <- project$data$analysis$scenarios
+  if (!is.list(canonical) || is.data.frame(canonical)) canonical <- list()
+
+  sid <- function(s) {
+    v <- s$id
+    if (is.null(v) || length(v) != 1 || is.na(v)) NA_character_ else as.character(v)
+  }
+  ids <- vapply(canonical, function(s) if (is.list(s)) sid(s) else NA_character_, character(1))
+
+  dropped <- 0L
+  if (is.list(legacy) && !is.data.frame(legacy)) {
+    for (s in legacy) {
+      if (!is.list(s) || is.data.frame(s)) { dropped <- dropped + 1L; next }
+      id <- sid(s)
+      if (!is.na(id) && id %in% ids) next
+      canonical[[length(canonical) + 1L]] <- s
+      ids <- c(ids, id)
+    }
+  } else if (!is.null(legacy)) {
+    dropped <- 1L
+  }
+  if (dropped > 0L && exists("debug_log", mode = "function")) {
+    debug_log(sprintf("migrate_legacy_scenarios: dropped %d malformed legacy scenario item(s)", dropped), "WP5")
+  }
+
+  if (!is.list(project$data$analysis)) project$data$analysis <- list()
+  project$data$analysis$scenarios <- canonical
+  project$data$scenarios <- NULL
+  project
+}
+
 #' Normalize and reconcile a loaded project (Task B2 — load-path hardening)
 #'
 #' A single pure helper that every load path (rds / json / autosave) can call
@@ -1120,6 +1164,9 @@ normalize_and_reconcile_project <- function(project, id_store = NULL) {
 
   # Step 1: normalize column casing project-wide (id -> id lowercase, etc.)
   project <- normalize_json_project_data(project)
+
+  # Step 1b: legacy scenario location -> data$analysis$scenarios (WP5 WS-0)
+  project <- migrate_legacy_scenarios(project)
 
   # Step 2: reconcile element IDs in the 6 element frames
   if (is.null(id_store)) id_store <- new_stable_id_store()
