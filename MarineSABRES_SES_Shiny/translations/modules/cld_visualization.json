@@ -332,12 +332,12 @@
     },
     "modules.isa.data_entry.common.leverage_points": {
       "en": "Leverage Points",
-      "es": "[ES] Leverage Points",
-      "fr": "[FR] Leverage Points",
-      "de": "[DE] Leverage Points",
-      "lt": "[LT] Leverage Points",
-      "pt": "[PT] Leverage Points",
-      "it": "[IT] Leverage Points",
+      "es": "Puntos de Apalancamiento",
+      "fr": "Points de Levier",
+      "de": "Hebelpunkte",
+      "lt": "Sverto taškai",
+      "pt": "Pontos de Alavancagem",
+      "it": "Punti di Leva",
       "no": "Innflytelsespunkter",
       "el": "Σημεία μόχλευσης"
     },

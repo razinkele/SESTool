@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (placeholder translations across the app)
+
+- **About 410 keys showed literal placeholders such as "[DE] Scenario Confirm Delete Message" in Spanish, French, German, Lithuanian, Portuguese and Italian**: the stakeholder (PIMS) module, the Scenario Builder, network-analysis tools, ISA data entry help, the entry point and the template pages. The completeness check passed them because every slot was filled. All are now translated; many English values were key-derived phrases ("Scenario Scenarios") and were rewritten from the original text in git history or from how the key is used. Half-English Greek and Norwegian values in the same keys were fixed too.
+- 37 sentences still in English in other languages (mostly Greek BOT help, Norwegian response measures) were translated; the French-manual tooltips' English slot (which held French) was corrected.
+- Four Scenario Builder messages now show their link count (`%d`); the code passed a count to `sprintf()` but the text had no placeholder.
+- New `test-i18n-placeholders.R` fails on any `[XX] ` value; the English-fallback check now requires zero long untranslated sentences everywhere. Help paragraphs that never had original text (ISA exercise help, template guide, PIMS help) were written fresh and should get a domain/native-speaker review.
+
 ### Fixed (template link signs — polarity review 2026-10-11)
 
 - A review of all 305 template links found five clear sign errors, four of them on links that still had placeholder "connects to" descriptions. Corrected (user approved): OffshoreWind pile-driving noise → sandeel abundance (+ → −); ClimateChange oil-spill risk → seal abundance (+ → −); Pollution heavy metals → dissolved oxygen and dredging resuspension → dissolved oxygen (+ → −); Fisheries cod biomass → herring recruitment (− → +, as its own description says: fewer cod → more sprat → less herring). The four placeholder descriptions now state the direction. Templates bumped (OffshoreWind/ClimateChange 2.1, Pollution/Fisheries 2.2).
