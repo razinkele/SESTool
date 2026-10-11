@@ -341,7 +341,7 @@ Write-Status "Extracting files and restarting Shiny Server..."
 $remoteScript = @"
 set -e
 
-PRESERVE_TGZ="/tmp/marinesabres-preserve-`$`$.tgz"
+PRESERVE_TGZ="`$(mktemp /tmp/marinesabres-preserve.XXXXXXXX)"
 
 # Runtime files the app writes into data/ (review 2026-10-07 N8): ML state,
 # template backups and the LIVE user feedback log, which is gitignored and so
@@ -378,7 +378,7 @@ tar -xzf /tmp/${TarFilename} --strip-components=${StripComponents} -C ${RemoteTa
 # this release, in the source-code dirs only: data/, www/, models/ (gitignored
 # ML weights) and SESModels/ hold files that are deliberately not in git.
 echo '==> Removing code files that are no longer in the release...'
-MANIFEST="/tmp/marinesabres-manifest-`$`$.txt"
+MANIFEST="`$(mktemp /tmp/marinesabres-manifest.XXXXXXXX)"
 tar --quoting-style=literal -tzf /tmp/${TarFilename} | cut -d/ -f`$(( ${StripComponents} + 1 ))- | grep -v '/`$' | LC_ALL=C sort > `$MANIFEST || true
 if [ -s `$MANIFEST ]; then
   (cd ${RemoteTarget} && find config functions modules scripts server translations -type f \
