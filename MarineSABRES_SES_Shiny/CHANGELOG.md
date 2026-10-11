@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed (dead code — review 2026-10-07 N66, N68)
+
+- **~1,300 lines of unused AI ISA sub-module copies** (N66): eight `setup_*` functions in `modules/ai_isa/question_flow.R`, four helpers in `modules/ai_isa/ui_components.R` and the whole `answer_processor.R` duplicated live inline code and had already drifted. The input validation that only the removed `process_answer()` copy had was ported to the live one.
+- **Uncalled, untested helpers** (N68): `create_undo_reactive`, `add_inferred_types`, `analyze_type_inference`, `predict_connection_enhanced` and `functions/async_helpers.R`. Tested building blocks without app callers were kept, as was the `diagnose_ses_models()` console diagnostic.
+
 ### Tests (review 2026-10-07 N45, N72–N78)
 
 - **Entry-point behaviour tests drive the real module** (N45): they ran against the helper stub and ended in `expect_true(TRUE)`; they now bind the real server and assert screen, step and selection state. CLAUDE.md's testing note was corrected.

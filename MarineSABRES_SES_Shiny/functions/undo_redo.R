@@ -357,79 +357,6 @@ print.undo_history <- function(x, ...) {
 # SHINY INTEGRATION HELPERS
 # =============================================================================
 
-#' Create Undo/Redo Reactive Values
-#'
-#' Creates reactive values for Shiny integration with undo/redo.
-#'
-#' @param initial_state Initial application state
-#' @return List with reactive values and history manager
-#' @export
-create_undo_reactive <- function(initial_state = NULL) {
-  if (!requireNamespace("shiny", quietly = TRUE)) {
-    stop("Shiny package required for reactive undo/redo")
-  }
-
-  # Create history manager
-  history <- create_undo_history()
-
-  # Create reactive values
-  rv <- shiny::reactiveValues(
-    state = initial_state,
-    can_undo = FALSE,
-    can_redo = FALSE,
-    undo_description = NULL,
-    redo_description = NULL
-  )
-
-  #' Update state with undo tracking
-  #'
-  #' @param new_state New state
-  #' @param action_type Type of action
-  #' @param description Action description
-  update_state <- function(new_state, action_type, description = NULL) {
-    old_state <- shiny::isolate(rv$state)
-    history$push_action(action_type, old_state, new_state, description)
-
-    rv$state <- new_state
-    rv$can_undo <- history$can_undo()
-    rv$can_redo <- history$can_redo()
-    rv$undo_description <- history$peek_undo()
-    rv$redo_description <- history$peek_redo()
-  }
-
-  #' Perform undo
-  perform_undo <- function() {
-    old_state <- history$undo()
-    if (!is.null(old_state)) {
-      rv$state <- old_state
-      rv$can_undo <- history$can_undo()
-      rv$can_redo <- history$can_redo()
-      rv$undo_description <- history$peek_undo()
-      rv$redo_description <- history$peek_redo()
-    }
-  }
-
-  #' Perform redo
-  perform_redo <- function() {
-    new_state <- history$redo()
-    if (!is.null(new_state)) {
-      rv$state <- new_state
-      rv$can_undo <- history$can_undo()
-      rv$can_redo <- history$can_redo()
-      rv$undo_description <- history$peek_undo()
-      rv$redo_description <- history$peek_redo()
-    }
-  }
-
-  list(
-    rv = rv,
-    history = history,
-    update_state = update_state,
-    perform_undo = perform_undo,
-    perform_redo = perform_redo
-  )
-}
-
 # =============================================================================
 # ACTION TYPE CONSTANTS
 # =============================================================================
@@ -448,3 +375,7 @@ UNDO_ACTION_TYPES <- list(
   APPLY_TEMPLATE = "apply_template",
   BATCH_EDIT = "batch_edit"
 )
+
+# (Review 2026-10-07 N68: create_undo_reactive() was removed -- never called
+#  and untested. Undo/redo is not wired into the app; the tested
+#  create_undo_action/create_undo_history building blocks remain.)

@@ -663,7 +663,8 @@ source("functions/session_logger.R", local = FALSE)  # FALSE = global scope for 
 source("functions/persistent_storage.R", local = FALSE)  # FALSE = global scope for server access
 
 # Async computation helpers (lightweight progress-aware wrappers)
-source(get_project_file("functions", "async_helpers.R"), local = FALSE)
+# (functions/async_helpers.R removed: run_with_progress/has_async_support had
+#  no callers and no tests -- review 2026-10-07 N68)
 
 # Cross-tool recommendation engine (next-steps links after analysis completion)
 source("functions/tool_recommendations.R", local = FALSE)  # FALSE = global scope for module access

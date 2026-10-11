@@ -41,7 +41,6 @@ local({
     "modules/ai_isa/connection_generator.R",
     "modules/ai_isa/ui_components.R",
     "modules/ai_isa/question_flow.R",
-    "modules/ai_isa/answer_processor.R",
     "modules/ai_isa/data_persistence.R",
     "modules/ai_isa/ui_renderers.R",
     "modules/ai_isa/template_handlers.R",

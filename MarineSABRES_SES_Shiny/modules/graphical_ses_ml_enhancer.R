@@ -11,64 +11,6 @@ if (!exists("ml_model_available")) {
 # ML-Enhanced Connection Prediction
 # ==============================================================================
 
-#' Predict connection with ML enhancement
-#'
-#' Blends ML predictions with rule-based logic for robust results
-#'
-#' @param from_element List with name and type
-#' @param to_element List with name and type
-#' @param context Context information
-#' @param ml_weight Weight for ML predictions (default: 0.7)
-#' @return List with connection prediction
-#' @export
-predict_connection_enhanced <- function(from_element, to_element, context,
-                                        ml_weight = 0.7,
-                                        graph = NULL, nodes = NULL) {
-
-  # Try ML prediction first
-  # Phase 2: pass graph/nodes for graph feature extraction when available
-  ml_result <- NULL
-  if (ml_model_available()) {
-    tryCatch({
-      ml_result <- predict_connection_ml(
-        source_name = from_element$name,
-        source_type = from_element$type,
-        target_name = to_element$name,
-        target_type = to_element$type,
-        context = context,
-        threshold = 0.5,
-        graph = graph,
-        nodes = nodes,
-        source_id = from_element$id,
-        target_id = to_element$id
-      )
-    }, error = function(e) {
-      debug_log(paste("ML prediction failed:", e$message), "ML_ENHANCER")
-    })
-  }
-
-  # Fallback to rule-based if ML not available
-  if (is.null(ml_result)) {
-    debug_log("Using rule-based prediction only", "ML_ENHANCER")
-
-    # Simple rule-based prediction
-    rule_result <- list(
-      connection_exists = TRUE,  # Conservative: assume connection possible
-      existence_probability = 0.5,
-      strength = "medium",
-      confidence = 3,
-      polarity = "+",
-      method = "rule-based"
-    )
-
-    return(rule_result)
-  }
-
-  # If ML succeeded, return ML result
-  debug_log(paste("Using ML prediction (prob:", round(ml_result$existence_probability, 3), ")"), "ML_ENHANCER")
-  return(ml_result)
-}
-
 # ==============================================================================
 # ML-Enhanced Element Suggestions
 # ==============================================================================
@@ -321,3 +263,6 @@ if (!exists(".ml_enhancer_model_loaded")) {
     .ml_enhancer_model_loaded <- FALSE
   })
 }
+
+# (Review 2026-10-07 N68: predict_connection_enhanced() was removed -- never
+#  called and untested.)
