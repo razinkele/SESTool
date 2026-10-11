@@ -109,13 +109,14 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
     scenarios <- reactiveVal(list())
     active_scenario_id <- reactiveVal(NULL)
 
-    # Initialize scenarios from project data
+    # Initialize scenarios from project data (canonical: data$analysis$scenarios;
+    # legacy data$scenarios is migrated on load by migrate_legacy_scenarios())
     observe({
       req(project_data_reactive())
       data <- project_data_reactive()
-
-      if (!is.null(data$data$scenarios)) {
-        scenarios(data$data$scenarios)
+      stored <- data$data$analysis$scenarios %||% data$data$scenarios
+      if (!is.null(stored)) {
+        scenarios(stored)
       }
     })
 
@@ -1160,10 +1161,12 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
       return(node_id)
     }
 
-    # Save scenarios to project data
+    # Save scenarios to project data (canonical location; WP5 WS-0)
     save_scenarios_to_project <- function() {
       data <- project_data_reactive()
-      data$data$scenarios <- scenarios()
+      if (!is.list(data$data$analysis)) data$data$analysis <- list()
+      data$data$analysis$scenarios <- scenarios()
+      data$data$scenarios <- NULL
       data$last_modified <- Sys.time()
       project_data_reactive(data)
     }
