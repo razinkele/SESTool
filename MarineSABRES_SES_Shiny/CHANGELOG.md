@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.21.0] - 2026-10-11
+
+Minor release: the medium- and low-severity findings of the 2026-10-07 review (PRs #76-#82). Deployed to laguna 2026-10-11.
+
 ### Removed (dead code — review 2026-10-07 N66, N68)
 
 - **~1,300 lines of unused AI ISA sub-module copies** (N66): eight `setup_*` functions in `modules/ai_isa/question_flow.R`, four helpers in `modules/ai_isa/ui_components.R` and the whole `answer_processor.R` duplicated live inline code and had already drifted. The input validation that only the removed `process_answer()` copy had was ported to the live one.

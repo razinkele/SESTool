@@ -1,8 +1,8 @@
 {
-  "version": "1.20.1",
-  "version_name": "Server-side autosave recovery (N7); Boolean node cap 20",
-  "release_date": "2026-10-10",
-  "release_type": "patch",
+  "version": "1.21.0",
+  "version_name": "Review fixes (medium/low): load integrity, analysis modules, autosave/ML, translations, dead code, tests",
+  "release_date": "2026-10-11",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -13,11 +13,15 @@
   "security_updates": false,
   "features": [],
   "fixes": {
-    "critical": [
-      "Server-mode autosaves are recoverable across sessions via a per-browser token (review N7) - PR #73."
-    ],
     "high": [
-      "Boolean attractor search limited to 20 nodes (was 25) - PR #74."
+      "Load/round-trip integrity: canonical columns and matrix cells on every load path; Download Excel always includes matrices; no false 'IDs repaired' toast on templates (N23-N28, N51, N57) - PR #76.",
+      "Analysis modules: connection-review observers no longer multiply; simulation/intervention use the current CLD; intervention delete; scenario loop counts and CLD loop highlighting (N30-N36) - PR #77.",
+      "Autosave/ML/session: ML feedback stored; empty startup project not autosaved; change detection works; language-switch restore failures reported (N29, N40, N53-N55, N58-N60) - PR #79."
+    ],
+    "medium": [
+      "Translations: Decision Lens, matrix-cell errors, SES model messages and regional-sea names in all 9 languages (N46, N47, N63, N64) - PR #81.",
+      "Dead code and duplicate definitions removed (N39, N65-N71) - PRs #78, #82.",
+      "Tests check real behaviour; run_all_tests.R runs per file like CI (N45, N72-N78) - PR #80."
     ]
   },
   "metrics": {
@@ -35,8 +39,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.20.0",
+  "previous_version": "1.20.1",
   "build_info": {
-    "build_date": "2026-10-10 23:39:12.339211"
+    "build_date": "2026-10-11 10:58:31.176651"
   }
 }
