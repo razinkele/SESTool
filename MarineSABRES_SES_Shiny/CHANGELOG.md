@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Four Scenario Builder messages now show their link count (`%d`); the code passed a count to `sprintf()` but the text had no placeholder.
 - New `test-i18n-placeholders.R` fails on any `[XX] ` value; the English-fallback check now requires zero long untranslated sentences everywhere. Help paragraphs that never had original text (ISA exercise help, template guide, PIMS help) were written fresh and should get a domain/native-speaker review.
 
+### Fixed (template link signs — polarity review 2026-10-11)
+
+- A review of all 305 template links found five clear sign errors, four of them on links that still had placeholder "connects to" descriptions. Corrected (user approved): OffshoreWind pile-driving noise → sandeel abundance (+ → −); ClimateChange oil-spill risk → seal abundance (+ → −); Pollution heavy metals → dissolved oxygen and dredging resuspension → dissolved oxygen (+ → −); Fisheries cod biomass → herring recruitment (− → +, as its own description says: fewer cod → more sprat → less herring). The four placeholder descriptions now state the direction. Templates bumped (OffshoreWind/ClimateChange 2.1, Pollution/Fisheries 2.2).
+- **Effect on Decision Lens:** with the cod → herring sign corrected, every Fisheries (Baltic) loop is balancing, so the template has no reinforcing growth engine and **Limits to Growth no longer appears** — the result shown in 1.21.1/1.22.0 came only from that sign error. The cod quota still sits in balancing management loops.
+- Medium/low-confidence items and seven links whose descriptions say they barely exist were left for domain review. Noted for follow-up: DAPSIWRM_FRAMEWORK_RULES.md calls the main D→A→P→C→ES→GB→D cycle "reinforcing" while Rule 3 makes P→C "−"; both cannot hold unless State nodes are worded as harms.
+
 ## [1.22.0] - 2026-10-11
 
 Minor release: the review decisions signed off on 2026-10-11 (PRs #87-#91). Decision Lens output changes (MICMAC thresholds, stricter archetypes).

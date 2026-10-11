@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.1",
+    "version": "2.2",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_estuary",
     "applicable_regions": [
       "baltic"
@@ -449,20 +449,20 @@
       "to_id": "MPF002",
       "from_type": "pressure",
       "to_type": "state",
-      "polarity": "+",
+      "polarity": "-",
       "strength": "weak",
       "confidence": 2,
-      "description": "Heavy metal contamination from industrial legacy connects to Dissolved oxygen levels in stratified waters"
+      "description": "Metal-contaminated sediments degrade the benthic community and can add to oxygen demand when disturbed: more contamination, lower dissolved oxygen."
     },
     {
       "from_id": "P006",
       "to_id": "MPF002",
       "from_type": "pressure",
       "to_type": "state",
-      "polarity": "+",
+      "polarity": "-",
       "strength": "weak",
       "confidence": 2,
-      "description": "Sediment resuspension from dredging connects to Dissolved oxygen levels in stratified waters"
+      "description": "Dredging resuspends organic-rich sediment whose decomposition consumes oxygen: more resuspension, lower dissolved oxygen."
     },
     {
       "from_id": "A004",
