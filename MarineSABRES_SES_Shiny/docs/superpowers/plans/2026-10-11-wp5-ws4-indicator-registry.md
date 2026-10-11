@@ -46,6 +46,7 @@ These rulings settle points where the spec is silent or contradicts the code. Th
 3. **A registry entry referenced by a project is later removed or renamed.** Expected: drift reports status `missing`, the modal offers no "update" for it, and nothing crashes. (Task 5, test "missing registry ids are reported, not updated".)
 4. **The user picks a registry entry, then overwrites the unit by hand.** Expected: the hand value is kept and `Registry_Id` is still set; a later re-save does not revert it to the registry value. (Task 4, test "user edits after picking survive re-save".)
 5. **The registry file is missing or malformed at startup.** Expected: a warning, an empty picker (only "—"), saves still work and the indicator text fields still save. (Task 2, test "missing registry file degrades to empty picker".)
+6. **An auto-save backup with one element carrying an indicator and another without is recovered.** The backup omits NA keys. Expected: both elements load. Before this fix the strict `rbind` at `data_structure.R:882` silently dropped the whole category; this was verified on 2026-10-11 and was added to the plan in review. (Task 3, test "ragged list-of-lists rows … do not drop the category".)
 
 ---
 
@@ -96,7 +97,10 @@ pdftotext -layout -enc UTF-8 output, which matches the A_D5.2 audit citations).
 import hashlib, pathlib, subprocess, sys, tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-PDF = ROOT / "WP5" / "D5.2" / "MarineSABRES_D5.2_Final.pdf"
+# Source docs are untracked and absent from worktrees: pass --wp5-dir <main checkout>/WP5
+# (same convention as build_wp5_mechanisms_kb.py). Default: <app>/WP5.
+_WP5 = pathlib.Path(sys.argv[sys.argv.index("--wp5-dir") + 1]) if "--wp5-dir" in sys.argv else ROOT / "WP5"
+PDF = _WP5 / "D5.2" / "MarineSABRES_D5.2_Final.pdf"
 OUT = ROOT / "scripts" / "wp5_kb_sources" / "d5.2_v5_indicator_sources.md"
 PDF_SHA256 = ""  # pin on first run (printed); --accept-new-source rewrites it
 EXPECTED_LINES = 13426
@@ -141,7 +145,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run it and pin the hash**
 
-Run from the app dir: `micromamba run -n shiny python -I scripts/extract_wp5_indicator_sources.py`
+Run from the app dir: `micromamba run -n shiny python -I scripts/extract_wp5_indicator_sources.py --wp5-dir "C:/Users/arturas.baziukas/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny/WP5"` (the worktree has no `WP5/`; `pdftotext` is xpdf 4.00 at `C:/Program Files/Git/mingw64/bin/pdftotext.exe` — if it is not on PATH, run from Git Bash or substitute that absolute path in the `subprocess.run` call)
 Expected: `ok …d5.2_v5_indicator_sources.md sha256 <hex>`. Paste the printed hex into `PDF_SHA256`, re-run, and expect the same `ok` line. Check with `grep -c "^L1" scripts/wp5_kb_sources/d5.2_v5_indicator_sources.md` that the output is non-empty, and with `grep -n "37.77%" …` that the F_01 baseline row is present.
 
 - [ ] **Step 3: Write the failing data-invariant tests**
@@ -728,6 +732,20 @@ test_that("JSON normalisation does not add a second indicator column next to Ind
   nm <- names(out$data$isa_data$goods_benefits)
   expect_equal(sum(tolower(nm) == "indicator"), 1L)
 })
+
+test_that("ragged list-of-lists rows (NA fields omitted by toJSON) do not drop the category", {
+  # auto_save_module.R serialises without na = "null", so a row with an empty
+  # Indicator omits the key. Before WS-4 this made do.call(rbind, ...) error at
+  # data_structure.R:882 and the whole category became NULL (verified 2026-10-11).
+  df <- data.frame(ID = c("D1", "D2"), Name = c("a", "b"), Indicator = c("x", NA),
+                   stringsAsFactors = FALSE)
+  js <- jsonlite::toJSON(list(data = list(isa_data = list(drivers = df))),
+                         auto_unbox = TRUE, null = "null")          # no na = "null"
+  out <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = FALSE))
+  d <- out$data$isa_data$drivers
+  expect_equal(nrow(d), 2L)
+  expect_equal(indicator_col(d, "Indicator"), c("x", ""))
+})
 ```
 
 - [ ] **Step 2: Run to see it fail**
@@ -756,6 +774,20 @@ indicator_col <- function(df, name) {
 }
 ```
 
+`functions/data_structure.R` (~line 882, inside `normalize_json_project_data()`): replace the strict `do.call(rbind, lapply(el, function(x) as.data.frame(x, stringsAsFactors = FALSE)))` with a key-union bind, so rows with omitted NA fields still convert:
+
+```r
+          rows <- lapply(el, function(x) {
+            x[vapply(x, is.null, logical(1))] <- NA   # JSON null -> NA, keep the key
+            as.data.frame(x, stringsAsFactors = FALSE)
+          })
+          dplyr::bind_rows(rows)
+```
+
+(`dplyr` is already loaded by `global.R`; `bind_rows` fills missing columns with NA. Keep the surrounding `tryCatch`.)
+
+`modules/auto_save_module.R:708`: add `na = "null"` to the `jsonlite::toJSON(...)` call, matching the other writers (`local_storage_module.R:694,764`, `server/modals.R:127`, `persistent_storage.R:421`).
+
 `global.R`: add `source("functions/indicator_snapshot.R", local = FALSE)` after the registry line.
 `tests/run_json_loading_tests.R`: next to the existing WS-3a source lines, add `source(file.path(app_root, "functions", "indicator_registry.R"))` and the same for `indicator_snapshot.R`, using whatever root variable that file already uses.
 
@@ -767,7 +799,7 @@ Expected: every file `[ FAIL 0 | … ]`. Also run `"/c/Program Files/R/R-4.4.1/b
 - [ ] **Step 5: Commit**
 
 ```bash
-git -C /c/Users/arturas.baziukas/wt-ws4 add MarineSABRES_SES_Shiny/functions/indicator_snapshot.R MarineSABRES_SES_Shiny/functions/data_structure.R MarineSABRES_SES_Shiny/global.R MarineSABRES_SES_Shiny/tests/run_json_loading_tests.R MarineSABRES_SES_Shiny/tests/testthat/test-indicator-snapshot.R
+git -C /c/Users/arturas.baziukas/wt-ws4 add MarineSABRES_SES_Shiny/functions/indicator_snapshot.R MarineSABRES_SES_Shiny/functions/data_structure.R MarineSABRES_SES_Shiny/modules/auto_save_module.R MarineSABRES_SES_Shiny/global.R MarineSABRES_SES_Shiny/tests/run_json_loading_tests.R MarineSABRES_SES_Shiny/tests/testthat/test-indicator-snapshot.R
 git -C /c/Users/arturas.baziukas/wt-ws4 commit -m "feat(isa): element indicator columns survive save and load (WS-4)"
 ```
 
