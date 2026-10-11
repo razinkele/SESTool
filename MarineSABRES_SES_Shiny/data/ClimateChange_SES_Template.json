@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: arctic_sea_ice",
     "applicable_regions": [
       "arctic"
@@ -420,10 +420,10 @@
       "to_id": "MPF002",
       "from_type": "pressure",
       "to_type": "state",
-      "polarity": "+",
+      "polarity": "-",
       "strength": "weak",
       "confidence": 2,
-      "description": "Oil spill risk in ice-covered waters connects to Ringed seal and bearded seal abundance"
+      "description": "Oil spills in ice-covered waters foul seals and their prey and are very hard to clean up under ice: higher spill risk, fewer ringed and bearded seals."
     },
     {
       "from_type": "driver",

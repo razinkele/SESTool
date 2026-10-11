@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.1] - 2026-10-11
+
+Patch release: placeholder translations (PR #93) and template link signs (PR #94).
+
+### Fixed (placeholder translations across the app)
+
+- **About 410 keys showed literal placeholders such as "[DE] Scenario Confirm Delete Message" in Spanish, French, German, Lithuanian, Portuguese and Italian**: the stakeholder (PIMS) module, the Scenario Builder, network-analysis tools, ISA data entry help, the entry point and the template pages. The completeness check passed them because every slot was filled. All are now translated; many English values were key-derived phrases ("Scenario Scenarios") and were rewritten from the original text in git history or from how the key is used. Half-English Greek and Norwegian values in the same keys were fixed too.
+- 37 sentences still in English in other languages (mostly Greek BOT help, Norwegian response measures) were translated; the French-manual tooltips' English slot (which held French) was corrected.
+- Four Scenario Builder messages now show their link count (`%d`); the code passed a count to `sprintf()` but the text had no placeholder.
+- New `test-i18n-placeholders.R` fails on any `[XX] ` value; the English-fallback check now requires zero long untranslated sentences everywhere. Help paragraphs that never had original text (ISA exercise help, template guide, PIMS help) were written fresh and should get a domain/native-speaker review.
+
+### Fixed (template link signs — polarity review 2026-10-11)
+
+- A review of all 305 template links found five clear sign errors, four of them on links that still had placeholder "connects to" descriptions. Corrected (user approved): OffshoreWind pile-driving noise → sandeel abundance (+ → −); ClimateChange oil-spill risk → seal abundance (+ → −); Pollution heavy metals → dissolved oxygen and dredging resuspension → dissolved oxygen (+ → −); Fisheries cod biomass → herring recruitment (− → +, as its own description says: fewer cod → more sprat → less herring). The four placeholder descriptions now state the direction. Templates bumped (OffshoreWind/ClimateChange 2.1, Pollution/Fisheries 2.2).
+- **Effect on Decision Lens:** with the cod → herring sign corrected, every Fisheries (Baltic) loop is balancing, so the template has no reinforcing growth engine and **Limits to Growth no longer appears** — the result shown in 1.21.1/1.22.0 came only from that sign error. The cod quota still sits in balancing management loops.
+- Medium/low-confidence items and seven links whose descriptions say they barely exist were left for domain review. Noted for follow-up: DAPSIWRM_FRAMEWORK_RULES.md calls the main D→A→P→C→ES→GB→D cycle "reinforcing" while Rule 3 makes P→C "−"; both cannot hold unless State nodes are worded as harms.
+
+## [1.22.0] - 2026-10-11
+
+Minor release: the review decisions signed off on 2026-10-11 (PRs #87-#91). Decision Lens output changes (MICMAC thresholds, stricter archetypes).
+
 ### Fixed (WP5 mechanism pane translations — review 2026-10-07 N48)
 
 - **The "Linked WP5 mechanisms" pane on Responses was English in every language:** 25 interface strings (pane title, field names, buttons, filter, the Arctic DA name, error and version-migration notices) carried the English text in all 9 slots, which the completeness check cannot see. They are now translated in all 8 other languages; the translations are first-pass and **flagged for review by native speakers / the PI**. The mechanism content itself (`data/ses_knowledge_db_wp5_mechanisms.json`) is unchanged.

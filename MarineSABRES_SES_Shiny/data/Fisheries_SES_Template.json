@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.1",
+    "version": "2.2",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_offshore",
     "applicable_regions": [
       "baltic"
@@ -366,7 +366,7 @@
       "to_id": "MPF002",
       "from_type": "state",
       "to_type": "state",
-      "polarity": "-",
+      "polarity": "+",
       "strength": "medium",
       "confidence": 4,
       "description": "Cod collapse released sprat from predation pressure, causing sprat to outcompete herring larvae for zooplankton prey, depressing herring recruitment through competitive exclusion"

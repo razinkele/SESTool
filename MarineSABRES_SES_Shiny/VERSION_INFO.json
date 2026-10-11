@@ -1,6 +1,6 @@
 {
-  "version": "1.21.1",
-  "version_name": "Leverage page heading; template Responses close feedback loops",
+  "version": "1.22.1",
+  "version_name": "Placeholder translations fixed; template link signs corrected",
   "release_date": "2026-10-11",
   "release_type": "patch",
   "status": "stable",
@@ -14,8 +14,8 @@
   "features": [],
   "fixes": {
     "high": [
-      "Leverage Point Analysis heading showed a raw translation key; new test guards *_key arguments - PR #84.",
-      "Templates: Goods & Benefits -> Response links so Responses close balancing loops; Decision Lens finds Limits to Growth in the Fisheries (Baltic) template - PR #85."
+      "About 410 keys showed literal '[XX] English' placeholders in es/fr/de/lt/pt/it (PIMS, Scenario Builder, analysis tools, ISA help, entry point, templates); translated, plus 37 English fallbacks; CI guards against both - PR #93.",
+      "Five template link signs corrected after a polarity review; Fisheries (Baltic) no longer shows Limits to Growth, which came from a sign error - PR #94."
     ]
   },
   "metrics": {
@@ -33,8 +33,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.21.0",
+  "previous_version": "1.22.0",
   "build_info": {
-    "build_date": "2026-10-11 12:18:38.735121"
+    "build_date": "2026-10-11 16:51:13.416792"
   }
 }

@@ -108,7 +108,7 @@
       "pt": "Analise padrões temporais e tendências nos indicadores do seu sistema socioecológico.",
       "it": "Analizza i modelli temporali e le tendenze negli indicatori del tuo sistema socio-ecologico.",
       "no": "Analyser tidsmønstre og trender i dine sosial-økologiske systemindikatorer.",
-      "el": "Analyze temporal patterns and trends in your social-ecological system indicators."
+      "el": "Αναλύστε χρονικά μοτίβα και τάσεις στους δείκτες του κοινωνικο-οικολογικού σας συστήματος."
     },
     "modules.analysis.bot.select_element": {
       "en": "Select Element:",
@@ -306,7 +306,7 @@
       "pt": "Ative 'Detectar Padrões' para analisar dinâmicas temporais.",
       "it": "Abilita 'Rileva Modelli' per analizzare le dinamiche temporali.",
       "no": "Aktiver 'Oppdage Mønstre' for å analysere tidsdynamikker.",
-      "el": "Enable 'Detect Patterns' to analyze temporal dynamics."
+      "el": "Ενεργοποιήστε την επιλογή 'Ανίχνευση μοτίβων' για να αναλύσετε τη χρονική δυναμική."
     },
     "modules.analysis.bot.download_data": {
       "en": "Download Data",
@@ -350,7 +350,7 @@
       "pt": "Carregue ou crie múltiplas séries temporais para comparar diferentes cenários.",
       "it": "Carica o crea più serie temporali per confrontare diversi scenari.",
       "no": "Last opp eller lag flere tidsserier for å sammenligne ulike scenarier.",
-      "el": "Upload or create multiple time series to compare different scenarios."
+      "el": "Μεταφορτώστε ή δημιουργήστε πολλαπλές χρονοσειρές για να συγκρίνετε διαφορετικά σενάρια."
     },
     "modules.analysis.bot.coming_soon": {
       "en": "Feature coming soon...",
@@ -394,7 +394,7 @@
       "pt": "A análise de Comportamento ao Longo do Tempo (BOT) examina como os principais indicadores do sistema mudam ao longo do tempo, revelando dinâmicas importantes como tendências, oscilações e mudanças de regime.",
       "it": "L'analisi del Comportamento nel Tempo (BOT) esamina come gli indicatori chiave del sistema cambiano nel tempo, rivelando dinamiche importanti come tendenze, oscillazioni e cambiamenti di regime.",
       "no": "Atferd Over Tid (BOT)-analyse undersøker hvordan viktige systemindikatorer endrer seg over tid, og avslører viktige dynamikker som trender, svingninger og regimeskift.",
-      "el": "Behaviour Over Time (BOT) analysis examines how key system indicators change over time, revealing important dynamics such as trends, oscillations, and regime shifts."
+      "el": "Η ανάλυση Συμπεριφοράς στον Χρόνο (BOT) εξετάζει πώς μεταβάλλονται οι βασικοί δείκτες του συστήματος με την πάροδο του χρόνου, αποκαλύπτοντας σημαντικές δυναμικές όπως τάσεις, ταλαντώσεις και μεταβολές καθεστώτος."
     },
     "modules.analysis.bot.help_features": {
       "en": "Features",
@@ -427,7 +427,7 @@
       "pt": "Ampliar, panoramizar e explorar padrões temporais com dygraphs",
       "it": "Zoom, panoramica ed esplorazione di modelli temporali con dygraphs",
       "no": "Zoom, panorer og utforsk tidsmønstre med dygraphs",
-      "el": "Zoom, pan, and explore temporal patterns with dygraphs"
+      "el": "Μεγεθύνετε, μετακινηθείτε και εξερευνήστε χρονικά μοτίβα με τα dygraphs"
     },
     "modules.analysis.bot.help_feature_trend": {
       "en": "Trend Analysis:",
@@ -449,7 +449,7 @@
       "pt": "Detectar e visualizar automaticamente tendências lineares",
       "it": "Rileva e visualizza automaticamente le tendenze lineari",
       "no": "Automatisk oppdage og visualisere lineære trender",
-      "el": "Automatically detect and visualize linear trends"
+      "el": "Αυτόματη ανίχνευση και οπτικοποίηση γραμμικών τάσεων"
     },
     "modules.analysis.bot.help_feature_moving_avg": {
       "en": "Moving Averages:",
@@ -471,7 +471,7 @@
       "pt": "Suavizar flutuações de curto prazo",
       "it": "Smussare le fluttuazioni a breve termine",
       "no": "Jevne ut kortsiktige svingninger",
-      "el": "Smooth out short-term fluctuations"
+      "el": "Εξομάλυνση βραχυπρόθεσμων διακυμάνσεων"
     },
     "modules.analysis.bot.help_feature_pattern": {
       "en": "Pattern Detection:",
@@ -493,7 +493,7 @@
       "pt": "Identificar tendências significativas, volatilidade e mudanças de fase",
       "it": "Identificare tendenze significative, volatilità e cambiamenti di fase",
       "no": "Identifisere signifikante trender, volatilitet og faseendringer",
-      "el": "Identify significant trends, volatility, and phase changes"
+      "el": "Εντοπισμός σημαντικών τάσεων, μεταβλητότητας και αλλαγών φάσης"
     },
     "modules.analysis.bot.help_feature_sources": {
       "en": "Multiple Data Sources:",
@@ -515,7 +515,7 @@
       "pt": "Entrada manual, upload de CSV ou importação de dados ISA",
       "it": "Inserimento manuale, caricamento CSV o importazione dati ISA",
       "no": "Manuell innlegging, CSV-opplasting eller ISA-dataimport",
-      "el": "Manual entry, CSV upload, or ISA data import"
+      "el": "Χειροκίνητη εισαγωγή, μεταφόρτωση CSV ή εισαγωγή δεδομένων ISA"
     },
     "modules.analysis.bot.help_interpreting": {
       "en": "Interpreting Patterns",
@@ -548,7 +548,7 @@
       "pt": "A variável do sistema está crescendo ao longo do tempo",
       "it": "La variabile del sistema sta crescendo nel tempo",
       "no": "Systemvariabelen vokser over tid",
-      "el": "System variable is growing over time"
+      "el": "Η μεταβλητή του συστήματος αυξάνεται με την πάροδο του χρόνου"
     },
     "modules.analysis.bot.help_decreasing": {
       "en": "Decreasing Trend:",
@@ -592,7 +592,7 @@
       "pt": "Grandes flutuações sugerem instabilidade ou choques externos",
       "it": "Grandi fluttuazioni suggeriscono instabilità o shock esterni",
       "no": "Store svingninger antyder ustabilitet eller eksterne sjokk",
-      "el": "Large fluctuations suggest instability or external shocks"
+      "el": "Οι μεγάλες διακυμάνσεις υποδηλώνουν αστάθεια ή εξωτερικούς κλυδωνισμούς"
     },
     "modules.analysis.bot.help_phases": {
       "en": "Growth/Decline Phases:",
@@ -614,7 +614,7 @@
       "pt": "Períodos de aumento ou diminuição constante",
       "it": "Periodi di aumento o diminuzione costante",
       "no": "Perioder med jevn økning eller nedgang",
-      "el": "Periods of consistent increase or decrease"
+      "el": "Περίοδοι σταθερής αύξησης ή μείωσης"
     },
     "modules.analysis.bot.help_best_practices": {
       "en": "Best Practices",
@@ -636,7 +636,7 @@
       "pt": "Selecione períodos de tempo significativos que capturem as dinâmicas do sistema",
       "it": "Seleziona periodi di tempo significativi che catturino le dinamiche del sistema",
       "no": "Velg meningsfulle tidsperioder som fanger systemdynamikker",
-      "el": "Select meaningful time periods that capture system dynamics"
+      "el": "Επιλέξτε ουσιαστικές χρονικές περιόδους που αποτυπώνουν τη δυναμική του συστήματος"
     },
     "modules.analysis.bot.help_practice_2": {
       "en": "Use multiple data points (5+ recommended) for reliable trend detection",
@@ -647,7 +647,7 @@
       "pt": "Use múltiplos pontos de dados (5+ recomendados) para detecção confiável de tendências",
       "it": "Usa più punti dati (5+ consigliati) per un rilevamento affidabile delle tendenze",
       "no": "Bruk flere datapunkter (5+ anbefalt) for pålitelig trenddeteksjon",
-      "el": "Use multiple data points (5+ recommended) for reliable trend detection"
+      "el": "Χρησιμοποιήστε πολλαπλά σημεία δεδομένων (συνιστώνται 5+) για αξιόπιστη ανίχνευση τάσεων"
     },
     "modules.analysis.bot.help_practice_3": {
       "en": "Compare BOT graphs across different elements to understand relationships",
@@ -658,7 +658,7 @@
       "pt": "Compare gráficos BOT entre diferentes elementos para entender relações",
       "it": "Confronta i grafici BOT tra diversi elementi per comprendere le relazioni",
       "no": "Sammenlign BOT-grafer på tvers av ulike elementer for å forstå sammenhenger",
-      "el": "Compare BOT graphs across different elements to understand relationships"
+      "el": "Συγκρίνετε γραφήματα BOT μεταξύ διαφορετικών στοιχείων για να κατανοήσετε τις σχέσεις τους"
     },
     "modules.analysis.bot.help_practice_4": {
       "en": "Look for tipping points or regime shifts in the data",
@@ -669,7 +669,7 @@
       "pt": "Procure pontos de inflexão ou mudanças de regime nos dados",
       "it": "Cerca punti di svolta o cambiamenti di regime nei dati",
       "no": "Se etter vippepunkter eller regimeskift i dataene",
-      "el": "Look for tipping points or regime shifts in the data"
+      "el": "Αναζητήστε σημεία καμπής ή μεταβολές καθεστώτος στα δεδομένα"
     },
     "modules.analysis.bot.help_practice_5": {
       "en": "Validate patterns with stakeholder knowledge",
@@ -680,7 +680,7 @@
       "pt": "Valide os padrões com o conhecimento das partes interessadas",
       "it": "Valida i modelli con la conoscenza degli stakeholder",
       "no": "Valider mønstre med interessentenes kunnskap",
-      "el": "Validate patterns with stakeholder knowledge"
+      "el": "Επικυρώστε τα μοτίβα με τη γνώση των ενδιαφερόμενων μερών"
     },
     "modules.analysis.bot.stats.num_observations": {
       "en": "Number of observations",
