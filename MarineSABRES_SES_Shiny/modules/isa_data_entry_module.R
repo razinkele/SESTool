@@ -430,6 +430,24 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # project) the module state is cleared first, otherwise apply_saved_isa()
     # only overwrites non-empty categories and the previous project's elements
     # leak into the new one (review 2026-10-07 N2).
+    # Warn (never repair) when matrices do not line up with the element lists:
+    # the CLD reads cells by position, so links would attach to the wrong
+    # nodes. This observer fires on every project write, so only warn when the
+    # set of findings changes.
+    alignment_state <- new.env(parent = emptyenv())
+    alignment_state$last <- character(0)
+    warn_if_matrices_misaligned <- function() {
+      findings <- validate_matrix_alignment(isolate(reactiveValuesToList(isa_data)))
+      changed <- !identical(findings, alignment_state$last)
+      alignment_state$last <- findings
+      if (length(findings) > 0 && changed) {
+        debug_log(paste("Matrix alignment:", paste(findings, collapse = "; ")), "ISA LOAD WARN")
+        fmt <- i18n$t("modules.isa.data_entry.common.matrices_misaligned_on_load")
+        msg <- if (grepl("%d", fmt, fixed = TRUE)) sprintf(fmt, length(findings)) else fmt
+        showNotification(msg, type = "warning", duration = 12, session = session)
+      }
+    }
+
     last_loaded_project_id <- NULL
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
@@ -446,6 +464,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         debug_log("Loading saved ISA data on project change", "ISA Module")
         apply_saved_isa(project$data$isa_data)
         data_initialized(TRUE)
+        warn_if_matrices_misaligned()
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
       }

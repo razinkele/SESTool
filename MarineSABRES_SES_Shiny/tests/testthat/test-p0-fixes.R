@@ -18,8 +18,7 @@ test_that("setup: required functions exist", {
   expect_true(exists("create_isa_modifier", mode = "function"))
 
   # Cross-reference validation
-  expect_true(exists("validate_cross_references", mode = "function"))
-  expect_true(exists("repair_adjacency_matrices", mode = "function"))
+  expect_true(exists("validate_matrix_alignment", mode = "function"))
 })
 
 # ============================================================================
@@ -154,107 +153,67 @@ test_that("create_isa_modifier rejects invalid element types", {
 # 2. Cross-Reference Validation Tests
 # ============================================================================
 
-context("P0 Fix 2: Cross-Reference Validation")
+context("P0 Fix 2: Matrix alignment validation")
 
-test_that("validate_cross_references returns empty for valid data", {
-  # Create valid ISA data structure
-  isa_data <- list(
-    drivers = data.frame(id = c("D001", "D002"), name = c("Driver 1", "Driver 2")),
-    activities = data.frame(id = c("A001", "A002"), name = c("Activity 1", "Activity 2")),
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix("", nrow = 2, ncol = 2, dimnames = list(c("D001", "D002"), c("A001", "A002")))
-    )
+# validate_matrix_alignment() replaced the old cross-reference validator and
+# its repair function (2026-10-11). The CLD reads matrix cells by
+# position, so what matters is that each matrix has one row/column per element,
+# in element order; row/column names may be element names or IDs.
+align_isa <- function(drivers, d_a) {
+  list(
+    drivers = drivers,
+    activities = data.frame(ID = c("A001", "A002"), Name = c("Activity 1", "Activity 2")),
+    pressures = data.frame(ID = character(0), Name = character(0)),
+    marine_processes = data.frame(ID = character(0), Name = character(0)),
+    ecosystem_services = data.frame(ID = character(0), Name = character(0)),
+    goods_benefits = data.frame(ID = character(0), Name = character(0)),
+    responses = data.frame(ID = character(0), Name = character(0)),
+    adjacency_matrices = list(d_a = d_a)
   )
+}
+two_drivers <- function() data.frame(ID = c("D001", "D002"), Name = c("Driver 1", "Driver 2"))
 
-  errors <- validate_cross_references(isa_data)
-  expect_equal(length(errors), 0)
+test_that("validate_matrix_alignment returns empty when rows/columns match by ID", {
+  isa <- align_isa(two_drivers(),
+    matrix("", 2, 2, dimnames = list(c("D001", "D002"), c("A001", "A002"))))
+  expect_equal(validate_matrix_alignment(isa), character(0))
 })
 
-test_that("validate_cross_references detects orphaned row references", {
-  isa_data <- list(
-    drivers = data.frame(id = c("D001"), name = c("Driver 1")),  # Only D001 exists
-    activities = data.frame(id = c("A001", "A002"), name = c("Activity 1", "Activity 2")),
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix("", nrow = 2, ncol = 2, dimnames = list(c("D001", "D002"), c("A001", "A002")))  # D002 is orphaned
-    )
-  )
-
-  errors <- validate_cross_references(isa_data)
-  expect_true(length(errors) > 0)
-  expect_true(any(grepl("orphaned", errors, ignore.case = TRUE)))
-  expect_true(any(grepl("D002", errors)))
+test_that("validate_matrix_alignment returns empty when rows/columns match by name", {
+  isa <- align_isa(two_drivers(),
+    matrix("", 2, 2, dimnames = list(c("Driver 1", "Driver 2"), c("Activity 1", "Activity 2"))))
+  expect_equal(validate_matrix_alignment(isa), character(0))
 })
 
-test_that("validate_cross_references detects orphaned column references", {
-  isa_data <- list(
-    drivers = data.frame(id = c("D001", "D002"), name = c("Driver 1", "Driver 2")),
-    activities = data.frame(id = c("A001"), name = c("Activity 1")),  # Only A001 exists
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix("", nrow = 2, ncol = 2, dimnames = list(c("D001", "D002"), c("A001", "A002")))  # A002 is orphaned
-    )
-  )
-
-  errors <- validate_cross_references(isa_data)
-  expect_true(length(errors) > 0)
-  expect_true(any(grepl("A002", errors)))
+test_that("validate_matrix_alignment flags a stale row for a deleted element", {
+  isa <- align_isa(data.frame(ID = "D002", Name = "Driver 2"),
+    matrix("", 2, 2, dimnames = list(c("Driver 1", "Driver 2"), c("Activity 1", "Activity 2"))))
+  f <- validate_matrix_alignment(isa)
+  expect_length(f, 1)
+  expect_true(grepl("d_a: 2 rows for 1 drivers", f, fixed = TRUE))
 })
 
-test_that("repair_adjacency_matrices removes orphaned references", {
-  isa_data <- list(
-    drivers = data.frame(id = c("D001"), name = c("Driver 1")),
-    activities = data.frame(id = c("A001"), name = c("Activity 1")),
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix(c("+", "-", "", ""), nrow = 2, ncol = 2,
-                   dimnames = list(c("D001", "D002"), c("A001", "A002")))  # D002, A002 orphaned
-    )
-  )
-
-  # Verify orphans exist before repair
-  errors_before <- validate_cross_references(isa_data)
-  expect_true(length(errors_before) > 0)
-
-  # Repair
-  repaired_data <- repair_adjacency_matrices(isa_data)
-
-  # Verify no orphans after repair
-  errors_after <- validate_cross_references(repaired_data)
-  expect_equal(length(errors_after), 0)
-
-  # Verify matrix was reduced correctly
-  expect_equal(nrow(repaired_data$adjacency_matrices$d_a), 1)
-  expect_equal(ncol(repaired_data$adjacency_matrices$d_a), 1)
-  expect_equal(rownames(repaired_data$adjacency_matrices$d_a), "D001")
-  expect_equal(colnames(repaired_data$adjacency_matrices$d_a), "A001")
+test_that("validate_matrix_alignment flags rows in a different order than the elements", {
+  isa <- align_isa(two_drivers(),
+    matrix("", 2, 2, dimnames = list(c("Driver 2", "Driver 1"), c("Activity 1", "Activity 2"))))
+  f <- validate_matrix_alignment(isa)
+  expect_length(f, 1)
+  expect_true(grepl("rows out of order or stale at position(s) 1, 2", f, fixed = TRUE))
 })
 
-test_that("validate_cross_references handles NULL input gracefully", {
-  errors <- validate_cross_references(NULL)
-  expect_equal(length(errors), 0)
+test_that("validate_matrix_alignment handles NULL and missing matrices", {
+  expect_equal(validate_matrix_alignment(NULL), character(0))
+  expect_equal(validate_matrix_alignment(list(drivers = two_drivers())), character(0))
 })
 
-test_that("repair_adjacency_matrices handles NULL input gracefully", {
-  result <- repair_adjacency_matrices(NULL)
-  expect_null(result)
+test_that("validate_matrix_alignment reports nothing for the shipped templates", {
+  root <- normalizePath(file.path(getwd(), "../.."))
+  for (f in list.files(file.path(root, "data"), "_SES_Template[.]json$", full.names = TRUE)) {
+    tpl <- load_template_from_json(f, use_cache = FALSE)
+    isa <- tpl[c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services",
+                 "goods_benefits", "responses", "adjacency_matrices")]
+    expect_equal(validate_matrix_alignment(isa), character(0), info = basename(f))
+  }
 })
 
 # ============================================================================
@@ -401,7 +360,7 @@ test_that("Cross-reference validation integrates with validation pipeline", {
 
   # This should pass validation
   errors <- validate_isa_structure(isa_data)
-  cross_ref_errors <- validate_cross_references(isa_data)
+  cross_ref_errors <- validate_matrix_alignment(isa_data)
 
   expect_equal(length(errors), 0)
   expect_equal(length(cross_ref_errors), 0)

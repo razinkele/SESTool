@@ -253,7 +253,7 @@ calculate_micmac <- function(nodes, edges) {
         node_id = nodes$id,
         influence = 0,
         exposure = 0,
-        quadrant = "Autonomous"
+        quadrant = "Undifferentiated"
       ))
     }
     if (!"id" %in% names(nodes)) {
@@ -282,16 +282,27 @@ calculate_micmac <- function(nodes, edges) {
       exposure = exposure_direct + exposure_indirect
     )
 
-    # Classify nodes into quadrants
-    median_influence <- median(micmac$influence)
-    median_exposure <- median(micmac$exposure)
+    # Classify nodes into quadrants against the MEAN (classic MICMAC axes).
+    # The median with a strict '>' put every node in "Autonomous" whenever
+    # values tied at the median, e.g. a plain D->A->P->MPF->ES->GB->R->D cycle
+    # (review 2026-10-07 N37). When every node has the same influence AND the
+    # same exposure there is no structure to rank, so say so instead of
+    # calling everything low priority.
+    mean_influence <- mean(micmac$influence)
+    mean_exposure <- mean(micmac$exposure)
+    undifferentiated <- length(unique(micmac$influence)) == 1 &&
+      length(unique(micmac$exposure)) == 1
 
-    micmac$quadrant <- case_when(
-      micmac$influence > median_influence & micmac$exposure > median_exposure ~ "Relay",
-      micmac$influence > median_influence & micmac$exposure <= median_exposure ~ "Influential",
-      micmac$influence <= median_influence & micmac$exposure > median_exposure ~ "Dependent",
-      TRUE ~ "Autonomous"
-    )
+    micmac$quadrant <- if (undifferentiated) {
+      rep("Undifferentiated", nrow(micmac))
+    } else {
+      case_when(
+        micmac$influence > mean_influence & micmac$exposure > mean_exposure ~ "Relay",
+        micmac$influence > mean_influence & micmac$exposure <= mean_exposure ~ "Influential",
+        micmac$influence <= mean_influence & micmac$exposure > mean_exposure ~ "Dependent",
+        TRUE ~ "Autonomous"
+      )
+    }
 
     return(micmac)
 

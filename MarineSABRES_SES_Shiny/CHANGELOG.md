@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (WP5 mechanism pane translations — review 2026-10-07 N48)
+
+- **The "Linked WP5 mechanisms" pane on Responses was English in every language:** 25 interface strings (pane title, field names, buttons, filter, the Arctic DA name, error and version-migration notices) carried the English text in all 9 slots, which the completeness check cannot see. They are now translated in all 8 other languages; the translations are first-pass and **flagged for review by native speakers / the PI**. The mechanism content itself (`data/ses_knowledge_db_wp5_mechanisms.json`) is unchanged.
+- **New check** `test-i18n-english-fallback.R`: no English sentences (≥ 30 characters) in other-language slots of the WP5 file, and a ratchet so the 42 remaining elsewhere (mostly analysis_bot, response_measures, scenario_builder) cannot grow.
+
+### Added (matrix alignment check on load — review 2026-10-07 N68 follow-up; signed off 2026-10-11)
+
+- **Loading a project now warns when a connection matrix does not line up with the element list.** The CLD reads matrix cells by position, so a row left over from a deleted element (or rows in a different order) silently attaches links to the wrong elements; the loader does not realign them. The new `validate_matrix_alignment()` checks row/column counts and, where present, row/column names (element names or IDs) position by position. The ISA module shows one translated warning when the findings change and logs the details. Nothing is repaired automatically.
+- The unused `validate_cross_references()` and `repair_adjacency_matrices()` were removed: they compared matrix names against a lowercase `id` column that canonical element tables do not have, so they would have flagged every template (22–26 false findings each).
+
+### Fixed (small gaps)
+
+- **Dashboard ecosystem-type dropdown is translated** (17 labels × 9 languages, same pattern as the regional-sea labels). Stored values are unchanged, so existing projects keep their selection.
+- **P3 tests no longer skip:** the event-bus tests now load `server/event_bus_setup.R` and run. Four tests for the removed lazy-loading registry and ML feature cache were deleted; those functions no longer exist, so the tests could only skip.
+- **CLAUDE.md** pointed to a non-existent `scripts/translation_workflow.R`; it now names the audit CI actually runs (`scripts/_i18n_audit.py`).
+
+### Changed (Decision Lens rules — review 2026-10-07 N35, N37, N52; signed off 2026-10-11)
+
+- **MICMAC quadrants are assigned against the mean** (classic MICMAC) instead of the median with a strict `>`, which labelled every node "Autonomous / lower priority" whenever values tied (e.g. a plain DAPSIWRM cycle). When every element has the same influence and dependence, they are shown as **Undifferentiated** with a neutral note (new label and narrative × 9 languages); a network with no links is also Undifferentiated.
+- **Limits to Growth needs a balancing loop through the ecosystem** (a Marine Process or Ecosystem Service node); policy-only loops such as Response ↔ Response no longer qualify.
+- **Tragedy of the Commons is reported once per commons**: an Ecosystem Service whose loops overlap an already reported Marine Process commons is not listed again. On the shipped templates this removes 3 duplicate Commons records in Caribbean (12 → 9 archetypes); Limits to Growth results, including Fisheries, are unchanged.
+
 ### Fixed (transition rules and P→MPF default — review 2026-10-07 N26, N61, N62)
 
 - **New Pressure → Marine Process links now default to `-`** (N26). Standard Entry seeded them `+`, contradicting the rule table and framework Rule 3. Every seeding path (the Standard Entry save, the Responses save, Excel and project recovery) now takes its default from `DAPSIWRM_ADJACENCY_RULES` via `default_polarity_for_matrix()`. Only new cells are affected. A rebuild no longer rewrites the sign of an edge that already exists, even when its user-edited flag is missing (old saves), so existing projects and templates keep their polarity. P→MPF is the only forward default that changed. D→A, A→P, MPF→ES, ES→GB, GB→D and GB→R stay `+`; R→D, R→A and R→P stay `-`.

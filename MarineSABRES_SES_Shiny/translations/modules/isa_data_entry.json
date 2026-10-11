@@ -4949,6 +4949,17 @@
       "it": "Nessun dato disponibile per questa matrice.",
       "no": "Ingen data tilgjengelig for denne matrisen.",
       "el": "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτόν τον πίνακα."
+    },
+    "modules.isa.data_entry.common.matrices_misaligned_on_load": {
+      "en": "%d connection matrix problem(s) found: a matrix does not match the element list (e.g. a row left over from a deleted element). Some links may appear on the wrong elements — please check the connections. Nothing was changed.",
+      "es": "Se encontraron %d problema(s) en las matrices de conexión: una matriz no coincide con la lista de elementos (p. ej., una fila de un elemento eliminado). Algunas conexiones pueden aparecer en elementos incorrectos; revise las conexiones. No se ha modificado nada.",
+      "fr": "%d problème(s) détecté(s) dans les matrices de connexion : une matrice ne correspond pas à la liste des éléments (p. ex. une ligne restante d'un élément supprimé). Certains liens peuvent apparaître sur les mauvais éléments — veuillez vérifier les connexions. Rien n'a été modifié.",
+      "de": "%d Problem(e) in den Verbindungsmatrizen gefunden: Eine Matrix passt nicht zur Elementliste (z. B. eine verbliebene Zeile eines gelöschten Elements). Einige Verbindungen können an falschen Elementen erscheinen — bitte prüfen Sie die Verbindungen. Es wurde nichts geändert.",
+      "lt": "Rasta ryšių matricų problemų: %d. Matrica neatitinka elementų sąrašo (pvz., liko ištrinto elemento eilutė). Kai kurie ryšiai gali būti rodomi prie netinkamų elementų — patikrinkite ryšius. Niekas nepakeista.",
+      "pt": "Foram encontrados %d problema(s) nas matrizes de ligação: uma matriz não corresponde à lista de elementos (p. ex., uma linha de um elemento eliminado). Algumas ligações podem aparecer nos elementos errados — verifique as ligações. Nada foi alterado.",
+      "it": "Trovati %d problemi nelle matrici di connessione: una matrice non corrisponde all'elenco degli elementi (ad es. una riga rimasta da un elemento eliminato). Alcuni collegamenti potrebbero comparire sugli elementi sbagliati: controlla le connessioni. Non è stato modificato nulla.",
+      "no": "Fant %d problem(er) i koblingsmatrisene: en matrise samsvarer ikke med elementlisten (f.eks. en rad igjen fra et slettet element). Noen koblinger kan vises på feil elementer — kontroller koblingene. Ingenting ble endret.",
+      "el": "Βρέθηκαν %d πρόβλημα(τα) στους πίνακες συνδέσεων: ένας πίνακας δεν αντιστοιχεί στη λίστα στοιχείων (π.χ. μια γραμμή από διαγραμμένο στοιχείο). Ορισμένες συνδέσεις μπορεί να εμφανίζονται σε λάθος στοιχεία — ελέγξτε τις συνδέσεις. Δεν άλλαξε τίποτα."
     }
   }
 }
