@@ -1137,6 +1137,24 @@ migrate_legacy_scenarios <- function(project) {
   project
 }
 
+#' Raise project$min_app_version to `version` if it is higher (never lowers)
+#'
+#' Used by WP5 features that add optional project blocks, so an older app
+#' version shows the downgrade warning in server/project_io.R. (WP5 spec WS-0)
+#' @param project Project list
+#' @param version Character "major.minor.patch"
+#' @return Project list
+stamp_min_app_version <- function(project, version) {
+  valid <- function(v) is.character(v) && length(v) == 1 && grepl("^[0-9]+(\\.[0-9]+){1,3}$", v)
+  if (!valid(version)) stop("stamp_min_app_version: invalid version '", version, "'")
+  if (!is.list(project)) return(project)
+  current <- project$min_app_version
+  if (!valid(current) || utils::compareVersion(version, current) > 0) {
+    project$min_app_version <- version
+  }
+  project
+}
+
 #' Normalize and reconcile a loaded project (Task B2 — load-path hardening)
 #'
 #' A single pure helper that every load path (rds / json / autosave) can call

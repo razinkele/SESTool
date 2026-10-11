@@ -57,3 +57,17 @@ test_that("normalize_and_reconcile_project applies the migration", {
   expect_null(out$data$scenarios)
   expect_equal(vapply(out$data$analysis$scenarios, `[[`, "", "id"), "legacy1")
 })
+
+test_that("stamp_min_app_version only ever raises the version", {
+  p <- list(min_app_version = "1.12.0")
+  expect_equal(stamp_min_app_version(p, "1.22.0")$min_app_version, "1.22.0")
+  expect_equal(stamp_min_app_version(list(min_app_version = "1.24.0"), "1.22.0")$min_app_version, "1.24.0")
+  expect_equal(stamp_min_app_version(list(), "1.22.0")$min_app_version, "1.22.0")
+  expect_equal(stamp_min_app_version(list(min_app_version = "garbage"), "1.22.0")$min_app_version, "1.22.0")
+  expect_equal(stamp_min_app_version(list(min_app_version = "1.22.0"), "1.22.0")$min_app_version, "1.22.0")
+})
+
+test_that("stamp_min_app_version rejects an invalid target version", {
+  expect_error(stamp_min_app_version(list(), "not-a-version"), "invalid version")
+  expect_identical(stamp_min_app_version("x", "1.22.0"), "x")
+})
