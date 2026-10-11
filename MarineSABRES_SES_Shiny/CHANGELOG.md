@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (WP5 foundation — spec 2026-10-11 WS-0/WS-1)
+- WP5 shared vocabulary: D5.2 criteria (EE/EC/EQ/PI/FF with PO/FI aliases), ordinal impact rubric, time horizons, EBM policy-instrument and management-measure typologies, 11 tenets, NPG governance dimensions, D5.3 graph-edit operations (`constants.R`, `functions/wp5_vocabulary.R`, `translations/modules/wp5_vocabulary.json`, 9 languages).
+- `data/wp5_intervention_ops.json`: D5.3 intervention typology → SES-graph change operations with per-row provenance; EBM-code mapping marked provisional pending WP5 confirmation.
+- `stamp_min_app_version()` helper (never lowers the stamped version).
+
+### Fixed
+- Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
+
 ## [1.21.1] - 2026-10-11
 
 Patch release: two bugs reported on the live site (PRs #84, #85). Deployed to laguna 2026-10-11.
