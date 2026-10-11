@@ -1,8 +1,8 @@
 {
-  "version": "1.21.0",
-  "version_name": "Review fixes (medium/low): load integrity, analysis modules, autosave/ML, translations, dead code, tests",
+  "version": "1.21.1",
+  "version_name": "Leverage page heading; template Responses close feedback loops",
   "release_date": "2026-10-11",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -14,14 +14,8 @@
   "features": [],
   "fixes": {
     "high": [
-      "Load/round-trip integrity: canonical columns and matrix cells on every load path; Download Excel always includes matrices; no false 'IDs repaired' toast on templates (N23-N28, N51, N57) - PR #76.",
-      "Analysis modules: connection-review observers no longer multiply; simulation/intervention use the current CLD; intervention delete; scenario loop counts and CLD loop highlighting (N30-N36) - PR #77.",
-      "Autosave/ML/session: ML feedback stored; empty startup project not autosaved; change detection works; language-switch restore failures reported (N29, N40, N53-N55, N58-N60) - PR #79."
-    ],
-    "medium": [
-      "Translations: Decision Lens, matrix-cell errors, SES model messages and regional-sea names in all 9 languages (N46, N47, N63, N64) - PR #81.",
-      "Dead code and duplicate definitions removed (N39, N65-N71) - PRs #78, #82.",
-      "Tests check real behaviour; run_all_tests.R runs per file like CI (N45, N72-N78) - PR #80."
+      "Leverage Point Analysis heading showed a raw translation key; new test guards *_key arguments - PR #84.",
+      "Templates: Goods & Benefits -> Response links so Responses close balancing loops; Decision Lens finds Limits to Growth in the Fisheries (Baltic) template - PR #85."
     ]
   },
   "metrics": {
@@ -30,7 +24,7 @@
     "knowledge_db_elements": 1119,
     "template_count": 7,
     "template_total_elements": 285,
-    "template_total_connections": 300,
+    "template_total_connections": 305,
     "orphan_element_rate": "0%",
     "polarity_coverage": "100%",
     "cross_ecosystem_links": 20,
@@ -39,8 +33,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.20.1",
+  "previous_version": "1.21.0",
   "build_info": {
-    "build_date": "2026-10-11 10:58:31.176651"
+    "build_date": "2026-10-11 12:18:38.735121"
   }
 }
