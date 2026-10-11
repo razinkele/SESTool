@@ -129,7 +129,7 @@
       "lt": "Pridėti efektyvumo ir įgyvendinamumo įvertinimus",
       "pt": "Adicionar classificações de eficácia e viabilidade",
       "it": "Aggiungi valutazioni di efficacia e fattibilità",
-      "no": "Add effectiveness and feasibility ratings",
+      "no": "Legg til vurderinger av effektivitet og gjennomførbarhet",
       "el": "Προσθήκη effectiveness and feasibility ratings"
     },
     "modules.response.measures.add_impact_link": {
@@ -382,7 +382,7 @@
       "lt": "Atsisiųsti Prioritetų Ataskaitą (PDF)",
       "pt": "Baixar Relatório de Prioridade (PDF)",
       "it": "Scarica Rapporto di Priorità (PDF)",
-      "no": "Download Priority Report (PDF)",
+      "no": "Last ned prioriteringsrapport (PDF)",
       "el": "Λήψη Priority Report (PDF)"
     },
     "modules.response.measures.download_response_data_excel": {
@@ -393,7 +393,7 @@
       "lt": "Atsisiųsti Atsakų Duomenis (Excel)",
       "pt": "Baixar Dados de Respostas (Excel)",
       "it": "Scarica Dati di Risposta (Excel)",
-      "no": "Download Response Data (Excel)",
+      "no": "Last ned responsdata (Excel)",
       "el": "Λήψη Απόκριση Δεδομένα (Excel)"
     },
     "modules.response.measures.download_response_documentation": {
@@ -404,7 +404,7 @@
       "lt": "Atsisiųsti Atsakų Dokumentaciją",
       "pt": "Baixar Documentação de Respostas",
       "it": "Scarica Documentazione di Risposta",
-      "no": "Download Response Documentation",
+      "no": "Last ned responsdokumentasjon",
       "el": "Λήψη Απόκριση Documentation"
     },
     "modules.response.measures.drivers": {
@@ -800,7 +800,7 @@
       "lt": "Valdymo Priemonės ir Politikos Intervencijos",
       "pt": "Medidas de Gestão e Intervenções Políticas",
       "it": "Misure di Gestione e Interventi Politici",
-      "no": "Management Measures and Policy Interventions",
+      "no": "Forvaltningstiltak og politiske virkemidler",
       "el": "Διαχείριση Μέτρα and Policy Interventions"
     },
     "modules.response.measures.mechanism_of_action": {
@@ -921,7 +921,7 @@
       "lt": "Naujos technologijos, geriausia praktika, inovacijos",
       "pt": "Novas tecnologias, melhores práticas, inovação",
       "it": "Nuove tecnologie, migliori pratiche, innovazione",
-      "no": "New technologies, best practices, innovation",
+      "no": "Ny teknologi, beste praksis, innovasjon",
       "el": "Νέο technologies, best practices, innovation"
     },
     "modules.response.measures.notesactions_required": {
@@ -1086,7 +1086,7 @@
       "lt": "Atsakų Įgyvendinimo Kelrodis",
       "pt": "Roteiro de Implementação de Respostas",
       "it": "Roadmap di Attuazione delle Risposte",
-      "no": "Response Implementation Roadmap",
+      "no": "Veikart for gjennomføring av responstiltak",
       "el": "Απόκριση Implementation Roadmap"
     },
     "modules.response.measures.response_measure": {
@@ -1119,7 +1119,7 @@
       "lt": "Atsako Priemonių Poveikio Matrica",
       "pt": "Matriz de Impacto das Medidas de Resposta",
       "it": "Matrice d'Impatto delle Misure di Risposta",
-      "no": "Response Measure Impact Matrix",
+      "no": "Effektmatrise for responstiltak",
       "el": "Απόκριση Μέτρο Επίπτωση Matrix"
     },
     "modules.response.measures.response_measure_prioritization": {
@@ -1130,7 +1130,7 @@
       "lt": "Atsako Priemonių Prioritetų Nustatymas",
       "pt": "Priorização de Medidas de Resposta",
       "it": "Prioritizzazione delle Misure di Risposta",
-      "no": "Response Measure Prioritization",
+      "no": "Prioritering av responstiltak",
       "el": "Απόκριση Μέτρο Prioritization"
     },
     "modules.response.measures.response_measure_prioritization_matrix": {
@@ -1141,7 +1141,7 @@
       "lt": "Atsako Priemonių Prioritetų Nustatymo Matrica",
       "pt": "Matriz de Priorização de Medidas de Resposta",
       "it": "Matrice di Prioritizzazione delle Misure di Risposta",
-      "no": "Response Measure Prioritization Matrix",
+      "no": "Prioriteringsmatrise for responstiltak",
       "el": "Απόκριση Μέτρο Prioritization Matrix"
     },
     "modules.response.measures.response_measures_register": {
@@ -1185,7 +1185,7 @@
       "lt": "Atkurti ekosistemas (brangu, lėta)",
       "pt": "Restaurar ecossistemas (caro, lento)",
       "it": "Ripristinare gli ecosistemi (costoso, lento)",
-      "no": "Restore ecosystems (expensive, slow)",
+      "no": "Restaurere økosystemer (kostbart, tregt)",
       "el": "Επαναφορά Οικοσυστήματα (expensive, slow)"
     },
     "modules.response.measures.select_response": {
@@ -1438,7 +1438,7 @@
       "lt": "Atsako priemonės (R) ir valdymo priemonės (M) užbaigia DAPSI(W)R(M) sistemą nustatydamos intervencijas sistemos problemoms spręsti.",
       "pt": "As medidas de resposta (R) e as medidas de gestão (M) completam o quadro DAPSI(W)R(M) identificando intervenções para resolver problemas do sistema.",
       "it": "Le misure di risposta (R) e le misure di gestione (M) completano il quadro DAPSI(W)R(M) identificando interventi per affrontare i problemi del sistema.",
-      "no": "Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.",
+      "no": "Responstiltak (R) og forvaltningstiltak (M) fullfører DAPSI(W)R(M)-rammeverket ved å identifisere tiltak for å håndtere problemer i systemet.",
       "el": "Απόκριση Μέτρα (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems."
     },
     "modules.response.track_validation_activities_and_model_confidence_a": {
@@ -1453,46 +1453,46 @@
       "el": "Παρακολούθηση δραστηριοτήτων επικύρωσης και αξιολόγηση εμπιστοσύνης μοντέλου."
     },
     "modules.response.measures.easy_butnlimited_impact": {
-      "en": "Easy Butnlimited Impact",
-      "es": "[ES] Easy Butnlimited Impact",
-      "fr": "[FR] Easy Butnlimited Impact",
-      "de": "[DE] Easy Butnlimited Impact",
-      "lt": "[LT] Easy Butnlimited Impact",
-      "pt": "[PT] Easy Butnlimited Impact",
-      "it": "[IT] Easy Butnlimited Impact",
-      "no": "Lett men begrenset effekt",
-      "el": "Εύκολο αλλά περιορισμένη επίδραση"
+      "en": "Easy but\nlimited impact",
+      "es": "Fácil pero\nimpacto limitado",
+      "fr": "Facile mais\nimpact limité",
+      "de": "Einfach, aber\ngeringe Wirkung",
+      "lt": "Lengva, bet\nribotas poveikis",
+      "pt": "Fácil mas\nimpacto limitado",
+      "it": "Facile ma\nimpatto limitato",
+      "no": "Lett, men\nbegrenset effekt",
+      "el": "Εύκολο αλλά\nπεριορισμένη επίδραση"
     },
     "modules.response.measures.effective_butndifficult": {
-      "en": "Effective Butndifficult",
-      "es": "[ES] Effective Butndifficult",
-      "fr": "[FR] Effective Butndifficult",
-      "de": "[DE] Effective Butndifficult",
-      "lt": "[LT] Effective Butndifficult",
-      "pt": "[PT] Effective Butndifficult",
-      "it": "[IT] Effective Butndifficult",
-      "no": "Effektivt men vanskelig",
-      "el": "Αποτελεσματικό αλλά δύσκολο"
+      "en": "Effective but\ndifficult",
+      "es": "Eficaz pero\ndifícil",
+      "fr": "Efficace mais\ndifficile",
+      "de": "Wirksam, aber\nschwierig",
+      "lt": "Veiksminga, bet\nsudėtinga",
+      "pt": "Eficaz mas\ndifícil",
+      "it": "Efficace ma\ndifficile",
+      "no": "Effektivt, men\nvanskelig",
+      "el": "Αποτελεσματικό αλλά\nδύσκολο"
     },
     "modules.response.measures.high_priorityneffective_feasible": {
-      "en": "High Priorityneffective Feasible",
-      "es": "[ES] High Priorityneffective Feasible",
-      "fr": "[FR] High Priorityneffective Feasible",
-      "de": "[DE] High Priorityneffective Feasible",
-      "lt": "[LT] High Priorityneffective Feasible",
-      "pt": "[PT] High Priorityneffective Feasible",
-      "it": "[IT] High Priorityneffective Feasible",
-      "no": "Høy prioritet effektivt gjennomførbart",
-      "el": "Υψηλή προτεραιότητα αποτελεσματικό εφικτό"
+      "en": "High priority\n(effective & feasible)",
+      "es": "Alta prioridad\n(eficaz y viable)",
+      "fr": "Haute priorité\n(efficace et réalisable)",
+      "de": "Hohe Priorität\n(wirksam und machbar)",
+      "lt": "Aukštas prioritetas\n(veiksminga ir įgyvendinama)",
+      "pt": "Alta prioridade\n(eficaz e exequível)",
+      "it": "Alta priorità\n(efficace e fattibile)",
+      "no": "Høy prioritet\n(effektivt og gjennomførbart)",
+      "el": "Υψηλή προτεραιότητα\n(αποτελεσματικό και εφικτό)"
     },
     "modules.response.measures.unknown": {
       "en": "Unknown",
-      "es": "[ES] Unknown",
-      "fr": "[FR] Unknown",
-      "de": "[DE] Unknown",
-      "lt": "[LT] Unknown",
-      "pt": "[PT] Unknown",
-      "it": "[IT] Unknown",
+      "es": "Desconocido",
+      "fr": "Inconnu",
+      "de": "Unbekannt",
+      "lt": "Nežinoma",
+      "pt": "Desconhecido",
+      "it": "Sconosciuto",
       "no": "Ukjent",
       "el": "Άγνωστο"
     },
