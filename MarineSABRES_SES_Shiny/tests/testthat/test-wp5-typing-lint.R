@@ -68,3 +68,48 @@ test_that("ecosystem-service 'regulation' vocabulary is not flagged (climate/wat
                  nd("ES_3", "Ρύθμιση του κλίματος", "Ecosystem Services"))
   expect_equal(nrow(wp5_typing_lint(nodes, eg(character(), character()))), 0L)
 })
+
+# ---- Task 2: surfaced in the ISA module (warn only; re-notify only on change) -----
+source_for_test(c("modules/isa_data_entry_module.R", "functions/isa_form_builders.R",
+                  "functions/data_structure.R", "functions/matrix_from_linked.R",
+                  "functions/standard_entry_excel_import.R", "functions/project_transactions.R"))
+isa_data_entry_server <- get("isa_data_entry_server", envir = .GlobalEnv)
+
+project_with_activity <- function(act_name, pid = "p1") list(project_id = pid, data = list(isa_data = list(
+  activities = data.frame(ID = "A001", Name = act_name, Sector = "", Description = "",
+                          LinkedP = "", Scale = "", Frequency = "", stringsAsFactors = FALSE),
+  adjacency_matrices = list(), user_edited_matrices = list())))
+
+test_that("a mistyped activity is recorded once; an unchanged re-save does not re-notify", {
+  pdr <- shiny::reactiveVal(project_with_activity("Fishing quota agreements"))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pdr, i18n = make_test_i18n(), event_bus = NULL), {
+    session$flushReact()
+    expect_true(any(startsWith(typing_state$last, "L1:")))
+    first <- typing_state$last
+    pdr(pdr()); session$flushReact()
+    expect_identical(typing_state$last, first)
+  })
+})
+
+test_that("a clean model records no typing finding", {
+  pdr <- shiny::reactiveVal(project_with_activity("Coastal tourism"))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pdr, i18n = make_test_i18n(), event_bus = NULL), {
+    session$flushReact()
+    expect_length(typing_state$last, 0)
+  })
+})
+
+test_that("typing lint is wired after the alignment warning; messages translated in 9 languages", {
+  s <- paste(readLines(file.path(PROJECT_ROOT, "modules", "isa_data_entry_module.R"), warn = FALSE), collapse = "\n")
+  expect_true(grepl("warn_if_matrices_misaligned()\n        warn_if_mistyped()", s, fixed = TRUE))
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "isa_data_entry.json"),
+                           simplifyVector = FALSE)$translation
+  for (k in paste0("modules.isa.data_entry.common.", c("typing_lint_found", "typing_lint_l1", "typing_lint_l2")))
+    for (l in c("en","es","fr","de","lt","pt","it","no","el")) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
+  for (l in c("en","es","fr","de","lt","pt","it","no","el")) {
+    f <- tr[["modules.isa.data_entry.common.typing_lint_found"]][[l]]
+    expect_true(grepl("%d", f, fixed = TRUE) && grepl("%s", f, fixed = TRUE), info = l)
+  }
+})

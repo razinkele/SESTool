@@ -448,6 +448,30 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
     }
 
+    # WS-3b typing lint: warn (never fix) about likely mistyped interventions and
+    # Responses without feedback; re-notify only when the findings change.
+    # i18n-ref: modules.isa.data_entry.common.typing_lint_l1
+    # i18n-ref: modules.isa.data_entry.common.typing_lint_l2
+    typing_state <- new.env(parent = emptyenv())
+    typing_state$last <- character(0)
+    warn_if_mistyped <- function() {
+      if (!exists("typing_lint_from_isa", mode = "function")) return(invisible(NULL))
+      f <- typing_lint_from_isa(isolate(reactiveValuesToList(isa_data)))
+      keys <- if (nrow(f) > 0) paste0(f$rule, ":", f$node_id) else character(0)
+      changed <- !identical(keys, typing_state$last)
+      typing_state$last <- keys
+      if (length(keys) > 0 && changed) {
+        debug_log(paste("Typing lint:", paste(keys, collapse = "; ")), "ISA LINT")
+        items <- vapply(seq_len(nrow(f)), function(i) paste0("“", f$name[i], "” — ",
+          i18n$t(paste0("modules.isa.data_entry.common.typing_lint_", tolower(f$rule[i])))), character(1))
+        shown <- paste(head(items, 5), collapse = "; ")
+        if (length(items) > 5) shown <- paste0(shown, "; …")
+        fmt <- i18n$t("modules.isa.data_entry.common.typing_lint_found")
+        msg <- if (grepl("%d", fmt, fixed = TRUE) && grepl("%s", fmt, fixed = TRUE)) sprintf(fmt, nrow(f), shown) else fmt
+        showNotification(msg, type = "warning", duration = 15, session = session)
+      }
+    }
+
     last_loaded_project_id <- NULL
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
@@ -465,6 +489,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         apply_saved_isa(project$data$isa_data)
         data_initialized(TRUE)
         warn_if_matrices_misaligned()
+        warn_if_mistyped()
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
       }
