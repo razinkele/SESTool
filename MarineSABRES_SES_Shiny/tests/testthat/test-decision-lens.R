@@ -50,7 +50,7 @@ test_that("classify_factors_micmac joins labels and full-name groups onto MICMAC
   expect_setequal(res$label, c("Driver", "Activity", "Pressure", "State"))
   # group stays the FULL category name (not a short code)
   expect_true("Marine Processes & Functioning" %in% res$group)
-  expect_true(all(res$quadrant %in% c("Relay", "Influential", "Dependent", "Autonomous")))
+  expect_true(all(res$quadrant %in% c("Relay", "Influential", "Dependent", "Autonomous", "Undifferentiated")))
   expect_type(res$influence, "double")
   expect_type(res$dependence, "double")
 })

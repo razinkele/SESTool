@@ -121,13 +121,20 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
       loopkey = paste(ids, collapse = ",")
     )
   }
-  # MPF candidates first, then ES; dedup by identical loop-set.
+  # MPF candidates first, then ES; dedup by identical loop-set. An ES
+  # candidate whose loops overlap an accepted MPF's is the same commons seen
+  # downstream (the service of that stock), so it is not reported again with
+  # leverage on the service (review 2026-10-07 N52). ES is reported only for
+  # loops no accepted MPF commons covers.
   if (length(cand) > 0) {
     cand <- cand[order(ifelse(vapply(cand, function(c) c$code, "") == "MPF", 0L, 1L))]
     seen <- character(0)
+    mpf_loops <- integer(0)
     for (c in cand) {
       if (c$loopkey %in% seen) next
+      if (c$code == "ES" && length(intersect(c$in_loops, mpf_loops)) > 0) next
       seen <- c(seen, c$loopkey)
+      if (c$code == "MPF") mpf_loops <- union(mpf_loops, c$in_loops)
       out[[length(out) + 1]] <- list(
         archetype_key    = "tragedy_of_the_commons",
         loop_ids         = sort(loop_info$LoopID[c$in_loops]),
@@ -154,6 +161,10 @@ detect_archetypes <- function(loop_info, nodes = NULL) {
     for (bi in bal) {
       r_in_bal <- loop_nodes[[bi]][loop_codes[[bi]] == "R"]
       if (length(r_in_bal) == 0) next
+      # The balancing loop must act through the ecosystem (a Marine Process or
+      # Ecosystem Service node), not be a policy-only loop such as
+      # Response <-> Response (review 2026-10-07 N35).
+      if (!any(loop_codes[[bi]] %in% c("MPF", "ES"))) next
       shared <- intersect(loop_nodes[[ri]], loop_nodes[[bi]])
       if (length(shared) == 0) next
       lev <- r_in_bal[1]   # the management Response (deterministic: first in loop order)
@@ -202,6 +213,7 @@ build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18
   # i18n-ref: modules.analysis.decision_lens.quad_relay
   # i18n-ref: modules.analysis.decision_lens.quad_dependent
   # i18n-ref: modules.analysis.decision_lens.quad_autonomous
+  # i18n-ref: modules.analysis.decision_lens.quad_undifferentiated
   # i18n-ref: modules.analysis.decision_lens.narrative_in_loops
   # i18n-ref: modules.analysis.decision_lens.narrative_archetype_leverage
   # i18n-ref: modules.analysis.decision_lens.narrative_confirm
@@ -225,6 +237,7 @@ build_decision_narrative <- function(node_id, micmac, loop_info, archetypes, i18
       "Relay"       = paste0(K, ".quad_relay"),
       "Dependent"   = paste0(K, ".quad_dependent"),
       "Autonomous"  = paste0(K, ".quad_autonomous"),
+      "Undifferentiated" = paste0(K, ".quad_undifferentiated"),
       paste0(K, ".quad_autonomous")
     )
     parts <- c(parts, paste0("<p><strong>", label, "</strong> — ", t(quad_key), "</p>"))
@@ -292,7 +305,8 @@ format_loop_ids <- function(ids, max_show = 20L) {
   Influential = "modules.analysis.decision_lens.quad_name_influential",
   Relay       = "modules.analysis.decision_lens.quad_name_relay",
   Dependent   = "modules.analysis.decision_lens.quad_name_dependent",
-  Autonomous  = "modules.analysis.decision_lens.quad_name_autonomous"
+  Autonomous  = "modules.analysis.decision_lens.quad_name_autonomous",
+  Undifferentiated = "modules.analysis.decision_lens.quad_name_undifferentiated"
 )
 .DL_GROUP_KEYS <- c(
   "Drivers"                        = "modules.analysis.decision_lens.group_drivers",
