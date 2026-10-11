@@ -376,23 +376,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
     # Reactive values for response data
     response_data <- reactiveValues(
-      measures = data.frame(
-        ID = character(),
-        Name = character(),
-        Type = character(),
-        Target = character(),
-        Description = character(),
-        Mechanism = character(),
-        TargetElement = character(),
-        Effectiveness = character(),
-        Feasibility = character(),
-        Cost = numeric(),
-        Status = character(),
-        Stakeholders = character(),
-        Barriers = character(),
-        DateAdded = character()
-        
-      ),
+      measures = empty_measures_df(),   # WS-3a register schema
       impacts = data.frame(
         ResponseID = character(),
         ProblemType = character(),
@@ -430,7 +414,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(project_data_reactive()$project_id, {
       rm <- project_data_reactive()$data$response_measures
       if (is.null(rm)) return()
-      if (!is.null(rm$measures))   response_data$measures   <- rm$measures
+      if (!is.null(rm$measures))   response_data$measures   <- normalize_response_measures(rm$measures)
       if (!is.null(rm$impacts))    response_data$impacts    <- rm$impacts
       if (!is.null(rm$milestones)) response_data$milestones <- rm$milestones
       if (!is.null(rm$counter))    response_data$counter    <- rm$counter

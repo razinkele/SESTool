@@ -95,3 +95,46 @@ test_that("governance translations exist in all 9 languages", {
   for (k in keys) for (l in c("en","es","fr","de","lt","pt","it","no","el"))
     expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
 })
+
+# ---- Task 2: every load path; JSON round-trips -----------------------------------
+mk_project_with_register <- function() {
+  p <- create_empty_project("t")
+  p$data$response_measures$measures <- normalize_response_measures(data.frame(
+    ID = c("RM_1", "RM_2"), Name = c("Quota", "Moorings"), Type = c("regulatory", "economic"),
+    Target = c("pressures", "activities"), Status = c("planned", "proposed"), Cost = c(4, 7),
+    Kind = c("measure", "instrument"), EbmCode = c("output", "3.4"), GovernanceLevel = c("national", "local"),
+    ImplementingStakeholders = c("SH_1;SH_2", ""), PairedWith = c("RM_2", "RM_1"),
+    Tenet_ecol_effective = c("intermediate", ""), Tenet_legally_permissible = c("full", "minimal"),
+    stringsAsFactors = FALSE))
+  p
+}
+
+test_that("create_empty_project uses the register schema", {
+  expect_equal(names(create_empty_project("t")$data$response_measures$measures), RM_REGISTER_COLUMNS)
+})
+
+test_that("register survives JSON round-trip with simplifyVector = TRUE and FALSE", {
+  p <- mk_project_with_register()
+  js <- jsonlite::toJSON(p, auto_unbox = TRUE, null = "null", na = "null")
+  for (sv in c(TRUE, FALSE)) {
+    back <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = sv))
+    m <- back$data$response_measures$measures
+    expect_equal(names(m), RM_REGISTER_COLUMNS, info = sv)
+    expect_equal(m$ImplementingStakeholders, c("SH_1;SH_2", ""), info = sv)
+    expect_equal(m$Tenet_ecol_effective, c("intermediate", ""), info = sv)
+    expect_equal(m$EbmCode, c("output", "3.4"), info = sv)
+    expect_equal(m$Cost, c(4, 7), info = sv)
+  }
+})
+
+test_that("legacy Lithuanian-label register is migrated on project load", {
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "response_measures.json"),
+                           simplifyVector = FALSE)$translation
+  p <- create_empty_project("t")
+  p$data$response_measures$measures <- data.frame(
+    ID = "RM_1", Name = "x", Type = tr[["modules.response.measures.regulatory"]]$lt,
+    Target = tr[["modules.response.measures.state"]]$lt, Status = tr[["modules.response.measures.planned"]]$lt,
+    Cost = 5, stringsAsFactors = FALSE)
+  out <- normalize_and_reconcile_project(p)$data$response_measures$measures
+  expect_equal(c(out$Type, out$Target, out$Status), c("regulatory", "state", "planned"))
+})

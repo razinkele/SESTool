@@ -260,20 +260,13 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
       # categorical keys "HIGH"/"MEDIUM"/"LOW"/"UNKNOWN"/"" for locale-stable
       # priority scoring across language switches.
       response_measures = list(
-        measures = data.frame(
-          ID = character(),
-          Name = character(),
-          Type = character(),
-          Target = character(),
-          Description = character(),
-          Mechanism = character(),
-          TargetElement = character(),
-          Effectiveness = character(),
-          Feasibility = character(),
-          Cost = numeric(),
-          Status = character(),
-          Stakeholders = character(),
-          Barriers = character(),
+        # WS-3a register schema (functions/response_measures_schema.R); guarded
+        # because tests/run_json_loading_tests.R sources this file standalone.
+        measures = if (exists("empty_measures_df", mode = "function")) empty_measures_df() else data.frame(
+          ID = character(), Name = character(), Type = character(), Target = character(),
+          Description = character(), Mechanism = character(), TargetElement = character(),
+          Effectiveness = character(), Feasibility = character(), Cost = numeric(),
+          Status = character(), Stakeholders = character(), Barriers = character(),
           DateAdded = character()
         ),
         impacts = data.frame(
@@ -941,6 +934,12 @@ normalize_json_project_data <- function(data) {
     isa <- restore_isa_matrices(isa)
 
     data$data$isa_data <- isa
+  }
+
+  # Response register: codes + full schema on every JSON load path (WP5 WS-3a)
+  if (is.list(data$data) && is.list(data$data$response_measures) &&
+      exists("normalize_response_measures", mode = "function")) {
+    data$data$response_measures$measures <- normalize_response_measures(data$data$response_measures$measures)
   }
 
   # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here
