@@ -100,3 +100,18 @@ test_that("legacy v1 KB shows the update warning", {
   suppressWarnings(load_wp5_mechanisms_kb(v1, force_reload = TRUE))
   expect_match(wp5_pane_html("Tuscan Archipelago"), "modules.wp5_mechanisms.pane.legacy_kb_warning", fixed = TRUE)
 })
+
+# ---- final-review fixes: derived indicator codes are not "success metrics"; lt pre-final label
+test_that("Macaronesia pane labels derived codes as indicators referenced, not success metrics", {
+  load_wp5_mechanisms_kb(force_reload = TRUE)
+  h <- wp5_pane_html("Macaronesia")
+  expect_match(h, "modules.wp5_mechanisms.attr.indicators_referenced", fixed = TRUE)
+  expect_false(grepl("modules.wp5_mechanisms.attr.success_metrics", h, fixed = TRUE))
+})
+
+test_that("Lithuanian pre-final badge and legacy warning use correct wording", {
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "wp5_mechanisms.json"),
+                           simplifyVector = FALSE)$translation
+  expect_equal(tr[["modules.wp5_mechanisms.provenance.wp5_prefinal"]]$lt, "Preliminarus projektas")
+  expect_match(tr[["modules.wp5_mechanisms.pane.legacy_kb_warning"]]$lt, "^Šiame diegime")
+})

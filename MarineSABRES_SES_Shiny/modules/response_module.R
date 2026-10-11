@@ -941,7 +941,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       # i18n-ref: modules.wp5_mechanisms.attr.design_parameters
       # i18n-ref: modules.wp5_mechanisms.attr.transferable_lessons
       # i18n-ref: modules.wp5_mechanisms.attr.risks_and_guardrails
-      # i18n-ref: modules.wp5_mechanisms.attr.success_metrics
+      # i18n-ref: modules.wp5_mechanisms.attr.indicators_referenced
       # i18n-ref: modules.wp5_mechanisms.attr.references
       field <- function(key, value, badge = NULL) {
         v <- paste(unlist(value), collapse = "; ")
@@ -971,7 +971,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
             field("applicability", m$applicability_text),
             field("cost_band", band),
             field("success_statement", m$success_statement),
-            field("success_metrics", d$success_metrics, provenance_badge(d$provenance, i18n)),
+            field("indicators_referenced", d$success_metrics, provenance_badge(d$provenance, i18n)),
             src_line(m$source_ref),
             if (!is.null(tk)) tags$details(
               tags$summary(i18n$t("modules.wp5_mechanisms.attr.toolkit_details"),

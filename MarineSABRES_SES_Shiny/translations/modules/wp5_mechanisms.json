@@ -111,17 +111,6 @@
       "no": "Gjelder demonstrasjonsområder",
       "el": "Ισχύει για τις περιοχές επίδειξης"
     },
-    "modules.wp5_mechanisms.attr.success_metrics": {
-      "en": "Success metrics",
-      "es": "Indicadores de éxito",
-      "fr": "Indicateurs de réussite",
-      "de": "Erfolgskennzahlen",
-      "lt": "Sėkmės rodikliai",
-      "pt": "Indicadores de sucesso",
-      "it": "Indicatori di successo",
-      "no": "Suksessindikatorer",
-      "el": "Δείκτες επιτυχίας"
-    },
     "modules.wp5_mechanisms.attr.risks_and_guardrails": {
       "en": "Risks and guardrails",
       "es": "Riesgos y salvaguardas",
@@ -402,7 +391,7 @@
       "es": "Esta instalación utiliza un catálogo de mecanismos antiguo elaborado a partir de borradores. Pida al administrador que lo actualice.",
       "fr": "Cette installation utilise un ancien catalogue de mécanismes établi à partir de projets de documents. Demandez à l'administrateur de le mettre à jour.",
       "de": "Diese Installation verwendet einen älteren, aus Entwürfen erstellten Mechanismenkatalog. Bitten Sie den Administrator um eine Aktualisierung.",
-      "lt": "Šioje diegtyje naudojamas senesnis mechanizmų katalogas, sudarytas pagal dokumentų projektus. Paprašykite administratoriaus jį atnaujinti.",
+      "lt": "Šiame diegime naudojamas senesnis mechanizmų katalogas, sudarytas pagal dokumentų projektus. Paprašykite administratoriaus jį atnaujinti.",
       "pt": "Esta instalação utiliza um catálogo de mecanismos antigo, elaborado a partir de documentos provisórios. Peça ao administrador que o atualize.",
       "it": "Questa installazione usa un vecchio catalogo dei meccanismi basato su bozze. Chiedere all'amministratore di aggiornarlo.",
       "no": "Denne installasjonen bruker en eldre mekanismekatalog laget fra utkast. Be administratoren om å oppdatere den.",
@@ -413,7 +402,7 @@
       "es": "Borrador previo a la versión final",
       "fr": "Projet préalable à la version finale",
       "de": "Vorläufiger Entwurf",
-      "lt": "Galutinės versijos projektas",
+      "lt": "Preliminarus projektas",
       "pt": "Rascunho anterior à versão final",
       "it": "Bozza pre-finale",
       "no": "Foreløpig utkast",
@@ -429,6 +418,17 @@
       "it": "Derivato",
       "no": "Avledet",
       "el": "Παράγωγο"
+    },
+    "modules.wp5_mechanisms.attr.indicators_referenced": {
+      "en": "Indicators referenced",
+      "es": "Indicadores mencionados",
+      "fr": "Indicateurs cités",
+      "de": "Genannte Indikatoren",
+      "lt": "Minimi rodikliai",
+      "pt": "Indicadores referidos",
+      "it": "Indicatori citati",
+      "no": "Indikatorer det vises til",
+      "el": "Δείκτες που αναφέρονται"
     }
   }
 }

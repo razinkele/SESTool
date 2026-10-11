@@ -150,3 +150,11 @@ test_that("a v1 KB still loads with a warning; accessors degrade gracefully", {
   expect_length(get_scenarios_for_da("macaronesia"), 0)
   expect_equal(get_cost_band_legend(), "")
 })
+
+# ---- final-review fix I1: the equality audit must run in CI -------------------
+test_that("CI runs the WP5 KB equality audit (Python) on every PR", {
+  wf <- file.path(PROJECT_ROOT_WP5, "..", ".github", "workflows", "test.yml")
+  skip_if_not(file.exists(wf), "workflow file not present in this checkout")
+  y <- paste(readLines(wf, warn = FALSE), collapse = "\n")
+  expect_match(y, "scripts/kb_audit/audit_wp5_mechanisms.py", fixed = TRUE)
+})

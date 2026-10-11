@@ -104,6 +104,12 @@ jobs:
           message(sprintf("Fixtures copied: %d", length(fx)))
         shell: Rscript {0}
 
+      # WP5 mechanism KB v2: the committed JSON must equal a fresh build of the
+      # committed source extract (catches hand edits, column swaps, short-cell
+      # edits that the R containment test cannot). Standard library only.
+      - name: WP5 mechanism KB audit
+        run: python3 scripts/kb_audit/audit_wp5_mechanisms.py
+
       - name: Run testthat suite (per-file process isolation)
         run: |
           set -uo pipefail
