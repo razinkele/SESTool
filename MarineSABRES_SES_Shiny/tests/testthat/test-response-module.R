@@ -115,3 +115,32 @@ test_that("Lithuanian pre-final badge and legacy warning use correct wording", {
   expect_equal(tr[["modules.wp5_mechanisms.provenance.wp5_prefinal"]]$lt, "Preliminarus projektas")
   expect_match(tr[["modules.wp5_mechanisms.pane.legacy_kb_warning"]]$lt, "^Šiame diegime")
 })
+
+# ---- WS-3a Task 3: codes in data, labels on display ------------------------------
+real_response_measures_ui <- get("response_measures_ui", envir = .GlobalEnv)  # helper-stubs.R shadows it
+rm_add <- function(inputs) {
+  proj <- create_empty_project("t"); pd <- reactiveVal(proj); out <- NULL
+  testServer(real_response_measures_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    do.call(session$setInputs, inputs)
+    session$setInputs(add_response = 1)
+    out <<- pd()$data$response_measures$measures
+  })
+  out
+}
+
+test_that("adding a measure stores codes, not translated labels", {
+  m <- rm_add(list(rm_name = "Quota cut", rm_type = "regulatory", rm_target = "pressures",
+                   rm_status = "planned", rm_description = "", rm_mechanism = "", rm_target_element = "",
+                   rm_effectiveness = "HIGH", rm_feasibility = "MEDIUM", rm_cost = 4,
+                   rm_stakeholders = "", rm_barriers = ""))
+  expect_equal(c(m$Type, m$Target, m$Status), c("regulatory", "pressures", "planned"))
+  expect_equal(names(m), RM_REGISTER_COLUMNS)
+})
+
+test_that("form choices are codes with translated names", {
+  ui <- as.character(real_response_measures_ui("t", make_test_i18n()))
+  expect_match(ui, 'value="regulatory"', fixed = TRUE)
+  expect_match(ui, 'value="partially_implemented"', fixed = TRUE)
+  expect_match(ui, "modules.response.measures.regulatory", fixed = TRUE)
+})

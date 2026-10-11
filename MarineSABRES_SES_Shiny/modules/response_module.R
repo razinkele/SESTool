@@ -36,20 +36,38 @@ response_measures_ui <- function(id, i18n) {
                   textInput(ns("rm_name"), i18n$t("common.labels.response_name"),
                            placeholder = i18n$t("modules.response.measures.eg_fishing_quota_reduction"))
                 ),
+                # WS-3a: values are stable codes (RM_*_CODES); labels translated here only.
+                # i18n-ref: modules.response.measures.regulatory
+                # i18n-ref: modules.response.measures.economic
+                # i18n-ref: modules.response.measures.educational
+                # i18n-ref: modules.response.measures.technical
+                # i18n-ref: modules.response.measures.institutional
+                # i18n-ref: modules.response.measures.voluntary
+                # i18n-ref: modules.response.measures.mixed
+                # i18n-ref: modules.response.measures.drivers
+                # i18n-ref: modules.response.measures.activities
+                # i18n-ref: modules.response.measures.pressures
+                # i18n-ref: modules.response.measures.state
+                # i18n-ref: modules.response.measures.multiple_levels
+                # i18n-ref: modules.response.measures.proposed
+                # i18n-ref: modules.response.measures.planned
+                # i18n-ref: modules.response.measures.implemented
+                # i18n-ref: modules.response.measures.partially_implemented
+                # i18n-ref: modules.response.measures.abandoned
                 column(3,
                   selectInput(ns("rm_type"), i18n$t("common.labels.response_type"),
-                             choices = c("", i18n$t("modules.response.measures.regulatory"), i18n$t("modules.response.measures.economic"), i18n$t("modules.response.measures.educational"),
-                                       i18n$t("modules.response.measures.technical"), i18n$t("modules.response.measures.institutional"), i18n$t("modules.response.measures.voluntary"), i18n$t("modules.response.measures.mixed")))
+                             choices = c(" " = "", setNames(names(RM_TYPE_CODES),
+                               vapply(RM_TYPE_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1)))))
                 ),
                 column(3,
                   selectInput(ns("rm_target"), i18n$t("modules.response.measures.targets"),
-                             choices = c("", i18n$t("modules.response.measures.drivers"), i18n$t("modules.response.measures.activities"), i18n$t("modules.response.measures.pressures"),
-                                       i18n$t("modules.response.measures.state"), i18n$t("modules.response.measures.multiple_levels")))
+                             choices = c(" " = "", setNames(names(RM_TARGET_CODES),
+                               vapply(RM_TARGET_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1)))))
                 ),
                 column(3,
                   selectInput(ns("rm_status"), i18n$t("common.labels.implementation_status"),
-                             choices = c(i18n$t("modules.response.measures.proposed"), i18n$t("modules.response.measures.planned"), i18n$t("modules.response.measures.implemented"),
-                                       i18n$t("modules.response.measures.partially_implemented"), i18n$t("modules.response.measures.abandoned")))
+                             choices = setNames(names(RM_STATUS_CODES),
+                               vapply(RM_STATUS_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1))))
                 )
               ),
               fluidRow(
@@ -371,6 +389,10 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       if (is.null(df) || nrow(df) == 0) return(df)
       if ("Effectiveness" %in% names(df)) df$Effectiveness <- vapply(df$Effectiveness, level_label, character(1))
       if ("Feasibility"   %in% names(df)) df$Feasibility   <- vapply(df$Feasibility,   level_label, character(1))
+      for (pair in list(c("Type", "type"), c("Target", "target"), c("Status", "status"), c("Kind", "kind"),
+                        c("EbmCode", "ebm_code"), c("GovernanceLevel", "governance_level"))) {
+        if (pair[1] %in% names(df)) df[[pair[1]]] <- rm_display_label(pair[2], df[[pair[1]]], i18n)
+      }
       df
     }
 
@@ -427,25 +449,17 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       response_data$counter <- response_data$counter + 1
       new_id <- generate_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
-      new_row <- data.frame(
-        ID = new_id,
-        Name = input$rm_name,
-        Type = input$rm_type,
-        Target = input$rm_target,
-        Description = input$rm_description,
-        Mechanism = input$rm_mechanism,
-        TargetElement = input$rm_target_element,
-        Effectiveness = input$rm_effectiveness,
-        Feasibility = input$rm_feasibility,
-        Cost = input$rm_cost,
-        Status = input$rm_status,
-        Stakeholders = input$rm_stakeholders,
-        Barriers = input$rm_barriers,
-        DateAdded = as.character(Sys.Date())
-        
-      )
+      # WS-3a: build through the register schema so columns always match
+      new_row <- normalize_response_measures(data.frame(
+        ID = new_id, Name = input$rm_name, Type = input$rm_type, Target = input$rm_target %||% "",
+        Description = input$rm_description %||% "", Mechanism = input$rm_mechanism %||% "",
+        TargetElement = input$rm_target_element %||% "", Effectiveness = input$rm_effectiveness %||% "",
+        Feasibility = input$rm_feasibility %||% "", Cost = input$rm_cost %||% NA_real_,
+        Status = input$rm_status %||% "", Stakeholders = input$rm_stakeholders %||% "",
+        Barriers = input$rm_barriers %||% "", DateAdded = as.character(Sys.Date()),
+        stringsAsFactors = FALSE))
 
-      response_data$measures <- rbind(response_data$measures, new_row)
+      response_data$measures <- rbind(normalize_response_measures(response_data$measures), new_row)
       sync_to_project_data()
 
       # Clear inputs
