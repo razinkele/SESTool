@@ -574,14 +574,14 @@
     },
     "common.misc.no_connections_in_this_category": {
       "en": "No connections in this category",
-      "lt": "Šioje kategorijoje ryšių nėra",
-      "es": "Sin conexiones en esta categoría",
+      "es": "No hay conexiones en esta categoría",
       "fr": "Aucune connexion dans cette catégorie",
       "de": "Keine Verbindungen in dieser Kategorie",
-      "it": "Nessuna connessione in questa categoria",
+      "lt": "Nėra ryšių šioje kategorijoje",
       "pt": "Sem conexões nesta categoria",
-      "el": "Δεν υπάρχουν συνδέσεις σε αυτή την κατηγορία",
-      "no": "Ingen forbindelser i denne kategorien"
+      "it": "Nessuna connessione in questa categoria",
+      "no": "Ingen forbindelser i denne kategorien",
+      "el": "Δεν υπάρχουν συνδέσεις σε αυτή την κατηγορία"
     },
     "common.misc.all_d_connections_in_s_approved": {
       "en": "All %d connections in %s approved",
@@ -607,25 +607,25 @@
     },
     "common.misc.progress": {
       "en": "Progress",
-      "lt": "Progresas",
       "es": "Progreso",
       "fr": "Progrès",
       "de": "Fortschritt",
-      "it": "Progresso",
+      "lt": "Pažanga",
       "pt": "Progresso",
-      "el": "Πρόοδος",
-      "no": "Fremdrift"
+      "it": "Progresso",
+      "no": "Fremdrift",
+      "el": "Πρόοδος"
     },
     "common.misc.no_cld_data_to_export_please_create_a_cld_first": {
-      "en": "No CLD data to export. Please create a CLD first.",
-      "lt": "Nėra CLD duomenų eksportavimui. Pirmiausia sukurkite CLD.",
-      "es": "No hay datos CLD para exportar. Por favor, cree un CLD primero.",
-      "fr": "Aucune donnée CLD à exporter. Veuillez d'abord créer un CLD.",
-      "de": "Keine CLD-Daten zum Exportieren. Bitte erstellen Sie zuerst ein CLD.",
-      "it": "Nessun dato CLD da esportare. Si prega di creare prima un CLD.",
-      "pt": "Sem dados CLD para exportar. Por favor, crie um CLD primeiro.",
-      "el": "Δεν υπάρχουν δεδομένα CLD για εξαγωγή. Παρακαλώ δημιουργήστε πρώτα ένα CLD.",
-      "no": "Ingen CLD-data å eksportere. Vennligst opprett en CLD først."
+      "en": "No CLD data to export — please create a CLD first.",
+      "es": "No hay datos CLD para exportar — por favor cree un CLD primero.",
+      "fr": "Aucune donnée CLD à exporter — veuillez d'abord créer un CLD.",
+      "de": "Keine CLD-Daten zum Exportieren — bitte erstellen Sie zuerst ein CLD.",
+      "lt": "Nėra CLD duomenų eksportavimui — pirmiausia sukurkite CLD.",
+      "pt": "Sem dados CLD para exportar — crie um CLD primeiro.",
+      "it": "Nessun dato CLD da esportare — crea prima un CLD.",
+      "no": "Ingen CLD-data å eksportere — vennligst opprett en CLD først.",
+      "el": "Δεν υπάρχουν δεδομένα CLD για εξαγωγή — παρακαλώ δημιουργήστε πρώτα ένα CLD."
     },
     "Beginner": {
       "en": "Beginner",

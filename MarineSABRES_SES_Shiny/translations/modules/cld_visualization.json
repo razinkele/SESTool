@@ -330,17 +330,6 @@
       "no": "Hva er et årsaksløkkediagram?",
       "el": "Τι είναι ένα Διάγραμμα Αιτιακών Βρόχων;"
     },
-    "modules.isa.data_entry.common.leverage_points": {
-      "en": "Leverage Points",
-      "es": "Puntos de Apalancamiento",
-      "fr": "Points de Levier",
-      "de": "Hebelpunkte",
-      "lt": "Sverto taškai",
-      "pt": "Pontos de Alavancagem",
-      "it": "Punti di Leva",
-      "no": "Innflytelsespunkter",
-      "el": "Σημεία μόχλευσης"
-    },
     "modules.cld.visualization.title": {
       "en": "Causal Loop Diagram Visualization",
       "es": "Visualización del Diagrama de Bucles Causales",

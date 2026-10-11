@@ -737,17 +737,6 @@
       "no": "Start her",
       "el": "Ξεκινήστε εδώ"
     },
-    "modules.response.measures.export": {
-      "en": "Export Pathway Report",
-      "es": "Exportar Informe de Ruta",
-      "fr": "Exporter le Rapport de Parcours",
-      "de": "Pfadbericht Exportieren",
-      "lt": "Eksportuoti kelio ataskaitą",
-      "pt": "Exportar Relatório de Percurso",
-      "it": "Esporta Rapporto Percorso",
-      "no": "Eksporter veirapport",
-      "el": "Εξαγωγή Pathway Report"
-    },
     "modules.entry_point.pathway_report_generated_successfully": {
       "en": "Pathway report generated successfully",
       "es": "Informe de ruta generado correctamente",
@@ -770,28 +759,6 @@
       "no": "Velg din rolle i marin forvaltning (flervalg)",
       "el": "Επιλέξτε τον ρόλο σας στη θαλάσσια διαχείριση (επιτρέπεται πολλαπλή επιλογή)"
     },
-    "modules.ses.creation.ecosystem_services": {
-      "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
-      "es": "Comprender la necesidad humana fundamental detrás de su pregunta ayuda a identificar servicios ecosistémicos relevantes y prioridades de gestión.",
-      "fr": "Comprendre le besoin humain fondamental derrière votre question aide à identifier les services écosystémiques pertinents et les priorités de gestion.",
-      "de": "Das Verständnis des grundlegenden menschlichen Bedürfnisses hinter Ihrer Frage hilft, relevante Ökosystemleistungen und Management-Prioritäten zu identifizieren.",
-      "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
-      "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
-      "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione.",
-      "no": "Å forstå det grunnleggende menneskelige behovet bak spørsmålet ditt hjelper med å identifisere relevante økosystemtjenester og forvaltningsprioriteringer.",
-      "el": "Η κατανόηση της θεμελιώδους ανθρώπινης ανάγκης πίσω από την ερώτησή σας βοηθά στον εντοπισμό σχετικών υπηρεσιών οικοσυστήματος και προτεραιοτήτων διαχείρισης."
-    },
-    "modules.ses.creation.es": {
-      "en": "Welcome to the MarineSABRES Toolbox",
-      "es": "Bienvenido a la Caja de Herramientas MarineSABRES",
-      "fr": "Bienvenue dans la Boîte à Outils MarineSABRES",
-      "de": "Willkommen bei der MarineSABRES Toolbox",
-      "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį",
-      "pt": "Bem-vindo à Caixa de Ferramentas MarineSABRES",
-      "it": "Benvenuto nella Toolbox MarineSABRES",
-      "no": "Velkommen til MarineSABRES Toolbox",
-      "el": "Καλώς ήρθατε to the MarineSABRES Toolbox"
-    },
     "modules.entry_point.what_basic_human_need_drives_your_question_multipl": {
       "en": "What basic human need drives your question? (multiple selections allowed)",
       "es": "¿Qué necesidad humana básica motiva su pregunta? (se permite selección múltiple)",
@@ -802,17 +769,6 @@
       "it": "Quale bisogno umano fondamentale motiva la tua domanda? (selezione multipla consentita)",
       "no": "Hvilket grunnleggende menneskelig behov driver spørsmålet ditt? (flervalg)",
       "el": "Ποια βασική ανθρώπινη ανάγκη κινεί το ερώτημά σας; (επιτρέπεται πολλαπλή επιλογή)"
-    },
-    "modules.response.measures.low": {
-      "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
-      "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
-      "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
-      "de": "Ihre Rolle hilft uns, die relevantesten Werkzeuge und Arbeitsabläufe für Ihren Meeresmanagement-Kontext zu empfehlen.",
-      "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
-      "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
-      "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
-      "no": "Din rolle hjelper oss å anbefale de mest relevante verktøyene og arbeidsflytene for din marine forvaltningskontekst.",
-      "el": "Ο ρόλος σας μας βοηθά να προτείνουμε τα πιο σχετικά εργαλεία και ροές εργασίας για το πλαίσιο θαλάσσιας διαχείρισής σας."
     },
     "modules.entry_point.faq_title": {
       "en": "Frequently Asked Questions",

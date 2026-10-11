@@ -606,15 +606,15 @@
       "el": "Δημιουργία παρουσίασης PowerPoint..."
     },
     "common.messages.error_invalid_proj_file_structure_this_may_not_be_": {
-      "en": "Error invalid proj file structure this may not be",
-      "lt": "Klaida: neteisinga projekto failo struktūra, tai gali būti ne",
-      "es": "Error: estructura de archivo de proyecto no válida, puede que no sea",
-      "fr": "Erreur : structure de fichier de projet invalide, ce n'est peut-être pas",
-      "de": "Fehler: ungültige Projektdateistruktur, dies ist möglicherweise nicht",
-      "it": "Errore: struttura del file di progetto non valida, potrebbe non essere",
-      "pt": "Erro: estrutura de arquivo de projeto inválida, pode não ser",
-      "el": "Σφάλμα: μη έγκυρη δομή αρχείου έργου, αυτό μπορεί να μην είναι",
-      "no": "Feil: ugyldig prosjektfilstruktur, dette er kanskje ikke"
+      "en": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
+      "es": "Error: Estructura de archivo de proyecto no válida.",
+      "fr": "Erreur : structure de fichier de projet invalide.",
+      "de": "Fehler: Ungültige Projektdateistruktur.",
+      "lt": "Klaida: netinkama projekto failo struktūra.",
+      "pt": "Erro: estrutura de arquivo de projeto inválida.",
+      "it": "Errore: struttura del file di progetto non valida.",
+      "no": "Feil: Ugyldig prosjektfilstruktur. Dette er kanskje ikke en gyldig MarineSABRES-prosjektfil.",
+      "el": "Σφάλμα: Μη έγκυρη δομή αρχείου έργου. Αυτό μπορεί να μην είναι έγκυρο αρχείο έργου MarineSABRES."
     },
     "common.messages.element_classified_as": {
       "en": "Element classified as:",

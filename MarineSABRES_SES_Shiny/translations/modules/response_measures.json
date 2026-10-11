@@ -338,7 +338,7 @@
       "lt": "Ištrinti Pasirinktus",
       "pt": "Excluir Selecionados",
       "it": "Elimina Selezionati",
-      "no": "Delete Selected",
+      "no": "Slett valgte",
       "el": "Διαγραφή Επιλεγμένο"
     },
     "modules.response.measures.deleted_response_measures": {

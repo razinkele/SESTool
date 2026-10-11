@@ -44,28 +44,6 @@
       "no": "Valideringsfeil:",
       "el": "Επικύρωση errors:"
     },
-    "modules.isa.data_entry.common.sector": {
-      "en": "EP2: Activity Sectors",
-      "es": "EP2: Sectores de Actividad",
-      "fr": "EP2: Secteurs d'Activité",
-      "de": "EP2: Aktivitätssektoren",
-      "lt": "EP2: Veiklos sektoriai",
-      "pt": "EP2: Setores de Atividade",
-      "it": "EP2: Settori di Attività",
-      "no": "ØP2: Aktivitetssektorer",
-      "el": "ΑΣ2: Τομείς δραστηριότητας"
-    },
-    "modules.entry_point.follow_this_sequence_of_tools_to_address_your_mari": {
-      "en": "Follow this sequence of tools to address your marine management question:",
-      "es": "Siga esta secuencia de herramientas para abordar su pregunta de gestión marina:",
-      "fr": "Suivez cette séquence d'outils pour répondre à votre question de gestion marine:",
-      "de": "Folgen Sie dieser Abfolge von Werkzeugen, um Ihre Meeresmanagement-Frage zu beantworten:",
-      "lt": "Sekite šią priemonių seką, kad išspręstumėte savo jūrų valdymo klausimą:",
-      "pt": "Siga esta sequência de ferramentas para abordar a sua questão de gestão marinha:",
-      "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:",
-      "no": "Følg denne verktøysekvensen for å besvare ditt marine forvaltningsspørsmål:",
-      "el": "Ακολουθήστε αυτή τη σειρά εργαλείων για να απαντήσετε στο ερώτημα θαλάσσιας διαχείρισής σας:"
-    },
     "modules.scenario.builder.cancel": {
       "en": "Cancel",
       "es": "Cancelar",
@@ -77,17 +55,6 @@
       "no": "Avbryt",
       "el": "Ακύρωση"
     },
-    "modules.ses.creation.complete_control_over_all_elements": {
-      "en": "Complete control over all elements",
-      "es": "Control completo sobre todos los elementos",
-      "fr": "Contrôle complet sur tous les éléments",
-      "de": "Vollständige Kontrolle über alle Elemente",
-      "lt": "Visiškas kontrolė virš visų elementų",
-      "pt": "Controle completo sobre todos os elementos",
-      "it": "Controllo completo su tutti gli elementi",
-      "no": "Full kontroll over alle elementer",
-      "el": "Ολοκληρώθηκε control over all elements"
-    },
     "modules.scenario.builder.create": {
       "en": "Create CLD networks and run analysis tools",
       "es": "Cree redes CLD y ejecute herramientas de análisis",
@@ -98,39 +65,6 @@
       "it": "Crea reti CLD ed esegui strumenti di analisi",
       "no": "Opprett CLD-nettverk og kjør analyseverktøy",
       "el": "Δημιουργία CLD networks and run analysis tools"
-    },
-    "modules.response.measures.delete_selected": {
-      "en": "Delete Selected",
-      "es": "Eliminar Seleccionados",
-      "fr": "Supprimer la Sélection",
-      "de": "Ausgewählte löschen",
-      "lt": "Ištrinti Pasirinktus",
-      "pt": "Excluir Selecionados",
-      "it": "Elimina Selezionati",
-      "no": "Delete Selected",
-      "el": "Διαγραφή Επιλεγμένο"
-    },
-    "modules.entry_point.need": {
-      "en": "This guidance system will help you find the right tools for your marine management needs.",
-      "es": "Este sistema de orientación le ayudará a encontrar las herramientas adecuadas para sus necesidades de gestión marina.",
-      "fr": "Ce système d'orientation vous aidera à trouver les bons outils pour vos besoins en gestion marine.",
-      "de": "Dieses Orientierungssystem hilft Ihnen, die richtigen Werkzeuge für Ihre Meeresmanagement-Bedürfnisse zu finden.",
-      "lt": "Ši orientavimo sistema padės jums rasti tinkamas priemones jūrų valdymo poreikiams.",
-      "pt": "Este sistema de orientação irá ajudá-lo a encontrar as ferramentas certas para as suas necessidades de gestão marinha.",
-      "it": "Questo sistema di orientamento ti aiuterà a trovare gli strumenti giusti per le tue esigenze di gestione marina.",
-      "no": "Dette veiledningssystemet hjelper deg med å finne de riktige verktøyene for dine behov innen havforvaltning.",
-      "el": "Αυτό το σύστημα καθοδήγησης θα σας βοηθήσει να βρείτε τα κατάλληλα εργαλεία για τις ανάγκες σας στη διαχείριση του θαλάσσιου περιβάλλοντος."
-    },
-    "modules.response.measures.response_measure": {
-      "en": "Response Measures",
-      "es": "Medidas de Respuesta",
-      "fr": "Mesures de Réponse",
-      "de": "Reaktionsmaßnahmen",
-      "lt": "Atsakomosios priemonės",
-      "pt": "Medidas de Resposta",
-      "it": "Misure di Risposta",
-      "no": "Responstiltak",
-      "el": "Απόκριση Μέτρα"
     },
     "modules.scenario.builder.scenario_add_modify_links": {
       "en": "Add/Modify Links",
@@ -1099,39 +1033,6 @@
       "it": "Nodi totali",
       "no": "Totalt antall noder",
       "el": "Σύνολο κόμβων"
-    },
-    "modules.entry_point.role": {
-      "en": "Select your role in marine management",
-      "es": "Seleccione su rol en la gestión marina",
-      "fr": "Sélectionnez votre rôle dans la gestion marine",
-      "de": "Wählen Sie Ihre Rolle im Meeresmanagement",
-      "lt": "Pasirinkite savo vaidmenį jūrų valdyme",
-      "pt": "Selecione o seu papel na gestão marinha",
-      "it": "Seleziona il tuo ruolo nella gestione marina",
-      "no": "Velg din rolle i marin forvaltning",
-      "el": "Επιλογή your role in marine management"
-    },
-    "modules.isa.data_entry.common.validation_errors": {
-      "en": "Validation errors:",
-      "es": "Errores de validación:",
-      "fr": "Erreurs de validation:",
-      "de": "Validierungsfehler:",
-      "lt": "Tikrinimo klaidos:",
-      "pt": "Erros de validação:",
-      "it": "Errori di validazione:",
-      "no": "Valideringsfeil:",
-      "el": "Επικύρωση errors:"
-    },
-    "modules.ses.creation.welfare": {
-      "en": "Welfare",
-      "es": "Bienestar",
-      "fr": "Bien-être",
-      "de": "Wohlfahrt",
-      "lt": "Gerovė",
-      "pt": "Bem-estar",
-      "it": "Benessere",
-      "no": "Velferd",
-      "el": "Ευημερία"
     },
     "modules.scenario.builder.activity": {
       "en": "Activity",
