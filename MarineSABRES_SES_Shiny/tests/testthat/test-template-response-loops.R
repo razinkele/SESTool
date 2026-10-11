@@ -37,14 +37,19 @@ loops_with_response <- function(li) {
   li[has_r, , drop = FALSE]
 }
 
-test_that("Fisheries (Baltic) template: Decision Lens finds Limits to Growth at the cod quota", {
+test_that("Fisheries (Baltic) template: the cod quota sits in balancing loops; no growth engine", {
+  # The quota (R001) closes balancing loops through cod biomass. With the
+  # cod -> herring sign corrected to "+" (2026-10-11), every Fisheries loop is
+  # balancing: the template has no reinforcing engine, so Limits to Growth does
+  # not apply. (An earlier Limits-to-Growth result came only from that sign error.)
   res <- template_loops("Fisheries")
+  r_loops <- loops_with_response(res$loop_info)
+  r1_loops <- r_loops[vapply(r_loops$NodeIDs, function(s) "R_1" %in% .dl_loop_nodes(s), logical(1)), , drop = FALSE]
+  expect_gt(nrow(r1_loops), 0)
+  expect_true(all(r1_loops$Type == "Balancing"))
+  expect_false(any(res$loop_info$Type == "Reinforcing"))
   keys <- vapply(res$archetypes, `[[`, "", "archetype_key")
-  expect_true("limits_to_growth" %in% keys)
-  ltg <- res$archetypes[keys == "limits_to_growth"]
-  lev_labels <- res$nodes$label[match(vapply(ltg, `[[`, "", "leverage_node_id"), res$nodes$id)]
-  lev_labels <- gsub("[[:space:]]+", " ", lev_labels)   # CLD labels are line-wrapped
-  expect_true(any(grepl("cod fishing quota", lev_labels, fixed = TRUE)), info = paste(lev_labels, collapse = " | "))
+  expect_false("limits_to_growth" %in% keys)
 })
 
 test_that("each edited template has a loop through a Response, and all such loops are Balancing", {
@@ -61,6 +66,6 @@ test_that("the GB -> Response links are benefit-worded with '-' polarity", {
     gbr <- Filter(function(x) x$from_type == "welfare" && x$to_type == "response", d$connections)
     expect_length(gbr, 1)
     expect_identical(gbr[[1]]$polarity, "-", info = name)
-    expect_identical(d$metadata$version, "2.1", info = name)
+    expect_true(numeric_version(d$metadata$version) >= "2.1", info = name)
   }
 })

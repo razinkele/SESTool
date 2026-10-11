@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: north_sea_offshore",
     "applicable_regions": [
       "north_sea"
@@ -398,10 +398,10 @@
       "to_id": "MPF001",
       "from_type": "pressure",
       "to_type": "state",
-      "polarity": "+",
+      "polarity": "-",
       "strength": "weak",
       "confidence": 2,
-      "description": "Underwater noise from pile-driving connects to Sandeel stock abundance and distribution"
+      "description": "Pile-driving noise displaces and injures sandeel and disturbs their sandy burrowing habitat: more noise, lower sandeel abundance."
     },
     {
       "from_id": "P005",
