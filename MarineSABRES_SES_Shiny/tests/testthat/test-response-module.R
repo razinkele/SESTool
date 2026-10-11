@@ -172,3 +172,17 @@ test_that("UI has the classification panel with i18n chrome", {
               "implementing_stakeholders", "paired_with"))
     expect_match(ui, paste0("modules.response.governance.", k), fixed = TRUE)
 })
+
+# ---- WS-3a Task 5: tenet appraisal -----------------------------------------------
+test_that("tenet levels are saved per tenet; intermediate offered only for ecol_effective", {
+  m <- rm_add(c(base_inputs, list(rm_tenet_ecol_effective = "intermediate",
+                                  rm_tenet_legally_permissible = "full", rm_tenet_communicable = "minimal")))
+  expect_equal(c(m$Tenet_ecol_effective, m$Tenet_legally_permissible, m$Tenet_communicable, m$Tenet_econ_viable),
+               c("intermediate", "full", "minimal", ""))
+  ui <- as.character(real_response_measures_ui("t", make_test_i18n()))
+  expect_match(ui, "modules.response.governance.tenets_title", fixed = TRUE)
+  ecol <- regmatches(ui, regexpr('(?s)id="t-rm_tenet_ecol_effective".*?</select>', ui, perl = TRUE))
+  comm <- regmatches(ui, regexpr('(?s)id="t-rm_tenet_communicable".*?</select>', ui, perl = TRUE))
+  expect_match(ecol, 'value="intermediate"', fixed = TRUE)
+  expect_false(grepl('value="intermediate"', comm, fixed = TRUE))
+})

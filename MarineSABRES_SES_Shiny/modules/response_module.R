@@ -151,7 +151,19 @@ response_measures_ui <- function(id, i18n) {
                   selectizeInput(ns("rm_impl_stakeholders"), i18n$t("modules.response.governance.implementing_stakeholders"),
                     choices = NULL, multiple = TRUE),
                   tags$small(class = "text-muted", i18n$t("modules.response.governance.no_stakeholders_hint"))
-                ))
+                )),
+                # 11-tenet appraisal (EBM framework); "intermediate" exists only for ecological effectiveness
+                # i18n-ref: modules.response.governance.tenet_level.minimal
+                # i18n-ref: modules.response.governance.tenet_level.intermediate
+                # i18n-ref: modules.response.governance.tenet_level.full
+                # i18n-ref: modules.response.governance.tenet_level.not_assessed
+                h6(class = "mt-2", i18n$t("modules.response.governance.tenets_title")),
+                fluidRow(lapply(EBM_TENETS$code, function(cd) {
+                  lv <- if (cd == "ecol_effective") TENET_LEVELS else setdiff(TENET_LEVELS, "intermediate")
+                  column(3, selectInput(ns(paste0("rm_tenet_", cd)), wp5_vocab_label("tenet", cd, i18n),
+                    choices = c(setNames("", i18n$t("modules.response.governance.tenet_level.not_assessed")),
+                                setNames(lv, vapply(lv, function(x) i18n$t(paste0("modules.response.governance.tenet_level.", x)), character(1))))))
+                }))
               ),
               actionButton(ns("add_response"), i18n$t("modules.response.measures.add_response_measure"),
                           icon = icon("plus"), class = "btn-success")
@@ -521,6 +533,8 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         LegalBasis = input$rm_legal_basis %||% "",
         ImplementingStakeholders = encode_ids(input$rm_impl_stakeholders),
         PairedWith = input$rm_paired_with %||% "",
+        setNames(lapply(EBM_TENETS$code, function(cd) input[[paste0("rm_tenet_", cd)]] %||% ""),
+                 paste0("Tenet_", EBM_TENETS$code)),
         stringsAsFactors = FALSE))
 
       response_data$measures <- rbind(normalize_response_measures(response_data$measures), new_row)
@@ -536,6 +550,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       updateTextInput(session, "rm_competent_authority", value = "")
       updateTextInput(session, "rm_legal_basis", value = "")
       updateSelectizeInput(session, "rm_impl_stakeholders", selected = character(0))
+      for (cd in EBM_TENETS$code) updateSelectInput(session, paste0("rm_tenet_", cd), selected = "")
 
       # v1.16.1: bandit write-side feedback. The user's chosen
       # Effectiveness × Feasibility IS their priority assignment. Treat
