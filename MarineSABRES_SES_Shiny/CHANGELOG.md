@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (model check — spec 2026-10-11 WS-3b)
+- **On load, the ISA editor warns about likely model issues.** It flags two cases:
+  - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.
+  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. All seven shipped templates currently contain such Responses, so loading a template shows this warning.
+- Matching uses whole words in 9 languages and does not flag the ecosystem-service sense of "regulation". The warning appears only when the findings change, and nothing in the project is modified.
+
 ### Fixed (Response register stored translated labels — spec 2026-10-11 WS-3a)
 - **Response type, target and status are stored as language-independent codes.** Previously the saved value was whatever language the user had active, so a project saved in Lithuanian showed Lithuanian values in other languages and could not be compared. Existing projects are converted on load, from labels in any of the 9 languages. Text that matches no label is kept unchanged.
 
