@@ -448,27 +448,36 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
     }
 
-    # WS-3b typing lint: warn (never fix) about likely mistyped interventions and
-    # Responses without feedback; re-notify only when the findings change.
-    # i18n-ref: modules.isa.data_entry.common.typing_lint_l1
-    # i18n-ref: modules.isa.data_entry.common.typing_lint_l2
+    # WS-3b model check: warn (never fix). L1 (element named like an instrument/
+    # measure) lists names as a warning; L2 (Response without feedback) is a
+    # count-only message. Keys are stable element IDs, sorted; only NEW findings
+    # notify, so equivalent re-saves, unrelated edits and fixes stay silent.
+    # Reset on project change (see the project observer below).
     typing_state <- new.env(parent = emptyenv())
     typing_state$last <- character(0)
+    typing_state$notified <- 0L
     warn_if_mistyped <- function() {
       if (!exists("typing_lint_from_isa", mode = "function")) return(invisible(NULL))
       f <- typing_lint_from_isa(isolate(reactiveValuesToList(isa_data)))
-      keys <- if (nrow(f) > 0) paste0(f$rule, ":", f$node_id) else character(0)
-      changed <- !identical(keys, typing_state$last)
+      keys <- sort(if (nrow(f) > 0) paste0(f$rule, ":", f$node_id) else character(0))
+      new_keys <- setdiff(keys, typing_state$last)
       typing_state$last <- keys
-      if (length(keys) > 0 && changed) {
-        debug_log(paste("Typing lint:", paste(keys, collapse = "; ")), "ISA LINT")
-        items <- vapply(seq_len(nrow(f)), function(i) paste0("“", f$name[i], "” — ",
-          i18n$t(paste0("modules.isa.data_entry.common.typing_lint_", tolower(f$rule[i])))), character(1))
-        shown <- paste(head(items, 5), collapse = "; ")
-        if (length(items) > 5) shown <- paste0(shown, "; …")
+      if (length(new_keys) == 0) return(invisible(NULL))
+      debug_log(paste("Model check:", paste(keys, collapse = "; ")), "ISA LINT")
+      typing_state$notified <- typing_state$notified + 1L
+      l1 <- f[f$rule == "L1", , drop = FALSE]
+      if (any(startsWith(new_keys, "L1:")) && nrow(l1) > 0) {
+        shown <- paste(head(paste0("“", l1$name, "”"), 5), collapse = ", ")
+        if (nrow(l1) > 5) shown <- paste0(shown, ", …")
         fmt <- i18n$t("modules.isa.data_entry.common.typing_lint_found")
-        msg <- if (grepl("%d", fmt, fixed = TRUE) && grepl("%s", fmt, fixed = TRUE)) sprintf(fmt, nrow(f), shown) else fmt
+        msg <- if (grepl("%1$d", fmt, fixed = TRUE)) tryCatch(sprintf(fmt, nrow(l1), shown), error = function(e) fmt) else fmt
         showNotification(msg, type = "warning", duration = 15, session = session)
+      }
+      n2 <- sum(f$rule == "L2")
+      if (any(startsWith(new_keys, "L2:")) && n2 > 0) {
+        fmt2 <- i18n$t("modules.isa.data_entry.common.typing_lint_l2_count")
+        msg2 <- if (grepl("%1$d", fmt2, fixed = TRUE)) tryCatch(sprintf(fmt2, n2), error = function(e) fmt2) else fmt2
+        showNotification(msg2, type = "message", duration = 10, session = session)
       }
     }
 
@@ -481,6 +490,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           debug_log("Project changed - clearing ISA module state", "ISA Module")
           .reset_isa_state()
           isa_data$case_info <- list()   # Exercise 0 belongs to the old project too
+          typing_state$last <- character(0)   # WS-3b: a new project is linted afresh
         }
         last_loaded_project_id <<- pid
       }

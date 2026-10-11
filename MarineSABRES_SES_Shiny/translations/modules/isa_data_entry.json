@@ -4874,37 +4874,26 @@
       "el": "Βρέθηκαν %d πρόβλημα(τα) στους πίνακες συνδέσεων: ένας πίνακας δεν αντιστοιχεί στη λίστα στοιχείων (π.χ. μια γραμμή από διαγραμμένο στοιχείο). Ορισμένες συνδέσεις μπορεί να εμφανίζονται σε λάθος στοιχεία — ελέγξτε τις συνδέσεις. Δεν άλλαξε τίποτα."
     },
     "modules.isa.data_entry.common.typing_lint_found": {
-      "en": "%d possible model issue(s): %s. Nothing was changed.",
-      "es": "%d posible(s) problema(s) en el modelo: %s. No se ha modificado nada.",
-      "fr": "%d problème(s) possible(s) dans le modèle : %s. Rien n'a été modifié.",
-      "de": "%d mögliche(s) Modellproblem(e): %s. Es wurde nichts geändert.",
-      "lt": "Galimų modelio problemų: %d. %s. Niekas nepakeista.",
-      "pt": "%d possível(eis) problema(s) no modelo: %s. Nada foi alterado.",
-      "it": "%d possibili problemi nel modello: %s. Non è stato modificato nulla.",
-      "no": "%d mulig(e) modellproblem: %s. Ingenting ble endret.",
-      "el": "%d πιθανό(ά) πρόβλημα(τα) στο μοντέλο: %s. Δεν άλλαξε τίποτα."
+      "en": "%1$d element(s) may be policy instruments or management measures and belong under Responses: %2$s. Nothing was changed.",
+      "es": "%1$d elemento(s) podrían ser instrumentos de política o medidas de gestión y pertenecer a Respuestas: %2$s. No se ha modificado nada.",
+      "fr": "%1$d élément(s) pourraient être des instruments de politique ou des mesures de gestion et relever des Réponses : %2$s. Rien n'a été modifié.",
+      "de": "%1$d Element(e) könnten Politikinstrumente oder Bewirtschaftungsmaßnahmen sein und zu den Reaktionen gehören: %2$s. Es wurde nichts geändert.",
+      "lt": "Elementų, kurie gali būti politikos priemonės ar valdymo priemonės ir priklausyti Atsakams (%1$d): %2$s. Niekas nepakeista.",
+      "pt": "%1$d elemento(s) podem ser instrumentos de política ou medidas de gestão e pertencer às Respostas: %2$s. Nada foi alterado.",
+      "it": "%1$d elementi potrebbero essere strumenti di policy o misure di gestione e appartenere alle Risposte: %2$s. Non è stato modificato nulla.",
+      "no": "%1$d element(er) kan være politiske virkemidler eller forvaltningstiltak og høre til under Responser: %2$s. Ingenting ble endret.",
+      "el": "%1$d στοιχείο(α) μπορεί να είναι μέσα πολιτικής ή μέτρα διαχείρισης και να ανήκουν στις Αποκρίσεις: %2$s. Δεν άλλαξε τίποτα."
     },
-    "modules.isa.data_entry.common.typing_lint_l1": {
-      "en": "looks like a policy instrument or management measure; consider making it a Response",
-      "es": "parece un instrumento de política o una medida de gestión; considere convertirlo en una Respuesta",
-      "fr": "ressemble à un instrument de politique ou à une mesure de gestion ; envisagez d'en faire une Réponse",
-      "de": "sieht wie ein Politikinstrument oder eine Bewirtschaftungsmaßnahme aus; erwägen Sie, es als Reaktion zu erfassen",
-      "lt": "panašu į politikos priemonę ar valdymo veiksmą; apsvarstykite galimybę jį paversti Atsaku",
-      "pt": "parece um instrumento de política ou uma medida de gestão; considere transformá-lo numa Resposta",
-      "it": "sembra uno strumento di policy o una misura di gestione; valuta di renderlo una Risposta",
-      "no": "ser ut som et politisk virkemiddel eller et forvaltningstiltak; vurder å gjøre det til en Respons",
-      "el": "μοιάζει με μέσο πολιτικής ή μέτρο διαχείρισης· εξετάστε να το ορίσετε ως Απόκριση"
-    },
-    "modules.isa.data_entry.common.typing_lint_l2": {
-      "en": "Response with no link from a Marine Process, Ecosystem Service or Goods & Benefit",
-      "es": "Respuesta sin enlace desde un Proceso Marino, un Servicio Ecosistémico o un Bien y Beneficio",
-      "fr": "Réponse sans lien provenant d'un processus marin, d'un service écosystémique ou d'un bien et avantage",
-      "de": "Reaktion ohne Verbindung von einem Meeresprozess, einer Ökosystemleistung oder einem Gut und Nutzen",
-      "lt": "Atsakas, neturintis ryšio iš jūrinio proceso, ekosistemos paslaugos ar gėrybės ir naudos",
-      "pt": "Resposta sem ligação a partir de um Processo Marinho, Serviço Ecossistémico ou Bem e Benefício",
-      "it": "Risposta senza collegamento da un Processo marino, un Servizio ecosistemico o un Bene e beneficio",
-      "no": "Respons uten kobling fra en marin prosess, en økosystemtjeneste eller et gode og en nytte",
-      "el": "Απόκριση χωρίς σύνδεση από θαλάσσια διεργασία, οικοσυστημική υπηρεσία ή αγαθό και όφελος"
+    "modules.isa.data_entry.common.typing_lint_l2_count": {
+      "en": "%1$d Response(s) are not linked from any Goods & Benefits, so they do not respond to an outcome.",
+      "es": "%1$d Respuesta(s) no están enlazadas desde ningún elemento de Bienes y Beneficios, por lo que no responden a ningún resultado.",
+      "fr": "%1$d Réponse(s) ne sont reliées à aucun élément de Biens et Avantages et ne répondent donc à aucun résultat.",
+      "de": "%1$d Reaktion(en) sind mit keinem Element der Güter und Vorteile verbunden und reagieren daher auf kein Ergebnis.",
+      "lt": "Atsakų, nesusietų su jokia Gėrybe ir nauda, todėl nereaguojančių į jokį rezultatą: %1$d.",
+      "pt": "%1$d Resposta(s) não estão ligadas a nenhum elemento de Bens e Benefícios e, por isso, não respondem a nenhum resultado.",
+      "it": "%1$d Risposte non sono collegate da alcun elemento di Beni e Benefici, quindi non rispondono a nessun risultato.",
+      "no": "%1$d Respons(er) er ikke koblet fra noen Goder og fordeler, og reagerer derfor ikke på noe utfall.",
+      "el": "%1$d Απόκριση(εις) δεν συνδέονται από κανένα Αγαθό & Όφελος, επομένως δεν ανταποκρίνονται σε κανένα αποτέλεσμα."
     }
   }
 }
