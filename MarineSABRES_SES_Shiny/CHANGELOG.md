@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (model check — spec 2026-10-11 WS-3b)
+- **On load, the ISA editor warns about likely model issues.** It flags two cases:
+  - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.
+  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. All seven shipped templates currently contain such Responses, so loading a template shows this warning.
+- Matching uses whole words in 9 languages and does not flag the ecosystem-service sense of "regulation". The warning appears only when the findings change, and nothing in the project is modified.
+
+### Fixed (Response register stored translated labels — spec 2026-10-11 WS-3a)
+- **Response type, target and status are stored as language-independent codes.** Previously the saved value was whatever language the user had active, so a project saved in Lithuanian showed Lithuanian values in other languages and could not be compared. Existing projects are converted on load, from labels in any of the 9 languages. Text that matches no label is kept unchanged.
+
+### Added (Response register — EBM classification and governance, WS-3a)
+- New collapsible section in "Add response measure":
+  - EBM classification: policy instrument or management measure, with the WP5 EBM type. Choosing a measure type suggests the DAPSIWRM target.
+  - Governance level, competent authority and legal basis.
+  - Implementing stakeholders, linked to PIMS stakeholders.
+  - Pairing into a management strategy (instrument + measure).
+  - Appraisal against the 11 tenets (minimal / intermediate / full compliance).
+- All fields are saved in projects and survive JSON save/load.
+
+### Changed (WP5 mechanism KB v2 — spec 2026-10-11 WS-2)
+- **The WP5 financial-mechanism catalogue is rebuilt from the FINAL D5.2 (v5, 23 Jun 2026):** 31 mechanisms (Arctic 8, Tuscan 7, Macaronesia 16; previously 28 from April drafts). Mechanism texts are quoted verbatim from D5.2 Tables 9, 20 and 22, and each card shows its source.
+- Macaronesia cards also show details from the Blue Corridor toolkit. That toolkit is an April 2026 annex that is **not part of the final D5.2**, and its details are badged "pre-final draft".
+- Removed (no WP5 source): two substituted Macaronesia mechanisms, invented Tuscan evidence, the code `POS_density`, Tuscan scenario labels (D5.2 defines no Tuscan scenarios), and builder-written assessment guidance (held until WP5 partners decide; spec Q1).
+- Added: Arctic research/innovation funds and PPP/CSR funding, Tuscan blue-carbon credits and certification/branding, Macaronesia cost bands, D5.2 scenario names per DA, and coded Arctic scenario applicability (derived).
+- Mechanism IDs are renumbered (`arc_01…`, `tus_01…`, `mac_01…`); no project data referenced the old IDs.
+- `scripts/build_wp5_mechanisms_kb.py` now parses a committed, hash-pinned source extract (`scripts/wp5_kb_sources/`). `scripts/kb_audit/audit_wp5_mechanisms.py` requires the JSON to equal a fresh build of that extract.
+
+### Added (WP5 foundation — spec 2026-10-11 WS-0/WS-1)
+- WP5 shared vocabulary: D5.2 criteria (EE/EC/EQ/PI/FF with PO/FI aliases), ordinal impact rubric, time horizons, EBM policy-instrument and management-measure typologies, 11 tenets, NPG governance dimensions, D5.3 graph-edit operations (`constants.R`, `functions/wp5_vocabulary.R`, `translations/modules/wp5_vocabulary.json`, 9 languages).
+- `data/wp5_intervention_ops.json`: D5.3 intervention typology → SES-graph change operations with per-row provenance; EBM-code mapping marked provisional pending WP5 confirmation.
+- `stamp_min_app_version()` helper (never lowers the stamped version).
+
+### Fixed
+- Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
+
 ## [1.22.2] - 2026-10-11
 
 Patch release: translation keys defined in two files (PR #96).

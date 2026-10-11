@@ -51,6 +51,10 @@ load_wp5_mechanisms_kb <- function(db_path = NULL, force_reload = FALSE) {
     raw <- jsonlite::fromJSON(db_path, simplifyDataFrame = FALSE)
     .wp5_kb_env$db <- raw
     .wp5_kb_env$loaded <- TRUE
+    if (is.null(raw$schema)) {
+      warning("[WP5 KB] schema 1 (pre-FINAL D5.2) KB loaded; rebuild with scripts/build_wp5_mechanisms_kb.py",
+              call. = FALSE)
+    }
 
     n_das <- length(raw$demonstration_areas %||% list())
     n_mechs <- sum(vapply(
@@ -129,6 +133,44 @@ get_mechanism_by_id <- function(id) {
 get_valuation_unit_values <- function(habitat) {
   if (!wp5_kb_available()) return(NULL)
   .wp5_kb_env$db$valuation_unit_values[[habitat]]
+}
+
+#' Schema version of the loaded WP5 KB (1 = April-draft KB, 2 = FINAL D5.2 rebuild)
+wp5_kb_schema <- function() {
+  if (!wp5_kb_available()) return(NA_integer_)
+  as.integer(.wp5_kb_env$db$schema %||% 1L)
+}
+
+#' D5.2 scenarios for a DA (none for Tuscan); list of list(code, name, source_ref)
+get_scenarios_for_da <- function(da) {
+  if (!wp5_kb_available()) return(list())
+  .wp5_kb_env$db$scenarios[[da]] %||% list()
+}
+
+#' Macaronesia cost-band legend (D5.2 Table 22); "" when absent
+get_cost_band_legend <- function() {
+  if (!wp5_kb_available()) return("")
+  as.character(.wp5_kb_env$db$cost_bands$legend %||% "")
+}
+
+#' Toolkit reference text by number; "" when unknown
+get_wp5_reference <- function(n) {
+  if (!wp5_kb_available()) return("")
+  as.character(.wp5_kb_env$db$references$toolkit[[as.character(n)]] %||% "")
+}
+
+#' Provenance of a mechanism field (spec P1)
+#' @param id Mechanism id
+#' @param field Dotted path, e.g. "toolkit.design_parameters"
+#' @return list(provenance, source_ref) or NULL for an unknown id
+mechanism_provenance <- function(id, field = NULL) {
+  m <- get_mechanism_by_id(id)
+  if (is.null(m)) return(NULL)
+  f <- field %||% ""
+  if (startsWith(f, "derived")) return(list(provenance = "wp5_derived", source_ref = m$source_ref))
+  if (startsWith(f, "toolkit") && !is.null(m$toolkit))
+    return(list(provenance = m$toolkit$provenance, source_ref = m$toolkit$source_ref))
+  list(provenance = m$provenance %||% "wp5_source", source_ref = m$source_ref)
 }
 
 # Auto-load on source if data file present (mirrors ses_knowledge_db_loader.R)

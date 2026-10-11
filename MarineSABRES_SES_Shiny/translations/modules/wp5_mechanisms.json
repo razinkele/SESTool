@@ -67,28 +67,6 @@
       "no": "Finansieringsstrøm",
       "el": "Χρηματοοικονομική ροή"
     },
-    "modules.wp5_mechanisms.attr.payer": {
-      "en": "Payer",
-      "es": "Pagador",
-      "fr": "Payeur",
-      "de": "Zahler",
-      "lt": "Mokėtojas",
-      "pt": "Pagador",
-      "it": "Pagatore",
-      "no": "Betaler",
-      "el": "Πληρωτής"
-    },
-    "modules.wp5_mechanisms.attr.receiver": {
-      "en": "Receiver",
-      "es": "Receptor",
-      "fr": "Bénéficiaire",
-      "de": "Empfänger",
-      "lt": "Gavėjas",
-      "pt": "Recetor",
-      "it": "Beneficiario",
-      "no": "Mottaker",
-      "el": "Αποδέκτης"
-    },
     "modules.wp5_mechanisms.attr.design_parameters": {
       "en": "Design parameters",
       "es": "Parámetros de diseño",
@@ -133,17 +111,6 @@
       "no": "Gjelder demonstrasjonsområder",
       "el": "Ισχύει για τις περιοχές επίδειξης"
     },
-    "modules.wp5_mechanisms.attr.success_metrics": {
-      "en": "Success metrics",
-      "es": "Indicadores de éxito",
-      "fr": "Indicateurs de réussite",
-      "de": "Erfolgskennzahlen",
-      "lt": "Sėkmės rodikliai",
-      "pt": "Indicadores de sucesso",
-      "it": "Indicatori di successo",
-      "no": "Suksessindikatorer",
-      "el": "Δείκτες επιτυχίας"
-    },
     "modules.wp5_mechanisms.attr.risks_and_guardrails": {
       "en": "Risks and guardrails",
       "es": "Riesgos y salvaguardas",
@@ -154,17 +121,6 @@
       "it": "Rischi e salvaguardie",
       "no": "Risikoer og sikkerhetsmekanismer",
       "el": "Κίνδυνοι και δικλίδες ασφαλείας"
-    },
-    "modules.wp5_mechanisms.attr.use_in_impact_assessment": {
-      "en": "Use in impact assessment",
-      "es": "Uso en la evaluación de impacto",
-      "fr": "Utilisation dans l'évaluation d'impact",
-      "de": "Verwendung in der Folgenabschätzung",
-      "lt": "Naudojimas poveikio vertinime",
-      "pt": "Utilização na avaliação de impacto",
-      "it": "Uso nella valutazione d'impatto",
-      "no": "Bruk i konsekvensvurdering",
-      "el": "Χρήση στην εκτίμηση επιπτώσεων"
     },
     "modules.wp5_mechanisms.attr.references": {
       "en": "References",
@@ -297,6 +253,182 @@
       "it": "Questo progetto utilizza funzionalità di una versione più recente del toolbox. Salvando qui, i dati della versione più recente andranno persi.",
       "no": "Dette prosjektet bruker funksjoner fra en nyere versjon av verktøyet. Lagrer du her, forkastes data fra den nyere versjonen.",
       "el": "Αυτό το έργο χρησιμοποιεί λειτουργίες από νεότερη έκδοση της εργαλειοθήκης. Η αποθήκευση εδώ θα απορρίψει τα δεδομένα της νεότερης έκδοσης."
+    },
+    "modules.wp5_mechanisms.attr.how_it_works": {
+      "en": "How it works",
+      "es": "Cómo funciona",
+      "fr": "Fonctionnement",
+      "de": "Funktionsweise",
+      "lt": "Kaip veikia",
+      "pt": "Como funciona",
+      "it": "Come funziona",
+      "no": "Slik fungerer det",
+      "el": "Πώς λειτουργεί"
+    },
+    "modules.wp5_mechanisms.attr.who_pays": {
+      "en": "Who pays / finances it",
+      "es": "Quién paga / financia",
+      "fr": "Qui paie / finance",
+      "de": "Wer zahlt / finanziert",
+      "lt": "Kas moka / finansuoja",
+      "pt": "Quem paga / financia",
+      "it": "Chi paga / finanzia",
+      "no": "Hvem betaler / finansierer",
+      "el": "Ποιος πληρώνει / χρηματοδοτεί"
+    },
+    "modules.wp5_mechanisms.attr.governance_interface": {
+      "en": "Governance / delivery interface",
+      "es": "Interfaz de gobernanza / ejecución",
+      "fr": "Interface de gouvernance / mise en œuvre",
+      "de": "Governance- / Umsetzungsschnittstelle",
+      "lt": "Valdysenos / įgyvendinimo sąsaja",
+      "pt": "Interface de governação / execução",
+      "it": "Interfaccia di governance / attuazione",
+      "no": "Styrings- / gjennomføringsgrensesnitt",
+      "el": "Διεπαφή διακυβέρνησης / υλοποίησης"
+    },
+    "modules.wp5_mechanisms.attr.applicability": {
+      "en": "Applicability",
+      "es": "Aplicabilidad",
+      "fr": "Applicabilité",
+      "de": "Anwendbarkeit",
+      "lt": "Pritaikomumas",
+      "pt": "Aplicabilidade",
+      "it": "Applicabilità",
+      "no": "Anvendbarhet",
+      "el": "Εφαρμοσιμότητα"
+    },
+    "modules.wp5_mechanisms.attr.what_it_delivers": {
+      "en": "What it delivers in practice",
+      "es": "Qué aporta en la práctica",
+      "fr": "Ce qu'il apporte concrètement",
+      "de": "Was es in der Praxis leistet",
+      "lt": "Ką tai suteikia praktiškai",
+      "pt": "O que proporciona na prática",
+      "it": "Cosa fornisce in pratica",
+      "no": "Hva det gir i praksis",
+      "el": "Τι προσφέρει στην πράξη"
+    },
+    "modules.wp5_mechanisms.attr.finance_flow_text": {
+      "en": "Who pays → what it funds",
+      "es": "Quién paga → qué financia",
+      "fr": "Qui paie → ce qui est financé",
+      "de": "Wer zahlt → was finanziert wird",
+      "lt": "Kas moka → ką finansuoja",
+      "pt": "Quem paga → o que financia",
+      "it": "Chi paga → cosa finanzia",
+      "no": "Hvem betaler → hva som finansieres",
+      "el": "Ποιος πληρώνει → τι χρηματοδοτεί"
+    },
+    "modules.wp5_mechanisms.attr.cost_band": {
+      "en": "Indicative annual cost",
+      "es": "Coste anual indicativo",
+      "fr": "Coût annuel indicatif",
+      "de": "Richtwert der jährlichen Kosten",
+      "lt": "Orientacinės metinės išlaidos",
+      "pt": "Custo anual indicativo",
+      "it": "Costo annuo indicativo",
+      "no": "Veiledende årlig kostnad",
+      "el": "Ενδεικτικό ετήσιο κόστος"
+    },
+    "modules.wp5_mechanisms.attr.cost_band_flag": {
+      "en": "* flagged in D5.2 (meaning not stated)",
+      "es": "* marcado en D5.2 (significado no indicado)",
+      "fr": "* signalé dans D5.2 (signification non précisée)",
+      "de": "* in D5.2 markiert (Bedeutung nicht angegeben)",
+      "lt": "* pažymėta D5.2 (reikšmė nenurodyta)",
+      "pt": "* assinalado em D5.2 (significado não indicado)",
+      "it": "* segnalato in D5.2 (significato non indicato)",
+      "no": "* merket i D5.2 (betydning ikke oppgitt)",
+      "el": "* επισημαίνεται στο D5.2 (η σημασία δεν αναφέρεται)"
+    },
+    "modules.wp5_mechanisms.attr.success_statement": {
+      "en": "What success looks like",
+      "es": "Cómo se ve el éxito",
+      "fr": "À quoi ressemble la réussite",
+      "de": "Woran sich Erfolg zeigt",
+      "lt": "Kaip atrodo sėkmė",
+      "pt": "Como se reconhece o sucesso",
+      "it": "Come si riconosce il successo",
+      "no": "Hvordan suksess ser ut",
+      "el": "Πώς φαίνεται η επιτυχία"
+    },
+    "modules.wp5_mechanisms.attr.toolkit_details": {
+      "en": "Toolkit details (Blue Corridor toolkit, April 2026 draft; not part of the final D5.2)",
+      "es": "Detalles del conjunto de herramientas (Blue Corridor, borrador de abril de 2026; no forma parte del D5.2 final)",
+      "fr": "Détails de la boîte à outils (Blue Corridor, projet d'avril 2026 ; ne fait pas partie du D5.2 final)",
+      "de": "Details des Instrumentenkastens (Blue Corridor, Entwurf April 2026; nicht Teil des endgültigen D5.2)",
+      "lt": "Priemonių rinkinio informacija (Blue Corridor, 2026 m. balandžio projektas; neįtraukta į galutinį D5.2)",
+      "pt": "Detalhes do conjunto de instrumentos (Blue Corridor, rascunho de abril de 2026; não faz parte do D5.2 final)",
+      "it": "Dettagli del toolkit (Blue Corridor, bozza di aprile 2026; non fa parte del D5.2 finale)",
+      "no": "Detaljer fra verktøykassen (Blue Corridor, utkast april 2026; ikke del av endelig D5.2)",
+      "el": "Λεπτομέρειες εργαλειοθήκης (Blue Corridor, σχέδιο Απριλίου 2026· δεν αποτελεί μέρος του τελικού D5.2)"
+    },
+    "modules.wp5_mechanisms.attr.source": {
+      "en": "Source",
+      "es": "Fuente",
+      "fr": "Source",
+      "de": "Quelle",
+      "lt": "Šaltinis",
+      "pt": "Fonte",
+      "it": "Fonte",
+      "no": "Kilde",
+      "el": "Πηγή"
+    },
+    "modules.wp5_mechanisms.pane.english_only_note": {
+      "en": "Mechanism texts are quoted from the WP5 documents and are available in English only.",
+      "es": "Los textos de los mecanismos se citan de los documentos del WP5 y solo están disponibles en inglés.",
+      "fr": "Les textes des mécanismes sont cités des documents du WP5 et ne sont disponibles qu'en anglais.",
+      "de": "Die Mechanismustexte sind aus den WP5-Dokumenten zitiert und nur auf Englisch verfügbar.",
+      "lt": "Mechanizmų tekstai cituojami iš WP5 dokumentų ir pateikiami tik anglų kalba.",
+      "pt": "Os textos dos mecanismos são citados dos documentos do WP5 e estão disponíveis apenas em inglês.",
+      "it": "I testi dei meccanismi sono citati dai documenti del WP5 e sono disponibili solo in inglese.",
+      "no": "Mekanismetekstene er sitert fra WP5-dokumentene og finnes bare på engelsk.",
+      "el": "Τα κείμενα των μηχανισμών παρατίθενται από τα έγγραφα του WP5 και είναι διαθέσιμα μόνο στα αγγλικά."
+    },
+    "modules.wp5_mechanisms.pane.legacy_kb_warning": {
+      "en": "This installation uses an older mechanism catalogue built from draft documents. Ask the administrator to update it.",
+      "es": "Esta instalación utiliza un catálogo de mecanismos antiguo elaborado a partir de borradores. Pida al administrador que lo actualice.",
+      "fr": "Cette installation utilise un ancien catalogue de mécanismes établi à partir de projets de documents. Demandez à l'administrateur de le mettre à jour.",
+      "de": "Diese Installation verwendet einen älteren, aus Entwürfen erstellten Mechanismenkatalog. Bitten Sie den Administrator um eine Aktualisierung.",
+      "lt": "Šiame diegime naudojamas senesnis mechanizmų katalogas, sudarytas pagal dokumentų projektus. Paprašykite administratoriaus jį atnaujinti.",
+      "pt": "Esta instalação utiliza um catálogo de mecanismos antigo, elaborado a partir de documentos provisórios. Peça ao administrador que o atualize.",
+      "it": "Questa installazione usa un vecchio catalogo dei meccanismi basato su bozze. Chiedere all'amministratore di aggiornarlo.",
+      "no": "Denne installasjonen bruker en eldre mekanismekatalog laget fra utkast. Be administratoren om å oppdatere den.",
+      "el": "Αυτή η εγκατάσταση χρησιμοποιεί παλαιότερο κατάλογο μηχανισμών που βασίζεται σε σχέδια εγγράφων. Ζητήστε από τον διαχειριστή να τον ενημερώσει."
+    },
+    "modules.wp5_mechanisms.provenance.wp5_prefinal": {
+      "en": "Pre-final draft",
+      "es": "Borrador previo a la versión final",
+      "fr": "Projet préalable à la version finale",
+      "de": "Vorläufiger Entwurf",
+      "lt": "Preliminarus projektas",
+      "pt": "Rascunho anterior à versão final",
+      "it": "Bozza pre-finale",
+      "no": "Foreløpig utkast",
+      "el": "Προκαταρκτικό σχέδιο"
+    },
+    "modules.wp5_mechanisms.provenance.wp5_derived": {
+      "en": "Derived",
+      "es": "Derivado",
+      "fr": "Dérivé",
+      "de": "Abgeleitet",
+      "lt": "Išvestinis",
+      "pt": "Derivado",
+      "it": "Derivato",
+      "no": "Avledet",
+      "el": "Παράγωγο"
+    },
+    "modules.wp5_mechanisms.attr.indicators_referenced": {
+      "en": "Indicators referenced",
+      "es": "Indicadores mencionados",
+      "fr": "Indicateurs cités",
+      "de": "Genannte Indikatoren",
+      "lt": "Minimi rodikliai",
+      "pt": "Indicadores referidos",
+      "it": "Indicatori citati",
+      "no": "Indikatorer det vises til",
+      "el": "Δείκτες που αναφέρονται"
     }
   }
 }

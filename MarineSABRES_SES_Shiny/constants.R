@@ -743,6 +743,108 @@ UI_CARD_BORDER_RADIUS <- "8px"
 WP5_DA_CONTEXTS <- c("macaronesia", "tuscan", "arctic")
 
 # ============================================================================
+# WP5 SHARED VOCABULARY (spec 2026-10-11 WS-1)
+# ============================================================================
+# Codes only. Labels resolve at render time via wp5_vocab_label() /
+# i18n key modules.wp5_vocabulary.<vocab>.<code, dots -> underscores>.
+# Sources: D5.2 final v5 §1.3-1.5 and Phase-3 rubric (audit A§2.2-2.3);
+# EBM framework & implementation guidance (audit C§2, D§3.2-3.4);
+# D5.4 NPG dimensions (audit D§1.2); D5.3 graph-change matrix (audit C§1.1).
+
+WP5_CRITERIA <- data.frame(
+  code = c("EE", "EC", "EQ", "PI", "FF"),
+  stringsAsFactors = FALSE
+)
+# D5.2 uses PO/FI in the indicator fiches for PI/FF (audit A§2.2)
+WP5_CRITERIA$aliases <- I(list(character(), character(), character(), "PO", "FI"))
+
+WP5_CRITERION_SUBDIMENSIONS <- list(
+  EQ = c("distributional", "procedural", "recognitional"),
+  PI = c("credibility", "manageability", "contestation_risk")
+)
+
+WP5_RUBRIC <- list(
+  direction          = c("increase", "decrease", "no_change", "uncertain"),
+  magnitude          = c("incremental", "moderate", "substantial"),
+  timing             = c("short", "medium", "long"),
+  confidence         = c("high", "medium", "low"),
+  evidence           = c("dataset", "literature", "stakeholder", "da_judgement", "triangulation"),
+  uncertainty_driver = c("data_gap", "contested_assumption", "weak_causal_link", "implementation_dependency"),
+  indicator_role     = c("primary", "supporting"),
+  pathway_segment    = c("pressure", "state", "benefit", "governance_capacity")
+)
+
+WP5_TIME_HORIZON_YEARS <- list(short = c(1, 3), medium = c(4, 7), long = c(8, 15))
+
+# EBM policy instruments (R). Source numbering skips 3.5 (audit C§2.1).
+EBM_POLICY_INSTRUMENTS <- data.frame(
+  code = c("1", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
+           "2", "2.1", "2.2", "2.3", "2.4", "2.5",
+           "3", "3.1", "3.2", "3.3", "3.4", "3.6", "3.7",
+           "4", "4.1", "4.2", "4.3"),
+  category = c(rep("legal_regulatory", 7), rep("voluntary_information", 6),
+               rep("economic_incentive", 7), rep("research_development", 4)),
+  level = c("category", rep("type", 6), "category", rep("type", 5),
+            "category", rep("type", 6), "category", rep("type", 3)),
+  stringsAsFactors = FALSE
+)
+
+# EBM management measures (M) with DAPSIWRM target (audit C§2.2)
+EBM_MANAGEMENT_MEASURES <- data.frame(
+  code = c("spatial.year_round", "spatial.seasonal", "input.capacity", "input.effort",
+           "input.technical", "output", "remediation", "restoration.species",
+           "restoration.habitat", "nbs.enhance", "nbs.multi_use", "nbs.replace"),
+  category = c("spatial", "spatial", "input", "input", "input", "output", "remediation",
+               "restoration", "restoration", "nbs", "nbs", "nbs"),
+  dapsiwrm_target = c("A|P|C", "A|P|C", "A", "A", "A", "P", "P", "C", "C", "C", "A", "A"),
+  stringsAsFactors = FALSE
+)
+
+# 11 tenets: 3 measure-level + 8 whole-intervention (audit C§3.3, D§3.4)
+EBM_TENETS <- data.frame(
+  code = c("ecol_effective", "tech_feasible", "econ_efficient",
+           "econ_viable", "socially_desirable", "ethically_defensible", "culturally_inclusive",
+           "legally_permissible", "admin_achievable", "communicable", "politically_expedient"),
+  scope = c(rep("measure", 3), rep("intervention", 8)),
+  stringsAsFactors = FALSE
+)
+
+NPG_DIMENSIONS <- c("knowledge", "collaboration", "values_conflict", "legitimacy_equity", "cross_sectoral")
+
+# D5.3 graph-change operations: (+/-) reweight existing edge, (---) new edge, (o) new node
+GRAPH_EDIT_OPS <- c("reweight_edge", "new_edge", "new_node")
+
+# ============================================================================
+# RESPONSE REGISTER CODES (spec 2026-10-11 WS-3a) — codes stored; labels via
+# existing modules.response.measures.<key> translations (values = key suffix)
+# ============================================================================
+RM_TYPE_CODES <- c(regulatory = "regulatory", economic = "economic", educational = "educational",
+                   technical = "technical", institutional = "institutional",
+                   voluntary = "voluntary", mixed = "mixed")
+RM_TARGET_CODES <- c(drivers = "drivers", activities = "activities", pressures = "pressures",
+                     state = "state", multiple = "multiple_levels")
+RM_STATUS_CODES <- c(proposed = "proposed", planned = "planned", implemented = "implemented",
+                     partially_implemented = "partially_implemented", abandoned = "abandoned")
+GOVERNANCE_LEVELS <- c("local", "island", "regional", "national", "eu", "regional_sea", "international")
+TENET_LEVELS <- c("minimal", "intermediate", "full")   # intermediate: ecol_effective only (EBM framework)
+
+RM_REGISTER_COLUMNS <- c(
+  "ID", "Name", "Type", "Target", "Description", "Mechanism", "TargetElement",
+  "Effectiveness", "Feasibility", "Cost", "Status", "Stakeholders", "Barriers", "DateAdded",
+  "Kind", "EbmCode", "GovernanceLevel", "CompetentAuthority", "LegalBasis",
+  "ImplementingStakeholders", "PairedWith",
+  paste0("Tenet_", c("ecol_effective", "tech_feasible", "econ_efficient",
+                     "econ_viable", "socially_desirable", "ethically_defensible", "culturally_inclusive",
+                     "legally_permissible", "admin_achievable", "communicable", "politically_expedient"))
+)
+
+# Columns shown in the register table and Word reports (codes translated);
+# tenet / stakeholder-ID / pairing columns stay in data and in the Excel export.
+RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel",
+                        "CompetentAuthority", "LegalBasis", "Effectiveness", "Feasibility", "Cost",
+                        "Status", "DateAdded")
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 

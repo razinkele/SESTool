@@ -13,6 +13,10 @@ project_root <- normalizePath(".")
 # Minimal stub — data_structure.R calls debug_log for warnings
 debug_log <- function(msg, ctx = "") invisible(NULL)
 
+source(file.path(project_root, "constants.R"), local = FALSE)
+source(file.path(project_root, "functions", "utils.R"), local = FALSE)
+source(file.path(project_root, "functions", "wp5_vocabulary.R"), local = FALSE)
+source(file.path(project_root, "functions", "response_measures_schema.R"), local = FALSE)
 source(file.path(project_root, "functions", "data_structure.R"), local = FALSE)
 
 cat("Running JSON project loading tests...\n\n")

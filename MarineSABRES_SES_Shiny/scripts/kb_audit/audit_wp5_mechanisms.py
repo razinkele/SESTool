@@ -1,135 +1,132 @@
 #!/usr/bin/env python3
-"""WP5 mechanism KB quality audit.
+"""WP5 mechanism KB v2 audit (spec 2026-10-11 WS-2).
 
-Reads data/ses_knowledge_db_wp5_mechanisms.json and flags:
-  - Mechanisms missing any of the 13 required attributes
-  - Mechanisms with <8/9 completeness attributes populated (per spec §5.7 floor)
-  - DA names not in the canonical {macaronesia, tuscan, arctic} set
-  - Empty references or evidence_base arrays
-  - finance_flow with no payer or no receiver
-  - Mechanism IDs that are not unique within the file
-  - valuation_unit_values band-ordering violations (low <= central <= high)
+(a) committed JSON must EQUAL a fresh build from the committed extract
+    (field-level diff -> catches hand edits, swapped columns, short-cell edits);
+(b) independent invariants (counts, provenance, placeholders, canonical codes,
+    no Tuscan scenarios, no use_in_impact_assessment, cost bands, header pins);
+(c) per-section verbatim containment of every non-derived string.
+There is deliberately NO completeness floor.
 
-Exits with status 1 if any FAIL-class issue is found.
-
-Usage:
-    micromamba run -n shiny python scripts/kb_audit/audit_wp5_mechanisms.py
+Usage (from MarineSABRES_SES_Shiny/):
+    micromamba run -n shiny python -I scripts/kb_audit/audit_wp5_mechanisms.py
 """
-
+import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
-KB_PATH = Path("data/ses_knowledge_db_wp5_mechanisms.json")
-CANONICAL_DAS = {"macaronesia", "tuscan", "arctic"}
-REQUIRED_ATTRS = [
-    "id", "name", "cost_profile", "what_it_funds", "finance_flow",
-    "design_parameters", "evidence_base", "transferable_lessons",
-    "applies_to_DAs", "success_metrics", "risks_and_guardrails",
-    "use_in_impact_assessment", "references",
-]
-# Of these 13, 9 are counted toward the spec's "≥8/9" completeness floor.
-# `id` is required but always populated by construction; `applies_to_DAs`,
-# `success_metrics`, `risks_and_guardrails` are project-internal cross-references
-# that may legitimately be lean or empty pending Phase 3/4.
-COMPLETENESS_ATTRS = [
-    "name", "cost_profile", "what_it_funds", "finance_flow",
-    "design_parameters", "evidence_base", "transferable_lessons",
-    "use_in_impact_assessment", "references",
-]
+APP = Path(__file__).resolve().parents[2]
+KB_PATH = APP / "data" / "ses_knowledge_db_wp5_mechanisms.json"
+_s = importlib.util.spec_from_file_location("bk", APP / "scripts" / "build_wp5_mechanisms_kb.py")
+bk = importlib.util.module_from_spec(_s); _s.loader.exec_module(bk)
+
+EXPECTED = {"arctic": 8, "tuscan": 7, "macaronesia": 16}
+PLACEHOLDER = re.compile(r"§x\.x|\bTODO\b|\bTBD\b|POS_density")
+SKIP = {"id", "da", "number", "provenance", "source_ref", "derived", "reference_numbers"}
 
 
-def is_populated(value):
-    """Return True if a JSON value carries non-trivial content."""
-    if value is None:
-        return False
-    if isinstance(value, str):
-        return bool(value.strip())
-    if isinstance(value, (list, dict)):
-        return bool(value)
-    return True
+def _diff(a, b, path, out):
+    if isinstance(a, dict) and isinstance(b, dict):
+        for k in sorted(set(a) | set(b)):
+            _diff(a.get(k, "<missing>"), b.get(k, "<missing>"), f"{path}.{k}" if path else k, out)
+    elif isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
+        for i, (x, y) in enumerate(zip(a, b)):
+            _diff(x, y, f"{path}[{i}]", out)
+    elif a != b:
+        out.append(path)
 
 
-def audit_mechanism(da_name, mech, seen_ids):
-    issues = []
-    mid = mech.get("id", "<missing-id>")
+def _strings(obj, path=""):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k not in SKIP:
+                yield from _strings(v, f"{path}.{k}" if path else k)
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            yield from _strings(v, f"{path}[{i}]")
+    elif isinstance(obj, str):
+        yield path, obj
 
-    # Missing required attributes (FAIL)
-    for attr in REQUIRED_ATTRS:
-        if attr not in mech:
-            issues.append(("FAIL", f"{da_name}/{mid}: missing required attribute '{attr}'"))
 
-    # ID uniqueness
-    if mid in seen_ids:
-        issues.append(("FAIL", f"{mid}: duplicate id (also appears in {seen_ids[mid]})"))
-    else:
-        seen_ids[mid] = da_name
+def audit(kb, sections):
+    fails = []
+    hdr = sections.get("__header__", {})
+    for k in ["verified_against_final_pdf"] + bk.PIN_KEYS:
+        if not hdr.get(k):
+            fails.append(f"top.extract_header: missing {k}")
+    fresh = bk.build_kb(sections)
+    for da, want in EXPECTED.items():
+        cm = kb["demonstration_areas"].get(da, {}).get("mechanisms", [])
+        fm = fresh["demonstration_areas"][da]["mechanisms"]
+        if len(cm) != want:
+            fails.append(f"top.{da}: {len(cm)} mechanisms, FINAL D5.2 has {want}")
+        for c, f in zip(cm, fm):
+            diffs = []
+            _diff(c, f, "", diffs)
+            fails += [f"{c.get('id')}.{p}: differs from a fresh build of the extract" for p in diffs]
+    top_diffs = []
+    _diff({k: v for k, v in kb.items() if k != "demonstration_areas"},
+          {k: v for k, v in fresh.items() if k != "demonstration_areas"}, "", top_diffs)
+    fails += [f"top.{p}: differs from a fresh build of the extract" for p in top_diffs]
 
-    # Completeness floor (>=8/9)
-    populated = sum(1 for a in COMPLETENESS_ATTRS if is_populated(mech.get(a)))
-    if populated < 8:
-        issues.append(("FAIL", f"{da_name}/{mid}: only {populated}/9 completeness attrs populated; spec floor is 8"))
-
-    # finance_flow structure
-    ff = mech.get("finance_flow") or {}
-    if not ff.get("payer"):
-        issues.append(("FAIL", f"{da_name}/{mid}: finance_flow.payer is empty"))
-    if not ff.get("receiver"):
-        issues.append(("FAIL", f"{da_name}/{mid}: finance_flow.receiver is empty"))
-
-    # applies_to_DAs canonicality
-    for da in mech.get("applies_to_DAs", []):
-        if da not in CANONICAL_DAS:
-            issues.append(("FAIL", f"{da_name}/{mid}: applies_to_DAs contains non-canonical '{da}'"))
-
-    # Empty references is a WARN (some mechanisms genuinely have only one source)
-    if not mech.get("references"):
-        issues.append(("WARN", f"{da_name}/{mid}: references array is empty"))
-    if not mech.get("evidence_base"):
-        issues.append(("WARN", f"{da_name}/{mid}: evidence_base array is empty"))
-
-    return issues
+    norm = {k: bk.clean_cell(v) for k, v in sections.items() if k != "__header__"}
+    hay = {"arctic": norm.get("table9_arctic", ""), "tuscan": norm.get("table20_tuscan", ""),
+           "macaronesia": norm.get("table22_macaronesia", "")}
+    ids = []
+    for da in EXPECTED:
+        for m in kb["demonstration_areas"].get(da, {}).get("mechanisms", []):
+            mid = m.get("id"); ids.append(mid)
+            if m.get("provenance") != "wp5_source" or not m.get("source_ref"):
+                fails.append(f"{mid}.provenance: missing wp5_source/source_ref")
+            d = m.get("derived", {})
+            if d.get("provenance") != "wp5_derived" or not d.get("derivation"):
+                fails.append(f"{mid}.derived: missing wp5_derived/derivation")
+            tk = m.get("toolkit")
+            if tk is not None:
+                if tk.get("provenance") != "wp5_prefinal" or tk.get("source_ref", {}).get("in_final_d52") is not False:
+                    fails.append(f"{mid}.toolkit: must be wp5_prefinal with in_final_d52=false")
+                if "use_in_impact_assessment" in tk:
+                    fails.append(f"{mid}.toolkit.use_in_impact_assessment: must not ship before partner Q1")
+            if "use_in_impact_assessment" in m:
+                fails.append(f"{mid}.use_in_impact_assessment: must not ship before partner Q1")
+            for path, val in _strings({k: v for k, v in m.items() if k != "toolkit"}):
+                if PLACEHOLDER.search(val):
+                    fails.append(f"{mid}.{path}: placeholder text")
+                elif val and bk.clean_cell(val) not in hay[da]:
+                    fails.append(f"{mid}.{path}: not verbatim in its source table")
+            for path, val in _strings(tk or {}):
+                if val and bk.clean_cell(val) not in norm.get("toolkit_annex_table2", ""):
+                    fails.append(f"{mid}.toolkit.{path}: not verbatim in toolkit Annex Table 2")
+            for code in d.get("success_metrics", []):
+                if code not in bk.CANONICAL_INDICATORS:
+                    fails.append(f"{mid}.derived.success_metrics: non-canonical {code}")
+            if da == "macaronesia":
+                parts, _ = bk.cost_band_parts(m.get("cost_band", ""))
+                if not parts or not all(p in bk.COST_GLYPHS for p in parts):
+                    fails.append(f"{mid}.cost_band: not in the D5.2 legend")
+    if len(ids) != len(set(ids)):
+        fails.append("top.ids: duplicate mechanism ids")
+    if kb.get("scenarios", {}).get("tuscan"):
+        fails.append("top.scenarios.tuscan: must be empty (D5.2 defines no Tuscan scenarios)")
+    for da, scs in kb.get("scenarios", {}).items():
+        for sc in scs:
+            if sc.get("name", "") not in norm.get("scenario_headings", ""):
+                fails.append(f"top.scenarios.{da}.{sc.get('code')}: name not in scenario_headings")
+    for svc, v in kb["valuation_unit_values"]["posidonia_oceanica"].items():
+        if not (v["low"] <= v["central"] <= v["high"]):
+            fails.append(f"top.valuation.{svc}: band order violated")
+    return fails
 
 
 def main():
-    if not KB_PATH.exists():
-        print(f"FAIL: KB file not found at {KB_PATH}", file=sys.stderr)
-        sys.exit(1)
-
-    with KB_PATH.open(encoding="utf-8") as f:
-        kb = json.load(f)
-
-    issues = []
-    seen_ids = {}
-
-    das = kb.get("demonstration_areas", {})
-    for da_name in das:
-        if da_name not in CANONICAL_DAS:
-            issues.append(("FAIL", f"demonstration_areas: non-canonical key '{da_name}'"))
-        for mech in das[da_name].get("mechanisms", []):
-            issues.extend(audit_mechanism(da_name, mech, seen_ids))
-
-    # Valuation block sanity
-    vuv = kb.get("valuation_unit_values", {})
-    if "posidonia_oceanica" in vuv:
-        pos = vuv["posidonia_oceanica"]
-        for service, vals in pos.items():
-            if not all(k in vals for k in ("low", "central", "high", "unit", "method")):
-                issues.append(("FAIL", f"valuation_unit_values.posidonia_oceanica.{service}: missing low/central/high/unit/method"))
-            elif not (vals["low"] <= vals["central"] <= vals["high"]):
-                issues.append(("FAIL", f"valuation_unit_values.posidonia_oceanica.{service}: bands not ordered low <= central <= high"))
-
-    # Report
-    fails = [i for i in issues if i[0] == "FAIL"]
-    warns = [i for i in issues if i[0] == "WARN"]
-
-    n_mechs = sum(len(da.get("mechanisms", [])) for da in das.values())
-    print(f"=== WP5 mechanism KB audit ===")
-    print(f"Mechanisms: {n_mechs}")
-    print(f"Issues: {len(fails)} FAIL, {len(warns)} WARN")
-    for sev, msg in fails + warns:
-        print(f"  [{sev}] {msg}")
-
+    sys.stdout.reconfigure(encoding="utf-8")
+    kb = json.loads(KB_PATH.read_text(encoding="utf-8"))
+    fails = audit(kb, bk.read_extract(bk.EXTRACT_PATH))
+    for f in fails:
+        print("FAIL", f)
+    print(f"[audit] {len(fails)} failure(s)")
     sys.exit(1 if fails else 0)
 
 

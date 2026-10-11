@@ -4872,6 +4872,28 @@
       "it": "Trovati %d problemi nelle matrici di connessione: una matrice non corrisponde all'elenco degli elementi (ad es. una riga rimasta da un elemento eliminato). Alcuni collegamenti potrebbero comparire sugli elementi sbagliati: controlla le connessioni. Non è stato modificato nulla.",
       "no": "Fant %d problem(er) i koblingsmatrisene: en matrise samsvarer ikke med elementlisten (f.eks. en rad igjen fra et slettet element). Noen koblinger kan vises på feil elementer — kontroller koblingene. Ingenting ble endret.",
       "el": "Βρέθηκαν %d πρόβλημα(τα) στους πίνακες συνδέσεων: ένας πίνακας δεν αντιστοιχεί στη λίστα στοιχείων (π.χ. μια γραμμή από διαγραμμένο στοιχείο). Ορισμένες συνδέσεις μπορεί να εμφανίζονται σε λάθος στοιχεία — ελέγξτε τις συνδέσεις. Δεν άλλαξε τίποτα."
+    },
+    "modules.isa.data_entry.common.typing_lint_found": {
+      "en": "%1$d element(s) may be policy instruments or management measures and belong under Responses: %2$s. Nothing was changed.",
+      "es": "%1$d elemento(s) podrían ser instrumentos de política o medidas de gestión y pertenecer a Respuestas: %2$s. No se ha modificado nada.",
+      "fr": "%1$d élément(s) pourraient être des instruments de politique ou des mesures de gestion et relever des Réponses : %2$s. Rien n'a été modifié.",
+      "de": "%1$d Element(e) könnten Politikinstrumente oder Bewirtschaftungsmaßnahmen sein und zu den Reaktionen gehören: %2$s. Es wurde nichts geändert.",
+      "lt": "Elementų, kurie gali būti politikos priemonės ar valdymo priemonės ir priklausyti Atsakams (%1$d): %2$s. Niekas nepakeista.",
+      "pt": "%1$d elemento(s) podem ser instrumentos de política ou medidas de gestão e pertencer às Respostas: %2$s. Nada foi alterado.",
+      "it": "%1$d elementi potrebbero essere strumenti di policy o misure di gestione e appartenere alle Risposte: %2$s. Non è stato modificato nulla.",
+      "no": "%1$d element(er) kan være politiske virkemidler eller forvaltningstiltak og høre til under Responser: %2$s. Ingenting ble endret.",
+      "el": "%1$d στοιχείο(α) μπορεί να είναι μέσα πολιτικής ή μέτρα διαχείρισης και να ανήκουν στις Αποκρίσεις: %2$s. Δεν άλλαξε τίποτα."
+    },
+    "modules.isa.data_entry.common.typing_lint_l2_count": {
+      "en": "%1$d Response(s) are not linked from any Goods & Benefits, so they do not respond to an outcome.",
+      "es": "%1$d Respuesta(s) no están enlazadas desde ningún elemento de Bienes y Beneficios, por lo que no responden a ningún resultado.",
+      "fr": "%1$d Réponse(s) ne sont reliées à aucun élément de Biens et Avantages et ne répondent donc à aucun résultat.",
+      "de": "%1$d Reaktion(en) sind mit keinem Element der Güter und Vorteile verbunden und reagieren daher auf kein Ergebnis.",
+      "lt": "Atsakų, nesusietų su jokia Gėrybe ir nauda, todėl nereaguojančių į jokį rezultatą: %1$d.",
+      "pt": "%1$d Resposta(s) não estão ligadas a nenhum elemento de Bens e Benefícios e, por isso, não respondem a nenhum resultado.",
+      "it": "%1$d Risposte non sono collegate da alcun elemento di Beni e Benefici, quindi non rispondono a nessun risultato.",
+      "no": "%1$d Respons(er) er ikke koblet fra noen Goder og fordeler, og reagerer derfor ikke på noe utfall.",
+      "el": "%1$d Απόκριση(εις) δεν συνδέονται από κανένα Αγαθό & Όφελος, επομένως δεν ανταποκρίνονται σε κανένα αποτέλεσμα."
     }
   }
 }

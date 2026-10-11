@@ -36,20 +36,38 @@ response_measures_ui <- function(id, i18n) {
                   textInput(ns("rm_name"), i18n$t("common.labels.response_name"),
                            placeholder = i18n$t("modules.response.measures.eg_fishing_quota_reduction"))
                 ),
+                # WS-3a: values are stable codes (RM_*_CODES); labels translated here only.
+                # i18n-ref: modules.response.measures.regulatory
+                # i18n-ref: modules.response.measures.economic
+                # i18n-ref: modules.response.measures.educational
+                # i18n-ref: modules.response.measures.technical
+                # i18n-ref: modules.response.measures.institutional
+                # i18n-ref: modules.response.measures.voluntary
+                # i18n-ref: modules.response.measures.mixed
+                # i18n-ref: modules.response.measures.drivers
+                # i18n-ref: modules.response.measures.activities
+                # i18n-ref: modules.response.measures.pressures
+                # i18n-ref: modules.response.measures.state
+                # i18n-ref: modules.response.measures.multiple_levels
+                # i18n-ref: modules.response.measures.proposed
+                # i18n-ref: modules.response.measures.planned
+                # i18n-ref: modules.response.measures.implemented
+                # i18n-ref: modules.response.measures.partially_implemented
+                # i18n-ref: modules.response.measures.abandoned
                 column(3,
                   selectInput(ns("rm_type"), i18n$t("common.labels.response_type"),
-                             choices = c("", i18n$t("modules.response.measures.regulatory"), i18n$t("modules.response.measures.economic"), i18n$t("modules.response.measures.educational"),
-                                       i18n$t("modules.response.measures.technical"), i18n$t("modules.response.measures.institutional"), i18n$t("modules.response.measures.voluntary"), i18n$t("modules.response.measures.mixed")))
+                             choices = c(" " = "", setNames(names(RM_TYPE_CODES),
+                               vapply(RM_TYPE_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1)))))
                 ),
                 column(3,
                   selectInput(ns("rm_target"), i18n$t("modules.response.measures.targets"),
-                             choices = c("", i18n$t("modules.response.measures.drivers"), i18n$t("modules.response.measures.activities"), i18n$t("modules.response.measures.pressures"),
-                                       i18n$t("modules.response.measures.state"), i18n$t("modules.response.measures.multiple_levels")))
+                             choices = c(" " = "", setNames(names(RM_TARGET_CODES),
+                               vapply(RM_TARGET_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1)))))
                 ),
                 column(3,
                   selectInput(ns("rm_status"), i18n$t("common.labels.implementation_status"),
-                             choices = c(i18n$t("modules.response.measures.proposed"), i18n$t("modules.response.measures.planned"), i18n$t("modules.response.measures.implemented"),
-                                       i18n$t("modules.response.measures.partially_implemented"), i18n$t("modules.response.measures.abandoned")))
+                             choices = setNames(names(RM_STATUS_CODES),
+                               vapply(RM_STATUS_CODES, function(k) i18n$t(paste0("modules.response.measures.", k)), character(1))))
                 )
               ),
               fluidRow(
@@ -99,6 +117,53 @@ response_measures_ui <- function(id, i18n) {
                                placeholder = i18n$t("modules.response.measures.what_obstacles_exist"),
                                rows = 2)
                 )
+              ),
+              # WS-3a: EBM classification + governance (codes stored; labels via i18n)
+              # i18n-ref: modules.response.governance.kind.instrument
+              # i18n-ref: modules.response.governance.kind.measure
+              # i18n-ref: modules.response.governance.level.local
+              # i18n-ref: modules.response.governance.level.island
+              # i18n-ref: modules.response.governance.level.regional
+              # i18n-ref: modules.response.governance.level.national
+              # i18n-ref: modules.response.governance.level.eu
+              # i18n-ref: modules.response.governance.level.regional_sea
+              # i18n-ref: modules.response.governance.level.international
+              tags$details(class = "mt-2 mb-2",
+                tags$summary(strong(i18n$t("modules.response.governance.section_title"))),
+                fluidRow(
+                  column(3, selectInput(ns("rm_kind"), i18n$t("modules.response.governance.kind"),
+                    choices = c(" " = "", setNames(c("instrument", "measure"),
+                      c(i18n$t("modules.response.governance.kind.instrument"),
+                        i18n$t("modules.response.governance.kind.measure")))))),
+                  column(5, selectizeInput(ns("rm_ebm_code"), i18n$t("modules.response.governance.ebm_code"),
+                    choices = c(" " = ""), options = list(placeholder = "")),
+                    tags$small(class = "text-muted", i18n$t("modules.response.governance.ebm_code_hint"))),
+                  column(4, selectInput(ns("rm_gov_level"), i18n$t("modules.response.governance.level"),
+                    choices = c(" " = "", setNames(GOVERNANCE_LEVELS,
+                      vapply(GOVERNANCE_LEVELS, function(g) i18n$t(paste0("modules.response.governance.level.", g)), character(1))))))
+                ),
+                fluidRow(
+                  column(4, textInput(ns("rm_competent_authority"), i18n$t("modules.response.governance.competent_authority"))),
+                  column(4, textInput(ns("rm_legal_basis"), i18n$t("modules.response.governance.legal_basis"))),
+                  column(4, selectInput(ns("rm_paired_with"), i18n$t("modules.response.governance.paired_with"), choices = c(" " = "")))
+                ),
+                fluidRow(column(12,
+                  selectizeInput(ns("rm_impl_stakeholders"), i18n$t("modules.response.governance.implementing_stakeholders"),
+                    choices = NULL, multiple = TRUE),
+                  tags$small(class = "text-muted", i18n$t("modules.response.governance.no_stakeholders_hint"))
+                )),
+                # 11-tenet appraisal (EBM framework); "intermediate" exists only for ecological effectiveness
+                # i18n-ref: modules.response.governance.tenet_level.minimal
+                # i18n-ref: modules.response.governance.tenet_level.intermediate
+                # i18n-ref: modules.response.governance.tenet_level.full
+                # i18n-ref: modules.response.governance.tenet_level.not_assessed
+                h6(class = "mt-2", i18n$t("modules.response.governance.tenets_title")),
+                fluidRow(lapply(EBM_TENETS$code, function(cd) {
+                  lv <- if (cd == "ecol_effective") TENET_LEVELS else setdiff(TENET_LEVELS, "intermediate")
+                  column(3, selectInput(ns(paste0("rm_tenet_", cd)), wp5_vocab_label("tenet", cd, i18n),
+                    choices = c(setNames("", i18n$t("modules.response.governance.tenet_level.not_assessed")),
+                                setNames(lv, vapply(lv, function(x) i18n$t(paste0("modules.response.governance.tenet_level.", x)), character(1))))))
+                }))
               ),
               actionButton(ns("add_response"), i18n$t("modules.response.measures.add_response_measure"),
                           icon = icon("plus"), class = "btn-success")
@@ -367,32 +432,18 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     # Returns a measures data frame with Effectiveness/Feasibility stable keys
     # translated for display (tables, plots, exports). Internal storage keeps
     # stable keys for correctness.
-    translate_levels_for_display <- function(df) {
-      if (is.null(df) || nrow(df) == 0) return(df)
-      if ("Effectiveness" %in% names(df)) df$Effectiveness <- vapply(df$Effectiveness, level_label, character(1))
-      if ("Feasibility"   %in% names(df)) df$Feasibility   <- vapply(df$Feasibility,   level_label, character(1))
-      df
+    # WS-3a: all coded columns incl. Tenet_* (functions/response_measures_schema.R)
+    translate_levels_for_display <- function(df) rm_translate_for_display(df, i18n)
+    # Curated, translated view for the register table and Word reports
+    display_view <- function(df) {
+      df <- translate_levels_for_display(df)
+      if (is.null(df) || !is.data.frame(df)) return(df)
+      df[, intersect(RM_DISPLAY_COLUMNS, names(df)), drop = FALSE]
     }
 
     # Reactive values for response data
     response_data <- reactiveValues(
-      measures = data.frame(
-        ID = character(),
-        Name = character(),
-        Type = character(),
-        Target = character(),
-        Description = character(),
-        Mechanism = character(),
-        TargetElement = character(),
-        Effectiveness = character(),
-        Feasibility = character(),
-        Cost = numeric(),
-        Status = character(),
-        Stakeholders = character(),
-        Barriers = character(),
-        DateAdded = character()
-        
-      ),
+      measures = empty_measures_df(),   # WS-3a register schema
       impacts = data.frame(
         ResponseID = character(),
         ProblemType = character(),
@@ -430,11 +481,39 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(project_data_reactive()$project_id, {
       rm <- project_data_reactive()$data$response_measures
       if (is.null(rm)) return()
-      if (!is.null(rm$measures))   response_data$measures   <- rm$measures
+      if (!is.null(rm$measures))   response_data$measures   <- normalize_response_measures(rm$measures)
       if (!is.null(rm$impacts))    response_data$impacts    <- rm$impacts
       if (!is.null(rm$milestones)) response_data$milestones <- rm$milestones
       if (!is.null(rm$counter))    response_data$counter    <- rm$counter
     }, ignoreNULL = FALSE)
+
+    # WS-3a: EBM picker follows the chosen kind; a measure type suggests the target
+    observeEvent(input$rm_kind, {
+      updateSelectizeInput(session, "rm_ebm_code", choices = ebm_code_choices(input$rm_kind, i18n), selected = "")
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$rm_ebm_code, {
+      tgt <- suggest_rm_target(input$rm_ebm_code)
+      if (nzchar(tgt)) updateSelectInput(session, "rm_target", selected = tgt)
+    }, ignoreInit = TRUE)
+
+    # WS-3a: implementing stakeholders come from PIMS; pairing from this register
+    # Update only when the PIMS stakeholder list really changes, keeping the
+    # user's current picks (WS-3a review I3: any project write re-ran this).
+    last_sh_choices <- reactiveVal(NULL)
+    observe({
+      sh <- tryCatch(project_data_reactive()$data$pims$stakeholders, error = function(e) NULL)
+      u <- stakeholder_picker_update(sh, isolate(input$rm_impl_stakeholders), isolate(last_sh_choices()))
+      if (u$skip) return()
+      last_sh_choices(u$choices)
+      updateSelectizeInput(session, "rm_impl_stakeholders", choices = u$choices, selected = u$selected, server = FALSE)
+    })
+
+    observe({
+      m <- response_data$measures
+      ch <- c(" " = "", if (nrow(m) > 0) setNames(m$ID, paste0(m$ID, " - ", m$Name)))
+      updateSelectInput(session, "rm_paired_with", choices = ch)
+    })
 
     # Add Response Measure ----
     observeEvent(input$add_response, {
@@ -443,25 +522,25 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       response_data$counter <- response_data$counter + 1
       new_id <- generate_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
-      new_row <- data.frame(
-        ID = new_id,
-        Name = input$rm_name,
-        Type = input$rm_type,
-        Target = input$rm_target,
-        Description = input$rm_description,
-        Mechanism = input$rm_mechanism,
-        TargetElement = input$rm_target_element,
-        Effectiveness = input$rm_effectiveness,
-        Feasibility = input$rm_feasibility,
-        Cost = input$rm_cost,
-        Status = input$rm_status,
-        Stakeholders = input$rm_stakeholders,
-        Barriers = input$rm_barriers,
-        DateAdded = as.character(Sys.Date())
-        
-      )
+      # WS-3a: build through the register schema so columns always match
+      new_row <- normalize_response_measures(data.frame(
+        ID = new_id, Name = input$rm_name, Type = input$rm_type, Target = input$rm_target %||% "",
+        Description = input$rm_description %||% "", Mechanism = input$rm_mechanism %||% "",
+        TargetElement = input$rm_target_element %||% "", Effectiveness = input$rm_effectiveness %||% "",
+        Feasibility = input$rm_feasibility %||% "", Cost = input$rm_cost %||% NA_real_,
+        Status = input$rm_status %||% "", Stakeholders = input$rm_stakeholders %||% "",
+        Barriers = input$rm_barriers %||% "", DateAdded = as.character(Sys.Date()),
+        Kind = input$rm_kind %||% "", EbmCode = input$rm_ebm_code %||% "",
+        GovernanceLevel = input$rm_gov_level %||% "",
+        CompetentAuthority = input$rm_competent_authority %||% "",
+        LegalBasis = input$rm_legal_basis %||% "",
+        ImplementingStakeholders = encode_ids(input$rm_impl_stakeholders),
+        PairedWith = input$rm_paired_with %||% "",
+        setNames(lapply(EBM_TENETS$code, function(cd) input[[paste0("rm_tenet_", cd)]] %||% ""),
+                 paste0("Tenet_", EBM_TENETS$code)),
+        stringsAsFactors = FALSE))
 
-      response_data$measures <- rbind(response_data$measures, new_row)
+      response_data$measures <- rbind(normalize_response_measures(response_data$measures), new_row)
       sync_to_project_data()
 
       # Clear inputs
@@ -471,6 +550,10 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       updateTextInput(session, "rm_target_element", value = "")
       updateTextAreaInput(session, "rm_stakeholders", value = "")
       updateTextAreaInput(session, "rm_barriers", value = "")
+      updateTextInput(session, "rm_competent_authority", value = "")
+      updateTextInput(session, "rm_legal_basis", value = "")
+      updateSelectizeInput(session, "rm_impl_stakeholders", selected = character(0))
+      for (cd in EBM_TENETS$code) updateSelectInput(session, paste0("rm_tenet_", cd), selected = "")
 
       # v1.16.1: bandit write-side feedback. The user's chosen
       # Effectiveness × Feasibility IS their priority assignment. Treat
@@ -514,7 +597,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
     # Response Table ----
     output$response_table <- renderDT({
-      datatable(translate_levels_for_display(response_data$measures),
+      datatable(display_view(response_data$measures),
                selection = 'multiple',
                options = list(pageLength = 10, scrollX = TRUE),
                rownames = FALSE)
@@ -653,7 +736,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       # (scoring already done above against the stable keys).
       measures <- translate_levels_for_display(measures)
 
-      visible_cols <- c("Rank", "ID", "Name", "Type", "Target",
+      visible_cols <- c("Rank", "ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel",
                         "Effectiveness", "Feasibility", "Cost",
                         "PriorityScore", "BanditSuggestion", "Status")
       visible_cols <- intersect(visible_cols, names(measures))
@@ -774,8 +857,8 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       },
       content = function(file) {
         tryCatch({
-          measures <- response_data$measures
-          req(nrow(measures) > 0)
+          req(nrow(response_data$measures) > 0)
+          measures <- display_view(response_data$measures)   # WS-3a: labels, curated columns
 
           doc <- officer::read_docx()
           doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.priority_report_title"), style = "heading 1")
@@ -823,9 +906,9 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       },
       content = function(file) {
         tryCatch({
-          measures <- response_data$measures
+          req(nrow(response_data$measures) > 0)
+          measures <- display_view(response_data$measures)   # WS-3a: labels, curated columns
           milestones <- response_data$milestones
-          req(nrow(measures) > 0)
 
           doc <- officer::read_docx()
           doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.implementation_plan_title"), style = "heading 1")
@@ -925,27 +1008,75 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         ))
       }
 
-      lapply(mechs, function(m) {
+      # KB v2 (spec 2026-10-11 WS-2): fields quoted from FINAL D5.2 tables;
+      # Macaronesia toolkit details are a pre-final annex (badged); impact-assessment
+      # guidance is not shipped until WP5 partners decide (spec Q1).
+      # i18n-ref: modules.wp5_mechanisms.attr.how_it_works
+      # i18n-ref: modules.wp5_mechanisms.attr.what_it_delivers
+      # i18n-ref: modules.wp5_mechanisms.attr.who_pays
+      # i18n-ref: modules.wp5_mechanisms.attr.finance_flow_text
+      # i18n-ref: modules.wp5_mechanisms.attr.governance_interface
+      # i18n-ref: modules.wp5_mechanisms.attr.applicability
+      # i18n-ref: modules.wp5_mechanisms.attr.cost_band
+      # i18n-ref: modules.wp5_mechanisms.attr.success_statement
+      # i18n-ref: modules.wp5_mechanisms.attr.cost_profile
+      # i18n-ref: modules.wp5_mechanisms.attr.what_it_funds
+      # i18n-ref: modules.wp5_mechanisms.attr.design_parameters
+      # i18n-ref: modules.wp5_mechanisms.attr.transferable_lessons
+      # i18n-ref: modules.wp5_mechanisms.attr.risks_and_guardrails
+      # i18n-ref: modules.wp5_mechanisms.attr.indicators_referenced
+      # i18n-ref: modules.wp5_mechanisms.attr.references
+      field <- function(key, value, badge = NULL) {
+        v <- paste(unlist(value), collapse = "; ")
+        if (!nzchar(v)) return(NULL)
+        p(strong(paste0(i18n$t(paste0("modules.wp5_mechanisms.attr.", key)), ": ")), span(v), badge)
+      }
+      src_line <- function(ref) {
+        if (is.null(ref)) return(NULL)
+        tags$small(class = "text-muted d-block",
+          paste0(i18n$t("modules.wp5_mechanisms.attr.source"), ": ", ref$document %||% "",
+                 if (!is.null(ref$table)) paste0(", ", ref$table) else "",
+                 if (!is.null(ref$row)) paste0(" #", ref$row) else ""))
+      }
+      legacy <- isTRUE(wp5_kb_schema() < 2L)
+      cards <- lapply(mechs, function(m) {
+        tk <- m$toolkit; d <- m$derived
+        band <- m$cost_band
+        if (isTRUE(d$cost_band_flagged)) band <- paste(band, i18n$t("modules.wp5_mechanisms.attr.cost_band_flag"))
         div(class = "card mb-3",
-          div(class = "card-header",
-              strong(m$name %||% "")),
+          div(class = "card-header", strong(m$name %||% "")),
           div(class = "card-body",
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.cost_profile"), ": ")),
-              span(m$cost_profile %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.what_it_funds"), ": ")),
-              span(m$what_it_funds %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.payer"), ": ")),
-              span(paste(unlist(m$finance_flow$payer %||% character(0)), collapse = "; "))),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.receiver"), ": ")),
-              span(m$finance_flow$receiver %||% "")),
-            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.use_in_impact_assessment"), ": ")),
-              span(m$use_in_impact_assessment %||% "")),
-            tags$small(class = "text-muted",
-                       paste(i18n$t("modules.wp5_mechanisms.attr.references"), ":",
-                             paste(unlist(m$references %||% character(0)), collapse = "; ")))
+            field("how_it_works", m$how_it_works),
+            field("what_it_delivers", m$what_it_delivers),
+            field("who_pays", m$who_pays),
+            field("finance_flow_text", m$finance_flow_text),
+            field("governance_interface", m$governance_interface),
+            field("applicability", m$applicability_text),
+            field("cost_band", band),
+            field("success_statement", m$success_statement),
+            field("indicators_referenced", d$success_metrics, provenance_badge(d$provenance, i18n)),
+            src_line(m$source_ref),
+            if (!is.null(tk)) tags$details(
+              tags$summary(i18n$t("modules.wp5_mechanisms.attr.toolkit_details"),
+                           provenance_badge(tk$provenance, i18n)),
+              field("cost_profile", tk$cost_profile),
+              field("what_it_funds", tk$what_it_funds),
+              field("design_parameters", tk$design_parameters),
+              field("transferable_lessons", tk$transferable_lessons),
+              field("risks_and_guardrails", tk$risks_and_guardrails_text),
+              field("references", vapply(unlist(tk$reference_numbers %||% list()), get_wp5_reference, character(1))),
+              src_line(tk$source_ref)
+            )
           )
         )
       })
+      tagList(
+        if (legacy) div(class = "alert alert-warning", i18n$t("modules.wp5_mechanisms.pane.legacy_kb_warning")),
+        p(class = "text-muted small", i18n$t("modules.wp5_mechanisms.pane.english_only_note")),
+        if (identical(da_key, "macaronesia") && nzchar(get_cost_band_legend()))
+          p(class = "small", get_cost_band_legend()),
+        cards
+      )
     })
 
     return(reactive({ response_data }))

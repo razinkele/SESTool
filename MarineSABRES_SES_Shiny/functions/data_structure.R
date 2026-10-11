@@ -260,20 +260,13 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
       # categorical keys "HIGH"/"MEDIUM"/"LOW"/"UNKNOWN"/"" for locale-stable
       # priority scoring across language switches.
       response_measures = list(
-        measures = data.frame(
-          ID = character(),
-          Name = character(),
-          Type = character(),
-          Target = character(),
-          Description = character(),
-          Mechanism = character(),
-          TargetElement = character(),
-          Effectiveness = character(),
-          Feasibility = character(),
-          Cost = numeric(),
-          Status = character(),
-          Stakeholders = character(),
-          Barriers = character(),
+        # WS-3a register schema (functions/response_measures_schema.R); guarded
+        # because tests/run_json_loading_tests.R sources this file standalone.
+        measures = if (exists("empty_measures_df", mode = "function")) empty_measures_df() else data.frame(
+          ID = character(), Name = character(), Type = character(), Target = character(),
+          Description = character(), Mechanism = character(), TargetElement = character(),
+          Effectiveness = character(), Feasibility = character(), Cost = numeric(),
+          Status = character(), Stakeholders = character(), Barriers = character(),
           DateAdded = character()
         ),
         impacts = data.frame(
@@ -943,6 +936,18 @@ normalize_json_project_data <- function(data) {
     data$data$isa_data <- isa
   }
 
+  # Response register: codes + full schema on every JSON load path (WP5 WS-3a)
+  if (is.list(data$data) && is.list(data$data$response_measures) &&
+      exists("normalize_response_measures", mode = "function")) {
+    data$data$response_measures$measures <- normalize_response_measures(data$data$response_measures$measures)
+  }
+
+  # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here
+  # so EVERY JSON load path gets it: project_io (via
+  # normalize_and_reconcile_project), local-storage load and the
+  # language-switch restore (restore_project_from_json_text).
+  data <- migrate_legacy_scenarios(data)
+
   data
 }
 
@@ -1096,6 +1101,94 @@ restore_project_from_json_text <- function(json_text) {
 # LOAD-PATH HARDENING HELPER
 # ============================================================================
 
+#' Convert a jsonlite-simplified scenario data.frame back to a list of lists
+#'
+#' fromJSON(simplifyVector = TRUE) turns a list of scenario objects into a
+#' data.frame (nested modifications become data.frame columns). Round-trip it
+#' through JSON with simplifyVector = FALSE to restore one list per scenario.
+#' Non-data.frame input is returned unchanged.
+#' @keywords internal
+.scenarios_as_list <- function(x) {
+  if (!is.data.frame(x)) return(x)
+  tryCatch(
+    jsonlite::fromJSON(
+      jsonlite::toJSON(x, auto_unbox = TRUE, null = "null", na = "null"),
+      simplifyVector = FALSE
+    ),
+    error = function(e) {
+      if (exists("debug_log", mode = "function")) {
+        debug_log(paste("scenario data.frame conversion failed:", e$message), "WARN")
+      }
+      list()
+    }
+  )
+}
+
+#' Move legacy project$data$scenarios into project$data$analysis$scenarios
+#'
+#' The scenario builder historically saved to data$scenarios while the schema
+#' (create_empty_project) declares data$analysis$scenarios. Merge by id;
+#' entries already at the canonical location win. Non-list items are dropped.
+#' A data.frame at either location (the shape produced by
+#' fromJSON(simplifyVector = TRUE) on the JSON load path) is converted back to
+#' a list of scenario lists, not dropped. Pure and idempotent. (WP5 spec WS-0)
+#' @param project Project list
+#' @return Project list with data$scenarios removed
+migrate_legacy_scenarios <- function(project) {
+  if (!is.list(project) || !is.list(project$data)) return(project)
+  has_legacy <- "scenarios" %in% names(project$data)
+  if (!has_legacy && !is.data.frame(project$data$analysis$scenarios)) return(project)
+
+  legacy <- .scenarios_as_list(project$data$scenarios)
+  canonical <- .scenarios_as_list(project$data$analysis$scenarios)
+  if (!is.list(canonical)) canonical <- list()
+
+  sid <- function(s) {
+    v <- s$id
+    if (is.null(v) || length(v) != 1 || is.na(v)) NA_character_ else as.character(v)
+  }
+  ids <- vapply(canonical, function(s) if (is.list(s)) sid(s) else NA_character_, character(1))
+
+  dropped <- 0L
+  if (is.list(legacy) && !is.data.frame(legacy)) {
+    for (s in legacy) {
+      if (!is.list(s) || is.data.frame(s)) { dropped <- dropped + 1L; next }
+      id <- sid(s)
+      if (!is.na(id) && id %in% ids) next
+      canonical[[length(canonical) + 1L]] <- s
+      ids <- c(ids, id)
+    }
+  } else if (!is.null(legacy)) {
+    dropped <- 1L
+  }
+  if (dropped > 0L && exists("debug_log", mode = "function")) {
+    debug_log(sprintf("migrate_legacy_scenarios: dropped %d malformed legacy scenario item(s)", dropped), "WP5")
+  }
+
+  if (!is.list(project$data$analysis)) project$data$analysis <- list()
+  project$data$analysis$scenarios <- canonical
+  project$data$scenarios <- NULL
+  project
+}
+
+#' Raise project$min_app_version to `version` if it is higher (never lowers)
+#'
+#' Used by WP5 features that add optional project blocks, so an older app
+#' version shows the downgrade warning in server/project_io.R. (WP5 spec WS-0)
+#' @param project Project list
+#' @param version Character "major.minor.patch"
+#' @return Project list
+stamp_min_app_version <- function(project, version) {
+  valid <- function(v) is.character(v) && length(v) == 1 && grepl("^[0-9]+(\\.[0-9]+){1,3}$", v)
+  if (!valid(version)) stop("stamp_min_app_version: invalid version '", version, "'")
+  if (!is.list(project)) return(project)
+  current <- project$min_app_version
+  if (!valid(current) || utils::compareVersion(version, current) > 0) {
+    project$min_app_version <- version
+  }
+  project
+}
+
 #' Normalize and reconcile a loaded project (Task B2 — load-path hardening)
 #'
 #' A single pure helper that every load path (rds / json / autosave) can call
@@ -1123,6 +1216,8 @@ normalize_and_reconcile_project <- function(project, id_store = NULL) {
 
   # Step 1: normalize column casing project-wide (id -> id lowercase, etc.)
   project <- normalize_json_project_data(project)
+
+  # (Step 1 also migrates legacy data$scenarios -> data$analysis$scenarios.)
 
   # Step 2: reconcile element IDs in the 6 element frames
   if (is.null(id_store)) id_store <- new_stable_id_store()
