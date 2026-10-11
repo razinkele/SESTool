@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **P3 tests no longer skip:** the event-bus tests now load `server/event_bus_setup.R` and run. Four tests for the removed lazy-loading registry and ML feature cache were deleted; those functions no longer exist, so the tests could only skip.
 - **CLAUDE.md** pointed to a non-existent `scripts/translation_workflow.R`; it now names the audit CI actually runs (`scripts/_i18n_audit.py`).
 
+### Changed (Decision Lens rules — review 2026-10-07 N35, N37, N52; signed off 2026-10-11)
+
+- **MICMAC quadrants are assigned against the mean** (classic MICMAC) instead of the median with a strict `>`, which labelled every node "Autonomous / lower priority" whenever values tied (e.g. a plain DAPSIWRM cycle). When every element has the same influence and dependence, they are shown as **Undifferentiated** with a neutral note (new label and narrative × 9 languages); a network with no links is also Undifferentiated.
+- **Limits to Growth needs a balancing loop through the ecosystem** (a Marine Process or Ecosystem Service node); policy-only loops such as Response ↔ Response no longer qualify.
+- **Tragedy of the Commons is reported once per commons**: an Ecosystem Service whose loops overlap an already reported Marine Process commons is not listed again. On the shipped templates this removes 3 duplicate Commons records in Caribbean (12 → 9 archetypes); Limits to Growth results, including Fisheries, are unchanged.
+
 ## [1.21.1] - 2026-10-11
 
 Patch release: two bugs reported on the live site (PRs #84, #85). Deployed to laguna 2026-10-11.
