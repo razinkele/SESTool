@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_estuary",
     "applicable_regions": [
       "baltic"
@@ -473,6 +473,16 @@
       "strength": "weak",
       "confidence": 2,
       "description": "Recreational salmon fishing connects to Nutrient enrichment from agricultural sources"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R001",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Declining recreational salmon fishing revenue increases support for fish passage restoration (dam removal, fish ladders): less revenue, more restoration."
     }
   ]
 }

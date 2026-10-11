@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_lagoon",
     "applicable_regions": [
       "baltic"
@@ -493,6 +493,16 @@
       "strength": "weak",
       "confidence": 2,
       "description": "Nutrient enrichment from agricultural sources connects to Reed bed extent and condition"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R003",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Falling fisher household income from pike-perch sales signals a depleted stock and builds support for stricter minimum landing sizes: less income, stronger size regulation."
     }
   ]
 }

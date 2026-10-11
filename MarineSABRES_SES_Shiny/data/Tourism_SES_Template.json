@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: mediterranean_rocky_shore",
     "applicable_regions": [
       "mediterranean"
@@ -481,6 +481,16 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Dive centre and marine tourism revenue reinforces diving tourism and underwater recreation demand"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "R001",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Declining dive and marine tourism revenue, as large predatory fish disappear, increases local support for no-take marine reserves: less revenue, more reserve designation."
     }
   ]
 }
