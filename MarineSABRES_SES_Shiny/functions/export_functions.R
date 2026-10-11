@@ -238,7 +238,9 @@ export_isa_to_workbook <- function(wb, isa_data) {
       "gb_r" = "Matrix_GB_R",
       "r_d" = "Matrix_R_D",
       "r_a" = "Matrix_R_A",
-      "r_p" = "Matrix_R_P"
+      "r_p" = "Matrix_R_P",
+      "r_mpf" = "Matrix_R_MPF",
+      "r_r" = "Matrix_R_R"
     )
     
     for (adj_name in names(adj_mapping)) {

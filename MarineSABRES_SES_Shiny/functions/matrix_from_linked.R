@@ -74,6 +74,10 @@ assert_matrices_aligned <- function(adj, edited) {
 #' semantically-unrelated column (e.g. Activities' Frequency would produce
 #' '+Medium:Continuous' which downstream consumers misinterpret).
 #'
+#' Callers pass `default_polarity = default_polarity_for_matrix(<key>)`
+#' (dapsiwrm_connection_rules.R) so new cells follow the rule table; it is
+#' applied to NEW cells only — existing cells keep their polarity.
+#'
 #' @return list(matrix, user_edited, stale_linked_ids, dropped_user_edits).
 #'   `stale_linked_ids`: character vector of IDs that were in LinkedX but
 #'     not in target_ids — caller surfaces in a notification.
@@ -167,7 +171,17 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
 
     for (tgt_id in declared) {
       if (!out_edited[src_id, tgt_id]) {
-        out[src_id, tgt_id] <- cell_default
+        # Only a NEW cell takes default_polarity. An edge that already exists
+        # (saved project, template, import) keeps its sign even when not
+        # flagged user_edited — old saves carry all-FALSE flags, and a change
+        # of the rule-table default must never flip their polarity (N26).
+        prev <- out[src_id, tgt_id]
+        prev_pol <- if (!is.na(prev) && nzchar(prev)) substr(prev, 1, 1) else ""
+        out[src_id, tgt_id] <- if (prev_pol %in% c("+", "-")) {
+          paste0(prev_pol, default_strength, ":", confidence)
+        } else {
+          cell_default
+        }
       }
     }
     # Cells previously set, NOT declared, NOT user_edited -> clear

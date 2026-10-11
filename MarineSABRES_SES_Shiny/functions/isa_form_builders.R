@@ -631,21 +631,34 @@ validate_and_collect_es <- function(input, panel_ids, session, i18n) {
   list(df = df, errors = validation_errors, n_rows = length(es_rows))
 }
 
-#' Build the four Responses-arm adjacency matrices from the responses element
+#' Responses-arm matrices built from the responses rows' Linked* columns:
+#' matrix key -> (Linked column, target element category). gb_r is handled
+#' separately (stored GB x R). R x MPF (Rule 12) and R x R (Rule 14) are
+#' editable from the Responses form (review 2026-10-07 N62).
+RESPONSE_OUT_LINKS <- list(
+  r_d   = list(col = "LinkedD",   tgt = "drivers"),
+  r_a   = list(col = "LinkedA",   tgt = "activities"),
+  r_p   = list(col = "LinkedP",   tgt = "pressures"),
+  r_mpf = list(col = "LinkedMPF", tgt = "marine_processes"),
+  r_r   = list(col = "LinkedR",   tgt = "responses")
+)
+
+#' Build the Responses-arm adjacency matrices from the responses element
 #' rows' Linked* columns. Pure: no Shiny/reactives. Mirrors the forward-chain
-#' rebuild but (a) builds 4 matrices, (b) seeds sign-aware lowercase/integer
-#' defaults, (c) transposes gb_r to GB x R on store and on read so user edits
-#' survive re-save. See docs/superpowers/specs/2026-06-06-responses-entry-design.md.
+#' rebuild but (a) builds every R-arm matrix (r_d / r_a / r_p / r_mpf / r_r /
+#' gb_r), (b) seeds lowercase/integer cells whose polarity comes from the rule
+#' table (default_polarity_for_matrix), (c) transposes gb_r to GB x R on store
+#' and on read so user edits survive re-save.
+#' See docs/superpowers/specs/2026-06-06-responses-entry-design.md.
 #'
-#' @param isa list/reactiveValues with $responses (cols ID, LinkedGB/D/A/P),
-#'   $goods_benefits, $drivers, $activities, $pressures, $adjacency_matrices,
-#'   $user_edited_matrices.
+#' @param isa list/reactiveValues with $responses (cols ID, LinkedGB/D/A/P/MPF/R),
+#'   $goods_benefits, $drivers, $activities, $pressures, $marine_processes,
+#'   $adjacency_matrices, $user_edited_matrices.
 #' @return list(adjacency_matrices, user_edited_matrices) updated copies.
-#' @note Builds only gb_r / r_d / r_a / r_p (the in-scope R-arm). r_mpf / r_es
-#'   are intentionally not built. Errors propagate to the caller by design
-#'   (the Shiny save observer is the error boundary); we do not tryCatch here.
-#'   stale_linked_ids / dropped_user_edits from rebuild_matrix_from_linked are
-#'   not surfaced here — the save observer may report them if desired.
+#' @note Errors propagate to the caller by design (the Shiny save observer is
+#'   the error boundary); we do not tryCatch here. stale_linked_ids /
+#'   dropped_user_edits from rebuild_matrix_from_linked are not surfaced here —
+#'   the save observer may report them if desired.
 build_response_matrices <- function(isa) {
   am <- if (is.null(isa$adjacency_matrices)) list() else isa$adjacency_matrices
   ue <- if (is.null(isa$user_edited_matrices)) list() else isa$user_edited_matrices
@@ -656,24 +669,22 @@ build_response_matrices <- function(isa) {
   }
   rid <- as.character(resp$ID)
 
-  # Outgoing R -> target (negative polarity): r_d, r_a, r_p
-  out_specs <- list(
-    list(key = "r_d", col = "LinkedD", tgt = isa$drivers),
-    list(key = "r_a", col = "LinkedA", tgt = isa$activities),
-    list(key = "r_p", col = "LinkedP", tgt = isa$pressures)
-  )
-  for (s in out_specs) {
-    tgt_ids <- if (is.data.frame(s$tgt)) as.character(s$tgt$ID) else character()
+  # Outgoing R -> target: r_d, r_a, r_p (rule default "-"), r_mpf, r_r ("+")
+  for (key in names(RESPONSE_OUT_LINKS)) {
+    s <- RESPONSE_OUT_LINKS[[key]]
+    tgt <- isa[[s$tgt]]
+    tgt_ids <- if (is.data.frame(tgt) && "ID" %in% names(tgt)) as.character(tgt$ID) else character()
     if (length(tgt_ids) == 0 || !(s$col %in% names(resp))) next
     res <- rebuild_matrix_from_linked(
       element_df = resp, linked_col = s$col,
       source_ids = rid, target_ids = tgt_ids,
       # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
-      default_polarity = "-", default_strength = "medium", default_confidence = "3",
-      existing_matrix    = am[[s$key]],
-      user_edited_matrix = ue[[s$key]])
-    am[[s$key]] <- res$matrix
-    ue[[s$key]] <- res$user_edited
+      default_polarity = default_polarity_for_matrix(key),
+      default_strength = "medium", default_confidence = "3",
+      existing_matrix    = am[[key]],
+      user_edited_matrix = ue[[key]])
+    am[[key]] <- res$matrix
+    ue[[key]] <- res$user_edited
   }
 
   # Incoming GB -> R (positive). Built R x GB, then transposed to GB x R for
@@ -684,7 +695,8 @@ build_response_matrices <- function(isa) {
       element_df = resp, linked_col = "LinkedGB",
       source_ids = rid, target_ids = gb_ids,
       # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
-      default_polarity = "+", default_strength = "medium", default_confidence = "3",
+      default_polarity = default_polarity_for_matrix("gb_r"),
+      default_strength = "medium", default_confidence = "3",
       existing_matrix    = if (!is.null(am$gb_r)) t(am$gb_r) else NULL,
       user_edited_matrix = if (!is.null(ue$gb_r)) t(ue$gb_r) else NULL)
     am$gb_r <- t(res$matrix)
@@ -696,9 +708,12 @@ build_response_matrices <- function(isa) {
 
 #' Field definitions for the Responses/Measures entry form. Display order:
 #' name/type/desc, the prominent linkedgb (loop-closer), stakeholder/importance/
-#' trend, then linkedd/linkeda/linkedp (rendered in the Advanced group by
-#' build_response_panel_ui).
-isa_fields_r <- function(i18n, gb_choices, d_choices, a_choices, p_choices) {
+#' trend, then linkedd/linkeda/linkedp/linkedmpf/linkedr (rendered in the
+#' Advanced group by build_response_panel_ui). linkedmpf -> r_mpf (Rule 12),
+#' linkedr -> r_r (Rule 14); callers should leave the panel's own response out
+#' of r_choices.
+isa_fields_r <- function(i18n, gb_choices, d_choices, a_choices, p_choices,
+                         mpf_choices = "", r_choices = "") {
   list(
     list(id = "name", type = "text",  label = i18n$t("common.labels.name"), width = 4),
     list(id = "type", type = "select", label = i18n$t("common.labels.type"), width = 4,
@@ -718,7 +733,11 @@ isa_fields_r <- function(i18n, gb_choices, d_choices, a_choices, p_choices) {
     list(id = "linkeda", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
          label = i18n$t("modules.isa.data_entry.responses.linked_a"), choices = a_choices),
     list(id = "linkedp", type = "select", multiple = TRUE, width = 4, advanced = TRUE,
-         label = i18n$t("modules.isa.data_entry.responses.linked_p"), choices = p_choices)
+         label = i18n$t("modules.isa.data_entry.responses.linked_p"), choices = p_choices),
+    list(id = "linkedmpf", type = "select", multiple = TRUE, width = 6, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_mpf"), choices = mpf_choices),
+    list(id = "linkedr", type = "select", multiple = TRUE, width = 6, advanced = TRUE,
+         label = i18n$t("modules.isa.data_entry.responses.linked_r"), choices = r_choices)
   )
 }
 
@@ -862,7 +881,9 @@ ISA_MATRIX_REVIEW_CHOICES <- c(
   "modules.isa.data_entry.matrix.gb_r"   = "gb_r",
   "modules.isa.data_entry.matrix.r_d"    = "r_d",
   "modules.isa.data_entry.matrix.r_a"    = "r_a",
-  "modules.isa.data_entry.matrix.r_p"    = "r_p"
+  "modules.isa.data_entry.matrix.r_p"    = "r_p",
+  "modules.isa.data_entry.matrix.r_mpf"  = "r_mpf",
+  "modules.isa.data_entry.matrix.r_r"    = "r_r"
 )
 
 #' Does a saved / imported isa_data list hold any element rows?

@@ -326,8 +326,10 @@ test_that("validate_connection returns TRUE for standard connections", {
 })
 
 test_that("validate_connection returns FALSE for invalid connections in strict mode", {
-  # Drivers should not connect directly to Pressures
-  expect_false(validate_connection("Drivers", "Pressures", strict = TRUE))
+  # Drivers should not connect directly to Goods & Benefits (Rule 15 removed).
+  # NB: Drivers -> Pressures IS valid (ExUP exception, review 2026-10-07 N61).
+  expect_false(validate_connection("Drivers", "Goods & Benefits", strict = TRUE))
+  expect_true(validate_connection("Drivers", "Pressures", strict = TRUE))
 
   # Activities should not connect to Ecosystem Services
   expect_false(validate_connection("Activities", "Ecosystem Services", strict = TRUE))
@@ -335,7 +337,7 @@ test_that("validate_connection returns FALSE for invalid connections in strict m
 
 test_that("validate_connection returns TRUE for non-standard connections in permissive mode", {
   # Non-standard but allowed in permissive mode
-  expect_true(validate_connection("Drivers", "Pressures", strict = FALSE))
+  expect_true(validate_connection("Drivers", "Goods & Benefits", strict = FALSE))
   expect_true(validate_connection("Activities", "Ecosystem Services", strict = FALSE))
 })
 
@@ -364,7 +366,7 @@ test_that("get_connection_description returns generic for unknown type", {
 })
 
 test_that("get_connection_description returns generic for non-standard connection", {
-  desc <- get_connection_description("Drivers", "Pressures")  # Not a standard connection
+  desc <- get_connection_description("Drivers", "Goods & Benefits")  # Not a standard connection
   expect_type(desc, "character")
   expect_true(grepl("affects", desc))
 })
@@ -407,8 +409,8 @@ test_that("get_connection_examples returns empty for unknown type", {
 })
 
 test_that("get_connection_examples returns empty for non-standard connection", {
-  # Drivers -> Pressures is not a standard connection
-  examples <- get_connection_examples("Drivers", "Pressures")
+  # Drivers -> Goods & Benefits is not a standard connection
+  examples <- get_connection_examples("Drivers", "Goods & Benefits")
   expect_equal(examples, list())
 })
 

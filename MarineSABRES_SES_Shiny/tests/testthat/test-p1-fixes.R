@@ -60,8 +60,9 @@ test_that("validate_connection_with_feedback accepts valid DAPSIWRM connections"
 })
 
 test_that("validate_connection_with_feedback warns on non-standard connections", {
-  # Non-standard but allowed (not strict mode)
-  result <- validate_connection_with_feedback("Drivers", "Pressures", strict = FALSE)
+  # Non-standard but allowed (not strict mode). D -> P is no longer an example:
+  # it is the documented ExUP exception (review 2026-10-07 N61).
+  result <- validate_connection_with_feedback("Drivers", "Goods & Benefits", strict = FALSE)
 
   expect_true(result$valid)  # Allowed in non-strict mode
   expect_equal(result$level, "warning")  # But with warning
@@ -98,7 +99,7 @@ test_that("validate_connection still works (backward compatibility)", {
   expect_true(validate_connection("Activities", "Pressures"))
 
   # Non-standard in strict mode
-  expect_false(validate_connection("Drivers", "Pressures", strict = TRUE))
+  expect_false(validate_connection("Drivers", "Goods & Benefits", strict = TRUE))
 })
 
 # ============================================================================

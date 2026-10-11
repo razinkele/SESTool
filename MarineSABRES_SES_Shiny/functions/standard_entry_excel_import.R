@@ -174,19 +174,26 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities")
   )
   # DAPSIWRM feedback arm (review 2026-10-07 N50): same name-based fallback for
-  # the R-arm matrices. r_d / r_a / r_p are R x TARGET with negative default
-  # polarity; gb_r is stored GB x R, so it is built R x GB and transposed.
-  # Cell format mirrors build_response_matrices() (lowercase strength, integer
-  # confidence) so DYNAMICS_WEIGHT_MAP keys resolve.
-  linked_map$r_d  <- list(src = "responses", col = "LinkedD",  tgt = "drivers",
-                          polarity = "-", strength = "medium", confidence = "3")
-  linked_map$r_a  <- list(src = "responses", col = "LinkedA",  tgt = "activities",
-                          polarity = "-", strength = "medium", confidence = "3")
-  linked_map$r_p  <- list(src = "responses", col = "LinkedP",  tgt = "pressures",
-                          polarity = "-", strength = "medium", confidence = "3")
-  linked_map$gb_r <- list(src = "responses", col = "LinkedGB", tgt = "goods_benefits",
-                          polarity = "+", strength = "medium", confidence = "3",
-                          transpose = TRUE)
+  # the R-arm matrices. r_d / r_a / r_p / r_mpf / r_r are R x TARGET; gb_r is
+  # stored GB x R, so it is built R x GB and transposed. Cell format mirrors
+  # build_response_matrices() (lowercase strength, integer confidence) so
+  # DYNAMICS_WEIGHT_MAP keys resolve.
+  linked_map$r_d   <- list(src = "responses", col = "LinkedD",   tgt = "drivers",
+                           strength = "medium", confidence = "3")
+  linked_map$r_a   <- list(src = "responses", col = "LinkedA",   tgt = "activities",
+                           strength = "medium", confidence = "3")
+  linked_map$r_p   <- list(src = "responses", col = "LinkedP",   tgt = "pressures",
+                           strength = "medium", confidence = "3")
+  linked_map$r_mpf <- list(src = "responses", col = "LinkedMPF", tgt = "marine_processes",
+                           strength = "medium", confidence = "3")
+  linked_map$r_r   <- list(src = "responses", col = "LinkedR",   tgt = "responses",
+                           strength = "medium", confidence = "3")
+  linked_map$gb_r  <- list(src = "responses", col = "LinkedGB",  tgt = "goods_benefits",
+                           strength = "medium", confidence = "3",
+                           transpose = TRUE)
+  # Every new cell's polarity comes from the rule table (review 2026-10-07 N26:
+  # p_mpf seeds "-" per Rule 3, R -> D/A/P "-", the rest "+").
+  for (mk in names(linked_map)) linked_map[[mk]]$polarity <- default_polarity_for_matrix(mk)
   # JSON / normalised projects carry lowercase element columns (linkedgb,
   # name): resolve the canonical names case-insensitively (review N4).
   canon <- function(df, cols) {

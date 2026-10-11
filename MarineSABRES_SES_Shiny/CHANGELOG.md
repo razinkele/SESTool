@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (transition rules and P→MPF default — review 2026-10-07 N26, N61, N62)
+
+- **New Pressure → Marine Process links now default to `-`** (N26). Standard Entry seeded them `+`, contradicting the rule table and framework Rule 3. Every seeding path (the Standard Entry save, the Responses save, Excel and project recovery) now takes its default from `DAPSIWRM_ADJACENCY_RULES` via `default_polarity_for_matrix()`. Only new cells are affected. A rebuild no longer rewrites the sign of an edge that already exists, even when its user-edited flag is missing (old saves), so existing projects and templates keep their polarity. P→MPF is the only forward default that changed. D→A, A→P, MPF→ES, ES→GB, GB→D and GB→R stay `+`; R→D, R→A and R→P stay `-`.
+- **The three transition-rule sources now agree** (N61). `DAPSIWRM_ADJACENCY_RULES` gains the transitions that `is_valid_dapsirwrm_transition()` and `DAPSIWRM_FRAMEWORK_RULES.md` already accepted: R→R (Rule 14), MPF→MPF (16), P→P (17), A→A (18) and the D→P ExUP exception. They are listed as `extension_targets` with a default polarity per target (`target_polarities`). They validate in strict mode but are not offered as graphical-builder suggestions. All five default to `+`: the framework doc says "Varies" or gives no sign for them, so the default follows the doc's examples and the neighbouring rules. A new test enumerates every type pair and checks that the table and the validator accept exactly the same set. Measures are excluded because they have no table entry; they are merged into Responses.
+- **The Standard Entry Responses form can edit R→MPF (Rule 12) and R→R (Rule 14) links** (N62). These were previously documented as intentionally omitted. They are new "Linked Marine Processes" and "Linked Responses" multi-selects in the Advanced group, stored as `LinkedMPF` / `LinkedR` and built into `r_mpf` / `r_r`. Both survive save/reload, JSON projects, the Standard Entry Excel export/import and the graphical-builder export. Both are listed in the adjacency-matrix review. New R→MPF cells seed `+` (Rule 12: restoration/protection raises state), and new R→R cells seed `+`. The R→R list refreshes after each save, so responses saved later can be linked. New labels are in all 9 languages.
+
 ## [1.21.1] - 2026-10-11
 
 Patch release: two bugs reported on the live site (PRs #84, #85). Deployed to laguna 2026-10-11.
