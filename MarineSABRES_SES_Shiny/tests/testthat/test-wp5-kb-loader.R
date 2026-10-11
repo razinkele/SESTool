@@ -121,3 +121,32 @@ test_that("valuation block numeric with band order", {
   for (s in v) expect_true(s$low <= s$central && s$central <= s$high)
   expect_equal(v$coastal_protection$high, 17200)
 })
+
+test_that("v2 accessors: scenarios, cost-band legend, references, provenance", {
+  .ensure_wp5_loader(); load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
+  expect_equal(wp5_kb_schema(), 2L)
+  expect_equal(vapply(get_scenarios_for_da("arctic"), `[[`, "", "code"),
+               c("no_agreement", "partial_agreement", "full_agreement"))
+  expect_length(get_scenarios_for_da("tuscan"), 0)
+  expect_match(get_cost_band_legend(), "Cost bands")
+  expect_true(nzchar(get_wp5_reference(1)))
+  expect_equal(get_wp5_reference(9999), "")
+  expect_equal(mechanism_provenance("tus_01", "applicability_text")$provenance, "wp5_source")
+  expect_equal(mechanism_provenance("mac_01", "toolkit.design_parameters")$provenance, "wp5_prefinal")
+  expect_equal(mechanism_provenance("mac_01", "derived.success_metrics")$provenance, "wp5_derived")
+  expect_null(mechanism_provenance("nope_99"))
+})
+
+test_that("a v1 KB still loads with a warning; accessors degrade gracefully", {
+  .ensure_wp5_loader()
+  on.exit(load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE), add = TRUE)
+  v1 <- tempfile(fileext = ".json")
+  writeLines(jsonlite::toJSON(list(version = "1.0.0", demonstration_areas = list(
+    tuscan = list(mechanisms = list(list(id = "tus_01", name = "PES")))),
+    valuation_unit_values = list()), auto_unbox = TRUE), v1)
+  expect_warning(load_wp5_mechanisms_kb(v1, force_reload = TRUE), "schema 1")
+  expect_equal(wp5_kb_schema(), 1L)
+  expect_equal(get_mechanisms_for_da("tuscan")[[1]]$id, "tus_01")
+  expect_length(get_scenarios_for_da("macaronesia"), 0)
+  expect_equal(get_cost_band_legend(), "")
+})
