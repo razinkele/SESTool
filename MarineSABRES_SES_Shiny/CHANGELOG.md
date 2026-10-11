@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (templates: Responses now close feedback loops)
+
+- **Decision Lens found no archetypes in the Fisheries (Baltic) template** (reported on the live site). This was not a detector bug: in every template except Caribbean, Responses only received Measure -> Response links, so no Response sat in any feedback loop and Limits to Growth could never fire. Added one Goods & Benefits -> Response link (DAPSIWRM rule 8) each to Fisheries, Aquaculture, Pollution and Tourism (templates 2.0 -> 2.1). The benefit nodes are worded as gains, so the links are `-` (less benefit, stronger response), and every loop they close is Balancing. Fisheries now shows Limits to Growth with the cod quota as leverage point; the other three gain a Balancing management loop but still have no reinforcing loop, so no archetype. Climate Change and Offshore Wind were left unchanged because no honest pairing closes a Balancing loop with their current links. Links reviewed for polarity and plausibility; Fisheries is weak/confidence 2 (cuts followed ICES advice).
+
 ### Fixed (Leverage Point Analysis heading)
 
 - **The Leverage Point Analysis page showed the raw key `modules.analysis.leverage.title` as its heading** (reported on the live site). The title, subtitle and help-dialog title keys were never defined. They are now added in all 9 languages; the title uses the sidebar wording.

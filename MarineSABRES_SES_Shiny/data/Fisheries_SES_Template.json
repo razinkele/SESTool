@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.0",
+    "version": "2.1",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_offshore",
     "applicable_regions": [
       "baltic"
@@ -490,6 +490,16 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R001",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "The collapse of fleet economic viability alongside the Eastern Baltic cod stock built political acceptance for the 2019 emergency closure and deep cod TAC cuts (Reg. (EU) 2019/1248), paired with cessation aid: less viability, stronger quota cuts. The cuts themselves followed ICES stock advice."
     }
   ]
 }
