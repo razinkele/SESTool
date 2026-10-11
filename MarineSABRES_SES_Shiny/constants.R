@@ -815,6 +815,30 @@ NPG_DIMENSIONS <- c("knowledge", "collaboration", "values_conflict", "legitimacy
 GRAPH_EDIT_OPS <- c("reweight_edge", "new_edge", "new_node")
 
 # ============================================================================
+# RESPONSE REGISTER CODES (spec 2026-10-11 WS-3a) — codes stored; labels via
+# existing modules.response.measures.<key> translations (values = key suffix)
+# ============================================================================
+RM_TYPE_CODES <- c(regulatory = "regulatory", economic = "economic", educational = "educational",
+                   technical = "technical", institutional = "institutional",
+                   voluntary = "voluntary", mixed = "mixed")
+RM_TARGET_CODES <- c(drivers = "drivers", activities = "activities", pressures = "pressures",
+                     state = "state", multiple = "multiple_levels")
+RM_STATUS_CODES <- c(proposed = "proposed", planned = "planned", implemented = "implemented",
+                     partially_implemented = "partially_implemented", abandoned = "abandoned")
+GOVERNANCE_LEVELS <- c("local", "island", "regional", "national", "eu", "regional_sea", "international")
+TENET_LEVELS <- c("minimal", "intermediate", "full")   # intermediate: ecol_effective only (EBM framework)
+
+RM_REGISTER_COLUMNS <- c(
+  "ID", "Name", "Type", "Target", "Description", "Mechanism", "TargetElement",
+  "Effectiveness", "Feasibility", "Cost", "Status", "Stakeholders", "Barriers", "DateAdded",
+  "Kind", "EbmCode", "GovernanceLevel", "CompetentAuthority", "LegalBasis",
+  "ImplementingStakeholders", "PairedWith",
+  paste0("Tenet_", c("ecol_effective", "tech_feasible", "econ_efficient",
+                     "econ_viable", "socially_desirable", "ethically_defensible", "culturally_inclusive",
+                     "legally_permissible", "admin_achievable", "communicable", "politically_expedient"))
+)
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 
