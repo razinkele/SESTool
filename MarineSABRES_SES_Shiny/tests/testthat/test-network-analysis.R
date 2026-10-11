@@ -483,7 +483,8 @@ test_that("calculate_micmac handles empty edges", {
   expect_equal(nrow(result), 3)
   expect_true(all(result$influence == 0))
   expect_true(all(result$exposure == 0))
-  expect_true(all(result$quadrant == "Autonomous"))
+  # no edges -> nothing to rank (review 2026-10-07 N37)
+  expect_true(all(result$quadrant == "Undifferentiated"))
 })
 
 test_that("calculate_micmac computes influence and exposure", {
