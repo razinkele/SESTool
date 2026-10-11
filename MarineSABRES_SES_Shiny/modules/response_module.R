@@ -118,6 +118,41 @@ response_measures_ui <- function(id, i18n) {
                                rows = 2)
                 )
               ),
+              # WS-3a: EBM classification + governance (codes stored; labels via i18n)
+              # i18n-ref: modules.response.governance.kind.instrument
+              # i18n-ref: modules.response.governance.kind.measure
+              # i18n-ref: modules.response.governance.level.local
+              # i18n-ref: modules.response.governance.level.island
+              # i18n-ref: modules.response.governance.level.regional
+              # i18n-ref: modules.response.governance.level.national
+              # i18n-ref: modules.response.governance.level.eu
+              # i18n-ref: modules.response.governance.level.regional_sea
+              # i18n-ref: modules.response.governance.level.international
+              tags$details(class = "mt-2 mb-2",
+                tags$summary(strong(i18n$t("modules.response.governance.section_title"))),
+                fluidRow(
+                  column(3, selectInput(ns("rm_kind"), i18n$t("modules.response.governance.kind"),
+                    choices = c(" " = "", setNames(c("instrument", "measure"),
+                      c(i18n$t("modules.response.governance.kind.instrument"),
+                        i18n$t("modules.response.governance.kind.measure")))))),
+                  column(5, selectizeInput(ns("rm_ebm_code"), i18n$t("modules.response.governance.ebm_code"),
+                    choices = c(" " = ""), options = list(placeholder = "")),
+                    tags$small(class = "text-muted", i18n$t("modules.response.governance.ebm_code_hint"))),
+                  column(4, selectInput(ns("rm_gov_level"), i18n$t("modules.response.governance.level"),
+                    choices = c(" " = "", setNames(GOVERNANCE_LEVELS,
+                      vapply(GOVERNANCE_LEVELS, function(g) i18n$t(paste0("modules.response.governance.level.", g)), character(1))))))
+                ),
+                fluidRow(
+                  column(4, textInput(ns("rm_competent_authority"), i18n$t("modules.response.governance.competent_authority"))),
+                  column(4, textInput(ns("rm_legal_basis"), i18n$t("modules.response.governance.legal_basis"))),
+                  column(4, selectInput(ns("rm_paired_with"), i18n$t("modules.response.governance.paired_with"), choices = c(" " = "")))
+                ),
+                fluidRow(column(12,
+                  selectizeInput(ns("rm_impl_stakeholders"), i18n$t("modules.response.governance.implementing_stakeholders"),
+                    choices = NULL, multiple = TRUE),
+                  tags$small(class = "text-muted", i18n$t("modules.response.governance.no_stakeholders_hint"))
+                ))
+              ),
               actionButton(ns("add_response"), i18n$t("modules.response.measures.add_response_measure"),
                           icon = icon("plus"), class = "btn-success")
             ),
@@ -442,6 +477,29 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       if (!is.null(rm$counter))    response_data$counter    <- rm$counter
     }, ignoreNULL = FALSE)
 
+    # WS-3a: EBM picker follows the chosen kind; a measure type suggests the target
+    observeEvent(input$rm_kind, {
+      updateSelectizeInput(session, "rm_ebm_code", choices = ebm_code_choices(input$rm_kind, i18n), selected = "")
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$rm_ebm_code, {
+      tgt <- suggest_rm_target(input$rm_ebm_code)
+      if (nzchar(tgt)) updateSelectInput(session, "rm_target", selected = tgt)
+    }, ignoreInit = TRUE)
+
+    # WS-3a: implementing stakeholders come from PIMS; pairing from this register
+    observe({
+      sh <- tryCatch(project_data_reactive()$data$pims$stakeholders, error = function(e) NULL)
+      ch <- if (is.data.frame(sh) && nrow(sh) > 0) setNames(as.character(sh$ID), paste0(sh$Name, " (", sh$ID, ")")) else character(0)
+      updateSelectizeInput(session, "rm_impl_stakeholders", choices = ch, server = FALSE)
+    })
+
+    observe({
+      m <- response_data$measures
+      ch <- c(" " = "", if (nrow(m) > 0) setNames(m$ID, paste0(m$ID, " - ", m$Name)))
+      updateSelectInput(session, "rm_paired_with", choices = ch)
+    })
+
     # Add Response Measure ----
     observeEvent(input$add_response, {
       req(input$rm_name, input$rm_type)
@@ -457,6 +515,12 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         Feasibility = input$rm_feasibility %||% "", Cost = input$rm_cost %||% NA_real_,
         Status = input$rm_status %||% "", Stakeholders = input$rm_stakeholders %||% "",
         Barriers = input$rm_barriers %||% "", DateAdded = as.character(Sys.Date()),
+        Kind = input$rm_kind %||% "", EbmCode = input$rm_ebm_code %||% "",
+        GovernanceLevel = input$rm_gov_level %||% "",
+        CompetentAuthority = input$rm_competent_authority %||% "",
+        LegalBasis = input$rm_legal_basis %||% "",
+        ImplementingStakeholders = encode_ids(input$rm_impl_stakeholders),
+        PairedWith = input$rm_paired_with %||% "",
         stringsAsFactors = FALSE))
 
       response_data$measures <- rbind(normalize_response_measures(response_data$measures), new_row)
@@ -469,6 +533,9 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       updateTextInput(session, "rm_target_element", value = "")
       updateTextAreaInput(session, "rm_stakeholders", value = "")
       updateTextAreaInput(session, "rm_barriers", value = "")
+      updateTextInput(session, "rm_competent_authority", value = "")
+      updateTextInput(session, "rm_legal_basis", value = "")
+      updateSelectizeInput(session, "rm_impl_stakeholders", selected = character(0))
 
       # v1.16.1: bandit write-side feedback. The user's chosen
       # Effectiveness × Feasibility IS their priority assignment. Treat
@@ -651,7 +718,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       # (scoring already done above against the stable keys).
       measures <- translate_levels_for_display(measures)
 
-      visible_cols <- c("Rank", "ID", "Name", "Type", "Target",
+      visible_cols <- c("Rank", "ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel",
                         "Effectiveness", "Feasibility", "Cost",
                         "PriorityScore", "BanditSuggestion", "Status")
       visible_cols <- intersect(visible_cols, names(measures))

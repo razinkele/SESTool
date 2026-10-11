@@ -144,3 +144,31 @@ test_that("form choices are codes with translated names", {
   expect_match(ui, 'value="partially_implemented"', fixed = TRUE)
   expect_match(ui, "modules.response.measures.regulatory", fixed = TRUE)
 })
+
+# ---- WS-3a Task 4: classification + governance fields --------------------------
+base_inputs <- list(rm_name = "Spatial closure", rm_type = "regulatory", rm_target = "multiple",
+                    rm_status = "proposed", rm_description = "", rm_mechanism = "", rm_target_element = "",
+                    rm_effectiveness = "", rm_feasibility = "", rm_cost = 5, rm_stakeholders = "", rm_barriers = "")
+
+test_that("classification and governance fields are saved as codes/scalars", {
+  m <- rm_add(c(base_inputs, list(rm_kind = "measure", rm_ebm_code = "spatial.seasonal",
+                                  rm_gov_level = "regional_sea", rm_competent_authority = "Park authority",
+                                  rm_legal_basis = "Law 394/1991", rm_impl_stakeholders = c("SH_1", "SH_3"),
+                                  rm_paired_with = "")))
+  expect_equal(c(m$Kind, m$EbmCode, m$GovernanceLevel), c("measure", "spatial.seasonal", "regional_sea"))
+  expect_equal(m$ImplementingStakeholders, "SH_1;SH_3")
+  expect_equal(c(m$CompetentAuthority, m$LegalBasis), c("Park authority", "Law 394/1991"))
+})
+
+test_that("measure with an empty EBM panel and no PIMS stakeholders still saves", {
+  m <- rm_add(base_inputs)
+  expect_equal(nrow(m), 1L)
+  expect_equal(c(m$Kind, m$EbmCode, m$ImplementingStakeholders, m$PairedWith), c("", "", "", ""))
+})
+
+test_that("UI has the classification panel with i18n chrome", {
+  ui <- as.character(real_response_measures_ui("t", make_test_i18n()))
+  for (k in c("section_title", "kind", "ebm_code", "level", "competent_authority", "legal_basis",
+              "implementing_stakeholders", "paired_with"))
+    expect_match(ui, paste0("modules.response.governance.", k), fixed = TRUE)
+})
