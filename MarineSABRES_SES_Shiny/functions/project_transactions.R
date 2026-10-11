@@ -5,7 +5,8 @@
 # P0 Fixes:
 #   1. with_project_transaction / with_project_transaction_batch
 #   2. create_isa_modifier
-#   3. validate_cross_references / repair_adjacency_matrices
+#   3. validate_matrix_alignment (replaced the earlier cross-reference
+#      validator and repair function, 2026-10-11)
 
 # ============================================================================
 # 1. Atomic Transaction Wrapper
@@ -178,162 +179,69 @@ create_isa_modifier <- function(category, action) {
   r   = "responses"
 )
 
-#' Validate that adjacency matrix row/column names match element IDs
+#' Check that adjacency matrices line up with the element lists
 #'
-#' Checks every adjacency matrix and reports any row or column name
-#' that does not correspond to an existing element.
+#' The CLD builder (create_edges_df -> process_adjacency_matrix) reads matrix
+#' cells by POSITION: row i is the i-th element of the row category. If a
+#' matrix has more or fewer rows/columns than there are elements, or its
+#' row/column names are in a different order, links silently attach to the
+#' wrong nodes. This reports such mismatches; it never changes the data.
 #'
-#' @param isa_data An ISA data list (with \code{adjacency_matrices} and element data frames).
-#' @return Character vector of error messages (length 0 means valid).
+#' Row/column names may be element names (most load paths) or element IDs;
+#' a position matches if it equals either.
+#'
+#' Replaces validate_cross_references()/repair_adjacency_matrices(), which
+#' compared names against a lowercase `id` column that canonical frames do not
+#' have and flagged every template (review 2026-10-07 N68 follow-up).
+#'
+#' @param isa_data ISA data list with element data frames and adjacency_matrices
+#' @return character vector of findings (empty when aligned)
 #' @export
-validate_cross_references <- function(isa_data) {
-  if (is.null(isa_data)) return(character(0))
-  if (is.null(isa_data$adjacency_matrices)) return(character(0))
+validate_matrix_alignment <- function(isa_data) {
+  am <- isa_data$adjacency_matrices
+  if (is.null(am) || length(am) == 0) return(character(0))
 
-  # Collect all valid IDs per category
-  all_ids <- list()
-  for (cat in .VALID_ISA_CATEGORIES) {
+  element_keys <- function(cat) {
     df <- isa_data[[cat]]
-    if (!is.null(df) && is.data.frame(df) && nrow(df) > 0 && "id" %in% names(df)) {
-      all_ids[[cat]] <- as.character(df$id)
-    } else {
-      all_ids[[cat]] <- character(0)
+    if (!is.data.frame(df) || nrow(df) == 0) {
+      return(list(n = 0L, name = NULL, id = NULL))
     }
+    col_of <- function(cands) {
+      hit <- intersect(cands, names(df))
+      if (length(hit) == 0) NULL else trimws(as.character(df[[hit[1]]]))
+    }
+    list(n = nrow(df), name = col_of(c("Name", "name")), id = col_of(c("ID", "id")))
   }
 
-  errors <- character(0)
+  findings <- character(0)
+  for (mat_name in names(am)) {
+    mat <- am[[mat_name]]
+    if (is.null(mat) || length(dim(mat)) != 2) next
+    parts <- strsplit(mat_name, "_", fixed = TRUE)[[1]]
+    if (length(parts) != 2 || !all(parts %in% names(.MATRIX_PREFIX_MAP))) next
 
-  for (mat_name in names(isa_data$adjacency_matrices)) {
-    mat <- isa_data$adjacency_matrices[[mat_name]]
-    if (is.null(mat)) next
-
-    # Parse the matrix name to determine row/col categories
-    parts <- strsplit(mat_name, "_")[[1]]
-    if (length(parts) < 2) next
-
-    # Row prefix is the first part, column prefix is the rest joined
-    # e.g. "d_a" -> row="d", col="a"
-    # e.g. "p_mpf" -> row="p", col="mpf"
-    # e.g. "mpf_es" -> row="mpf", col="es"
-    # Strategy: try longest prefix match first
-    row_prefix <- NULL
-    col_prefix <- NULL
-    for (i in seq_along(parts)[-length(parts)]) {
-      candidate_row <- paste(parts[1:i], collapse = "_")
-      candidate_col <- paste(parts[(i + 1):length(parts)], collapse = "_")
-      if (candidate_row %in% names(.MATRIX_PREFIX_MAP) &&
-          candidate_col %in% names(.MATRIX_PREFIX_MAP)) {
-        row_prefix <- candidate_row
-        col_prefix <- candidate_col
-        break
+    for (side in 1:2) {
+      cat <- .MATRIX_PREFIX_MAP[[parts[side]]]
+      el <- element_keys(cat)
+      n_mat <- dim(mat)[side]
+      what <- if (side == 1) "rows" else "columns"
+      if (n_mat != el$n) {
+        findings <- c(findings, sprintf("%s: %d %s for %d %s",
+                                        mat_name, n_mat, what, el$n, cat))
+        next
       }
-    }
-
-    if (is.null(row_prefix) || is.null(col_prefix)) next
-
-    row_cat <- .MATRIX_PREFIX_MAP[[row_prefix]]
-    col_cat <- .MATRIX_PREFIX_MAP[[col_prefix]]
-
-    valid_row_ids <- all_ids[[row_cat]]
-    valid_col_ids <- all_ids[[col_cat]]
-
-    # Check rows
-    mat_row_names <- rownames(mat)
-    if (!is.null(mat_row_names)) {
-      orphaned_rows <- setdiff(mat_row_names, valid_row_ids)
-      if (length(orphaned_rows) > 0) {
-        errors <- c(errors, sprintf(
-          "Matrix '%s': orphaned row reference(s): %s (not in %s)",
-          mat_name,
-          paste(orphaned_rows, collapse = ", "),
-          row_cat
-        ))
-      }
-    }
-
-    # Check columns
-    mat_col_names <- colnames(mat)
-    if (!is.null(mat_col_names)) {
-      orphaned_cols <- setdiff(mat_col_names, valid_col_ids)
-      if (length(orphaned_cols) > 0) {
-        errors <- c(errors, sprintf(
-          "Matrix '%s': orphaned column reference(s): %s (not in %s)",
-          mat_name,
-          paste(orphaned_cols, collapse = ", "),
-          col_cat
-        ))
+      labels <- dimnames(mat)[[side]]
+      if (is.null(labels) || el$n == 0) next
+      labels <- trimws(as.character(labels))
+      ok <- rep(FALSE, el$n)
+      if (!is.null(el$name)) ok <- ok | labels == el$name
+      if (!is.null(el$id))   ok <- ok | labels == el$id
+      ok[is.na(ok)] <- FALSE
+      if (!all(ok)) {
+        findings <- c(findings, sprintf("%s: %s out of order or stale at position(s) %s",
+                                        mat_name, what, paste(which(!ok), collapse = ", ")))
       }
     }
   }
-
-  errors
-}
-
-
-#' Repair adjacency matrices by removing orphaned references
-#'
-#' Removes rows and columns whose names do not match any existing element.
-#'
-#' @param isa_data An ISA data list.
-#' @return The repaired ISA data list, or NULL if input is NULL.
-#' @export
-repair_adjacency_matrices <- function(isa_data) {
-  if (is.null(isa_data)) return(NULL)
-  if (is.null(isa_data$adjacency_matrices)) return(isa_data)
-
-  # Collect all valid IDs per category
-  all_ids <- list()
-  for (cat in .VALID_ISA_CATEGORIES) {
-    df <- isa_data[[cat]]
-    if (!is.null(df) && is.data.frame(df) && nrow(df) > 0 && "id" %in% names(df)) {
-      all_ids[[cat]] <- as.character(df$id)
-    } else {
-      all_ids[[cat]] <- character(0)
-    }
-  }
-
-  for (mat_name in names(isa_data$adjacency_matrices)) {
-    mat <- isa_data$adjacency_matrices[[mat_name]]
-    if (is.null(mat)) next
-
-    # Parse matrix name
-    parts <- strsplit(mat_name, "_")[[1]]
-    if (length(parts) < 2) next
-
-    row_prefix <- NULL
-    col_prefix <- NULL
-    for (i in seq_along(parts)[-length(parts)]) {
-      candidate_row <- paste(parts[1:i], collapse = "_")
-      candidate_col <- paste(parts[(i + 1):length(parts)], collapse = "_")
-      if (candidate_row %in% names(.MATRIX_PREFIX_MAP) &&
-          candidate_col %in% names(.MATRIX_PREFIX_MAP)) {
-        row_prefix <- candidate_row
-        col_prefix <- candidate_col
-        break
-      }
-    }
-
-    if (is.null(row_prefix) || is.null(col_prefix)) next
-
-    row_cat <- .MATRIX_PREFIX_MAP[[row_prefix]]
-    col_cat <- .MATRIX_PREFIX_MAP[[col_prefix]]
-
-    valid_row_ids <- all_ids[[row_cat]]
-    valid_col_ids <- all_ids[[col_cat]]
-
-    # Keep only valid rows and columns
-    keep_rows <- rownames(mat) %in% valid_row_ids
-    keep_cols <- colnames(mat) %in% valid_col_ids
-
-    if (!all(keep_rows) || !all(keep_cols)) {
-      repaired <- mat[keep_rows, keep_cols, drop = FALSE]
-      debug_log(sprintf(
-        "Repaired matrix '%s': %dx%d -> %dx%d",
-        mat_name, nrow(mat), ncol(mat), nrow(repaired), ncol(repaired)
-      ), "TRANSACTION")
-      isa_data$adjacency_matrices[[mat_name]] <- repaired
-    }
-  }
-
-  isa_data
+  findings
 }

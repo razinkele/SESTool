@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The "Linked WP5 mechanisms" pane on Responses was English in every language:** 25 interface strings (pane title, field names, buttons, filter, the Arctic DA name, error and version-migration notices) carried the English text in all 9 slots, which the completeness check cannot see. They are now translated in all 8 other languages; the translations are first-pass and **flagged for review by native speakers / the PI**. The mechanism content itself (`data/ses_knowledge_db_wp5_mechanisms.json`) is unchanged.
 - **New check** `test-i18n-english-fallback.R`: no English sentences (≥ 30 characters) in other-language slots of the WP5 file, and a ratchet so the 42 remaining elsewhere (mostly analysis_bot, response_measures, scenario_builder) cannot grow.
 
+### Added (matrix alignment check on load — review 2026-10-07 N68 follow-up; signed off 2026-10-11)
+
+- **Loading a project now warns when a connection matrix does not line up with the element list.** The CLD reads matrix cells by position, so a row left over from a deleted element (or rows in a different order) silently attaches links to the wrong elements; the loader does not realign them. The new `validate_matrix_alignment()` checks row/column counts and, where present, row/column names (element names or IDs) position by position. The ISA module shows one translated warning when the findings change and logs the details. Nothing is repaired automatically.
+- The unused `validate_cross_references()` and `repair_adjacency_matrices()` were removed: they compared matrix names against a lowercase `id` column that canonical element tables do not have, so they would have flagged every template (22–26 false findings each).
+
 ### Fixed (small gaps)
 
 - **Dashboard ecosystem-type dropdown is translated** (17 labels × 9 languages, same pattern as the regional-sea labels). Stored values are unchanged, so existing projects keep their selection.
