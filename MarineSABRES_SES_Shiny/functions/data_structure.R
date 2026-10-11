@@ -941,6 +941,12 @@ normalize_json_project_data <- function(data) {
     data$data$isa_data <- isa
   }
 
+  # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here
+  # so EVERY JSON load path gets it: project_io (via
+  # normalize_and_reconcile_project), local-storage load and the
+  # language-switch restore (restore_project_from_json_text).
+  data <- migrate_legacy_scenarios(data)
+
   data
 }
 
@@ -1093,21 +1099,47 @@ restore_project_from_json_text <- function(json_text) {
 # LOAD-PATH HARDENING HELPER
 # ============================================================================
 
+#' Convert a jsonlite-simplified scenario data.frame back to a list of lists
+#'
+#' fromJSON(simplifyVector = TRUE) turns a list of scenario objects into a
+#' data.frame (nested modifications become data.frame columns). Round-trip it
+#' through JSON with simplifyVector = FALSE to restore one list per scenario.
+#' Non-data.frame input is returned unchanged.
+#' @keywords internal
+.scenarios_as_list <- function(x) {
+  if (!is.data.frame(x)) return(x)
+  tryCatch(
+    jsonlite::fromJSON(
+      jsonlite::toJSON(x, auto_unbox = TRUE, null = "null", na = "null"),
+      simplifyVector = FALSE
+    ),
+    error = function(e) {
+      if (exists("debug_log", mode = "function")) {
+        debug_log(paste("scenario data.frame conversion failed:", e$message), "WARN")
+      }
+      list()
+    }
+  )
+}
+
 #' Move legacy project$data$scenarios into project$data$analysis$scenarios
 #'
 #' The scenario builder historically saved to data$scenarios while the schema
 #' (create_empty_project) declares data$analysis$scenarios. Merge by id;
 #' entries already at the canonical location win. Non-list items are dropped.
-#' Pure and idempotent. (WP5 spec WS-0)
+#' A data.frame at either location (the shape produced by
+#' fromJSON(simplifyVector = TRUE) on the JSON load path) is converted back to
+#' a list of scenario lists, not dropped. Pure and idempotent. (WP5 spec WS-0)
 #' @param project Project list
 #' @return Project list with data$scenarios removed
 migrate_legacy_scenarios <- function(project) {
   if (!is.list(project) || !is.list(project$data)) return(project)
-  if (!"scenarios" %in% names(project$data)) return(project)
+  has_legacy <- "scenarios" %in% names(project$data)
+  if (!has_legacy && !is.data.frame(project$data$analysis$scenarios)) return(project)
 
-  legacy <- project$data$scenarios
-  canonical <- project$data$analysis$scenarios
-  if (!is.list(canonical) || is.data.frame(canonical)) canonical <- list()
+  legacy <- .scenarios_as_list(project$data$scenarios)
+  canonical <- .scenarios_as_list(project$data$analysis$scenarios)
+  if (!is.list(canonical)) canonical <- list()
 
   sid <- function(s) {
     v <- s$id
@@ -1183,8 +1215,7 @@ normalize_and_reconcile_project <- function(project, id_store = NULL) {
   # Step 1: normalize column casing project-wide (id -> id lowercase, etc.)
   project <- normalize_json_project_data(project)
 
-  # Step 1b: legacy scenario location -> data$analysis$scenarios (WP5 WS-0)
-  project <- migrate_legacy_scenarios(project)
+  # (Step 1 also migrates legacy data$scenarios -> data$analysis$scenarios.)
 
   # Step 2: reconcile element IDs in the 6 element frames
   if (is.null(id_store)) id_store <- new_stable_id_store()

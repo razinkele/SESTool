@@ -99,3 +99,11 @@ test_that("no orphan keys in wp5_vocabulary.json", {
   expected <- unlist(lapply(WP5_VOCABS, function(v) wp5_vocab_key(v, wp5_vocab_codes(v))))
   expect_setequal(names(tr), expected)
 })
+
+# --- review fix I2: Pressure (P) must use the app's established DAPSIWRM term --
+test_that("pathway_segment.pressure matches the app's Pressures terminology", {
+  tr <- jsonlite::fromJSON(WP5_VOCAB_I18N, simplifyVector = FALSE)$translation
+  p <- tr[["modules.wp5_vocabulary.pathway_segment.pressure"]]
+  expect_equal(p$lt, "Spaudimas")    # app: "Spaudimai"; "Poveikis" means impact
+  expect_equal(p$no, "Belastning")   # app: "Belastninger"
+})

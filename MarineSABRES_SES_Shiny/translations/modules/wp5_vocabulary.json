@@ -401,10 +401,10 @@
       "es": "Presión",
       "fr": "Pression",
       "de": "Belastung",
-      "lt": "Poveikis",
+      "lt": "Spaudimas",
       "pt": "Pressão",
       "it": "Pressione",
-      "no": "Påvirkning",
+      "no": "Belastning",
       "el": "Πίεση"
     },
     "modules.wp5_vocabulary.pathway_segment.state": {

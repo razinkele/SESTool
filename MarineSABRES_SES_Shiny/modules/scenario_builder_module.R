@@ -114,7 +114,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
     observe({
       req(project_data_reactive())
       data <- project_data_reactive()
-      stored <- data$data$analysis$scenarios %||% data$data$scenarios
+      # Re-run the (idempotent) migration: an in-memory project that skipped a
+      # load path, or whose canonical slot is an empty list(), must still show
+      # legacy scenarios -- `%||%` would not fall back from list().
+      stored <- migrate_legacy_scenarios(data)$data$analysis$scenarios
       if (!is.null(stored)) {
         scenarios(stored)
       }

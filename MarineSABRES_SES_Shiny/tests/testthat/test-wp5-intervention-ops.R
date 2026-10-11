@@ -54,3 +54,16 @@ test_that("missing or corrupt file: warning + empty results, no error", {
   expect_equal(nrow(get_intervention_types()), 0L)
   load_wp5_intervention_ops(OPS_PATH, force_reload = TRUE)   # restore for later tests
 })
+
+# --- review fix I1: startup auto-load must surface a missing/corrupt table ----
+test_that("startup auto-load warns and logs (not silently) when the table is missing", {
+  logged <- character()
+  # local_mocked_bindings() only works for pkgload packages; swap the global by hand
+  orig <- get("debug_log", envir = globalenv())
+  assign("debug_log", function(msg, ctx = "INFO", ...) logged <<- c(logged, msg), envir = globalenv())
+  on.exit(assign("debug_log", orig, envir = globalenv()), add = TRUE)
+  expect_warning(.wp5_ops_autoload(file.path(tempdir(), "missing_ops.json")), "not found")
+  expect_true(any(grepl("not found", logged)))
+  expect_equal(nrow(get_allowed_graph_ops("nudge")), 0L)
+  load_wp5_intervention_ops(OPS_PATH, force_reload = TRUE)   # restore
+})

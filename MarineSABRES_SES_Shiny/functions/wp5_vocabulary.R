@@ -133,7 +133,16 @@ get_allowed_graph_ops <- function(id, context = NULL) {
   data.frame(op = ops, source = src, stringsAsFactors = FALSE)
 }
 
-# Auto-load on source if data file present (mirrors wp5_kb_loader.R)
-if (file.exists("data/wp5_intervention_ops.json")) {
-  suppressWarnings(load_wp5_intervention_ops())
+#' Startup load: a missing/corrupt table warns AND is logged (never silent)
+#' @keywords internal
+.wp5_ops_autoload <- function(path = NULL) {
+  withCallingHandlers(
+    load_wp5_intervention_ops(path, force_reload = TRUE),
+    warning = function(w) {
+      if (exists("debug_log", mode = "function")) debug_log(conditionMessage(w), "WARN")
+    }
+  )
 }
+
+# Auto-load on source (get_project_file() resolves the path from PROJECT_ROOT)
+.wp5_ops_autoload()

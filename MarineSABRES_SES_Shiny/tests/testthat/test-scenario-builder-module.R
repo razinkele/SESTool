@@ -91,3 +91,16 @@ test_that("save_scenarios_to_project writes canonical location and clears legacy
     expect_equal(vapply(saved$data$analysis$scenarios, `[[`, "", "id"), "s_new")
   })
 })
+
+# --- review fix C2: builder fallback when canonical slot is an empty list ----
+test_that("builder shows legacy scenarios when canonical slot is an empty list (C2)", {
+  proj <- create_empty_project("t")            # analysis$scenarios = list()
+  proj$data$scenarios <- list(list(id = "legacy_only", name = "Legacy",
+                                   modifications = list(), results = NULL))
+  pd <- reactiveVal(proj)
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$flushReact()
+    expect_equal(vapply(scenarios(), `[[`, "", "id"), "legacy_only")
+  })
+})
