@@ -297,59 +297,8 @@ test_that("loaded templates have required ISA structure", {
   }
 })
 
-# ============================================================================
-# Cross-Reference Validation Tests
-# ============================================================================
-
-context("Module Integration: Cross-Reference Validation")
-
-test_that("validate_cross_references detects orphaned matrix references", {
-  skip_if_not(exists("validate_cross_references", mode = "function"),
-              "validate_cross_references function not available")
-
-  # Create ISA data with orphaned reference
-  isa_data <- list(
-    drivers = data.frame(id = "d1", name = "Valid Driver"),
-    activities = data.frame(id = "a1", name = "Valid Activity"),
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix(c(1, 0), nrow = 2, ncol = 1,
-                   dimnames = list(c("d1", "ORPHAN_REF"), c("a1")))
-    )
-  )
-
-  errors <- validate_cross_references(isa_data)
-
-  expect_true(length(errors) > 0)
-  expect_true(any(grepl("ORPHAN", errors)))
-})
-
-test_that("validate_cross_references passes with valid references", {
-  skip_if_not(exists("validate_cross_references", mode = "function"),
-              "validate_cross_references function not available")
-
-  # Create valid ISA data
-  isa_data <- list(
-    drivers = data.frame(id = "d1", name = "Driver"),
-    activities = data.frame(id = "a1", name = "Activity"),
-    pressures = data.frame(id = character(0), name = character(0)),
-    marine_processes = data.frame(id = character(0), name = character(0)),
-    ecosystem_services = data.frame(id = character(0), name = character(0)),
-    goods_benefits = data.frame(id = character(0), name = character(0)),
-    responses = data.frame(id = character(0), name = character(0)),
-    adjacency_matrices = list(
-      d_a = matrix(1, nrow = 1, ncol = 1, dimnames = list("d1", "a1"))
-    )
-  )
-
-  errors <- validate_cross_references(isa_data)
-
-  expect_equal(length(errors), 0)
-})
+# (Matrix cross-reference tests moved to test-p0-fixes.R, which now covers
+#  validate_matrix_alignment().)
 
 # ============================================================================
 # Transaction Wrapper Tests
