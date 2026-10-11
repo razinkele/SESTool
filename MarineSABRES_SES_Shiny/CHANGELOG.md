@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed (WP5 mechanism KB v2 — spec 2026-10-11 WS-2)
+- **The WP5 financial-mechanism catalogue is rebuilt from the FINAL D5.2 (v5, 23 Jun 2026):** 31 mechanisms (Arctic 8, Tuscan 7, Macaronesia 16; previously 28 from April drafts). Mechanism texts are quoted verbatim from D5.2 Tables 9, 20 and 22, and each card shows its source.
+- Macaronesia cards also show details from the Blue Corridor toolkit. That toolkit is an April 2026 annex that is **not part of the final D5.2**, and its details are badged "pre-final draft".
+- Removed (no WP5 source): two substituted Macaronesia mechanisms, invented Tuscan evidence, the code `POS_density`, Tuscan scenario labels (D5.2 defines no Tuscan scenarios), and builder-written assessment guidance (held until WP5 partners decide; spec Q1).
+- Added: Arctic research/innovation funds and PPP/CSR funding, Tuscan blue-carbon credits and certification/branding, Macaronesia cost bands, D5.2 scenario names per DA, and coded Arctic scenario applicability (derived).
+- Mechanism IDs are renumbered (`arc_01…`, `tus_01…`, `mac_01…`); no project data referenced the old IDs.
+- `scripts/build_wp5_mechanisms_kb.py` now parses a committed, hash-pinned source extract (`scripts/wp5_kb_sources/`). `scripts/kb_audit/audit_wp5_mechanisms.py` requires the JSON to equal a fresh build of that extract.
+
+### Added (WP5 foundation — spec 2026-10-11 WS-0/WS-1)
+- WP5 shared vocabulary: D5.2 criteria (EE/EC/EQ/PI/FF with PO/FI aliases), ordinal impact rubric, time horizons, EBM policy-instrument and management-measure typologies, 11 tenets, NPG governance dimensions, D5.3 graph-edit operations (`constants.R`, `functions/wp5_vocabulary.R`, `translations/modules/wp5_vocabulary.json`, 9 languages).
+- `data/wp5_intervention_ops.json`: D5.3 intervention typology → SES-graph change operations with per-row provenance; EBM-code mapping marked provisional pending WP5 confirmation.
+- `stamp_min_app_version()` helper (never lowers the stamped version).
+
+### Fixed
+- Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
+
 ## [1.22.1] - 2026-10-11
 
 Patch release: placeholder translations (PR #93) and template link signs (PR #94).
@@ -55,14 +71,6 @@ Minor release: the review decisions signed off on 2026-10-11 (PRs #87-#91). Deci
 - **New Pressure → Marine Process links now default to `-`** (N26). Standard Entry seeded them `+`, contradicting the rule table and framework Rule 3. Every seeding path (the Standard Entry save, the Responses save, Excel and project recovery) now takes its default from `DAPSIWRM_ADJACENCY_RULES` via `default_polarity_for_matrix()`. Only new cells are affected. A rebuild no longer rewrites the sign of an edge that already exists, even when its user-edited flag is missing (old saves), so existing projects and templates keep their polarity. P→MPF is the only forward default that changed. D→A, A→P, MPF→ES, ES→GB, GB→D and GB→R stay `+`; R→D, R→A and R→P stay `-`.
 - **The three transition-rule sources now agree** (N61). `DAPSIWRM_ADJACENCY_RULES` gains the transitions that `is_valid_dapsirwrm_transition()` and `DAPSIWRM_FRAMEWORK_RULES.md` already accepted: R→R (Rule 14), MPF→MPF (16), P→P (17), A→A (18) and the D→P ExUP exception. They are listed as `extension_targets` with a default polarity per target (`target_polarities`). They validate in strict mode but are not offered as graphical-builder suggestions. All five default to `+`: the framework doc says "Varies" or gives no sign for them, so the default follows the doc's examples and the neighbouring rules. A new test enumerates every type pair and checks that the table and the validator accept exactly the same set. Measures are excluded because they have no table entry; they are merged into Responses.
 - **The Standard Entry Responses form can edit R→MPF (Rule 12) and R→R (Rule 14) links** (N62). These were previously documented as intentionally omitted. They are new "Linked Marine Processes" and "Linked Responses" multi-selects in the Advanced group, stored as `LinkedMPF` / `LinkedR` and built into `r_mpf` / `r_r`. Both survive save/reload, JSON projects, the Standard Entry Excel export/import and the graphical-builder export. Both are listed in the adjacency-matrix review. New R→MPF cells seed `+` (Rule 12: restoration/protection raises state). Previously the table's R-arm fallback was `-`, and `infer_connection_polarity()` returned `-` for non-restoration names. The graphical builder's inference now uses the same `+` table default. New R→R cells also seed `+`. The R→R list refreshes after each save, so responses saved later can be linked. New labels are in all 9 languages.
-
-### Added (WP5 foundation — spec 2026-10-11 WS-0/WS-1)
-- WP5 shared vocabulary: D5.2 criteria (EE/EC/EQ/PI/FF with PO/FI aliases), ordinal impact rubric, time horizons, EBM policy-instrument and management-measure typologies, 11 tenets, NPG governance dimensions, D5.3 graph-edit operations (`constants.R`, `functions/wp5_vocabulary.R`, `translations/modules/wp5_vocabulary.json`, 9 languages).
-- `data/wp5_intervention_ops.json`: D5.3 intervention typology → SES-graph change operations with per-row provenance; EBM-code mapping marked provisional pending WP5 confirmation.
-- `stamp_min_app_version()` helper (never lowers the stamped version).
-
-### Fixed
-- Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
 
 ## [1.21.1] - 2026-10-11
 
