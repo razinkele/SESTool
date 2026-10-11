@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (Leverage Point Analysis heading)
+
+- **The Leverage Point Analysis page showed the raw key `modules.analysis.leverage.title` as its heading** (reported on the live site). The title, subtitle and help-dialog title keys were never defined. They are now added in all 9 languages; the title uses the sidebar wording.
+- **New guard:** keys passed as helper arguments (`title_key`, `subtitle_key`, `context_key`, `label_key`, `description_key`, `question_key`) were invisible to the CI translation audit, which only scans `i18n$t()` calls. `test-i18n-key-arguments.R` now checks that every such literal resolves.
+
 ## [1.21.0] - 2026-10-11
 
 Minor release: the medium- and low-severity findings of the 2026-10-07 review (PRs #76-#82). Deployed to laguna 2026-10-11.

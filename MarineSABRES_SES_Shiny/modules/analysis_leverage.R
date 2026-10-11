@@ -132,6 +132,9 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
     })
 
     # === REACTIVE MODULE HEADER ===
+    # i18n-ref: modules.analysis.leverage.title
+    # i18n-ref: modules.analysis.leverage.subtitle
+    # i18n-ref: modules.analysis.leverage.help_title
     create_reactive_header(
       output = output,
       ns = session$ns,

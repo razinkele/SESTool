@@ -725,6 +725,39 @@
       "it": "I nodi Risposta e Misura possono ottenere punteggi più alti a causa della loro posizione di collegamento strutturale nel framework DAPSI(W)R(M). Considerare il tipo di nodo nell'interpretazione dei risultati.",
       "no": "Respons- og Tiltaksnoder kan score høyere på grunn av sin strukturelle broposisjon i DAPSI(W)R(M)-rammeverket. Vurder nodetype ved tolkning av resultater.",
       "el": "Οι κόμβοι Απόκρισης και Μέτρου ενδέχεται να βαθμολογούνται υψηλότερα λόγω της δομικής τους θέσης γέφυρας στο πλαίσιο DAPSI(W)R(M). Λάβετε υπόψη τον τύπο κόμβου κατά την ερμηνεία των αποτελεσμάτων."
+    },
+    "modules.analysis.leverage.title": {
+      "en": "Leverage Point Analysis",
+      "es": "Análisis de Puntos de Apalancamiento",
+      "fr": "Analyse des Points de Levier",
+      "de": "Hebelpunkt-Analyse",
+      "lt": "Svertų taškų analizė",
+      "pt": "Análise de Pontos de Alavancagem",
+      "it": "Analisi dei Punti di Leva",
+      "no": "Påvirkningspunktanalyse",
+      "el": "Ανάλυση Σημείων Μόχλευσης"
+    },
+    "modules.analysis.leverage.subtitle": {
+      "en": "Identify the elements with the greatest potential to change how the system behaves",
+      "es": "Identifique los elementos con mayor potencial para cambiar el comportamiento del sistema",
+      "fr": "Identifiez les éléments ayant le plus grand potentiel pour modifier le comportement du système",
+      "de": "Ermitteln Sie die Elemente mit dem größten Potenzial, das Verhalten des Systems zu verändern",
+      "lt": "Nustatykite elementus, galinčius labiausiai pakeisti sistemos elgseną",
+      "pt": "Identifique os elementos com maior potencial para mudar o comportamento do sistema",
+      "it": "Individua gli elementi con il maggiore potenziale di cambiare il comportamento del sistema",
+      "no": "Finn elementene med størst potensial til å endre hvordan systemet oppfører seg",
+      "el": "Εντοπίστε τα στοιχεία με τη μεγαλύτερη δυνατότητα να αλλάξουν τη συμπεριφορά του συστήματος"
+    },
+    "modules.analysis.leverage.help_title": {
+      "en": "Leverage Point Analysis Help",
+      "es": "Ayuda: Análisis de Puntos de Apalancamiento",
+      "fr": "Aide : Analyse des Points de Levier",
+      "de": "Hilfe: Hebelpunkt-Analyse",
+      "lt": "Pagalba: svertų taškų analizė",
+      "pt": "Ajuda: Análise de Pontos de Alavancagem",
+      "it": "Guida: Analisi dei Punti di Leva",
+      "no": "Hjelp: Påvirkningspunktanalyse",
+      "el": "Βοήθεια: Ανάλυση Σημείων Μόχλευσης"
     }
   }
 }
