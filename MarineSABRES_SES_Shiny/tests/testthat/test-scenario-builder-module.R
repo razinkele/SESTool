@@ -57,3 +57,50 @@ test_that("scenario_builder_server event_bus defaults to NULL", {
   expect_true(is.null(default) || identical(as.character(default), "NULL"),
               info = "event_bus must default to NULL for backward compatibility")
 })
+
+# ============================================================================
+# WS-0: canonical storage at project$data$analysis$scenarios
+# ============================================================================
+# helper-stubs.R defines a stub scenario_builder_server in testthat's helper env
+# that shadows the .GlobalEnv copy written by source_for_test(); re-bind the real
+# one (pattern: test-entry-point-module.R).
+real_scenario_builder_server <- get("scenario_builder_server", envir = .GlobalEnv)
+
+test_that("builder loads scenarios from data$analysis$scenarios", {
+  proj <- create_empty_project("t")
+  proj$data$analysis$scenarios <- list(list(id = "s_can", name = "Canonical",
+                                            modifications = list(), results = NULL))
+  pd <- reactiveVal(proj)
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$flushReact()
+    expect_equal(vapply(scenarios(), `[[`, "", "id"), "s_can")
+  })
+})
+
+test_that("save_scenarios_to_project writes canonical location and clears legacy", {
+  proj <- create_empty_project("t")
+  proj$data$scenarios <- list(list(id = "old"))   # stale legacy key in memory
+  pd <- reactiveVal(proj)
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    scenarios(list(list(id = "s_new", name = "New", modifications = list())))
+    save_scenarios_to_project()
+    saved <- pd()
+    expect_null(saved$data$scenarios)
+    expect_equal(vapply(saved$data$analysis$scenarios, `[[`, "", "id"), "s_new")
+  })
+})
+
+# --- review fix C2: builder fallback when canonical slot is an empty list ----
+test_that("builder shows legacy scenarios when canonical slot is an empty list (C2)", {
+  proj <- create_empty_project("t")            # analysis$scenarios = list()
+  proj$data$scenarios <- list(list(id = "legacy_only", name = "Legacy",
+                                   modifications = list(), results = NULL))
+  pd <- reactiveVal(proj)
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$flushReact()
+    expect_equal(vapply(scenarios(), `[[`, "", "id"), "legacy_only")
+  })
+})
