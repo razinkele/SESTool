@@ -371,6 +371,22 @@ tar -xzf /tmp/${TarFilename} --strip-components=${StripComponents} -C ${RemoteTa
 # export-ignore leaves empty directory stubs for the excluded trees
 (cd ${RemoteTarget} && find tests .claude DTU -depth -type d -empty -delete 2>/dev/null) || true
 
+# Extraction overwrites but never deletes, and the move-aside above only fires
+# for shiny-owned dirs (after one deploy they are razinka-owned), so a file
+# deleted from git stayed live: 1.22.2 kept loading the removed
+# translations/common/patch_additions.json. Delete code files that are not in
+# this release, in the source-code dirs only: data/, www/, models/ (gitignored
+# ML weights) and SESModels/ hold files that are deliberately not in git.
+echo '==> Removing code files that are no longer in the release...'
+MANIFEST="/tmp/marinesabres-manifest-`$`$.txt"
+tar --quoting-style=literal -tzf /tmp/${TarFilename} | cut -d/ -f`$(( ${StripComponents} + 1 ))- | grep -v '/`$' | LC_ALL=C sort > `$MANIFEST || true
+if [ -s `$MANIFEST ]; then
+  (cd ${RemoteTarget} && find config functions modules scripts server translations -type f \
+      ! -name '_merged_translations.json' 2>/dev/null | LC_ALL=C sort | LC_ALL=C comm -13 `$MANIFEST - | \
+    while IFS= read -r f; do rm -f "`$f" && echo "  removed `$f"; done) || true
+fi
+rm -f `$MANIFEST
+
 echo '==> Restoring preserved user data...'
 (test -s `$PRESERVE_TGZ && tar xzf `$PRESERVE_TGZ -C ${RemoteTarget}/ && \
    echo '   Restored:' && tar tzf `$PRESERVE_TGZ) || echo '   (nothing to restore)'
