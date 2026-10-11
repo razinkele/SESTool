@@ -66,3 +66,74 @@ wp5_vocab_label <- function(vocab, code, i18n) {
     if (length(lbl) != 1 || is.na(lbl) || lbl == "" || identical(lbl, key)) cd else lbl
   }, character(1), USE.NAMES = FALSE)
 }
+
+# ------------------------------------------------------------------------------
+# D5.3 intervention -> graph-operation table (data/wp5_intervention_ops.json)
+# ------------------------------------------------------------------------------
+.wp5_ops_env <- new.env(parent = emptyenv())
+.wp5_ops_env$db <- NULL
+
+#' Load the intervention->graph-operation table (cached)
+#' @return Parsed list, or NULL (with a warning) if missing/corrupt
+load_wp5_intervention_ops <- function(path = NULL, force_reload = FALSE) {
+  if (!is.null(.wp5_ops_env$db) && !force_reload) return(invisible(.wp5_ops_env$db))
+  if (is.null(path)) {
+    path <- if (exists("get_project_file", mode = "function")) {
+      get_project_file("data", "wp5_intervention_ops.json")
+    } else file.path("data", "wp5_intervention_ops.json")
+  }
+  .wp5_ops_env$db <- NULL
+  if (!file.exists(path)) {
+    warning(sprintf("[WP5 vocab] intervention ops table not found at: %s", path))
+    return(invisible(NULL))
+  }
+  db <- tryCatch(jsonlite::fromJSON(path, simplifyVector = FALSE), error = function(e) {
+    warning(sprintf("[WP5 vocab] failed to parse intervention ops table: %s", e$message))
+    NULL
+  })
+  .wp5_ops_env$db <- db
+  if (!is.null(db) && exists("debug_log", mode = "function")) {
+    debug_log(sprintf("WP5 intervention ops loaded: %d rows", length(db$interventions)), "WP5")
+  }
+  invisible(db)
+}
+
+#' Intervention types, optionally filtered by group
+#' @return data.frame(id, group, provenance) (0 rows if table unavailable)
+get_intervention_types <- function(group = NULL) {
+  rows <- .wp5_ops_env$db$interventions %||% list()
+  rows <- Filter(function(r) is.null(r$context), rows)
+  if (!is.null(group)) rows <- Filter(function(r) identical(r$group, group), rows)
+  data.frame(
+    id = vapply(rows, function(r) r$id, character(1)),
+    group = vapply(rows, function(r) r$group, character(1)),
+    provenance = vapply(rows, function(r) r$provenance, character(1)),
+    stringsAsFactors = FALSE
+  )
+}
+
+#' Allowed graph-edit operations for an intervention type
+#'
+#' Union of xlsx and EBM operations, each tagged by source ("xlsx", "ebm",
+#' or "xlsx+ebm"). A row whose `context` equals the requested DA overrides the
+#' master row; unknown contexts fall back to master. (spec WS-1, Q4)
+#' @return data.frame(op, source) ordered as GRAPH_EDIT_OPS; 0 rows if unknown
+get_allowed_graph_ops <- function(id, context = NULL) {
+  rows <- .wp5_ops_env$db$interventions %||% list()
+  pick <- NULL
+  if (!is.null(context)) {
+    pick <- Find(function(r) identical(r$id, id) && identical(r$context, context), rows)
+  }
+  if (is.null(pick)) pick <- Find(function(r) identical(r$id, id) && is.null(r$context), rows)
+  if (is.null(pick)) return(data.frame(op = character(), source = character(), stringsAsFactors = FALSE))
+  x <- unlist(pick$ops_xlsx); e <- unlist(pick$ops_ebm)
+  ops <- GRAPH_EDIT_OPS[GRAPH_EDIT_OPS %in% c(x, e)]
+  src <- vapply(ops, function(o) paste(c(if (o %in% x) "xlsx", if (o %in% e) "ebm"), collapse = "+"),
+                character(1), USE.NAMES = FALSE)
+  data.frame(op = ops, source = src, stringsAsFactors = FALSE)
+}
+
+# Auto-load on source if data file present (mirrors wp5_kb_loader.R)
+if (file.exists("data/wp5_intervention_ops.json")) {
+  suppressWarnings(load_wp5_intervention_ops())
+}
