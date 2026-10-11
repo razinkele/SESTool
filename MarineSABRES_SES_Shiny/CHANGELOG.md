@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.1] - 2026-10-11
+
+Patch release: placeholder translations (PR #93) and template link signs (PR #94).
+
 ### Fixed (placeholder translations across the app)
 
 - **About 410 keys showed literal placeholders such as "[DE] Scenario Confirm Delete Message" in Spanish, French, German, Lithuanian, Portuguese and Italian**: the stakeholder (PIMS) module, the Scenario Builder, network-analysis tools, ISA data entry help, the entry point and the template pages. The completeness check passed them because every slot was filled. All are now translated; many English values were key-derived phrases ("Scenario Scenarios") and were rewritten from the original text in git history or from how the key is used. Half-English Greek and Norwegian values in the same keys were fixed too.
