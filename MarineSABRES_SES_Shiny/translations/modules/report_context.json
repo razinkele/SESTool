@@ -186,6 +186,193 @@
       "it": "Mar dei Caraibi",
       "no": "Det karibiske hav",
       "el": "Καραϊβική Θάλασσα"
+    },
+    "modules.report_context.eco_coastal": {
+      "en": "Coastal",
+      "es": "Costero",
+      "fr": "Côtier",
+      "de": "Küste",
+      "lt": "Pakrantė",
+      "pt": "Costeiro",
+      "it": "Costiero",
+      "no": "Kyst",
+      "el": "Παράκτιο"
+    },
+    "modules.report_context.eco_shelf": {
+      "en": "Shelf",
+      "es": "Plataforma continental",
+      "fr": "Plateau continental",
+      "de": "Schelf",
+      "lt": "Šelfas",
+      "pt": "Plataforma continental",
+      "it": "Piattaforma continentale",
+      "no": "Sokkel",
+      "el": "Υφαλοκρηπίδα"
+    },
+    "modules.report_context.eco_deep_sea": {
+      "en": "Deep Sea",
+      "es": "Mar profundo",
+      "fr": "Grands fonds",
+      "de": "Tiefsee",
+      "lt": "Gilioji jūra",
+      "pt": "Mar profundo",
+      "it": "Mare profondo",
+      "no": "Dyphav",
+      "el": "Βαθιά θάλασσα"
+    },
+    "modules.report_context.eco_pelagic": {
+      "en": "Pelagic",
+      "es": "Pelágico",
+      "fr": "Pélagique",
+      "de": "Pelagial",
+      "lt": "Pelaginė zona",
+      "pt": "Pelágico",
+      "it": "Pelagico",
+      "no": "Pelagisk",
+      "el": "Πελαγικό"
+    },
+    "modules.report_context.eco_benthic": {
+      "en": "Benthic",
+      "es": "Bentónico",
+      "fr": "Benthique",
+      "de": "Benthal",
+      "lt": "Bentosas",
+      "pt": "Bentónico",
+      "it": "Bentonico",
+      "no": "Bentisk",
+      "el": "Βενθικό"
+    },
+    "modules.report_context.eco_rocky_shore": {
+      "en": "Rocky Shore",
+      "es": "Costa rocosa",
+      "fr": "Côte rocheuse",
+      "de": "Felsküste",
+      "lt": "Uolėta pakrantė",
+      "pt": "Costa rochosa",
+      "it": "Costa rocciosa",
+      "no": "Klippekyst",
+      "el": "Βραχώδης ακτή"
+    },
+    "modules.report_context.eco_sandy_shore": {
+      "en": "Sandy Shore",
+      "es": "Playa arenosa",
+      "fr": "Plage de sable",
+      "de": "Sandstrand",
+      "lt": "Smėlėta pakrantė",
+      "pt": "Praia arenosa",
+      "it": "Spiaggia sabbiosa",
+      "no": "Sandstrand",
+      "el": "Αμμώδης ακτή"
+    },
+    "modules.report_context.eco_mudflat": {
+      "en": "Mudflat",
+      "es": "Llanura fangosa",
+      "fr": "Vasière",
+      "de": "Watt",
+      "lt": "Dumblynas",
+      "pt": "Planície de lodo",
+      "it": "Piana fangosa",
+      "no": "Mudderflate",
+      "el": "Λασπώδης παλιρροιακή ζώνη"
+    },
+    "modules.report_context.eco_saltmarsh": {
+      "en": "Saltmarsh",
+      "es": "Marisma",
+      "fr": "Marais salé",
+      "de": "Salzwiese",
+      "lt": "Druskingoji pelkė",
+      "pt": "Sapal",
+      "it": "Palude salmastra",
+      "no": "Strandeng",
+      "el": "Αλμυρόβαλτος"
+    },
+    "modules.report_context.eco_seagrass": {
+      "en": "Seagrass",
+      "es": "Pradera marina",
+      "fr": "Herbier marin",
+      "de": "Seegraswiese",
+      "lt": "Jūrinės žolės",
+      "pt": "Pradaria marinha",
+      "it": "Prateria di fanerogame",
+      "no": "Sjøgress",
+      "el": "Λιβάδι θαλάσσιων φανερογάμων"
+    },
+    "modules.report_context.eco_kelp_forest": {
+      "en": "Kelp Forest",
+      "es": "Bosque de laminarias",
+      "fr": "Forêt de laminaires",
+      "de": "Kelpwald",
+      "lt": "Rudadumblių miškas",
+      "pt": "Floresta de laminárias",
+      "it": "Foresta di kelp",
+      "no": "Tareskog",
+      "el": "Δάσος φυκιών"
+    },
+    "modules.report_context.eco_coral_reef": {
+      "en": "Coral Reef",
+      "es": "Arrecife de coral",
+      "fr": "Récif corallien",
+      "de": "Korallenriff",
+      "lt": "Koralų rifas",
+      "pt": "Recife de coral",
+      "it": "Barriera corallina",
+      "no": "Korallrev",
+      "el": "Κοραλλιογενής ύφαλος"
+    },
+    "modules.report_context.eco_mangrove": {
+      "en": "Mangrove",
+      "es": "Manglar",
+      "fr": "Mangrove",
+      "de": "Mangrove",
+      "lt": "Mangrovės",
+      "pt": "Mangal",
+      "it": "Mangrovia",
+      "no": "Mangrove",
+      "el": "Μαγκρόβια"
+    },
+    "modules.report_context.eco_estuary": {
+      "en": "Estuary",
+      "es": "Estuario",
+      "fr": "Estuaire",
+      "de": "Ästuar",
+      "lt": "Estuarija",
+      "pt": "Estuário",
+      "it": "Estuario",
+      "no": "Elvemunning",
+      "el": "Εκβολή"
+    },
+    "modules.report_context.eco_lagoon": {
+      "en": "Lagoon",
+      "es": "Laguna",
+      "fr": "Lagune",
+      "de": "Lagune",
+      "lt": "Lagūna",
+      "pt": "Laguna",
+      "it": "Laguna",
+      "no": "Lagune",
+      "el": "Λιμνοθάλασσα"
+    },
+    "modules.report_context.eco_fjord": {
+      "en": "Fjord",
+      "es": "Fiordo",
+      "fr": "Fjord",
+      "de": "Fjord",
+      "lt": "Fjordas",
+      "pt": "Fiorde",
+      "it": "Fiordo",
+      "no": "Fjord",
+      "el": "Φιόρδ"
+    },
+    "modules.report_context.eco_other": {
+      "en": "Other",
+      "es": "Otro",
+      "fr": "Autre",
+      "de": "Andere",
+      "lt": "Kita",
+      "pt": "Outro",
+      "it": "Altro",
+      "no": "Annet",
+      "el": "Άλλο"
     }
   }
 }

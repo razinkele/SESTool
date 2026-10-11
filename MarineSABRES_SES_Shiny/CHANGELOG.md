@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (small gaps)
+
+- **Dashboard ecosystem-type dropdown is translated** (17 labels × 9 languages, same pattern as the regional-sea labels). Stored values are unchanged, so existing projects keep their selection.
+- **P3 tests no longer skip:** the event-bus tests now load `server/event_bus_setup.R` and run. Four tests for the removed lazy-loading registry and ML feature cache were deleted; those functions no longer exist, so the tests could only skip.
+- **CLAUDE.md** pointed to a non-existent `scripts/translation_workflow.R`; it now names the audit CI actually runs (`scripts/_i18n_audit.py`).
+
 ### Changed (Decision Lens rules — review 2026-10-07 N35, N37, N52; signed off 2026-10-11)
 
 - **MICMAC quadrants are assigned against the mean** (classic MICMAC) instead of the median with a strict `>`, which labelled every node "Autonomous / lower priority" whenever values tied (e.g. a plain DAPSIWRM cycle). When every element has the same influence and dependence, they are shown as **Undifferentiated** with a neutral note (new label and narrative × 9 languages); a network with no links is also Undifferentiated.
