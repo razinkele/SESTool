@@ -69,3 +69,33 @@ test_that("labels for unknown/NA codes fall back to the code, never error", {
   broken <- list(t = function(k) stop("boom"))
   expect_equal(wp5_vocab_label("instrument", "1.1", broken), "1.1")
 })
+
+.wp5_root <- function() { wd <- getwd(); if (basename(wd) == "testthat") dirname(dirname(wd)) else wd }
+WP5_VOCAB_I18N <- file.path(.wp5_root(), "translations", "modules", "wp5_vocabulary.json")
+LANGS9 <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+WP5_VOCABS <- c("criteria", "subdimension", "direction", "magnitude", "timing", "confidence",
+                "evidence", "uncertainty_driver", "indicator_role", "pathway_segment",
+                "instrument", "measure", "tenet", "npg", "graph_op")
+
+test_that("every vocabulary code has a 9-language translation", {
+  tr <- jsonlite::fromJSON(WP5_VOCAB_I18N, simplifyVector = FALSE)$translation
+  for (v in WP5_VOCABS) for (cd in wp5_vocab_codes(v)) {
+    k <- wp5_vocab_key(v, cd)
+    expect_true(k %in% names(tr), info = k)
+    for (l in LANGS9) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
+  }
+})
+
+test_that("translations are genuine, not English copies (>=90% differ per language)", {
+  tr <- jsonlite::fromJSON(WP5_VOCAB_I18N, simplifyVector = FALSE)$translation
+  for (l in setdiff(LANGS9, "en")) {
+    same <- vapply(tr, function(e) identical(e[[l]], e$en), logical(1))
+    expect_lt(mean(same), 0.10, label = paste("share identical to English for", l))
+  }
+})
+
+test_that("no orphan keys in wp5_vocabulary.json", {
+  tr <- jsonlite::fromJSON(WP5_VOCAB_I18N, simplifyVector = FALSE)$translation
+  expected <- unlist(lapply(WP5_VOCABS, function(v) wp5_vocab_key(v, wp5_vocab_codes(v))))
+  expect_setequal(names(tr), expected)
+})
