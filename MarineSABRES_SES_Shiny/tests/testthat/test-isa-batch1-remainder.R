@@ -105,7 +105,8 @@ test_that("N22: app.R passes the event bus to cld_viz_server", {
 # N38 — matrix-review selector keys match stored matrix names
 # ---------------------------------------------------------------------------
 test_that("N38: every matrix-review choice is a canonical SOURCExTARGET matrix key", {
-  canonical <- c("es_gb", "mpf_es", "p_mpf", "a_p", "d_a", "gb_d", "gb_r", "r_d", "r_a", "r_p")
+  canonical <- c("es_gb", "mpf_es", "p_mpf", "a_p", "d_a", "gb_d", "gb_r", "r_d", "r_a", "r_p",
+                 "r_mpf", "r_r")   # R -> MPF / R -> R editable since review N62
   expect_true(all(ISA_MATRIX_REVIEW_CHOICES %in% canonical))
   expect_setequal(unname(ISA_MATRIX_REVIEW_CHOICES), canonical)
   expect_false(any(c("gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb") %in% ISA_MATRIX_REVIEW_CHOICES))

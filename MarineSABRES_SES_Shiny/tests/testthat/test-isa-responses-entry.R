@@ -128,3 +128,41 @@ test_that("an invalid cell edit is rejected and leaves the matrix unchanged", {
     expect_equal(isa_data$adjacency_matrices$r_d["R001","D001"], "-medium:3")  # unchanged
   })
 })
+
+test_that("N62: the Responses form saves R->MPF and R->R links and reloads them", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server,
+             args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {
+    isa_data$goods_benefits   <- data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE)
+    isa_data$marine_processes <- data.frame(ID = c("MPF001", "MPF002"), Name = c("Fish", "Seagrass"),
+                                            stringsAsFactors = FALSE)
+    session$setInputs(add_response = 1)
+    session$setInputs(add_response = 2)
+    r1 <- isa_data$r_panel_ids[[1]]; r2 <- isa_data$r_panel_ids[[2]]
+    set_panel_inputs(session, r2, name = "Monitoring")
+    set_panel_inputs(session, r1, name = "MPA", linkedgb = "GB001",
+                     linkedmpf = "MPF002: Seagrass", linkedr = paste0(r2, ": Monitoring"))
+    session$setInputs(save_responses = 1)
+
+    am <- isa_data$adjacency_matrices
+    expect_equal(am$r_mpf[r1, "MPF002"], paste0(default_polarity_for_matrix("r_mpf"), "medium:3"))
+    expect_equal(am$r_mpf[r1, "MPF001"], "")
+    expect_equal(am$r_r[r1, r2], paste0(default_polarity_for_matrix("r_r"), "medium:3"))
+    expect_equal(sum(nzchar(am$r_r)), 1L)
+    expect_equal(pd()$data$isa_data$adjacency_matrices$r_r[r1, r2], am$r_r[r1, r2])
+
+    # reload: Linked* columns re-derived from the matrices (matrix -> form)
+    saved <- pd()$data$isa_data
+    saved$responses$LinkedMPF <- NULL; saved$responses$LinkedR <- NULL
+    apply_saved_isa(saved)
+    row1 <- isa_data$responses[isa_data$responses$ID == r1, ]
+    expect_equal(row1$LinkedMPF, "MPF002")
+    expect_equal(row1$LinkedR, r2)
+
+    # unlink both in the form -> cells cleared on the next save
+    set_panel_inputs(session, r1, linkedmpf = "", linkedr = "")
+    session$setInputs(save_responses = 2)
+    expect_equal(isa_data$adjacency_matrices$r_mpf[r1, "MPF002"], "")
+    expect_equal(isa_data$adjacency_matrices$r_r[r1, r2], "")
+  })
+})

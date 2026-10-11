@@ -200,6 +200,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         Importance = character(), Trend = character(),
         LinkedGB = character(), LinkedD = character(),
         LinkedA = character(), LinkedP = character(),
+        LinkedMPF = character(), LinkedR = character(),
         stringsAsFactors = FALSE
       ),
 
@@ -308,6 +309,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           element_df = element_df, linked_col = linked_col,
           source_ids = element_df$ID, target_ids = target_ids,
           element_confidence_col = "Confidence",
+          default_polarity   = default_polarity_for_matrix(matrix_key),
           existing_matrix    = isa_data$adjacency_matrices[[matrix_key]],
           user_edited_matrix = isa_data$user_edited_matrices[[matrix_key]])
         isa_data$adjacency_matrices[[matrix_key]]   <- rebuilt$matrix
@@ -392,12 +394,15 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       if (is.data.frame(r) && nrow(r) > 0) {
         am <- isa_data$adjacency_matrices
         r$LinkedGB <- ""; r$LinkedD <- ""; r$LinkedA <- ""; r$LinkedP <- ""
+        r$LinkedMPF <- ""; r$LinkedR <- ""
         for (i in seq_len(nrow(r))) {
           rid <- as.character(r$ID[i])
           r$LinkedGB[i] <- rederive_linked_from_matrix(am$gb_r, rid, "col")
           r$LinkedD[i]  <- rederive_linked_from_matrix(am$r_d,  rid, "row")
           r$LinkedA[i]  <- rederive_linked_from_matrix(am$r_a,  rid, "row")
           r$LinkedP[i]  <- rederive_linked_from_matrix(am$r_p,  rid, "row")
+          r$LinkedMPF[i] <- rederive_linked_from_matrix(am$r_mpf, rid, "row")
+          r$LinkedR[i]   <- rederive_linked_from_matrix(am$r_r,   rid, "row")
         }
         isa_data$responses <- r
       }
@@ -930,6 +935,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
             # i18n-ref: modules.isa.data_entry.matrix.r_d
             # i18n-ref: modules.isa.data_entry.matrix.r_a
             # i18n-ref: modules.isa.data_entry.matrix.r_p
+            # i18n-ref: modules.isa.data_entry.matrix.r_mpf
+            # i18n-ref: modules.isa.data_entry.matrix.r_r
             selectInput(ns("adj_matrix_select"), i18n$t("common.labels.select_matrix_type"),
                        choices = setNames(unname(ISA_MATRIX_REVIEW_CHOICES),
                                           vapply(names(ISA_MATRIX_REVIEW_CHOICES), i18n$t, character(1)))),
@@ -1452,13 +1459,21 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       d_choices  <- c("", paste0(isa_data$drivers$ID,        ": ", isa_data$drivers$Name))
       a_choices  <- c("", paste0(isa_data$activities$ID,     ": ", isa_data$activities$Name))
       p_choices  <- c("", paste0(isa_data$pressures$ID,      ": ", isa_data$pressures$Name))
+      mpf_choices <- c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name))
+      # R -> R (Rule 14): every other saved response; a response never links to itself
+      other_r <- isa_data$responses
+      other_r <- if (is.data.frame(other_r) && nrow(other_r) > 0 && "ID" %in% names(other_r))
+        other_r[as.character(other_r$ID) != current_id, , drop = FALSE] else NULL
+      r_choices <- c("", if (!is.null(other_r) && nrow(other_r) > 0)
+        paste0(other_r$ID, ": ", other_r$Name %||% ""))
 
       insertUI(
         selector = paste0("#", ns("r_entries")),
         where = "beforeEnd",
         ui = build_response_panel_ui(
           ns, current_id,
-          isa_fields_r(i18n, gb_choices, d_choices, a_choices, p_choices), i18n)
+          isa_fields_r(i18n, gb_choices, d_choices, a_choices, p_choices,
+                       mpf_choices, r_choices), i18n)
       )
 
       register_remove_observer(input, ns, "r", current_id, i18n,
@@ -1478,26 +1493,37 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       r_df <- collect_element_entries(
         input, "r", isa_data$r_panel_ids, ELEMENT_ID_PREFIX$responses,
         field_ids = c("name","type","desc","stakeholder","importance","trend",
-                      "linkedgb","linkedd","linkeda","linkedp"),
+                      "linkedgb","linkedd","linkeda","linkedp","linkedmpf","linkedr"),
         col_names = c("Name","Type","Description","Stakeholder","Importance","Trend",
-                      "LinkedGB","LinkedD","LinkedA","LinkedP")
+                      "LinkedGB","LinkedD","LinkedA","LinkedP","LinkedMPF","LinkedR")
       )
       # Loaded responses carry Linked* re-derived from the matrices by
       # apply_saved_isa(), so merging by ID is enough to keep their R-arm edges.
       r_df <- merge_saved("responses", "r", r_df,
                           c("Name","Type","Description","Stakeholder","Importance","Trend",
-                            "LinkedGB","LinkedD","LinkedA","LinkedP"))
+                            "LinkedGB","LinkedD","LinkedA","LinkedP","LinkedMPF","LinkedR"))
       isa_data$responses <- r_df
       built <- build_response_matrices(isa_data)
       isa_data$adjacency_matrices   <- built$adjacency_matrices
       isa_data$user_edited_matrices <- built$user_edited_matrices
       if (nrow(r_df) == 0) {                      # all panels blank -> drop stale R-arm matrices
-        for (k in c("r_d","r_a","r_p","gb_r")) {
+        for (k in c("r_d","r_a","r_p","r_mpf","r_r","gb_r")) {
           isa_data$adjacency_matrices[[k]]   <- NULL
           isa_data$user_edited_matrices[[k]] <- NULL
         }
       }
       sync_to_project_data()
+      # R -> R choices are built when a panel is added, so responses saved after
+      # it were not offered. Refresh every live panel's list (minus itself),
+      # keeping the current selection (review 2026-10-07 N62).
+      if (nrow(r_df) > 0) {
+        for (pid in live_panel_ids(input, "r", isa_data$r_panel_ids)) {
+          others <- r_df[as.character(r_df$ID) != pid, , drop = FALSE]
+          updateSelectInput(session, paste0("r_linkedr_", pid),
+                            choices = c("", if (nrow(others) > 0) paste0(others$ID, ": ", others$Name)),
+                            selected = input[[paste0("r_linkedr_", pid)]])
+        }
+      }
       showNotification(paste(i18n$t("modules.isa.data_entry.responses.saved"), nrow(r_df)),
                        type = "message")
     })

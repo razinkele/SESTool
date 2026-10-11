@@ -7,7 +7,19 @@
 #' Defines allowed connections between DAPSIWRM types following the framework logic:
 #' Drivers → Activities → Pressures → Marine Processes & Functioning →
 #' Ecosystem Services → Goods & Benefits → (Drivers/Responses)
-#' Responses → (Drivers/Activities/Pressures/Marine Processes & Functioning)
+#' Responses → (Drivers/Activities/Pressures/Marine Processes & Functioning/Responses)
+#'
+#' Fields per source type:
+#' - `targets`: the canonical causal-chain targets (Rules 1-12 + collapsed 6/7).
+#'   This is what the graphical builder iterates to suggest next elements.
+#' - `extension_targets`: the further transitions DAPSIWRM_FRAMEWORK_RULES.md
+#'   accepts (Rule 14 R→R, 16 C/S→C/S, 17 P→P, 18 A→A and the D→P ExUP
+#'   exception). They are valid connections (validate_connection(),
+#'   is_valid_dapsirwrm_transition()) but are not offered as suggestions.
+#' - `target_polarities`: default polarity per target type (canonical and
+#'   extension). `default_polarity` is the per-source fallback.
+#' Use get_rule_default_polarity() / default_polarity_for_matrix() rather than
+#' reading `default_polarity` directly (review 2026-10-07 N26 / N61).
 #'
 #' @format List of allowed connections with polarity and examples
 #' @export
@@ -18,6 +30,11 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   Drivers = list(
     targets = c("Activities"),
+    # D → P: Exogenic Unmanaged Pressures exception (Elliott 2011). The doc
+    # gives no sign; "+" follows the neighbouring D→A / A→P convention (the
+    # driver produces the pressure).
+    extension_targets = c("Pressures"),
+    target_polarities = c("Activities" = "+", "Pressures" = "+"),
     default_polarity = "+",
     allowed_polarities = c("+", "-"),
 
@@ -53,6 +70,10 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   Activities = list(
     targets = c("Pressures"),
+    # Rule 18 A → A (MSP / cumulative-effects extension). Doc: "Varies";
+    # "+" follows the doc's example (facilitation).
+    extension_targets = c("Activities"),
+    target_polarities = c("Pressures" = "+", "Activities" = "+"),
     default_polarity = "+",
     allowed_polarities = c("+", "-"),
 
@@ -95,6 +116,10 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   Pressures = list(
     targets = c("Marine Processes & Functioning"),
+    # Rule 17 P → P (pressure cascades). Doc: "Varies (typically reinforcing)".
+    extension_targets = c("Pressures"),
+    # Rule 3 P → C/S defaults to "-" (pressures degrade state).
+    target_polarities = c("Marine Processes & Functioning" = "-", "Pressures" = "+"),
     default_polarity = "-",
     allowed_polarities = c("-", "+"),
 
@@ -137,6 +162,9 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   "Marine Processes & Functioning" = list(
     targets = c("Ecosystem Services"),
+    # Rule 16 C/S → C/S. Doc: "Varies"; "+" follows the doc's example.
+    extension_targets = c("Marine Processes & Functioning"),
+    target_polarities = c("Ecosystem Services" = "+", "Marine Processes & Functioning" = "+"),
     default_polarity = "+",
     allowed_polarities = c("+", "-"),
 
@@ -179,6 +207,8 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   "Ecosystem Services" = list(
     targets = c("Goods & Benefits"),
+    extension_targets = character(0),
+    target_polarities = c("Goods & Benefits" = "+"),
     default_polarity = "+",
     allowed_polarities = c("+", "-"),
 
@@ -221,6 +251,8 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   "Goods & Benefits" = list(
     targets = c("Drivers", "Responses"),
+    extension_targets = character(0),
+    target_polarities = c("Drivers" = "+", "Responses" = "+"),
     default_polarity = "+",
     allowed_polarities = c("+", "-"),
 
@@ -256,6 +288,13 @@ DAPSIWRM_ADJACENCY_RULES <- list(
   # ============================================================================
   Responses = list(
     targets = c("Drivers", "Activities", "Pressures", "Marine Processes & Functioning"),
+    # Rule 14 R → R. Doc: "Varies"; "+" follows the doc's example.
+    extension_targets = c("Responses"),
+    # Rules 9-11 R → D/A/P: "-" (restrict / mitigate). Rule 12 R → C/S: the doc
+    # gives "+" (restoration / protection raises state), so new R → MPF cells
+    # seed "+".
+    target_polarities = c("Drivers" = "-", "Activities" = "-", "Pressures" = "-",
+                          "Marine Processes & Functioning" = "+", "Responses" = "+"),
     default_polarity = "-",
     allowed_polarities = c("-", "+"),
 
@@ -305,15 +344,84 @@ DAPSIWRM_ADJACENCY_RULES <- list(
 #' Get Allowed Target Types for a DAPSIWRM Type
 #'
 #' @param source_type Source DAPSIWRM type
+#' @param include_extensions If TRUE, also return the extension transitions
+#'   (R→R, P→P, C/S→C/S, A→A, D→P). Default FALSE: the canonical chain only,
+#'   which is what the graphical builder suggests.
 #' @return Character vector of allowed target types
 #' @export
-get_allowed_targets <- function(source_type) {
+get_allowed_targets <- function(source_type, include_extensions = FALSE) {
   if (!source_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
     log_warning("DAPSIWRM", paste("Unknown DAPSIWRM type:", source_type))
     return(character(0))
   }
 
-  return(DAPSIWRM_ADJACENCY_RULES[[source_type]]$targets)
+  rule <- DAPSIWRM_ADJACENCY_RULES[[source_type]]
+  if (isTRUE(include_extensions)) {
+    return(unique(c(rule$targets, rule$extension_targets)))
+  }
+  return(rule$targets)
+}
+
+#' All valid target types of a rule entry (canonical + extension)
+#' @param rule one DAPSIWRM_ADJACENCY_RULES entry
+#' @return character vector
+.rule_all_targets <- function(rule) unique(c(rule$targets, rule$extension_targets))
+
+#' Default polarity for a DAPSIWRM transition, from the rule table
+#'
+#' Single source of truth for seeding new matrix cells (review 2026-10-07 N26).
+#'
+#' @param from_type Source DAPSIWRM type (table name, e.g. "Pressures")
+#' @param to_type Target DAPSIWRM type
+#' @param fallback returned when the transition is not in the table
+#' @return "+" or "-"
+#' @export
+get_rule_default_polarity <- function(from_type, to_type, fallback = "+") {
+  if (!exists("DAPSIWRM_ADJACENCY_RULES") || is.null(from_type) ||
+      !from_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
+    return(fallback)
+  }
+  rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
+  tp <- rule$target_polarities
+  if (!is.null(to_type) && !is.null(tp) && to_type %in% names(tp)) {
+    return(unname(tp[[to_type]]))
+  }
+  if (!is.null(to_type) && to_type %in% .rule_all_targets(rule)) {
+    return(rule$default_polarity)
+  }
+  fallback
+}
+
+#' Standard Entry matrix key -> c(source type, target type) in table names
+DAPSIWRM_MATRIX_KEY_TYPES <- list(
+  d_a    = c("Drivers", "Activities"),
+  a_p    = c("Activities", "Pressures"),
+  p_mpf  = c("Pressures", "Marine Processes & Functioning"),
+  mpf_es = c("Marine Processes & Functioning", "Ecosystem Services"),
+  es_gb  = c("Ecosystem Services", "Goods & Benefits"),
+  gb_d   = c("Goods & Benefits", "Drivers"),
+  gb_r   = c("Goods & Benefits", "Responses"),
+  r_d    = c("Responses", "Drivers"),
+  r_a    = c("Responses", "Activities"),
+  r_p    = c("Responses", "Pressures"),
+  r_mpf  = c("Responses", "Marine Processes & Functioning"),
+  r_r    = c("Responses", "Responses")
+)
+
+#' Default polarity used to seed a NEW cell of a Standard Entry matrix
+#'
+#' Looks the transition up in DAPSIWRM_ADJACENCY_RULES so every seeding path
+#' (Standard Entry save, Responses save, Excel/project recovery) agrees with
+#' the framework rules — e.g. p_mpf seeds "-" (Rule 3), not a hard-coded "+".
+#'
+#' @param matrix_key e.g. "p_mpf", "r_d", "gb_r"
+#' @param fallback used for unknown keys
+#' @return "+" or "-"
+#' @export
+default_polarity_for_matrix <- function(matrix_key, fallback = "+") {
+  types <- DAPSIWRM_MATRIX_KEY_TYPES[[matrix_key]]
+  if (is.null(types)) return(fallback)
+  get_rule_default_polarity(types[1], types[2], fallback = fallback)
 }
 
 
@@ -337,13 +445,13 @@ infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
   rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
 
   # Check if target type is allowed
-  if (!to_type %in% rule$targets) {
+  if (!to_type %in% .rule_all_targets(rule)) {
     log_warning("DAPSIWRM", paste("Connection", from_type, "->", to_type, "not in standard DAPSIWRM framework"))
     return("+")
   }
 
-  # Use default polarity
-  default_pol <- rule$default_polarity
+  # Use the per-target default polarity from the rule table
+  default_pol <- get_rule_default_polarity(from_type, to_type)
 
   # Check for negative keywords that might reverse polarity
   from_lower <- tolower(from_name)
@@ -375,11 +483,10 @@ infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
     if (to_type %in% c("Drivers", "Activities", "Pressures")) {
       return("-")  # Responses typically reduce these
     } else if (to_type == "Marine Processes & Functioning") {
-      # Restoration increases state
-      if (grepl("restoration|enhancement|improvement", from_lower)) {
-        return("+")
-      }
-      return("-")  # Protection/regulation
+      # Rule 12: restoration AND protection raise state ("Marine protected
+      # areas" -> "Increase fish stocks" (+)). Use the rule-table default so
+      # the graphical builder and Standard Entry seed the same sign (N61).
+      return(default_pol)
     }
   }
 
@@ -488,7 +595,7 @@ validate_connection <- function(from_type, to_type, strict = FALSE) {
   }
 
   rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
-  is_allowed <- to_type %in% rule$targets
+  is_allowed <- to_type %in% .rule_all_targets(rule)
 
   if (!is_allowed && !strict) {
     debug_log(paste("Non-standard connection:", from_type, "->", to_type), "CONNECTION")
@@ -586,7 +693,7 @@ validate_connection_with_feedback <- function(from_type, to_type, strict = FALSE
   }
 
   rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
-  is_standard <- to_type %in% rule$targets
+  is_standard <- to_type %in% .rule_all_targets(rule)
 
   if (is_standard) {
     # Standard DAPSIWRM connection
@@ -601,7 +708,7 @@ validate_connection_with_feedback <- function(from_type, to_type, strict = FALSE
 
   # Non-standard connection
 
-  valid_targets <- rule$targets
+  valid_targets <- .rule_all_targets(rule)
   suggestion_text <- paste("Standard targets for", from_type, "are:",
                            paste(valid_targets, collapse = ", "))
 

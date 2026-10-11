@@ -1320,6 +1320,28 @@
       "no": "Tiltak → Påvirkninger",
       "el": "Αποκρίσεις → Πιέσεις"
     },
+    "modules.isa.data_entry.matrix.r_mpf": {
+      "en": "Responses → Marine Processes",
+      "es": "Respuestas → Procesos marinos",
+      "fr": "Réponses → Processus marins",
+      "de": "Maßnahmen → Marine Prozesse",
+      "lt": "Atsakai → Jūriniai procesai",
+      "pt": "Respostas → Processos marinhos",
+      "it": "Risposte → Processi marini",
+      "no": "Tiltak → Marine prosesser",
+      "el": "Αποκρίσεις → Θαλάσσιες διεργασίες"
+    },
+    "modules.isa.data_entry.matrix.r_r": {
+      "en": "Responses → Responses",
+      "es": "Respuestas → Respuestas",
+      "fr": "Réponses → Réponses",
+      "de": "Maßnahmen → Maßnahmen",
+      "lt": "Atsakai → Atsakai",
+      "pt": "Respostas → Respostas",
+      "it": "Risposte → Risposte",
+      "no": "Tiltak → Tiltak",
+      "el": "Αποκρίσεις → Αποκρίσεις"
+    },
     "modules.isa.data_entry.common.adjacency_matrix_review": {
       "en": "Adjacency Matrix Review",
       "es": "Revisión de Matriz de Adyacencia",
@@ -4786,15 +4808,15 @@
       "el": "Δεν υπάρχουν αποκρίσεις για αποθήκευση."
     },
     "modules.isa.data_entry.responses.advanced_links": {
-      "en": "Advanced: link to Drivers / Activities / Pressures",
-      "es": "Avanzado: vincular a Motores / Actividades / Presiones",
-      "fr": "Avancé : lier aux Moteurs / Activités / Pressions",
-      "de": "Erweitert: Verknüpfung mit Antriebskräften / Aktivitäten / Belastungen",
-      "lt": "Išplėstiniai: susieti su Varikliais / Veiklomis / Spaudimais",
-      "pt": "Avançado: ligar a Motores / Atividades / Pressões",
-      "it": "Avanzato: collega a Driver / Attività / Pressioni",
-      "no": "Avansert: koble til Drivkrefter / Aktiviteter / Påvirkninger",
-      "el": "Για προχωρημένους: σύνδεση με Κινητήριες δυνάμεις / Δραστηριότητες / Πιέσεις"
+      "en": "Advanced: link to Drivers / Activities / Pressures / Marine Processes / other Responses",
+      "es": "Avanzado: vincular a Motores / Actividades / Presiones / Procesos marinos / otras Respuestas",
+      "fr": "Avancé : lier aux Moteurs / Activités / Pressions / Processus marins / autres Réponses",
+      "de": "Erweitert: Verknüpfung mit Antriebskräften / Aktivitäten / Belastungen / marinen Prozessen / anderen Maßnahmen",
+      "lt": "Išplėstiniai: susieti su Varikliais / Veiklomis / Spaudimais / Jūriniais procesais / kitais Atsakais",
+      "pt": "Avançado: ligar a Motores / Atividades / Pressões / Processos marinhos / outras Respostas",
+      "it": "Avanzato: collega a Driver / Attività / Pressioni / Processi marini / altre Risposte",
+      "no": "Avansert: koble til Drivkrefter / Aktiviteter / Påvirkninger / Marine prosesser / andre Tiltak",
+      "el": "Για προχωρημένους: σύνδεση με Κινητήριες δυνάμεις / Δραστηριότητες / Πιέσεις / Θαλάσσιες διεργασίες / άλλες Αποκρίσεις"
     },
     "modules.isa.data_entry.responses.linked_gb": {
       "en": "Good(s) & Benefit(s) this response improves",
@@ -4840,6 +4862,28 @@
       "no": "Tilknyttede påvirkninger",
       "el": "Συνδεδεμένες πιέσεις"
     },
+    "modules.isa.data_entry.responses.linked_mpf": {
+      "en": "Linked Marine Processes",
+      "es": "Procesos marinos vinculados",
+      "fr": "Processus marins liés",
+      "de": "Verknüpfte marine Prozesse",
+      "lt": "Susieti jūriniai procesai",
+      "pt": "Processos marinhos ligados",
+      "it": "Processi marini collegati",
+      "no": "Tilknyttede marine prosesser",
+      "el": "Συνδεδεμένες θαλάσσιες διεργασίες"
+    },
+    "modules.isa.data_entry.responses.linked_r": {
+      "en": "Linked Responses",
+      "es": "Respuestas vinculadas",
+      "fr": "Réponses liées",
+      "de": "Verknüpfte Maßnahmen",
+      "lt": "Susieti atsakai",
+      "pt": "Respostas ligadas",
+      "it": "Risposte collegate",
+      "no": "Tilknyttede tiltak",
+      "el": "Συνδεδεμένες αποκρίσεις"
+    },
     "modules.isa.data_entry.responses.help_title": {
       "en": "About Responses & Measures",
       "es": "Acerca de Respuestas y medidas",
@@ -4852,15 +4896,15 @@
       "el": "Σχετικά με τις Αποκρίσεις και τα μέτρα"
     },
     "modules.isa.data_entry.responses.help_body": {
-      "en": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets.",
-      "es": "Añada respuestas de gestión y vincule cada una a los bienes y beneficios que mejora y, opcionalmente, a los motores, actividades o presiones a los que se dirige.",
-      "fr": "Ajoutez des réponses de gestion et liez chacune aux biens et bénéfices qu'elle améliore et, le cas échéant, aux moteurs, activités ou pressions qu'elle vise.",
-      "de": "Fügen Sie Managementreaktionen hinzu und verknüpfen Sie jede mit den Gütern und dem Nutzen, die sie verbessert, sowie optional mit den Antriebskräften, Aktivitäten oder Belastungen, auf die sie abzielt.",
-      "lt": "Pridėkite valdymo atsakus ir kiekvieną susiekite su gėrybėmis ir nauda, kurią jis pagerina, o pasirinktinai – su varikliais, veiklomis ar spaudimais, į kuriuos jis nukreiptas.",
-      "pt": "Adicione respostas de gestão e ligue cada uma aos bens e benefícios que melhora e, opcionalmente, aos motores, atividades ou pressões a que se dirige.",
-      "it": "Aggiungi risposte di gestione e collega ciascuna ai beni e benefici che migliora e, facoltativamente, ai driver, attività o pressioni a cui è rivolta.",
-      "no": "Legg til forvaltningsresponser og koble hver enkelt til godene og fordelene den forbedrer, og eventuelt til drivkreftene, aktivitetene eller påvirkningene den retter seg mot.",
-      "el": "Προσθέστε αποκρίσεις διαχείρισης και συνδέστε καθεμία με τα αγαθά και οφέλη που βελτιώνει και, προαιρετικά, με τις κινητήριες δυνάμεις, δραστηριότητες ή πιέσεις στις οποίες στοχεύει."
+      "en": "Add management responses and link each to the Good(s) & Benefit(s) it improves, and optionally to the Drivers/Activities/Pressures it targets, the Marine Processes it restores or protects, and other Responses it supports.",
+      "es": "Añada respuestas de gestión y vincule cada una a los bienes y beneficios que mejora y, opcionalmente, a los motores, actividades o presiones a los que se dirige, a los procesos marinos que restaura o protege y a otras respuestas que apoya.",
+      "fr": "Ajoutez des réponses de gestion et liez chacune aux biens et bénéfices qu'elle améliore et, le cas échéant, aux moteurs, activités ou pressions qu'elle vise, aux processus marins qu'elle restaure ou protège et aux autres réponses qu'elle soutient.",
+      "de": "Fügen Sie Managementreaktionen hinzu und verknüpfen Sie jede mit den Gütern und dem Nutzen, die sie verbessert, sowie optional mit den Antriebskräften, Aktivitäten oder Belastungen, auf die sie abzielt, den marinen Prozessen, die sie wiederherstellt oder schützt, und anderen Maßnahmen, die sie unterstützt.",
+      "lt": "Pridėkite valdymo atsakus ir kiekvieną susiekite su gėrybėmis ir nauda, kurią jis pagerina, o pasirinktinai – su varikliais, veiklomis ar spaudimais, į kuriuos jis nukreiptas, jūriniais procesais, kuriuos jis atkuria ar saugo, ir kitais atsakais, kuriuos jis remia.",
+      "pt": "Adicione respostas de gestão e ligue cada uma aos bens e benefícios que melhora e, opcionalmente, aos motores, atividades ou pressões a que se dirige, aos processos marinhos que restaura ou protege e a outras respostas que apoia.",
+      "it": "Aggiungi risposte di gestione e collega ciascuna ai beni e benefici che migliora e, facoltativamente, ai driver, attività o pressioni a cui è rivolta, ai processi marini che ripristina o protegge e alle altre risposte che sostiene.",
+      "no": "Legg til forvaltningsresponser og koble hver enkelt til godene og fordelene den forbedrer, og eventuelt til drivkreftene, aktivitetene eller påvirkningene den retter seg mot, de marine prosessene den gjenoppretter eller beskytter, og andre tiltak den støtter.",
+      "el": "Προσθέστε αποκρίσεις διαχείρισης και συνδέστε καθεμία με τα αγαθά και οφέλη που βελτιώνει και, προαιρετικά, με τις κινητήριες δυνάμεις, δραστηριότητες ή πιέσεις στις οποίες στοχεύει, τις θαλάσσιες διεργασίες που αποκαθιστά ή προστατεύει και άλλες αποκρίσεις που υποστηρίζει."
     },
     "modules.isa.data_entry.matrix.cell_unknown_matrix": {
       "en": "This matrix is not available.",

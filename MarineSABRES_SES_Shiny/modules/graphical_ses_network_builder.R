@@ -328,6 +328,8 @@ convert_graphical_to_isa <- function(nodes, edges, context) {
     r$LinkedD  <- vapply(r$ID, function(id) linked_of_row("r_d", id), "")
     r$LinkedA  <- vapply(r$ID, function(id) linked_of_row("r_a", id), "")
     r$LinkedP  <- vapply(r$ID, function(id) linked_of_row("r_p", id), "")
+    r$LinkedMPF <- vapply(r$ID, function(id) linked_of_row("r_mpf", id), "")
+    r$LinkedR   <- vapply(r$ID, function(id) linked_of_row("r_r", id), "")
     r$LinkedGB <- vapply(r$ID, function(id) linked_of_col("gb_r", id), "")
     isa_data$responses <- r
   }
@@ -365,7 +367,8 @@ graphical_isa_spec <- function() {
     ecosystem_services = list(prefix = p("impacts", "ES"),   cols = c("Type", "Description", "LinkedGB", "Mechanism", "Confidence")),
     goods_benefits     = list(prefix = p("welfare", "GB"),   cols = c("Type", "Description", "Stakeholder", "Importance", "Trend")),
     responses          = list(prefix = p("responses", "R"),  cols = c("Type", "Description", "Stakeholder", "Importance", "Trend",
-                                                                       "LinkedGB", "LinkedD", "LinkedA", "LinkedP"))
+                                                                       "LinkedGB", "LinkedD", "LinkedA", "LinkedP",
+                                                                       "LinkedMPF", "LinkedR"))
   )
 }
 
@@ -389,11 +392,14 @@ graphical_type_to_isa_key <- function(type) {
 #' Canonical SOURCE x TARGET matrices (gb_r is stored GB x R)
 graphical_isa_matrix_pairs <- function() {
   data.frame(
-    key = c("d_a", "a_p", "p_mpf", "mpf_es", "es_gb", "gb_d", "gb_r", "r_d", "r_a", "r_p"),
+    key = c("d_a", "a_p", "p_mpf", "mpf_es", "es_gb", "gb_d", "gb_r", "r_d", "r_a", "r_p",
+            "r_mpf", "r_r"),
     src = c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services",
-            "goods_benefits", "goods_benefits", "responses", "responses", "responses"),
+            "goods_benefits", "goods_benefits", "responses", "responses", "responses",
+            "responses", "responses"),
     tgt = c("activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits",
-            "drivers", "responses", "drivers", "activities", "pressures"),
+            "drivers", "responses", "drivers", "activities", "pressures",
+            "marine_processes", "responses"),
     stringsAsFactors = FALSE)
 }
 

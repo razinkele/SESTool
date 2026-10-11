@@ -361,7 +361,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           gb_r = NULL,     # Welfare → Responses (problems drive responses)
           r_d = NULL,      # Responses → Drivers (policy targeting drivers)
           r_a = NULL,      # Responses → Activities (regulations on activities)
-          r_p = NULL       # Responses → Pressures (direct pressure mitigation)
+          r_p = NULL,      # Responses → Pressures (direct pressure mitigation)
+          r_mpf = NULL,    # Responses → Marine Processes (restoration / protection)
+          r_r = NULL       # Responses → Responses (policy interactions)
         )
       ),
       
@@ -964,7 +966,8 @@ matrix_key_categories <- function() {
     mpf_es = c("marine_processes", "ecosystem_services"), mp_es = c("marine_processes", "ecosystem_services"),
     es_gb = c("ecosystem_services", "goods_benefits"), gb_d = c("goods_benefits", "drivers"),
     gb_r = c("goods_benefits", "responses"), r_d = c("responses", "drivers"),
-    r_a = c("responses", "activities"), r_p = c("responses", "pressures")
+    r_a = c("responses", "activities"), r_p = c("responses", "pressures"),
+    r_mpf = c("responses", "marine_processes"), r_r = c("responses", "responses")
   )
 }
 
@@ -1614,7 +1617,7 @@ delete_element_safe <- function(isa_data, elem_name, id) {
 #' Canonical Standard Entry column names (the ISA module's schema)
 ISA_CANONICAL_COLUMNS <- c("ID", "Name", "Type", "Description", "Stakeholder", "Importance",
                            "Trend", "LinkedGB", "LinkedES", "LinkedMPF", "LinkedP", "LinkedA",
-                           "LinkedD", "Mechanism", "Confidence", "Spatial", "Intensity",
+                           "LinkedD", "LinkedR", "Mechanism", "Confidence", "Spatial", "Intensity",
                            "Temporal", "Sector", "Scale", "Frequency", "Controllability",
                            "Indicator")
 
