@@ -145,6 +145,10 @@ test_that("N61: infer_connection_polarity uses per-target defaults for extension
                                          "Pressures", "Pressures"), "+")
   expect_equal(infer_connection_polarity("MPA", "Monitoring programme",
                                          "Responses", "Responses"), "+")
+  # R -> MPF: the graphical builder and Standard Entry seed the same sign
+  expect_equal(infer_connection_polarity("Marine protected area", "Fish stocks",
+                                         "Responses", "Marine Processes & Functioning"),
+               default_polarity_for_matrix("r_mpf"))
 })
 
 # ---------------------------------------------------------------------------

@@ -483,11 +483,10 @@ infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
     if (to_type %in% c("Drivers", "Activities", "Pressures")) {
       return("-")  # Responses typically reduce these
     } else if (to_type == "Marine Processes & Functioning") {
-      # Restoration increases state
-      if (grepl("restoration|enhancement|improvement", from_lower)) {
-        return("+")
-      }
-      return("-")  # Protection/regulation
+      # Rule 12: restoration AND protection raise state ("Marine protected
+      # areas" -> "Increase fish stocks" (+)). Use the rule-table default so
+      # the graphical builder and Standard Entry seed the same sign (N61).
+      return(default_pol)
     }
   }
 
