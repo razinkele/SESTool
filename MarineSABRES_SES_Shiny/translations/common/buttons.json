@@ -232,15 +232,15 @@
       "el": "Ναι"
     },
     "common.buttons.ok": {
-      "en": "Ok",
-      "lt": "Ok",
-      "es": "Ok",
-      "fr": "Ok",
-      "de": "Ok",
-      "it": "Ok",
-      "pt": "Ok",
-      "el": "Ok",
-      "no": "Ok"
+      "en": "OK",
+      "es": "OK",
+      "fr": "OK",
+      "de": "OK",
+      "lt": "OK",
+      "pt": "OK",
+      "it": "OK",
+      "no": "OK",
+      "el": "Εντάξει"
     },
     "common.buttons.copied": {
       "en": "Copied!",

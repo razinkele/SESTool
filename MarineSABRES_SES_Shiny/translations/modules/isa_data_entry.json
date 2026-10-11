@@ -1615,7 +1615,7 @@
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
       "no": "Eksporter data",
-      "el": "Εξαγωγή Δεδομένα"
+      "el": "Εξαγωγή Δεδομένων"
     },
     "modules.isa.data_entry.common.export_to_excel": {
       "en": "Export to Excel",
@@ -3267,17 +3267,6 @@
       "no": "Hva er integrert systemanalyse (ISA)?",
       "el": "Τι είναι η Ολοκληρωμένη Ανάλυση Συστημάτων (ISA);"
     },
-    "modules.analysis.common.high_degree": {
-      "en": "Find key stakeholders (high degree nodes)",
-      "es": "Encontrar partes interesadas clave (nodos de alto grado)",
-      "fr": "Trouver les parties prenantes clés (nœuds de haut degré)",
-      "de": "Schlüsselakteure finden (Knoten mit hohem Grad)",
-      "lt": "Rasti pagrindinius suinteresuotus subjektus (didelio laipsnio mazgai)",
-      "pt": "Encontrar partes interessadas-chave (nós de alto grau)",
-      "it": "Trovare le parti interessate chiave (nodi ad alto grado)",
-      "no": "Finn nøkkelinteressenter (noder med høy grad)",
-      "el": "Εύρεση βασικών ενδιαφερομένων (κόμβοι υψηλού βαθμού)"
-    },
     "modules.isa.data_entry.common.linked_to_activity": {
       "en": "Linked to Activity",
       "es": "Vinculado a actividad",
@@ -3332,17 +3321,6 @@
       "it": "Collegato alla pressione",
       "no": "Koblet til press",
       "el": "Συνδεδεμένο με πίεση"
-    },
-    "modules.response.measures.mechanism_of_action": {
-      "en": "Mechanism of Action:",
-      "es": "Mecanismo de Acción:",
-      "fr": "Mécanisme d'Action:",
-      "de": "Wirkungsmechanismus:",
-      "lt": "Veikimo Mechanizmas:",
-      "pt": "Mecanismo de Ação:",
-      "it": "Meccanismo d'Azione:",
-      "no": "Virkningsmekanisme:",
-      "el": "Μηχανισμός δράσης:"
     },
     "modules.isa.data_entry.common.please_fix_the_following_issues_before_saving": {
       "en": "Please fix the following issues before saving:",
@@ -3432,17 +3410,6 @@
       "no": "Interessent",
       "el": "Ενδιαφερόμενο μέρος"
     },
-    "modules.response.measures.impact_strength": {
-      "en": "Impact Strength:",
-      "es": "Intensidad del Impacto:",
-      "fr": "Force de l'Impact:",
-      "de": "Wirkungsstärke:",
-      "lt": "Poveikio Stiprumas:",
-      "pt": "Força do Impacto:",
-      "it": "Forza dell'Impatto:",
-      "no": "Påvirkningsstyrke:",
-      "el": "Επίπτωση Strength:"
-    },
     "modules.isa.data_entry.common.temporal": {
       "en": "Temporal Scope:",
       "es": "Ámbito Temporal:",
@@ -3464,17 +3431,6 @@
       "it": "Tendenza",
       "no": "Trend",
       "el": "Τάση"
-    },
-    "modules.response.measures.completed": {
-      "en": "Validation Completed:",
-      "es": "Validación Completada:",
-      "fr": "Validation Terminée :",
-      "de": "Validierung abgeschlossen:",
-      "lt": "Patvirtinimas baigtas:",
-      "pt": "Validação Concluída:",
-      "it": "Validazione Completata:",
-      "no": "Validering fullført:",
-      "el": "Επικύρωση Completed:"
     },
     "modules.isa.data_entry.common.validation_errors": {
       "en": "Validation errors:",
@@ -3784,28 +3740,6 @@
       "no": "Analyse av grunnårsaker vises her basert på strukturen i CLD-et ditt.",
       "el": "Η ανάλυση των βαθύτερων αιτιών θα εμφανιστεί εδώ με βάση τη δομή του CLD σας."
     },
-    "modules.ses.creation.ecosystem_services": {
-      "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
-      "es": "Comprender la necesidad humana fundamental detrás de su pregunta ayuda a identificar servicios ecosistémicos relevantes y prioridades de gestión.",
-      "fr": "Comprendre le besoin humain fondamental derrière votre question aide à identifier les services écosystémiques pertinents et les priorités de gestion.",
-      "de": "Das Verständnis des grundlegenden menschlichen Bedürfnisses hinter Ihrer Frage hilft, relevante Ökosystemleistungen und Management-Prioritäten zu identifizieren.",
-      "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
-      "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
-      "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione.",
-      "no": "Å forstå det grunnleggende menneskelige behovet bak spørsmålet ditt hjelper med å identifisere relevante økosystemtjenester og forvaltningsprioriteringer.",
-      "el": "Η κατανόηση της θεμελιώδους ανθρώπινης ανάγκης πίσω από την ερώτησή σας βοηθά στον εντοπισμό σχετικών υπηρεσιών οικοσυστήματος και προτεραιοτήτων διαχείρισης."
-    },
-    "modules.entry_point.start_over": {
-      "en": "Start Over",
-      "es": "Empezar de nuevo",
-      "fr": "Recommencer",
-      "de": "Neu beginnen",
-      "lt": "Pradėti iš naujo",
-      "pt": "Recomeçar",
-      "it": "Ricomincia",
-      "no": "Start på nytt",
-      "el": "Έναρξη από την αρχή"
-    },
     "modules.isa.ai_assistant.approved_connections": {
       "en": "Approved Connections",
       "es": "Conexiones aprobadas",
@@ -4080,28 +4014,6 @@
       "it": "Prova ad aggiungere più elementi a categorie diverse (Fattori, Attività, Pressioni, ecc.) per creare collegamenti significativi.",
       "no": "Prøv å legge til flere elementer i ulike kategorier (drivkrefter, aktiviteter, press osv.) for å lage meningsfulle tilkoblinger.",
       "el": "Δοκιμάστε να προσθέσετε περισσότερα στοιχεία σε διαφορετικές κατηγορίες (κινητήριες δυνάμεις, δραστηριότητες, πιέσεις κ.λπ.) για να δημιουργήσετε ουσιαστικές συνδέσεις."
-    },
-    "modules.ses.creation.connection_review": {
-      "en": "Connection Review",
-      "es": "Revisión de conexiones",
-      "fr": "Revue des connexions",
-      "de": "Verbindungsprüfung",
-      "lt": "Ryšių peržiūra",
-      "pt": "Revisão de ligações",
-      "it": "Revisione dei collegamenti",
-      "no": "Tilkoblingsgjennomgang",
-      "el": "Αναθεώρηση συνδέσεων"
-    },
-    "modules.ses.creation.welfare": {
-      "en": "Welfare",
-      "es": "Bienestar",
-      "fr": "Bien-être",
-      "de": "Wohlfahrt",
-      "lt": "Gerovė",
-      "pt": "Bem-estar",
-      "it": "Benessere",
-      "no": "Velferd",
-      "el": "Ευημερία"
     },
     "modules.isa.data_entry.common.confidence_level": {
       "en": "Confidence Level",

@@ -341,17 +341,6 @@
       "no": "For å installere TinyTeX for PDF-støtte",
       "el": "Για εγκατάσταση TinyTeX για υποστήριξη PDF"
     },
-    "modules.isa.data_entry.common.export_data": {
-      "en": "Export Data",
-      "es": "Exportar Datos",
-      "fr": "Exporter les Données",
-      "de": "Daten Exportieren",
-      "lt": "Eksportuoti duomenis",
-      "pt": "Exportar Dados",
-      "it": "Esporta Dati",
-      "no": "Eksporter data",
-      "el": "Εξαγωγή Δεδομένων"
-    },
     "modules.export.reports.title": {
       "en": "Export & Reports",
       "es": "Exportación e Informes",
