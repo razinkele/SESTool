@@ -185,3 +185,49 @@ def test_extract_excludes_superseded_toolkit_draft():
 def test_default_build_is_byte_stable_and_matches_committed_json():
     kb = bk.build_kb(bk.read_extract(EXTRACT))
     assert bk.kb_json_text(kb) == KB_JSON.read_text(encoding="utf-8")
+
+
+def _load_audit():
+    s = importlib.util.spec_from_file_location("au", APP / "scripts" / "kb_audit" / "audit_wp5_mechanisms.py")
+    m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
+
+
+@needs_extract
+def test_audit_passes_on_committed_kb():
+    au = _load_audit()
+    kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    assert au.audit(kb, bk.read_extract(EXTRACT)) == []
+
+
+@needs_extract
+def test_audit_names_field_on_short_cell_edit():
+    au = _load_audit(); kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    kb["demonstration_areas"]["tuscan"]["mechanisms"][0]["applicability_text"] = "Medium"   # was "High"
+    assert any(f.startswith("tus_01.applicability_text") for f in au.audit(kb, bk.read_extract(EXTRACT)))
+
+
+@needs_extract
+def test_audit_catches_column_swap():
+    au = _load_audit(); kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    m = kb["demonstration_areas"]["arctic"]["mechanisms"][1]
+    m["who_pays"], m["governance_interface"] = m["governance_interface"], m["who_pays"]
+    fails = au.audit(kb, bk.read_extract(EXTRACT))
+    assert any(f.startswith("arc_02.who_pays") for f in fails)
+
+
+@needs_extract
+def test_audit_flags_hand_edited_extract():
+    au = _load_audit(); secs = bk.read_extract(EXTRACT)
+    kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    secs["table20_tuscan"] = secs["table20_tuscan"].replace("| High |", "| Very high |", 1)
+    assert any(f.startswith("tus_0") for f in au.audit(kb, secs))
+
+
+@needs_extract
+def test_audit_flags_placeholder_tuscan_scenarios_and_guidance():
+    au = _load_audit(); kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    kb["scenarios"]["tuscan"] = [{"code": "S2", "name": "Light"}]
+    kb["demonstration_areas"]["macaronesia"]["mechanisms"][0]["toolkit"]["use_in_impact_assessment"] = "x"
+    kb["demonstration_areas"]["arctic"]["mechanisms"][0]["applicability_text"] += " (§x.x)"
+    fails = " | ".join(au.audit(kb, bk.read_extract(EXTRACT))).lower()
+    assert "tuscan" in fails and "use_in_impact_assessment" in fails and "placeholder" in fails
