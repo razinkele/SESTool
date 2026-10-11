@@ -176,39 +176,6 @@
       "no": "Turisme",
       "el": "Τουρισμός"
     },
-    "modules.isa.data_entry.common.add_activity": {
-      "en": "Add Activity",
-      "es": "Agregar Actividad",
-      "fr": "Ajouter une Activité",
-      "de": "Aktivität hinzufügen",
-      "lt": "Pridėti veiklą",
-      "pt": "Adicionar Atividade",
-      "it": "Aggiungi Attività",
-      "no": "Legg til aktivitet",
-      "el": "Προσθήκη Δραστηριότητα"
-    },
-    "modules.isa.data_entry.common.frequency": {
-      "en": "Frequency",
-      "es": "Frecuencia",
-      "fr": "Fréquence",
-      "de": "Häufigkeit",
-      "lt": "Dažnumas",
-      "pt": "Frequência",
-      "it": "Frequenza",
-      "no": "Frekvens",
-      "el": "Συχνότητα"
-    },
-    "modules.isa.data_entry.common.sector": {
-      "en": "EP2: Activity Sectors",
-      "es": "EP2: Sectores de Actividad",
-      "fr": "EP2: Secteurs d'Activité",
-      "de": "EP2: Aktivitätssektoren",
-      "lt": "EP2: Veiklos sektoriai",
-      "pt": "EP2: Setores de Atividade",
-      "it": "EP2: Settori di Attività",
-      "no": "ØP2: Aktivitetssektorer",
-      "el": "ΑΣ2: Τομείς δραστηριότητας"
-    },
     "modules.pims.download_stakeholder_information_for_reporting_and": {
       "en": "Download stakeholder information for reporting and documentation.",
       "es": "Descargue la información de las partes interesadas para informes y documentación.",
@@ -494,17 +461,6 @@
       "it": "Consultare",
       "no": "Konsultere",
       "el": "Διαβούλευση"
-    },
-    "modules.analysis.common.counteract_change_and_seek_equilibrium": {
-      "en": " Counteract change and seek equilibrium.",
-      "es": "Contrarrestan el cambio y buscan el equilibrio.",
-      "fr": "Contrebalancent le changement et recherchent l'équilibre.",
-      "de": "Wirken Veränderungen entgegen und suchen das Gleichgewicht.",
-      "lt": "Priešinasi pokyčiams ir siekia pusiausvyros.",
-      "pt": "Contrabalançam a mudança e buscam o equilíbrio.",
-      "it": "Contrastano il cambiamento e cercano l'equilibrio.",
-      "no": " Motvirker endring og søker likevekt.",
-      "el": " Αντισταθμίζουν την αλλαγή και αναζητούν ισορροπία."
     },
     "modules.pims.stakeholder.current_attitude": {
       "en": "Current Attitude",
@@ -1320,17 +1276,6 @@
       "no": "Politikk/forvaltning",
       "el": "Πολιτική/διαχείριση"
     },
-    "modules.isa.this_ai_powered_assistant_helps_you_create_your_da": {
-      "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
-      "es": "Este asistente impulsado por IA le ayuda a crear su marco DAPSI(W)R(M) a través de una conversación interactiva. Simplemente responda las preguntas y el asistente le guiará en cada paso.",
-      "fr": "Cet assistant alimenté par l'IA vous aide à créer votre cadre DAPSI(W)R(M) grâce à une conversation interactive. Répondez simplement aux questions et l'assistant vous guidera à chaque étape.",
-      "de": "Dieser KI-gestützte Assistent hilft Ihnen, Ihr DAPSI(W)R(M)-Framework durch interaktive Konversation zu erstellen. Beantworten Sie einfach die Fragen und der Assistent führt Sie durch jeden Schritt.",
-      "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
-      "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
-      "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
-      "no": "Denne KI-drevne assistenten hjelper deg med å lage ditt DAPSI(W)R(M)-rammeverk gjennom interaktiv samtale. Svar enkelt på spørsmålene, og assistenten veileder deg gjennom hvert trinn.",
-      "el": "Αυτός ο βοηθός τεχνητής νοημοσύνης σας βοηθά να δημιουργήσετε το πλαίσιο DAPSI(W)R(M) μέσω διαδραστικής συνομιλίας. Απλά απαντήστε στις ερωτήσεις και ο βοηθός θα σας καθοδηγήσει σε κάθε βήμα."
-    },
     "modules.pims.stakeholder.powerinfluence": {
       "en": "Power/Influence",
       "es": "Poder/Influencia",
@@ -1418,28 +1363,6 @@
       "it": "Trimestrale",
       "no": "Kvartalsvis",
       "el": "Τριμηνιαίο"
-    },
-    "modules.response.measures.export": {
-      "en": "Export Pathway Report",
-      "es": "Exportar Informe de Ruta",
-      "fr": "Exporter le Rapport de Parcours",
-      "de": "Pfadbericht Exportieren",
-      "lt": "Eksportuoti kelio ataskaitą",
-      "pt": "Exportar Relatório de Percurso",
-      "it": "Esporta Rapporto Percorso",
-      "no": "Eksporter veirapport",
-      "el": "Εξαγωγή Pathway Report"
-    },
-    "modules.isa.data_entry.common.documentation": {
-      "en": "Experienced users, academic research, detailed documentation",
-      "es": "Usuarios experimentados, investigación académica, documentación detallada",
-      "fr": "Utilisateurs expérimentés, recherche académique, documentation détaillée",
-      "de": "Erfahrene Benutzer, akademische Forschung, detaillierte Dokumentation",
-      "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
-      "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
-      "it": "Utenti esperti, ricerca accademica, documentazione dettagliata",
-      "no": "Erfarne brukere, akademisk forskning, detaljert dokumentasjon",
-      "el": "Έμπειροι χρήστες, ακαδημαϊκή έρευνα, λεπτομερής τεκμηρίωση"
     },
     "modules.pims.stakeholder.resistant": {
       "en": "Resistant",
@@ -1672,17 +1595,6 @@
       "no": "Interessentregister",
       "el": "Μητρώο ενδιαφερόμενων μερών"
     },
-    "modules.isa.data_entry.common.stakeholder": {
-      "en": "Define your project goals, stakeholders, and timeline",
-      "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
-      "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
-      "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
-      "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
-      "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
-      "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Definer prosjektmål, interessenter og tidsplan",
-      "el": "Καθορίστε τους στόχους του έργου, τους ενδιαφερόμενους και το χρονοδιάγραμμα"
-    },
     "modules.pims.stakeholder.stakeholders_by_sector": {
       "en": "Stakeholders by Sector",
       "es": "Partes interesadas por sector",
@@ -1913,83 +1825,6 @@
       "it": "Qual è il loro ruolo? Decisore, utente, parte interessata dagli effetti, ecc.",
       "no": "Hva er deres rolle? Beslutningstaker, bruker, berørt part osv.",
       "el": "Ποιος είναι ο ρόλος τους; Υπεύθυνος λήψης αποφάσεων, χρήστης, θιγόμενο μέρος κ.λπ."
-    },
-    "modules.response.measures.completed": {
-      "en": "Validation Completed:",
-      "es": "Validación Completada:",
-      "fr": "Validation Terminée :",
-      "de": "Validierung abgeschlossen:",
-      "lt": "Patvirtinimas baigtas:",
-      "pt": "Validação Concluída:",
-      "it": "Validazione Completata:",
-      "no": "Validering fullført:",
-      "el": "Επικύρωση Completed:"
-    },
-    "modules.response.measures.delete_selected": {
-      "en": "Delete Selected",
-      "es": "Eliminar Seleccionados",
-      "fr": "Supprimer la Sélection",
-      "de": "Ausgewählte löschen",
-      "lt": "Ištrinti Pasirinktus",
-      "pt": "Excluir Selecionados",
-      "it": "Elimina Selezionati",
-      "no": "Slett valgte",
-      "el": "Διαγραφή Επιλεγμένο"
-    },
-    "modules.response.measures.high": {
-      "en": "Total number of connections (in + out). High values indicate hub nodes.",
-      "es": "Número total de conexiones (entrada + salida). Valores altos indican nodos concentradores.",
-      "fr": "Nombre total de connexions (entrée + sortie). Des valeurs élevées indiquent des nœuds hub.",
-      "de": "Gesamtzahl der Verbindungen (eingehend + ausgehend). Hohe Werte weisen auf Hub-Knoten hin.",
-      "lt": "Bendras ryšių skaičius (įėjimas + išėjimas). Didelės reikšmės rodo koncentratoriaus mazgus.",
-      "pt": "Número total de conexões (entrada + saída). Valores altos indicam nós concentradores.",
-      "it": "Numero totale di connessioni (in + out). Valori elevati indicano nodi hub.",
-      "no": "Totalt antall forbindelser (inn + ut). Høye verdier indikerer knutepunkter.",
-      "el": "Σύνολο number of connections (in + out). High values indicate hub nodes."
-    },
-    "modules.response.measures.low": {
-      "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
-      "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
-      "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
-      "de": "Ihre Rolle hilft uns, die relevantesten Werkzeuge und Arbeitsabläufe für Ihren Meeresmanagement-Kontext zu empfehlen.",
-      "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
-      "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
-      "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
-      "no": "Din rolle hjelper oss å anbefale de mest relevante verktøyene og arbeidsflytene for din marine forvaltningskontekst.",
-      "el": "Ο ρόλος σας μας βοηθά να προτείνουμε τα πιο σχετικά εργαλεία και ροές εργασίας για το πλαίσιο θαλάσσιας διαχείρισής σας."
-    },
-    "modules.response.measures.medium": {
-      "en": "Small/medium enterprise influencers",
-      "es": "Influyentes de pequeñas/medianas empresas",
-      "fr": "Influenceurs de petites/moyennes entreprises",
-      "de": "Einflussnehmer kleiner/mittlerer Unternehmen",
-      "lt": "Mažų/vidutinių įmonių įtakos asmenys",
-      "pt": "Influenciadores de pequenas/médias empresas",
-      "it": "Influencer di piccole/medie imprese",
-      "no": "Små/mellomstore bedriftspåvirkere",
-      "el": "Μικρές/μεσαίες επιχειρήσεις ως παράγοντες επιρροής"
-    },
-    "modules.response.measures.planned": {
-      "en": "Planned",
-      "es": "Planificado",
-      "fr": "Planifié",
-      "de": "Geplant",
-      "lt": "Planuojamas",
-      "pt": "Planeado",
-      "it": "Pianificato",
-      "no": "Planlagt",
-      "el": "Προγραμματισμένο"
-    },
-    "modules.response.measures.unknown": {
-      "en": "Unknown",
-      "es": "Desconocido",
-      "fr": "Inconnu",
-      "de": "Unbekannt",
-      "lt": "Nežinoma",
-      "pt": "Desconhecido",
-      "it": "Sconosciuto",
-      "no": "Ukjent",
-      "el": "Άγνωστο"
     },
     "modules.pims.stakeholder.count": {
       "en": "Count",

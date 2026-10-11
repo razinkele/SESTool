@@ -1045,28 +1045,6 @@
       "no": "Frekvens",
       "el": "Συχνότητα"
     },
-    "modules.entry_point.guided_pathway": {
-      "en": "Guided Pathway",
-      "es": "Ruta Guiada",
-      "fr": "Parcours Guidé",
-      "de": "Geführter Pfad",
-      "lt": "Vedamas kelias",
-      "pt": "Percurso Guiado",
-      "it": "Percorso Guidato",
-      "no": "Veiledet vei",
-      "el": "Καθοδηγούμενη διαδρομή"
-    },
-    "modules.response.measures.intervention_points": {
-      "en": "Identify intervention points (high betweenness nodes)",
-      "es": "Identificar puntos de intervención (nodos de alta intermediación)",
-      "fr": "Identifier les points d'intervention (nœuds à haute intermédiarité)",
-      "de": "Interventionspunkte identifizieren (Knoten mit hoher Zwischenzentralität)",
-      "lt": "Nustatyti intervencijos taškus (didelio tarpininkavimo mazgai)",
-      "pt": "Identificar pontos de intervenção (nós de alta intermediação)",
-      "it": "Identificare i punti di intervento (nodi ad alta betweenness)",
-      "no": "Identifiser intervensjonspunkter (noder med høy mellomleddsentralitet)",
-      "el": "Εντοπίστε σημεία παρέμβασης (κόμβοι υψηλής ενδιαμεσότητας)"
-    },
     "modules.analysis.common.high_closeness": {
       "en": "High closeness",
       "es": "Alta cercanía",
@@ -1099,17 +1077,6 @@
       "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema.",
       "no": "Høy PageRank: Disse nodene har bred innflytelse over nettverket og representerer ofte kjernelementer i systemet.",
       "el": "Υψηλό PageRank: Αυτοί οι κόμβοι έχουν ευρεία επιρροή στο δίκτυο και συχνά αντιπροσωπεύουν βασικά στοιχεία του συστήματος."
-    },
-    "modules.isa.ai_assistant.other": {
-      "en": "Other",
-      "es": "Otro",
-      "fr": "Autre",
-      "de": "Andere",
-      "lt": "Kita",
-      "pt": "Outro",
-      "it": "Altro",
-      "no": "Annen",
-      "el": "Άλλο"
     },
     "modules.analysis.common.most_influential_system_components": {
       "en": "Most influential system components",
@@ -1187,17 +1154,6 @@
       "it": "Obiettivi per interventi ad ampio raggio",
       "no": "Mål for brede intervensjoner",
       "el": "Στόχοι για ευρείες παρεμβάσεις"
-    },
-    "modules.export.reports.export_visualizations": {
-      "en": "Export Visualizations",
-      "es": "Exportar Visualizaciones",
-      "fr": "Exporter les Visualisations",
-      "de": "Visualisierungen Exportieren",
-      "lt": "Eksportuoti vizualizacijas",
-      "pt": "Exportar Visualizações",
-      "it": "Esporta Visualizzazioni",
-      "no": "Eksporter visualiseringer",
-      "el": "Εξαγωγή Visualizations"
     },
     "modules.analysis.elements_appearing_in_multiple_loops_are_potential": {
       "en": " Elements appearing in multiple loops are potential leverage points for interventions.",
@@ -1352,17 +1308,6 @@
       "it": "Esamina i singoli loop e visualizza il loro percorso completo",
       "no": " Undersøk individuelle sløyfer og se deres fullstendige sti",
       "el": " Εξετάστε μεμονωμένους βρόχους και δείτε την πλήρη διαδρομή τους"
-    },
-    "modules.response.effective_responses_address_feedback_loops_and_lev": {
-      "en": "Effective responses address feedback loops and leverage points identified in your ISA analysis.",
-      "es": "Las respuestas efectivas abordan los bucles de retroalimentación y los puntos de apalancamiento identificados en su análisis ISA.",
-      "fr": "Les réponses efficaces traitent les boucles de rétroaction et les points de levier identifiés dans votre analyse ISA.",
-      "de": "Wirksame Antworten befassen sich mit Rückkopplungsschleifen und Hebelpunkten, die in Ihrer ISA-Analyse identifiziert wurden.",
-      "lt": "Efektyvūs atsakai sprendžia grįžtamojo ryšio kilpas ir svertų taškus, nustatytus jūsų ISA analizėje.",
-      "pt": "Respostas eficazes abordam loops de feedback e pontos de alavancagem identificados na sua análise ISA.",
-      "it": "Le risposte efficaci affrontano i cicli di feedback e i punti di leva identificati nella vostra analisi ISA.",
-      "no": "Effektive responser adresserer tilbakekoblingsløkker og innflytelsespunkter identifisert i ISA-analysen.",
-      "el": "Οι αποτελεσματικές αποκρίσεις αντιμετωπίζουν βρόχους ανατροφοδότησης και σημεία μόχλευσης που εντοπίστηκαν στην ανάλυση ISA."
     },
     "modules.analysis.loops.identify_which_system_elements_participate_in_most_loops": {
       "en": " Identify which system elements participate in most loops",

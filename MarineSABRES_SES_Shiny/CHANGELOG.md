@@ -35,6 +35,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
 
+## [1.22.2] - 2026-10-11
+
+Patch release: translation keys defined in two files (PR #96).
+
+### Fixed (translation keys defined in two files)
+
+- 47 translation keys were defined in more than one file; the file loaded last won, so the other copy was silently ignored. Where the copies meant different things the wrong text showed:
+  - the ISA **Stakeholder** field label read "Define your project goals, stakeholders, and timeline";
+  - the ISA **Documentation** heading read "Experienced users, academic research, detailed documentation";
+  - the entry-point summary's **Role:** label read "Select your role in marine management";
+  - "Approve all / Reject all" in connection review said "All connections in 7 approved": the count landed where the category name belonged.
+- Each key now lives in one file, the one matching its namespace. `common/patch_additions.json`, an override file made only of duplicates, is merged and removed; its Lithuanian "Vairuotojo tipas" (car driver) for the DAPSIWRM Driver type is dropped in favour of "Varomosios jėgos tipas".
+- New `test-i18n-duplicate-keys.R` fails if any key is defined twice again.
+
 ## [1.22.1] - 2026-10-11
 
 Patch release: placeholder translations (PR #93) and template link signs (PR #94).
