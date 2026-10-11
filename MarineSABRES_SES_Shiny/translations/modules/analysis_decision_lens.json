@@ -506,6 +506,28 @@
       "it": "Cicli",
       "no": "Sløyfer",
       "el": "Βρόχοι"
+    },
+    "modules.analysis.decision_lens.quad_name_undifferentiated": {
+      "en": "Undifferentiated",
+      "es": "Sin diferenciar",
+      "fr": "Indifférencié",
+      "de": "Undifferenziert",
+      "lt": "Neišskirtas",
+      "pt": "Indiferenciado",
+      "it": "Indifferenziato",
+      "no": "Udifferensiert",
+      "el": "Αδιαφοροποίητο"
+    },
+    "modules.analysis.decision_lens.quad_undifferentiated": {
+      "en": "Every element has the same influence and dependence in this network, so there is no structural ranking — this does not mean low priority. (Structural only.)",
+      "es": "Todos los elementos tienen la misma influencia y dependencia en esta red, por lo que no hay una jerarquía estructural; esto no significa baja prioridad. (Solo estructural.)",
+      "fr": "Tous les éléments ont la même influence et la même dépendance dans ce réseau ; il n'y a donc pas de classement structurel — cela ne signifie pas une faible priorité. (Structurel uniquement.)",
+      "de": "Alle Elemente haben in diesem Netzwerk denselben Einfluss und dieselbe Abhängigkeit, daher gibt es keine strukturelle Rangfolge — das bedeutet keine niedrige Priorität. (Nur strukturell.)",
+      "lt": "Visi šio tinklo elementai turi vienodą įtaką ir priklausomybę, todėl struktūrinio reitingo nėra — tai nereiškia žemo prioriteto. (Tik struktūriškai.)",
+      "pt": "Todos os elementos têm a mesma influência e dependência nesta rede, pelo que não há hierarquia estrutural — isto não significa baixa prioridade. (Apenas estrutural.)",
+      "it": "Tutti gli elementi hanno la stessa influenza e dipendenza in questa rete, quindi non esiste una classifica strutturale: ciò non significa bassa priorità. (Solo strutturale.)",
+      "no": "Alle elementene har samme innflytelse og avhengighet i dette nettverket, så det finnes ingen strukturell rangering — dette betyr ikke lav prioritet. (Kun strukturelt.)",
+      "el": "Όλα τα στοιχεία έχουν την ίδια επιρροή και εξάρτηση σε αυτό το δίκτυο, άρα δεν υπάρχει δομική κατάταξη — αυτό δεν σημαίνει χαμηλή προτεραιότητα. (Μόνο δομικά.)"
     }
   }
 }
