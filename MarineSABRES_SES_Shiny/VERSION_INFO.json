@@ -1,6 +1,6 @@
 {
-  "version": "1.22.1",
-  "version_name": "Placeholder translations fixed; template link signs corrected",
+  "version": "1.22.2",
+  "version_name": "Translation keys defined once; four wrong labels fixed",
   "release_date": "2026-10-11",
   "release_type": "patch",
   "status": "stable",
@@ -14,8 +14,7 @@
   "features": [],
   "fixes": {
     "high": [
-      "About 410 keys showed literal '[XX] English' placeholders in es/fr/de/lt/pt/it (PIMS, Scenario Builder, analysis tools, ISA help, entry point, templates); translated, plus 37 English fallbacks; CI guards against both - PR #93.",
-      "Five template link signs corrected after a polarity review; Fisheries (Baltic) no longer shows Limits to Growth, which came from a sign error - PR #94."
+      "47 translation keys were defined in two files and the last file won: the ISA Stakeholder label, ISA Documentation heading, entry-point Role label and the batch approve/reject message showed the wrong text. Each key now lives in one file; a test guards against new duplicates - PR #96."
     ]
   },
   "metrics": {
@@ -33,8 +32,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.22.0",
+  "previous_version": "1.22.1",
   "build_info": {
-    "build_date": "2026-10-11 16:51:13.416792"
+    "build_date": "2026-10-11 19:48:44.346801"
   }
 }

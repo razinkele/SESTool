@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.2] - 2026-10-11
+
+Patch release: translation keys defined in two files (PR #96).
+
 ### Fixed (translation keys defined in two files)
 
 - 47 translation keys were defined in more than one file; the file loaded last won, so the other copy was silently ignored. Where the copies meant different things the wrong text showed:
