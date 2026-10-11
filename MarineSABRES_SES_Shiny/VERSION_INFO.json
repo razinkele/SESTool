@@ -1,8 +1,8 @@
 {
-  "version": "1.21.1",
-  "version_name": "Leverage page heading; template Responses close feedback loops",
+  "version": "1.22.0",
+  "version_name": "Review decisions: Decision Lens rules, transition rules, matrix alignment check, WP5 translations",
   "release_date": "2026-10-11",
-  "release_type": "patch",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -14,8 +14,13 @@
   "features": [],
   "fixes": {
     "high": [
-      "Leverage Point Analysis heading showed a raw translation key; new test guards *_key arguments - PR #84.",
-      "Templates: Goods & Benefits -> Response links so Responses close balancing loops; Decision Lens finds Limits to Growth in the Fisheries (Baltic) template - PR #85."
+      "Decision Lens: MICMAC quadrants vs the mean with an Undifferentiated guard; Limits to Growth needs an MPF/ES balancing loop; one Commons record per commons (N35, N37, N52) - PR #88.",
+      "Transition rules aligned to the framework doc; P->MPF default polarity '-'; Standard Entry edits R->MPF and R->R (N26, N61, N62) - PR #91.",
+      "Project load warns when a connection matrix does not line up with its element list (CLD reads matrices by position) - PR #90."
+    ],
+    "medium": [
+      "WP5 mechanism pane translated (flagged for native review); English-fallback ratchet (N48) - PR #89.",
+      "Dashboard ecosystem-type labels translated; P3 tests un-skipped - PR #87."
     ]
   },
   "metrics": {
@@ -33,8 +38,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.21.0",
+  "previous_version": "1.21.1",
   "build_info": {
-    "build_date": "2026-10-11 12:18:38.735121"
+    "build_date": "2026-10-11 14:58:25.716595"
   }
 }

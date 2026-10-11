@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-10-11
+
+Minor release: the review decisions signed off on 2026-10-11 (PRs #87-#91). Decision Lens output changes (MICMAC thresholds, stricter archetypes).
+
 ### Fixed (WP5 mechanism pane translations — review 2026-10-07 N48)
 
 - **The "Linked WP5 mechanisms" pane on Responses was English in every language:** 25 interface strings (pane title, field names, buttons, filter, the Arctic DA name, error and version-migration notices) carried the English text in all 9 slots, which the completeness check cannot see. They are now translated in all 8 other languages; the translations are first-pass and **flagged for review by native speakers / the PI**. The mechanism content itself (`data/ses_knowledge_db_wp5_mechanisms.json`) is unchanged.
