@@ -4,7 +4,7 @@
 
 R/Shiny application for Social-Ecological Systems (SES) analysis using the DAPSIWRM framework. Supports 9 languages with reactive i18n, network visualization, and ML-assisted element classification.
 
-**Version**: 1.11.2 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
+**Version**: see `VERSION` | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
 
 ## Quick Commands
 
@@ -25,8 +25,8 @@ Rscript tests/run_json_loading_tests.R
 # Run specific test file
 Rscript -e "testthat::test_file('tests/testthat/test-i18n-enforcement.R')"
 
-# Validate translations before commit
-Rscript scripts/translation_workflow.R check
+# Validate translations before commit (the same audit CI runs; must report missing=0, hardcoded=0)
+micromamba run -n shiny python scripts/_i18n_audit.py
 
 # Pre-deployment validation
 Rscript deployment/pre-deploy-check.R

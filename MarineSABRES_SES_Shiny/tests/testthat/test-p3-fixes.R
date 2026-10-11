@@ -152,9 +152,11 @@ test_that("P3 - event_bus_setup functions are syntactically correct", {
 # Event Bus Functional Tests
 # ============================================================================
 
+# server/event_bus_setup.R is not in global.R's chain, so load it here. These
+# tests used to skip when it was absent, which meant they never ran.
+source_for_test("server/event_bus_setup.R")
+
 test_that("P3 - Event bus can be created and used", {
-  skip_if_not(exists("create_event_bus", mode = "function"),
-              "create_event_bus function not loaded")
 
   # Create event bus
   event_bus <- create_event_bus(session_id = "test_session")
@@ -176,10 +178,6 @@ test_that("P3 - Event bus can be created and used", {
 test_that("P3 - is_event_bus correctly identifies event bus (if available)", {
   # This function is in the new event_bus_setup.R, may not be loaded
   # if the old reactive_pipeline.R is used
-  skip_if_not(exists("is_event_bus", mode = "function"),
-              "is_event_bus function not loaded (optional in older implementation)")
-  skip_if_not(exists("create_event_bus", mode = "function"),
-              "create_event_bus function not loaded")
 
   event_bus <- create_event_bus()
 
@@ -189,78 +187,9 @@ test_that("P3 - is_event_bus correctly identifies event bus (if available)", {
   expect_false(is_event_bus("not an event bus"))
 })
 
-# ============================================================================
-# Lazy Loading Functional Tests
-# ============================================================================
-
-test_that("P3 - Lazy module registry can be initialized", {
-  skip_if_not(exists("init_lazy_module_registry", mode = "function"),
-              "init_lazy_module_registry function not loaded")
-
-  # Should not error
-  result <- tryCatch({
-    init_lazy_module_registry()
-    TRUE
-  }, error = function(e) {
-    FALSE
-  })
-
-  expect_true(result, info = "init_lazy_module_registry should execute without error")
-})
-
-test_that("P3 - get_lazy_load_stats returns data frame", {
-  skip_if_not(exists("get_lazy_load_stats", mode = "function"),
-              "get_lazy_load_stats function not loaded")
-
-  stats <- get_lazy_load_stats()
-
-  expect_true(is.data.frame(stats), info = "Should return data frame")
-  expect_true("module_id" %in% names(stats), info = "Should have module_id column")
-  expect_true("category" %in% names(stats), info = "Should have category column")
-  expect_true("loaded" %in% names(stats), info = "Should have loaded column")
-})
-
-# ============================================================================
-# ML Cache Functional Tests
-# ============================================================================
-
-test_that("P3 - ML feature cache functions work correctly", {
-  skip_if_not(exists("cache_ml_features", mode = "function"),
-              "cache_ml_features function not loaded")
-  skip_if_not(exists("get_cached_ml_features", mode = "function"),
-              "get_cached_ml_features function not loaded")
-  skip_if_not(exists("clear_ml_feature_cache", mode = "function"),
-              "clear_ml_feature_cache function not loaded")
-
-  # Clear cache first
-  clear_ml_feature_cache()
-
-  # Test caching
-  test_features <- c(1.0, 2.0, 3.0)
-  cache_ml_features("test_element_1", test_features, ttl_seconds = 60)
-
-  # Test retrieval
-  cached <- get_cached_ml_features("test_element_1")
-  expect_equal(cached, test_features, info = "Should retrieve cached features")
-
-  # Test non-existent key
-  non_existent <- get_cached_ml_features("non_existent_key")
-  expect_null(non_existent, info = "Non-existent key should return NULL")
-
-  # Clean up
-  clear_ml_feature_cache()
-})
-
-test_that("P3 - get_ml_cache_stats returns cache statistics", {
-  skip_if_not(exists("get_ml_cache_stats", mode = "function"),
-              "get_ml_cache_stats function not loaded")
-
-  stats <- get_ml_cache_stats()
-
-  expect_true(is.list(stats), info = "Should return list")
-  expect_true("cached_count" %in% names(stats), info = "Should have cached_count")
-  expect_true("max_size" %in% names(stats), info = "Should have max_size")
-})
+# (Lazy-loading registry and ML feature-cache tests removed 2026-10-11: those
+#  functions no longer exist anywhere in the app -- lazy_loading.R was removed,
+#  see the test above -- so the tests could only ever skip.)
 
 # ============================================================================
 # Integration Tests

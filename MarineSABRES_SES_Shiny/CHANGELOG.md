@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (small gaps)
+
+- **Dashboard ecosystem-type dropdown is translated** (17 labels × 9 languages, same pattern as the regional-sea labels). Stored values are unchanged, so existing projects keep their selection.
+- **P3 tests no longer skip:** the event-bus tests now load `server/event_bus_setup.R` and run. Four tests for the removed lazy-loading registry and ML feature cache were deleted; those functions no longer exist, so the tests could only skip.
+- **CLAUDE.md** pointed to a non-existent `scripts/translation_workflow.R`; it now names the audit CI actually runs (`scripts/_i18n_audit.py`).
+
 ## [1.21.1] - 2026-10-11
 
 Patch release: two bugs reported on the live site (PRs #84, #85). Deployed to laguna 2026-10-11.

@@ -52,6 +52,29 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   )
   stopifnot(length(REGIONAL_SEA_LABEL_KEYS) == length(REGIONAL_SEA_KB_KEYS))
 
+  # Ecosystem-type labels, parallel to ECOSYSTEM_TYPE_CHOICES_DETAILED. The stored
+  # value stays the lowercase English name; only the label is translated.
+  ECOSYSTEM_TYPE_LABEL_KEYS <- c(
+    "modules.report_context.eco_coastal",
+    "modules.report_context.eco_shelf",
+    "modules.report_context.eco_deep_sea",
+    "modules.report_context.eco_pelagic",
+    "modules.report_context.eco_benthic",
+    "modules.report_context.eco_rocky_shore",
+    "modules.report_context.eco_sandy_shore",
+    "modules.report_context.eco_mudflat",
+    "modules.report_context.eco_saltmarsh",
+    "modules.report_context.eco_seagrass",
+    "modules.report_context.eco_kelp_forest",
+    "modules.report_context.eco_coral_reef",
+    "modules.report_context.eco_mangrove",
+    "modules.report_context.eco_estuary",
+    "modules.report_context.eco_lagoon",
+    "modules.report_context.eco_fjord",
+    "modules.report_context.eco_other"
+  )
+  stopifnot(length(ECOSYSTEM_TYPE_LABEL_KEYS) == length(ECOSYSTEM_TYPE_CHOICES_DETAILED))
+
   # ========== CACHED STATS (shared by value boxes, status, and timeline) ==========
   dashboard_stats <- reactive({
     data <- project_data()
@@ -238,7 +261,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
           i18n$t("modules.report_context.ecosystem_type_label"),
           choices = c(setNames("", i18n$t("modules.report_context.not_set")),
                       setNames(tolower(ECOSYSTEM_TYPE_CHOICES_DETAILED),
-                              ECOSYSTEM_TYPE_CHOICES_DETAILED)),
+                               vapply(ECOSYSTEM_TYPE_LABEL_KEYS, function(k) as.character(i18n$t(k)), character(1)))),
           selected = isolate(project_data()$data$metadata$ecosystem_type) %||% ""
         ),
         tags$hr(style = "margin: 10px 0;"),
