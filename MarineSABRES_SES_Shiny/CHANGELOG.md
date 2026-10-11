@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (WP5 mechanism pane translations — review 2026-10-07 N48)
+
+- **The "Linked WP5 mechanisms" pane on Responses was English in every language:** 25 interface strings (pane title, field names, buttons, filter, the Arctic DA name, error and version-migration notices) carried the English text in all 9 slots, which the completeness check cannot see. They are now translated in all 8 other languages; the translations are first-pass and **flagged for review by native speakers / the PI**. The mechanism content itself (`data/ses_knowledge_db_wp5_mechanisms.json`) is unchanged.
+- **New check** `test-i18n-english-fallback.R`: no English sentences (≥ 30 characters) in other-language slots of the WP5 file, and a ratchet so the 42 remaining elsewhere (mostly analysis_bot, response_measures, scenario_builder) cannot grow.
+
 ### Fixed (small gaps)
 
 - **Dashboard ecosystem-type dropdown is translated** (17 labels × 9 languages, same pattern as the regional-sea labels). Stored values are unchanged, so existing projects keep their selection.
