@@ -345,3 +345,85 @@ impact_indicator_suggestions <- function(criterion, da) {
   rownames(out) <- NULL
   out
 }
+
+# ---- storage (spec WS-6 change 7) --------------------------------------------
+get_impact_assessment <- function(project) {
+  if (!is.list(project) || !is.list(project$data) || !is.list(project$data$analysis)) return(NULL)
+  project$data$analysis[["impact_assessment"]]
+}
+
+#' Store the assessment; stamps min_app_version (never lowers). NULL removes it.
+set_impact_assessment <- function(project, ia) {
+  if (!is.list(project$data$analysis)) project$data$analysis <- list()
+  if (is.null(ia)) {
+    project$data$analysis$impact_assessment <- NULL
+    return(project)
+  }
+  project$data$analysis$impact_assessment <- normalize_impact_assessment(ia)
+  stamp_min_app_version(project, WP5_IMPACT_MIN_APP_VERSION)
+}
+
+#' Canonical impact-assessment block from any load path, or NULL if malformed.
+#' Converts through JSON with simplifyVector = FALSE first, so data frames from
+#' a simplifyVector = TRUE load become plain lists. Drops cells whose scenario
+#' does not exist and maps criterion aliases (PO -> PI, FI -> FF).
+normalize_impact_assessment <- function(x) {
+  if (is.null(x)) return(NULL)
+  x <- tryCatch(
+    jsonlite::fromJSON(jsonlite::toJSON(x, auto_unbox = TRUE, null = "null", na = "null", digits = NA),
+                       simplifyVector = FALSE),
+    error = function(e) NULL)
+  if (!is.list(x) || is.null(names(x))) {
+    if (exists("debug_log", mode = "function")) debug_log("impact_assessment block malformed; dropped", "WP5")
+    return(NULL)
+  }
+  # Any field-level surprise drops the block, never the project load
+  tryCatch(.impact_normalize_body(x), error = function(e) {
+    if (exists("debug_log", mode = "function")) {
+      debug_log(paste("impact_assessment block dropped:", conditionMessage(e)), "WP5")
+    }
+    NULL
+  })
+}
+
+.impact_normalize_body <- function(x) {
+  da <- .imp_str(x[["da"]])
+  if (!da %in% c("", WP5_DA_CONTEXTS)) da <- ""
+
+  scenarios <- .imp_empty_named()
+  for (s in if (is.list(x[["scenarios"]])) x[["scenarios"]] else list()) {
+    if (!is.list(s)) next
+    sc <- .impact_fill_scenario(s)
+    if (!.impact_valid_code(sc$code) || sc$code %in% names(scenarios)) next
+    if (length(scenarios) >= IMPACT_MAX_SCENARIOS) break
+    scenarios[[sc$code]] <- sc
+  }
+
+  cells <- .imp_empty_named()
+  xc <- x[["cells"]]
+  if (is.list(xc) && !is.null(names(xc))) {
+    for (raw_cr in names(xc)) {
+      cr <- wp5_criterion_code(raw_cr)
+      row <- xc[[raw_cr]]
+      if (is.na(cr) || cr %in% names(cells) || !is.list(row) || is.null(names(row))) next
+      kept <- .imp_empty_named()
+      for (sc in names(row)) if (sc %in% names(scenarios)) kept[[sc]] <- .impact_fill_cell(row[[sc]])
+      if (length(kept) > 0) cells[[cr]] <- kept
+    }
+  }
+
+  baseline <- .imp_str(x[["baseline_code"]])
+  if (!baseline %in% names(scenarios)) baseline <- ""
+  sec <- function(s) .impact_fill_section(if (is.list(x[[s]])) x[[s]] else list(), IMPACT_TEXT_SECTIONS[[s]])
+
+  # Same field order as new_impact_assessment(), so identical() holds after a round trip
+  list(schema = IMPACT_SCHEMA_VERSION, da = da,
+       characterisation = sec("characterisation"),
+       baseline_code = baseline,
+       scenarios = scenarios,
+       scope = .impact_fill_scope(x[["scope"]]),            # guards non-list scope/displacement
+       cells = cells,
+       uncertainty = sec("uncertainty"),
+       trade_offs = sec("trade_offs"),
+       recommendations = sec("recommendations"))
+}

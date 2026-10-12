@@ -960,6 +960,19 @@ normalize_json_project_data <- function(data) {
   # language-switch restore (restore_project_from_json_text).
   data <- migrate_legacy_scenarios(data)
 
+  # WP5 impact assessment (WS-6a): canonical block on every JSON/RDS load path
+  # (tryCatch: a bug in the normaliser must drop the block, not fail the project load)
+  if (is.list(data$data) && is.list(data$data$analysis) &&
+      !is.null(data$data$analysis$impact_assessment) &&
+      exists("normalize_impact_assessment", mode = "function")) {
+    data$data$analysis$impact_assessment <- tryCatch(
+      normalize_impact_assessment(data$data$analysis$impact_assessment),
+      error = function(e) {
+        debug_log(paste("impact_assessment dropped on load:", conditionMessage(e)), "WP5")
+        NULL
+      })
+  }
+
   data
 }
 

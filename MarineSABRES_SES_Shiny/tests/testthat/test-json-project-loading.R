@@ -437,3 +437,39 @@ test_that("WS-4 indicator columns survive JSON (both simplify modes, with/withou
   saveRDS(ws4_project(), f)
   ws4_expect_columns(normalize_json_project_data(readRDS(f)), "rds")
 })
+
+# ============================================================================
+# WS-6a (P7): data$analysis$impact_assessment survives JSON and RDS round trips
+# ============================================================================
+if (!exists("normalize_impact_assessment", mode = "function")) {
+  source(file.path(project_root, "functions", "impact_reference.R"), local = FALSE)
+  source(file.path(project_root, "functions", "impact_assessment_model.R"), local = FALSE)
+}
+
+ws6_project <- function() {
+  ia <- new_impact_assessment("arctic")
+  ia <- impact_add_scenario(ia, new_impact_scenario("no_agreement", "No Agreement"))
+  ia <- impact_add_scenario(ia, new_impact_scenario("full_agreement", "Full Agreement", ambition_rank = 2L))
+  ia <- impact_set_baseline(ia, "no_agreement")
+  cl <- new_impact_cell()
+  cl$direction <- "decrease"; cl$confidence <- "low"; cl$uncertainty_driver <- "contested_assumption"
+  cl$evidence <- "dataset"; cl$subdimension_notes <- list(credibility = "Quota claims – contested")
+  cl$indicator_roles <- list(ARC_TAC_VS_ADVICE = "primary"); cl$mechanism_ids <- c("arc_02", "arc_06")
+  ia <- impact_set_cell(ia, "PI", "full_agreement", cl)
+  ia <- impact_set_section(ia, "recommendations", list(text = "Seek a sharing arrangement"))
+  set_impact_assessment(list(project_id = "p_ws6", data = list(analysis = list())), ia)
+}
+
+test_that("WS-6a impact assessment survives JSON (both simplify modes) and RDS round trips", {
+  p <- ws6_project()
+  js <- jsonlite::toJSON(p, auto_unbox = TRUE, null = "null", na = "null")
+  for (sv in c(TRUE, FALSE)) {
+    pd <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = sv))
+    expect_identical(pd$data$analysis$impact_assessment, p$data$analysis$impact_assessment,
+                     info = sprintf("simplifyVector=%s", sv))
+  }
+  f <- tempfile(fileext = ".rds")
+  saveRDS(p, f)
+  expect_identical(normalize_json_project_data(readRDS(f))$data$analysis$impact_assessment,
+                   p$data$analysis$impact_assessment)
+})
