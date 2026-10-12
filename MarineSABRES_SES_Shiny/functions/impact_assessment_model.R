@@ -263,3 +263,85 @@ impact_set_displacement <- function(ia, answer, note = "", displaced_pressure_id
 }
 
 impact_displacement_flagged <- function(ia) identical(ia$scope$displacement$answer, "yes")
+
+# ---- WP5 reference starters (spec WS-6 change 3) -----------------------------
+#' A new assessment pre-filled with the DA's published scenarios and baseline
+#' (no cells: reference cells stay read-only until copied)
+impact_assessment_from_reference <- function(da) {
+  ia <- new_impact_assessment(da)
+  for (s in impact_reference_scenarios(da)) {
+    ia <- impact_add_scenario(ia, new_impact_scenario(s$code, s$name, ambition_rank = s$ambition_rank,
+                                                      source = "wp5_reference"))
+  }
+  b <- impact_reference_baseline(da)
+  if (nzchar(b) && b %in% impact_scenario_codes(ia)) ia$baseline_code <- b
+  ia
+}
+
+#' Copy a read-only WP5 reference cell into the editable assessment.
+#' Table 21 states one confidence per scenario; it is copied only when it is a
+#' single level (a published range such as Medium–High leaves the choice to
+#' the user). Direction, magnitude and timing stay empty: D5.2 gives text.
+impact_copy_reference_cell <- function(ia, criterion, scenario_code, overwrite = FALSE) {
+  cr <- .impact_criterion(criterion)
+  if (!nzchar(ia$da)) .impact_error("no_da")
+  ref <- impact_reference_cell(ia$da, cr, scenario_code)
+  if (is.null(ref)) .impact_error("no_reference_cell")
+  if (!overwrite && !identical(impact_get_cell(ia, cr, scenario_code), new_impact_cell())) {
+    .impact_error("cell_not_empty")
+  }
+  sc <- Find(function(s) identical(s$code, scenario_code), impact_reference_scenarios(ia$da))
+  conf <- sc$confidence_codes %||% character(0)
+  cell <- new_impact_cell()
+  cell$rationale <- if (nzchar(ref$rating_text)) paste0(ref$rating_text, " — ", ref$text) else ref$text
+  cell$confidence <- if (length(conf) == 1) conf else ""
+  # P5 snapshot: provenance + reference version, so later corrections are detectable
+  cell$reference <- list(da = ia$da, table = ref$table, criterion = cr, scenario = scenario_code,
+                         provenance = ref$provenance, ref_version = impact_reference_version())
+  impact_set_cell(ia, cr, scenario_code, cell)
+}
+
+# ---- linking helpers (spec WS-6 change 4) ------------------------------------
+#' All mechanisms of a DA for a scenario, annotated and sorted by WS-2
+#' scenario_applicability. Nothing is hidden: D5.2 Table 9 often names only the
+#' scenario where a mechanism is strongest, which is not a statement that it is
+#' inapplicable elsewhere. applicability is NA where D5.2 says nothing for this
+#' scenario (always for Tuscan/Macaronesia and for user-defined scenarios).
+#' Order: essential, most_effective, applicable, complementary, not stated, fragmented.
+impact_mechanism_options <- function(da, scenario_code) {
+  empty <- data.frame(id = character(), name = character(), applicability = character(),
+                      applicability_text = character(), stringsAsFactors = FALSE)
+  rows <- lapply(get_mechanisms_for_da(da), function(m) {
+    v <- m[["derived"]][["scenario_applicability"]][[scenario_code]]
+    data.frame(id = m$id, name = m$name,
+               applicability = if (is.null(v)) NA_character_ else as.character(v),
+               applicability_text = .imp_str(m[["applicability_text"]]), stringsAsFactors = FALSE)
+  })
+  out <- do.call(rbind, c(list(empty), rows))
+  rank <- match(out$applicability, c("essential", "most_effective", "applicable", "complementary"))
+  rank[is.na(out$applicability)] <- 5L
+  rank[is.na(rank)] <- 6L                          # fragmented (or any unknown code) last
+  out <- out[order(rank), , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}
+
+#' Registry indicators with a role for this criterion in this DA (WS-4
+#' criterion_roles), primary before supporting
+impact_indicator_suggestions <- function(criterion, da) {
+  cr <- .impact_criterion(criterion)
+  empty <- data.frame(code = character(), name = character(), role = character(), stub = logical(),
+                      stringsAsFactors = FALSE)
+  entries <- load_indicator_registry()$entries %||% list()
+  rows <- lapply(entries, function(e) {
+    # Some fiche citations carry only role_text ("role": null), e.g. C_02 EC/EQ: no suggestion
+    role <- .imp_str(e[["criterion_roles"]][[cr]][["role"]])
+    if (!identical(e$da, da) || !role %in% WP5_RUBRIC$indicator_role) return(NULL)
+    data.frame(code = e$code, name = e$name, role = role, stub = isTRUE(e$stub),
+               stringsAsFactors = FALSE)
+  })
+  out <- do.call(rbind, c(list(empty), rows))
+  out <- out[order(match(out$role, WP5_RUBRIC$indicator_role)), , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}

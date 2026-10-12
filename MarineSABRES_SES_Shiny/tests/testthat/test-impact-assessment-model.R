@@ -127,3 +127,90 @@ test_that("steps 1, 3, 5, 6 and 7 have stored fields (roadmap §8.4)", {
   expect_identical(ia$scope$element_ids, c("P001", "C003"))
   expect_identical(ia$scope$indicator_codes, "C_01")
 })
+
+load_wp5_mechanisms_kb(file.path(PROJECT_ROOT, "data", "ses_knowledge_db_wp5_mechanisms.json"),
+                       force_reload = TRUE)
+load_impact_reference(file.path(PROJECT_ROOT, "data", "wp5_impact_reference.json"), force_reload = TRUE)
+
+test_that("reference starters: Macaronesia S1-S4 with S1 baseline, Arctic 3, Tuscan none", {
+  mac <- impact_assessment_from_reference("macaronesia")
+  expect_identical(impact_scenario_codes(mac), paste0("S", 1:4))
+  expect_identical(mac$baseline_code, "S1")
+  expect_identical(mac$scenarios$S3$source, "wp5_reference")
+  expect_identical(mac$scenarios$S4$ambition_rank, 4L)
+  expect_identical(names(mac$cells), character(0))          # reference cells stay read-only
+  arc <- impact_assessment_from_reference("arctic")
+  expect_identical(impact_scenario_codes(arc), c("no_agreement", "partial_agreement", "full_agreement"))
+  expect_identical(arc$baseline_code, "partial_agreement")
+  tus <- impact_assessment_from_reference("tuscan")
+  expect_identical(tus$da, "tuscan")
+  expect_identical(impact_scenario_codes(tus), character(0))
+  expect_identical(impact_step_problems(tus, 2)$problem, "no_scenarios")
+})
+
+test_that("copying a reference cell: text, single-level confidence only, provenance", {
+  ia <- impact_assessment_from_reference("macaronesia")
+  ia <- impact_copy_reference_cell(ia, "EE", "S3")
+  cl <- impact_get_cell(ia, "EE", "S3")
+  expect_true(startsWith(cl$rationale, "Clear ecological gains"))
+  expect_identical(cl$confidence, "medium")                  # S3 = Medium
+  expect_identical(cl$direction, "")                         # D5.2 gives text, not a direction
+  expect_identical(cl$reference, list(da = "macaronesia", table = "Table 21", criterion = "EE", scenario = "S3",
+                                      provenance = "wp5_source", ref_version = "1.0.0"))
+  ia <- impact_copy_reference_cell(ia, "EE", "S2")
+  expect_identical(impact_get_cell(ia, "EE", "S2")$confidence, "")   # S2 = Medium–High: user decides
+  arc <- impact_copy_reference_cell(impact_assessment_from_reference("arctic"), "PI", "no_agreement")
+  expect_identical(impact_get_cell(arc, "PI", "no_agreement")$rationale,
+                   "High — Politically easy to maintain; avoids difficult compromises; risks overfishing and continued certification loss.")
+})
+
+test_that("copy guards: no reference cell, edited cell, no DA, missing reference file", {
+  err <- function(expr) tryCatch({ expr; NA_character_ }, impact_error = function(e) e$code)
+  arc <- impact_assessment_from_reference("arctic")
+  expect_identical(err(impact_copy_reference_cell(arc, "EE", "full_agreement")), "no_reference_cell")
+  ia <- impact_assessment_from_reference("macaronesia")
+  edited <- new_impact_cell(); edited$rationale <- "my own view"
+  ia <- impact_set_cell(ia, "EC", "S1", edited)
+  expect_identical(err(impact_copy_reference_cell(ia, "EC", "S1")), "cell_not_empty")
+  ia <- impact_copy_reference_cell(ia, "EC", "S1", overwrite = TRUE)
+  expect_true(startsWith(impact_get_cell(ia, "EC", "S1")$rationale, "High short-term efficiency"))
+  expect_identical(err(impact_copy_reference_cell(new_impact_assessment(), "EE", "S1")), "no_da")
+  suppressWarnings(load_impact_reference(tempfile(fileext = ".json"), force_reload = TRUE))
+  starter <- impact_assessment_from_reference("macaronesia")
+  expect_identical(starter$da, "macaronesia")
+  expect_identical(impact_scenario_codes(starter), character(0))
+  load_impact_reference(file.path(PROJECT_ROOT, "data", "wp5_impact_reference.json"), force_reload = TRUE)
+})
+
+test_that("mechanism options annotate and sort by WS-2 applicability; nothing is hidden", {
+  no <- impact_mechanism_options("arctic", "no_agreement")
+  expect_identical(nrow(no), 8L)
+  expect_identical(names(no), c("id", "name", "applicability", "applicability_text"))
+  expect_identical(no$id[1], "arc_02")                                  # essential first
+  expect_identical(no$applicability[no$id == "arc_04"], "fragmented")
+  expect_identical(no$id[nrow(no)], "arc_04")                           # fragmented last
+  expect_true(is.na(no$applicability[no$id == "arc_03"]))               # "Most effective under Full": silent on No
+  expect_identical(no$applicability_text[no$id == "arc_03"], "Most effective under Full Agreement")
+  full <- impact_mechanism_options("arctic", "full_agreement")
+  expect_identical(nrow(full), 8L)
+  expect_false(anyNA(full$applicability))
+  mine <- impact_mechanism_options("arctic", "quota_swap")              # user-defined scenario
+  expect_identical(nrow(mine), 8L)
+  expect_true(all(is.na(mine$applicability)))
+  mac <- impact_mechanism_options("macaronesia", "S2")                  # no applicability map in D5.2
+  expect_identical(nrow(mac), length(get_mechanisms_for_da("macaronesia")))
+  expect_true(all(is.na(mac$applicability)))
+})
+
+test_that("indicator suggestions use WS-4 criterion roles, primary first, for every criterion", {
+  for (cr in WP5_CRITERIA$code) {
+    s <- impact_indicator_suggestions(cr, "macaronesia")               # EC/EQ include null-role citations
+    expect_identical(names(s), c("code", "name", "role", "stub"), info = cr)
+    expect_true(all(s$role %in% WP5_RUBRIC$indicator_role), info = cr)
+    expect_false(is.unsorted(match(s$role, WP5_RUBRIC$indicator_role)), info = cr)
+  }
+  s <- impact_indicator_suggestions("EE", "macaronesia")
+  expect_identical(s$role[s$code == "C_01"], "primary")
+  expect_false("C_02" %in% impact_indicator_suggestions("EC", "macaronesia")$code)   # role: null
+  expect_identical(nrow(impact_indicator_suggestions("EE", "tuscan")), 0L)
+})
