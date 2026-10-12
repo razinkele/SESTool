@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.23.0] - 2026-10-12
+
+Minor release: WP5 integration workstreams WS-0 to WS-3b (PR #100). Released before the WP5 partners' sign-off on the mechanism catalogue (partner letter question 1).
+
 ### Added (model check — spec 2026-10-11 WS-3b)
 - **On load, the ISA editor warns about likely model issues.** It flags two cases:
   - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.
