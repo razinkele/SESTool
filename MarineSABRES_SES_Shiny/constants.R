@@ -880,6 +880,28 @@ WP5_VALUATION_DISCOUNT_RATES <- c(0, 0.03, 0.05, 0.07)
 WP5_DEFAULT_TIME_HORIZON <- 20L      # D5.2 §4.8: "a 20-year lifespan for restored meadows"
 WP5_VALUATION_MAX_HORIZON <- 100L
 WP5_VALUATION_MAX_RATE_PCT <- 20
+# ============================================================================
+# WP5 IMPACT ASSESSMENT (spec 2026-10-11 WS-6; data + model layer WS-6a)
+# ============================================================================
+# Stored at data$analysis$impact_assessment. Cell codes come from WP5_RUBRIC
+# (WS-1). The lists below are not WS-1 vocabularies; WS-6b labels them.
+IMPACT_SCHEMA_VERSION <- 1L
+IMPACT_MAX_SCENARIOS <- 5L       # roadmap §8.3; D5.2 DAs use 3 (Arctic) and 4 (Macaronesia)
+# D5.2 Macaronesia scenario description dimensions (audit A§3.3); optional free text
+IMPACT_SCENARIO_DIMENSIONS <- c("governance_form", "spatial_scope", "sectoral_activation",
+                                "monitoring_data", "compliance_credibility", "financing_capacity")
+IMPACT_SCENARIO_SOURCES <- c("user", "wp5_reference")
+IMPACT_DISPLACEMENT_ANSWERS <- c("yes", "no", "unsure")   # displacement/leakage prompt (audit A§8.4)
+# Free-text sections of the 7-step flow (roadmap §8.4): step 1 characterisation,
+# step 5 uncertainty, step 6 trade-offs (auto_draft = WS-6c narrative), step 7.
+IMPACT_TEXT_SECTIONS <- list(
+  characterisation = c("focal_issue", "spatial_scope", "time_horizon", "stakeholders"),
+  uncertainty      = c("notes"),
+  trade_offs       = c("text", "auto_draft"),
+  recommendations  = c("text")
+)
+# 1.24.0 shipped without this block, so the first release carrying it is 1.25.0.
+WP5_IMPACT_MIN_APP_VERSION <- "1.25.0"
 
 # ============================================================================
 # END OF CONSTANTS
