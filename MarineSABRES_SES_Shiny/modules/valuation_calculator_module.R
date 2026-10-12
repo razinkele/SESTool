@@ -96,7 +96,13 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
         tags$td(format_eur(r$npv$high[i]))))
       rest <- r$restoration
       rest_ui <- if (!is.null(rest)) {
-        yrs <- function(v) if (is.na(v)) i18n$t("modules.valuation_calculator.never_breaks_even") else tfmt("modules.valuation_calculator.years_value", format_years(v))
+        # i18n-ref: modules.valuation_calculator.beyond_horizon
+        yrs <- function(v, beyond) {
+          if (is.na(v)) return(i18n$t("modules.valuation_calculator.never_breaks_even"))
+          out <- tfmt("modules.valuation_calculator.years_value", format_years(v))
+          if (isTRUE(beyond)) out <- paste(out, tfmt("modules.valuation_calculator.beyond_horizon", as.integer(r$horizon)))
+          out
+        }
         tagList(
           h5(i18n$t("modules.valuation_calculator.break_even_heading")),
           tags$table(class = "table table-sm", tags$tbody(
@@ -104,8 +110,11 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
             tags$tr(tags$td(i18n$t("modules.valuation_calculator.survival_adjusted")),
                     tags$td(paste(format_eur(rest$survival_adjusted[["low"]]), "–",
                                   format_eur(rest$survival_adjusted[["high"]])))),
-            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_low")), tags$td(yrs(rest$break_even_low))),
-            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_high")), tags$td(yrs(rest$break_even_high))))),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_low")),
+                    tags$td(yrs(rest$break_even_low, rest$beyond_horizon_low))),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_high")),
+                    tags$td(yrs(rest$break_even_high, rest$beyond_horizon_high))))),
+          p(class = "small text-muted mb-1", i18n$t("modules.valuation_calculator.break_even_assumption")),
           tags$small(class = "text-muted",
                      if (isTRUE(rest$rate_is_fallback)) i18n$t("modules.valuation_calculator.break_even_rate_fallback")
                      else tfmt("modules.valuation_calculator.break_even_rate_note", pct(rest$rate))))
@@ -148,13 +157,15 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
       content = function(file) {
         r <- valuation()
         req(isTRUE(r$ok))
+        # Never "1e+06": format numbers in full (review #2).
+        num_txt <- function(v) if (is.null(v) || length(v) == 0 || is.na(v[1])) "" else
+          format(v[1], scientific = FALSE, trim = TRUE)
         inputs <- data.frame(
           parameter = c("habitat", "area_ha", "services", "horizon_years", "discount_rate_pct",
                         "restoration_area_ha", "cost_bound"),
-          value = c(WP5_VALUATION_HABITAT, as.character(input$area_ha),
-                    paste(input$services %||% character(0), collapse = "; "), as.character(input$horizon),
-                    if (is.null(input$discount_rate) || is.na(input$discount_rate)) "" else as.character(input$discount_rate),
-                    if (is.null(input$restoration_area) || is.na(input$restoration_area)) "" else as.character(input$restoration_area),
+          value = c(WP5_VALUATION_HABITAT, num_txt(input$area_ha),
+                    paste(input$services %||% character(0), collapse = "; "), num_txt(input$horizon),
+                    num_txt(input$discount_rate), num_txt(input$restoration_area),
                     input$cost_bound %||% "low"),
           stringsAsFactors = FALSE)
         tryCatch({
@@ -182,7 +193,21 @@ build_valuation_excel <- function(result, inputs, file, saver = openxlsx::saveWo
   wb <- openxlsx::createWorkbook()
   openxlsx::addWorksheet(wb, "Valuation")
   openxlsx::writeData(wb, "Valuation", inputs, startRow = 1)
-  openxlsx::writeData(wb, "Valuation", valuation_export_rows(result), startRow = nrow(inputs) + 3)
+  rows <- valuation_export_rows(result)
+  start <- nrow(inputs) + 3
+  openxlsx::writeData(wb, "Valuation", rows, startRow = start)
+  # Whole-number format on the value columns so Excel never shows 1E+11 (review #2);
+  # break-even years keep one decimal.
+  if (nrow(rows) > 0) {
+    cols <- match(c("low", "high", "value"), names(rows))
+    data_rows <- start + seq_len(nrow(rows))
+    yrs <- data_rows[rows$unit == "years"]
+    eur <- data_rows[rows$unit != "years"]
+    if (length(eur)) openxlsx::addStyle(wb, "Valuation", openxlsx::createStyle(numFmt = "#,##0"),
+                                        rows = eur, cols = cols, gridExpand = TRUE)
+    if (length(yrs)) openxlsx::addStyle(wb, "Valuation", openxlsx::createStyle(numFmt = "0.0"),
+                                        rows = yrs, cols = cols, gridExpand = TRUE)
+  }
   saver(wb, file, overwrite = TRUE)
   invisible(file)
 }

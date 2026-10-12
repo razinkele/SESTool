@@ -103,8 +103,14 @@ test_that("restoration: cost, survival adjustment and break-even at both bands",
   x <- r$restoration
   expect_equal(x$cost, 200000)
   expect_equal(unname(x$survival_adjusted), c(200000 / 0.60, 200000 / 0.38))
-  expect_equal(x$break_even_low, 200000 / (2 * 4440))                     # slowest: low band
-  expect_equal(x$break_even_high, 200000 / (2 * 25840))
+  # review #1: break-even uses the survival-adjusted cost, consistent with the row above it.
+  # Slowest case: lower service values vs cost / worst survival (0.38); fastest: higher values vs cost / 0.60.
+  expect_equal(x$break_even_low, (200000 / 0.38) / (2 * 4440))
+  expect_equal(x$break_even_high, (200000 / 0.60) / (2 * 25840))
+  expect_true(x$beyond_horizon_low)                                         # 59.3 years > 20-year horizon
+  expect_false(x$beyond_horizon_high)                                       # 6.5 years
+  expect_false(isTRUE(calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = 20, restoration_area = 1,
+                           cost_bound = "high", discount_rate_pct = 7)$restoration$beyond_horizon_low))  # NA: never
   expect_equal(x$rate, 0)
   expect_true(x$rate_is_fallback)
   rh <- calc(area_ha = 10, services = WP5_VALUATION_SERVICES, horizon = 20, restoration_area = 1,

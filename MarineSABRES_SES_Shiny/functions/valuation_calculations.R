@@ -96,13 +96,20 @@ compute_valuation <- function(area_ha, services, horizon, discount_rate_pct = NA
     rate <- if (is.na(user_rate)) 0 else user_rate
     benefit_low <- restoration_area * sum(tab$low)
     benefit_high <- restoration_area * sum(tab$high)
+    adj <- survival_adjusted_cost(cost, as.numeric(restoration$early_survival_low),
+                                  as.numeric(restoration$early_survival_high))
+    # Break-even is measured against the survival-adjusted cost, so it agrees with
+    # the adjusted-cost row: slowest case = lower service values vs cost / worst
+    # survival; fastest = higher values vs cost / best survival. Benefits are the
+    # mature-meadow values from year 1 (stated in the UI).
+    be_low <- calculate_break_even_horizon(benefit_low, adj[["high"]], rate)
+    be_high <- calculate_break_even_horizon(benefit_high, adj[["low"]], rate)
     rest <- list(area = restoration_area, cost_bound = bound, cost_per_ha = per_ha, cost = cost,
-                 survival_adjusted = survival_adjusted_cost(cost, as.numeric(restoration$early_survival_low),
-                                                            as.numeric(restoration$early_survival_high)),
-                 rate = rate, rate_is_fallback = is.na(user_rate),
+                 survival_adjusted = adj, rate = rate, rate_is_fallback = is.na(user_rate),
                  benefit_low = benefit_low, benefit_high = benefit_high,
-                 break_even_low = calculate_break_even_horizon(benefit_low, cost, rate),
-                 break_even_high = calculate_break_even_horizon(benefit_high, cost, rate))
+                 break_even_low = be_low, break_even_high = be_high,
+                 beyond_horizon_low = !is.na(be_low) && be_low > horizon,
+                 beyond_horizon_high = !is.na(be_high) && be_high > horizon)
   }
 
   list(ok = TRUE, errors = character(0),
@@ -165,7 +172,7 @@ valuation_export_rows <- function(result) {
                                   source = paste(s48, "survival 38-60%; cost / survival"))
     out[[length(out) + 1]] <- row("break_even", sprintf("years_at_%g%%", 100 * r$rate),
                                   r$break_even_low, r$break_even_high, unit = "years",
-                                  provenance = "toolbox_extension", source = "annuity formula (not in D5.2)")
+                                  provenance = "toolbox_extension", source = "survival-adjusted cost vs full annual value from year 1; annuity formula (not in D5.2)")
   }
   do.call(rbind, out)
 }

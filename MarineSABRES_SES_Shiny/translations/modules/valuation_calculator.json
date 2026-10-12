@@ -573,26 +573,48 @@
       "el": "Κόστος προσαρμοσμένο στην αρχική επιβίωση (38–60%)"
     },
     "modules.valuation_calculator.break_even_low": {
-      "en": "Years to recover the cost (low values)",
-      "es": "Años para recuperar el coste (valores bajos)",
-      "fr": "Années pour récupérer le coût (valeurs basses)",
-      "de": "Jahre bis zur Kostendeckung (niedrige Werte)",
-      "lt": "Metai sąnaudoms atgauti (mažiausios vertės)",
-      "pt": "Anos para recuperar o custo (valores baixos)",
-      "it": "Anni per recuperare il costo (valori bassi)",
-      "no": "År før kostnaden er tjent inn (lave verdier)",
-      "el": "Έτη για ανάκτηση του κόστους (χαμηλές τιμές)"
+      "en": "Years to recover the survival-adjusted cost, slowest case",
+      "es": "Años para recuperar el coste ajustado por supervivencia, caso más lento",
+      "fr": "Années pour récupérer le coût ajusté à la survie, cas le plus lent",
+      "de": "Jahre bis zur Deckung der überlebensbereinigten Kosten, langsamster Fall",
+      "lt": "Metai pagal išgyvenamumą pakoreguotoms sąnaudoms atgauti, lėčiausias atvejis",
+      "pt": "Anos para recuperar o custo ajustado à sobrevivência, caso mais lento",
+      "it": "Anni per recuperare il costo corretto per la sopravvivenza, caso più lento",
+      "no": "År før den overlevelsesjusterte kostnaden er tjent inn, tregeste tilfelle",
+      "el": "Έτη για ανάκτηση του κόστους προσαρμοσμένου στην επιβίωση, βραδύτερη περίπτωση"
     },
     "modules.valuation_calculator.break_even_high": {
-      "en": "Years to recover the cost (high values)",
-      "es": "Años para recuperar el coste (valores altos)",
-      "fr": "Années pour récupérer le coût (valeurs hautes)",
-      "de": "Jahre bis zur Kostendeckung (hohe Werte)",
-      "lt": "Metai sąnaudoms atgauti (didžiausios vertės)",
-      "pt": "Anos para recuperar o custo (valores altos)",
-      "it": "Anni per recuperare il costo (valori alti)",
-      "no": "År før kostnaden er tjent inn (høye verdier)",
-      "el": "Έτη για ανάκτηση του κόστους (υψηλές τιμές)"
+      "en": "Years to recover the survival-adjusted cost, fastest case",
+      "es": "Años para recuperar el coste ajustado por supervivencia, caso más rápido",
+      "fr": "Années pour récupérer le coût ajusté à la survie, cas le plus rapide",
+      "de": "Jahre bis zur Deckung der überlebensbereinigten Kosten, schnellster Fall",
+      "lt": "Metai pagal išgyvenamumą pakoreguotoms sąnaudoms atgauti, greičiausias atvejis",
+      "pt": "Anos para recuperar o custo ajustado à sobrevivência, caso mais rápido",
+      "it": "Anni per recuperare il costo corretto per la sopravvivenza, caso più rapido",
+      "no": "År før den overlevelsesjusterte kostnaden er tjent inn, raskeste tilfelle",
+      "el": "Έτη για ανάκτηση του κόστους προσαρμοσμένου στην επιβίωση, ταχύτερη περίπτωση"
+    },
+    "modules.valuation_calculator.break_even_assumption": {
+      "en": "Slowest case: lower service values and the lowest survival rate; fastest case: higher values and the highest survival rate. Both assume the restored meadow delivers its full value from the first year, although meadows take years to establish.",
+      "es": "Caso más lento: valores de servicio más bajos y la menor tasa de supervivencia; caso más rápido: valores más altos y la mayor tasa de supervivencia. Ambos suponen que la pradera restaurada aporta todo su valor desde el primer año, aunque las praderas tardan años en establecerse.",
+      "fr": "Cas le plus lent : valeurs de service plus basses et taux de survie le plus faible ; cas le plus rapide : valeurs plus hautes et taux de survie le plus élevé. Les deux supposent que l'herbier restauré fournit toute sa valeur dès la première année, alors qu'un herbier met des années à s'établir.",
+      "de": "Langsamster Fall: niedrigere Leistungswerte und die geringste Überlebensrate; schnellster Fall: höhere Werte und die höchste Überlebensrate. Beide nehmen an, dass die wiederhergestellte Wiese ab dem ersten Jahr ihren vollen Wert erbringt, obwohl Wiesen Jahre brauchen, um sich zu etablieren.",
+      "lt": "Lėčiausias atvejis: mažesnės paslaugų vertės ir mažiausias išgyvenamumas; greičiausias atvejis: didesnės vertės ir didžiausias išgyvenamumas. Abu atvejai daro prielaidą, kad atkurta pieva visą vertę teikia nuo pirmųjų metų, nors pievos įsitvirtina per daugelį metų.",
+      "pt": "Caso mais lento: valores de serviço mais baixos e a menor taxa de sobrevivência; caso mais rápido: valores mais altos e a maior taxa de sobrevivência. Ambos assumem que a pradaria restaurada fornece todo o seu valor desde o primeiro ano, embora as pradarias demorem anos a estabelecer-se.",
+      "it": "Caso più lento: valori dei servizi più bassi e tasso di sopravvivenza minimo; caso più rapido: valori più alti e tasso di sopravvivenza massimo. Entrambi presuppongono che la prateria ripristinata fornisca il suo pieno valore dal primo anno, anche se le praterie impiegano anni per affermarsi.",
+      "no": "Tregeste tilfelle: lavere tjenesteverdier og laveste overlevelsesrate; raskeste tilfelle: høyere verdier og høyeste overlevelsesrate. Begge forutsetter at den restaurerte engen gir full verdi fra første år, selv om enger trenger år for å etablere seg.",
+      "el": "Βραδύτερη περίπτωση: χαμηλότερες τιμές υπηρεσιών και το χαμηλότερο ποσοστό επιβίωσης· ταχύτερη περίπτωση: υψηλότερες τιμές και το υψηλότερο ποσοστό επιβίωσης. Και οι δύο υποθέτουν ότι το αποκατεστημένο λιβάδι αποδίδει πλήρη αξία από το πρώτο έτος, αν και τα λιβάδια χρειάζονται χρόνια για να εγκατασταθούν."
+    },
+    "modules.valuation_calculator.beyond_horizon": {
+      "en": "(beyond the %1$d-year horizon)",
+      "es": "(más allá del horizonte de %1$d años)",
+      "fr": "(au-delà de l'horizon de %1$d ans)",
+      "de": "(jenseits des Zeithorizonts von %1$d Jahren)",
+      "lt": "(už %1$d m. laikotarpio ribų)",
+      "pt": "(além do horizonte de %1$d anos)",
+      "it": "(oltre l'orizzonte di %1$d anni)",
+      "no": "(utenfor tidshorisonten på %1$d år)",
+      "el": "(πέρα από τον ορίζοντα των %1$d ετών)"
     },
     "modules.valuation_calculator.years_value": {
       "en": "%1$s years",

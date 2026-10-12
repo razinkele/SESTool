@@ -133,11 +133,38 @@ test_that("every valuation-calculator key used in code exists in all 9 languages
     expect_false(is.null(tr[[k]]), info = k)
     for (l in langs) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
   }
-  for (k in c("cumulative_label", "central_cumulative", "years_value", "break_even_rate_note"))
+  for (k in c("cumulative_label", "central_cumulative", "years_value", "break_even_rate_note", "beyond_horizon"))
     for (l in langs)
       expect_true(grepl("%1$", tr[[paste0("modules.valuation_calculator.", k)]][[l]], fixed = TRUE),
                   info = paste(k, l))
   sb <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "ui", "sidebar.json"),
                            simplifyVector = FALSE)$translation
   for (l in langs) expect_true(nzchar(sb[["ui.sidebar.valuation_calculator"]][[l]] %||% ""), info = l)
+})
+
+# ---- Final review fixes -------------------------------------------------------
+test_that("the break-even block states its assumption and flags results beyond the horizon", {
+  # review #1: break-even uses the survival-adjusted cost and says it assumes full service
+  # value from year 1; a horizon shorter than the payback is called out.
+  testServer(valuation_calculator_server, args = srv_args, {
+    set_defaults(session, restoration_area = 1, cost_bound = "low")      # slowest case 59.3 y > 20 y
+    html <- as.character(output$results$html)
+    expect_match(html, "modules.valuation_calculator.break_even_assumption", fixed = TRUE)
+    expect_match(html, "modules.valuation_calculator.beyond_horizon", fixed = TRUE)
+  })
+})
+
+test_that("the xlsx export never writes scientific notation and formats numbers (1,000,000 ha)", {
+  # review #2: as.character(1e6) gives "1e+06"; numeric cells need a #,##0 format.
+  testServer(valuation_calculator_server, args = srv_args, {
+    set_defaults(session, area_ha = 1e6, restoration_area = 1e6)
+    f <- output$download_xlsx
+    x <- openxlsx::read.xlsx(f, colNames = FALSE)
+    flat <- unlist(x)
+    expect_true("1000000" %in% flat)
+    expect_false(any(grepl("e+", flat, fixed = TRUE)))
+    wb <- openxlsx::loadWorkbook(f)
+    fmts <- vapply(wb$styleObjects, function(s) as.character(s$style$numFmt$formatCode %||% ""), character(1))
+    expect_true("#,##0" %in% fmts)
+  })
 })
