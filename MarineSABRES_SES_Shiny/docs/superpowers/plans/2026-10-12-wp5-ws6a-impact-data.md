@@ -875,7 +875,8 @@ Create `functions/impact_assessment_model.R`:
 .imp_str <- function(v) {
   if (is.null(v) || length(v) == 0) return("")
   v <- v[[1]]
-  if (is.null(v) || length(v) == 0 || is.na(v)) "" else as.character(v)
+  # !is.atomic first: a nested list from hand-edited JSON must not reach is.na()
+  if (is.null(v) || !is.atomic(v) || length(v) != 1 || is.na(v)) "" else as.character(v)
 }
 .imp_chr <- function(v) {
   v <- unlist(v, use.names = FALSE)
@@ -1526,7 +1527,7 @@ In `functions/data_structure.R`, inside `normalize_json_project_data()`, directl
 "C:/Program Files/R/R-4.4.1/bin/Rscript.exe" -e "testthat::test_file('tests/testthat/test-data-structure.R')"
 ```
 
-Expected: all pass. If the `.json` round trip differs only in one field, print `str()` of both values and fix the normaliser's coercion for that field (for example, a length-1 `evidence` read back as a scalar). Do not weaken `expect_identical`.
+Expected: all pass. If the fixture test errors inside `normalize_json_project_data()` (for example because it expects an `isa_data` block), add the missing empty block to the fixture the way `create_empty_project()` declares it. Keep `version` at 1.21.1 and keep the test strict. If the `.json` round trip differs only in one field, print `str()` of both values and fix the normaliser's coercion for that field (for example, a length-1 `evidence` read back as a scalar). Do not weaken `expect_identical`.
 
 - [ ] **Step 6: Commit**
 
