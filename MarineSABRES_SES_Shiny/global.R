@@ -704,6 +704,7 @@ source("functions/ses_knowledge_db_loader.R", local = FALSE)
 # Must be global scope for use by the Response/Measure reference pane (and later
 # WP5 phases: valuation calculator, impact-assessment linked-mechanisms UI)
 source("functions/wp5_kb_loader.R", local = FALSE)
+source("functions/valuation_calculations.R", local = FALSE)
 source("functions/wp5_vocabulary.R", local = FALSE)
 source("functions/response_measures_schema.R", local = FALSE)
 source("functions/wp5_typing_lint.R", local = FALSE)
