@@ -14,9 +14,11 @@
 
 | Part | Contents | Status |
 |---|---|---|
-| **WS-6a (this plan)** | Reference data + loader; model (scenarios, cells, problems, displacement); reference starters + copy; mechanism and indicator linking helpers; storage, normaliser, round trip | this plan |
-| WS-6b | Module UI: 7 steps, matrix + per-cell modal, criterion × scenario heat map, Arctic revenue tables view, Tuscan empty state, ~120 i18n keys, `set_impact_assessment()` on first write | next plan |
-| WS-6c | Step 6 deterministic narrative (9 languages), Word/Excel report with provenance appendix | after 6b |
+| **WS-6a (this plan)** | Reference data + loader; the full stored schema for all 7 steps (characterisation, scenarios + baseline, scope incl. element/indicator selection and displacement, cells, uncertainty notes, trade-offs, recommendations); problems; reference starters + copy; mechanism and indicator linking helpers; storage, normaliser, round trip | this plan |
+| WS-6b | Module UI for all 7 steps, matrix + per-cell modal, criterion × scenario heat map, Arctic revenue tables view, Tuscan empty state, the optional "displaced pressure" P element (writes `scope$displacement$displaced_pressure_id`), ~120 i18n keys, `set_impact_assessment()` on first write. **Step 5 decision belongs here:** 6a stores free-text uncertainty notes only; re-scoring under alternative assumptions (roadmap §8.4 step 5) either extends the schema in 6b (bump `IMPACT_SCHEMA_VERSION`, extend `.impact_fill_*` and the normaliser) or is descoped as roadmap §8.10 allows | next plan |
+| WS-6c | Step 6 deterministic narrative (9 languages) written to `trade_offs$auto_draft`, Word/Excel report with provenance appendix | after 6b |
+
+**Schema rule for 6b/6c:** the normaliser keeps only the fields defined here (it is a whitelist, so malformed or foreign data can't get in). Any new stored field must be added to the matching `.impact_fill_*` helper and to `normalize_impact_assessment()` in the same commit, or it disappears on the next load.
 
 WS-6a changes nothing a user can see. Release it together with WS-6b as **1.25.0**.
 
@@ -26,7 +28,9 @@ WS-6a changes nothing a user can see. Release it together with WS-6b as **1.25.0
 2. **Table 21 confidence is per scenario (one column), not per cell.** Copying a reference cell copies that scenario's confidence into the cell only when D5.2 gives a single level (S1 High, S3 Medium). For ranges (S2 Medium–High, S4 Low–Medium) the copied cell's confidence stays empty, so the user must choose.
 3. **No genuine 1.21.1 fixture project exists in the repo** (the spec's cross-cutting section asks for round trips against one). This plan adds a minimal hand-authored project stamped `version` 1.21.1 with no WP5 blocks. That is a deviation: it tests "an older project without the block loads unchanged and can gain one", not the full 1.21.1 schema.
 4. **No new WS-1 vocabulary codes.** `test-wp5-vocabulary.R` requires 9-language labels for every code in `.wp5_vocab_table()`. New code lists (scenario dimensions, displacement answers, problem codes) live in `constants.R` and in the model, outside the vocab table; WS-6b gives them i18n keys. WS-6a has no user-facing strings.
-5. **`create_empty_project()` is not changed.** The block is optional (spec cross-cutting "Schema and migration"); it appears only when `set_impact_assessment()` writes it.
+5. **Mechanism linking annotates and sorts; it does not hide.** D5.2 Table 9 often names only the scenario where a mechanism is strongest ("Most effective under Full Agreement"). Treating that as "not applicable elsewhere" would claim more than the source, so every DA mechanism is returned with its applicability code (`NA` = D5.2 does not say for this scenario) and its published `applicability_text`. Recommended mechanisms come first and "fragmented" ones last.
+6. **Provenance (spec P1/P5).** Reference cell blocks carry `provenance: "wp5_source"` and a `source_ref`. A copied cell records `provenance` and `ref_version` (the reference file's `schema_version`), so a later correction (e.g. after partner question 2) can be detected in saved projects.
+7. **`create_empty_project()` is not changed.** The block is optional (spec cross-cutting "Schema and migration"); it appears only when `set_impact_assessment()` writes it.
 
 ## Global Constraints
 
@@ -46,9 +50,10 @@ WS-6a changes nothing a user can see. Release it together with WS-6b as **1.25.0
 
 1. **A project whose block has cells for a scenario that no longer exists** (hand-edited, or saved mid-edit) should load with the orphan cells dropped, not crash. Pinned in Task 5 (`orphan cells are dropped`).
 2. **Cells keyed by D5.2 aliases `PO`/`FI`** (from fiche-derived data) should load as `PI`/`FF`. Pinned in Task 5.
-3. **A malformed block** (a string, a number, or a list without names) must not stop the project loading; the block is dropped. Pinned in Task 5.
-4. **The reference file missing on the server** must leave the app working: status `"unavailable"`, a starter with the DA set and no scenarios. Pinned in Task 2 and Task 4.
+3. **A malformed block or field** (a string, a number, an unnamed list; or a valid block whose `scope`, `displacement`, a section or a cell field has the wrong type) must not stop the project loading. A bad block is dropped; a bad field falls back to its empty value and the rest of the block survives. The load hook also wraps the normaliser in `tryCatch`. Pinned in Task 5.
+4. **The reference file missing on the server** must leave the app working: status `"unavailable"` (one warning, no re-read of the default path on every call), and a starter with the DA set and no scenarios. Pinned in Task 2 and Task 4.
 5. **Copying a reference cell over a cell the user already edited** must not silently overwrite it (`cell_not_empty` unless `overwrite = TRUE`). A criterion with no reference cell (e.g. Arctic EE) must return `no_reference_cell`. Pinned in Task 4.
+6. **Linking for any scenario or criterion**: indicator suggestions must not error for EC/EQ, where some registry citations have `role: null`; mechanism options must not come back empty for a user-defined scenario. Pinned in Task 4.
 
 ---
 
@@ -68,6 +73,7 @@ WS-6a changes nothing a user can see. Release it together with WS-6b as **1.25.0
 | `tests/testthat/test-impact-reference.R` | Create | Loader/getters |
 | `tests/testthat/test-impact-assessment-model.R` | Create | Model, problems, starters, linking |
 | `tests/testthat/test-impact-assessment-storage.R` | Create | Stamp + three load paths + fixture |
+| `tests/testthat/test-json-project-loading.R` | Modify (append) | WS-6 round trip block (spec P7) |
 | `tests/testthat/fixtures/project_1_21_1_minimal.json` | Create | Older-project fixture (decision 3) |
 | `CHANGELOG.md` | Modify `[Unreleased]` | Entry |
 
@@ -162,8 +168,11 @@ test_that("Macaronesia Table 21: 5 criteria x 4 scenarios, each anchored on one 
   lines <- ext_lines(mac$cell_source$source_lines[[1]], mac$cell_source$source_lines[[2]])
   keys <- vapply(mac$cells, function(c) paste(c$criterion, c$scenario), character(1))
   expect_setequal(keys, as.vector(outer(c("EE", "EC", "EQ", "PI", "FF"), paste0("S", 1:4), paste)))
+  expect_identical(mac$provenance, "wp5_source")
+  expect_identical(mac$source_ref$table, "Table 21")
   for (c in mac$cells) {
-    expect_gt(length(c$verify_phrases), 0)
+    # one anchor from the cell's first layout line, one from its last (catches dropped clauses)
+    expect_gte(length(c$verify_phrases), 2)
     for (p in c$verify_phrases) {
       expect_true(on_one_line(p, lines), info = paste(c$criterion, c$scenario, "not in extract:", p))
       expect_true(grepl(p, c$text, fixed = TRUE), info = paste(c$criterion, c$scenario, "not in text:", p))
@@ -177,6 +186,7 @@ test_that("Macaronesia scenario confidence matches Table 21 and uses rubric code
   expect_identical(codes_of(mac$scenarios), paste0("S", 1:4))
   expect_identical(vapply(mac$scenarios, function(s) as.integer(s$ambition_rank), integer(1)), 1:4)
   for (s in mac$scenarios) {
+    expect_gte(length(s$verify_phrases), 2)
     for (p in s$verify_phrases) {
       expect_true(on_one_line(p, lines), info = p)
       expect_true(grepl(p, s$confidence_text, fixed = TRUE), info = p)
@@ -191,9 +201,11 @@ test_that("Arctic Table 8: political feasibility per scenario, anchored on extra
   arc <- da("arctic")
   lines <- ext_lines(2166, 2180)
   expect_identical(arc$cell_source$table, "Table 8")
+  expect_identical(arc$provenance, "wp5_source")
   expect_setequal(vapply(arc$cells, function(c) c$scenario, ""), c("no_agreement", "partial_agreement", "full_agreement"))
   for (c in arc$cells) {
     expect_identical(c$criterion, "PI")
+    expect_gte(length(c$verify_phrases), 2)
     expect_true(on_one_line(c$rating_verify, lines), info = c$rating_verify)
     for (p in c$verify_phrases) {
       expect_true(on_one_line(p, lines), info = p)
@@ -232,6 +244,16 @@ test_that("Arctic revenue figures are the published table strings, never recompu
         v <- s[[sc]]
         expect_true(on_one_line(v$display, sl), info = paste(tag, sc, v$display))
         expect_equal(v$usd_millions, usd_millions_of(v$display), info = paste(tag, sc))
+      }
+      # Tables 3 and 5 put one species per line in column order Full | Partial | No.
+      # Locate the line by the Full value (Greenland "Blue Whiting" wraps). Iceland's
+      # Table 7 is garbled in the text layer, so it keeps the presence-only check.
+      if (cty$country %in% c("faroe_islands", "greenland")) {
+        row <- sl[grepl(s$full_agreement$display, sl, fixed = TRUE)]
+        expect_length(row, 1)
+        pos <- vapply(c(s$full_agreement$display, s$partial_agreement$display, s$no_agreement$display),
+                      function(d) as.integer(regexpr(d, row[1], fixed = TRUE)), integer(1))
+        expect_true(all(pos > 0) && !is.unsorted(pos, strictly = TRUE), info = paste(tag, "column order"))
       }
     }
   }
@@ -285,58 +307,60 @@ Transcriptions remove the line-end hyphenation of the PDF layout. Keep "–" (en
       "scenarios": [
         {"code": "S1", "short_label": "S1 BAU", "ambition_rank": 1,
          "confidence_text": "High, based on observed current conditions and well-documented governance arrangements",
-         "confidence_codes": ["high"], "verify_phrases": ["High, based on"]},
+         "confidence_codes": ["high"], "verify_phrases": ["High, based on", "documented gov"]},
         {"code": "S2", "short_label": "S2 Light coordination", "ambition_rank": 2,
          "confidence_text": "Medium–High, effects are incremental and reasonably predictable, but uptake can vary",
-         "confidence_codes": ["medium", "high"], "verify_phrases": ["Medium–High,"]},
+         "confidence_codes": ["medium", "high"], "verify_phrases": ["Medium–High,", "take can vary"]},
         {"code": "S3", "short_label": "S3 Coordinated EEZ corridor", "ambition_rank": 3,
          "confidence_text": "Medium, positive impacts are plausible, but depend on governance design and compliance",
-         "confidence_codes": ["medium"], "verify_phrases": ["Medium, positive"]},
+         "confidence_codes": ["medium"], "verify_phrases": ["Medium, positive", "and compliance"]},
         {"code": "S4", "short_label": "S4 Integrated EEZ + ABNJ corridor", "ambition_rank": 4,
          "confidence_text": "Low–Medium, outcomes depend heavily on political commitment, funding continuity & benefit-sharing mechanisms and sectoral responses",
-         "confidence_codes": ["low", "medium"], "verify_phrases": ["Low–Medium,"]}
+         "confidence_codes": ["low", "medium"], "verify_phrases": ["Low–Medium,", "sectoral responses"]}
       ],
       "cell_source": {"table": "Table 21", "source_lines": [4798, 4851]},
+      "provenance": "wp5_source",
+      "source_ref": {"document": "MarineSABRES D5.2 Final v5 (23 Jun 2026)", "table": "Table 21", "section": "5.5"},
       "cells": [
-        {"criterion": "EE", "scenario": "S1", "verify_phrases": ["No additional ecological"],
+        {"criterion": "EE", "scenario": "S1", "verify_phrases": ["No additional ecological", "managed in isolation"],
          "text": "No additional ecological impact beyond existing MPAs, migratory species remain exposed between MPAs, pressures from fisheries, shipping, and tourism continue to be managed in isolation"},
-        {"criterion": "EC", "scenario": "S1", "verify_phrases": ["additional constraints"],
+        {"criterion": "EC", "scenario": "S1", "verify_phrases": ["additional constraints", "continue/may arise"],
          "text": "High short-term efficiency as there are no additional constraints for companies, long-term inefficiencies continue/may arise from unmanaged ecological impacts"},
-        {"criterion": "EQ", "scenario": "S1", "verify_phrases": ["Uneven outcomes persist"],
+        {"criterion": "EQ", "scenario": "S1", "verify_phrases": ["Uneven outcomes persist", "transit shipping"],
          "text": "Uneven outcomes persist between regions and user groups; e.g. small-scale fisheries receive fewer benefits than larger operators and transit shipping"},
-        {"criterion": "PI", "scenario": "S1", "verify_phrases": ["High, as no changes"],
+        {"criterion": "PI", "scenario": "S1", "verify_phrases": ["High, as no changes", "quired for fisheries, shipping"],
          "text": "High, as no changes are required for fisheries, shipping operators, or tourism businesses"},
-        {"criterion": "FF", "scenario": "S1", "verify_phrases": ["High feasibility (no added"],
+        {"criterion": "FF", "scenario": "S1", "verify_phrases": ["High feasibility (no added", "isting budgets and"],
          "text": "High feasibility (no added cost), relies entirely on existing budgets and instruments"},
-        {"criterion": "EE", "scenario": "S2", "verify_phrases": ["Minor ecological"],
+        {"criterion": "EE", "scenario": "S2", "verify_phrases": ["Minor ecological", "mulative corridor-wide"],
          "text": "Minor ecological improvements through voluntary alignment, e.g. shared guidelines for fisheries or tourism, but insufficient to reduce cumulative corridor-wide pressures"},
-        {"criterion": "EC", "scenario": "S2", "verify_phrases": ["High economic"],
+        {"criterion": "EC", "scenario": "S2", "verify_phrases": ["High economic", "for fisheries remains"],
          "text": "High economic efficiency due to low implementation costs and no major disruption e.g. to tourism demand, shipping routes, planning risks for fisheries remains"},
-        {"criterion": "EQ", "scenario": "S2", "verify_phrases": ["Slight equity"],
+        {"criterion": "EQ", "scenario": "S2", "verify_phrases": ["Slight equity", "smaller actors"],
          "text": "Slight equity improvements through shared practices, but stronger regions and well-organized sectors benefit more than smaller actors"},
-        {"criterion": "PI", "scenario": "S2", "verify_phrases": ["High, as measures remain"],
+        {"criterion": "PI", "scenario": "S2", "verify_phrases": ["High, as measures remain", "eries, shipping, or tourism"],
          "text": "High, as measures remain voluntary and do not impose binding constraints on fisheries, shipping, or tourism sectors"},
-        {"criterion": "FF", "scenario": "S2", "verify_phrases": ["High feasibility, low"],
+        {"criterion": "FF", "scenario": "S2", "verify_phrases": ["High feasibility, low", "stakeholder engagement"],
          "text": "High feasibility, low additional costs, mainly administrative coordination and stakeholder engagement"},
-        {"criterion": "EE", "scenario": "S3", "verify_phrases": ["Clear ecological gains"],
+        {"criterion": "EE", "scenario": "S3", "verify_phrases": ["Clear ecological gains", "of migratory routes"],
          "text": "Clear ecological gains from coordinated fisheries management, harmonized tourism standards, and improved protection of migratory routes"},
-        {"criterion": "EC", "scenario": "S3", "verify_phrases": ["Moderate, higher"],
+        {"criterion": "EC", "scenario": "S3", "verify_phrases": ["Moderate, higher", "ecological limits"],
          "text": "Moderate, higher costs (management, re-routing, etc.) need to be offset by better alignment between operator capacity and ecological limits"},
-        {"criterion": "EQ", "scenario": "S3", "verify_phrases": ["More balanced"],
+        {"criterion": "EQ", "scenario": "S3", "verify_phrases": ["More balanced", "for some operators."],
          "text": "More balanced distribution of costs and benefits across regions and stakeholder groups - if safeguards/transition support are built in; otherwise, adjustment burdens can concentrate. Small-scale fisheries and nature tourism benefit from healthier ecosystems, though adjustment costs likely arise for some operators."},
-        {"criterion": "PI", "scenario": "S3", "verify_phrases": ["Medium: requires political"],
+        {"criterion": "PI", "scenario": "S3", "verify_phrases": ["Medium: requires political", "igation/transition narrative"],
          "text": "Medium: requires political agreement among regional authorities and acceptance of clear rules, e.g. by fisheries and tourism operators, requires sustained stakeholder engagement and mitigation/transition narrative"},
-        {"criterion": "FF", "scenario": "S3", "verify_phrases": ["Moderate feasibility"],
+        {"criterion": "FF", "scenario": "S3", "verify_phrases": ["Moderate feasibility", "port, but costs are shared"],
          "text": "Moderate feasibility requires dedicated funding for coordination, monitoring, and stakeholder support, but costs are shared across regions"},
-        {"criterion": "EE", "scenario": "S4", "verify_phrases": ["High effectiveness:"],
+        {"criterion": "EE", "scenario": "S4", "verify_phrases": ["High effectiveness:", "tem connectivity"],
          "text": "High effectiveness: fisheries effort, maritime traffic and tourism pressures are managed coherently across the corridor, maximizing ecosystem connectivity"},
-        {"criterion": "EC", "scenario": "S4", "verify_phrases": ["High long-term"],
+        {"criterion": "EC", "scenario": "S4", "verify_phrases": ["High long-term", "may be significant"],
          "text": "High long-term efficiency based on long-term ecological improvements, but short-term adjustment costs for fisheries, shipping and some types of tourism may be significant"},
-        {"criterion": "EQ", "scenario": "S4", "verify_phrases": ["High equity potential"],
+        {"criterion": "EQ", "scenario": "S4", "verify_phrases": ["High equity potential", "on small islands or specific"],
          "text": "High equity potential if redistribution and compensation mechanisms are included; otherwise risks disproportionate impacts on small islands or specific sectors"},
-        {"criterion": "PI", "scenario": "S4", "verify_phrases": ["Lower to medium, it requires"],
+        {"criterion": "PI", "scenario": "S4", "verify_phrases": ["Lower to medium, it requires", "need to be locally visible"],
          "text": "Lower to medium, it requires binding agreements, shared governance structures, and strong political alignment, requires strong legitimacy, coalition-building, benefit-sharing mechanisms and transition support, benefits need to be locally visible"},
-        {"criterion": "FF", "scenario": "S4", "verify_phrases": ["Challenging, high costs for"],
+        {"criterion": "FF", "scenario": "S4", "verify_phrases": ["Challenging, high costs for", "for affected sectors"],
          "text": "Challenging, high costs for monitoring, enforcement, coordination, requires substantial and sustained financing, potentially including new EU or transnational funding instruments, potentially including compensation or transition support for affected sectors"}
       ]
     },
@@ -350,15 +374,17 @@ Transcriptions remove the line-end hyphenation of the PDF layout. Keep "–" (en
         {"code": "full_agreement", "short_label": "Full Agreement", "ambition_rank": 0}
       ],
       "cell_source": {"table": "Table 8", "source_lines": [2166, 2180]},
+      "provenance": "wp5_source",
+      "source_ref": {"document": "MarineSABRES D5.2 Final v5 (23 Jun 2026)", "table": "Table 8", "section": "3.5.4"},
       "cells": [
         {"criterion": "PI", "scenario": "full_agreement", "rating_text": "Low to moderate", "rating_verify": "Full Agree- Low to",
-         "verify_phrases": ["Requires states to give up"],
+         "verify_phrases": ["Requires states to give up", "may resist if perceived as unequal"],
          "text": "Requires states to give up unilateral control; unlikely without clear gains for all; Iceland and Greenland may resist if perceived as unequal outcomes."},
         {"criterion": "PI", "scenario": "partial_agreement", "rating_text": "Moderate", "rating_verify": "Partial    Moderate",
-         "verify_phrases": ["Moderate Reflects current state", "bilateral deals (e.g., UK–Faroes)"],
+         "verify_phrases": ["Moderate Reflects current state", "bilateral deals (e.g., UK–Faroes)", "politically more palatable"],
          "text": "Reflects current state; bilateral deals (e.g., UK–Faroes) persist; lacks system-wide enforcement, but politically more palatable."},
         {"criterion": "PI", "scenario": "no_agreement", "rating_text": "High", "rating_verify": "No Agree- High",
-         "verify_phrases": ["Politically easy to maintain"],
+         "verify_phrases": ["Politically easy to maintain", "continued certification loss"],
          "text": "Politically easy to maintain; avoids difficult compromises; risks overfishing and continued certification loss."}
       ],
       "revenue": {
@@ -473,7 +499,8 @@ git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): D5.2 impact-asse
   - `impact_reference_status(da)` → `"available"` | `"valuation_only"` | `"unavailable"`; errors on an unknown DA
   - `impact_reference_scenarios(da)` → list of `list(code, name, short_label, ambition_rank (int), confidence_text, confidence_codes (chr))`
   - `impact_reference_baseline(da)` → string (`""` if none)
-  - `impact_reference_cell(da, criterion, scenario_code)` → `list(criterion, scenario, rating_text, text, table, source_lines (int[2]))` or NULL
+  - `impact_reference_cell(da, criterion, scenario_code)` → `list(criterion, scenario, rating_text, text, table, source_lines (int[2]), provenance)` or NULL
+  - `impact_reference_version()` → the reference file's `schema_version` (`""` when unavailable)
   - `impact_reference_revenue(da)` → the `revenue` list or NULL
 
 - [ ] **Step 1: Write the failing test**
@@ -524,6 +551,8 @@ test_that("reference cells resolve criterion aliases and carry their source", {
   expect_identical(c1$table, "Table 21")
   expect_identical(c1$source_lines, c(4798L, 4851L))
   expect_identical(c1$rating_text, "")
+  expect_identical(c1$provenance, "wp5_source")
+  expect_identical(impact_reference_version(), "1.0.0")
   a <- impact_reference_cell("arctic", "PI", "full_agreement")
   expect_identical(a$rating_text, "Low to moderate")
   expect_null(impact_reference_cell("arctic", "EE", "full_agreement"))
@@ -538,9 +567,11 @@ test_that("Arctic revenue is exposed as published", {
 
 test_that("a missing reference file warns and degrades to 'unavailable'", {
   expect_warning(load_impact_reference(tempfile(fileext = ".json"), force_reload = TRUE), "reference data not loaded")
-  expect_identical(impact_reference_status("macaronesia"), "unavailable")
+  # later getter calls must not silently re-read the default path (failed load is cached)
+  expect_silent(expect_identical(impact_reference_status("macaronesia"), "unavailable"))
   expect_identical(impact_reference_scenarios("macaronesia"), list())
   expect_null(impact_reference_cell("macaronesia", "EE", "S1"))
+  expect_identical(impact_reference_version(), "")
   load_impact_reference(ref_file, force_reload = TRUE)
   expect_identical(impact_reference_status("macaronesia"), "available")
 })
@@ -564,11 +595,15 @@ Create `functions/impact_reference.R`:
 
 .impact_ref_env <- new.env(parent = emptyenv())
 .impact_ref_env$db <- NULL
+.impact_ref_env$loaded <- FALSE   # TRUE after any attempt, failed or not
 
 #' Load the impact-assessment reference data (cached)
+#' A failed load is cached too: the data stays "unavailable" (one warning)
+#' until force_reload = TRUE, instead of re-reading the default path on
+#' every getter call.
 #' @return Parsed list, or NULL (with a warning) if missing/corrupt
 load_impact_reference <- function(path = NULL, force_reload = FALSE) {
-  if (!is.null(.impact_ref_env$db) && !force_reload) return(invisible(.impact_ref_env$db))
+  if (isTRUE(.impact_ref_env$loaded) && !force_reload) return(invisible(.impact_ref_env$db))
   if (is.null(path)) {
     path <- if (exists("get_project_file", mode = "function")) {
       get_project_file("data", "wp5_impact_reference.json")
@@ -582,7 +617,15 @@ load_impact_reference <- function(path = NULL, force_reload = FALSE) {
     NULL
   })
   .impact_ref_env$db <- db
+  .impact_ref_env$loaded <- TRUE
   invisible(db)
+}
+
+#' Version of the loaded reference data ("" when unavailable); stored on copied cells
+impact_reference_version <- function() {
+  db <- load_impact_reference()
+  if (is.null(db)) return("")
+  as.character(db$schema_version %||% "")
 }
 
 .impact_ref_da <- function(da) {
@@ -642,7 +685,8 @@ impact_reference_cell <- function(da, criterion, scenario_code) {
                   rating_text = as.character(cl$rating_text %||% ""),
                   text = as.character(cl$text %||% ""),
                   table = as.character(src$table %||% ""),
-                  source_lines = as.integer(unlist(src$source_lines %||% list()))))
+                  source_lines = as.integer(unlist(src$source_lines %||% list())),
+                  provenance = as.character(b$provenance %||% "wp5_source")))
     }
   }
   NULL
@@ -692,7 +736,9 @@ git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): impact-assessmen
 - Consumes: `WP5_RUBRIC`, `WP5_CRITERIA`, `WP5_CRITERION_SUBDIMENSIONS`, `WP5_DA_CONTEXTS`, `wp5_criterion_code()`.
 - Produces:
   - constants `IMPACT_SCHEMA_VERSION` (1L), `IMPACT_MAX_SCENARIOS` (5L), `IMPACT_SCENARIO_DIMENSIONS`, `IMPACT_SCENARIO_SOURCES`, `IMPACT_DISPLACEMENT_ANSWERS`, `WP5_IMPACT_MIN_APP_VERSION` ("1.25.0")
-  - `new_impact_assessment(da = "")` → `list(schema, da, baseline_code, scenarios = named list, scope = list(displacement = list(answer, note)), cells = named list)`
+  - constant `IMPACT_TEXT_SECTIONS` (section → field names)
+  - `new_impact_assessment(da = "")` → `list(schema, da, characterisation, baseline_code, scenarios = named list, scope = list(element_ids, indicator_codes, displacement = list(answer, note, displaced_pressure_id)), cells = named list, uncertainty, trade_offs, recommendations)`
+  - `impact_set_section(ia, section, values)` (errors `unknown_section`, `unknown_field`); `impact_set_scope_items(ia, element_ids, indicator_codes)`
   - `new_impact_scenario(code, name, description = "", ambition_rank = 0L, source = "user")`
   - `new_impact_cell()`
   - `impact_scenario_codes(ia)`; `impact_add_scenario(ia, scenario)`; `impact_remove_scenario(ia, code)`; `impact_set_baseline(ia, code)`
@@ -700,9 +746,9 @@ git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): impact-assessmen
   - `impact_cell_problems(cell, criterion)` → character vector of problem codes
   - `impact_step_problems(ia, step)` → `data.frame(criterion, scenario, problem)`
   - `impact_problem_blocks(code)` → logical; `impact_can_advance(ia, step)` → logical
-  - `impact_set_displacement(ia, answer, note = "")`; `impact_displacement_flagged(ia)`
+  - `impact_set_displacement(ia, answer, note = "", displaced_pressure_id = "")`; `impact_displacement_flagged(ia)`
   - Errors are conditions of class `impact_error` with `$code` (e.g. `"too_many_scenarios"`)
-  - Internal helpers reused by Task 5: `.impact_fill_cell(x)`, `.impact_fill_scenario(x)`, `.imp_str`, `.imp_chr`, `.imp_int`, `.imp_named_str`
+  - Internal helpers reused by Task 5: `.impact_fill_cell(x)`, `.impact_fill_scenario(x)`, `.impact_fill_scope(x)`, `.impact_fill_section(x, fields)`, `.imp_str`, `.imp_chr`, `.imp_int`, `.imp_named_str`
 
 - [ ] **Step 1: Write the failing test**
 
@@ -816,8 +862,27 @@ test_that("displacement/leakage prompt (A§8.4): a yes needs a note", {
   expect_true(impact_displacement_flagged(ia))
   expect_identical(impact_step_problems(ia, 3)$problem, "displacement_note_missing")
   expect_false(impact_can_advance(ia, 3))
-  ia <- impact_set_displacement(ia, "yes", "Effort may move to ABNJ waters")
+  ia <- impact_set_displacement(ia, "yes", "Effort may move to ABNJ waters", displaced_pressure_id = "P012")
   expect_true(impact_can_advance(ia, 3))
+  expect_identical(ia$scope$displacement$displaced_pressure_id, "P012")
+})
+
+test_that("steps 1, 3, 5, 6 and 7 have stored fields (roadmap §8.4)", {
+  ia <- new_impact_assessment("macaronesia")
+  expect_identical(names(ia), c("schema", "da", "characterisation", "baseline_code", "scenarios", "scope",
+                                "cells", "uncertainty", "trade_offs", "recommendations"))
+  expect_identical(names(ia$characterisation), IMPACT_TEXT_SECTIONS$characterisation)
+  ia <- impact_set_section(ia, "characterisation", list(focal_issue = "Migratory corridor", time_horizon = "2035"))
+  expect_identical(ia$characterisation$focal_issue, "Migratory corridor")
+  expect_identical(ia$characterisation$stakeholders, "")
+  ia <- impact_set_section(ia, "recommendations", list(text = "Start with S3"))
+  expect_identical(ia$recommendations$text, "Start with S3")
+  err <- function(expr) tryCatch({ expr; NA_character_ }, impact_error = function(e) e$code)
+  expect_identical(err(impact_set_section(ia, "scenarios", list(text = "x"))), "unknown_section")
+  expect_identical(err(impact_set_section(ia, "uncertainty", list(text = "x"))), "unknown_field")
+  ia <- impact_set_scope_items(ia, element_ids = c("P001", "C003"), indicator_codes = "C_01")
+  expect_identical(ia$scope$element_ids, c("P001", "C003"))
+  expect_identical(ia$scope$indicator_codes, "C_01")
 })
 ```
 
@@ -843,6 +908,14 @@ IMPACT_SCENARIO_DIMENSIONS <- c("governance_form", "spatial_scope", "sectoral_ac
                                 "monitoring_data", "compliance_credibility", "financing_capacity")
 IMPACT_SCENARIO_SOURCES <- c("user", "wp5_reference")
 IMPACT_DISPLACEMENT_ANSWERS <- c("yes", "no", "unsure")   # displacement/leakage prompt (audit A§8.4)
+# Free-text sections of the 7-step flow (roadmap §8.4): step 1 characterisation,
+# step 5 uncertainty, step 6 trade-offs (auto_draft = WS-6c narrative), step 7.
+IMPACT_TEXT_SECTIONS <- list(
+  characterisation = c("focal_issue", "spatial_scope", "time_horizon", "stakeholders"),
+  uncertainty      = c("notes"),
+  trade_offs       = c("text", "auto_draft"),
+  recommendations  = c("text")
+)
 # 1.24.0 shipped without this block, so the first release carrying it is 1.25.0.
 WP5_IMPACT_MIN_APP_VERSION <- "1.25.0"
 ```
@@ -860,10 +933,16 @@ Create `functions/impact_assessment_model.R`:
 #
 # Shape: scenarios and cells are named lists (JSON objects), so a JSON load
 # with simplifyVector = TRUE never turns them into data frames:
-#   list(schema, da, baseline_code,
-#        scenarios = list(<code> = scenario, ...),
-#        scope = list(displacement = list(answer, note)),
-#        cells = list(<criterion> = list(<scenario code> = cell, ...), ...))
+#   list(schema, da,
+#        characterisation = list(focal_issue, spatial_scope, time_horizon, stakeholders),  # step 1
+#        baseline_code, scenarios = list(<code> = scenario, ...),                           # step 2
+#        scope = list(element_ids, indicator_codes,                                         # step 3
+#                     displacement = list(answer, note, displaced_pressure_id)),
+#        cells = list(<criterion> = list(<scenario code> = cell, ...), ...),                # step 4
+#        uncertainty = list(notes), trade_offs = list(text, auto_draft),                   # steps 5-6
+#        recommendations = list(text))                                                      # step 7
+# The normaliser is a whitelist: a new stored field must be added to the
+# matching .impact_fill_* helper and to normalize_impact_assessment().
 
 .impact_error <- function(code) {
   stop(structure(class = c("impact_error", "error", "condition"),
@@ -941,15 +1020,57 @@ new_impact_scenario <- function(code, name, description = "", ambition_rank = 0L
                              ambition_rank = ambition_rank, source = source))
 }
 
+.impact_fill_section <- function(x, fields) {
+  x <- .imp_named_str(x)
+  setNames(lapply(fields, function(f) .imp_str(x[[f]])), fields)
+}
+
+# Step 3: selected ISA elements / registry indicators + displacement check (A§8.4)
+.impact_fill_scope <- function(x) {
+  x <- if (is.list(x)) x else list()
+  d <- x[["displacement"]]
+  if (!is.list(d)) d <- list()
+  ans <- .imp_str(d[["answer"]])
+  if (!ans %in% IMPACT_DISPLACEMENT_ANSWERS) ans <- ""
+  list(element_ids = .imp_chr(x[["element_ids"]]),
+       indicator_codes = .imp_chr(x[["indicator_codes"]]),
+       displacement = list(answer = ans, note = .imp_str(d[["note"]]),
+                           displaced_pressure_id = .imp_str(d[["displaced_pressure_id"]])))
+}
+
 #' An empty assessment, optionally for a WP5 DA
 new_impact_assessment <- function(da = "") {
   if (!identical(da, "") && !(is.character(da) && length(da) == 1 && da %in% WP5_DA_CONTEXTS)) {
     .impact_error("unknown_da")
   }
-  list(schema = IMPACT_SCHEMA_VERSION, da = da, baseline_code = "",
+  list(schema = IMPACT_SCHEMA_VERSION, da = da,
+       characterisation = .impact_fill_section(list(), IMPACT_TEXT_SECTIONS$characterisation),
+       baseline_code = "",
        scenarios = .imp_empty_named(),
-       scope = list(displacement = list(answer = "", note = "")),
-       cells = .imp_empty_named())
+       scope = .impact_fill_scope(list()),
+       cells = .imp_empty_named(),
+       uncertainty = .impact_fill_section(list(), IMPACT_TEXT_SECTIONS$uncertainty),
+       trade_offs = .impact_fill_section(list(), IMPACT_TEXT_SECTIONS$trade_offs),
+       recommendations = .impact_fill_section(list(), IMPACT_TEXT_SECTIONS$recommendations))
+}
+
+#' Set free-text fields of a section (characterisation, uncertainty, trade_offs, recommendations)
+#' @param values Named list/character of field = text; unknown fields are an error
+impact_set_section <- function(ia, section, values) {
+  if (!is.character(section) || length(section) != 1 || !section %in% names(IMPACT_TEXT_SECTIONS)) {
+    .impact_error("unknown_section")
+  }
+  values <- .imp_named_str(values)
+  if (any(!names(values) %in% IMPACT_TEXT_SECTIONS[[section]])) .impact_error("unknown_field")
+  for (f in names(values)) ia[[section]][[f]] <- values[[f]]
+  ia
+}
+
+#' Step 3 scope: ISA element IDs and registry indicator codes in scope
+impact_set_scope_items <- function(ia, element_ids = character(0), indicator_codes = character(0)) {
+  ia$scope$element_ids <- .imp_chr(element_ids)
+  ia$scope$indicator_codes <- .imp_chr(indicator_codes)
+  ia
 }
 
 # ---- scenarios ---------------------------------------------------------------
@@ -1057,11 +1178,14 @@ impact_step_problems <- function(ia, step) {
 impact_can_advance <- function(ia, step) !any(impact_problem_blocks(impact_step_problems(ia, step)$problem))
 
 # ---- displacement / leakage (audit A§8.4) ------------------------------------
-impact_set_displacement <- function(ia, answer, note = "") {
+#' @param displaced_pressure_id Optional ID of a P element created for the displaced
+#'   pressure (spec WS-6 change 5; WS-6b creates the element)
+impact_set_displacement <- function(ia, answer, note = "", displaced_pressure_id = "") {
   if (!(is.character(answer) && length(answer) == 1 && answer %in% IMPACT_DISPLACEMENT_ANSWERS)) {
     .impact_error("invalid_displacement_answer")
   }
-  ia$scope$displacement <- list(answer = answer, note = .imp_str(note))
+  ia$scope$displacement <- list(answer = answer, note = .imp_str(note),
+                                displaced_pressure_id = .imp_str(displaced_pressure_id))
   ia
 }
 
@@ -1103,7 +1227,7 @@ git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): impact-assessmen
 - Produces:
   - `impact_assessment_from_reference(da)` → assessment with the published scenarios (`source = "wp5_reference"`) and baseline; no cells
   - `impact_copy_reference_cell(ia, criterion, scenario_code, overwrite = FALSE)` → assessment; errors `no_da`, `no_reference_cell`, `cell_not_empty`, `unknown_scenario`
-  - `impact_mechanism_options(da, scenario_code)` → `data.frame(id, name, applicability)`; `NA` applicability when the KB has no map
+  - `impact_mechanism_options(da, scenario_code)` → `data.frame(id, name, applicability, applicability_text)`, every DA mechanism, sorted; `NA` applicability where D5.2 says nothing for the scenario
   - `impact_indicator_suggestions(criterion, da)` → `data.frame(code, name, role, stub)`, primary first
 
 - [ ] **Step 1: Append the failing tests**
@@ -1138,7 +1262,8 @@ test_that("copying a reference cell: text, single-level confidence only, provena
   expect_true(startsWith(cl$rationale, "Clear ecological gains"))
   expect_identical(cl$confidence, "medium")                  # S3 = Medium
   expect_identical(cl$direction, "")                         # D5.2 gives text, not a direction
-  expect_identical(cl$reference, list(da = "macaronesia", table = "Table 21", criterion = "EE", scenario = "S3"))
+  expect_identical(cl$reference, list(da = "macaronesia", table = "Table 21", criterion = "EE", scenario = "S3",
+                                      provenance = "wp5_source", ref_version = "1.0.0"))
   ia <- impact_copy_reference_cell(ia, "EE", "S2")
   expect_identical(impact_get_cell(ia, "EE", "S2")$confidence, "")   # S2 = Medium–High: user decides
   arc <- impact_copy_reference_cell(impact_assessment_from_reference("arctic"), "PI", "no_agreement")
@@ -1164,25 +1289,37 @@ test_that("copy guards: no reference cell, edited cell, no DA, missing reference
   load_impact_reference(file.path(PROJECT_ROOT, "data", "wp5_impact_reference.json"), force_reload = TRUE)
 })
 
-test_that("mechanism options follow WS-2 scenario applicability", {
+test_that("mechanism options annotate and sort by WS-2 applicability; nothing is hidden", {
   no <- impact_mechanism_options("arctic", "no_agreement")
-  expect_setequal(no$id, c("arc_01", "arc_02", "arc_04", "arc_07", "arc_08"))
+  expect_identical(nrow(no), 8L)
+  expect_identical(names(no), c("id", "name", "applicability", "applicability_text"))
+  expect_identical(no$id[1], "arc_02")                                  # essential first
   expect_identical(no$applicability[no$id == "arc_04"], "fragmented")
+  expect_identical(no$id[nrow(no)], "arc_04")                           # fragmented last
+  expect_true(is.na(no$applicability[no$id == "arc_03"]))               # "Most effective under Full": silent on No
+  expect_identical(no$applicability_text[no$id == "arc_03"], "Most effective under Full Agreement")
   full <- impact_mechanism_options("arctic", "full_agreement")
   expect_identical(nrow(full), 8L)
-  mac <- impact_mechanism_options("macaronesia", "S2")       # no applicability map in D5.2
+  expect_false(anyNA(full$applicability))
+  mine <- impact_mechanism_options("arctic", "quota_swap")              # user-defined scenario
+  expect_identical(nrow(mine), 8L)
+  expect_true(all(is.na(mine$applicability)))
+  mac <- impact_mechanism_options("macaronesia", "S2")                  # no applicability map in D5.2
   expect_identical(nrow(mac), length(get_mechanisms_for_da("macaronesia")))
   expect_true(all(is.na(mac$applicability)))
 })
 
-test_that("indicator suggestions use WS-4 criterion roles, primary first", {
+test_that("indicator suggestions use WS-4 criterion roles, primary first, for every criterion", {
+  for (cr in WP5_CRITERIA$code) {
+    s <- impact_indicator_suggestions(cr, "macaronesia")               # EC/EQ include null-role citations
+    expect_identical(names(s), c("code", "name", "role", "stub"), info = cr)
+    expect_true(all(s$role %in% WP5_RUBRIC$indicator_role), info = cr)
+    expect_false(is.unsorted(match(s$role, WP5_RUBRIC$indicator_role)), info = cr)
+  }
   s <- impact_indicator_suggestions("EE", "macaronesia")
-  expect_true("C_01" %in% s$code)
   expect_identical(s$role[s$code == "C_01"], "primary")
-  expect_true(all(s$role %in% WP5_RUBRIC$indicator_role))
-  expect_false(is.unsorted(match(s$role, WP5_RUBRIC$indicator_role)))
+  expect_false("C_02" %in% impact_indicator_suggestions("EC", "macaronesia")$code)   # role: null
   expect_identical(nrow(impact_indicator_suggestions("EE", "tuscan")), 0L)
-  expect_identical(names(s), c("code", "name", "role", "stub"))
 })
 ```
 
@@ -1227,27 +1364,33 @@ impact_copy_reference_cell <- function(ia, criterion, scenario_code, overwrite =
   cell <- new_impact_cell()
   cell$rationale <- if (nzchar(ref$rating_text)) paste0(ref$rating_text, " — ", ref$text) else ref$text
   cell$confidence <- if (length(conf) == 1) conf else ""
-  cell$reference <- list(da = ia$da, table = ref$table, criterion = cr, scenario = scenario_code)
+  # P5 snapshot: provenance + reference version, so later corrections are detectable
+  cell$reference <- list(da = ia$da, table = ref$table, criterion = cr, scenario = scenario_code,
+                         provenance = ref$provenance, ref_version = impact_reference_version())
   impact_set_cell(ia, cr, scenario_code, cell)
 }
 
 # ---- linking helpers (spec WS-6 change 4) ------------------------------------
-#' Mechanisms for a scenario, pre-filtered by WS-2 scenario_applicability.
-#' A mechanism without an applicability map (Tuscan, Macaronesia) is kept with
-#' NA; one whose map omits the scenario is dropped.
+#' All mechanisms of a DA for a scenario, annotated and sorted by WS-2
+#' scenario_applicability. Nothing is hidden: D5.2 Table 9 often names only the
+#' scenario where a mechanism is strongest, which is not a statement that it is
+#' inapplicable elsewhere. applicability is NA where D5.2 says nothing for this
+#' scenario (always for Tuscan/Macaronesia and for user-defined scenarios).
+#' Order: essential, most_effective, applicable, complementary, not stated, fragmented.
 impact_mechanism_options <- function(da, scenario_code) {
   empty <- data.frame(id = character(), name = character(), applicability = character(),
-                      stringsAsFactors = FALSE)
+                      applicability_text = character(), stringsAsFactors = FALSE)
   rows <- lapply(get_mechanisms_for_da(da), function(m) {
-    sa <- m[["derived"]][["scenario_applicability"]]
-    if (is.null(sa)) {
-      return(data.frame(id = m$id, name = m$name, applicability = NA_character_, stringsAsFactors = FALSE))
-    }
-    v <- sa[[scenario_code]]
-    if (is.null(v)) return(NULL)
-    data.frame(id = m$id, name = m$name, applicability = as.character(v), stringsAsFactors = FALSE)
+    v <- m[["derived"]][["scenario_applicability"]][[scenario_code]]
+    data.frame(id = m$id, name = m$name,
+               applicability = if (is.null(v)) NA_character_ else as.character(v),
+               applicability_text = .imp_str(m[["applicability_text"]]), stringsAsFactors = FALSE)
   })
   out <- do.call(rbind, c(list(empty), rows))
+  rank <- match(out$applicability, c("essential", "most_effective", "applicable", "complementary"))
+  rank[is.na(out$applicability)] <- 5L
+  rank[is.na(rank)] <- 6L                          # fragmented (or any unknown code) last
+  out <- out[order(rank), , drop = FALSE]
   rownames(out) <- NULL
   out
 }
@@ -1260,9 +1403,10 @@ impact_indicator_suggestions <- function(criterion, da) {
                       stringsAsFactors = FALSE)
   entries <- load_indicator_registry()$entries %||% list()
   rows <- lapply(entries, function(e) {
-    r <- e[["criterion_roles"]][[cr]]
-    if (!identical(e$da, da) || is.null(r)) return(NULL)
-    data.frame(code = e$code, name = e$name, role = as.character(r$role), stub = isTRUE(e$stub),
+    # Some fiche citations carry only role_text ("role": null), e.g. C_02 EC/EQ: no suggestion
+    role <- .imp_str(e[["criterion_roles"]][[cr]][["role"]])
+    if (!identical(e$da, da) || !role %in% WP5_RUBRIC$indicator_role) return(NULL)
+    data.frame(code = e$code, name = e$name, role = role, stub = isTRUE(e$stub),
                stringsAsFactors = FALSE)
   })
   out <- do.call(rbind, c(list(empty), rows))
@@ -1292,7 +1436,7 @@ git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): impact-assessmen
 - Modify: `functions/impact_assessment_model.R` (append)
 - Modify: `functions/data_structure.R` (`normalize_json_project_data`, directly after `data <- migrate_legacy_scenarios(data)`)
 - Create: `tests/testthat/fixtures/project_1_21_1_minimal.json`
-- Test: `tests/testthat/test-impact-assessment-storage.R`
+- Test: `tests/testthat/test-impact-assessment-storage.R` (create) and `tests/testthat/test-json-project-loading.R` (append the WS-6 block)
 
 **Interfaces:**
 - Consumes: Task 3/4 functions; `stamp_min_app_version()` (functions/data_structure.R:1193); `export_project_json()` (functions/export_functions.R:262); `normalize_json_project_data()`; `create_empty_project()`.
@@ -1348,7 +1492,12 @@ build_ia <- function() {
   ia <- impact_set_cell(ia, "EQ", "S4", cl)
   one <- new_impact_cell(); one$evidence <- "dataset"; one$direction <- "no_change"
   ia <- impact_set_cell(ia, "FF", "S2", one)                 # length-1 arrays are unboxed by toJSON
-  impact_set_displacement(ia, "yes", "Effort may move to ABNJ waters")
+  ia <- impact_set_section(ia, "characterisation", list(focal_issue = "Migratory corridor", stakeholders = "Fishers; tour operators"))
+  ia <- impact_set_section(ia, "uncertainty", list(notes = "Compliance in ABNJ"))
+  ia <- impact_set_section(ia, "trade_offs", list(text = "S4: equity vs cost"))
+  ia <- impact_set_section(ia, "recommendations", list(text = "Pilot S3 first"))
+  ia <- impact_set_scope_items(ia, element_ids = c("P001", "C003"), indicator_codes = "C_01")
+  impact_set_displacement(ia, "yes", "Effort may move to ABNJ waters", displaced_pressure_id = "P012")
 }
 project_with_ia <- function() set_impact_assessment(create_empty_project("WS-6a round trip"), build_ia())
 
@@ -1427,12 +1576,78 @@ test_that("a malformed block is dropped and the project still loads", {
   }
   expect_identical(normalize_impact_assessment(list(da = "baltic", baseline_code = "S1"))$da, "")
 })
+
+test_that("a malformed field inside a valid block drops only that field", {
+  for (bad_scope in list("x", 5, list(displacement = "yes"))) {
+    p <- project_with_ia()
+    p$data$analysis$impact_assessment$scope <- bad_scope
+    out <- normalize_json_project_data(p)
+    ia <- get_impact_assessment(out)
+    expect_false(is.null(ia))
+    expect_identical(ia$scope$displacement$answer, "")
+    expect_identical(ia$scope$element_ids, character(0))
+    expect_identical(impact_scenario_codes(ia), paste0("S", 1:4))   # the rest survives
+  }
+  p <- project_with_ia()
+  p$data$analysis$impact_assessment$characterisation <- "not a section"
+  p$data$analysis$impact_assessment$cells$EQ$S4$subdimension_notes <- "loose text"
+  ia <- get_impact_assessment(normalize_json_project_data(p))
+  expect_identical(ia$characterisation$focal_issue, "")
+  expect_identical(ia$cells$EQ$S4$subdimension_notes, setNames(list(), character(0)))
+  expect_identical(ia$cells$EQ$S4$direction, "increase")
+})
 ```
 
-- [ ] **Step 3: Run it and confirm that it fails**
+Also append a WS-6 block to `tests/testthat/test-json-project-loading.R` (spec P7: every new project-data block gets its round trip in this file, which `tests/run_json_loading_tests.R` also runs). Follow the WS-4 block at the end of that file:
 
-Run: `"C:/Program Files/R/R-4.4.1/bin/Rscript.exe" -e "testthat::test_file('tests/testthat/test-impact-assessment-storage.R')"`
-Expected: FAIL with `could not find function "set_impact_assessment"`.
+```r
+# ============================================================================
+# WS-6a (P7): data$analysis$impact_assessment survives JSON and RDS round trips
+# ============================================================================
+if (!exists("normalize_impact_assessment", mode = "function")) {
+  source(file.path(project_root, "functions", "impact_reference.R"), local = FALSE)
+  source(file.path(project_root, "functions", "impact_assessment_model.R"), local = FALSE)
+}
+
+ws6_project <- function() {
+  ia <- new_impact_assessment("arctic")
+  ia <- impact_add_scenario(ia, new_impact_scenario("no_agreement", "No Agreement"))
+  ia <- impact_add_scenario(ia, new_impact_scenario("full_agreement", "Full Agreement", ambition_rank = 2L))
+  ia <- impact_set_baseline(ia, "no_agreement")
+  cl <- new_impact_cell()
+  cl$direction <- "decrease"; cl$confidence <- "low"; cl$uncertainty_driver <- "contested_assumption"
+  cl$evidence <- "dataset"; cl$subdimension_notes <- list(credibility = "Quota claims – contested")
+  cl$indicator_roles <- list(ARC_TAC_VS_ADVICE = "primary"); cl$mechanism_ids <- c("arc_02", "arc_06")
+  ia <- impact_set_cell(ia, "PI", "full_agreement", cl)
+  ia <- impact_set_section(ia, "recommendations", list(text = "Seek a sharing arrangement"))
+  set_impact_assessment(list(project_id = "p_ws6", data = list(analysis = list())), ia)
+}
+
+test_that("WS-6a impact assessment survives JSON (both simplify modes) and RDS round trips", {
+  p <- ws6_project()
+  js <- jsonlite::toJSON(p, auto_unbox = TRUE, null = "null", na = "null")
+  for (sv in c(TRUE, FALSE)) {
+    pd <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = sv))
+    expect_identical(pd$data$analysis$impact_assessment, p$data$analysis$impact_assessment,
+                     info = sprintf("simplifyVector=%s", sv))
+  }
+  f <- tempfile(fileext = ".rds")
+  saveRDS(p, f)
+  expect_identical(normalize_json_project_data(readRDS(f))$data$analysis$impact_assessment,
+                   p$data$analysis$impact_assessment)
+})
+```
+
+`stamp_min_app_version()` treats a missing `min_app_version` as lower than any version, so `set_impact_assessment()` works on this minimal project list.
+
+- [ ] **Step 3: Run them and confirm that they fail**
+
+```bash
+"C:/Program Files/R/R-4.4.1/bin/Rscript.exe" -e "testthat::test_file('tests/testthat/test-impact-assessment-storage.R')"
+"C:/Program Files/R/R-4.4.1/bin/Rscript.exe" -e "testthat::test_file('tests/testthat/test-json-project-loading.R')"
+```
+
+Expected: both FAIL with `could not find function "set_impact_assessment"` (in the loading file only the new WS-6 test fails; the model files from Tasks 3-4 already exist).
 
 - [ ] **Step 4: Implement storage and the normaliser**
 
@@ -1470,6 +1685,16 @@ normalize_impact_assessment <- function(x) {
     if (exists("debug_log", mode = "function")) debug_log("impact_assessment block malformed; dropped", "WP5")
     return(NULL)
   }
+  # Any field-level surprise drops the block, never the project load
+  tryCatch(.impact_normalize_body(x), error = function(e) {
+    if (exists("debug_log", mode = "function")) {
+      debug_log(paste("impact_assessment block dropped:", conditionMessage(e)), "WP5")
+    }
+    NULL
+  })
+}
+
+.impact_normalize_body <- function(x) {
   da <- .imp_str(x[["da"]])
   if (!da %in% c("", WP5_DA_CONTEXTS)) da <- ""
 
@@ -1495,16 +1720,20 @@ normalize_impact_assessment <- function(x) {
     }
   }
 
-  d <- x[["scope"]][["displacement"]]
-  ans <- .imp_str(d[["answer"]])
-  if (!ans %in% IMPACT_DISPLACEMENT_ANSWERS) ans <- ""
   baseline <- .imp_str(x[["baseline_code"]])
   if (!baseline %in% names(scenarios)) baseline <- ""
+  sec <- function(s) .impact_fill_section(if (is.list(x[[s]])) x[[s]] else list(), IMPACT_TEXT_SECTIONS[[s]])
 
-  list(schema = IMPACT_SCHEMA_VERSION, da = da, baseline_code = baseline,
+  # Same field order as new_impact_assessment(), so identical() holds after a round trip
+  list(schema = IMPACT_SCHEMA_VERSION, da = da,
+       characterisation = sec("characterisation"),
+       baseline_code = baseline,
        scenarios = scenarios,
-       scope = list(displacement = list(answer = ans, note = .imp_str(d[["note"]]))),
-       cells = cells)
+       scope = .impact_fill_scope(x[["scope"]]),            # guards non-list scope/displacement
+       cells = cells,
+       uncertainty = sec("uncertainty"),
+       trade_offs = sec("trade_offs"),
+       recommendations = sec("recommendations"))
 }
 ```
 
@@ -1512,10 +1741,16 @@ In `functions/data_structure.R`, inside `normalize_json_project_data()`, directl
 
 ```r
   # WP5 impact assessment (WS-6a): canonical block on every JSON/RDS load path
+  # (tryCatch: a bug in the normaliser must drop the block, not fail the project load)
   if (is.list(data$data) && is.list(data$data$analysis) &&
       !is.null(data$data$analysis$impact_assessment) &&
       exists("normalize_impact_assessment", mode = "function")) {
-    data$data$analysis$impact_assessment <- normalize_impact_assessment(data$data$analysis$impact_assessment)
+    data$data$analysis$impact_assessment <- tryCatch(
+      normalize_impact_assessment(data$data$analysis$impact_assessment),
+      error = function(e) {
+        debug_log(paste("impact_assessment dropped on load:", conditionMessage(e)), "WP5")
+        NULL
+      })
   }
 ```
 
@@ -1532,7 +1767,7 @@ Expected: all pass. If the fixture test errors inside `normalize_json_project_da
 - [ ] **Step 6: Commit**
 
 ```bash
-git -C "C:/Users/arturas.baziukas/wt-ws6" add MarineSABRES_SES_Shiny/functions/impact_assessment_model.R MarineSABRES_SES_Shiny/functions/data_structure.R MarineSABRES_SES_Shiny/tests/testthat/test-impact-assessment-storage.R MarineSABRES_SES_Shiny/tests/testthat/fixtures/project_1_21_1_minimal.json
+git -C "C:/Users/arturas.baziukas/wt-ws6" add MarineSABRES_SES_Shiny/functions/impact_assessment_model.R MarineSABRES_SES_Shiny/functions/data_structure.R MarineSABRES_SES_Shiny/tests/testthat/test-impact-assessment-storage.R MarineSABRES_SES_Shiny/tests/testthat/test-json-project-loading.R MarineSABRES_SES_Shiny/tests/testthat/fixtures/project_1_21_1_minimal.json
 git -C "C:/Users/arturas.baziukas/wt-ws6" commit -m "feat(wp5): impact-assessment storage with min_app_version stamp and loss-free JSON/RDS round trip (WS-6a)"
 ```
 
