@@ -399,3 +399,41 @@ test_that("compareVersion correctly identifies downgrade scenarios", {
   expect_equal(utils::compareVersion("1.12.0", "1.12.0"), 0)   # equal — no warning
   expect_equal(utils::compareVersion("1.11.2", "1.12.0"), -1)  # older required < current — no warning
 })
+
+# ============================================================================
+# WS-4 (P7): indicator columns survive JSON and RDS round trips
+# ============================================================================
+if (!exists("indicator_col", mode = "function")) {
+  source(file.path(project_root, "functions", "indicator_snapshot.R"), local = FALSE)
+}
+
+ws4_project <- function() list(project_id = "p_ws4", data = list(isa_data = list(
+  activities = data.frame(ID = c("A001", "A002"), Name = c("Fishing", "Tourism"),
+                          Indicator = c("Tuna share", NA), Indicator_Unit = c("%", NA),
+                          Data_Source = c("Landings statistics", NA), Registry_Id = c("F_01", NA),
+                          Registry_Version = c("1", NA), stringsAsFactors = FALSE))))
+
+ws4_expect_columns <- function(pd, label) {
+  a <- pd$data$isa_data$activities
+  expect_true(is.data.frame(a), info = label)
+  expect_equal(nrow(a), 2L, info = label)
+  expect_equal(indicator_col(a, "Indicator"), c("Tuna share", ""), info = label)
+  expect_equal(indicator_col(a, "Indicator_Unit"), c("%", ""), info = label)
+  expect_equal(indicator_col(a, "Data_Source"), c("Landings statistics", ""), info = label)
+  expect_equal(indicator_col(a, "Registry_Id"), c("F_01", ""), info = label)
+  expect_equal(indicator_col(a, "Registry_Version"), c("1", ""), info = label)
+}
+
+test_that("WS-4 indicator columns survive JSON (both simplify modes, with/without na='null') and RDS round trips", {
+  for (na_null in c(TRUE, FALSE)) {
+    js <- if (na_null) jsonlite::toJSON(ws4_project(), auto_unbox = TRUE, null = "null", na = "null")
+          else jsonlite::toJSON(ws4_project(), auto_unbox = TRUE, null = "null")
+    for (sv in c(TRUE, FALSE)) {
+      pd <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = sv))
+      ws4_expect_columns(pd, sprintf("json na_null=%s simplifyVector=%s", na_null, sv))
+    }
+  }
+  f <- tempfile(fileext = ".rds")
+  saveRDS(ws4_project(), f)
+  ws4_expect_columns(normalize_json_project_data(readRDS(f)), "rds")
+})

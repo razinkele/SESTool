@@ -708,6 +708,7 @@ source("functions/wp5_vocabulary.R", local = FALSE)
 source("functions/response_measures_schema.R", local = FALSE)
 source("functions/wp5_typing_lint.R", local = FALSE)
 source("functions/indicator_registry.R", local = FALSE)
+source("functions/indicator_snapshot.R", local = FALSE)
 
 # Country Governance and Socio-Economic Database loader
 # Must be global scope for country-specific governance and socioeconomic element suggestions

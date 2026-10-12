@@ -879,9 +879,13 @@ normalize_json_project_data <- function(data) {
       # Convert list-of-lists to data frame (happens with simplifyVector = FALSE)
       if (is.list(el) && !is.data.frame(el) && length(el) > 0) {
         el <- tryCatch({
-          do.call(rbind, lapply(el, function(x) {
+          # Key-union bind: toJSON() without na = "null" omits NA fields, so rows
+          # can be ragged; a strict rbind() would drop the whole category (WS-4).
+          rows <- lapply(el, function(x) {
+            x[vapply(x, is.null, logical(1))] <- NA   # JSON null -> NA, keep the key
             as.data.frame(x, stringsAsFactors = FALSE)
-          }))
+          })
+          dplyr::bind_rows(rows)
         }, error = function(e) {
           debug_log(paste("Cannot convert", etype, "to data.frame:", e$message), "WARN")
           NULL

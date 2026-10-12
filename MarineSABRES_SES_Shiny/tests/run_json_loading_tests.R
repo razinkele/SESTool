@@ -18,6 +18,8 @@ source(file.path(project_root, "functions", "utils.R"), local = FALSE)
 source(file.path(project_root, "functions", "wp5_vocabulary.R"), local = FALSE)
 source(file.path(project_root, "functions", "response_measures_schema.R"), local = FALSE)
 source(file.path(project_root, "functions", "data_structure.R"), local = FALSE)
+source(file.path(project_root, "functions", "indicator_registry.R"), local = FALSE)
+source(file.path(project_root, "functions", "indicator_snapshot.R"), local = FALSE)
 
 cat("Running JSON project loading tests...\n\n")
 source(file.path(project_root, "tests", "testthat", "test-json-project-loading.R"))
