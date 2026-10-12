@@ -227,3 +227,128 @@ test_that("responses gain no indicator columns (ruling 9)", {
                      tolower(c("Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version"))))
   })
 })
+
+# ---- Task 5: drift ----------------------------------------------------------
+cur_rev <- as.character(get_indicator("F_01")$revision)
+isa_drift <- function(ver = "0", reg = "F_01") list(
+  activities = data.frame(ID = c("A001", "A002"), Name = c("Fishing", "Tourism"),
+                          Indicator = c("Tuna share", ""), Indicator_Unit = c("%", ""), Data_Source = c("", ""),
+                          Registry_Id = c(reg, ""), Registry_Version = c(ver, ""), stringsAsFactors = FALSE))
+
+test_that("an older registry revision is reported as drift with the value diff; current is not", {
+  d <- indicator_drift(isa_drift("0"))
+  expect_equal(d$element_id, "A001")
+  expect_equal(d$status, "updated")
+  expect_equal(d$current_revision, cur_rev)
+  expect_equal(d$element_indicator, "Tuna share")                   # roadmap §7.6: snapshot value ...
+  expect_equal(d$registry_indicator, get_indicator("F_01")$name)    # ... vs current registry value
+  expect_equal(d$registry_unit, get_indicator("F_01")$unit)
+  expect_equal(nrow(indicator_drift(isa_drift(cur_rev))), 0L)
+})
+
+test_that("missing registry ids are reported, not updated", {
+  d <- indicator_drift(isa_drift("1", reg = "GONE_99"))
+  expect_equal(d$status, "missing")
+  df <- apply_registry_resnapshot(isa_drift("1", reg = "GONE_99")$activities, "A001")
+  expect_equal(df$Indicator[1], "Tuna share")                      # untouched
+})
+
+test_that("an unavailable registry reports no drift (nothing is flagged missing)", {
+  expect_warning(load_indicator_registry(path = tempfile(fileext = ".json"), force_reload = TRUE), "registry")
+  expect_equal(nrow(indicator_drift(isa_drift("0"))), 0L)
+  load_indicator_registry(force_reload = TRUE)                     # restore
+  expect_equal(nrow(indicator_drift(isa_drift("0"))), 1L)
+})
+
+test_that("re-snapshot overwrites only the chosen rows and clears their drift", {
+  isa <- isa_drift("0")
+  isa$activities <- apply_registry_resnapshot(isa$activities, "A001")
+  expect_equal(isa$activities$Indicator[1], get_indicator("F_01")$name)
+  expect_equal(isa$activities$Registry_Version[1], cur_rev)
+  expect_equal(nrow(indicator_drift(isa)), 0L)
+})
+
+test_that("drift reads lowercased columns after JSON load", {
+  isa <- isa_drift("0"); names(isa$activities) <- tolower(names(isa$activities))
+  expect_equal(indicator_drift(isa)$element_id, "A001")
+})
+
+test_that("empty or indicator-free projects give zero drift without error", {
+  expect_equal(nrow(indicator_drift(list())), 0L)
+  expect_equal(nrow(indicator_drift(list(drivers = data.frame(ID = "D001", Name = "x")))), 0L)
+  expect_equal(indicator_drift_keys(indicator_drift(list())), character(0))
+})
+
+proj_with_snapshot <- function(ver, pid = "p1", reg = "F_01") list(project_id = pid, data = list(isa_data = list(
+  activities = data.frame(ID = "A001", Name = "Fishing", Sector = "", Description = "", LinkedP = "",
+                          Scale = "", Frequency = "", Indicator = "Tuna share", Indicator_Unit = "%",
+                          Data_Source = "", Registry_Id = reg, Registry_Version = ver, stringsAsFactors = FALSE),
+  adjacency_matrices = list(), user_edited_matrices = list())))
+
+test_that("loading a stale snapshot notifies once, shows the review link; re-snapshot via the modal clears it", {
+  pdr <- shiny::reactiveVal(proj_with_snapshot("0"))
+  testServer(isa_data_entry_server, args = srv_args(pdr), {
+    session$flushReact()
+    expect_equal(drift_state$notified, 1L)
+    expect_equal(drift_state$last, "activities:A001")
+    expect_match(as.character(output$indicator_drift_bar$html), "indicator_drift_open", fixed = TRUE)
+    pdr(modifyList(pdr(), list(metadata = list(saved_at = 2)))); session$flushReact()
+    expect_equal(drift_state$notified, 1L)                         # same findings: silent
+    session$setInputs(indicator_drift_open = 1)                     # persistent link opens the modal
+    session$setInputs(indicator_drift_ids = "activities:A001")
+    session$setInputs(indicator_drift_apply = 1)
+    expect_equal(indicator_col(isa_data$activities, "Registry_Version"), cur_rev)
+    expect_equal(indicator_col(isa_data$activities, "Indicator"), get_indicator("F_01")$name)
+    expect_length(drift_state$last, 0)
+    expect_equal(nrow(drift_rv()), 0L)                              # link disappears
+  })
+})
+
+test_that("a missing-only drift review opens and applies without error and changes nothing", {
+  pdr <- shiny::reactiveVal(proj_with_snapshot("1", reg = "GONE_99"))
+  testServer(isa_data_entry_server, args = srv_args(pdr), {
+    session$flushReact()
+    expect_equal(drift_state$findings$status, "missing")
+    expect_no_error(session$setInputs(indicator_drift_open = 1))
+    expect_no_error(session$setInputs(indicator_drift_ids = ":", indicator_drift_apply = 1))   # bogus pick
+    expect_equal(indicator_col(isa_data$activities, "Registry_Id"), "GONE_99")
+    expect_equal(indicator_col(isa_data$activities, "Indicator"), "Tuna share")
+    expect_equal(indicator_col(isa_data$activities, "Registry_Version"), "1")
+  })
+})
+
+test_that("dismissing keeps the data and the review link; same-project writes stay silent; a new session re-notifies", {
+  pdr <- shiny::reactiveVal(proj_with_snapshot("0"))
+  testServer(isa_data_entry_server, args = srv_args(pdr), {
+    session$flushReact()
+    expect_equal(drift_state$notified, 1L)
+    session$setInputs(indicator_drift_open = 1)                     # open, then close without applying
+    pdr(modifyList(pdr(), list(metadata = list(saved_at = 3)))); session$flushReact()
+    expect_equal(drift_state$notified, 1L)
+    expect_equal(indicator_col(isa_data$activities, "Registry_Version"), "0")
+    expect_equal(drift_state$findings$element_id, "A001")
+    expect_match(as.character(output$indicator_drift_bar$html), "indicator_drift_open", fixed = TRUE)
+  })
+  pdr2 <- shiny::reactiveVal(proj_with_snapshot("0"))               # next load (new session)
+  testServer(isa_data_entry_server, args = srv_args(pdr2), {
+    session$flushReact()
+    expect_equal(drift_state$notified, 1L)
+  })
+})
+
+test_that("a current snapshot records no drift; switching project resets the dedup", {
+  pdr <- shiny::reactiveVal(proj_with_snapshot(cur_rev))
+  testServer(isa_data_entry_server, args = srv_args(pdr), {
+    session$flushReact()
+    expect_equal(drift_state$notified, 0L)
+  })
+  # Same stale element ID in two projects: only the project-change reset of
+  # drift_state$last lets p2 notify again (this fails without that line).
+  pdr2 <- shiny::reactiveVal(proj_with_snapshot("0", pid = "p1"))
+  testServer(isa_data_entry_server, args = srv_args(pdr2), {
+    session$flushReact()
+    expect_equal(drift_state$notified, 1L)
+    pdr2(proj_with_snapshot("0", pid = "p2")); session$flushReact()
+    expect_equal(drift_state$notified, 2L)
+  })
+})

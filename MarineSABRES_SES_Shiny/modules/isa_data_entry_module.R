@@ -13,7 +13,8 @@ isa_data_entry_ui <- function(id, i18n) {
 
     fluidRow(
       column(12,
-        uiOutput(ns("isa_header"))
+        uiOutput(ns("isa_header")),
+        uiOutput(ns("indicator_drift_bar"))   # WS-4: shown while registry drift is unresolved
       )
     ),
 
@@ -500,6 +501,117 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
     }
 
+    # WS-4 registry drift: warn (never rewrite). Same dedup/reset pattern as the
+    # typing lint (only NEW findings toast; reset on project change). A sticky
+    # toast plus a persistent link under the header open the review modal, so
+    # dismissing the toast never loses access (plan ruling 5).
+    drift_state <- new.env(parent = emptyenv())
+    drift_state$last <- character(0)
+    drift_state$notified <- 0L
+    drift_state$findings <- NULL
+    drift_rv <- reactiveVal(NULL)            # drives output$indicator_drift_bar
+
+    refresh_drift_findings <- function() {
+      d <- indicator_drift(isolate(reactiveValuesToList(isa_data)))
+      drift_state$findings <- d
+      drift_rv(d)
+      d
+    }
+
+    drift_count_msg <- function(key, n) {
+      fmt <- i18n$t(key)
+      if (grepl("%1$d", fmt, fixed = TRUE)) tryCatch(sprintf(fmt, n), error = function(e) fmt) else fmt
+    }
+
+    warn_if_indicator_drift <- function() {
+      d <- refresh_drift_findings()
+      keys <- indicator_drift_keys(d)
+      new_keys <- setdiff(keys, drift_state$last)
+      drift_state$last <- keys
+      if (length(new_keys) == 0) return(invisible(NULL))
+      drift_state$notified <- drift_state$notified + 1L
+      n_upd <- sum(d$status == "updated")
+      n_mis <- sum(d$status == "missing")
+      msg <- paste(c(
+        if (n_upd > 0) drift_count_msg("modules.indicator_registry.drift_found", n_upd),
+        if (n_mis > 0) drift_count_msg("modules.indicator_registry.drift_found_missing", n_mis)
+      ), collapse = " ")
+      showNotification(msg, id = ns("indicator_drift"), type = "warning", duration = NULL, session = session,
+                       action = actionLink(ns("indicator_drift_open_toast"),
+                                           i18n$t("modules.indicator_registry.drift_review")))
+    }
+
+    output$indicator_drift_bar <- renderUI({
+      d <- drift_rv()
+      if (!is.data.frame(d) || nrow(d) == 0) return(NULL)
+      div(class = "alert alert-warning py-1 px-2 mb-2",
+          actionLink(ns("indicator_drift_open"),
+                     paste0(i18n$t("modules.indicator_registry.drift_link"), " (", nrow(d), ")")))
+    })
+
+    drift_diff_table <- function(row) {
+      tags$table(class = "table table-sm mb-2",
+        tags$thead(tags$tr(tags$th(i18n$t("modules.indicator_registry.drift_col_field")),
+                           tags$th(i18n$t("modules.indicator_registry.drift_col_element")),
+                           tags$th(i18n$t("modules.indicator_registry.drift_col_registry")))),
+        tags$tbody(
+          tags$tr(tags$td(i18n$t("modules.indicator_registry.field_indicator")),
+                  tags$td(row$element_indicator), tags$td(row$registry_indicator)),
+          tags$tr(tags$td(i18n$t("modules.indicator_registry.field_unit")),
+                  tags$td(row$element_unit), tags$td(row$registry_unit)),
+          tags$tr(tags$td(i18n$t("modules.indicator_registry.field_data_source")),
+                  tags$td(row$element_source), tags$td(row$registry_source))))
+    }
+
+    show_drift_modal <- function() {
+      d <- drift_state$findings
+      if (!is.data.frame(d) || nrow(d) == 0) return(invisible(NULL))
+      upd <- d[d$status == "updated", , drop = FALSE]
+      mis <- d[d$status == "missing", , drop = FALSE]
+      showModal(modalDialog(
+        title = i18n$t("modules.indicator_registry.drift_title"),
+        if (nrow(upd) > 0) tagList(
+          h5(i18n$t("modules.indicator_registry.drift_status_updated")),
+          p(i18n$t("modules.indicator_registry.drift_explain")),
+          checkboxGroupInput(ns("indicator_drift_ids"), NULL,
+            choiceNames = lapply(seq_len(nrow(upd)), function(i) tagList(
+              strong(paste0(upd$element_name[i], " (", upd$registry_id[i], ": ",
+                            upd$snapshot_revision[i], " → ", upd$current_revision[i], ")")),
+              drift_diff_table(upd[i, , drop = FALSE]))),
+            choiceValues = paste0(upd$element_key, ":", upd$element_id))),
+        if (nrow(mis) > 0) tagList(
+          h5(i18n$t("modules.indicator_registry.drift_status_missing")),
+          p(class = "text-muted", i18n$t("modules.indicator_registry.drift_missing_explain")),
+          tags$ul(lapply(seq_len(nrow(mis)), function(i)
+            tags$li(paste0(mis$element_name[i], " (", mis$registry_id[i], ")"))))),
+        footer = if (nrow(upd) > 0) {
+          tagList(modalButton(i18n$t("common.buttons.cancel")),
+                  actionButton(ns("indicator_drift_apply"), i18n$t("modules.indicator_registry.drift_apply"),
+                               class = "btn-primary"))
+        } else {
+          modalButton(i18n$t("common.buttons.close"))
+        }))
+    }
+    observeEvent(input$indicator_drift_open, show_drift_modal())
+    observeEvent(input$indicator_drift_open_toast, show_drift_modal())
+
+    observeEvent(input$indicator_drift_apply, {
+      d <- drift_state$findings
+      valid <- if (is.data.frame(d) && nrow(d) > 0) {
+        paste0(d$element_key, ":", d$element_id)[d$status == "updated"]
+      } else character(0)
+      picks <- intersect(as.character(input$indicator_drift_ids), valid)   # drops bogus and missing picks
+      for (key in unique(sub(":.*$", "", picks))) {
+        ids <- sub("^[^:]+:", "", picks[startsWith(picks, paste0(key, ":"))])
+        isa_data[[key]] <- apply_registry_resnapshot(isa_data[[key]], ids)
+      }
+      removeModal()
+      d <- refresh_drift_findings()
+      drift_state$last <- indicator_drift_keys(d)
+      if (nrow(d) == 0) removeNotification(ns("indicator_drift"), session = session)
+      if (length(picks) > 0) sync_to_project_data()
+    })
+
     last_loaded_project_id <- NULL
     observeEvent(project_data_reactive()$project_id, {
       project <- project_data_reactive()
@@ -510,6 +622,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           .reset_isa_state()
           isa_data$case_info <- list()   # Exercise 0 belongs to the old project too
           typing_state$last <- character(0)   # WS-3b: a new project is linted afresh
+          drift_state$last <- character(0)     # WS-4: a new project is checked afresh
+          drift_state$findings <- NULL
+          drift_rv(NULL)
+          removeNotification(ns("indicator_drift"), session = session)
         }
         last_loaded_project_id <<- pid
       }
@@ -519,6 +635,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         data_initialized(TRUE)
         warn_if_matrices_misaligned()
         warn_if_mistyped()
+        warn_if_indicator_drift()
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
       }

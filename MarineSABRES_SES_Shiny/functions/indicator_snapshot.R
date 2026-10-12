@@ -94,3 +94,70 @@ register_indicator_picker_observer <- function(input, output, session, prefix, c
                            value = paste(unlist(e$data_sources), collapse = "; "))
   }, ignoreInit = TRUE)
 }
+
+#' Registry drift across element frames (pure). status: "updated" when the
+#' entry's revision is newer than the snapshot, "missing" when the id is gone.
+#' Returns zero rows when the registry itself is not loaded, so a missing or
+#' malformed registry file never flags every linked element as missing.
+indicator_drift <- function(isa_data) {
+  empty <- data.frame(element_key = character(), element_id = character(), element_name = character(),
+                      registry_id = character(), snapshot_revision = character(),
+                      current_revision = character(), status = character(),
+                      element_indicator = character(), element_unit = character(), element_source = character(),
+                      registry_indicator = character(), registry_unit = character(), registry_source = character(),
+                      stringsAsFactors = FALSE)
+  if (!is.list(isa_data) || length(load_indicator_registry()$entries) == 0) return(empty)
+  out <- list()
+  for (key in ISA_ELEMENT_KEYS) {
+    df <- isa_data[[key]]
+    if (!is.data.frame(df) || nrow(df) == 0) next
+    reg <- indicator_col(df, "Registry_Id"); ver <- indicator_col(df, "Registry_Version")
+    ids <- indicator_col(df, "ID"); nms <- indicator_col(df, "Name")
+    ind <- indicator_col(df, "Indicator"); unit <- indicator_col(df, "Indicator_Unit")
+    src <- indicator_col(df, "Data_Source")
+    for (i in which(nzchar(reg))) {
+      e <- get_indicator(reg[i])
+      cur <- if (is.null(e)) "" else as.character(e$revision %||% 1L)
+      snap <- suppressWarnings(as.integer(ver[i]))
+      status <- if (is.null(e)) "missing"
+                else if (is.na(snap) || snap < as.integer(cur)) "updated" else NA_character_
+      if (is.na(status)) next
+      out[[length(out) + 1]] <- data.frame(
+        element_key = key, element_id = ids[i], element_name = nms[i],
+        registry_id = reg[i], snapshot_revision = ver[i], current_revision = cur, status = status,
+        element_indicator = ind[i], element_unit = unit[i], element_source = src[i],
+        registry_indicator = if (is.null(e)) "" else as.character(e$name),
+        registry_unit = if (is.null(e)) "" else as.character(e$unit %||% ""),
+        registry_source = if (is.null(e)) "" else paste(unlist(e$data_sources), collapse = "; "),
+        stringsAsFactors = FALSE)
+    }
+  }
+  if (length(out) == 0) empty else do.call(rbind, out)
+}
+
+#' Dedup keys for drift findings: sorted "<element_key>:<element_id>".
+indicator_drift_keys <- function(d) {
+  if (!is.data.frame(d) || nrow(d) == 0) return(character(0))
+  sort(paste0(d$element_key, ":", d$element_id))
+}
+
+#' Overwrite the chosen rows from the current registry entry (user-confirmed).
+apply_registry_resnapshot <- function(df, ids) {
+  if (!is.data.frame(df) || nrow(df) == 0 || length(ids) == 0) return(df)
+  idcol <- which(tolower(names(df)) == "id")[1]
+  if (is.na(idcol)) return(df)
+  for (i in which(as.character(df[[idcol]]) %in% ids)) {
+    e <- get_indicator(indicator_col(df, "Registry_Id")[i])
+    if (is.null(e)) next
+    set <- function(col, val) {
+      h <- which(tolower(names(df)) == tolower(col))
+      if (!length(h)) { df[[col]] <<- ""; h <- ncol(df) }
+      df[i, h[1]] <<- val
+    }
+    set("Indicator", as.character(e$name))
+    set("Indicator_Unit", as.character(e$unit %||% ""))
+    set("Data_Source", paste(unlist(e$data_sources), collapse = "; "))
+    set("Registry_Version", as.character(e$revision %||% 1L))
+  }
+  df
+}
