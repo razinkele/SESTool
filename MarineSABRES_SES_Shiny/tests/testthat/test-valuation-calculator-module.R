@@ -118,3 +118,26 @@ test_that("the app wires the module under the Response menu", {
   sb <- paste(readLines(file.path(PROJECT_ROOT, "functions", "ui_sidebar.R"), warn = FALSE), collapse = "\n")
   expect_match(sb, 'tabName = "response_valuation"', fixed = TRUE)
 })
+
+test_that("every valuation-calculator key used in code exists in all 9 languages", {
+  langs <- c("en","es","fr","de","lt","pt","it","no","el")
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "valuation_calculator.json"),
+                           simplifyVector = FALSE)$translation
+  src <- paste(readLines(file.path(PROJECT_ROOT, "modules", "valuation_calculator_module.R"), warn = FALSE),
+               collapse = "\n")
+  found <- regmatches(src, gregexpr("modules\\.valuation_calculator\\.[A-Za-z0-9_.]*[A-Za-z0-9_]", src))[[1]]
+  found <- sub("^modules\\.valuation_calculator\\.", "", found)
+  found <- found[!grepl("\\.$", found) & !found %in% c("service", "method", "error", "warn")]  # paste0 prefixes
+  keys <- unique(c(found, "title", "subtitle", "help_title", "disclaimer"))
+  for (k in paste0("modules.valuation_calculator.", keys)) {
+    expect_false(is.null(tr[[k]]), info = k)
+    for (l in langs) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
+  }
+  for (k in c("cumulative_label", "central_cumulative", "years_value", "break_even_rate_note"))
+    for (l in langs)
+      expect_true(grepl("%1$", tr[[paste0("modules.valuation_calculator.", k)]][[l]], fixed = TRUE),
+                  info = paste(k, l))
+  sb <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "ui", "sidebar.json"),
+                           simplifyVector = FALSE)$translation
+  for (l in langs) expect_true(nzchar(sb[["ui.sidebar.valuation_calculator"]][[l]] %||% ""), info = l)
+})

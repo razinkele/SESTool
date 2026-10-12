@@ -352,6 +352,17 @@
       "no": "Scenariobygger",
       "el": "Δημιουργός Σεναρίων"
     },
+    "ui.sidebar.valuation_calculator": {
+      "en": "Valuation Calculator",
+      "es": "Calculadora de Valoración",
+      "fr": "Calculateur de Valeur",
+      "de": "Bewertungsrechner",
+      "lt": "Vertinimo skaičiuoklė",
+      "pt": "Calculadora de Valoração",
+      "it": "Calcolatore di Valutazione",
+      "no": "Verdsettingskalkulator",
+      "el": "Υπολογιστής Αποτίμησης"
+    },
     "ui.sidebar.ses_visualization": {
       "en": "SES Visualization",
       "es": "Visualización SES",

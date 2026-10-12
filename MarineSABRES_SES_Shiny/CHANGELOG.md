@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (WP5 valuation calculator — spec 2026-10-11 WS-5)
+- New page under Response & Validation: a Posidonia oceanica valuation calculator. It multiplies a meadow area by the D5.2 Table 19 benefit-transfer values (five ecosystem services) and shows the annual value range and its undiscounted total over a chosen horizon; 1 ha over 20 years reproduces D5.2's €88,800 to €516,800.
+- Badged as toolbox additions: a central midpoint, the discounted value at 0/3/5/7% (plus your own rate), the restoration cost against D5.2's €100,000–500,000 per ha, a cost adjusted for 38–60% early survival, and the break-even horizon.
+- Excel export with the inputs, every value and its provenance. The valuation figures in the mechanism catalogue are now checked against the D5.2 text in tests.
+
 ### Added (WP5 indicator registry — spec 2026-10-11 WS-4)
 - WP5 indicator registry (`data/wp5_indicators.json`): 11 Macaronesia fiche-set indicators (4 stubs pending partner fiches), 33 Posidonia indicators with Table 18 reference ranges, 46 Annex 1 DAPSIWRM-typed indicators (28 Tuscan, 18 Macaronesia), 5 Arctic descriptive indicators (Faroe Islands). Every WP5 value cites D5.2 v5 line ranges, and tests check its quotes against a committed extract. The WS-2 mechanism audit now fails when a mechanism's success metric is not in the registry.
 - Standard Entry: every element (not Responses) now has Indicator, Unit and Data source fields and a WP5 indicator picker that shows each entry's provenance. Picking copies the values (snapshot) and records the registry entry and revision; such projects are stamped `min_app_version` 1.24.0, because 1.23.0 predates these columns and would drop them on save.
