@@ -380,3 +380,27 @@ test_that("every indicator-registry and badge key used in code exists in all 9 l
   for (p in c("toolbox_extension", "provisional"))
     expect_match(ui, paste0("# i18n-ref: modules.wp5_mechanisms.provenance.", p), fixed = TRUE)
 })
+
+# ---- Final review fixes -------------------------------------------------------
+test_that("mixed number/text values in one column across rows do not drop the category", {
+  # review #1: dplyr::bind_rows refuses <double> + <character> in one column; the
+  # tryCatch then turned the whole category into NULL (hand-edited / foreign JSON).
+  js <- '{"data":{"isa_data":{"drivers":[{"ID":"D1","Name":"a","Importance":3},{"ID":"D2","Name":"b","Importance":"High"}]}}}'
+  out <- normalize_json_project_data(jsonlite::fromJSON(js, simplifyVector = FALSE))
+  d <- out$data$isa_data$drivers
+  expect_equal(nrow(d), 2L)
+  expect_equal(indicator_col(d, "Importance"), c("3", "High"))
+})
+
+test_that("the picker fills blank or previously-picked values and keeps the user's own text", {
+  # review #2: one rule for picking and switching; typed text is never replaced.
+  f1 <- get_indicator("F_01"); t1 <- get_indicator("T_01")
+  src <- function(e) paste(unlist(e$data_sources), collapse = "; ")
+  up <- indicator_picker_updates(list(indicator = "", indunit = "my unit", datasource = ""), "", "F_01")
+  expect_equal(up, list(indicator = f1$name, datasource = src(f1)))
+  cur <- list(indicator = f1$name, indunit = f1$unit, datasource = "My survey")
+  expect_equal(indicator_picker_updates(cur, "F_01", "T_01"), list(indicator = t1$name, indunit = t1$unit))
+  expect_equal(indicator_picker_updates(cur, "F_01", ""), list(indicator = "", indunit = ""))
+  expect_match(paste(deparse(register_indicator_picker_observer), collapse = "\n"), "indicator_picker_updates",
+               fixed = TRUE)
+})

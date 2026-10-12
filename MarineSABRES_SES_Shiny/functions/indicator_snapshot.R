@@ -78,6 +78,30 @@ project_has_registry_snapshot <- function(isa_data) {
              logical(1)))
 }
 
+#' Field updates for a picker change (pure). A field is replaced only when it is
+#' blank or still holds the previously picked entry's value, so text the user
+#' typed is never overwritten; switching entries (or picking "—") replaces or
+#' clears what the old entry put there. Same "fill, don't overwrite" rule as
+#' apply_registry_snapshot() on save.
+#' @param current named list(indicator, indunit, datasource) of current field values
+#' @return named list of field -> new value, only for fields that change
+indicator_picker_updates <- function(current, old_code, new_code) {
+  vals <- function(code) {
+    e <- get_indicator(code)
+    if (is.null(e)) return(list(indicator = "", indunit = "", datasource = ""))
+    list(indicator = as.character(e$name), indunit = as.character(e$unit %||% ""),
+         datasource = paste(unlist(e$data_sources), collapse = "; "))
+  }
+  old <- vals(old_code); new <- vals(new_code)
+  out <- list()
+  for (f in c("indicator", "indunit", "datasource")) {
+    cur <- as.character(current[[f]] %||% "")
+    if (length(cur) == 0 || is.na(cur[1])) cur <- ""
+    if ((!nzchar(cur[1]) || identical(cur[1], old[[f]])) && !identical(cur[1], new[[f]])) out[[f]] <- new[[f]]
+  }
+  out
+}
+
 #' Badge + auto-fill for one panel's picker. The text fields are filled as soon
 #' as an entry is picked (UX only; the authoritative snapshot runs on save in
 #' apply_registry_snapshot()).
@@ -85,13 +109,15 @@ register_indicator_picker_observer <- function(input, output, session, prefix, c
   sel_id <- paste0(prefix, "_registry_", current_id)
   output[[paste0(prefix, "_regbadge_", current_id)]] <- shiny::renderUI(
     indicator_provenance_ui(input[[sel_id]], i18n))
+  prev_code <- ""
   shiny::observeEvent(input[[sel_id]], {
-    e <- get_indicator(input[[sel_id]])
-    if (is.null(e)) return(invisible(NULL))
-    shiny::updateTextInput(session, paste0(prefix, "_indicator_", current_id), value = as.character(e$name))
-    shiny::updateTextInput(session, paste0(prefix, "_indunit_", current_id), value = as.character(e$unit %||% ""))
-    shiny::updateTextInput(session, paste0(prefix, "_datasource_", current_id),
-                           value = paste(unlist(e$data_sources), collapse = "; "))
+    new_code <- as.character(input[[sel_id]] %||% "")
+    fid <- function(f) paste0(prefix, "_", f, "_", current_id)
+    current <- lapply(stats::setNames(nm = c("indicator", "indunit", "datasource")),
+                      function(f) shiny::isolate(input[[fid(f)]]))
+    ups <- indicator_picker_updates(current, prev_code, new_code)
+    for (f in names(ups)) shiny::updateTextInput(session, fid(f), value = ups[[f]])
+    prev_code <<- new_code
   }, ignoreInit = TRUE)
 }
 

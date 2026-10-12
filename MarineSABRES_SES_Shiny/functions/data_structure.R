@@ -885,7 +885,15 @@ normalize_json_project_data <- function(data) {
             x[vapply(x, is.null, logical(1))] <- NA   # JSON null -> NA, keep the key
             as.data.frame(x, stringsAsFactors = FALSE)
           })
-          dplyr::bind_rows(rows)
+          # bind_rows() refuses a column whose type differs between rows (3 vs
+          # "High" in hand-edited JSON); fall back to character columns rather
+          # than lose the category. Clean files keep their column types.
+          tryCatch(dplyr::bind_rows(rows), error = function(e) {
+            dplyr::bind_rows(lapply(rows, function(r) {
+              r[] <- lapply(r, function(v) if (is.atomic(v)) as.character(v) else v)
+              r
+            }))
+          })
         }, error = function(e) {
           debug_log(paste("Cannot convert", etype, "to data.frame:", e$message), "WARN")
           NULL
