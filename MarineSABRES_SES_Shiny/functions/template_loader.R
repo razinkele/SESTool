@@ -98,6 +98,9 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
     if (type_lower %in% c("impact", "ecosystemservice", "ecosystem_service")) return("impact")
     if (type_lower %in% c("goodsbenefit", "goods_benefit", "welfare")) return("welfare")
     if (type_lower %in% c("enmp", "pressure")) return("pressure")
+    # Measures are a subtype of Responses and share their matrix rows (gb_r etc.);
+    # rows are matched by ID, so this only lets "welfare" -> "measure" reach gb_r.
+    if (type_lower == "measure") return("response")
     return(type_lower)
   }
   

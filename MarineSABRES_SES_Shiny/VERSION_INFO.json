@@ -1,8 +1,8 @@
 {
-  "version": "1.22.2",
-  "version_name": "Translation keys defined once; four wrong labels fixed",
-  "release_date": "2026-10-11",
-  "release_type": "patch",
+  "version": "1.23.0",
+  "version_name": "WP5 integration: mechanism catalogue v2, Response register, model check",
+  "release_date": "2026-10-12",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -11,10 +11,16 @@
   "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
-  "features": [],
+  "features": [
+    "WP5 financial-mechanism catalogue rebuilt from the final D5.2: 31 mechanisms with per-field sources (WS-2, PR #100).",
+    "Response register: EBM classification, governance, implementing stakeholders, strategy pairing and 11-tenet appraisal (WS-3a, PR #100).",
+    "Model check on load: instrument-like Drivers/Activities/Ecosystem Services and Responses without feedback (WS-3b, PR #100).",
+    "WP5 shared vocabulary and D5.3 intervention-to-operation data (WS-0/WS-1, PR #100)."
+  ],
   "fixes": {
     "high": [
-      "47 translation keys were defined in two files and the last file won: the ISA Stakeholder label, ISA Documentation heading, entry-point Role label and the batch approve/reject message showed the wrong text. Each key now lives in one file; a test guards against new duplicates - PR #96."
+      "Response type/target/status are stored as language-independent codes; projects saved in another language are converted on load (WS-3a).",
+      "Scenario Builder stores scenarios at data$analysis$scenarios; legacy locations migrate on every load path (WS-0)."
     ]
   },
   "metrics": {
@@ -23,7 +29,7 @@
     "knowledge_db_elements": 1119,
     "template_count": 7,
     "template_total_elements": 285,
-    "template_total_connections": 305,
+    "template_total_connections": 320,
     "orphan_element_rate": "0%",
     "polarity_coverage": "100%",
     "cross_ecosystem_links": 20,
@@ -32,8 +38,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.22.1",
+  "previous_version": "1.22.3",
   "build_info": {
-    "build_date": "2026-10-11 19:48:44.346801"
+    "build_date": "2026-10-12 09:34:08.492850"
   }
 }

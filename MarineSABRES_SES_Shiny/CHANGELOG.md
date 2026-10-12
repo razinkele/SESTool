@@ -9,16 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added (WP5 indicator registry — spec 2026-10-11 WS-4)
 - WP5 indicator registry (`data/wp5_indicators.json`): 11 Macaronesia fiche-set indicators (4 stubs pending partner fiches), 33 Posidonia indicators with Table 18 reference ranges, 46 Annex 1 DAPSIWRM-typed indicators (28 Tuscan, 18 Macaronesia), 5 Arctic descriptive indicators (Faroe Islands). Every WP5 value cites D5.2 v5 line ranges, and tests check its quotes against a committed extract. The WS-2 mechanism audit now fails when a mechanism's success metric is not in the registry.
-- Standard Entry: every element (not Responses) now has Indicator, Unit and Data source fields and a WP5 indicator picker that shows each entry's provenance. Picking copies the values (snapshot) and records the registry entry and revision; such projects are stamped `min_app_version` 1.23.0.
+- Standard Entry: every element (not Responses) now has Indicator, Unit and Data source fields and a WP5 indicator picker that shows each entry's provenance. Picking copies the values (snapshot) and records the registry entry and revision; such projects are stamped `min_app_version` 1.24.0, because 1.23.0 predates these columns and would drop them on save.
 - On project load, a warning appears when a copied indicator has since changed in, or been removed from, the registry; a persistent link opens a review that compares the element's values with the registry's, and the user chooses which elements to update.
 
 ### Fixed (auto-save backups could lose a whole element category — WS-4)
 - Auto-save wrote JSON without `na = "null"`, so an element with an empty field omitted that key; on recovery the strict row bind failed and the whole category (e.g. all Drivers) was silently dropped. Auto-save now writes NA as `null`, and the loader binds rows by key union, so older backups recover too.
 
+## [1.23.0] - 2026-10-12
+
+Minor release: WP5 integration workstreams WS-0 to WS-3b (PR #100). Released before the WP5 partners' sign-off on the mechanism catalogue (partner letter question 1).
+
 ### Added (model check — spec 2026-10-11 WS-3b)
 - **On load, the ISA editor warns about likely model issues.** It flags two cases:
   - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.
-  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. All seven shipped templates currently contain such Responses, so loading a template shows this warning.
+  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. Six of the seven shipped templates still contain such Responses (see the template change below), so loading one shows this warning.
 - Matching uses whole words in 9 languages and does not flag the ecosystem-service sense of "regulation". The warning appears only when the findings change, and nothing in the project is modified.
 
 ### Fixed (Response register stored translated labels — spec 2026-10-11 WS-3a)
@@ -48,6 +52,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Scenario Builder now stores scenarios at `data$analysis$scenarios` (the schema location); legacy `data$scenarios` is migrated on every load path.
+
+## [1.22.3] - 2026-10-12
+
+Patch release: template Responses linked to the benefits that trigger them (PR #101). Built from 1.22.2; the unreleased WP5 work below is not included.
+
+### Changed (templates — Responses linked to the benefits that trigger them)
+- **15 Goods & Benefits → Response or Measure links added to six templates**, so more Responses sit in feedback loops (Responses without one: 34 → 19). Fisheries 2, Pollution 1, Tourism 3, Climate Change 2, Offshore Wind 1, Caribbean 6. In the six smaller templates every loop a new link closes is Balancing. In Caribbean, within the 8-step loop search the app uses, the 6 reinforcing loops it already had are unchanged and the new links add only balancing loops; Limits to Growth findings rise from 5 to 10. Longer loops through five of the new Caribbean links are mixed, as they already were through 12 of its 19 original links. Template versions bumped.
+- The 19 Responses still without feedback need a trigger the app cannot store as a link into a Response (water clarity, porpoise or seabird numbers, cod biomass). They are left for expert review: Aquaculture (all 5), Pollution 5, Offshore Wind 4, Fisheries 2, Climate Change 2, Tourism 1.
+
+### Fixed
+- Template loader: a Goods & Benefits → Measure link now reaches the Response matrix (Measures share the Responses' rows); before, it was silently dropped.
 
 ## [1.22.2] - 2026-10-11
 
