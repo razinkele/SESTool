@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.2",
+    "version": "2.3",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_offshore",
     "applicable_regions": [
       "baltic"
@@ -500,6 +500,26 @@
       "strength": "weak",
       "confidence": 2,
       "description": "The collapse of fleet economic viability alongside the Eastern Baltic cod stock built political acceptance for the 2019 emergency closure and deep cod TAC cuts (Reg. (EU) 2019/1248), paired with cessation aid: less viability, stronger quota cuts. The cuts themselves followed ICES stock advice."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R005",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Falling fleet viability as the Eastern Baltic cod stock declined built support for closing trawling in the Bornholm Basin spawning area alongside the 2019 emergency measures: less viability, stronger closures."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "M001",
+      "from_type": "welfare",
+      "to_type": "measure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "The same loss of fleet viability motivated seasonal spawning-time closures as the practical tool for cod recovery: less viability, more closure periods."
     }
   ]
 }

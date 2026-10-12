@@ -61,11 +61,46 @@ test_that("each edited template has a loop through a Response, and all such loop
 })
 
 test_that("the GB -> Response links are benefit-worded with '-' polarity", {
-  for (name in c("Fisheries", "Aquaculture", "Pollution", "Tourism")) {
+  for (name in c("Fisheries", "Aquaculture", "Pollution", "Tourism", "ClimateChange")) {
     d <- jsonlite::fromJSON(tpl_path(name), simplifyVector = FALSE)
-    gbr <- Filter(function(x) x$from_type == "welfare" && x$to_type == "response", d$connections)
-    expect_length(gbr, 1)
-    expect_identical(gbr[[1]]$polarity, "-", info = name)
+    gbr <- Filter(function(x) x$from_type == "welfare" && x$to_type %in% c("response", "measure"), d$connections)
+    expect_gte(length(gbr), 1)
+    expect_true(all(vapply(gbr, `[[`, "", "polarity") == "-"), info = name)
     expect_true(numeric_version(d$metadata$version) >= "2.1", info = name)
+  }
+})
+
+ALL_TEMPLATES <- c("Fisheries", "Aquaculture", "Pollution", "Tourism", "ClimateChange", "OffshoreWind", "Caribbean")
+
+test_that("loops through a Response are Balancing (Caribbean: no new reinforcing loops)", {
+  # Each GB -> Response link added on 2026-10-12 closes only balancing loops in the
+  # six smaller templates. Caribbean (v1.0) already had 6 reinforcing loops through
+  # its original links; its welfare nodes are problem-worded ("Decline in tourism
+  # revenue"), so its new links use '+' and must not add reinforcing loops.
+  for (name in setdiff(ALL_TEMPLATES, "Caribbean")) {
+    r_loops <- loops_with_response(template_loops(name)$loop_info)
+    if (NROW(r_loops) > 0) expect_true(all(r_loops$Type == "Balancing"), info = name)
+  }
+  carib <- template_loops("Caribbean")$loop_info
+  expect_lte(sum(carib$Type == "Reinforcing"), 6)
+})
+
+test_that("a GB -> Measure link reaches the merged gb_r matrix", {
+  tpl <- load_template_from_json(tpl_path("Fisheries"), use_cache = FALSE)
+  gb_r <- tpl$adjacency_matrices$gb_r
+  gb <- tpl$goods_benefits$Name[tpl$goods_benefits$ID == "GB001"]
+  m <- tpl$responses$Name[tpl$responses$ID == "M001"]
+  expect_match(gb_r[gb, m], "^-")
+})
+
+test_that("Responses still lacking feedback are the ones left for expert review", {
+  # These need a state trigger (water clarity, porpoise or seabird numbers) that the
+  # app cannot store as a link into a Response; see the 2026-10-12 template PR.
+  expected <- c(Fisheries = 2, Aquaculture = 5, Pollution = 5, Tourism = 1,
+                ClimateChange = 2, OffshoreWind = 4, Caribbean = 0)
+  for (name in ALL_TEMPLATES) {
+    gb_r <- load_template_from_json(tpl_path(name), use_cache = FALSE)$adjacency_matrices$gb_r
+    no_fb <- apply(gb_r, 2, function(col) all(is.na(col) | !nzchar(col)))
+    expect_equal(sum(no_fb), expected[[name]], info = name)
   }
 })
