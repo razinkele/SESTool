@@ -16,6 +16,9 @@ ext_lines <- function(from, to) {
   expect_true(all(rng %in% names(txt)), info = paste("extract lacks", from, "-", to))
   unname(txt[intersect(rng, names(txt))])
 }
+# Table 21 row ranges (checked against the extract): each scenario's cells and
+# confidence phrases must sit inside that scenario's own rows, not just the table
+S21_ROWS <- list(S1 = c(4808, 4815), S2 = c(4817, 4824), S3 = c(4826, 4840), S4 = c(4842, 4851))
 on_one_line <- function(phrase, lines) any(grepl(phrase, lines, fixed = TRUE))
 da <- function(x) ref$demonstration_areas[[x]]
 codes_of <- function(lst) vapply(lst, function(s) s$code, character(1))
@@ -30,6 +33,10 @@ test_that("Macaronesia Table 21: 5 criteria x 4 scenarios, each anchored on one 
   expect_identical(mac$provenance, "wp5_source")
   expect_identical(mac$source_ref$table, "Table 21")
   for (c in mac$cells) {
+    rows <- ext_lines(S21_ROWS[[c$scenario]][1], S21_ROWS[[c$scenario]][2])
+    for (p in c$verify_phrases) {
+      expect_true(on_one_line(p, rows), info = paste(c$criterion, c$scenario, "not in its own scenario rows:", p))
+    }
     # one anchor from the cell's first layout line, one from its last (catches dropped clauses)
     expect_gte(length(c$verify_phrases), 2)
     for (p in c$verify_phrases) {
@@ -45,6 +52,10 @@ test_that("Macaronesia scenario confidence matches Table 21 and uses rubric code
   expect_identical(codes_of(mac$scenarios), paste0("S", 1:4))
   expect_identical(vapply(mac$scenarios, function(s) as.integer(s$ambition_rank), integer(1)), 1:4)
   for (s in mac$scenarios) {
+    srows <- ext_lines(S21_ROWS[[s$code]][1], S21_ROWS[[s$code]][2])
+    for (p in s$verify_phrases) {
+      expect_true(on_one_line(p, srows), info = paste(s$code, "confidence phrase not in its own rows:", p))
+    }
     expect_gte(length(s$verify_phrases), 2)
     for (p in s$verify_phrases) {
       expect_true(on_one_line(p, lines), info = p)
@@ -98,6 +109,8 @@ test_that("Arctic revenue figures are the published table strings, never recompu
       expect_equal(s$landings_t, as.numeric(gsub(",", "", s$landings_display)), info = tag)
       expect_equal(s$price_usd_per_t, as.numeric(gsub("[$,]", "", s$price_display)), info = tag)
       expect_true(on_one_line(s$baseline$display, bl), info = tag)
+      # landings x price must reproduce the published baseline within 1% (catches species swaps)
+      expect_lt(abs(as.numeric(s$landings_t) * as.numeric(s$price_usd_per_t) / 1e6 / s$baseline$usd_millions - 1), 0.01, label = tag)
       expect_equal(s$baseline$usd_millions, usd_millions_of(s$baseline$display), info = tag)
       for (sc in c("no_agreement", "partial_agreement", "full_agreement")) {
         v <- s[[sc]]

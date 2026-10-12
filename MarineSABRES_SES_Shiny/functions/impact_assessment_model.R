@@ -27,7 +27,8 @@
 .imp_str <- function(v) {
   if (is.null(v) || length(v) == 0) return("")
   v <- v[[1]]
-  # !is.atomic first: a nested list from hand-edited JSON must not reach is.na()
+  # Takes the first element of a vector/list. A nested object that reaches here after the
+  # JSON round trip may be flattened to its first leaf; !is.atomic keeps lists out of is.na().
   if (is.null(v) || !is.atomic(v) || length(v) != 1 || is.na(v)) "" else as.character(v)
 }
 .imp_chr <- function(v) {
@@ -86,11 +87,23 @@ new_impact_cell <- function() .impact_fill_cell(list())
 }
 
 #' A scenario on the assessment's scenario axis (spec WS-6 change 2)
-new_impact_scenario <- function(code, name, description = "", ambition_rank = 0L, source = "user") {
+new_impact_scenario <- function(code, name, description = "", ambition_rank = 0L, source = "user",
+                                dimensions = NULL) {
   if (!.impact_valid_code(code)) .impact_error("invalid_scenario_code")
   if (!source %in% IMPACT_SCENARIO_SOURCES) .impact_error("invalid_scenario_source")
+  .impact_check_dimensions(dimensions)
   .impact_fill_scenario(list(code = code, name = name %||% code, description = description,
-                             ambition_rank = ambition_rank, source = source))
+                             ambition_rank = ambition_rank, source = source, dimensions = dimensions))
+}
+
+# Dimension names must come from IMPACT_SCENARIO_DIMENSIONS (NULL = none given)
+.impact_check_dimensions <- function(dimensions) {
+  if (is.null(dimensions)) return(invisible(NULL))
+  nm <- names(dimensions)
+  if (length(dimensions) > 0 && (is.null(nm) || any(is.na(nm) | !nm %in% IMPACT_SCENARIO_DIMENSIONS))) {
+    .impact_error("unknown_field")
+  }
+  invisible(NULL)
 }
 
 .impact_fill_section <- function(x, fields) {
@@ -150,9 +163,31 @@ impact_set_scope_items <- function(ia, element_ids = character(0), indicator_cod
 impact_scenario_codes <- function(ia) names(ia$scenarios) %||% character(0)
 
 impact_add_scenario <- function(ia, scenario) {
+  scenario <- .impact_fill_scenario(if (is.list(scenario)) scenario else list())
+  if (!.impact_valid_code(scenario$code)) .impact_error("invalid_scenario_code")
   if (scenario$code %in% impact_scenario_codes(ia)) .impact_error("duplicate_scenario_code")
   if (length(ia$scenarios) >= IMPACT_MAX_SCENARIOS) .impact_error("too_many_scenarios")
   ia$scenarios[[scenario$code]] <- scenario
+  ia
+}
+
+#' Edit a scenario in place. The code is immutable; NULL arguments leave a field unchanged.
+#' @param dimensions Named list/character of IMPACT_SCENARIO_DIMENSIONS entries to set
+impact_update_scenario <- function(ia, code, name = NULL, description = NULL, ambition_rank = NULL,
+                                   dimensions = NULL) {
+  if (!(is.character(code) && length(code) == 1 && code %in% impact_scenario_codes(ia))) {
+    .impact_error("unknown_scenario")
+  }
+  .impact_check_dimensions(dimensions)
+  s <- ia$scenarios[[code]]
+  if (!is.null(name)) s$name <- name
+  if (!is.null(description)) s$description <- description
+  if (!is.null(ambition_rank)) s$ambition_rank <- ambition_rank
+  if (!is.null(dimensions)) {
+    d <- .imp_named_str(dimensions)
+    for (k in names(d)) s$dimensions[[k]] <- d[[k]]
+  }
+  ia$scenarios[[code]] <- .impact_fill_scenario(s)
   ia
 }
 
@@ -167,7 +202,9 @@ impact_remove_scenario <- function(ia, code) {
 
 #' IMPACT is the difference against the baseline (D5.2 L609-611)
 impact_set_baseline <- function(ia, code) {
-  if (!code %in% impact_scenario_codes(ia)) .impact_error("unknown_scenario")
+  if (!(is.character(code) && length(code) == 1 && code %in% impact_scenario_codes(ia))) {
+    .impact_error("unknown_scenario")
+  }
   ia$baseline_code <- code
   ia
 }
@@ -287,6 +324,9 @@ impact_copy_reference_cell <- function(ia, criterion, scenario_code, overwrite =
   if (!nzchar(ia$da)) .impact_error("no_da")
   ref <- impact_reference_cell(ia$da, cr, scenario_code)
   if (is.null(ref)) .impact_error("no_reference_cell")
+  # A user scenario that merely reuses a reference code must not receive D5.2 text as wp5_source
+  own <- ia$scenarios[[scenario_code]]
+  if (!is.null(own) && !identical(own$source, "wp5_reference")) .impact_error("scenario_not_reference")
   if (!overwrite && !identical(impact_get_cell(ia, cr, scenario_code), new_impact_cell())) {
     .impact_error("cell_not_empty")
   }
@@ -311,6 +351,7 @@ impact_copy_reference_cell <- function(ia, criterion, scenario_code, overwrite =
 impact_mechanism_options <- function(da, scenario_code) {
   empty <- data.frame(id = character(), name = character(), applicability = character(),
                       applicability_text = character(), stringsAsFactors = FALSE)
+  if (identical(da, "")) return(empty)                # new assessment without a DA
   rows <- lapply(get_mechanisms_for_da(da), function(m) {
     v <- m[["derived"]][["scenario_applicability"]][[scenario_code]]
     data.frame(id = m$id, name = m$name,
@@ -353,13 +394,17 @@ get_impact_assessment <- function(project) {
 }
 
 #' Store the assessment; stamps min_app_version (never lowers). NULL removes it.
+#' A malformed (non-NULL) assessment is an error ("malformed_assessment") and the
+#' project, including any existing block, is left untouched.
 set_impact_assessment <- function(project, ia) {
   if (!is.list(project$data$analysis)) project$data$analysis <- list()
   if (is.null(ia)) {
     project$data$analysis$impact_assessment <- NULL
     return(project)
   }
-  project$data$analysis$impact_assessment <- normalize_impact_assessment(ia)
+  norm <- normalize_impact_assessment(ia)
+  if (is.null(norm)) .impact_error("malformed_assessment")
+  project$data$analysis$impact_assessment <- norm
   stamp_min_app_version(project, WP5_IMPACT_MIN_APP_VERSION)
 }
 
@@ -405,9 +450,22 @@ normalize_impact_assessment <- function(x) {
     for (raw_cr in names(xc)) {
       cr <- wp5_criterion_code(raw_cr)
       row <- xc[[raw_cr]]
-      if (is.na(cr) || cr %in% names(cells) || !is.list(row) || is.null(names(row))) next
+      if (is.na(cr)) next
+      if (cr %in% names(cells)) {                  # canonical key and its alias both present: first wins
+        if (exists("debug_log", mode = "function")) {
+          debug_log(paste0("impact_assessment: duplicate criterion '", raw_cr, "' (", cr, ") dropped"), "WP5")
+        }
+        next
+      }
+      if (!is.list(row) || is.null(names(row))) next
       kept <- .imp_empty_named()
-      for (sc in names(row)) if (sc %in% names(scenarios)) kept[[sc]] <- .impact_fill_cell(row[[sc]])
+      allowed_sub <- WP5_CRITERION_SUBDIMENSIONS[[cr]] %||% character(0)
+      for (sc in names(row)) if (sc %in% names(scenarios)) {
+        cell <- .impact_fill_cell(row[[sc]])
+        # positional keys ("2") from partially named lists and other criteria's sub-dimensions
+        cell$subdimension_notes <- cell$subdimension_notes[names(cell$subdimension_notes) %in% allowed_sub]
+        kept[[sc]] <- cell
+      }
       if (length(kept) > 0) cells[[cr]] <- kept
     }
   }

@@ -165,6 +165,7 @@ test_that("copying a reference cell: text, single-level confidence only, provena
 })
 
 test_that("copy guards: no reference cell, edited cell, no DA, missing reference file", {
+  on.exit(load_impact_reference(file.path(PROJECT_ROOT, "data", "wp5_impact_reference.json"), force_reload = TRUE), add = TRUE)
   err <- function(expr) tryCatch({ expr; NA_character_ }, impact_error = function(e) e$code)
   arc <- impact_assessment_from_reference("arctic")
   expect_identical(err(impact_copy_reference_cell(arc, "EE", "full_agreement")), "no_reference_cell")
@@ -179,7 +180,6 @@ test_that("copy guards: no reference cell, edited cell, no DA, missing reference
   starter <- impact_assessment_from_reference("macaronesia")
   expect_identical(starter$da, "macaronesia")
   expect_identical(impact_scenario_codes(starter), character(0))
-  load_impact_reference(file.path(PROJECT_ROOT, "data", "wp5_impact_reference.json"), force_reload = TRUE)
 })
 
 test_that("mechanism options annotate and sort by WS-2 applicability; nothing is hidden", {
@@ -213,4 +213,81 @@ test_that("indicator suggestions use WS-4 criterion roles, primary first, for ev
   expect_identical(s$role[s$code == "C_01"], "primary")
   expect_false("C_02" %in% impact_indicator_suggestions("EC", "macaronesia")$code)   # role: null
   expect_identical(nrow(impact_indicator_suggestions("EE", "tuscan")), 0L)
+})
+
+test_that("a user scenario that reuses a reference code cannot receive reference text (I3)", {
+  ia <- impact_assessment_from_reference("macaronesia")
+  ia$scenarios$S2 <- new_impact_scenario("S2", "My own S2")          # source "user"
+  expect_identical(err_code(impact_copy_reference_cell(ia, "EE", "S2")), "scenario_not_reference")
+  expect_identical(err_code(impact_copy_reference_cell(ia, "EE", "S3")), NA_character_)
+  expect_identical(err_code(impact_copy_reference_cell(ia, "EE", "S9")), "no_reference_cell")
+  gone <- impact_remove_scenario(impact_assessment_from_reference("macaronesia"), "S2")
+  expect_identical(err_code(impact_copy_reference_cell(gone, "EE", "S2")), "unknown_scenario")
+})
+
+test_that("DA '' degrades like an unavailable reference; unknown DAs still error (I4)", {
+  expect_identical(impact_reference_status(""), "unavailable")
+  expect_identical(impact_reference_scenarios(""), list())
+  expect_identical(impact_reference_baseline(""), "")
+  expect_null(impact_reference_cell("", "EE", "S1"))
+  expect_null(impact_reference_revenue(""))
+  expect_identical(impact_assessment_from_reference(""), new_impact_assessment(""))
+  mo <- impact_mechanism_options("", "S1")
+  expect_identical(nrow(mo), 0L)
+  expect_identical(names(mo), c("id", "name", "applicability", "applicability_text"))
+  si <- impact_indicator_suggestions("EE", "")
+  expect_identical(nrow(si), 0L)
+  expect_identical(names(si), c("code", "name", "role", "stub"))
+  expect_error(impact_reference_status("baltic"), "Unknown DA")
+})
+
+test_that("impact_update_scenario edits fields, keeps the code, and validates (I5)", {
+  ia <- two_scen()
+  up <- impact_update_scenario(ia, "S2", name = "Lighter", description = "Voluntary",
+                               ambition_rank = 3L, dimensions = list(governance_form = "voluntary"))
+  expect_identical(up$scenarios$S2$code, "S2")
+  expect_identical(up$scenarios$S2$name, "Lighter")
+  expect_identical(up$scenarios$S2$description, "Voluntary")
+  expect_identical(up$scenarios$S2$ambition_rank, 3L)
+  expect_identical(up$scenarios$S2$dimensions$governance_form, "voluntary")
+  expect_identical(up$scenarios$S2$dimensions$spatial_scope, "")
+  expect_identical(up$scenarios$S1, ia$scenarios$S1)
+  expect_identical(impact_update_scenario(up, "S2"), up)               # NULL args change nothing
+  part <- impact_update_scenario(up, "S2", name = "Renamed")
+  expect_identical(part$scenarios$S2$description, "Voluntary")
+  expect_identical(part$scenarios$S2$dimensions$governance_form, "voluntary")
+  expect_identical(err_code(impact_update_scenario(ia, "S9", name = "x")), "unknown_scenario")
+  expect_identical(err_code(impact_update_scenario(ia, "S1", dimensions = list(bogus = "x"))), "unknown_field")
+  s <- new_impact_scenario("S7", "x", dimensions = list(financing_capacity = "EU funds"))
+  expect_identical(s$dimensions$financing_capacity, "EU funds")
+  expect_identical(err_code(new_impact_scenario("S7", "x", dimensions = list(bogus = "y"))), "unknown_field")
+})
+
+test_that("add_scenario and set_baseline reject malformed input with impact errors (M5)", {
+  ia <- two_scen()
+  expect_identical(err_code(impact_add_scenario(ia, "S3")), "invalid_scenario_code")
+  expect_identical(err_code(impact_add_scenario(ia, list(code = "bad code"))), "invalid_scenario_code")
+  expect_identical(err_code(impact_add_scenario(ia, NULL)), "invalid_scenario_code")
+  expect_identical(err_code(impact_set_baseline(ia, c("S1", "S2"))), "unknown_scenario")
+  expect_identical(err_code(impact_set_baseline(ia, NULL)), "unknown_scenario")
+  expect_identical(err_code(impact_set_baseline(ia, NA_character_)), "unknown_scenario")
+  ia <- impact_add_scenario(ia, list(code = "S3", name = "Third"))      # completed through the filler
+  expect_identical(ia$scenarios$S3$dimensions, new_impact_scenario("S3", "x")$dimensions)
+  expect_identical(ia$scenarios$S3$source, "user")
+})
+
+test_that("unnamed subdimension notes are dropped, not kept under positional keys (M3)", {
+  ia <- two_scen()
+  cl <- new_impact_cell()
+  cl$subdimension_notes <- list(distributional = "a", "b")
+  ia <- impact_set_cell(ia, "EQ", "S1", cl)
+  expect_identical(names(ia$cells$EQ$S1$subdimension_notes), "distributional")
+  expect_identical(impact_cell_problems(ia$cells$EQ$S1, "EQ"), c("direction_missing", "confidence_missing"))
+  # a raw block (hand edit or older save) is cleaned by the normaliser: positional keys and
+  # sub-dimensions that belong to another criterion are dropped
+  raw <- ia
+  raw$cells$EQ$S1$subdimension_notes <- list(distributional = "a", "b", credibility = "wrong criterion")
+  out <- normalize_impact_assessment(raw)
+  expect_identical(names(out$cells$EQ$S1$subdimension_notes), "distributional")
+  expect_false("invalid_subdimension" %in% impact_cell_problems(out$cells$EQ$S1, "EQ"))
 })

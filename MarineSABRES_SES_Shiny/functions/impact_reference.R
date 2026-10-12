@@ -39,7 +39,9 @@ impact_reference_version <- function() {
   as.character(db$schema_version %||% "")
 }
 
+# NULL for da = "" (a new assessment without a DA) and when the data is unavailable
 .impact_ref_da <- function(da) {
+  if (identical(da, "")) return(NULL)
   if (!is.character(da) || length(da) != 1 || !da %in% WP5_DA_CONTEXTS) {
     stop("Unknown DA: ", paste(da, collapse = ","))
   }

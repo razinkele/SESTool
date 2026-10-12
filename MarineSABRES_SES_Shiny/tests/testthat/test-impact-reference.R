@@ -56,12 +56,17 @@ test_that("Arctic revenue is exposed as published", {
 })
 
 test_that("a missing reference file warns and degrades to 'unavailable'", {
+  on.exit(load_impact_reference(ref_file, force_reload = TRUE), add = TRUE)
   expect_warning(load_impact_reference(tempfile(fileext = ".json"), force_reload = TRUE), "reference data not loaded")
   # later getter calls must not silently re-read the default path (failed load is cached)
   expect_silent(expect_identical(impact_reference_status("macaronesia"), "unavailable"))
   expect_identical(impact_reference_scenarios("macaronesia"), list())
   expect_null(impact_reference_cell("macaronesia", "EE", "S1"))
   expect_identical(impact_reference_version(), "")
+})
+
+test_that("the reference loads again after a failed load", {
+  suppressWarnings(load_impact_reference(tempfile(fileext = ".json"), force_reload = TRUE))
   load_impact_reference(ref_file, force_reload = TRUE)
   expect_identical(impact_reference_status("macaronesia"), "available")
 })

@@ -19,6 +19,8 @@ build_ia <- function() {
   cl$mechanism_ids <- "mac_01"
   ia <- impact_set_cell(ia, "EQ", "S4", cl)
   one <- new_impact_cell(); one$evidence <- "dataset"; one$direction <- "no_change"
+  ia <- impact_update_scenario(ia, "S3", description = "Coordinated corridor management",
+                               dimensions = list(governance_form = "EEZ coordination", financing_capacity = "EU funds"))
   ia <- impact_set_cell(ia, "FF", "S2", one)                 # length-1 arrays are unboxed by toJSON
   ia <- impact_set_section(ia, "characterisation", list(focal_issue = "Migratory corridor", stakeholders = "Fishers; tour operators"))
   ia <- impact_set_section(ia, "uncertainty", list(notes = "Compliance in ABNJ"))
@@ -123,4 +125,34 @@ test_that("a malformed field inside a valid block drops only that field", {
   expect_identical(ia$characterisation$focal_issue, "")
   expect_identical(ia$cells$EQ$S4$subdimension_notes, setNames(list(), character(0)))
   expect_identical(ia$cells$EQ$S4$direction, "increase")
+})
+
+test_that("storing a malformed block is an error and leaves the project untouched (I1)", {
+  p <- project_with_ia()
+  for (bad in list("garbage", list(1, 2))) {
+    code <- tryCatch({ set_impact_assessment(p, bad); NA_character_ }, impact_error = function(e) e$code)
+    expect_identical(code, "malformed_assessment")
+  }
+  expect_identical(get_impact_assessment(p), build_ia())
+  expect_identical(p$min_app_version, WP5_IMPACT_MIN_APP_VERSION)
+  fresh <- create_empty_project("fresh")
+  before <- fresh$min_app_version
+  code <- tryCatch({ set_impact_assessment(fresh, "garbage"); NA_character_ }, impact_error = function(e) e$code)
+  expect_identical(code, "malformed_assessment")
+  expect_identical(fresh$min_app_version, before)
+})
+
+test_that("scenario description and dimensions survive the round trips (I5)", {
+  s3 <- get_impact_assessment(project_with_ia())$scenarios$S3
+  expect_identical(s3$description, "Coordinated corridor management")
+  expect_identical(s3$dimensions$financing_capacity, "EU funds")
+})
+
+test_that("a canonical criterion and its alias together leave exactly one cell row (M4)", {
+  raw <- build_ia()
+  raw$cells$PO <- raw$cells$EQ
+  raw$cells$PI <- raw$cells$EE
+  out <- normalize_impact_assessment(raw)
+  expect_identical(sum(names(out$cells) == "PI"), 1L)
+  expect_false("PO" %in% names(out$cells))
 })

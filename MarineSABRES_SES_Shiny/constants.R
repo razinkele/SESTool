@@ -885,6 +885,9 @@ WP5_VALUATION_MAX_RATE_PCT <- 20
 # ============================================================================
 # Stored at data$analysis$impact_assessment. Cell codes come from WP5_RUBRIC
 # (WS-1). The lists below are not WS-1 vocabularies; WS-6b labels them.
+# Adding a stored field requires raising BOTH IMPACT_SCHEMA_VERSION and
+# WP5_IMPACT_MIN_APP_VERSION: an older app's whitelist normaliser silently strips
+# unknown fields when it re-saves the project.
 IMPACT_SCHEMA_VERSION <- 1L
 IMPACT_MAX_SCENARIOS <- 5L       # roadmap §8.3; D5.2 DAs use 3 (Arctic) and 4 (Macaronesia)
 # D5.2 Macaronesia scenario description dimensions (audit A§3.3); optional free text
