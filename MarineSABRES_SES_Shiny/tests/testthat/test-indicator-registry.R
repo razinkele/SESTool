@@ -127,3 +127,87 @@ test_that("F_02 (CPUE) publishes no baseline values and is flagged as a data gap
   expect_true(isTRUE(f2$data_gap))
   expect_true(nzchar(f2$caveat %||% ""))
 })
+
+# ---- Task 2: other DAs + loader ---------------------------------------------
+source_for_test(c("functions/indicator_registry.R"))
+
+test_that("Posidonia: 33 Table 17 indicators, 8 with Table 18 reference ranges", {
+  pos <- Filter(function(e) identical(e$source_set, "posidonia"), entries)
+  expect_length(pos, 33)
+  expect_true(all(startsWith(vapply(pos, `[[`, "", "code"), "TUS_POS_")))
+  with_rr <- Filter(function(e) !is.null(e$reference_range), pos)
+  expect_length(with_rr, 8)
+  for (e in with_rr) {
+    rr <- e$reference_range
+    expect_true(nzchar(rr$text), info = e$code)
+    if (!is.null(rr$low) && !is.null(rr$high)) expect_lte(rr$low, rr$high)
+  }
+  expect_true(all(vapply(pos, function(e) e$provenance == "wp5_derived", logical(1))))  # codes are generated
+  expect_true("TUS_POS_SEAGRASS_SHOOT_DENSITY" %in% codes)
+  expect_equal(by_code[["TUS_POS_SEAGRASS_SHOOT_DENSITY"]]$name, "Seagrass meadow density")
+})
+
+test_that("Annex 1 rows: 28 Tuscan + 18 Macaronesia, typed through the map, data gaps flagged", {
+  a1 <- Filter(function(e) identical(e$source_set, "annex1"), entries)
+  a1_codes <- vapply(a1, `[[`, "", "code")
+  expect_equal(sum(startsWith(a1_codes, "TUS_A1_")), 28L)
+  expect_equal(sum(startsWith(a1_codes, "MAC_A1_")), 18L)
+  for (e in a1) expect_true(e$source_type %in% names(reg$dapsiwrm_type_map$map), info = e$code)
+  for (e in a1) expect_equal(e$dapsiwrm_type, reg$dapsiwrm_type_map$map[[e$source_type]], info = e$code)
+  seg <- c(drivers = "pressure", activities = "pressure", pressures = "pressure", marine_processes = "state",
+           ecosystem_services = "benefit", goods_benefits = "benefit")
+  for (e in a1) expect_equal(e$pathway_segment, seg[[e$dapsiwrm_type]], info = e$code)
+  expect_equal(by_code[["TUS_A1_POTENTIAL_ANCHORAGES"]]$source_type, "Activity")   # stacked-label count (ruling 13)
+  gaps <- Filter(function(e) isTRUE(e$data_gap), a1)
+  expect_gte(length(gaps), 2)                                  # energy dissipation capacity, natural habitats
+})
+
+test_that("Arctic has the five descriptive wp5_derived entries; prices are retail", {
+  arc <- Filter(function(e) e$da == "arctic", entries)
+  expect_setequal(vapply(arc, `[[`, "", "code"),
+                  c("ARC_LANDINGS", "ARC_PRICE", "ARC_TAC_VS_ADVICE", "ARC_SSB_VS_REFPOINTS", "ARC_MSC_STATUS"))
+  for (e in arc) expect_equal(e$provenance, "wp5_derived")
+  expect_match(by_code[["ARC_PRICE"]]$name, "retail", ignore.case = TRUE)
+  expect_false(grepl("first-sale", by_code[["ARC_PRICE"]]$name, ignore.case = TRUE))
+})
+
+test_that("loader caches and lookups filter", {
+  r <- load_indicator_registry(force_reload = TRUE)
+  expect_equal(r$version, reg$registry_version)
+  expect_equal(get_indicator("F_01")$annex_code, "F_02")
+  expect_null(get_indicator("NOPE"))
+  mac <- list_indicators(da = "macaronesia", source_set = "fiche")
+  expect_setequal(mac$code, mac_fiche)
+  expect_equal(nrow(mac), 11L)
+  expect_equal(nrow(list_indicators(da = "macaronesia", source_set = "fiche", include_stubs = FALSE)), 7L)
+  expect_gt(nrow(list_indicators(da = "macaronesia")), 11L)     # Table 7 rows share the DA
+  expect_true(all(list_indicators(dapsiwrm_type = "pressures")$dapsiwrm_type == "pressures"))
+  expect_true("TUS_POS_SEAGRASS_SHOOT_DENSITY" %in% search_indicators("shoots")$code)
+  expect_true("F_01" %in% search_indicators("f_01")$code)       # code match is case-insensitive
+  expect_equal(nrow(search_indicators("")), 0L)
+})
+
+test_that("picker choices put the element's own type first and start with an empty choice", {
+  ch <- indicator_picker_choices("pressures", make_test_i18n())
+  expect_equal(unname(ch[[1]]), "")
+  expect_true(length(ch) >= 3)
+  first_group <- ch[[2]]
+  expect_true(all(vapply(first_group, function(code) get_indicator(code)$dapsiwrm_type == "pressures", logical(1))))
+})
+
+test_that("picker labels mark stubs and non-wp5_source provenance; wp5_source has no marker", {
+  ch <- indicator_picker_choices("activities", make_test_i18n())
+  vals <- unlist(lapply(ch[-1], function(g) unlist(g)))
+  labs <- unlist(lapply(ch[-1], names))
+  lab <- function(code) labs[match(code, vals)]
+  expect_match(lab("C_02"), "modules.indicator_registry.stub_marker", fixed = TRUE)
+  expect_match(lab("TUS_POS_SEAGRASS_SHOOT_DENSITY"), "modules.wp5_mechanisms.provenance.wp5_derived", fixed = TRUE)
+  expect_false(grepl("[", lab("F_01"), fixed = TRUE))
+})
+
+test_that("missing registry file degrades to empty picker with a warning", {
+  expect_warning(r <- load_indicator_registry(path = tempfile(fileext = ".json"), force_reload = TRUE), "registry")
+  expect_length(r$entries, 0)
+  expect_length(indicator_picker_choices("drivers", make_test_i18n()), 1)
+  load_indicator_registry(force_reload = TRUE)                  # restore the real registry for later tests
+})

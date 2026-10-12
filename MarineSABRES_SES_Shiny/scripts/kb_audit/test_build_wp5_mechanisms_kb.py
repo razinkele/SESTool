@@ -231,3 +231,18 @@ def test_audit_flags_placeholder_tuscan_scenarios_and_guidance():
     kb["demonstration_areas"]["arctic"]["mechanisms"][0]["applicability_text"] += " (§x.x)"
     fails = " | ".join(au.audit(kb, bk.read_extract(EXTRACT))).lower()
     assert "tuscan" in fails and "use_in_impact_assessment" in fails and "placeholder" in fails
+
+
+def test_success_metrics_must_exist_in_ws4_registry():
+    au = _load_audit()
+    kb = {"demonstration_areas": {"macaronesia": {"mechanisms": [
+        {"id": "mac_01", "derived": {"success_metrics": ["F_01", "ZZ_99"]}}]}}}
+    fails = au.success_metric_registry_fails(kb, {"F_01", "C_02"})
+    assert fails == ["mac_01.derived.success_metrics: ZZ_99 not in data/wp5_indicators.json"]
+    assert au.success_metric_registry_fails(kb, None) == ["top.registry: data/wp5_indicators.json missing (WS-4)"]
+
+
+def test_committed_kb_success_metrics_are_all_in_the_registry():
+    au = _load_audit()
+    kb = json.loads(KB_JSON.read_text(encoding="utf-8"))
+    assert au.success_metric_registry_fails(kb, au.registry_codes()) == []

@@ -380,6 +380,3394 @@
       "provenance": "provisional",
       "source_ref": {"document": "D5.2 v5", "section": "Macaronesia criteria narrative (EC, EQ)", "lines": [4985, 5132]},
       "source_quotes": ["T_04 (employment)", "T_01–T_04"]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": 400,
+        "high": 700,
+        "unit": "shoots/m2",
+        "text": "In the Balearic/Spanish Mediterranean, values range from ~400 to 700 shoots/m². (Data from several Mediterranean studies)",
+        "comment": "Dense meadows (≥400 shoots/m²) are linked with enhanced coastal protection. Local variability is expected due to depth and hydrodynamic conditions.",
+        "reference": "Olivé et al. (2007); Duarte (2002)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEAGRASS_SHOOT_DENSITY",
+      "name": "Seagrass meadow density",
+      "table18_name": "Seagrass Shoot Density",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Coastal Protection",
+      "unit": "shoots/m2",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Seagrass meadow density",
+        "Shoots/m²",
+        "values range from ~400 to",
+        "Dense meadows (≥400 shoots/m²)"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": 30,
+        "high": 100,
+        "unit": "cm",
+        "text": "Reported ranges of ~30–100 cm in healthy Posidonia oceanica meadows across the Mediterranean.",
+        "comment": "Variation in canopy height is common; the higher end typically occurs in less disturbed sites.",
+        "reference": "Duarte (2002)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_CANOPY_HEIGHT",
+      "name": "Canopy height",
+      "table18_name": "Canopy Height",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Coastal Protection",
+      "unit": "cm",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Canopy height",
+        "Reported ranges of ~30–100 cm in"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": null,
+        "high": 1500,
+        "unit": "g/m2",
+        "text": "Up to approximately 1,500 g/m² reported in several Mediterranean studies, including Spanish coasts.",
+        "comment": "High below-ground biomass is a key indicator of strong sediment stabilization.",
+        "reference": "Duarte (2002); Marbà et al. (2002)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_ROOT_AND_RHIZOME_BIOMASS",
+      "name": "Root and rhizome biomass",
+      "table18_name": "Root & Rhizome Biomass",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Coastal Protection",
+      "unit": "g/m2",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Root and rhizome biomass",
+        "Up to approximately 1,500 g/m²"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_WAVE_ENERGY_REDUCTION",
+      "name": "Wave energy reduction",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Coastal Protection",
+      "unit": "% reduction in wave force",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Wave energy reduction",
+        "% reduction in wave force"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEDIMENT_ACCRETION_RATE",
+      "name": "Sediment accretion rate",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Coastal Protection",
+      "unit": "cm/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Sediment accretion rate"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": null,
+        "high": null,
+        "unit": "g/m2/year",
+        "text": "Up to ~60 g N/m²/year and ~10 g P/m²/year in typical Mediterranean settings; values from Spanish Mediterranean areas are within these ranges.",
+        "comment": "Efficient nutrient uptake helps improve water quality; local values depend on water column nutrient concentrations and seagrass health.",
+        "reference": "Fourqurean et al. (2012); Orth et al. (2006)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_NUTRIENT_UPTAKE_CAPACITY",
+      "name": "Nutrient retention (N, P)",
+      "table18_name": "Nutrient Uptake Capacity",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Water Purification",
+      "unit": "kg/ha/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Nutrient retention (N, P)",
+        "Up to ~60 g N/m²/year and ~10 g"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_WATER_CLARITY",
+      "name": "Water clarity (turbidity reduction)",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Water Purification",
+      "unit": "Secchi depth (m), NTU",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Water clarity (turbidity reduction)"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": 1.8,
+        "high": 1.8,
+        "unit": "mg N/m2/hour",
+        "text": "Approximately 1.8 mg N/m²/hour in several Mediterranean studies.",
+        "comment": "Indicates effective removal of excess nitrogen.",
+        "reference": "Fourqurean et al. (2012)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_DENITRIFICATION_RATE",
+      "name": "Denitrification rate",
+      "table18_name": "Denitrification Rate",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Water Purification",
+      "unit": "mg N/m2/hour",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Denitrification rate",
+        "Approximately 1.8 mg N/m²/hour"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_BACTERIAL_AND_PATHOGEN_FILTRATION",
+      "name": "Bacterial & pathogen filtration",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Water Purification",
+      "unit": "% reduction",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Bacterial & pathogen filtration"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": 500,
+        "high": 1000,
+        "unit": "g/m2",
+        "text": "Ranges between 500–1000 g/m² have been reported from Mediterranean meadows, including studies on Italian coasts.",
+        "comment": "Higher biomass is typically observed in areas with well-structured meadows that provide effective nursery habitat.",
+        "reference": "Heck et al. (2003); Marbà et al. (2002)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_FISH_AND_INVERTEBRATE_BIOMASS",
+      "name": "Fish & invertebrate biomass",
+      "table18_name": "Fish & Invertebrate Biomass",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Food Provision",
+      "unit": "g/m2 or kg/ha",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Fish & invertebrate biomass",
+        "Ranges between 500–1000 g/m²"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_JUVENILE_FISH_DENSITY",
+      "name": "Juvenile fish density",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Food Provision",
+      "unit": "# individuals/m2",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Juvenile fish density"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SPECIES_RICHNESS",
+      "name": "Species richness",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Food Provision",
+      "unit": "Shannon Index or # species/area",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Species richness",
+        "Shannon Index or # species/area"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_HABITAT_COMPLEXITY",
+      "name": "Habitat complexity (leaf area index)",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Food Provision",
+      "unit": "Index value",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Habitat complexity (leaf area index)"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_EXPORT_OF_ORGANIC_MATTER",
+      "name": "Export of organic matter",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Food Provision",
+      "unit": "g C/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Export of organic matter"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": 83,
+        "high": 150,
+        "unit": "g C/m2/year",
+        "text": "Average values typically range from 83 to 150 g C/m²/year in Mediterranean meadows.",
+        "comment": "Reflects the blue carbon potential; slight differences may occur due to local water quality and light conditions.",
+        "reference": "Serrano et al. (2016); Duarte et al. (2005)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_CARBON_SEQUESTRATION_RATE",
+      "name": "Carbon sequestration rate",
+      "table18_name": "Carbon Sequestration Rate",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Climate Regulation",
+      "unit": "g C/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Carbon sequestration rate",
+        "from 83 to 150 g C/m²/year in"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": {
+        "low": null,
+        "high": 10,
+        "unit": "Mg C/ha",
+        "text": "Values up to approximately 10 Mg C/ha have been reported in Mediterranean studies.",
+        "comment": "Highlights the long-term carbon sink function of seagrass meadows; site-specific measurements can vary with sediment type and deposition rates.",
+        "reference": "Duarte et al. (2005); Serrano et al. (2016)"
+      },
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEDIMENT_ORGANIC_CARBON_STORAGE",
+      "name": "Sediment organic carbon storage",
+      "table18_name": "Sediment Organic Carbon Storage",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Climate Regulation",
+      "unit": "Mg C/ha",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Sediment organic carbon storage",
+        "Values up to approximately 10 Mg"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_NET_PRIMARY_PRODUCTION",
+      "name": "Net Primary Production (NPP)",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Climate Regulation",
+      "unit": "g C/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Net Primary Production (NPP)"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_BLUE_CARBON_BURIAL_RATE",
+      "name": "Blue carbon burial rate",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Climate Regulation",
+      "unit": "g C/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Blue carbon burial rate"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_DECOMPOSITION_RATE_OF_SEAGRASS_BIOMASS",
+      "name": "Decomposition rate of seagrass biomass",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Climate Regulation",
+      "unit": "%",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Decomposition rate of seagrass bio-"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_WATER_TRANSPARENCY",
+      "name": "Water transparency",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Recreation & Tourism",
+      "unit": "Secchi depth (m), NTU",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Water transparency"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEAGRASS_COVER",
+      "name": "Seagrass cover",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Recreation & Tourism",
+      "unit": "% of seabed covered",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Seagrass cover",
+        "% of seabed covered"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_BIODIVERSITY_INDEX",
+      "name": "Biodiversity index",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Recreation & Tourism",
+      "unit": "# species/area",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Biodiversity index"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_PRESENCE_OF_CHARISMATIC_SPECIES",
+      "name": "Presence of charismatic species",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Recreation & Tourism",
+      "unit": "# observations of turtles, seahorses, etc.",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Presence of charismatic species",
+        "# observations of turtles, seahorses,"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_RECRUITMENT_RATE_OF_JUVENILE_FISH",
+      "name": "Recruitment rate of juvenile fish",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Life Cycle Maintenance",
+      "unit": "# juveniles/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Recruitment rate of juvenile fish # juveniles/m²/year"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_EPIPHYTE_BIOMASS",
+      "name": "Epiphyte biomass",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Life Cycle Maintenance",
+      "unit": "g/m2",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Epiphyte biomass"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_TROPHIC_LINKAGES",
+      "name": "Trophic linkages",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Life Cycle Maintenance",
+      "unit": "Stable isotope ratios (d13C, d15N)",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Trophic linkages",
+        "Stable isotope ratios (δ13C, δ15N)"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_EXTENT_OF_SEAGRASS_MEADOW",
+      "name": "Extent of seagrass meadow",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Life Cycle Maintenance",
+      "unit": "ha",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Extent of seagrass meadow"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEAGRASS_BIOMASS_PRODUCTION",
+      "name": "Seagrass biomass production",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Biotic Materials & Biofuels",
+      "unit": "g DW/m2/year",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Seagrass biomass production",
+        "g DW/m²/year"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_CELLULOSE_AND_LIGNIN_CONTENT",
+      "name": "Cellulose & lignin content",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Biotic Materials & Biofuels",
+      "unit": "% composition",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Cellulose & lignin content"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_DECOMPOSABILITY_RATE",
+      "name": "Decomposability rate",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Biotic Materials & Biofuels",
+      "unit": "% degradation over time",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Decomposability rate",
+        "% degradation over time"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_NUMBER_OF_ENDEMIC_RARE_SPECIES",
+      "name": "Number of endemic/rare species",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Cognitive & Cultural Benefits",
+      "unit": "# species in Red List categories",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Number of endemic/rare species # species in Red List categories"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_HISTORICAL_SEAGRASS_BANQUETTES",
+      "name": "Historical seagrass banquettes",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "ecosystem_service": "Cognitive & Cultural Benefits",
+      "unit": "m2 of accumulated seagrass detritus",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Historical seagrass banquettes m² of accumulated seagrass detritus"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_POS_SEAGRASS_MEADOW_LONGEVITY",
+      "name": "Seagrass meadow longevity",
+      "da": "tuscan",
+      "source_set": "posidonia",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "ecosystem_service": "Cognitive & Cultural Benefits",
+      "unit": "Years (or centuries, from sediment cores)",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Code generated from D5.2 Table 17/18 row names (no code in source); values copied from Table 18; dapsiwrm_type/pathway_segment assigned by the toolbox.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Tables 17-18",
+        "lines": [
+          3116,
+          3280
+        ]
+      },
+      "source_quotes": [
+        "Seagrass meadow longevity",
+        "Years (or centuries, from sediment"
+      ],
+      "caveat": "Table 17 lists the indicator and unit only; no reference values are published (Table 18 covers 8 indicators)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_RESIDENT_POPULATION_SENSE_OF_IDENTITY_AND_BELONGING",
+      "name": "Resident population",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Human needs",
+      "dapsiwrm_type": "drivers",
+      "pathway_segment": "pressure",
+      "element": "Sense of Identity and Belonging",
+      "definition": "Linked to the resident population.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Annual reports of TANP"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Sense of Iden-",
+        "Linked to the resident popu-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_RESIDENT_POPULATION_FOOD_SECURITY",
+      "name": "Resident population",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Human needs",
+      "dapsiwrm_type": "drivers",
+      "pathway_segment": "pressure",
+      "element": "Food Security",
+      "definition": "Associated with the availability of local marine resources, we used an indirect indicator.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Annual reports of TANP"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Food Security",
+        "Associated with the availa-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_TOURISTIC_PRESENCES",
+      "name": "Touristic presences",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Human needs",
+      "dapsiwrm_type": "drivers",
+      "pathway_segment": "pressure",
+      "element": "Self-Actualization (Recreation)",
+      "definition": "Reflected in the recreational use of the marine environment.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Annual reports of TANP"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Touristic",
+        "presences"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_LICENCES_FOR_DIVING_ACCESSES",
+      "name": "Licences for diving accesses",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Human needs",
+      "dapsiwrm_type": "drivers",
+      "pathway_segment": "pressure",
+      "element": "Self-Actualization (Recreation)",
+      "definition": "Reflected in the recreational use of the marine environment.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Annual reports of TANP"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Licences for diving"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_CLIMATE_CHANGE",
+      "name": "Climate Change",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Activity",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Global CO2 Emissions",
+      "definition": "Primary cause of climate change.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "EU EDGAR (Emissions Database for Global Atmospheric Research)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Global CO2        Climate Change",
+        "Primary cause of climate"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_POTENTIAL_ANCHORAGES",
+      "name": "Potential anchorages",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Activity",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Vessel anchorages",
+      "definition": "Proportional to the density of leisure craft vessels in the TANP.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "EMODNET"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Potential anchor-",
+        "of leisure craft vessels in the"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_ARTISANAL_FISHING_ACTIVITY",
+      "name": "Artisanal fishing activity",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Activity",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Artisanal Fishing",
+      "definition": "Derived from the density of fishing boats in the TANP.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "EMODNET"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Artisanal Fish- Artisanal fishing",
+        "fishing boats in the TANP"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_VESSEL_DENSITY",
+      "name": "Vessel density",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Activity",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Vessel movements and maintenance",
+      "definition": "Reflects direct and indirect impacts on the marine environment.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "EMODNET"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Vessel density",
+        "Reflects direct and indirect"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_BIOMASS_OF_SPECIES_REMOVED",
+      "name": "Biomass of species removed",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Activity",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Recreational Fishing/Harvesting",
+      "definition": "Reflects direct impacts on the marine fauna.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Biomass of species Reflects direct impacts on        Data gap"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_CUMULATIVE_INTENSITY_OF_MARINE_HEATWAVES",
+      "name": "Cumulative Intensity of Marine Heatwaves",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Climate Change",
+      "definition": "Indicator of climate change.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "NOAA"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Cumulative Inten-",
+        "Indicator of climate change. NOAA"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_AREA_OF_P_OCEANICA_HABITAT_DISTURBED_OR_LOST",
+      "name": "Area of P. oceanica habitat disturbed or lost (km²)",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Disturbance of species due to human presence",
+      "definition": "Direct disturbance to P. oceanica beds.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Area of P. oceanica   Direct disturbance to P. oce-  Data Gap"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_MEDIAN_TOTAL_NUMBER_OF_LITTERED_ITEMS_PER_100M",
+      "name": "Median total number of littered items per 100m²",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Input of Litter and Nutrient Discharge",
+      "definition": "Pollution Impact.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ARPAT"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Median total num-",
+        "items per 100m²"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_ANIMALS_KILLED_OR_INJURED_PER_ACTIVITY_OR_PER_YEAR",
+      "name": "Animals killed or injured per activity or per year (number of bycatch of sea turtles)",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Extraction Mortality or Injury to Wild Species",
+      "definition": "Direct impact on wild non-target species.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ARPAT"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Animals killed or",
+        "sea turtles"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_NUMBER_OF_NIS_PER_AREA",
+      "name": "Number of NIS per area",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Input or spread of nonindigenous species",
+      "definition": "Related to International Marine Traffic and lessepsian species.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Expert opinion"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Number of NIS per",
+        "Expert opinion"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_PREI_INDEX",
+      "name": "PREI index",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Marine Processes and Functions",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Primary Production",
+      "definition": "Provides insight into the health of P. oceanica meadows.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ARPAT"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "PREI  index",
+        "health of P. oceanica mead-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_TURBIDITY",
+      "name": "Turbidity",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Marine Processes and Functions",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Seawater",
+      "definition": "Affected by terrestrial inputs, nutrient discharge, sediment resuspension.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Copernicus"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Seawater         Turbidity",
+        "Affected by terrestrial in-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_SEA_SURFACE_TEMPERATURE",
+      "name": "Sea Surface Temperature",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Marine Processes and Functions",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Seawater",
+      "definition": "Related to global Climate Change.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Copernicus"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Sea Surface Tem-",
+        "Related to global Climate Copernicus"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_MEAN_TROPHIC_LEVEL_OF_REEF_FISH_ASSEMBLAGES",
+      "name": "Mean Trophic Level of Reef Fish Assemblages",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Marine Processes and Functions",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Food Web Dynamics",
+      "definition": "A decrease may signal high fishing pressure.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "University of Pisa"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Mean Trophic",
+        "A decrease may signal high"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_POSIDONIA_OCEANICA_MEADOWS",
+      "name": "Posidonia oceanica Meadows",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Services",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Seascapes",
+      "definition": "Offers places for recreation and contributes to biodiversity.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "TA National Park"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Posidonia oceanica   Offers places for recreation",
+        "TA National Park"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_QUALITY_OF_BATHING_WATERS_CLEAN_WATER_AND_SEDIMENTS",
+      "name": "Quality of Bathing Waters",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Services",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Clean Water and Sediments",
+      "definition": "Key for human health and marine life.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ARPAT (Environmental Protection Agency of Tuscany)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Clean Water Quality of Bathing Key for human health"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_BIOMASS_OF_REEF_FISH",
+      "name": "Biomass of reef fish",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Services",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Coastal and Marine Biota",
+      "definition": "Essential for a robust ecosystem.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "University of Pisa"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Biomass of reef",
+        "Essential for a robust eco-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_AMOUNT_OF_CARBON_DIOXIDE_SEQUESTERED",
+      "name": "Amount of carbon dioxide sequestered",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Services",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Carbon Sequestration",
+      "definition": "ES provided by P. oceanica beds.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Amount of carbon     ES provided by P. oceanica    Data Gap"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_ENERGY_DISSIPATION_CAPACITY",
+      "name": "Energy dissipation capacity",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Services",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Natural Hazard Protection",
+      "definition": "ES provided by P. oceanica beds.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Natural Hazard Energy dissipation ES provided by P. oceanica        Data Gap"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_EMPLOYMENT_RATE",
+      "name": "Employment Rate",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Goods and Benefits",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Income and Employment",
+      "definition": "Provides income and employment opportunities to the local community.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ISTAT (Italian Institute of Statistics)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Employment Rate ployment opportunities to"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_HOUSING_COST_TO_INCOME_RATIO",
+      "name": "Housing Cost-to-Income Ratio",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Goods and Benefits",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Housing",
+      "definition": "Represents the balance between living costs and earnings for residents.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ISTAT"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Housing Cost-to-In-",
+        "Represents the balance be-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_FISH_LANDINGS",
+      "name": "Fish landings",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Goods and Benefits",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Fish for Human Consumption",
+      "definition": "Integral to the area's culture and tracked through fish landing data.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ISTAT"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Fish for Human   Fish landings",
+        "Integral to the area's culture"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_QUALITY_OF_BATHING_WATERS_USE_OF_PLACES_AND_SEASCAPES",
+      "name": "Quality of Bathing Waters",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Goods and Benefits",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Use of Places and seascapes",
+      "definition": "Reflects visual appeal and quality of coastal bathing areas, important for tourism and health.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ARPAT (Environmental Protection Agency of Tuscany)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Use of Places Quality of Bathing",
+        "Reflects visual appeal and"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": true,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "TUS_A1_NATURAL_HABITATS",
+      "name": "Natural habitats",
+      "da": "tuscan",
+      "source_set": "annex1",
+      "source_type": "Goods and Benefits",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Aesthetic Benefit",
+      "definition": "Crucial for tourism and local well-being, but quantification is challenging.",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 6 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 6",
+        "lines": [
+          8291,
+          8437
+        ]
+      },
+      "source_quotes": [
+        "Natural habitats",
+        "tion is challenging."
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_RESIDENT_IN_MACARONESIA",
+      "name": "Resident in Macaronesia",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Needs",
+      "dapsiwrm_type": "drivers",
+      "pathway_segment": "pressure",
+      "element": "Improved human health benefits and wellbeing",
+      "definition": "residents in Macaronesia",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Census; ISTAC (Canaries)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Census; ISTAC (Canar-",
+        "Improved hu-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_AQUATIC_SPORTS",
+      "name": "Aquatic Sports",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Activities",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Aquatic Sports",
+      "definition": "register athletes in: Scuba diving; canoeing; jet skiing; fishing; surfing; sailing; Stand up paddling",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "DRD and ISTAC"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Aquatic Sports Aquatic Sports jet skiing; fishing; surf- DRD and ISTAC"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_RECREATIONAL_DIVING",
+      "name": "Recreational Diving",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Activities",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "element": "Recreational Diving",
+      "definition": "scuba dives that had dove in MPAs each year",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "CPVP - Azores; General Directorate of Sustainable Fisheries, General Subdirectorate for Fisheries, Ministry of Agriculture, Fisheries and Food"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Recreational    Recreational   Diving",
+        "dove in MPAs each year"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_FISHING",
+      "name": "Fishing",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Dominant Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Fishing",
+      "definition": "Total Fishing landings (in tons per year)",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "PORDATA and Department of Agriculture, Livestock, Fisheries and Food Sovereignty"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Fishing             Fishing                 Total Fishing landings",
+        "tons per year)"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_NON_NATIVE_SPECIES",
+      "name": "Non-native species",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Dominant Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Input or spread of non-indigenous species",
+      "definition": "No. of non-natives species within years",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "CIBIO-Açores; MARE-Madeira; Castro et al. (2022), EXOS/BIOTA"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Non-native species      No. of non-natives spe-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_LITTER_RECOVERED_PER_CLEANING_ACTIVITY",
+      "name": "Litter recovered per cleaning activity",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Dominant Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Input of litter",
+      "definition": "organized activities conducted to collect marine litter on the coast",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "DRPM - DQEM; OSPAR; AAE"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Input of litter   Litter recovered   per",
+        "litter on the coast"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_TOURISTIC_PRESSURE",
+      "name": "Touristic pressure",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Dominant Pressures",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "element": "Disturbance of species due to human presence",
+      "definition": "tourists inside MPAs",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "OTA; DREM; ISTAC"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Touristic pressure      tourists inside MPAs        OTA; DREM; ISTAC"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_PREDATOR_PREY_RATIO_OF_FISH_WITHIN_MPAS",
+      "name": "Predator/prey ratio of fish within MPAs",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Marine Process and Functioning",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Food-Web dynamics",
+      "definition": "# of predator species / # of prey species within MPAs",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "MARE-Madeira; IMAR - Azores; Canarias Costa Viva (ECOAQUA)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Predator/prey ratio",
+        "of fish within MPAs"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_PRODUCTIVITY",
+      "name": "Productivity",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Marine Process and Functioning",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Primary production",
+      "definition": "Chlorophyll concentration (annual average)",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "OOM"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Productivity            Chlorophyll concentra-      OOM"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_ABUNDANCE_OF_LARGE_PREDATOR_FISH_WITHIN_MPAS",
+      "name": "Abundance of large predator fish within MPAs",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Marine Process and Functioning",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "element": "Formation of species and habitats",
+      "definition": "Mycteroperca fusca; Serranus atricauda; Epinephelus marginatus /m2",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "MARE-Madeira; IMAR - Azores; Canarias Costa Viva (ECOAQUA)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Abundance of large",
+        "predator fish within"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_ABUNDANCE_OF_BENTHIC_FISH_WITHIN_MPAS",
+      "name": "Abundance of benthic fish within MPAs",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Service",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Biodiversity",
+      "definition": "total individuals /m2",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "MARE-Madeira; IMAR - Azores; Canarias Costa Viva (ECOAQUA)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Abundance of ben-",
+        "thic fish within total individuals /m2"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_NATURA_RESERVES",
+      "name": "NATURA reserves",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Service",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Places and seascapes",
+      "definition": "MPAs (Rede NATURA) each 10 years",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "DRPM; IFCN; Department of Ecological Transition and Energy"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "NATURA reserves         MPAs (Rede NATURA)"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_BLUE_FLAG_STATUS_AREA",
+      "name": "Blue Flag status area",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Ecosystem Service",
+      "dapsiwrm_type": "ecosystem_services",
+      "pathway_segment": "benefit",
+      "element": "Clean water and sediments",
+      "definition": "Blue Flag status areas each year",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Bandeira Azul; General Public Health Department (Canary Health Service)/ADEAC"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Clean water and Blue Flag status",
+        "Bandeira Azul; Gen-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_MARINE_TOURISM_COMPANIES",
+      "name": "Marine tourism companies",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Good and Benefit",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Income and Employment",
+      "definition": "marine touristic companies",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "DRPM, ACIF and BIOCON (Plasmar+)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Income and Em- Marine tourism marine touristic compa- DRPM, ACIF and BIO-"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_FISH_LANDINGS_OF_KEY_COASTAL_SPECIES",
+      "name": "Fish landings of key coastal species",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Good and Benefit",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Food for human consumption",
+      "definition": "Mycteroperca fusca; Serranus atricauda; Epinephelus marginatus (in tons)",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "PORDATA and Department of Agriculture, Livestock, Fisheries and Food Sovereignty"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Food for human Fish landings of key",
+        "coastal species"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_AREA_OF_COASTLINE_PROTECTED_BY_MPAS",
+      "name": "Area of coastline protected by MPAs",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Good and Benefit",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Uses of places and seascapes",
+      "definition": "% of coastline protected by MPAs compared to the territorial sea",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "DRPM; IFCN; Ministry for Ecological Transition and Demographic Challenge"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Area of coastline",
+        "protected by MPAs"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_RESEARCH_PAPERS_CONCERNING_MPAS_DA",
+      "name": "Research papers concerning MPAs DA",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Good and Benefit",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Education & Research",
+      "definition": "Number per year (expert view)",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Web of Knowledge"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Research papers  in",
+        "Web of Knowledge"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "MAC_A1_NUMBER_OF_BLUE_SCHOOLS",
+      "name": "Number of Blue Schools",
+      "da": "macaronesia",
+      "source_set": "annex1",
+      "source_type": "Good and Benefit",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "element": "Education & Research",
+      "definition": "Number per year (community view)",
+      "unit": "",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ABAE; DRM; EMODnet"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Row of D5.2 Annex 1 Table 7 (Borja et al. 2024); dapsiwrm_type via dapsiwrm_type_map; pathway_segment by plan ruling 8.",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Annex 1 Table 7",
+        "lines": [
+          9020,
+          9140
+        ]
+      },
+      "source_quotes": [
+        "Number of Blue",
+        "ABAE; DRM; EMODnet"
+      ],
+      "caveat": "Type assigned by counting the stacked Type labels in source order (PDF pp. 186-188); the layout extract prints Type labels out of alignment with rows."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [
+        {
+          "area": "Faroe Islands",
+          "species": "Mackerel",
+          "period": "2024",
+          "value": 69489,
+          "unit": "t"
+        },
+        {
+          "area": "Faroe Islands",
+          "species": "Herring",
+          "period": "2024",
+          "value": 59426,
+          "unit": "t"
+        },
+        {
+          "area": "Faroe Islands",
+          "species": "Blue whiting",
+          "period": "2024",
+          "value": 433281,
+          "unit": "t"
+        }
+      ],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "ARC_LANDINGS",
+      "name": "Pelagic landings by species, Faroe Islands (2024)",
+      "da": "arctic",
+      "source_set": "arctic",
+      "dapsiwrm_type": "activities",
+      "pathway_segment": "pressure",
+      "unit": "tonnes",
+      "scale_type": "numeric",
+      "data_sources": [
+        "Official 2024 landing volumes (Faroe Islands)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Descriptive indicator assembled from Arctic NEA chapter text; D5.2 defines no formal Arctic indicator set (A§5.5)",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Arctic NEA chapter",
+        "lines": [
+          1863,
+          1880
+        ]
+      },
+      "source_quotes": [
+        "Landings (tons)",
+        "Estimated revenue (USD) for the Faroe Islands in 2024.",
+        "Mackerel  69,489"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [
+        {
+          "area": "Faroe Islands",
+          "species": "Mackerel",
+          "period": "2024",
+          "value": 4790,
+          "unit": "USD/t"
+        },
+        {
+          "area": "Faroe Islands",
+          "species": "Herring",
+          "period": "2024",
+          "value": 17710,
+          "unit": "USD/t"
+        },
+        {
+          "area": "Faroe Islands",
+          "species": "Blue whiting",
+          "period": "2024",
+          "value": 6015,
+          "unit": "USD/t"
+        }
+      ],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "ARC_PRICE",
+      "name": "Average retail price by species (midpoint), Faroe Islands (2024)",
+      "da": "arctic",
+      "source_set": "arctic",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "benefit",
+      "unit": "USD/t",
+      "scale_type": "numeric",
+      "data_sources": [],
+      "provenance": "wp5_derived",
+      "derivation": "Descriptive indicator assembled from Arctic NEA chapter text; D5.2 defines no formal Arctic indicator set (A§5.5)",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Arctic NEA chapter",
+        "lines": [
+          1863,
+          1896
+        ]
+      },
+      "source_quotes": [
+        "average retail prices",
+        "Avg. Price (USD/ton)",
+        "midpoint retail prices, not ex-vessel prices."
+      ],
+      "caveat": "Retail midpoint prices, not first-sale/ex-vessel prices; ex-vessel prices are often 30–50% of final retail value (L1863–1865, L1894)."
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [
+        {
+          "area": "Northeast Atlantic",
+          "species": "Mackerel",
+          "period": "2023",
+          "value": 35,
+          "unit": "%"
+        },
+        {
+          "area": "Northeast Atlantic",
+          "species": "Herring",
+          "period": "2023",
+          "value": 33,
+          "unit": "%"
+        },
+        {
+          "area": "Northeast Atlantic",
+          "species": "Blue whiting",
+          "period": "2023",
+          "value": 28,
+          "unit": "%"
+        }
+      ],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "ARC_TAC_VS_ADVICE",
+      "name": "Catch vs TAC and ICES advice (overshoot %)",
+      "da": "arctic",
+      "source_set": "arctic",
+      "dapsiwrm_type": "pressures",
+      "pathway_segment": "pressure",
+      "unit": "%",
+      "scale_type": "numeric",
+      "data_sources": [
+        "MSC (2024)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Descriptive indicator assembled from Arctic NEA chapter text; D5.2 defines no formal Arctic indicator set (A§5.5)",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Arctic NEA chapter",
+        "lines": [
+          1785,
+          1815
+        ]
+      },
+      "source_quotes": [
+        "herring, and 28% for blue whiting",
+        "by over 5.3 million tons"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "ARC_SSB_VS_REFPOINTS",
+      "name": "SSB vs MSY Btrigger/Bpa/Blim; F vs FMSY/Fpa",
+      "da": "arctic",
+      "source_set": "arctic",
+      "dapsiwrm_type": "marine_processes",
+      "pathway_segment": "state",
+      "unit": "ratio to reference point",
+      "scale_type": "numeric",
+      "data_sources": [
+        "ICES (2023a-c)",
+        "MSC (2023)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Descriptive indicator assembled from Arctic NEA chapter text; D5.2 defines no formal Arctic indicator set (A§5.5)",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Arctic NEA chapter",
+        "lines": [
+          1785,
+          1815
+        ]
+      },
+      "source_quotes": [
+        "MSY Btrigger",
+        "FMSY",
+        "is below MSY Btrigger and Bpa but above Blim"
+      ]
+    },
+    {
+      "annex_code": null,
+      "criterion_roles": {},
+      "baseline": [
+        {
+          "area": "Northeast Atlantic",
+          "species": "Mackerel, herring, blue whiting",
+          "period": "since 2019",
+          "value": null,
+          "value_text": "certification lost",
+          "unit": null
+        }
+      ],
+      "scenario_projection": {},
+      "early_warning": [],
+      "reference_range": null,
+      "data_gap": false,
+      "stub": false,
+      "revision": 1,
+      "classification_provenance": "toolbox_extension",
+      "code": "ARC_MSC_STATUS",
+      "name": "MSC certification status",
+      "da": "arctic",
+      "source_set": "arctic",
+      "dapsiwrm_type": "goods_benefits",
+      "pathway_segment": "governance_capacity",
+      "unit": "categorical (certified/suspended)",
+      "scale_type": "categorical",
+      "data_sources": [
+        "MSC (2023)"
+      ],
+      "provenance": "wp5_derived",
+      "derivation": "Descriptive indicator assembled from Arctic NEA chapter text; D5.2 defines no formal Arctic indicator set (A§5.5)",
+      "source_ref": {
+        "document": "D5.2 v5",
+        "section": "Arctic NEA chapter",
+        "lines": [
+          885,
+          900
+        ]
+      },
+      "source_quotes": [
+        "Marine Stewardship Council (MSC) certification",
+        "2019, all three stocks have lost"
+      ]
     }
   ]
 }

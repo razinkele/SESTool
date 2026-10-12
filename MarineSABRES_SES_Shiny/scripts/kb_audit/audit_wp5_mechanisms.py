@@ -19,6 +19,31 @@ from pathlib import Path
 
 APP = Path(__file__).resolve().parents[2]
 KB_PATH = APP / "data" / "ses_knowledge_db_wp5_mechanisms.json"
+
+REGISTRY_PATH = APP / "data" / "wp5_indicators.json"
+
+
+def registry_codes(path=REGISTRY_PATH):
+    """Codes of the WS-4 indicator registry, or None when the file is absent."""
+    p = Path(path)
+    if not p.exists():
+        return None
+    return {e["code"] for e in json.loads(p.read_text(encoding="utf-8"))["entries"]}
+
+
+def success_metric_registry_fails(kb, codes):
+    """Spec WS-2 Audit: every derived.success_metrics code must exist in the WS-4 registry."""
+    if codes is None:
+        return ["top.registry: data/wp5_indicators.json missing (WS-4)"]
+    fails = []
+    for da, block in kb.get("demonstration_areas", {}).items():
+        for m in block.get("mechanisms", []):
+            for code in m.get("derived", {}).get("success_metrics", []):
+                if code not in codes:
+                    fails.append(f"{m.get('id')}.derived.success_metrics: {code} not in data/wp5_indicators.json")
+    return fails
+
+
 _s = importlib.util.spec_from_file_location("bk", APP / "scripts" / "build_wp5_mechanisms_kb.py")
 bk = importlib.util.module_from_spec(_s); _s.loader.exec_module(bk)
 
@@ -50,7 +75,7 @@ def _strings(obj, path=""):
         yield path, obj
 
 
-def audit(kb, sections):
+def audit(kb, sections, registry=None):
     fails = []
     hdr = sections.get("__header__", {})
     for k in ["verified_against_final_pdf"] + bk.PIN_KEYS:
@@ -117,6 +142,7 @@ def audit(kb, sections):
     for svc, v in kb["valuation_unit_values"]["posidonia_oceanica"].items():
         if not (v["low"] <= v["central"] <= v["high"]):
             fails.append(f"top.valuation.{svc}: band order violated")
+    fails += success_metric_registry_fails(kb, registry_codes() if registry is None else registry)
     return fails
 
 
