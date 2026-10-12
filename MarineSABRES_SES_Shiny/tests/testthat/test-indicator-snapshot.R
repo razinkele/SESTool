@@ -404,3 +404,9 @@ test_that("the picker fills blank or previously-picked values and keeps the user
   expect_match(paste(deparse(register_indicator_picker_observer), collapse = "\n"), "indicator_picker_updates",
                fixed = TRUE)
 })
+
+test_that("the registry-snapshot stamp names a release newer than 1.23.0 (which has no WS-4 columns)", {
+  # 1.23.0 shipped WS-0..WS-3b only; it would load a WS-4 project without warning
+  # and drop Registry_Id/Registry_Version on save, so the stamp must be later.
+  expect_equal(utils::compareVersion(WP5_INDICATOR_MIN_APP_VERSION, "1.23.0"), 1L)
+})

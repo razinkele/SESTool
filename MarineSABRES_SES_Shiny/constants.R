@@ -862,7 +862,9 @@ WP5_INDICATOR_SCALE_TYPES <- c("numeric", "ordinal_profile", "count", "categoric
 WP5_INDICATOR_SOURCE_SETS <- c("fiche", "annex1", "posidonia", "arctic")
 # A save that records a registry snapshot needs an app that keeps the
 # Registry_Id/Registry_Version columns (WS-0 stamp_min_app_version()).
-WP5_INDICATOR_MIN_APP_VERSION <- "1.23.0"
+# 1.23.0 shipped WS-0..WS-3b without these columns, so the first release
+# carrying WS-4 is 1.24.0.
+WP5_INDICATOR_MIN_APP_VERSION <- "1.24.0"
 
 # ============================================================================
 # END OF CONSTANTS
