@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.3] - 2026-10-12
+
+Patch release: template Responses linked to the benefits that trigger them (PR #101). Built from 1.22.2; the unreleased WP5 work on main is not included.
+
+### Changed (templates — Responses linked to the benefits that trigger them)
+- **15 Goods & Benefits → Response or Measure links added to six templates**, so more Responses sit in feedback loops (Responses without one: 34 → 19). Fisheries 2, Pollution 1, Tourism 3, Climate Change 2, Offshore Wind 1, Caribbean 6. In the six smaller templates every loop a new link closes is Balancing. In Caribbean, within the 8-step loop search the app uses, the 6 reinforcing loops it already had are unchanged and the new links add only balancing loops; Limits to Growth findings rise from 5 to 10. Longer loops through five of the new Caribbean links are mixed, as they already were through 12 of its 19 original links. Template versions bumped.
+- The 19 Responses still without feedback need a trigger the app cannot store as a link into a Response (water clarity, porpoise or seabird numbers, cod biomass). They are left for expert review: Aquaculture (all 5), Pollution 5, Offshore Wind 4, Fisheries 2, Climate Change 2, Tourism 1.
+
+### Fixed
+- Template loader: a Goods & Benefits → Measure link in a template file now reaches the Response matrix (Measures share the Responses' rows); before, it was silently dropped.
+
 ## [1.22.2] - 2026-10-11
 
 Patch release: translation keys defined in two files (PR #96).
