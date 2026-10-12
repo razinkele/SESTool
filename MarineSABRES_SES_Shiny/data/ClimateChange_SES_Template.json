@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.1",
+    "version": "2.2",
     "source": "Rebuilt from ses_knowledge_db.json context: arctic_sea_ice",
     "applicable_regions": [
       "arctic"
@@ -444,6 +444,26 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R002",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Inuit concern that seismic surveys displace marine mammals and threaten harvest-based food security drove opposition to Arctic exploration (e.g. Clyde River v. Petroleum Geo-Services, 2017 SCC 40): less food security, stronger moratorium pressure."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R003",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Threats to community food security are a main argument for Indigenous co-management of marine mammal harvests: less food security, more co-management."
     }
   ]
 }

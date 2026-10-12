@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.2",
+    "version": "2.3",
     "source": "Rebuilt from ses_knowledge_db.json context: baltic_estuary",
     "applicable_regions": [
       "baltic"
@@ -483,6 +483,16 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Declining recreational salmon fishing revenue increases support for fish passage restoration (dam removal, fish ladders): less revenue, more restoration."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R003",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Declining salmon angling revenue signals a weak salmon run and adds pressure for HELCOM salmon river recovery plans: less revenue, stronger recovery effort."
     }
   ]
 }

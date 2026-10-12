@@ -11,7 +11,7 @@
   },
   "metadata": {
     "created_date": "2026-04-08",
-    "version": "2.1",
+    "version": "2.2",
     "source": "Rebuilt from ses_knowledge_db.json context: mediterranean_rocky_shore",
     "applicable_regions": [
       "mediterranean"
@@ -491,6 +491,36 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Declining dive and marine tourism revenue, as large predatory fish disappear, increases local support for no-take marine reserves: less revenue, more reserve designation."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "R002",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Falling income from sea urchin harvesting signals stock depletion and prompts harvest quotas: less fisher income, tighter quota management."
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "M001",
+      "from_type": "welfare",
+      "to_type": "measure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Dive operators losing revenue as heavily visited reef sites degrade press for visitor carrying-capacity limits: less dive revenue, stricter limits."
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "M002",
+      "from_type": "welfare",
+      "to_type": "measure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Anchor damage that degrades dive sites and dive revenue prompts dive operators and managers to install mooring buoys: less dive revenue, more buoys."
     }
   ]
 }

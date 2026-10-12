@@ -23,7 +23,7 @@
   },
   "metadata": {
     "created_date": "2025-11-13",
-    "version": "1.0",
+    "version": "1.1",
     "source": "Based on comprehensive analysis of Caribbean marine environmental challenges 2011-2023",
     "applicable_regions": [
       "Caribbean Sea",
@@ -2297,6 +2297,66 @@
       "description": "Reduced quality of life reinforces housing and infrastructure needs",
       "strength": "medium",
       "confidence": 3
+    },
+    {
+      "from_id": "W2",
+      "to_id": "RC5",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Loss of fishing income and food security is the main trigger for stronger fisheries management: more loss, more management."
+    },
+    {
+      "from_id": "W2",
+      "to_id": "RC7",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Loss of fishing income and food security prompts support for fishers and alternative aquaculture: more loss, more support."
+    },
+    {
+      "from_id": "W2",
+      "to_id": "RC2",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Declining catches are a common argument for marine protected areas as fish replenishment zones: more loss, more protection."
+    },
+    {
+      "from_id": "W1",
+      "to_id": "RC10",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Declining tourism revenue as reefs and beaches degrade prompts sustainable tourism policies: more decline, more sustainable tourism measures."
+    },
+    {
+      "from_id": "W1",
+      "to_id": "RC9",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Damage to reef fish and dive sites from invasive species (e.g. lionfish) shows up as lost tourism revenue and prompts control programmes: more decline, more control."
+    },
+    {
+      "from_id": "W7",
+      "to_id": "RC13",
+      "from_type": "welfare",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 2,
+      "description": "Sargassum clean-up costs on municipalities push island governments toward regional cooperation on a transboundary problem: more burden, more cooperation."
     }
   ],
   "usage_notes": "This template represents the complex, multi-faceted marine environmental challenges facing Caribbean islands. It can be adapted for other tropical island contexts by adjusting specific regional seas, ecosystem types, and local pollutants. The template emphasizes the interconnected nature of problems (Sargassum, coral bleaching, contamination, overfishing, habitat loss) and the need for integrated coastal zone management approaches."

@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed (templates — Responses linked to the benefits that trigger them)
+- **15 Goods & Benefits → Response links added to six templates**, so more Responses sit in feedback loops and the model check flags fewer of them (34 → 19). Fisheries 2, Pollution 1, Tourism 3, Climate Change 2, Offshore Wind 1, Caribbean 6. In the six smaller templates every loop a new link closes is Balancing. In Caribbean the 6 reinforcing loops it already had are unchanged, and its Limits to Growth findings rise from 5 to 10. Template versions bumped.
+- The 19 Responses still without feedback need a trigger the app cannot store as a link into a Response (water clarity, porpoise or seabird numbers, cod biomass). They are left for expert review: Aquaculture (all 5), Pollution 5, Offshore Wind 4, Fisheries 2, Climate Change 2, Tourism 1.
+- Template loader: a Goods & Benefits → Measure link now reaches the Response matrix (Measures share the Responses' rows); before, it was silently dropped.
+
 ### Added (model check — spec 2026-10-11 WS-3b)
 - **On load, the ISA editor warns about likely model issues.** It flags two cases:
   - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.
-  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. All seven shipped templates currently contain such Responses, so loading a template shows this warning.
+  - Responses that receive no link from a Marine Process, Ecosystem Service or Goods & Benefit, so they cannot respond to the state they manage. Six of the seven shipped templates still contain such Responses (see the template change below), so loading one shows this warning.
 - Matching uses whole words in 9 languages and does not flag the ecosystem-service sense of "regulation". The warning appears only when the findings change, and nothing in the project is modified.
 
 ### Fixed (Response register stored translated labels — spec 2026-10-11 WS-3a)
