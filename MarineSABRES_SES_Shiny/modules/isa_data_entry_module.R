@@ -295,6 +295,12 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         pd$data$isa_data$case_info <- isa_data$case_info
       }
 
+      # WS-0/WS-4: a project holding a registry snapshot needs an app that keeps
+      # Registry_Id/Registry_Version (older apps drop unknown element columns).
+      if (project_has_registry_snapshot(pd$data$isa_data)) {
+        pd <- stamp_min_app_version(pd, WP5_INDICATOR_MIN_APP_VERSION)
+      }
+
       project_data_reactive(pd)
     }
 
@@ -342,7 +348,20 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                             linked_col = NULL, matrix_key = NULL) {
       pids <- isa_data[[paste0(prefix, "_panel_ids")]]
       live <- live_panel_ids(input, prefix, pids)
-      df <- merge_collected_with_existing(isa_data[[key]], collected, pids, live, col_names)
+      # WS-4: only the six element categories carry indicator fields; Responses
+      # (prefix "r") keep their original column set (plan rulings 3 and 9).
+      is_el <- prefix %in% names(ISA_PREFIX_ELEMENT_KEY)
+      cols <- if (is_el) c(col_names, ISA_INDICATOR_COLUMNS) else col_names
+      # Indicator fields come from the third panel row for live rows; loaded
+      # rows carry theirs over by ID inside merge_collected_with_existing().
+      if (is_el && is.data.frame(collected) && nrow(collected) > 0 && "ID" %in% names(collected)) {
+        ind <- collect_indicator_inputs(input, prefix, collected$ID)
+        collected <- cbind(collected[, setdiff(names(collected), ISA_INDICATOR_COLUMNS), drop = FALSE],
+                           ind[match(collected$ID, ind$ID), setdiff(names(ind), "ID"), drop = FALSE])
+      }
+      previous <- isa_data[[key]]
+      df <- merge_collected_with_existing(previous, collected, pids, live, cols)
+      if (is_el) df <- apply_registry_snapshot(df, previous)
       if (!is.null(linked_col) && !is.null(matrix_key)) {
         df <- fill_linked_from_matrix(df, linked_col,
                                       isa_data$adjacency_matrices[[matrix_key]], live)
@@ -1238,6 +1257,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "goods_benefits",
                               id_prefix = ELEMENT_ID_PREFIX$welfare,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "gb", current_id, i18n)
     })
 
     output$gb_table <- renderDT({
@@ -1290,6 +1310,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "ecosystem_services",
                               id_prefix = ELEMENT_ID_PREFIX$impacts,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "es", current_id, i18n)
     })
 
     output$es_table <- renderDT({
@@ -1345,6 +1366,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "marine_processes",
                               id_prefix = ELEMENT_ID_PREFIX$states,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "mpf", current_id, i18n)
     })
 
     output$mpf_table <- renderDT({
@@ -1384,6 +1406,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "pressures",
                               id_prefix = ELEMENT_ID_PREFIX$pressures,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "p", current_id, i18n)
     })
 
     output$p_table <- renderDT({
@@ -1423,6 +1446,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "activities",
                               id_prefix = ELEMENT_ID_PREFIX$activities,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "a", current_id, i18n)
     })
 
     output$a_table <- renderDT({
@@ -1462,6 +1486,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                               isa_data = isa_data, data_key = "drivers",
                               id_prefix = ELEMENT_ID_PREFIX$drivers,
                               on_remove = sync_to_project_data)
+      register_indicator_picker_observer(input, output, session, "d", current_id, i18n)
     })
 
     output$d_table <- renderDT({

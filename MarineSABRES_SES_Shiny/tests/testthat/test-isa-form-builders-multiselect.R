@@ -24,7 +24,11 @@ test_that("a Pressures panel renders its Linked-to-MPF field as a <select multip
 
   expect_match(html, "<select[^>]*multiple", perl = TRUE)      # is a multi-select
   expect_match(html, 'value="MPF001: A"', fixed = TRUE)        # real choice present
-  expect_false(grepl('<option value=""', html, fixed = TRUE))  # blank placeholder dropped
+  # Only the Linked select drops its blank placeholder; the WS-4 registry picker
+  # in the same panel keeps its "—" choice on purpose.
+  linked <- regmatches(html, regexpr('(?s)<select[^>]*id="isa-p_linkedmpf_P001".*?</select>', html, perl = TRUE))
+  expect_length(linked, 1)
+  expect_false(grepl('<option value=""', linked, fixed = TRUE))  # blank placeholder dropped
 })
 
 test_that("a panel with no multiple field renders only single-selects (unchanged)", {

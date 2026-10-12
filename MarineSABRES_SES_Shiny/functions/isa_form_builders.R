@@ -66,12 +66,38 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
     )
   )
 
+  # WS-4: indicator row for the six element prefixes only (not Responses).
+  element_key <- if (exists("ISA_PREFIX_ELEMENT_KEY")) unname(ISA_PREFIX_ELEMENT_KEY[prefix]) else NA_character_
+  row3 <- NULL
+  if (length(element_key) == 1 && !is.na(element_key)) {
+    row3 <- tagList(
+      do.call(fluidRow, lapply(isa_indicator_fields(i18n, element_key), build_field)),
+      fluidRow(column(12,
+        uiOutput(ns(paste0(prefix, "_regbadge_", current_id))),
+        tags$small(class = "text-muted", i18n$t("modules.indicator_registry.picker_help"))
+      ))
+    )
+  }
+
   div(
     id = ns(paste0(prefix, "_panel_", current_id)),
     class = "isa-entry-panel",
     style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
     do.call(fluidRow, row1_cols),
-    do.call(fluidRow, row2_cols)
+    do.call(fluidRow, row2_cols),
+    row3
+  )
+}
+
+#' Indicator fields shown as the third row of every element entry panel (WS-4)
+isa_indicator_fields <- function(i18n, element_key) {
+  list(
+    list(id = "registry", type = "select", width = 4,
+         label = i18n$t("modules.indicator_registry.picker_label"),
+         choices = indicator_picker_choices(element_key, i18n)),
+    list(id = "indicator", type = "text", width = 3, label = i18n$t("modules.indicator_registry.field_indicator")),
+    list(id = "indunit", type = "text", width = 2, label = i18n$t("modules.indicator_registry.field_unit")),
+    list(id = "datasource", type = "text", width = 3, label = i18n$t("modules.indicator_registry.field_data_source"))
   )
 }
 
