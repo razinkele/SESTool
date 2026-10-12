@@ -501,12 +501,14 @@ setup_stale_data_observer <- function(event_bus, has_results_fn, ns, i18n) {
 }
 
 #' Small badge marking non-wp5_source provenance (spec P1); NULL for wp5_source
-#' @param provenance "wp5_prefinal" | "wp5_derived" | other
+#' @param provenance "wp5_prefinal" | "wp5_derived" | "toolbox_extension" | "provisional"
 #' @param i18n Translator
 provenance_badge <- function(provenance, i18n) {
   if (is.null(provenance) || identical(provenance, "wp5_source")) return(NULL)
   # i18n-ref: modules.wp5_mechanisms.provenance.wp5_prefinal
   # i18n-ref: modules.wp5_mechanisms.provenance.wp5_derived
+  # i18n-ref: modules.wp5_mechanisms.provenance.toolbox_extension
+  # i18n-ref: modules.wp5_mechanisms.provenance.provisional
   tags$span(class = "badge bg-warning text-dark ms-1",
             i18n$t(paste0("modules.wp5_mechanisms.provenance.", provenance)))
 }

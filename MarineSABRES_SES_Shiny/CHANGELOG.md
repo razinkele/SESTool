@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (WP5 indicator registry — spec 2026-10-11 WS-4)
+- WP5 indicator registry (`data/wp5_indicators.json`): 11 Macaronesia fiche-set indicators (4 stubs pending partner fiches), 33 Posidonia indicators with Table 18 reference ranges, 46 Annex 1 DAPSIWRM-typed indicators (28 Tuscan, 18 Macaronesia), 5 Arctic descriptive indicators (Faroe Islands). Every WP5 value cites D5.2 v5 line ranges, and tests check its quotes against a committed extract. The WS-2 mechanism audit now fails when a mechanism's success metric is not in the registry.
+- Standard Entry: every element (not Responses) now has Indicator, Unit and Data source fields and a WP5 indicator picker that shows each entry's provenance. Picking copies the values (snapshot) and records the registry entry and revision; such projects are stamped `min_app_version` 1.23.0.
+- On project load, a warning appears when a copied indicator has since changed in, or been removed from, the registry; a persistent link opens a review that compares the element's values with the registry's, and the user chooses which elements to update.
+
+### Fixed (auto-save backups could lose a whole element category — WS-4)
+- Auto-save wrote JSON without `na = "null"`, so an element with an empty field omitted that key; on recovery the strict row bind failed and the whole category (e.g. all Drivers) was silently dropped. Auto-save now writes NA as `null`, and the loader binds rows by key union, so older backups recover too.
+
 ### Added (model check — spec 2026-10-11 WS-3b)
 - **On load, the ISA editor warns about likely model issues.** It flags two cases:
   - Drivers, Activities or Ecosystem Services named like a policy instrument or management measure (quota, licence, MPA, label, mooring, subsidy, tax, ban, closure, restoration…), which probably belong under Responses. This mistake appeared in all three demonstration-area models analysed in D5.3.

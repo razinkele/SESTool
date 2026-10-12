@@ -352,3 +352,31 @@ test_that("a current snapshot records no drift; switching project resets the ded
     expect_equal(drift_state$notified, 2L)
   })
 })
+
+test_that("every indicator-registry and badge key used in code exists in all 9 languages, defined once", {
+  langs <- c("en","es","fr","de","lt","pt","it","no","el")
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "indicator_registry.json"),
+                           simplifyVector = FALSE)$translation
+  mech <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "wp5_mechanisms.json"),
+                             simplifyVector = FALSE)$translation
+  keys <- c("picker_none", "picker_label", "picker_help", "picker_group_suggested", "picker_group_other",
+            "field_indicator", "field_unit", "field_data_source", "da.macaronesia", "da.tuscan", "da.arctic",
+            "stub_marker", "drift_found", "drift_found_missing", "drift_review", "drift_link", "drift_title",
+            "drift_explain", "drift_missing_explain", "drift_apply", "drift_status_updated", "drift_status_missing",
+            "drift_col_field", "drift_col_element", "drift_col_registry")
+  for (k in paste0("modules.indicator_registry.", keys)) {
+    expect_false(is.null(tr[[k]]), info = k)
+    for (l in langs) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
+  }
+  for (k in paste0("modules.wp5_mechanisms.provenance.", c("wp5_derived", "toolbox_extension", "provisional"))) {
+    expect_false(is.null(mech[[k]]), info = k)
+    expect_null(tr[[k]])                                            # defined in wp5_mechanisms.json only
+    for (l in langs) expect_true(nzchar(mech[[k]][[l]] %||% ""), info = paste(k, l))
+  }
+  for (k in c("drift_found", "drift_found_missing"))
+    for (l in langs)
+      expect_true(grepl("%1$d", tr[[paste0("modules.indicator_registry.", k)]][[l]], fixed = TRUE), info = paste(k, l))
+  ui <- paste(readLines(file.path(PROJECT_ROOT, "functions", "ui_components.R"), warn = FALSE), collapse = "\n")
+  for (p in c("toolbox_extension", "provisional"))
+    expect_match(ui, paste0("# i18n-ref: modules.wp5_mechanisms.provenance.", p), fixed = TRUE)
+})

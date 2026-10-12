@@ -419,6 +419,28 @@
       "no": "Avledet",
       "el": "Παράγωγο"
     },
+    "modules.wp5_mechanisms.provenance.toolbox_extension": {
+      "en": "Toolbox extension",
+      "es": "Extensión de la herramienta",
+      "fr": "Extension de l'outil",
+      "de": "Toolbox-Erweiterung",
+      "lt": "Įrankio papildinys",
+      "pt": "Extensão da ferramenta",
+      "it": "Estensione dello strumento",
+      "no": "Verktøyutvidelse",
+      "el": "Επέκταση εργαλείου"
+    },
+    "modules.wp5_mechanisms.provenance.provisional": {
+      "en": "Provisional",
+      "es": "Provisional",
+      "fr": "Provisoire",
+      "de": "Vorläufig",
+      "lt": "Preliminarus",
+      "pt": "Provisório",
+      "it": "Provvisorio",
+      "no": "Foreløpig",
+      "el": "Προσωρινό"
+    },
     "modules.wp5_mechanisms.attr.indicators_referenced": {
       "en": "Indicators referenced",
       "es": "Indicadores mencionados",
