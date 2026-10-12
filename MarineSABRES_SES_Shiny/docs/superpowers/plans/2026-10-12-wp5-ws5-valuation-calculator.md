@@ -34,7 +34,7 @@
 4. **Restoration.** Inputs: restoration area (ha, optional; 0 or blank hides the block) and cost bound (`low` €100,000/ha or `high` €500,000/ha, from D5.2 §4.8). Restoration cost = restoration area × bound. Benefits for break-even are the restored area's annual value (sum of the selected services' unit values × restoration area) at the low and at the high band, giving two horizons. Break-even uses the user's discount rate, or 0% (undiscounted, D5.2's framing) when the rate is blank; the UI states which rate it used. Survival-adjusted cost = cost ÷ 0.60 (low) to cost ÷ 0.38 (high), read from the KB.
 5. **Number format.** Euro amounts are rounded to whole euros and grouped with a no-break space (`€88 800`), never in scientific notation. A comma or point separator would read as a decimal mark in half of the 9 languages. Years show one decimal.
 6. **Session-only inputs.** Calculator inputs are not stored in the project (the spec does not ask for it, and storing them would need a schema field, a save/load round trip and a `min_app_version` stamp). Follow-up if partners want saved calculations.
-7. **Validation.** Area must be a number ≥ 0; horizon 0–100 years; discount rate blank or 0–20%; restoration area blank or ≥ 0. Invalid inputs give translated messages and no numbers (no NaN, negatives or "Inf" on screen), and the download button is disabled via `req()`.
+7. **Validation.** Area must be a number ≥ 0; horizon a whole number of years, 0–100; discount rate blank or 0–20%; restoration area blank or ≥ 0. Invalid inputs give translated messages and no numbers (no NaN, negatives or "Inf" on screen), and the download button is disabled via `req()`.
 8. **Habitat.** One habitat (Posidonia oceanica), as in roadmap §6.5; the habitat is shown as fixed text, not a picker.
 
 ## Review Focus
@@ -306,6 +306,7 @@ test_that("invalid inputs return error keys and no numbers", {
   }
   expect_true("invalid_horizon" %in% calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = 101)$errors)
   expect_true("invalid_horizon" %in% calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = NA)$errors)
+  expect_true("invalid_horizon" %in% calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = 20.5)$errors)
   expect_true("invalid_rate" %in% calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = 20,
                                        discount_rate_pct = 25)$errors)
   expect_true("invalid_rate" %in% calc(area_ha = 1, services = WP5_VALUATION_SERVICES, horizon = 20,
@@ -423,7 +424,8 @@ valuation_unit_table <- function(unit_values) {
 validate_valuation_inputs <- function(area_ha, horizon, discount_rate_pct, restoration_area) {
   e <- character(0)
   if (!.is_number(area_ha) || area_ha < 0) e <- c(e, "invalid_area")
-  if (!.is_number(horizon) || horizon < 0 || horizon > WP5_VALUATION_MAX_HORIZON) e <- c(e, "invalid_horizon")
+  if (!.is_number(horizon) || horizon < 0 || horizon > WP5_VALUATION_MAX_HORIZON || horizon != round(horizon))
+    e <- c(e, "invalid_horizon")
   if (!.is_blank(discount_rate_pct) &&
       (!.is_number(discount_rate_pct) || discount_rate_pct < 0 || discount_rate_pct > WP5_VALUATION_MAX_RATE_PCT))
     e <- c(e, "invalid_rate")
@@ -716,40 +718,39 @@ Expected: an error at `get("valuation_calculator_server", envir = .GlobalEnv)` (
 valuation_calculator_ui <- function(id, i18n) {
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
-  t <- function(k) i18n$t(paste0("modules.valuation_calculator.", k))
   # i18n-ref: modules.valuation_calculator.service.coastal_protection
   # i18n-ref: modules.valuation_calculator.service.carbon_sequestration
   # i18n-ref: modules.valuation_calculator.service.recreation_tourism
   # i18n-ref: modules.valuation_calculator.service.food_provision
   # i18n-ref: modules.valuation_calculator.service.water_purification
   service_choices <- stats::setNames(WP5_VALUATION_SERVICES,
-                                     vapply(WP5_VALUATION_SERVICES, function(s) t(paste0("service.", s)),
+                                     vapply(WP5_VALUATION_SERVICES, function(s) i18n$t(paste0("modules.valuation_calculator.service.", s)),
                                             character(1)))
   tagList(
     fluidRow(column(12,
       create_module_header(ns, "modules.valuation_calculator.title", "modules.valuation_calculator.subtitle",
                            "help_valuation", i18n),
-      div(class = "alert alert-warning py-2", icon("info-circle"), " ", t("disclaimer"))
+      div(class = "alert alert-warning py-2", icon("info-circle"), " ", i18n$t("modules.valuation_calculator.disclaimer"))
     )),
     fluidRow(
       column(4, wellPanel(
-        p(strong(t("habitat_label")), " ", t("habitat_posidonia")),
-        numericInput(ns("area_ha"), t("area_label"), value = 1, min = 0, step = 0.1),
-        checkboxGroupInput(ns("services"), t("services_label"), choices = service_choices,
+        p(strong(i18n$t("modules.valuation_calculator.habitat_label")), " ", i18n$t("modules.valuation_calculator.habitat_posidonia")),
+        numericInput(ns("area_ha"), i18n$t("modules.valuation_calculator.area_label"), value = 1, min = 0, step = 0.1),
+        checkboxGroupInput(ns("services"), i18n$t("modules.valuation_calculator.services_label"), choices = service_choices,
                            selected = WP5_VALUATION_SERVICES),
-        numericInput(ns("horizon"), t("horizon_label"), value = WP5_DEFAULT_TIME_HORIZON, min = 0,
+        numericInput(ns("horizon"), i18n$t("modules.valuation_calculator.horizon_label"), value = WP5_DEFAULT_TIME_HORIZON, min = 0,
                      max = WP5_VALUATION_MAX_HORIZON, step = 1),
-        numericInput(ns("discount_rate"), t("discount_rate_label"), value = NA, min = 0,
+        numericInput(ns("discount_rate"), i18n$t("modules.valuation_calculator.discount_rate_label"), value = NA, min = 0,
                      max = WP5_VALUATION_MAX_RATE_PCT, step = 0.5),
-        tags$small(class = "text-muted", t("discount_rate_help")),
+        tags$small(class = "text-muted", i18n$t("modules.valuation_calculator.discount_rate_help")),
         hr(),
-        h5(t("restoration_heading")),
-        numericInput(ns("restoration_area"), t("restoration_area_label"), value = NA, min = 0, step = 0.1),
-        radioButtons(ns("cost_bound"), t("cost_bound_label"),
-                     choices = stats::setNames(c("low", "high"), c(t("cost_bound_low"), t("cost_bound_high"))),
+        h5(i18n$t("modules.valuation_calculator.restoration_heading")),
+        numericInput(ns("restoration_area"), i18n$t("modules.valuation_calculator.restoration_area_label"), value = NA, min = 0, step = 0.1),
+        radioButtons(ns("cost_bound"), i18n$t("modules.valuation_calculator.cost_bound_label"),
+                     choices = stats::setNames(c("low", "high"), c(i18n$t("modules.valuation_calculator.cost_bound_low"), i18n$t("modules.valuation_calculator.cost_bound_high"))),
                      selected = "low"),
         hr(),
-        downloadButton(ns("download_xlsx"), t("download_xlsx"))
+        downloadButton(ns("download_xlsx"), i18n$t("modules.valuation_calculator.download_xlsx"))
       )),
       column(8, uiOutput(ns("results")))
     )
@@ -758,9 +759,13 @@ valuation_calculator_ui <- function(id, i18n) {
 
 valuation_calculator_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
-    t <- function(k) i18n$t(paste0("modules.valuation_calculator.", k))
-    tfmt <- function(k, ...) {
-      fmt <- t(k)
+    # Formatted strings; keys listed as sentinels so the i18n audit sees them.
+    # i18n-ref: modules.valuation_calculator.cumulative_label
+    # i18n-ref: modules.valuation_calculator.central_cumulative
+    # i18n-ref: modules.valuation_calculator.years_value
+    # i18n-ref: modules.valuation_calculator.break_even_rate_note
+    tfmt <- function(key, ...) {
+      fmt <- i18n$t(key)
       if (grepl("%1$", fmt, fixed = TRUE)) tryCatch(sprintf(fmt, ...), error = function(e) fmt) else fmt
     }
     pct <- function(r) paste0(formatC(100 * r, format = "fg", digits = 3), "%")
@@ -779,54 +784,54 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
       # i18n-ref: modules.valuation_calculator.method.market_pricing
       # i18n-ref: modules.valuation_calculator.method.replacement_cost
       rows <- lapply(seq_len(nrow(ps)), function(i) tags$tr(
-        tags$td(t(paste0("service.", ps$service[i]))), tags$td(t(paste0("method.", ps$method[i]))),
+        tags$td(i18n$t(paste0("modules.valuation_calculator.service.", ps$service[i]))), tags$td(i18n$t(paste0("modules.valuation_calculator.method.", ps$method[i]))),
         tags$td(format_eur(ps$annual_low[i])), tags$td(format_eur(ps$annual_high[i]))))
       tagList(
-        h4(t("primary_heading")),
+        h4(i18n$t("modules.valuation_calculator.primary_heading")),
         tags$table(class = "table table-sm",
-          tags$thead(tags$tr(tags$th(t("col_service")), tags$th(t("col_method")),
-                             tags$th(t("col_annual_low")), tags$th(t("col_annual_high")))),
+          tags$thead(tags$tr(tags$th(i18n$t("modules.valuation_calculator.col_service")), tags$th(i18n$t("modules.valuation_calculator.col_method")),
+                             tags$th(i18n$t("modules.valuation_calculator.col_annual_low")), tags$th(i18n$t("modules.valuation_calculator.col_annual_high")))),
           tags$tbody(rows,
-            tags$tr(class = "fw-bold", tags$td(t("row_total")), tags$td(""),
+            tags$tr(class = "fw-bold", tags$td(i18n$t("modules.valuation_calculator.row_total")), tags$td(""),
                     tags$td(format_eur(r$total[["low"]])), tags$td(format_eur(r$total[["high"]]))),
-            tags$tr(class = "fw-bold", tags$td(tfmt("cumulative_label", as.integer(r$horizon))), tags$td(""),
+            tags$tr(class = "fw-bold", tags$td(tfmt("modules.valuation_calculator.cumulative_label", as.integer(r$horizon))), tags$td(""),
                     tags$td(format_eur(r$cumulative[["low"]])), tags$td(format_eur(r$cumulative[["high"]]))))),
-        tags$small(class = "text-muted", t("source_note")))
+        tags$small(class = "text-muted", i18n$t("modules.valuation_calculator.source_note")))
     }
 
     secondary_block <- function(r) {
       npv_rows <- lapply(seq_len(nrow(r$npv)), function(i) tags$tr(
         class = if (r$npv$user[i]) "table-info" else NULL,
-        tags$td(pct(r$npv$rate[i]), if (r$npv$user[i]) tags$em(paste0(" (", t("your_rate"), ")"))),
+        tags$td(pct(r$npv$rate[i]), if (r$npv$user[i]) tags$em(paste0(" (", i18n$t("modules.valuation_calculator.your_rate"), ")"))),
         tags$td(format_eur(r$npv$low[i])), tags$td(format_eur(r$npv$central[i])),
         tags$td(format_eur(r$npv$high[i]))))
       rest <- r$restoration
       rest_ui <- if (!is.null(rest)) {
-        yrs <- function(v) if (is.na(v)) t("never_breaks_even") else tfmt("years_value", format_years(v))
+        yrs <- function(v) if (is.na(v)) i18n$t("modules.valuation_calculator.never_breaks_even") else tfmt("modules.valuation_calculator.years_value", format_years(v))
         tagList(
-          h5(t("break_even_heading")),
+          h5(i18n$t("modules.valuation_calculator.break_even_heading")),
           tags$table(class = "table table-sm", tags$tbody(
-            tags$tr(tags$td(t("restoration_cost")), tags$td(format_eur(rest$cost))),
-            tags$tr(tags$td(t("survival_adjusted")),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.restoration_cost")), tags$td(format_eur(rest$cost))),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.survival_adjusted")),
                     tags$td(paste(format_eur(rest$survival_adjusted[["low"]]), "–",
                                   format_eur(rest$survival_adjusted[["high"]])))),
-            tags$tr(tags$td(t("break_even_low")), tags$td(yrs(rest$break_even_low))),
-            tags$tr(tags$td(t("break_even_high")), tags$td(yrs(rest$break_even_high))))),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_low")), tags$td(yrs(rest$break_even_low))),
+            tags$tr(tags$td(i18n$t("modules.valuation_calculator.break_even_high")), tags$td(yrs(rest$break_even_high))))),
           tags$small(class = "text-muted",
-                     if (isTRUE(rest$rate_is_fallback)) t("break_even_rate_fallback")
-                     else tfmt("break_even_rate_note", pct(rest$rate))))
+                     if (isTRUE(rest$rate_is_fallback)) i18n$t("modules.valuation_calculator.break_even_rate_fallback")
+                     else tfmt("modules.valuation_calculator.break_even_rate_note", pct(rest$rate))))
       }
       tagList(
-        h4(t("secondary_heading"), provenance_badge("toolbox_extension", i18n)),
-        p(t("secondary_explain")),
+        h4(i18n$t("modules.valuation_calculator.secondary_heading"), provenance_badge("toolbox_extension", i18n)),
+        p(i18n$t("modules.valuation_calculator.secondary_explain")),
         tags$table(class = "table table-sm", tags$tbody(
-          tags$tr(tags$td(t("central_annual")), tags$td(format_eur(r$total[["central"]]))),
-          tags$tr(tags$td(tfmt("central_cumulative", as.integer(r$horizon))),
+          tags$tr(tags$td(i18n$t("modules.valuation_calculator.central_annual")), tags$td(format_eur(r$total[["central"]]))),
+          tags$tr(tags$td(tfmt("modules.valuation_calculator.central_cumulative", as.integer(r$horizon))),
                   tags$td(format_eur(r$cumulative[["central"]]))))),
-        h5(t("npv_heading")),
+        h5(i18n$t("modules.valuation_calculator.npv_heading")),
         tags$table(class = "table table-sm",
-          tags$thead(tags$tr(tags$th(t("col_rate")), tags$th(t("col_npv_low")), tags$th(t("col_npv_central")),
-                             tags$th(t("col_npv_high")))),
+          tags$thead(tags$tr(tags$th(i18n$t("modules.valuation_calculator.col_rate")), tags$th(i18n$t("modules.valuation_calculator.col_npv_low")), tags$th(i18n$t("modules.valuation_calculator.col_npv_central")),
+                             tags$th(i18n$t("modules.valuation_calculator.col_npv_high")))),
           tags$tbody(npv_rows)),
         rest_ui)
     }
@@ -840,12 +845,12 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
         # i18n-ref: modules.valuation_calculator.error.invalid_restoration_area
         # i18n-ref: modules.valuation_calculator.error.data_unavailable
         return(div(class = "alert alert-danger",
-                   tags$ul(lapply(r$errors, function(e) tags$li(t(paste0("error.", e)))))))
+                   tags$ul(lapply(r$errors, function(e) tags$li(i18n$t(paste0("modules.valuation_calculator.error.", e)))))))
       }
       tagList(
         # i18n-ref: modules.valuation_calculator.warn.no_services
         if (length(r$warnings)) div(class = "alert alert-info",
-                                     lapply(r$warnings, function(w) p(t(paste0("warn.", w))))),
+                                     lapply(r$warnings, function(w) p(i18n$t(paste0("modules.valuation_calculator.warn.", w))))),
         primary_block(r), hr(), secondary_block(r))
     })
 
@@ -875,7 +880,7 @@ valuation_calculator_server <- function(id, project_data_reactive, i18n, event_b
     )
 
     create_help_observer(input, "help_valuation", "modules.valuation_calculator.help_title",
-      tagList(p(t("help_body_1")), p(t("help_body_2")), p(t("help_body_3"))), i18n)
+      tagList(p(i18n$t("modules.valuation_calculator.help_body_1")), p(i18n$t("modules.valuation_calculator.help_body_2")), p(i18n$t("modules.valuation_calculator.help_body_3"))), i18n)
 
     invisible(valuation)
   })
@@ -943,12 +948,10 @@ test_that("every valuation-calculator key used in code exists in all 9 languages
                            simplifyVector = FALSE)$translation
   src <- paste(readLines(file.path(PROJECT_ROOT, "modules", "valuation_calculator_module.R"), warn = FALSE),
                collapse = "\n")
-  direct <- regmatches(src, gregexpr('t\\("([a-z_.]+)"', src))[[1]]
-  direct <- sub('^t\\("', "", sub('"$', "", direct))
-  direct <- direct[!grepl("^(common|modules|ui)\\.", direct)]   # i18n$t("common...") calls are full keys
-  refs <- sub("^.*modules\\.valuation_calculator\\.", "",
-              regmatches(src, gregexpr("i18n-ref: modules\\.valuation_calculator\\.[A-Za-z_.]+", src))[[1]])
-  keys <- unique(c(direct, refs, "title", "subtitle", "help_title", "disclaimer"))
+  found <- regmatches(src, gregexpr("modules\\.valuation_calculator\\.[A-Za-z0-9_.]*[A-Za-z0-9_]", src))[[1]]
+  found <- sub("^modules\\.valuation_calculator\\.", "", found)
+  found <- found[!grepl("\\.$", found) & !found %in% c("service", "method", "error", "warn")]  # paste0 prefixes
+  keys <- unique(c(found, "title", "subtitle", "help_title", "disclaimer"))
   for (k in paste0("modules.valuation_calculator.", keys)) {
     expect_false(is.null(tr[[k]]), info = k)
     for (l in langs) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
@@ -1032,7 +1035,7 @@ English source strings below. Translate each into es, fr, de, lt, pt, it, no, el
 | break_even_rate_note | Calculated at a discount rate of %1$s. |
 | break_even_rate_fallback | Calculated without discounting (0%), because no discount rate was entered. |
 | error.invalid_area | Enter a meadow area of 0 ha or more. |
-| error.invalid_horizon | Enter a time horizon between 0 and 100 years. |
+| error.invalid_horizon | Enter a whole number of years between 0 and 100. |
 | error.invalid_rate | Enter a discount rate between 0% and 20%, or leave it empty. |
 | error.invalid_restoration_area | Enter a restoration area of 0 ha or more, or leave it empty. |
 | error.data_unavailable | Valuation data are not available. |
