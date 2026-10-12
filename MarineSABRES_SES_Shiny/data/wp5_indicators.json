@@ -1,0 +1,385 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "1.0.0",
+  "last_updated": "2026-10-11",
+  "description": "WP5 indicator registry (D5.2 v5): Macaronesia fiches, Posidonia Tables 17-18, Annex 1 DAPSIWRM-typed tables, Arctic descriptive indicators.",
+  "source_document": "MarineSABRES D5.2 Final v5 (23 Jun 2026)",
+  "source_extract": "scripts/wp5_kb_sources/d5.2_v5_indicator_sources.md",
+  "dapsiwrm_type_map": {
+    "provenance": "wp5_derived",
+    "derivation": "Annex 1 Table 6/7 'Type' column (hyphen-split labels joined) -> ISA element key",
+    "map": {
+      "Human needs": "drivers", "Needs": "drivers",
+      "Activity": "activities", "Activities": "activities",
+      "Pressures": "pressures", "Dominant Pressures": "pressures",
+      "Marine Processes and Functions": "marine_processes", "Marine Process and Functioning": "marine_processes",
+      "Ecosystem Services": "ecosystem_services", "Ecosystem Service": "ecosystem_services",
+      "Goods and Benefits": "goods_benefits", "Good and Benefit": "goods_benefits"
+    }
+  },
+  "entries": [
+    {
+      "code": "C_01", "annex_code": null, "name": "Connectivity Index (migratory species)",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "marine_processes", "pathway_segment": "state",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Structured, evidence-based connectivity profile for a DA-validated shortlist of highly migratory and/or vulnerable taxa (cetaceans, seabirds, elasmobranchs): cross-area occurrence, recurrence and seasonality, and stepping-stone plausibility. A connectivity proxy, not an abundance, density or trend estimate.",
+      "unit": "", "scale_type": "ordinal_profile",
+      "criterion_roles": {
+        "EE": {"role": "primary", "role_text": "primary"},
+        "PI": {"role": "supporting", "role_text": "PO (strong supporting)"},
+        "FF": {"role": "supporting", "role_text": "FI (supporting)"},
+        "EC": {"role": "supporting", "role_text": "EC (secondary)"},
+        "EQ": {"role": "supporting", "role_text": "EQ (limited)"}
+      },
+      "baseline": [
+        {"taxon": "Fin whale (B. physalus)", "area": "Azores", "period": "2009-2023", "value": null, "value_text": "Seasonal recurrent (spring; May–Jun) — MON: E=1,911; O=3,773 (2009–2020) + CET: E=2; O=2 (2017–2019; Jul)", "evidence_strength": "Strong (high Azores recurrence + repeated transit detections)", "unit": null},
+        {"taxon": "Fin whale (B. physalus)", "area": "Madeira", "period": null, "value": null, "value_text": "Not detected in current CET Madeira box extract", "unit": null},
+        {"taxon": "Fin whale (B. physalus)", "area": "Canaries", "period": null, "value": null, "value_text": "Not detected in current CET Canaries box extract", "unit": null},
+        {"taxon": "Fin whale (B. physalus)", "area": "Transit / ABNJ", "period": "2014-2023", "value": null, "value_text": "Regular low-density transit — CET: E=48; O=48 (2014–2023; peaks Apr/Jul/Sep)", "unit": null},
+        {"taxon": "Blue whale (B. musculus)", "area": "Azores", "period": "2009-2019", "value": null, "value_text": "Seasonal recurrent (spring; Apr–May) — MON: E=770; O=1,509 (2009–2019)", "evidence_strength": "Moderate (clear Azores seasonality; weak corridor-wide detection)", "unit": null},
+        {"taxon": "Blue whale (B. musculus)", "area": "Madeira", "period": null, "value": null, "value_text": "Not detected in current CET Madeira box extract", "unit": null},
+        {"taxon": "Blue whale (B. musculus)", "area": "Canaries", "period": null, "value": null, "value_text": "Not detected in current CET Canaries box extract", "unit": null},
+        {"taxon": "Blue whale (B. musculus)", "area": "Transit / ABNJ", "period": "2015", "value": null, "value_text": "Very rare in transit — CET: E=2; O=2 (2015; peaks Jun/Oct)", "unit": null},
+        {"taxon": "Sei whale (B. borealis)", "area": "Azores", "period": "2009-2022", "value": null, "value_text": "Recurrent (early summer; May–Jul) — MON: E=685; O=1,459 (2009–2020) + CET (Az): E=3; O=3 (2020–2022; Jul–Aug)", "evidence_strength": "High (long Azores time series + confirmed transit presence)", "unit": null},
+        {"taxon": "Sei whale (B. borealis)", "area": "Madeira", "period": "2013", "value": null, "value_text": "Very rare — CET: E=1; O=1 (2013; Aug)", "unit": null},
+        {"taxon": "Sei whale (B. borealis)", "area": "Canaries", "period": null, "value": null, "value_text": "Not detected in current CET Canaries box extract", "unit": null},
+        {"taxon": "Sei whale (B. borealis)", "area": "Transit / ABNJ", "period": "2015-2017", "value": null, "value_text": "Rare but present transit signal — CET: E=3; O=3 (2015–2017; peaks Jun/Jul/Sep)", "unit": null},
+        {"taxon": "Humpback whale (M. novaeangliae)", "area": "Azores", "period": "2009-2020", "value": null, "value_text": "Seasonal recurrent (spring; Mar–May) — MON: E=263; O=517 (2009–2020) + CET (Az): E=1; O=1 (2017; Aug)", "evidence_strength": "Moderate (strong migration logic; limited detections beyond Azores)", "unit": null},
+        {"taxon": "Humpback whale (M. novaeangliae)", "area": "Madeira", "period": "2017", "value": null, "value_text": "Rare — CET: E=2; O=2 (2017; Jul)", "unit": null},
+        {"taxon": "Humpback whale (M. novaeangliae)", "area": "Canaries", "period": null, "value": null, "value_text": "Not detected in current CET Canaries box extract", "unit": null},
+        {"taxon": "Humpback whale (M. novaeangliae)", "area": "Transit / ABNJ", "period": null, "value": null, "value_text": "Not detected in current CET transit extract", "unit": null},
+        {"taxon": "Sperm whale (P. macrocephalus)", "area": "Azores", "period": "2009-2023", "value": null, "value_text": "Very frequent, year-round — MON: E=7,949; O=18,534 (2009–2020; peaks Jun–Aug) + CET (Az): E=51; O=51 (2014–2023; peaks Jul–Sep)", "evidence_strength": "Strong (multi-region, multi-year corridor-consistent detections)", "unit": null},
+        {"taxon": "Sperm whale (P. macrocephalus)", "area": "Madeira", "period": "2012-2024", "value": null, "value_text": "Regular — CET: E=87; O=87 (2012–2024; peaks Jul/Aug/Oct)", "unit": null},
+        {"taxon": "Sperm whale (P. macrocephalus)", "area": "Canaries", "period": "2017-2024", "value": null, "value_text": "Regular (lower) — CET: E=20; O=20 (2017–2024; peaks Aug–Oct)", "unit": null},
+        {"taxon": "Sperm whale (P. macrocephalus)", "area": "Transit / ABNJ", "period": "2012-2024", "value": null, "value_text": "Regular — CET: E=53; O=53 (2012–2024; peaks Jul/Aug/Oct)", "unit": null},
+        {"taxon": "Cuvier's beaked whale (Z. cavirostris)", "area": "Azores", "period": "2009-2024", "value": null, "value_text": "Frequent (summer/autumn) — MON: E=1,946; O=4,805 (2009–2020; peaks Jul–Sep) + CET (Az): E=7; O=7 (2016–2024; Jul–Sep)", "evidence_strength": "High (strong Azores + repeated route-water detections)", "unit": null},
+        {"taxon": "Cuvier's beaked whale (Z. cavirostris)", "area": "Madeira", "period": "2013-2024", "value": null, "value_text": "Occasional but repeated — CET: E=10; O=10 (2013–2024; Jul–Sep)", "unit": null},
+        {"taxon": "Cuvier's beaked whale (Z. cavirostris)", "area": "Canaries", "period": null, "value": null, "value_text": "Not detected in current CET Canaries box extract", "unit": null},
+        {"taxon": "Cuvier's beaked whale (Z. cavirostris)", "area": "Transit / ABNJ", "period": "2017-2024", "value": null, "value_text": "Occasional — CET: E=7; O=7 (2017–2024; Aug–Oct)", "unit": null}
+      ],
+      "scenario_projection": {
+        "S1": {"direction_text": "0 (Status Quo)", "direction": "no_change", "assumption_text": "S1 — Business as usual", "magnitude_text": "No improvements in seasonal coupling between islands and pelagic zones"},
+        "S2": {"direction_text": "0/+", "direction": "uncertain", "assumption_text": "S2 — Light coordination", "magnitude_text": "Slight improvements from better data alignment; seasonal presence described more consistently between islands"},
+        "S3": {"direction_text": "++", "direction": "increase", "assumption_text": "S3 — Coordinated EEZ corridor", "magnitude_text": "Where baseline shows recurrence or seasonality, coordinated management across islands becomes feasible"},
+        "S4": {"direction_text": "++/+++", "direction": "increase", "assumption_text": "S4 — Integrated EEZ + ABNJ corridor", "magnitude_text": "S3 improvements remain, with added value from reduced edge effects beyond EEZ boundaries"}
+      },
+      "early_warning": [
+        {"lever": "Aligned seasonal windows across archipelagos", "metric": "C_01", "trigger": "Seasonal presence is recorded differently or managed inconsistently across islands; timing confusion for users and managers"},
+        {"lever": "Transit-water coherence package (S4 scenarios)", "metric": "C_01", "trigger": "Offshore use is documented, but no linked management exists; 'paper corridor' critique emerges"},
+        {"lever": "Bycatch / disturbance minimum corridor standards", "metric": "C_01", "trigger": "One archipelago takes action while others lag, or gear/use rules differ for same species"},
+        {"lever": "Cross-jurisdiction enforcement coordination", "metric": "C_01", "trigger": "Discrepancy in enforcement effort, rules, or communication across agencies"},
+        {"lever": "Stakeholder legitimacy and trust-building package", "metric": "C_01", "trigger": "Stakeholder feedback flags corridor as symbolic, unfair, or externally imposed; pushback slows uptake"}
+      ],
+      "reference_range": null,
+      "data_sources": ["MONICET (Azores)", "CETUS (CET) route sightings", "GBIF/eBird", "OBIS/GBIF"],
+      "data_gap": true, "stub": false, "revision": 1,
+      "caveat": "Baseline rows are the six cetacean species whose Table 2 cells carry published values (cells read in PDF reading order, pp. 253-254); the pilot whale, seabird and elasmobranch rows are 'O=___' templates in the source and are omitted. Scenario direction_text is the near-island (EEZ) column of Table 3 (0/+/++/+++ ordinal legend). Criterion roles are taken from the interpretation bridge (L10823-10835) because the Table 1 role column interleaves in the extract.",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, indicator C_01", "lines": [10262, 10980]},
+      "source_quotes": ["C_01 — Connectivity Index (Migratory species)", "PO (strong supporting)", "EQ (limited)",
+                        "Table 2: Baseline evidence of corridor use and monitoring detectability", "MON: E=1,911; O=3,773",
+                        "Table 3 — Scenario-based connectivity implications", "0 (Status Quo). No improvements in seasonal coupling",
+                        "++/+++ (S3 improvements remain", "Table 5: Corridor design and adaptive management implications (from C_01)"]
+    },
+    {
+      "code": "F_01", "annex_code": "F_02", "name": "Pelagic (tuna) landing share",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "activities", "pathway_segment": "pressure",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Share of tuna in total commercial landings per archipelago, from aggregated landings (t) of five highly migratory tuna species; 3-year rolling average.",
+      "unit": "%", "scale_type": "numeric",
+      "criterion_roles": {
+        "EC": {"role": "primary", "role_text": "Primary"},
+        "EQ": {"role": "primary", "role_text": "Primary/Supporting"},
+        "PI": {"role": "supporting", "role_text": "Supporting"},
+        "FF": {"role": "supporting", "role_text": "Supporting"},
+        "EE": {"role": "supporting", "role_text": "Secondary (triangulation only)"}
+      },
+      "baseline": [
+        {"area": "Madeira", "period": "2022-2024", "value": 37.77, "unit": "%"},
+        {"area": "Azores", "period": "2022-2024", "value": 45.48, "unit": "%"},
+        {"area": "Canaries", "period": "2022-2024", "value": 51.24, "unit": "%"}
+      ],
+      "scenario_projection": {
+        "S1": {"direction_text": "~0 (↔)", "direction": "no_change", "assumption_text": "S1 BAU", "magnitude_text": null},
+        "S2": {"direction_text": "↔ / slight ↓", "direction": "decrease", "assumption_text": "S2 Light coordination", "magnitude_text": null},
+        "S3": {"direction_text": "↓↓ (moderate)", "direction": "decrease", "assumption_text": "S3 Coordinated corridor (EEZ)", "magnitude_text": null},
+        "S4": {"direction_text": "↔ / slight ↑", "direction": "increase", "assumption_text": "S4 Integrated corridor (EEZ+ABNJ)", "magnitude_text": null}
+      },
+      "early_warning": [
+        {"lever": "Leakage and displacement management are the hinge.", "metric": null, "trigger": null},
+        {"lever": "Dependency hotspots deserve targeted mitigation.", "metric": null, "trigger": null},
+        {"lever": "Substitute fisheries must be part of the story.", "metric": null, "trigger": null},
+        {"lever": "Financial feasibility differentiates scenarios.", "metric": null, "trigger": null}
+      ],
+      "reference_range": null,
+      "data_sources": ["Regional fisheries landings statistics (Madeira, Azores, Canaries)"],
+      "data_gap": false, "stub": false, "revision": 1,
+      "caveat": "Scenario directions are the 'Expected ΔF_02' column of 'Table 1 Scenario-based assumptions' (L11271-11313); the prose below it (L11317) calls the same table 'Table 2'. The landings-bound columns interleave in the layout, so magnitude_text is left null.",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, indicator F_02 (canonical F_01)", "lines": [10986, 11585]},
+      "source_quotes": ["Pelagic landing share (tuna)", "37.77%", "45.48%", "51.24%", "Secondary (trian-",
+                        "Table 1 Scenario-based assumptions", "~0 (↔)", "Corridor design implications (as indicated by F_02)",
+                        "Leakage and displacement management are the hinge."]
+    },
+    {
+      "code": "F_02", "annex_code": "F_03", "name": "CPUE: catch per unit effort",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "marine_processes", "pathway_segment": "state",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Catch rate of selected key species relevant to the corridor (primarily highly migratory pelagics), as catch (number or weight) per standardised unit of fishing effort (e.g. kg per set; fish per 1,000 hooks; t per fishing hour/day).",
+      "unit": "catch per unit effort", "scale_type": "numeric",
+      "criterion_roles": {
+        "EE": {"role": "primary", "role_text": "Primary"},
+        "EC": {"role": "supporting", "role_text": "Supporting"},
+        "PI": {"role": "supporting", "role_text": "Supporting"},
+        "FF": {"role": "supporting", "role_text": "Secondary"},
+        "EQ": {"role": "supporting", "role_text": "Secondary"}
+      },
+      "baseline": [],
+      "scenario_projection": {
+        "S1": {"direction_text": "↔ (noise)", "direction": "no_change", "assumption_text": "S1 BAU", "magnitude_text": "More of the same: noisy year-to-year swings; any trend is slow and hard to attribute"},
+        "S2": {"direction_text": "↔ / ↑ (stabilisation)", "direction": "increase", "assumption_text": "S2 Light coordination", "magnitude_text": "Slightly calmer signal possible: less erratic CPUE, small stabilisation at best"},
+        "S3": {"direction_text": "± (local ↑; aggregate ↔/↓)", "direction": "uncertain", "assumption_text": "S3 Coordinated EEZ corridor", "magnitude_text": "Patchy results: some places/fleets report CPUE up, others down"},
+        "S4": {"direction_text": "↔/↑ (more plausible)", "direction": "increase", "assumption_text": "S4 Integrated EEZ+ABNJ", "magnitude_text": "Best chance of a consistent stabilisation signal; early adjustment turbulence still likely"}
+      },
+      "early_warning": [],
+      "reference_range": null,
+      "data_sources": ["Fishery-dependent catch and effort data (logbooks), standardised per species and fleet/gear segment"],
+      "data_gap": true, "stub": false, "revision": 1,
+      "caveat": "D5.2 describes the CPUE baseline method (L11653-11695) but publishes no CPUE values. The EQ row of the criteria table is printed twice (L11648-11651); it is recorded once.",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, indicator F_03 (canonical F_02)", "lines": [11587, 11760]},
+      "source_quotes": ["Indicator F_03 - CPUE: Catch per Unit Effort", "Table 1 Scenario-to-CPUE expected pattern",
+                        "↔ (noise)", "± (local ↑;", "Establish baseline CPUE values for selected species"]
+    },
+    {
+      "code": "F_03", "annex_code": "F_04", "name": "Fisheries participation and capacity exposure (commercial F_04a, charter F_04b)",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "activities", "pathway_segment": "pressure",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Register- or licence-based counts by archipelago and segment: commercial fishing vessels by home port / operational base (F_04a) and licensed recreational fishing charter operators and/or vessels (F_04b), separated to avoid double counting.",
+      "unit": "vessels / operators", "scale_type": "count",
+      "criterion_roles": {
+        "EQ": {"role": "primary", "role_text": "Primary"},
+        "PI": {"role": "primary", "role_text": "Primary"},
+        "EC": {"role": "primary", "role_text": "Primary / strong supporting"},
+        "FF": {"role": "supporting", "role_text": "Supporting"},
+        "EE": {"role": "supporting", "role_text": "Secondary (triangulation only)"}
+      },
+      "baseline": [
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2022", "value": 706, "unit": "vessels"},
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2023", "value": 687, "unit": "vessels"},
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2024", "value": 685, "unit": "vessels"},
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2022", "value": 512, "unit": "vessels"},
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2023", "value": 497, "unit": "vessels"},
+        {"area": "Azores (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2024", "value": 499, "unit": "vessels"},
+        {"area": "Azores (F_04b)", "measure": "Charter capacity - operators", "period": "as of 04 Jan 2023", "value": 70, "unit": "operators"},
+        {"area": "Azores (F_04b)", "measure": "Charter capacity - vessels", "period": "as of 04 Jan 2023", "value": 94, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2022", "value": 403, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2023", "value": 401, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - registered fleet (year-end)", "period": "2024", "value": 399, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2022", "value": 100, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2023", "value": 96, "unit": "vessels"},
+        {"area": "Madeira (F_04a)", "measure": "Commercial vessels - licensed (in-year)", "period": "2024", "value": 95, "unit": "vessels"},
+        {"area": "Madeira (F_04b)", "measure": "Charter capacity - operators (study baseline, Pita et al. 2022)", "period": null, "value": 14, "unit": "operators"},
+        {"area": "Madeira (F_04b)", "measure": "Charter capacity - vessels (study baseline, Pita et al. 2022)", "period": null, "value": 18, "unit": "vessels"},
+        {"area": "Canary Islands (F_04a)", "measure": "Commercial vessels - registered fleet (year-end, all port base Canarias)", "period": "2022", "value": 741, "unit": "vessels"},
+        {"area": "Canary Islands (F_04a)", "measure": "Commercial vessels - registered fleet (year-end, all port base Canarias)", "period": "2023", "value": 734, "unit": "vessels"},
+        {"area": "Canary Islands (F_04a)", "measure": "Commercial vessels - registered fleet (year-end, all port base Canarias)", "period": "2024", "value": 717, "unit": "vessels"},
+        {"area": "Canary Islands (F_04b)", "measure": "Charter capacity - List-6 (collective recreational licence) vessels", "period": "2015", "value": 20, "unit": "vessels"},
+        {"area": "Canary Islands (F_04b)", "measure": "Charter capacity - List-6 (collective recreational licence) vessels", "period": "2016", "value": 30, "unit": "vessels"}
+      ],
+      "scenario_projection": {
+        "S1": {"direction_text": "F_04a: ↔; F_04b: ↔", "direction": "no_change", "assumption_text": "S1 BAU", "magnitude_text": "Background variability dominates (fuel, weather, markets); tourism seasonality dominates; corridor signal absent"},
+        "S2": {"direction_text": "F_04a: ↔; F_04b: ↔", "direction": "no_change", "assumption_text": "S2 Light coordination", "magnitude_text": "Slight predictability gain (fewer rule surprises); limited cost change"},
+        "S3": {"direction_text": "F_04a: ↔ (near-term) / ± (medium-term); F_04b: ±", "direction": "uncertain", "assumption_text": "S3 Coordinated EEZ corridor", "magnitude_text": "Re-targeting and crowding: shifts in grounds/species; higher time/fuel/admin"},
+        "S4": {"direction_text": "F_04a: ↔ (near-term) / ± (medium-term); F_04b: ±", "direction": "uncertain", "assumption_text": "S4 Integrated EEZ+ABNJ corridor", "magnitude_text": "Two-track outcome: stabilisation if credible coherence reduces leakage; otherwise, burden dominates"}
+      },
+      "early_warning": [
+        {"lever": "Hotspot zoning + crowding management (nearshore charter grounds; small-vessel commercial grounds)", "metric": "cancellations, trip-days shift, crowding reports, conflicts", "trigger": null},
+        {"lever": "Low-friction compliance package (templates, harmonised definitions, predictable controls)", "metric": "compliance time/cost reports; dispute frequency; inspection outcomes", "trigger": null},
+        {"lever": "Cross-boundary coherence measures (shared rules/definitions; enforcement coordination)", "metric": "evidence of consistent enforcement; leakage narratives; rule 'work-arounds'", "trigger": null},
+        {"lever": "Equity safeguards (proportionate requirements; targeted transition support)", "metric": "distribution of cancellations/costs; exit intentions; association complaints", "trigger": null},
+        {"lever": "Displacement plan (explicitly managed effort re-targeting)", "metric": "spatial effort indicators; local pressure hotspots", "trigger": null}
+      ],
+      "reference_range": null,
+      "data_sources": ["DGRM Annual Fleet Reports 2022/2023/2024 (registered + licensed)", "Azores DRPM maritime-tourism operator lists ('Pesca Turística', 04 Jan 2023)", "Pita et al. (2022), Frontiers in Marine Science", "Gobierno de Canarias fleet statistics 'Puerto base: Canarias'", "ULPGC/AccedaCRIS thesis (List-6 totals 2015-2016)"],
+      "data_gap": false, "stub": false, "revision": 1,
+      "caveat": "Table 3 cells read in PDF reading order (p. 287). Canary Islands licensed counts are 'Not separated' and no stable charter operator list was identified; Canary charter vessels are List-6 proxy totals for older years. Madeira charter values are study-based, Azores charter values a single-date snapshot. Scenario directions are the two count columns of 'Table 4 Scenario-based assumptions' (L12219-12264). Early-warning rows are the design-lever table (L12549-12581); the trigger-response column interleaves and is not transcribed.",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, indicator F_04 (canonical F_03)", "lines": [11889, 12583]},
+      "source_quotes": ["Indicator F_04 - Fisheries participation and capacity exposure", "Table 3: Baseline participation and capacity snapshot (stake map)",
+                        "2022: 706", "70 (as-of 04 Jan", "EC – Eco- Primary /", "Table 4 Scenario-based assumptions", "Hotspot zoning + crowd-"]
+    },
+    {
+      "code": "M_01", "annex_code": null, "name": "Number of vessel movements between islands",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "activities", "pathway_segment": "pressure",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Frequency of vessel transits between the Azores, Madeira and the Canary Islands over a year.",
+      "unit": "vessels per year", "scale_type": "count",
+      "criterion_roles": {
+        "EQ": {"role": "primary", "role_text": "Primary"},
+        "PI": {"role": "primary", "role_text": "Primary"},
+        "EC": {"role": "supporting", "role_text": "Secondary"},
+        "FF": {"role": "supporting", "role_text": "Secondary"},
+        "EE": {"role": "primary", "role_text": "Primary"}
+      },
+      "baseline": [
+        {"area": "Azores - Madeira or Canary Islands", "period": "2023", "value": 71, "unit": "vessels"},
+        {"area": "Azores - Madeira or Canary Islands", "period": "2024", "value": 64, "unit": "vessels"}
+      ],
+      "caveat": "The baseline table caption in the source reads 'Number of marine tourism companies' (copy-paste error); the rows are vessel counts. The criteria table header reads 'Use of T_03' (A§5.1). Madeira-Canaries data not available. Magnitude cells are assigned in PDF reading order (p. 300).",
+      "scenario_projection": {
+        "S1": {"assumption_text": "Stable or gradually increasing vessel movements", "direction_text": "→, slight ↑", "direction": "increase", "magnitude_text": "Unmanaged overlap with migratory routes; persistent pressure"},
+        "S2": {"assumption_text": "Branding activities leading to awareness effects", "direction_text": "→", "direction": "no_change", "magnitude_text": "Improved awareness improves, but quantity mainly unchanged"},
+        "S3": {"assumption_text": "Routing adjustment, slow-down areas in limited areas", "direction_text": "→, slight ↓", "direction": "decrease", "magnitude_text": "Traffic influenced by routing and spatial management"},
+        "S4": {"assumption_text": "Routing measures and potentially binding obligations in high-risk areas", "direction_text": "→, ↓", "direction": "decrease", "magnitude_text": "Strongest reduction in high-risk movements; structured connectivity"}
+      },
+      "early_warning": [],
+      "reference_range": null,
+      "data_sources": ["Inter-island vessel counts (Azores-Madeira/Canaries), 2023-2024"],
+      "data_gap": true, "stub": false, "revision": 1,
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, vessel movements fiche", "lines": [12584, 12752]},
+      "source_quotes": ["Number of vessel movements between islands", "n.d.   71    64", "→, slight ↑", "Strongest reduction in high-risk"]
+    },
+    {
+      "code": "T_01", "annex_code": null, "name": "Total visitors",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "activities", "pathway_segment": "pressure",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Number of non-resident visitors arriving in the corridor-affected territories of Macaronesia (Azores, Madeira, Canary Islands) per year; covers all tourism, not only marine tourism.",
+      "unit": "visitors per year", "scale_type": "count",
+      "criterion_roles": {
+        "EQ": {"role": "primary", "role_text": "Primary"},
+        "PI": {"role": "primary", "role_text": "Primary"},
+        "EC": {"role": "primary", "role_text": "Primary"},
+        "FF": {"role": "supporting", "role_text": "Secondary"},
+        "EE": {"role": "supporting", "role_text": "Secondary"}
+      },
+      "baseline": [
+        {"area": "Azores", "period": "2022", "value": 1031090, "unit": "visitors"},
+        {"area": "Azores", "period": "2023", "value": 1176645, "unit": "visitors"},
+        {"area": "Azores", "period": "2024", "value": 1282081, "unit": "visitors"},
+        {"area": "Madeira", "period": "2022", "value": 1772776, "unit": "visitors"},
+        {"area": "Madeira", "period": "2023", "value": 2090849, "unit": "visitors"},
+        {"area": "Madeira", "period": "2024", "value": 2231584, "unit": "visitors"},
+        {"area": "Canaries", "period": "2022", "value": 12449338, "unit": "visitors"},
+        {"area": "Canaries", "period": "2023", "value": 13564375, "unit": "visitors"}
+      ],
+      "scenario_projection": {
+        "S1": {"assumption_text": "Growth driven by market forces; no corridor signal", "direction_text": "↑", "direction": "increase", "magnitude_text": "Continuation of current development"},
+        "S2": {"assumption_text": "Positive branding effect without regulatory costs", "direction_text": "↔, slight ↑", "direction": "increase", "magnitude_text": "Remain at least stable relative to S1, potentially increase slightly due to enhanced destination image"},
+        "S3": {"assumption_text": "Adjustment phase followed by quality-driven growth", "direction_text": "↔, then ↑", "direction": "increase", "magnitude_text": "Short-term stabilisation, medium-term moderate growth especially in nature tourism"},
+        "S4": {"assumption_text": "Possible volume stabilisation; shift to high-value tourism", "direction_text": "↔, then ↑", "direction": "increase", "magnitude_text": "Slower growth, stable (less) mass tourism, more high-value tourism"}
+      },
+      "early_warning": [],
+      "reference_range": null,
+      "data_sources": ["Regional statistics offices (Azores, Madeira, Canary Islands), annual non-resident visitors"],
+      "data_gap": false, "stub": false, "revision": 1,
+      "caveat": "The criteria table header reads 'Use of F_04' (copy-paste error). 2024 data for the Canary Islands were not available at the time of analysis. Magnitude cells are assigned in reading order (same layout as the M_01 synthesis table).",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, total visitors fiche", "lines": [12850, 13040]},
+      "source_quotes": ["Indicator: Total visitors", "Table 7: Total visitors for Macaronesia 2022-2024",
+                        "Azores           1,031,090   1,176,645   1,282,081", "12,449,338  13,564,375", "↔, then ↑"]
+    },
+    {
+      "code": "T_03", "annex_code": null, "name": "Number of marine tourism companies",
+      "alt_meaning": "Shortlist meaning: wildlife-watch participation (A§5.1); fiche meaning is canonical pending partner Q3",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "goods_benefits", "pathway_segment": "benefit",
+      "classification_provenance": "toolbox_extension",
+      "definition": "Count of active, licensed businesses offering marine tourism services (whale-watching, diving, tourist fishing, leisure boat hire and other nature-based marine activities) in the Macaronesian archipelagos.",
+      "unit": "companies", "scale_type": "count",
+      "criterion_roles": {
+        "EQ": {"role": "primary", "role_text": "Primary"},
+        "PI": {"role": "primary", "role_text": "Primary"},
+        "EC": {"role": "primary", "role_text": "Primary"},
+        "FF": {"role": "primary", "role_text": "Primary"},
+        "EE": {"role": "primary", "role_text": "Primary"}
+      },
+      "baseline": [
+        {"area": "Azores", "period": "2022", "value": 166, "unit": "companies"},
+        {"area": "Azores", "period": "2023", "value": 188, "unit": "companies"},
+        {"area": "Azores", "period": "2024", "value": 201, "unit": "companies"},
+        {"area": "Madeira", "period": "2022", "value": 130, "unit": "companies"},
+        {"area": "Madeira", "period": "2023", "value": 153, "unit": "companies"},
+        {"area": "Madeira", "period": "2024", "value": 173, "unit": "companies"}
+      ],
+      "scenario_projection": {
+        "S1": {"assumption_text": "Sector expansion, without a corresponding corridor mechanism to steer behavior", "direction_text": "↑", "direction": "increase", "magnitude_text": "Continuation of current development, unmanaged expansion"},
+        "S2": {"assumption_text": "Voluntary and soft governance mechanisms are implemented, voluntary codes, branding", "direction_text": "↑, →", "direction": "increase", "magnitude_text": "Growth continues; early professionalization via voluntary standards"},
+        "S3": {"assumption_text": "Management of intensity and standards", "direction_text": "→, slight ↑", "direction": "increase", "magnitude_text": "Slower growth; consolidation and regulated capacity in sensitive areas"},
+        "S4": {"assumption_text": "Structural transformation of the sector", "direction_text": "→, ↓ (in hotspots)", "direction": "decrease", "magnitude_text": "Strongest shift toward high-standard and lower-impact operator base"}
+      },
+      "early_warning": [],
+      "reference_range": null,
+      "data_sources": ["Regional maritime-tourism operator registers (Azores, Madeira), 2022-2024"],
+      "data_gap": true, "stub": false, "revision": 1,
+      "caveat": "Comparable data for the Canary Islands were not available. Synthesis cells read in PDF reading order (p. 314).",
+      "provenance": "wp5_source",
+      "source_ref": {"document": "D5.2 v5", "section": "Annex 8, marine tourism companies fiche", "lines": [13148, 13309]},
+      "source_quotes": ["Indicator: Number of marine tourism companies.", "Table 9: Number of marine tourism companies for Macaronesia 2022-2024",
+                        "Azores                 166   188   201", "Madeira                130   153   173", "→, ↓ (in hotspots)"]
+    },
+    {
+      "code": "C_02", "annex_code": null, "name": "Monitoring / implementation capacity",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "activities", "pathway_segment": "governance_capacity",
+      "classification_provenance": "toolbox_extension",
+      "definition": "", "unit": "", "scale_type": "numeric",
+      "criterion_roles": {
+        "EC": {"role": null, "role_text": "cited in the EC narrative: \"C_02 (monitoring capacity) conditions whether coordination reduces inefficiency\""},
+        "EQ": {"role": null, "role_text": "cited in the EQ narrative: \"capacity to comply (C_02)\""}
+      },
+      "baseline": [], "scenario_projection": {}, "early_warning": [], "reference_range": null, "data_sources": [],
+      "data_gap": true, "stub": true, "revision": 1,
+      "caveat": "No fiche in D5.2; name and criterion citations only, awaiting a partner fiche. A governance-capacity indicator whose natural home is Responses (out of scope in WS-4), so the stub is listed under Activities.",
+      "provenance": "provisional",
+      "source_ref": {"document": "D5.2 v5", "section": "Macaronesia criteria narrative (EC, EQ)", "lines": [4985, 5132]},
+      "source_quotes": ["C_02 (monitoring capacity)", "capacity to comply (C_02)"]
+    },
+    {
+      "code": "M_02", "annex_code": "M_03", "name": "Traffic / vessel interaction with sensitive areas",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "pressures", "pathway_segment": "pressure",
+      "classification_provenance": "toolbox_extension",
+      "definition": "", "unit": "", "scale_type": "numeric",
+      "criterion_roles": {
+        "EQ": {"role": null, "role_text": "cited in the EQ narrative: \"where pressures concentrate and may be redistributed (M_01–M_02)\""}
+      },
+      "baseline": [], "scenario_projection": {}, "early_warning": [], "reference_range": null, "data_sources": [],
+      "data_gap": true, "stub": true, "revision": 1,
+      "caveat": "No fiche in D5.2; name and criterion citation only, awaiting a partner fiche.",
+      "provenance": "provisional",
+      "source_ref": {"document": "D5.2 v5", "section": "Macaronesia criteria narrative (EQ)", "lines": [4985, 5132]},
+      "source_quotes": ["M_01–M_02"]
+    },
+    {
+      "code": "T_02", "annex_code": null, "name": "Marine tourism revenue",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "goods_benefits", "pathway_segment": "benefit",
+      "classification_provenance": "toolbox_extension",
+      "definition": "", "unit": "", "scale_type": "numeric",
+      "criterion_roles": {
+        "EC": {"role": null, "role_text": "cited in the EC narrative: \"T_02 (marine tourism revenue)\""},
+        "EQ": {"role": null, "role_text": "cited in the EQ narrative: \"T_01–T_04\""}
+      },
+      "baseline": [], "scenario_projection": {}, "early_warning": [], "reference_range": null, "data_sources": [],
+      "data_gap": true, "stub": true, "revision": 1,
+      "caveat": "No fiche in D5.2; name and criterion citations only, awaiting a partner fiche.",
+      "provenance": "provisional",
+      "source_ref": {"document": "D5.2 v5", "section": "Macaronesia criteria narrative (EC, EQ)", "lines": [4985, 5132]},
+      "source_quotes": ["T_02 (marine tourism revenue)", "T_01–T_04"]
+    },
+    {
+      "code": "T_04", "annex_code": null, "name": "Marine tourism employment",
+      "da": "macaronesia", "source_set": "fiche", "dapsiwrm_type": "goods_benefits", "pathway_segment": "benefit",
+      "classification_provenance": "toolbox_extension",
+      "definition": "", "unit": "", "scale_type": "numeric",
+      "criterion_roles": {
+        "EC": {"role": null, "role_text": "cited in the EC narrative: \"T_04 (employment)\""},
+        "EQ": {"role": null, "role_text": "cited in the EQ narrative: \"T_01–T_04\""}
+      },
+      "baseline": [], "scenario_projection": {}, "early_warning": [], "reference_range": null, "data_sources": [],
+      "data_gap": true, "stub": true, "revision": 1,
+      "caveat": "No fiche in D5.2; name and criterion citations only, awaiting a partner fiche.",
+      "provenance": "provisional",
+      "source_ref": {"document": "D5.2 v5", "section": "Macaronesia criteria narrative (EC, EQ)", "lines": [4985, 5132]},
+      "source_quotes": ["T_04 (employment)", "T_01–T_04"]
+    }
+  ]
+}

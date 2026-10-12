@@ -845,6 +845,26 @@ RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "Gove
                         "Status", "DateAdded")
 
 # ============================================================================
+# WP5 INDICATOR REGISTRY (spec 2026-10-11 WS-4)
+# ============================================================================
+# Element frames carry these columns. Names lowercase to the legacy
+# create_empty_element_df() schema (indicator / indicator_unit / data_source),
+# so merge_collected_with_existing() (tolower alignment) and the JSON loader
+# (lowercases element columns) keep a single column per field.
+ISA_INDICATOR_COLUMNS <- c("Indicator", "Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version")
+ISA_ELEMENT_KEYS <- c("drivers", "activities", "pressures", "marine_processes",
+                      "ecosystem_services", "goods_benefits")
+# The six Standard Entry element prefixes. Responses ("r") are deliberately
+# absent: WS-4 leaves them untouched (plan ruling 9).
+ISA_PREFIX_ELEMENT_KEY <- c(d = "drivers", a = "activities", p = "pressures", mpf = "marine_processes",
+                            es = "ecosystem_services", gb = "goods_benefits")
+WP5_INDICATOR_SCALE_TYPES <- c("numeric", "ordinal_profile", "count", "categorical")
+WP5_INDICATOR_SOURCE_SETS <- c("fiche", "annex1", "posidonia", "arctic")
+# A save that records a registry snapshot needs an app that keeps the
+# Registry_Id/Registry_Version columns (WS-0 stamp_min_app_version()).
+WP5_INDICATOR_MIN_APP_VERSION <- "1.23.0"
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 
