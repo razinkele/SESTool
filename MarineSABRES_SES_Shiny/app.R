@@ -96,6 +96,7 @@ OPTIONAL_MODULES <- c(
   "modules/analysis_leverage.R",         # Leverage Point Analysis
   "modules/analysis_decision_lens.R",    # Decision Lens (QSEM factor classification)
   "modules/response_module.R",           # Response measures (includes response_validation_server())
+  "modules/valuation_calculator_module.R",  # WP5 WS-5 valuation calculator
   "modules/scenario_builder_module.R",   # Scenario Builder
   "modules/prepare_report_module.R",     # Report preparation (comprehensive)
   "modules/export_reports_module.R",     # Export & Reports (simple)
@@ -505,6 +506,7 @@ ui <- bs4DashPage(
 
       # ==================== RESPONSE & VALIDATION ====================
       bs4TabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
+      bs4TabItem(tabName = "response_valuation", valuation_calculator_ui("valuation_calc", i18n)),
       bs4TabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
       bs4TabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
 
@@ -1048,6 +1050,7 @@ server <- function(input, output, session) {
 
   # Response & validation modules
   response_measures_server("resp_meas", project_data, session_i18n)
+  valuation_calculator_server("valuation_calc", project_data, session_i18n)
   scenario_builder_server("scenario_builder", project_data, session_i18n)
   response_validation_server("resp_val", project_data, session_i18n)
 

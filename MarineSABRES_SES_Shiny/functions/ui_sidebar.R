@@ -400,6 +400,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
         safe_t("ui.sidebar.response_validation", i18n_obj = i18n),
         icon = icon("tasks"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.valuation_calculator", i18n_obj = i18n), tabName = "response_valuation"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
       )
