@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.24.0] - 2026-10-12
+
+Minor release: WP5 integration workstreams WS-4 (indicator registry) and WS-5 (valuation calculator). Projects that use a WP5 indicator require 1.24.0 or later.
+
 ### Added (WP5 valuation calculator — spec 2026-10-11 WS-5)
 - New page under Response & Validation: a Posidonia oceanica valuation calculator. It multiplies a meadow area by the D5.2 Table 19 benefit-transfer values (five ecosystem services) and shows the annual value range and its undiscounted total over a chosen horizon; 1 ha over 20 years reproduces D5.2's €88,800 to €516,800.
 - Badged as toolbox additions: a central midpoint, the discounted value at 0/3/5/7% (plus your own rate), the restoration cost against D5.2's €100,000–500,000 per ha, a cost adjusted for 38–60% early survival, and the break-even horizon.
