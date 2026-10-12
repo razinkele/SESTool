@@ -135,6 +135,16 @@ get_valuation_unit_values <- function(habitat) {
   .wp5_kb_env$db$valuation_unit_values[[habitat]]
 }
 
+#' Restoration cost bounds and early survival for a habitat (D5.2 §4.8)
+#'
+#' @param habitat Character habitat key (e.g., "posidonia_oceanica")
+#' @return list(low, high, unit, early_survival_low, early_survival_high), or NULL
+#' @export
+get_restoration_costs <- function(habitat) {
+  if (!wp5_kb_available()) return(NULL)
+  .wp5_kb_env$db$valuation_unit_values$restoration_costs[[habitat]]
+}
+
 #' Schema version of the loaded WP5 KB (1 = April-draft KB, 2 = FINAL D5.2 rebuild)
 wp5_kb_schema <- function() {
   if (!wp5_kb_available()) return(NA_integer_)

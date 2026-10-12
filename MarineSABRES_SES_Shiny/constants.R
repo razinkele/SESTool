@@ -867,6 +867,21 @@ WP5_INDICATOR_SOURCE_SETS <- c("fiche", "annex1", "posidonia", "arctic")
 WP5_INDICATOR_MIN_APP_VERSION <- "1.24.0"
 
 # ============================================================================
+# WP5 VALUATION CALCULATOR (spec 2026-10-11 WS-5)
+# ============================================================================
+# Benefit-transfer unit values and restoration costs come from the WS-2 KB
+# (valuation_unit_values); these constants only fix order, defaults and limits.
+WP5_VALUATION_HABITAT <- "posidonia_oceanica"
+WP5_VALUATION_SERVICES <- c("coastal_protection", "carbon_sequestration", "recreation_tourism",
+                            "food_provision", "water_purification")
+# NPV sensitivity table (roadmap §6.5: never a single rate). A toolbox addition;
+# D5.2 publishes no discount rate or NPV.
+WP5_VALUATION_DISCOUNT_RATES <- c(0, 0.03, 0.05, 0.07)
+WP5_DEFAULT_TIME_HORIZON <- 20L      # D5.2 §4.8: "a 20-year lifespan for restored meadows"
+WP5_VALUATION_MAX_HORIZON <- 100L
+WP5_VALUATION_MAX_RATE_PCT <- 20
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 

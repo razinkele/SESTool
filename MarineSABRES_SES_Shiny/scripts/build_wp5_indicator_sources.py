@@ -23,7 +23,7 @@ RANGES = [  # (from, to, label)
     (1120, 1130, "Arctic: WP3 'Agreements on Quotas'"),
     (1785, 1815, "Arctic: TAC vs advice, SSB/F vs reference points"),
     (1863, 1896, "Arctic: retail prices and landings table (Faroe Islands, 2024)"),
-    (3112, 3330, "Tuscan: Tables 17 and 18 (Posidonia indicators)"),
+    (3112, 3372, "Tuscan: Tables 17-19 (Posidonia indicators and valuation) and §4.8 restoration costs"),
     (4985, 5132, "Macaronesia: indicator citations in economic efficiency and equity"),
     (8285, 8440, "Annex 1 Table 6 (Tuscan DAPSIWRM indicators)"),
     (9015, 9142, "Annex 1 Table 7 (Macaronesia DAPSIWRM indicators)"),
