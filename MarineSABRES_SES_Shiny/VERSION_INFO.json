@@ -1,8 +1,8 @@
 {
-  "version": "1.22.3",
-  "version_name": "Template Responses linked to the benefits that trigger them",
+  "version": "1.23.0",
+  "version_name": "WP5 integration: mechanism catalogue v2, Response register, model check",
   "release_date": "2026-10-12",
-  "release_type": "patch",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -11,10 +11,16 @@
   "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
-  "features": [],
+  "features": [
+    "WP5 financial-mechanism catalogue rebuilt from the final D5.2: 31 mechanisms with per-field sources (WS-2, PR #100).",
+    "Response register: EBM classification, governance, implementing stakeholders, strategy pairing and 11-tenet appraisal (WS-3a, PR #100).",
+    "Model check on load: instrument-like Drivers/Activities/Ecosystem Services and Responses without feedback (WS-3b, PR #100).",
+    "WP5 shared vocabulary and D5.3 intervention-to-operation data (WS-0/WS-1, PR #100)."
+  ],
   "fixes": {
-    "medium": [
-      "15 Goods & Benefits -> Response or Measure links added to six SES templates so more Responses sit in feedback loops; Goods & Benefits -> Measure links in template files were silently dropped by the loader and now load - PR #101."
+    "high": [
+      "Response type/target/status are stored as language-independent codes; projects saved in another language are converted on load (WS-3a).",
+      "Scenario Builder stores scenarios at data$analysis$scenarios; legacy locations migrate on every load path (WS-0)."
     ]
   },
   "metrics": {
@@ -32,8 +38,8 @@
     "test_files": 58
   },
   "migration_notes": [],
-  "previous_version": "1.22.2",
+  "previous_version": "1.22.3",
   "build_info": {
-    "build_date": "2026-10-12 07:51:03.961596"
+    "build_date": "2026-10-12 09:34:08.492850"
   }
 }
