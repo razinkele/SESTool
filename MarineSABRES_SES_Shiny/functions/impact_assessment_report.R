@@ -110,3 +110,215 @@ impact_narrative_draft <- function(ia, i18n) {
   paras <- c(paras, t(paste0(K, "closing")))
   paste(paras, collapse = "\n\n")
 }
+# ---- report data -----------------------------------------------------------------
+.ia_yes_no <- function(x, t) if (isTRUE(x)) t("modules.impact_assessment.report.yes") else t("modules.impact_assessment.report.no")
+
+# Cell summary as in the step-4 matrix: glyph, magnitude label, (confidence label)
+.ia_cell_summary <- function(cell, i18n, t) {
+  cell <- .impact_fill_cell(cell)
+  s <- trimws(paste0(impact_direction_glyph(cell$direction), " ",
+                     if (nzchar(cell$magnitude)) wp5_vocab_label("magnitude", cell$magnitude, i18n) else "",
+                     if (nzchar(cell$confidence)) paste0(" (", wp5_vocab_label("confidence", cell$confidence, i18n), ")") else ""))
+  if (nzchar(s)) s else t("modules.impact_assessment.report.empty")
+}
+
+# KB source_ref is a nested list (document, table, row); flatten to one string
+.ia_source_ref <- function(x) {
+  if (is.null(x)) return("")
+  if (is.list(x)) return(paste(vapply(x, function(v) paste(as.character(unlist(v)), collapse = " "), character(1)), collapse = ", "))
+  paste(as.character(x), collapse = ", ")
+}
+
+.ia_provenance_label <- function(p, t) {
+  # i18n-ref: modules.wp5_mechanisms.provenance.wp5_source
+  # i18n-ref: modules.wp5_mechanisms.provenance.wp5_prefinal
+  # i18n-ref: modules.wp5_mechanisms.provenance.wp5_derived
+  # i18n-ref: modules.wp5_mechanisms.provenance.toolbox_extension
+  # i18n-ref: modules.wp5_mechanisms.provenance.provisional
+  vapply(as.character(p), function(x) if (nzchar(x)) t(paste0("modules.wp5_mechanisms.provenance.", x)) else "", character(1), USE.NAMES = FALSE)
+}
+
+#' Everything the Word and Excel reports show, already translated. Pure; no file I/O.
+#' @param project The project list (for the name and ISA element names)
+#' @param ia The assessment (any load shape; normalised here)
+impact_report_data <- function(project, ia, i18n) {
+  t <- .ia_t(i18n)
+  K <- "modules.impact_assessment.report."
+  # i18n-ref: modules.impact_assessment.report.yes
+  # i18n-ref: modules.impact_assessment.report.no
+  # i18n-ref: modules.impact_assessment.report.empty
+  # i18n-ref: modules.impact_assessment.report.narrative_item
+  # i18n-ref: modules.impact_assessment.report.stub
+  # i18n-ref: modules.impact_assessment.da.macaronesia
+  # i18n-ref: modules.impact_assessment.da.tuscan
+  # i18n-ref: modules.impact_assessment.da.arctic
+  # i18n-ref: modules.impact_assessment.da.none
+  # i18n-ref: modules.impact_assessment.displacement.yes
+  # i18n-ref: modules.impact_assessment.displacement.no
+  # i18n-ref: modules.impact_assessment.displacement.unsure
+  ia <- normalize_impact_assessment(ia) %||% new_impact_assessment("")
+  codes <- .ia_scenario_order(ia)
+  empty_to_na <- function(x) if (nzchar(x)) x else t(paste0(K, "empty"))
+
+  meta <- list(
+    project_name = as.character(project$data$metadata$project_name %||% project$project_name %||% ""),
+    da = ia$da,
+    da_label = t(if (nzchar(ia$da)) paste0("modules.impact_assessment.da.", ia$da) else "modules.impact_assessment.da.none"),
+    generated = format(Sys.time(), "%Y-%m-%d %H:%M"),
+    ref_version = impact_reference_version(),
+    n_scenarios = length(codes),
+    baseline = as.character(ia$baseline_code %||% ""))
+
+  fields <- IMPACT_TEXT_SECTIONS$characterisation
+  # i18n-ref: modules.impact_assessment.field.focal_issue
+  # i18n-ref: modules.impact_assessment.field.spatial_scope
+  # i18n-ref: modules.impact_assessment.field.time_horizon
+  # i18n-ref: modules.impact_assessment.field.stakeholders
+  characterisation <- data.frame(field = fields,
+    label = vapply(fields, function(f) t(paste0("modules.impact_assessment.field.", f)), character(1)),
+    value = vapply(fields, function(f) as.character(ia$characterisation[[f]] %||% ""), character(1)),
+    stringsAsFactors = FALSE, row.names = NULL)
+
+  sc <- impact_scenario_table_df(ia, i18n)
+  sc <- sc[match(codes, sc$code), , drop = FALSE]
+  scenarios <- data.frame(code = codes, name = sc$name %||% character(0),
+    baseline = vapply(sc$baseline %||% logical(0), .ia_yes_no, character(1), t = t),
+    ambition = ifelse(is.na(sc$ambition_rank) | sc$ambition_rank <= 0L, "", as.character(sc$ambition_rank)),
+    source = sc$source_label %||% character(0),
+    description = vapply(codes, function(cd) as.character(ia$scenarios[[cd]]$description %||% ""), character(1)),
+    stringsAsFactors = FALSE, row.names = NULL)
+
+  choices <- impact_element_choices(project)                 # values = ids, names = "Name (ID) [element_type]"
+  el_name <- function(id) { i <- match(id, choices); if (is.na(i)) id else sub(" \\([^)]*\\) \\[[^]]*\\]$", "", names(choices)[i]) }
+  ids <- ia$scope$element_ids
+  scope_elements <- data.frame(id = ids, name = vapply(ids, el_name, character(1)), stringsAsFactors = FALSE, row.names = NULL)
+
+  reg <- tryCatch(list_indicators(), error = function(e) NULL)
+  ind_row <- function(code) {
+    r <- if (is.data.frame(reg)) reg[reg$code == code, , drop = FALSE] else NULL
+    if (is.null(r) || nrow(r) == 0) return(data.frame(code = code, name = "", provenance = "", stub = FALSE, stringsAsFactors = FALSE))
+    data.frame(code = code, name = as.character(r$name[1]), provenance = as.character(r$provenance[1]), stub = isTRUE(r$stub[1]), stringsAsFactors = FALSE)
+  }
+  scope_indicators <- do.call(rbind, c(list(data.frame(code = character(), name = character(), provenance = character(), stub = logical(), stringsAsFactors = FALSE)),
+                                       lapply(ia$scope$indicator_codes, ind_row)))
+  rownames(scope_indicators) <- NULL
+
+  d <- ia$scope$displacement
+  # i18n-ref: modules.impact_assessment.displacement_question
+  # i18n-ref: modules.impact_assessment.displacement_note
+  # i18n-ref: modules.impact_assessment.displaced_pressure
+  displacement <- data.frame(
+    label = c(t("modules.impact_assessment.displacement_question"), t("modules.impact_assessment.displacement_note"), t("modules.impact_assessment.displaced_pressure")),
+    value = c(if (nzchar(d$answer)) t(paste0("modules.impact_assessment.displacement.", d$answer)) else t(paste0(K, "empty")),
+              empty_to_na(d$note), if (nzchar(d$displaced_pressure_id)) el_name(d$displaced_pressure_id) else t(paste0(K, "empty"))),
+    stringsAsFactors = FALSE)
+
+  crits <- WP5_CRITERIA$code
+  matrix_wide <- data.frame(criterion = crits, stringsAsFactors = FALSE)
+  for (cd in codes) matrix_wide[[cd]] <- vapply(crits, function(cr) .ia_cell_summary(impact_get_cell(ia, cr, cd), i18n, t), character(1))
+
+  lbl <- function(vocab, code) if (nzchar(code)) wp5_vocab_label(vocab, code, i18n) else ""
+  mech_name <- function(id) { m <- get_mechanism_by_id(id); if (is.null(m)) id else as.character(m$name %||% id) }
+  cell_rows <- list(); mech_links <- list(); prov_rows <- list()
+  for (cr in crits) for (cd in codes) {
+    cl <- impact_get_cell(ia, cr, cd)
+    subs <- if (length(cl$subdimension_notes)) paste(paste0(vapply(names(cl$subdimension_notes), function(s) lbl("subdimension", s), character(1)), ": ", unlist(cl$subdimension_notes)), collapse = "; ") else ""
+    inds <- if (length(cl$indicator_roles)) paste(paste0(names(cl$indicator_roles), " (", vapply(unlist(cl$indicator_roles), function(r) lbl("indicator_role", r), character(1)), ")"), collapse = ", ") else ""
+    mechs <- if (length(cl$mechanism_ids)) paste(cl$mechanism_ids, collapse = ", ") else ""   # ids; Appendix A maps id -> name
+    ref <- if (length(cl$reference)) paste0(cl$reference$table %||% "", " v", cl$reference$ref_version %||% "") else ""
+    cell_rows[[length(cell_rows) + 1]] <- data.frame(criterion = cr, scenario = cd,
+      direction = lbl("direction", cl$direction), magnitude = lbl("magnitude", cl$magnitude), timing = lbl("timing", cl$timing),
+      confidence = lbl("confidence", cl$confidence),
+      evidence = paste(vapply(cl$evidence, function(e) lbl("evidence", e), character(1)), collapse = ", "),
+      uncertainty_driver = lbl("uncertainty_driver", cl$uncertainty_driver), rationale = cl$rationale,
+      subdimensions = subs, indicators = inds, mechanisms = mechs, reference = ref, stringsAsFactors = FALSE)
+    for (id in cl$mechanism_ids) mech_links[[id]] <- c(mech_links[[id]], paste(cr, "/", cd))
+    if (length(cl$reference)) {
+      edited <- impact_cell_edited_since_copy(cl, ia$da)
+      prov_rows[[length(prov_rows) + 1]] <- data.frame(
+        kind = if (edited) "reference_copy_edited" else "reference_copy", item = paste(cr, "/", cd),
+        provenance = if (edited) "wp5_derived" else as.character(cl$reference$provenance %||% "wp5_source"),
+        detail = ref, stringsAsFactors = FALSE)
+    }
+    for (code in names(cl$indicator_roles)) {
+      r <- ind_row(code)
+      if (isTRUE(r$stub) || (nzchar(r$provenance) && !identical(r$provenance, "wp5_source"))) {
+        prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "indicator", item = code, provenance = r$provenance,
+          detail = if (isTRUE(r$stub)) t(paste0(K, "stub")) else r$name, stringsAsFactors = FALSE)
+      }
+    }
+  }
+  cells_long <- do.call(rbind, c(list(data.frame(criterion = character(), scenario = character(), direction = character(), magnitude = character(),
+    timing = character(), confidence = character(), evidence = character(), uncertainty_driver = character(), rationale = character(),
+    subdimensions = character(), indicators = character(), mechanisms = character(), reference = character(), stringsAsFactors = FALSE)), cell_rows))
+  rownames(cells_long) <- NULL
+
+  mech_ids <- names(mech_links) %||% character(0)      # names(list()) is NULL, which would drop the id column
+  mechanisms <- data.frame(id = mech_ids,
+    name = vapply(mech_ids, mech_name, character(1)),
+    provenance = vapply(mech_ids, function(id) { p <- mechanism_provenance(id); if (is.null(p)) "" else as.character(p$provenance %||% "") }, character(1)),
+    source_ref = vapply(mech_ids, function(id) { p <- mechanism_provenance(id); if (is.null(p)) "" else .ia_source_ref(p$source_ref) }, character(1)),
+    linked_to = vapply(mech_ids, function(id) paste(unique(mech_links[[id]]), collapse = ", "), character(1)),
+    stringsAsFactors = FALSE, row.names = NULL)
+  mechanisms$provenance_label <- .ia_provenance_label(mechanisms$provenance, t)
+  for (i in seq_len(nrow(mechanisms))) if (nzchar(mechanisms$provenance[i]) && !identical(mechanisms$provenance[i], "wp5_source")) {
+    prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "mechanism", item = mechanisms$id[i], provenance = mechanisms$provenance[i],
+      detail = mechanisms$name[i], stringsAsFactors = FALSE)
+  }
+  for (i in seq_len(nrow(scope_indicators))) if (isTRUE(scope_indicators$stub[i]) || (nzchar(scope_indicators$provenance[i]) && !identical(scope_indicators$provenance[i], "wp5_source"))) {
+    prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "indicator", item = scope_indicators$code[i], provenance = scope_indicators$provenance[i],
+      detail = if (isTRUE(scope_indicators$stub[i])) t(paste0(K, "stub")) else scope_indicators$name[i], stringsAsFactors = FALSE)
+  }
+  if (nzchar(ia$trade_offs$auto_draft %||% "")) {
+    prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "toolbox_extension", item = t(paste0(K, "narrative_item")),
+      provenance = "toolbox_extension", detail = "", stringsAsFactors = FALSE)
+  }
+  provenance <- do.call(rbind, c(list(data.frame(kind = character(), item = character(), provenance = character(), detail = character(), stringsAsFactors = FALSE)), prov_rows))
+  provenance <- provenance[!duplicated(provenance[, c("kind", "item")]), , drop = FALSE]
+  rownames(provenance) <- NULL
+  provenance$provenance_label <- .ia_provenance_label(provenance$provenance, t)
+  scope_indicators$stub <- NULL
+
+  # i18n-ref: modules.impact_assessment.report.col.code
+  # i18n-ref: modules.impact_assessment.report.col.name
+  # i18n-ref: modules.impact_assessment.report.col.baseline
+  # i18n-ref: modules.impact_assessment.report.col.ambition
+  # i18n-ref: modules.impact_assessment.report.col.source
+  # i18n-ref: modules.impact_assessment.report.col.description
+  # i18n-ref: modules.impact_assessment.report.col.id
+  # i18n-ref: modules.impact_assessment.report.col.provenance
+  # i18n-ref: modules.impact_assessment.report.col.criterion
+  # i18n-ref: modules.impact_assessment.report.col.scenario
+  # i18n-ref: modules.impact_assessment.report.col.direction
+  # i18n-ref: modules.impact_assessment.report.col.magnitude
+  # i18n-ref: modules.impact_assessment.report.col.timing
+  # i18n-ref: modules.impact_assessment.report.col.confidence
+  # i18n-ref: modules.impact_assessment.report.col.evidence
+  # i18n-ref: modules.impact_assessment.report.col.uncertainty_driver
+  # i18n-ref: modules.impact_assessment.report.col.rationale
+  # i18n-ref: modules.impact_assessment.report.col.subdimensions
+  # i18n-ref: modules.impact_assessment.report.col.indicators
+  # i18n-ref: modules.impact_assessment.report.col.mechanisms
+  # i18n-ref: modules.impact_assessment.report.col.reference
+  # i18n-ref: modules.impact_assessment.report.col.source_ref
+  # i18n-ref: modules.impact_assessment.report.col.linked_to
+  # i18n-ref: modules.impact_assessment.report.col.kind
+  # i18n-ref: modules.impact_assessment.report.col.item
+  # i18n-ref: modules.impact_assessment.report.col.detail
+  # i18n-ref: modules.impact_assessment.report.col.label
+  # i18n-ref: modules.impact_assessment.report.col.value
+  col_keys <- c("code", "name", "baseline", "ambition", "source", "description", "id", "provenance", "criterion", "scenario",
+                "direction", "magnitude", "timing", "confidence", "evidence", "uncertainty_driver", "rationale", "subdimensions",
+                "indicators", "mechanisms", "reference", "source_ref", "linked_to", "kind", "item", "detail", "label", "value")
+  # A list, not a character vector: renderers look up scenario-code columns (S1…) that are absent here,
+  # and `[[` on a character vector errors instead of returning NULL for `%||%`.
+  labels <- as.list(stats::setNames(vapply(col_keys, function(k) t(paste0(K, "col.", k)), character(1)), col_keys))
+  labels[["provenance_label"]] <- labels[["provenance"]]
+
+  list(meta = meta, characterisation = characterisation, scenarios = scenarios, scope_elements = scope_elements,
+       scope_indicators = scope_indicators, displacement = displacement, matrix_wide = matrix_wide, cells_long = cells_long,
+       mechanisms = mechanisms, provenance = provenance,
+       text = list(uncertainty = as.character(ia$uncertainty$notes %||% ""), trade_offs_draft = as.character(ia$trade_offs$auto_draft %||% ""),
+                   trade_offs_text = as.character(ia$trade_offs$text %||% ""), recommendations = as.character(ia$recommendations$text %||% "")),
+       labels = labels)
+}

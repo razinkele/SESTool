@@ -451,6 +451,17 @@
       "it": "Indicatori citati",
       "no": "Indikatorer det vises til",
       "el": "Δείκτες που αναφέρονται"
+    },
+    "modules.wp5_mechanisms.provenance.wp5_source": {
+      "en": "WP5 source",
+      "es": "Fuente del WP5",
+      "fr": "Source WP5",
+      "de": "WP5-Quelle",
+      "lt": "WP5 šaltinis",
+      "pt": "Fonte do WP5",
+      "it": "Fonte WP5",
+      "no": "WP5-kilde",
+      "el": "Πηγή WP5"
     }
   }
 }

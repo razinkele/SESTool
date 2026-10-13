@@ -118,3 +118,88 @@ test_that("the narrative keys exist in all 9 languages and keep their placeholde
     for (p in ph[[k]]) expect_true(grepl(p, v, fixed = TRUE), info = paste(k, l, p))
   }
 })
+
+# ---- impact_report_data ----------------------------------------------------------
+report_project <- function(ia = fixture_ia(), canonical_cols = FALSE) {
+  p <- create_empty_project("Corridor case"); p$data$metadata$project_name <- "Corridor case"; p$data$metadata$da_site <- "Macaronesia"
+  el <- data.frame(id = c("P001", "C003"), name = c("Trawling pressure", "Seabird colony"), stringsAsFactors = FALSE)
+  if (canonical_cols) names(el) <- c("ID", "Name")
+  p$data$isa_data$pressures <- el[1, , drop = FALSE]; p$data$isa_data$marine_processes <- el[2, , drop = FALSE]
+  set_impact_assessment(p, ia)
+}
+
+test_that("impact_report_data returns every block with the fixture's content", {
+  r <- impact_report_data(report_project(), fixture_ia(), i18n)
+  expect_identical(r$meta$project_name, "Corridor case")
+  expect_identical(r$meta$da, "macaronesia"); expect_identical(r$meta$baseline, "S1"); expect_identical(r$meta$n_scenarios, 4L)
+  expect_identical(r$characterisation$value[r$characterisation$field == "focal_issue"], "Migratory corridor")
+  expect_identical(r$scenarios$code, c("S1", "S2", "S3", "S4"))
+  expect_identical(r$scope_elements$name, c("Trawling pressure", "Seabird colony"))
+  expect_identical(r$scope_indicators$code, "C_01"); expect_true(nzchar(r$scope_indicators$name))
+  expect_identical(nrow(r$displacement), 3L)
+  expect_match(r$displacement$value[2], "ABNJ", fixed = TRUE)
+  expect_identical(names(r$matrix_wide), c("criterion", "S1", "S2", "S3", "S4"))
+  expect_identical(nrow(r$matrix_wide), nrow(WP5_CRITERIA))
+  expect_match(r$matrix_wide$S2[r$matrix_wide$criterion == "EE"], "\u2191", fixed = TRUE)      # glyph + magnitude code
+  expect_identical(nrow(r$cells_long), nrow(WP5_CRITERIA) * 4L)
+  eq_s4 <- r$cells_long[r$cells_long$criterion == "EQ" & r$cells_long$scenario == "S4", ]
+  expect_identical(eq_s4$evidence, "literature, stakeholder")
+  expect_match(eq_s4$indicators, "C_01 (primary)", fixed = TRUE)
+  expect_match(eq_s4$mechanisms, "mac_01", fixed = TRUE)
+  expect_match(eq_s4$rationale, "€0.25–1m/yr", fixed = TRUE)
+  ee_s3 <- r$cells_long[r$cells_long$criterion == "EE" & r$cells_long$scenario == "S3", ]
+  expect_match(ee_s3$reference, "Table 21", fixed = TRUE)
+  expect_identical(r$mechanisms$id, "mac_01"); expect_identical(r$mechanisms$provenance, "wp5_source")
+  expect_match(r$mechanisms$linked_to, "EQ / S4", fixed = TRUE)
+  expect_true("reference_copy" %in% r$provenance$kind)                                        # copied EE/S3, unedited
+  expect_false("reference_copy_edited" %in% r$provenance$kind)
+  expect_false("toolbox_extension" %in% r$provenance$kind)                                     # no draft stored yet
+  expect_identical(r$text$recommendations, "Pilot S3 first (Πιλοτικό)")
+})
+
+test_that("the provenance appendix records an edited copy and the toolbox draft", {
+  ia <- fixture_ia()
+  cl <- impact_get_cell(ia, "EE", "S3"); cl$rationale <- paste(cl$rationale, "(edited)"); ia <- impact_set_cell(ia, "EE", "S3", cl)
+  ia <- impact_set_section(ia, "trade_offs", list(auto_draft = impact_narrative_draft(ia, i18n)))
+  r <- impact_report_data(report_project(ia), ia, i18n)
+  expect_true("reference_copy_edited" %in% r$provenance$kind)
+  expect_true("toolbox_extension" %in% r$provenance$kind)
+  expect_identical(r$provenance$provenance[r$provenance$kind == "reference_copy_edited"], "wp5_derived")
+})
+
+test_that("unknown mechanism ids / indicator codes and canonical ID/Name columns do not break the report data", {
+  ia <- fixture_ia()
+  cl <- impact_get_cell(ia, "EQ", "S4"); cl$mechanism_ids <- c("mac_01", "gone_99"); cl$indicator_roles <- list(NOPE_1 = "supporting")
+  ia <- impact_set_cell(ia, "EQ", "S4", cl)
+  ia <- impact_set_scope_items(ia, element_ids = c("P001", "C003", "X999"), indicator_codes = c("C_01", "NOPE_1"))
+  r <- impact_report_data(report_project(ia, canonical_cols = TRUE), ia, i18n)
+  expect_identical(r$scope_elements$name, c("Trawling pressure", "Seabird colony", "X999"))     # unknown id shown as id
+  expect_identical(r$scope_indicators$name[r$scope_indicators$code == "NOPE_1"], "")
+  gone <- r$mechanisms[r$mechanisms$id == "gone_99", ]
+  expect_identical(gone$name, "gone_99"); expect_identical(gone$provenance, "")
+})
+
+test_that("an empty assessment yields empty tables and '(not provided)' text, not an error", {
+  r <- impact_report_data(create_empty_project("x"), new_impact_assessment(""), i18n)
+  expect_identical(nrow(r$scenarios), 0L); expect_identical(nrow(r$cells_long), 0L); expect_identical(nrow(r$provenance), 0L)
+  expect_identical(names(r$matrix_wide), "criterion")
+  expect_identical(r$text$recommendations, "")
+  expect_identical(r$meta$da_label, "modules.impact_assessment.da.none")
+})
+
+test_that("the report keys exist in all 9 languages", {
+  # The explicit contract (the Step 4 table), not a regex over the source: heading keys are built with
+  # t(paste0(K, ...)) so a source scan only ever sees the sentinel comments.
+  tr <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "impact_assessment.json"), simplifyVector = FALSE)$translation
+  REPORT_KEYS <- c("title", "subtitle", "project", "da", "generated", "ref_version", "baseline",
+    paste0("section.", c("characterisation", "scenarios", "scope", "matrix", "uncertainty", "trade_offs", "recommendations")),
+    "appendix_mechanisms", "appendix_provenance", "scope_elements", "scope_indicators", "displacement", "matrix_summary", "matrix_detail",
+    "draft_label", "user_text_label", "empty", "none", "yes", "no", "stub", "narrative_item", "provenance_none", "provenance_intro",
+    paste0("kind.", c("reference_copy", "reference_copy_edited", "mechanism", "indicator", "toolbox_extension")),
+    paste0("col.", c("code", "name", "baseline", "ambition", "source", "description", "id", "provenance", "criterion", "scenario",
+                     "direction", "magnitude", "timing", "confidence", "evidence", "uncertainty_driver", "rationale", "subdimensions",
+                     "indicators", "mechanisms", "reference", "source_ref", "linked_to", "kind", "item", "detail", "label", "value")))
+  expect_length(REPORT_KEYS, 64L)   # = the number of rows in the Step 4 table
+  for (k in paste0("modules.impact_assessment.report.", REPORT_KEYS)) for (l in LANGS) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
+  expect_true(nzchar(jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "wp5_mechanisms.json"), simplifyVector = FALSE)$translation[["modules.wp5_mechanisms.provenance.wp5_source"]][["el"]] %||% ""))
+})
