@@ -60,3 +60,17 @@ test_that("impact_matrix_table renders 5 criteria x N scenarios with one link pe
   expect_match(html, "modules.wp5_mechanisms.provenance.toolbox_extension", fixed = TRUE)
   expect_match(html, "ia-ref", fixed = TRUE)   # the copied cell carries the reference marker
 })
+
+test_that("no .ia- CSS rule uses the background shorthand (it would wipe the low-confidence hatching)", {
+  css <- paste(readLines(file.path(PROJECT_ROOT, "www", "custom.css"), warn = FALSE), collapse = "\n")
+  blocks <- regmatches(css, gregexpr("[.]ia-[^{}]*[{][^}]*[}]", css))[[1]]
+  expect_gt(length(blocks), 0)
+  expect_false(any(grepl("(^|[^-])background[ ]*:", blocks)))
+})
+
+test_that("impact_reference_panel is NULL for a user scenario and shows the heading for a reference scenario", {
+  ref <- impact_reference_cell("macaronesia", "EE", "S1")
+  expect_false(is.null(ref))
+  expect_null(impact_reference_panel(ref, FALSE, shiny::NS("ia"), i18n))
+  expect_match(as.character(impact_reference_panel(ref, TRUE, shiny::NS("ia"), i18n)), "modules.impact_assessment.reference_cell_heading", fixed = TRUE)
+})

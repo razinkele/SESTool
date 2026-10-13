@@ -163,3 +163,15 @@ impact_matrix_table <- function(ia, i18n, ns) {
     provenance_badge("toolbox_extension", i18n), " \u00b7 ", i18n$t("modules.impact_assessment.legend_hatch"))
   tagList(tags$table(class = "table table-bordered ia-matrix", tags$thead(header), tags$tbody(rows)), legend)
 }
+
+#' The WP5 reference-rating panel of the cell editor. Only a scenario that came
+#' from the WP5 reference set may show D5.2 text; a user scenario that merely
+#' reuses a code gets NULL.
+impact_reference_panel <- function(ref, is_ref_scenario, ns, i18n) {
+  if (is.null(ref) || !isTRUE(is_ref_scenario)) return(NULL)
+  div(class = "alert alert-light border py-2",
+    strong(i18n$t("modules.impact_assessment.reference_cell_heading")), " ", provenance_badge(ref$provenance, i18n),
+    p(class = "mb-1", if (nzchar(ref$rating_text)) tags$b(ref$rating_text), " ", ref$text),
+    tags$small(class = "text-muted", ref$table),
+    shiny::actionButton(ns("cell_copy_reference"), i18n$t("modules.impact_assessment.copy_reference"), class = "btn-outline-primary btn-sm ms-2"))
+}

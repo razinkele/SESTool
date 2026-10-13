@@ -283,19 +283,15 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     show_cell_modal <- function(cr, cd) {
       cl <- impact_get_cell(rv$ia, cr, cd)
       d <- da()
-      ref <- if (nzchar(d)) impact_reference_cell(d, cr, cd) else NULL
       is_ref_scenario <- identical(rv$ia$scenarios[[cd]]$source, "wp5_reference")
+      ref <- if (nzchar(d) && is_ref_scenario) impact_reference_cell(d, cr, cd) else NULL
       subs <- WP5_CRITERION_SUBDIMENSIONS[[cr]] %||% character(0)
       ind <- impact_indicator_suggestions(cr, d)
       mech <- impact_mechanism_options(d, cd)
       mech_labels <- if (nrow(mech)) paste0(mech$name, ifelse(is.na(mech$applicability), "", paste0(" \u2014 ", mech$applicability))) else character(0)
       showModal(modalDialog(size = "l", easyClose = FALSE,
         title = paste0(wp5_vocab_label("criteria", cr, i18n), " \u00d7 ", cd, " \u2014 ", rv$ia$scenarios[[cd]]$name),
-        if (!is.null(ref)) div(class = "alert alert-light border py-2",
-          strong(i18n$t("modules.impact_assessment.reference_cell_heading")), " ", provenance_badge(ref$provenance, i18n),
-          p(class = "mb-1", if (nzchar(ref$rating_text)) tags$b(ref$rating_text), " ", ref$text),
-          tags$small(class = "text-muted", ref$table),
-          if (is_ref_scenario) actionButton(ns("cell_copy_reference"), i18n$t("modules.impact_assessment.copy_reference"), class = "btn-outline-primary btn-sm ms-2")),
+        impact_reference_panel(ref, is_ref_scenario, ns, i18n),
         fluidRow(
           column(6, rubric_select("cell_direction", "direction", "modules.impact_assessment.cell_direction", cl$direction),
                     rubric_select("cell_magnitude", "magnitude", "modules.impact_assessment.cell_magnitude", cl$magnitude),

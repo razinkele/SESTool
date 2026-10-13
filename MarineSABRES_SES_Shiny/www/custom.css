@@ -1368,7 +1368,7 @@ textarea:focus-visible {
 
 /* WP5 impact assessment: criterion x scenario matrix (step 4) */
 .ia-matrix td.ia-cell { min-width: 9rem; vertical-align: middle; text-align: center; }
-.ia-fill-0 { background: #ffffff; } .ia-fill-1 { background: #e3f2fd; } .ia-fill-2 { background: #90caf9; } .ia-fill-3 { background: #42a5f5; }
-.ia-dir-decrease.ia-fill-1 { background: #fdecea; } .ia-dir-decrease.ia-fill-2 { background: #f5b7b1; } .ia-dir-decrease.ia-fill-3 { background: #ec7063; }
+.ia-fill-0 { background-color: #ffffff; } .ia-fill-1 { background-color: #e3f2fd; } .ia-fill-2 { background-color: #90caf9; } .ia-fill-3 { background-color: #42a5f5; }
+.ia-dir-decrease.ia-fill-1 { background-color: #fdecea; } .ia-dir-decrease.ia-fill-2 { background-color: #f5b7b1; } .ia-dir-decrease.ia-fill-3 { background-color: #ec7063; }
 .ia-conf-low { background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0 6px, transparent 6px 12px); }
 td.ia-ref { outline: 2px dashed #6c757d; outline-offset: -3px; }
