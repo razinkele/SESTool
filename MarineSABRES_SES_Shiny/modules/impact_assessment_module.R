@@ -33,25 +33,54 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     ref_status <- reactive(impact_reference_status(da()))
     available_steps <- function() 1:7
 
+    # What the working copy was last built from / last written to. A plain
+    # (non-reactive) environment: the seeding observer reads it under isolate()
+    # and commit() updates it, so a commit never looks like a project change.
+    loaded <- new.env(parent = emptyenv())
+    loaded$project_id <- NULL
+    loaded$block <- NULL
+
     # Build the working copy from the project; a fresh one starts from the DA's
     # published scenarios (nothing is written until the user acts).
-    load_from_project <- function() {
-      pd <- project_data_reactive()
-      ia <- get_impact_assessment(pd)
+    load_from_project <- function(pd, reset_step = TRUE) {
+      stored <- get_impact_assessment(pd)
+      ia <- stored
       if (is.null(ia)) {
         d <- wp5_da_for_project(pd)
         ia <- if (identical(impact_reference_status(d), "available")) impact_assessment_from_reference(d) else new_impact_assessment(d)
       }
+      loaded$project_id <- pd$project_id
+      loaded$block <- stored
       rv$ia <- ia
-      rv$step <- 1L
+      if (reset_step) rv$step <- 1L
     }
-    observe({ project_data_reactive(); isolate(if (is.null(rv$ia)) load_from_project()) })
-    if (!is.null(event_bus)) observeEvent(event_bus$on_project_loaded(), load_from_project(), ignoreInit = TRUE)
+    # No load path emits project_loaded, so the project itself is the signal:
+    # reload when another project is opened (id), when the stored block differs
+    # from what this module last committed (reload of the same file, external
+    # change), or when nothing is stored and the DA changed. Only
+    # project_data_reactive() is a dependency; everything else is isolated.
+    observe({
+      pd <- project_data_reactive()
+      isolate({
+        first <- is.null(rv$ia)
+        id_changed <- !identical(pd$project_id, loaded$project_id)
+        block <- get_impact_assessment(pd)
+        block_changed <- !identical(block, loaded$block)
+        da_changed <- !first && is.null(block) && !identical(wp5_da_for_project(pd), rv$ia$da)
+        if (first || id_changed || block_changed || da_changed) load_from_project(pd, reset_step = first || id_changed)
+      })
+    })
+    # Backup only: the observer above is the mechanism
+    if (!is.null(event_bus)) observeEvent(event_bus$on_project_loaded(), load_from_project(project_data_reactive()), ignoreInit = TRUE)
 
-    # Persist: the only write path. Never emits ISA/CLD events.
+    # Persist: the only write path. Never emits ISA/CLD events. loaded$block is
+    # updated before the write so the re-triggered seeding observer finds the
+    # block it committed and does nothing (project_id is deliberately untouched).
     commit <- function(ia) {
+      pd <- set_impact_assessment(isolate(project_data_reactive()), ia)   # may raise impact_error
+      loaded$block <- get_impact_assessment(pd)
       rv$ia <- ia
-      project_data_reactive(set_impact_assessment(project_data_reactive(), ia))
+      project_data_reactive(pd)
     }
     # Translate a model error (class impact_error, $code) into a notification
     notify_impact_error <- function(e) {
@@ -81,6 +110,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     output$da_banner <- renderUI(impact_da_banner(da(), ref_status(), i18n))
     blocked_steps <- reactive({ req(rv$ia); Filter(function(s) !impact_can_advance(rv$ia, s), c(2L, 3L, 4L)) })
     output$step_bar <- renderUI({ req(rv$ia); impact_step_bar(rv$step, available_steps(), i18n, ns, blocked = blocked_steps()) })
+    # Direct jumps are intentionally ungated (the step bar marks blocked steps); only Next is gated.
     lapply(1:7, function(n) observeEvent(input[[paste0("goto_step_", n)]], { rv$step <- n }))
     observeEvent(input$prev_step, { if (rv$step > 1L) rv$step <- rv$step - 1L })
     observeEvent(input$next_step, {
@@ -171,7 +201,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     }
     output$sc_table <- DT::renderDT({
       req(rv$ia)
-      df <- impact_scenario_table_df(rv$ia, i18n)
+      df <- impact_scenario_table_display(impact_scenario_table_df(rv$ia, i18n))
       names(df) <- c(i18n$t("modules.impact_assessment.scenario_code"), i18n$t("modules.impact_assessment.scenario_name"),
                      i18n$t("modules.impact_assessment.baseline_label"), i18n$t("modules.impact_assessment.scenario_ambition"),
                      i18n$t("modules.impact_assessment.scenario_source"))
@@ -384,11 +414,13 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
         DT::DTOutput(ns("arctic_revenue")),
         if (nrow(feas)) tagList(h6(i18n$t("modules.impact_assessment.arctic_feasibility_heading")),
           tags$table(class = "table table-sm", tags$tbody(lapply(seq_len(nrow(feas)), function(i)
-            tags$tr(tags$td(feas$scenario[i]), tags$td(tags$b(feas$rating_text[i]), " ", feas$text[i])))))))
+            tags$tr(tags$td(impact_scenario_display_name(rv$ia, da(), feas$scenario[i])),
+                    tags$td(tags$b(feas$rating_text[i]), " ", feas$text[i])))))))
     }
+    # Codes stay in the data; the table shows translated labels (spec P2)
     output$arctic_revenue <- DT::renderDT({
-      rows <- impact_revenue_rows(impact_reference_revenue(da()))
-      DT::datatable(rows, options = list(pageLength = 10, dom = "t"), rownames = FALSE)
+      tbl <- impact_revenue_display(impact_reference_revenue(da()), da(), i18n)
+      DT::datatable(tbl$data, colnames = tbl$colnames, options = list(pageLength = 10, dom = "t"), rownames = FALSE)
     })
 
     output$step_body <- renderUI({
@@ -398,8 +430,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
           ses_empty_state("modules.impact_assessment.tuscan_empty", "modules.impact_assessment.tuscan_empty_hint",
                           icon_name = "euro-sign", status = "info", i18n = i18n),
           div(class = "text-center", actionButton(ns("go_valuation"), i18n$t("modules.impact_assessment.go_valuation"),
-                                                 class = "btn-outline-primary",
-                                                 onclick = "Shiny.setInputValue('impact_nav_target', 'response_valuation', {priority: 'event'})"))
+                                                 class = "btn-outline-primary"))
         ))
       }
       switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "4" = step4_ui(), "5" = step5_ui(), "6" = step6_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
@@ -407,7 +438,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
 
     # Navigation to the valuation calculator (Tuscan empty state)
     observeEvent(input$go_valuation, {
-      if (!is.null(event_bus) && is.function(event_bus$emit_navigation_request)) event_bus$emit_navigation_request("response_valuation")
+      if (!is.null(event_bus) && is.function(event_bus$emit_navigation_request)) event_bus$emit_navigation_request("response_valuation", source = "impact_assessment")
     })
 
     create_help_observer(input, "help_impact", "modules.impact_assessment.help_title",

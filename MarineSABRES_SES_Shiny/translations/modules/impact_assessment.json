@@ -1374,6 +1374,138 @@
       "it": "Correggi questi punti prima di proseguire:",
       "no": "Rett opp dette før du går videre:",
       "el": "Διορθώστε τα παρακάτω πριν συνεχίσετε:"
+    },
+    "modules.impact_assessment.legend_ref": {
+      "en": "Dashed outline = copied from the WP5 reference",
+      "es": "Contorno discontinuo = copiado de la referencia del WP5",
+      "fr": "Contour en pointillés = copié depuis la référence du WP5",
+      "de": "Gestrichelter Rahmen = aus der WP5-Referenz übernommen",
+      "lt": "Punktyrinis kontūras = nukopijuota iš WP5 atskaitos duomenų",
+      "pt": "Contorno tracejado = copiado da referência do WP5",
+      "it": "Contorno tratteggiato = copiato dal riferimento WP5",
+      "no": "Stiplet omriss = kopiert fra WP5-referansen",
+      "el": "Διακεκομμένο περίγραμμα = αντιγραμμένο από την αναφορά του WP5"
+    },
+    "modules.impact_assessment.revenue.country": {
+      "en": "Country",
+      "es": "País",
+      "fr": "Pays",
+      "de": "Land",
+      "lt": "Šalis",
+      "pt": "País",
+      "it": "Paese",
+      "no": "Land",
+      "el": "Χώρα"
+    },
+    "modules.impact_assessment.revenue.species": {
+      "en": "Species",
+      "es": "Especie",
+      "fr": "Espèce",
+      "de": "Art",
+      "lt": "Rūšis",
+      "pt": "Espécie",
+      "it": "Specie",
+      "no": "Art",
+      "el": "Είδος"
+    },
+    "modules.impact_assessment.revenue.landings": {
+      "en": "Landings",
+      "es": "Desembarques",
+      "fr": "Débarquements",
+      "de": "Anlandungen",
+      "lt": "Iškrovimai",
+      "pt": "Desembarques",
+      "it": "Sbarchi",
+      "no": "Landinger",
+      "el": "Εκφορτώσεις"
+    },
+    "modules.impact_assessment.revenue.price": {
+      "en": "Price",
+      "es": "Precio",
+      "fr": "Prix",
+      "de": "Preis",
+      "lt": "Kaina",
+      "pt": "Preço",
+      "it": "Prezzo",
+      "no": "Pris",
+      "el": "Τιμή"
+    },
+    "modules.impact_assessment.revenue.baseline": {
+      "en": "Baseline revenue",
+      "es": "Ingresos de referencia",
+      "fr": "Revenus de référence",
+      "de": "Basiserlöse",
+      "lt": "Bazinės pajamos",
+      "pt": "Receita de referência",
+      "it": "Ricavi di riferimento",
+      "no": "Referanseinntekter",
+      "el": "Έσοδα αναφοράς"
+    },
+    "modules.impact_assessment.country.faroe_islands": {
+      "en": "Faroe Islands",
+      "es": "Islas Feroe",
+      "fr": "Îles Féroé",
+      "de": "Färöer",
+      "lt": "Farerų salos",
+      "pt": "Ilhas Faroé",
+      "it": "Isole Fær Øer",
+      "no": "Færøyene",
+      "el": "Νήσοι Φερόες"
+    },
+    "modules.impact_assessment.country.greenland": {
+      "en": "Greenland",
+      "es": "Groenlandia",
+      "fr": "Groenland",
+      "de": "Grönland",
+      "lt": "Grenlandija",
+      "pt": "Gronelândia",
+      "it": "Groenlandia",
+      "no": "Grønland",
+      "el": "Γροιλανδία"
+    },
+    "modules.impact_assessment.country.iceland": {
+      "en": "Iceland",
+      "es": "Islandia",
+      "fr": "Islande",
+      "de": "Island",
+      "lt": "Islandija",
+      "pt": "Islândia",
+      "it": "Islanda",
+      "no": "Island",
+      "el": "Ισλανδία"
+    },
+    "modules.impact_assessment.species.mackerel": {
+      "en": "Mackerel",
+      "es": "Caballa",
+      "fr": "Maquereau",
+      "de": "Makrele",
+      "lt": "Skumbrė",
+      "pt": "Sarda",
+      "it": "Sgombro",
+      "no": "Makrell",
+      "el": "Σκουμπρί"
+    },
+    "modules.impact_assessment.species.herring": {
+      "en": "Herring",
+      "es": "Arenque",
+      "fr": "Hareng",
+      "de": "Hering",
+      "lt": "Silkė",
+      "pt": "Arenque",
+      "it": "Aringa",
+      "no": "Sild",
+      "el": "Ρέγγα"
+    },
+    "modules.impact_assessment.species.blue_whiting": {
+      "en": "Blue whiting",
+      "es": "Bacaladilla",
+      "fr": "Merlan bleu",
+      "de": "Blauer Wittling",
+      "lt": "Putasu",
+      "pt": "Verdinho",
+      "it": "Melù",
+      "no": "Kolmule",
+      "el": "Προσφυγάκι"
     }
   }
 }

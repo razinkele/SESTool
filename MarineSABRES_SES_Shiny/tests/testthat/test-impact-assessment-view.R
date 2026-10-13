@@ -13,6 +13,36 @@ test_that("impact_scenario_table_df lists scenarios with the baseline flag and a
   expect_identical(nrow(impact_scenario_table_df(new_impact_assessment(""), i18n)), 0L)
 })
 
+test_that("impact_scenario_table_display shows the baseline as a check mark and an unranked ambition as blank", {
+  ia <- impact_add_scenario(impact_assessment_from_reference("macaronesia"), new_impact_scenario("U1", "Mine", ambition_rank = 0L))
+  disp <- impact_scenario_table_display(impact_scenario_table_df(ia, i18n))
+  expect_identical(disp$baseline, c(intToUtf8(0x2713L), "", "", "", ""))
+  expect_identical(disp$ambition_rank[5], "")
+  expect_true(all(nzchar(disp$ambition_rank[1:4])))
+  expect_false(is.logical(disp$baseline))
+})
+
+test_that("impact_scenario_display_name prefers the assessment name, then the reference name, then the code", {
+  ia <- impact_assessment_from_reference("arctic")
+  ref_name <- impact_reference_scenarios("arctic")[[1]]$name
+  code <- impact_reference_scenarios("arctic")[[1]]$code
+  expect_identical(impact_scenario_display_name(NULL, "arctic", code), ref_name)
+  ia$scenarios[[code]]$name <- "Renamed"
+  expect_identical(impact_scenario_display_name(ia, "arctic", code), "Renamed")
+  expect_identical(impact_scenario_display_name(NULL, "", "X9"), "X9")
+})
+
+test_that("impact_cell_edited_since_copy detects edits to a copied reference cell", {
+  ia <- impact_copy_reference_cell(impact_assessment_from_reference("macaronesia"), "EQ", "S4")
+  cl <- impact_get_cell(ia, "EQ", "S4")
+  expect_false(impact_cell_edited_since_copy(cl, "macaronesia"))
+  cl2 <- cl; cl2$rationale <- paste(cl$rationale, "(edited)")
+  expect_true(impact_cell_edited_since_copy(cl2, "macaronesia"))
+  cl3 <- cl; cl3$confidence <- if (identical(cl$confidence, "low")) "high" else "low"
+  expect_true(impact_cell_edited_since_copy(cl3, "macaronesia"))
+  expect_false(impact_cell_edited_since_copy(new_impact_cell(), "macaronesia"))
+})
+
 test_that("impact_problem_messages translates step problems, prefixing cell problems", {
   ia <- new_impact_assessment("macaronesia")
   msgs <- impact_problem_messages(impact_step_problems(ia, 2), i18n)
@@ -59,6 +89,11 @@ test_that("impact_matrix_table renders 5 criteria x N scenarios with one link pe
   expect_match(html, "modules.impact_assessment.baseline_label", fixed = TRUE)
   expect_match(html, "modules.wp5_mechanisms.provenance.toolbox_extension", fixed = TRUE)
   expect_match(html, "ia-ref", fixed = TRUE)   # the copied cell carries the reference marker
+  expect_match(html, "modules.impact_assessment.legend_ref", fixed = TRUE)
+  expect_false(grepl("provenance.wp5_derived", html, fixed = TRUE))   # verbatim copy: no derived badge
+  cl <- impact_get_cell(ia, "EE", "S3"); cl$rationale <- paste(cl$rationale, "(edited)")
+  html2 <- as.character(impact_matrix_table(impact_set_cell(ia, "EE", "S3", cl), i18n, shiny::NS("ia")))
+  expect_match(html2, "modules.wp5_mechanisms.provenance.wp5_derived", fixed = TRUE)
 })
 
 test_that("no .ia- CSS rule uses the background shorthand (it would wipe the low-confidence hatching)", {
@@ -83,6 +118,19 @@ test_that("impact_revenue_rows shows the published Arctic displays verbatim and 
   expect_identical(far$baseline, "$332.85 million")
   expect_identical(far$full_agreement, "$285.6 million")
   expect_identical(nrow(impact_revenue_rows(NULL)), 0L)
+})
+
+test_that("impact_revenue_display translates countries, species and headers and names the scenario columns", {
+  tbl <- impact_revenue_display(impact_reference_revenue("arctic"), "arctic", i18n)
+  expect_length(tbl$colnames, ncol(tbl$data))
+  expect_identical(tbl$colnames[1], "modules.impact_assessment.revenue.country")
+  expect_identical(tbl$colnames[8], impact_scenario_display_name(NULL, "arctic", "full_agreement"))
+  expect_true(all(startsWith(tbl$data$country, "modules.impact_assessment.country.")))
+  expect_true("modules.impact_assessment.country.faroe_islands" %in% tbl$data$country)
+  expect_true(all(startsWith(tbl$data$species, "modules.impact_assessment.species.")))
+  far <- tbl$data[tbl$data$country == "modules.impact_assessment.country.faroe_islands" &
+                  tbl$data$species == "modules.impact_assessment.species.mackerel", ]
+  expect_identical(far$baseline, "$332.85 million")   # published values untouched
 })
 
 test_that("impact_feasibility_rows returns the Arctic Table 8 cells, the Macaronesia PI cells, and nothing without a DA", {

@@ -62,6 +62,41 @@ impact_scenario_table_df <- function(ia, i18n) {
   do.call(rbind, rows)
 }
 
+#' Display form of the scenario table: the baseline flag as a check mark and an
+#' unranked ambition (0) as blank. The data frame above keeps the raw values.
+impact_scenario_table_display <- function(df) {
+  df$baseline <- ifelse(df$baseline %in% TRUE, intToUtf8(0x2713L), "")   # check mark
+  df$ambition_rank <- ifelse(is.na(df$ambition_rank) | df$ambition_rank <= 0L, "", as.character(df$ambition_rank))
+  df
+}
+
+#' Name to show for a scenario code: the assessment's own name when it has the
+#' scenario, else the WP5 reference name, else the code.
+#' @param ia Assessment or NULL (NULL = reference name only)
+impact_scenario_display_name <- function(ia, da, code) {
+  own <- if (is.list(ia)) ia$scenarios[[code]]$name else NULL
+  if (length(own) == 1 && nzchar(own)) return(as.character(own))
+  ref <- if (nzchar(da %||% "")) Find(function(s) identical(s$code, code), impact_reference_scenarios(da)) else NULL
+  if (!is.null(ref) && nzchar(ref$name %||% "")) as.character(ref$name) else as.character(code)
+}
+
+#' TRUE when a cell copied from the WP5 reference has since been edited (its
+#' rationale or confidence no longer matches what the copy wrote). FALSE for a
+#' cell without a reference snapshot, or when the reference cell is gone.
+#' @param cell An assessment cell
+#' @param da Fallback DA when the snapshot carries none
+impact_cell_edited_since_copy <- function(cell, da = "") {
+  snap <- cell$reference
+  if (length(snap) == 0) return(FALSE)
+  d <- if (nzchar(snap$da %||% "")) snap$da else da
+  if (!nzchar(d %||% "")) return(FALSE)
+  ref <- impact_reference_cell(d, snap$criterion, snap$scenario)
+  if (is.null(ref)) return(FALSE)
+  vals <- .impact_reference_copy_values(d, ref, snap$scenario)
+  !identical(as.character(cell$rationale %||% ""), vals$rationale) ||
+    !identical(as.character(cell$confidence %||% ""), vals$confidence)
+}
+
 #' Translated sentences for an impact_step_problems() frame
 impact_problem_messages <- function(problems, i18n) {
   if (is.null(problems) || nrow(problems) == 0) return(character(0))
@@ -154,14 +189,19 @@ impact_matrix_table <- function(ia, i18n, ns) {
       label <- paste0(impact_direction_glyph(cl$direction), " ",
                       if (nzchar(cl$magnitude)) wp5_vocab_label("magnitude", cl$magnitude, i18n) else "",
                       if (nzchar(cl$confidence)) paste0(" (", wp5_vocab_label("confidence", cl$confidence, i18n), ")") else "")
+      # A copied cell the user has since edited is no longer verbatim WP5 data (spec P1)
+      edited <- has_ref && impact_cell_edited_since_copy(cl, ia$da)
+      text <- if (nzchar(trimws(label))) label else i18n$t("modules.impact_assessment.cell_empty")
       tags$td(class = paste(impact_cell_css_class(cl), if (has_ref) "ia-ref"),
-              shiny::actionLink(ns(paste0("cell_", cr, "_", cd)), if (nzchar(trimws(label))) label else i18n$t("modules.impact_assessment.cell_empty"),
+              shiny::actionLink(ns(paste0("cell_", cr, "_", cd)),
+                                if (edited) tagList(text, " ", provenance_badge("wp5_derived", i18n)) else text,
                                 class = "ia-cell-link d-block"))
     }))
   })
   legend <- div(class = "small text-muted mt-2",
     i18n$t("modules.impact_assessment.legend_glyph"), " \u00b7 ", i18n$t("modules.impact_assessment.legend_fill"), " ",
-    provenance_badge("toolbox_extension", i18n), " \u00b7 ", i18n$t("modules.impact_assessment.legend_hatch"))
+    provenance_badge("toolbox_extension", i18n), " \u00b7 ", i18n$t("modules.impact_assessment.legend_hatch"),
+    " \u00b7 ", i18n$t("modules.impact_assessment.legend_ref"))
   tagList(tags$table(class = "table table-bordered ia-matrix", tags$thead(header), tags$tbody(rows)), legend)
 }
 
@@ -192,6 +232,29 @@ impact_revenue_rows <- function(revenue) {
                stringsAsFactors = FALSE)
   }))
   do.call(rbind, c(list(empty), unlist(rows, recursive = FALSE)))
+}
+
+#' Display form of the Arctic revenue table (spec P2: codes in data, labels on
+#' display): translated country and species labels, translated column headers,
+#' and the reference scenario names for the three scenario columns.
+#' @return list(data = data.frame, colnames = character)
+impact_revenue_display <- function(revenue, da, i18n) {
+  rows <- impact_revenue_rows(revenue)
+  # i18n-ref: modules.impact_assessment.country.faroe_islands
+  # i18n-ref: modules.impact_assessment.country.greenland
+  # i18n-ref: modules.impact_assessment.country.iceland
+  # i18n-ref: modules.impact_assessment.species.mackerel
+  # i18n-ref: modules.impact_assessment.species.herring
+  # i18n-ref: modules.impact_assessment.species.blue_whiting
+  rows$country <- vapply(rows$country, function(x) i18n$t(paste0("modules.impact_assessment.country.", x)), character(1), USE.NAMES = FALSE)
+  rows$species <- vapply(rows$species, function(x) i18n$t(paste0("modules.impact_assessment.species.", x)), character(1), USE.NAMES = FALSE)
+  # the scenario columns hold the published reference values, so they carry the reference names
+  sc_name <- function(cd) impact_scenario_display_name(NULL, da, cd)
+  headers <- c(i18n$t("modules.impact_assessment.revenue.country"), i18n$t("modules.impact_assessment.revenue.species"),
+               i18n$t("modules.impact_assessment.revenue.landings"), i18n$t("modules.impact_assessment.revenue.price"),
+               i18n$t("modules.impact_assessment.revenue.baseline"),
+               sc_name("no_agreement"), sc_name("partial_agreement"), sc_name("full_agreement"))
+  list(data = rows, colnames = headers)
 }
 
 #' Political-feasibility reference cells (criterion PI) for a DA

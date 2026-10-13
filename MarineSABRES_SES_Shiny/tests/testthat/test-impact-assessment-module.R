@@ -32,11 +32,17 @@ test_that("a Macaronesia project starts from the WP5 reference scenarios without
 })
 
 test_that("a Tuscan project shows the valuation-only empty state and no step body", {
-  testServer(impact_assessment_server, args = srv(mk_project("Tuscan Archipelago")), {
+  args <- srv(mk_project("Tuscan Archipelago")); bus <- create_event_bus("ia-tuscan"); args$event_bus <- bus
+  testServer(impact_assessment_server, args = args, {
     session$flushReact()
     html <- as.character(output$step_body$html)
     expect_match(html, "modules.impact_assessment.tuscan_empty", fixed = TRUE)
-    expect_match(html, "response_valuation", fixed = TRUE)
+    expect_match(html, "-go_valuation\"", fixed = TRUE)
+    expect_false(grepl("onclick", html, fixed = TRUE))
+    session$setInputs(go_valuation = 1); session$flushReact()
+    ev <- isolate(bus$get_last_event())
+    expect_identical(ev$type, "navigation_request")
+    expect_identical(ev$target, "response_valuation")
   })
 })
 
@@ -49,14 +55,51 @@ test_that("a project without a DA gets an empty assessment and the no-DA note", 
   })
 })
 
-test_that("an existing assessment in the project is loaded, and reloaded on project_loaded", {
+test_that("an existing assessment in the project is loaded, and reloaded when another project is opened (no event bus)", {
   p <- set_impact_assessment(mk_project("Macaronesia"), impact_set_section(new_impact_assessment("macaronesia"), "characterisation", list(focal_issue = "Corridor")))
-  args <- srv(p); bus <- create_event_bus("ia-load"); args$event_bus <- bus
+  args <- srv(p)
   testServer(impact_assessment_server, args = args, {
     session$flushReact()
     expect_identical(rv$ia$characterisation$focal_issue, "Corridor")
     p2 <- set_impact_assessment(mk_project("Macaronesia"), impact_set_section(new_impact_assessment("macaronesia"), "characterisation", list(focal_issue = "Other")))
-    args$project_data_reactive(p2); bus$emit_project_loaded("test"); session$flushReact()
+    args$project_data_reactive(p2); session$flushReact()
+    expect_identical(rv$ia$characterisation$focal_issue, "Other")
+  })
+})
+
+test_that("a project opened after session start is picked up; commits do not reload or reset the step", {
+  args <- srv(mk_project(NULL))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    expect_identical(rv$ia$da, "")
+    # 1. open a Macaronesia project (no load event is emitted by any load path)
+    pa <- mk_project("Macaronesia"); pa$project_id <- "PROJ_A"
+    args$project_data_reactive(pa); session$flushReact()
+    expect_identical(impact_scenario_codes(rv$ia), c("S1", "S2", "S3", "S4"))
+    expect_identical(rv$ia$da, "macaronesia")
+    # 2. saving writes the loaded project's assessment and keeps the step
+    rv$step <- 2L
+    session$setInputs(char_focal_issue = "x", char_spatial_scope = "", char_time_horizon = "", char_stakeholders = "",
+                      save_characterisation = 1)
+    session$flushReact()
+    expect_identical(get_impact_assessment(args$project_data_reactive())$da, "macaronesia")
+    expect_identical(rv$step, 2L)
+    # 3. switching to another project that holds an assessment loads it and resets to step 1
+    rv$step <- 4L
+    pb <- set_impact_assessment(mk_project("Macaronesia"),
+                                impact_set_section(new_impact_assessment("macaronesia"), "characterisation", list(focal_issue = "Other")))
+    pb$project_id <- "PROJ_B"
+    args$project_data_reactive(pb); session$flushReact()
+    expect_identical(rv$ia$characterisation$focal_issue, "Other")
+    expect_identical(rv$step, 1L)
+    # 4. a normal commit neither reloads nor moves the user
+    rv$step <- 5L
+    commit(impact_set_section(rv$ia, "recommendations", list(text = "ok")))
+    rv$ia$in_memory_marker <- "kept"   # a reload would rebuild rv$ia from the project and drop this
+    session$flushReact()
+    expect_identical(rv$ia$in_memory_marker, "kept")
+    expect_identical(rv$step, 5L)
+    expect_identical(rv$ia$recommendations$text, "ok")
     expect_identical(rv$ia$characterisation$focal_issue, "Other")
   })
 })
@@ -132,6 +175,12 @@ test_that("step 2 adds, sets baseline, removes scenarios and enforces the maximu
     expect_length(impact_scenario_codes(rv$ia), 5L)                      # refused: IMPACT_MAX_SCENARIOS
     session$setInputs(sc_baseline = "U2"); session$flushReact()
     expect_identical(rv$ia$baseline_code, "U2")
+    # renderDT is server-side, so the cells are not in the output payload: assert the
+    # render runs with translated headers and goes through the display mapping
+    # (impact_scenario_table_display, unit-tested in test-impact-assessment-view.R)
+    expect_match(paste(as.character(output$sc_table), collapse = " "), "modules.impact_assessment.baseline_label", fixed = TRUE)
+    mod_src <- paste(readLines(file.path(PROJECT_ROOT, "modules", "impact_assessment_module.R"), warn = FALSE), collapse = "\n")
+    expect_match(mod_src, "impact_scenario_table_display(impact_scenario_table_df(rv$ia, i18n))", fixed = TRUE)
     session$setInputs(sc_table_rows_selected = 5L, sc_remove = 1); session$flushReact()
     expect_identical(impact_scenario_codes(rv$ia), paste0("U", 1:4))
     expect_identical(get_impact_assessment(args$project_data_reactive())$baseline_code, "U2")
@@ -226,6 +275,14 @@ test_that("an Arctic project shows the read-only revenue table and feasibility c
     expect_match(html, "modules.impact_assessment.arctic_revenue_note", fixed = TRUE)
     expect_match(html, "-arctic_revenue\"", fixed = TRUE)   # testServer namespaces as proxyN-
     expect_identical(impact_scenario_codes(rv$ia), c("no_agreement", "partial_agreement", "full_agreement"))
+    # labels, not codes (spec P2): translated headers and reference scenario names in the revenue
+    # table (cell values are server-side; impact_revenue_display is unit-tested), names in the feasibility rows
+    rev <- paste(as.character(output$arctic_revenue), collapse = " ")
+    expect_match(rev, "modules.impact_assessment.revenue.country", fixed = TRUE)
+    expect_match(rev, htmltools::htmlEscape(impact_scenario_display_name(NULL, "arctic", "full_agreement")), fixed = TRUE)
+    nm <- rv$ia$scenarios$no_agreement$name
+    expect_match(html, paste0("<td>", htmltools::htmlEscape(nm), "</td>"), fixed = TRUE)
+    if (!identical(nm, "no_agreement")) expect_false(grepl("<td>no_agreement</td>", html, fixed = TRUE))
   })
 })
 
