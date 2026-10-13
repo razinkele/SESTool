@@ -75,7 +75,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       showNotification(i18n$t(paste0("modules.impact_assessment.error.", code)), type = "error", duration = 8)
     }
     try_commit <- function(expr) {
-      tryCatch(commit(expr), error = function(e) { notify_impact_error(e); invisible(NULL) })
+      tryCatch({ commit(expr); TRUE }, error = function(e) { notify_impact_error(e); FALSE })
     }
 
     output$da_banner <- renderUI(impact_da_banner(da(), ref_status(), i18n))
@@ -110,8 +110,9 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     )
     save_section <- function(section, fields, prefix) {
       vals <- setNames(lapply(fields, function(f) input[[paste0(prefix, f)]] %||% ""), fields)
-      try_commit(impact_set_section(rv$ia, section, vals))
-      showNotification(i18n$t("modules.impact_assessment.saved"), type = "message", duration = 3)
+      if (isTRUE(try_commit(impact_set_section(rv$ia, section, vals)))) {
+        showNotification(i18n$t("modules.impact_assessment.saved"), type = "message", duration = 3)
+      }
     }
     observeEvent(input$save_characterisation, save_section("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_"))
     observeEvent(input$save_recommendations, save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_"))

@@ -108,3 +108,15 @@ test_that("step 7 saves recommendations and prefills from the stored text", {
     expect_identical(get_impact_assessment(args$project_data_reactive())$recommendations$text, "Pilot S3, then S4")
   })
 })
+
+test_that("try_commit returns FALSE on a model error and TRUE on success", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    bad <- try_commit(stop(structure(class = c("impact_error", "error", "condition"),
+                                     list(message = "x", code = "unknown"))))
+    expect_false(bad)
+    expect_true(try_commit(impact_set_section(rv$ia, "recommendations", list(text = "ok"))))
+    expect_identical(get_impact_assessment(args$project_data_reactive())$recommendations$text, "ok")
+  })
+})
