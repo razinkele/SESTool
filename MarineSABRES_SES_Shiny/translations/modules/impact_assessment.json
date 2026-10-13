@@ -1704,6 +1704,50 @@
       "it": "Non sono ancora stati definiti scenari, quindi non c'è nulla da redigere.",
       "no": "Ingen scenarier er definert ennå, så det er ingenting å utarbeide.",
       "el": "Δεν έχουν οριστεί ακόμη σενάρια, επομένως δεν υπάρχει τίποτα για σύνταξη."
+    },
+    "modules.impact_assessment.draft_button": {
+      "en": "Draft from the matrix",
+      "es": "Redactar a partir de la matriz",
+      "fr": "Rédiger à partir de la matrice",
+      "de": "Aus der Matrix entwerfen",
+      "lt": "Parengti pagal matricą",
+      "pt": "Redigir a partir da matriz",
+      "it": "Redigere dalla matrice",
+      "no": "Utarbeid fra matrisen",
+      "el": "Σύνταξη από τον πίνακα"
+    },
+    "modules.impact_assessment.draft_hint": {
+      "en": "Generates templated sentences from the criterion × scenario matrix. It is a toolbox extension, not WP5 text.",
+      "es": "Genera frases a partir de plantillas con la matriz criterio × escenario. Es una extensión de la herramienta, no texto del WP5.",
+      "fr": "Génère des phrases modélisées à partir de la matrice critère × scénario. Il s'agit d'une extension de la boîte à outils, et non d'un texte du WP5.",
+      "de": "Erzeugt vorformulierte Sätze aus der Matrix Kriterium × Szenario. Dies ist eine Erweiterung des Toolkits, kein WP5-Text.",
+      "lt": "Sugeneruoja šablonines frazes iš kriterijų × scenarijų matricos. Tai įrankių rinkinio papildinys, o ne WP5 tekstas.",
+      "pt": "Gera frases modelo a partir da matriz critério × cenário. É uma extensão da ferramenta, não texto do WP5.",
+      "it": "Genera frasi basate su modelli a partire dalla matrice criterio × scenario. È un'estensione del toolbox, non un testo del WP5.",
+      "no": "Genererer malbaserte setninger fra matrisen kriterium × scenario. Dette er en utvidelse av verktøykassen, ikke WP5-tekst.",
+      "el": "Δημιουργεί προτάσεις από πρότυπα με βάση τον πίνακα κριτήριο × σενάριο. Πρόκειται για επέκταση της εργαλειοθήκης και όχι για κείμενο του WP5."
+    },
+    "modules.impact_assessment.draft_use": {
+      "en": "Use the draft as the starting point of my text",
+      "es": "Usar el borrador como punto de partida de mi texto",
+      "fr": "Utiliser le brouillon comme point de départ de mon texte",
+      "de": "Den Entwurf als Ausgangspunkt für meinen Text verwenden",
+      "lt": "Naudoti juodraštį kaip savo teksto pradžią",
+      "pt": "Usar o rascunho como ponto de partida do meu texto",
+      "it": "Usare la bozza come punto di partenza del mio testo",
+      "no": "Bruk utkastet som utgangspunkt for teksten min",
+      "el": "Χρήση του προσχεδίου ως αφετηρίας για το κείμενό μου"
+    },
+    "modules.impact_assessment.draft_created": {
+      "en": "Draft generated from the matrix",
+      "es": "Borrador generado a partir de la matriz",
+      "fr": "Brouillon généré à partir de la matrice",
+      "de": "Entwurf aus der Matrix erstellt",
+      "lt": "Juodraštis sugeneruotas pagal matricą",
+      "pt": "Rascunho gerado a partir da matriz",
+      "it": "Bozza generata dalla matrice",
+      "no": "Utkast generert fra matrisen",
+      "el": "Το προσχέδιο δημιουργήθηκε από τον πίνακα"
     }
   }
 }

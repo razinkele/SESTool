@@ -319,3 +319,45 @@ test_that("next is blocked on step 2 without scenarios and on step 4 with a low-
     expect_identical(rv$step, 5L)
   })
 })
+
+# ---- WS-6c: step 6 draft -------------------------------------------------------
+ia_with_matrix <- function() {
+  ia <- impact_assessment_from_reference("macaronesia")
+  up <- new_impact_cell(); up$direction <- "increase"; up$magnitude <- "moderate"; up$confidence <- "high"
+  dn <- new_impact_cell(); dn$direction <- "decrease"; dn$magnitude <- "incremental"; dn$confidence <- "medium"
+  ia <- impact_set_cell(ia, "EE", "S2", up)
+  impact_set_cell(ia, "FF", "S2", dn)
+}
+
+test_that("step 6 drafts the narrative from the matrix, stores it, shows it with the toolbox badge, and can copy it into the text box", {
+  p <- set_impact_assessment(mk_project("Macaronesia"), ia_with_matrix())
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_6 = 1); session$flushReact()
+    html <- as.character(output$step_body$html)
+    expect_match(html, "-draft_trade_offs\"", fixed = TRUE)
+    expect_false(grepl("-use_draft\"", html, fixed = TRUE))              # no draft yet
+    expect_identical(rv$ia$trade_offs$auto_draft, "")
+    session$setInputs(to_text = "My own notes", draft_trade_offs = 1); session$flushReact()
+    draft <- rv$ia$trade_offs$auto_draft
+    expect_match(draft, "modules.impact_assessment.narrative.trade_off", fixed = TRUE)
+    expect_identical(rv$ia$trade_offs$text, "My own notes")              # unsaved text box content is kept
+    expect_identical(get_impact_assessment(args$project_data_reactive())$trade_offs$auto_draft, draft)
+    html <- as.character(output$step_body$html)
+    expect_match(html, "modules.impact_assessment.auto_draft_heading", fixed = TRUE)
+    expect_match(html, "modules.wp5_mechanisms.provenance.toolbox_extension", fixed = TRUE)
+    expect_match(html, "-use_draft\"", fixed = TRUE)
+    session$setInputs(use_draft = 1); session$flushReact()                 # updateTextAreaInput is a no-op in tests;
+    expect_identical(rv$ia$trade_offs$auto_draft, draft)                  # the button must not alter stored state
+  })
+})
+
+test_that("drafting on an assessment without scenarios stores the 'empty' sentence and does not error", {
+  args <- srv(mk_project(NULL))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_6 = 1, draft_trade_offs = 1); session$flushReact()
+    expect_match(rv$ia$trade_offs$auto_draft, "narrative.empty", fixed = TRUE)
+  })
+})

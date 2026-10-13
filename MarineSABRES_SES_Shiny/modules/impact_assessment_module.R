@@ -390,12 +390,36 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       p(class = "text-muted", i18n$t("modules.impact_assessment.uncertainty_intro")),
       text_section_ui("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_", "save_uncertainty", rows = 6)
     )
-    step6_ui <- function() tagList(
-      p(class = "text-muted", i18n$t("modules.impact_assessment.trade_offs_intro")),
-      if (nzchar(rv$ia$trade_offs$auto_draft %||% ""))
-        div(class = "alert alert-light border", strong(i18n$t("modules.impact_assessment.auto_draft_heading")), p(rv$ia$trade_offs$auto_draft)),
-      text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
-    )
+    step6_ui <- function() {
+      draft <- rv$ia$trade_offs$auto_draft %||% ""
+      tagList(
+        p(class = "text-muted", i18n$t("modules.impact_assessment.trade_offs_intro")),
+        div(class = "mb-2",
+          actionButton(ns("draft_trade_offs"), i18n$t("modules.impact_assessment.draft_button"), icon = icon("magic"), class = "btn-outline-primary btn-sm"),
+          " ", provenance_badge("toolbox_extension", i18n),
+          tags$small(class = "d-block text-muted", i18n$t("modules.impact_assessment.draft_hint"))),
+        if (nzchar(draft))
+          div(class = "alert alert-light border",
+              strong(i18n$t("modules.impact_assessment.auto_draft_heading")), " ", provenance_badge("toolbox_extension", i18n),
+              lapply(strsplit(draft, "
+
+", fixed = TRUE)[[1]], p),
+              actionButton(ns("use_draft"), i18n$t("modules.impact_assessment.draft_use"), class = "btn-link btn-sm p-0")),
+        text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
+      )
+    }
+    # The draft is regenerated on demand and stored next to the author's text. The current
+    # text-box content is COMMITTED in the same write (so "Draft" also acts as "Save" for the
+    # text): the step body re-renders on rv$ia change, which would otherwise wipe unsaved typing.
+    observeEvent(input$draft_trade_offs, {
+      vals <- list(text = input$to_text %||% rv$ia$trade_offs$text %||% "", auto_draft = impact_narrative_draft(rv$ia, i18n))
+      if (isTRUE(try_commit(impact_set_section(rv$ia, "trade_offs", vals)))) {
+        showNotification(i18n$t("modules.impact_assessment.draft_created"), type = "message", duration = 3)
+      }
+    })
+    observeEvent(input$use_draft, {
+      updateTextAreaInput(session, "to_text", value = rv$ia$trade_offs$auto_draft %||% "")
+    })
     observeEvent(input$save_uncertainty, save_section("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_"))
     observeEvent(input$save_trade_offs, {
       vals <- list(text = input$to_text %||% "", auto_draft = rv$ia$trade_offs$auto_draft %||% "")
