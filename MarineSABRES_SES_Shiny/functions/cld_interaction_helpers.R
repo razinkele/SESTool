@@ -487,18 +487,31 @@ build_leverage_highlight_data <- function(nodes, edges, top_n = 10) {
 #' @param edges Data frame. All CLD edges.
 #' @return List with: reset_nodes, reset_edges data frames for visUpdate.
 build_leverage_reset_data <- function(nodes, edges) {
+  # An empty or NULL node frame has zero ids, so data.frame() below would fail
+  # with "arguments imply differing number of rows: 0, 1" (production logs
+  # 2026-10-13, toggling the leverage switch off on an empty CLD).
+  if (is.null(nodes) || !is.data.frame(nodes) || nrow(nodes) == 0) {
+    return(list(
+      reset_nodes = data.frame(id = character(0), hidden = logical(0), stringsAsFactors = FALSE),
+      reset_edges = data.frame(id = integer(0), hidden = logical(0), stringsAsFactors = FALSE)
+    ))
+  }
+  n_edges <- if (is.data.frame(edges)) nrow(edges) else 0L
+  node_color <- if ("color" %in% names(nodes)) nodes$color else rep(NA_character_, nrow(nodes))
+  node_font  <- if ("font.size" %in% names(nodes)) as.integer(nodes$font.size) else rep(NA_integer_, nrow(nodes))
+
   reset_nodes <- data.frame(
     id = nodes$id,
     hidden = FALSE,
     color.border = "#2B7CE9",
-    color.background = nodes$color,
+    color.background = node_color,
     borderWidth = 2,
-    font.size = as.integer(nodes$font.size),
+    font.size = node_font,
     stringsAsFactors = FALSE
   )
 
   reset_edges <- data.frame(
-    id = seq_len(nrow(edges)),
+    id = seq_len(n_edges),
     hidden = FALSE,
     stringsAsFactors = FALSE
   )

@@ -15,8 +15,13 @@
 #' @param i18n i18n translator object
 #' @param project_data_reactive Reactive value for project data
 #' @param event_bus Event bus for ISA change events (optional)
+#' @param question_flow Question flow definition list (the module's QUESTION_FLOW).
+#'   This file is sourced at module-file level, so the module server's local
+#'   QUESTION_FLOW is NOT visible here; it must be passed in. Without it the
+#'   "Start over" confirmation failed with "object 'QUESTION_FLOW' not found"
+#'   (seen in production logs 2026-10-13).
 setup_action_handlers <- function(input, session, rv, i18n, project_data_reactive,
-                                   event_bus = NULL) {
+                                   event_bus = NULL, question_flow = NULL) {
 
   # Handle preview model
   observeEvent(input$preview_model, {
@@ -135,8 +140,13 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
     rv$auto_saved_step_10 <- FALSE
     rv$show_text_input <- FALSE
 
+    first_question <- if (!is.null(question_flow) && length(question_flow) > 0) {
+      question_flow[[1]]$question
+    } else {
+      i18n$t("modules.isa.ai_assistant.welcome_message")
+    }
     rv$conversation <- list(
-      list(type = "ai", message = QUESTION_FLOW[[1]]$question, timestamp = Sys.time())
+      list(type = "ai", message = first_question, timestamp = Sys.time())
     )
 
     rv$elements <- list(

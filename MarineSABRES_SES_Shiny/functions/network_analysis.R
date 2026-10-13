@@ -72,11 +72,45 @@ calculate_network_metrics <- function(nodes, edges = NULL) {
     outdegree = degree(g, mode = "out"),
     betweenness = tryCatch(betweenness(g, directed = TRUE), error = function(e) rep(0, vcount(g))),
     closeness = safe_closeness,
-    eigenvector = tryCatch(eigen_centrality(g, directed = TRUE)$vector, error = function(e) rep(0, vcount(g))),
+    eigenvector = safe_eigen_centrality(g),
     pagerank = tryCatch(page_rank(g)$vector, error = function(e) rep(0, vcount(g)))
   )
 
   return(metrics)
+}
+
+#' Eigenvector centrality that never hangs on a disconnected graph
+#'
+#' igraph's ARPACK-based eigen_centrality() can fail to converge, or hang, on
+#' a graph that is not weakly connected. This runs it only on the largest
+#' weakly connected component (zero for every other vertex) and returns zeros
+#' on any error or on an edgeless graph. Shared by calculate_network_metrics()
+#' and calculate_all_centralities() (the metrics path was unguarded until
+#' 2026-10-13).
+#'
+#' @param g igraph object
+#' @return Numeric vector of length vcount(g)
+safe_eigen_centrality <- function(g) {
+  n <- vcount(g)
+  if (n == 0) return(numeric(0))
+  if (ecount(g) == 0) return(rep(0, n))
+  tryCatch({
+    if (is_connected(g, mode = "weak")) {
+      eigen_centrality(g, directed = TRUE)$vector
+    } else {
+      comp <- components(g, mode = "weak")
+      ev <- rep(0, n)
+      largest <- which.max(comp$csize)
+      vids <- which(comp$membership == largest)
+      if (length(vids) > 1) {
+        sub_g <- induced_subgraph(g, vids)
+        sub_ev <- tryCatch(eigen_centrality(sub_g, directed = TRUE)$vector,
+                           error = function(e) rep(0, length(vids)))
+        ev[vids] <- sub_ev
+      }
+      ev
+    }
+  }, error = function(e) rep(0, n))
 }
 
 #' Create igraph object from nodes and edges
@@ -1346,24 +1380,7 @@ calculate_all_centralities <- function(g) {
   }, error = function(e) rep(0, n))
 
   # eigen_centrality can hang on disconnected graphs — only run on connected component
-  safe_eigenvector <- tryCatch({
-    if (is_connected(g, mode = "weak")) {
-      eigen_centrality(g, directed = TRUE)$vector
-    } else {
-      # Compute per largest connected component, zero for isolated nodes
-      comp <- components(g, mode = "weak")
-      ev <- rep(0, n)
-      largest <- which.max(comp$csize)
-      vids <- which(comp$membership == largest)
-      if (length(vids) > 1) {
-        sub_g <- induced_subgraph(g, vids)
-        sub_ev <- tryCatch(eigen_centrality(sub_g, directed = TRUE)$vector,
-                           error = function(e) rep(0, length(vids)))
-        ev[vids] <- sub_ev
-      }
-      ev
-    }
-  }, error = function(e) rep(0, n))
+  safe_eigenvector <- safe_eigen_centrality(g)
 
   safe_pagerank <- tryCatch(
     page_rank(g)$vector,
