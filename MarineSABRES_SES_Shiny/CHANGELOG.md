@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (whole site hang — laguna outage 2026-10-13)
+- The AI ISA assistant's recovery observer could re-trigger itself forever. Its guard read `rv$elements$drivers`/`$activities` outside `isolate()` and then rewrote `rv$elements` with fresh timestamps, so a project with elements but no Drivers and no Activities kept Shiny's flush loop busy indefinitely. On open-source Shiny Server every user shares one R process, so one such session took the whole site down (HTTP 502 until the worker was restarted). The guard is now read inside `isolate()` and covers every element category. Regression test: `tests/testthat/test-ai-isa-recovery-loop.R`.
+
 ### Added (WP5 impact assessment, data layer — spec 2026-10-11 WS-6a)
 - D5.2 reference data for the impact-assessment module (`data/wp5_impact_reference.json`): Macaronesia Table 21 (5 criteria × S1–S4, with each scenario's confidence) and Arctic Tables 2–8 (revenue by scenario for the Faroe Islands, Greenland and Iceland; political feasibility per scenario). Tests check every value against the committed D5.2 extract. The Arctic revenue values are stored exactly as published, with a note that they conflict with D5.2's stated assumptions (partner question 2). Tuscany has no scenarios in D5.2.
 - The data model behind the module (no screens yet): ordinal criterion × scenario cells, up to 5 scenarios with a baseline, the rule that low confidence needs an uncertainty driver, the displacement/leakage check, copying a D5.2 reference cell into an editable cell, and mechanism and indicator suggestions per scenario and criterion. Assessments are stored at `data$analysis$impact_assessment` and survive `.json` and `.rds` save/load unchanged. Projects that contain one require 1.25.0.
