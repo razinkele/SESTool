@@ -348,6 +348,11 @@ test_that("step 6 drafts the narrative from the matrix, stores it, shows it with
     expect_match(html, "modules.impact_assessment.auto_draft_heading", fixed = TRUE)
     expect_match(html, "modules.wp5_mechanisms.provenance.toolbox_extension", fixed = TRUE)
     expect_match(html, "-use_draft\"", fixed = TRUE)
+    paras <- strsplit(draft, "\n\n", fixed = TRUE)[[1]]
+    expect_gte(length(paras), 2)                                          # several narrative paragraphs
+    alert <- sub("^.*alert alert-light border", "", html)
+    expect_gte(lengths(regmatches(alert, gregexpr("<p>", alert))), length(paras))   # each rendered as its own <p>
+    expect_match(html, paras[[2]], fixed = TRUE)
     session$setInputs(use_draft = 1); session$flushReact()                 # updateTextAreaInput is a no-op in tests;
     expect_identical(rv$ia$trade_offs$auto_draft, draft)                  # the button must not alter stored state
   })

@@ -401,9 +401,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
         if (nzchar(draft))
           div(class = "alert alert-light border",
               strong(i18n$t("modules.impact_assessment.auto_draft_heading")), " ", provenance_badge("toolbox_extension", i18n),
-              lapply(strsplit(draft, "
-
-", fixed = TRUE)[[1]], p),
+              lapply(strsplit(draft, "\n\n", fixed = TRUE)[[1]], p),
               actionButton(ns("use_draft"), i18n$t("modules.impact_assessment.draft_use"), class = "btn-link btn-sm p-0")),
         text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
       )
