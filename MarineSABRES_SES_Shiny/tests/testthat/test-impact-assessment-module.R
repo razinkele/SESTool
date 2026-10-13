@@ -120,3 +120,39 @@ test_that("try_commit returns FALSE on a model error and TRUE on success", {
     expect_identical(get_impact_assessment(args$project_data_reactive())$recommendations$text, "ok")
   })
 })
+
+test_that("step 2 adds, sets baseline, removes scenarios and enforces the maximum", {
+  args <- srv(mk_project(NULL))   # no DA: starts empty
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 2L; session$flushReact()
+    expect_match(as.character(output$step_body$html), "modules.impact_assessment.problem.no_scenarios", fixed = TRUE)
+    for (i in 1:5) { session$setInputs(sc_code = paste0("U", i), sc_name = paste("User", i), sc_description = "", sc_ambition = i, sc_add = i); session$flushReact() }
+    expect_identical(impact_scenario_codes(rv$ia), paste0("U", 1:5))
+    session$setInputs(sc_code = "U6", sc_name = "Six", sc_ambition = 6, sc_add = 6); session$flushReact()
+    expect_length(impact_scenario_codes(rv$ia), 5L)                      # refused: IMPACT_MAX_SCENARIOS
+    session$setInputs(sc_baseline = "U2"); session$flushReact()
+    expect_identical(rv$ia$baseline_code, "U2")
+    session$setInputs(sc_table_rows_selected = 5L, sc_remove = 1); session$flushReact()
+    expect_identical(impact_scenario_codes(rv$ia), paste0("U", 1:4))
+    expect_identical(get_impact_assessment(args$project_data_reactive())$baseline_code, "U2")
+  })
+})
+
+test_that("an invalid scenario code is reported, not fatal", {
+  testServer(impact_assessment_server, args = srv(mk_project(NULL)), {
+    session$flushReact(); rv$step <- 2L
+    session$setInputs(sc_code = "S 1!", sc_name = "Bad", sc_ambition = 1, sc_add = 1); session$flushReact()
+    expect_length(impact_scenario_codes(rv$ia), 0L)
+  })
+})
+
+test_that("Load WP5 scenarios restores the published set for a DA with reference data", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 2L
+    session$setInputs(sc_table_rows_selected = 4L, sc_remove = 1); session$flushReact()
+    expect_identical(impact_scenario_codes(rv$ia), c("S1", "S2", "S3"))
+    session$setInputs(sc_load_reference = 1); session$flushReact()
+    expect_identical(impact_scenario_codes(rv$ia), c("S1", "S2", "S3", "S4"))
+  })
+})
