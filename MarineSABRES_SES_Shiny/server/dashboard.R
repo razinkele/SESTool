@@ -478,12 +478,16 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       event_color <- event[["color"]] %||% "gray"
       event_description <- event[["description"]] %||% ""
 
+      # bs4TimelineItem() appends classes via icon$attribs$class, so `icon`
+      # must be a shiny tag, not the icon name. Passing the bare name made every
+      # timeline with at least one event fail with "$ operator is invalid for
+      # atomic vectors" (production logs 2026-10-13).
       bs4TimelineItem(
         elevation = 2,
         time = if(inherits(event_date, "Date") || inherits(event_date, "POSIXt"))
                  format(event_date, "%b %d, %Y") else as.character(event_date),
         title = event_title,
-        icon = event_icon,
+        icon = if (inherits(event_icon, "shiny.tag")) event_icon else icon(event_icon),
         color = event_color,
         event_description
       )

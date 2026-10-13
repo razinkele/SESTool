@@ -7,6 +7,13 @@
 options(shiny.minified = TRUE)
 options(shiny.autoreload = FALSE)
 
+# Keep source references for everything sourced from here on (global.R,
+# functions/, modules/, server/). Under Rscript/Shiny Server the default is
+# FALSE, which left production error traces as an anonymous "51: observe /
+# 50: <observer>" with no file or line (2026-10-13 incident). With srcrefs
+# Shiny prints "[file.R#line]" next to each frame.
+options(keep.source = TRUE)
+
 # ============================================================================
 # LOAD GLOBAL ENVIRONMENT
 # ============================================================================

@@ -2486,7 +2486,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # ========== ACTION HANDLERS ==========
     # Preview, save, start over, and element link handlers extracted to modules/ai_isa/action_handlers.R
-    setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus)
+    setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus,
+                          question_flow = QUESTION_FLOW)
 
     # ========== TEMPLATE HANDLERS ==========
     # Template loading handlers extracted to modules/ai_isa/template_handlers.R
