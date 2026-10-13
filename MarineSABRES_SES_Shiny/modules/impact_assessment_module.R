@@ -79,10 +79,19 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     }
 
     output$da_banner <- renderUI(impact_da_banner(da(), ref_status(), i18n))
-    output$step_bar <- renderUI({ req(rv$ia); impact_step_bar(rv$step, available_steps(), i18n, ns) })
+    blocked_steps <- reactive({ req(rv$ia); Filter(function(s) !impact_can_advance(rv$ia, s), c(2L, 3L, 4L)) })
+    output$step_bar <- renderUI({ req(rv$ia); impact_step_bar(rv$step, available_steps(), i18n, ns, blocked = blocked_steps()) })
     lapply(1:7, function(n) observeEvent(input[[paste0("goto_step_", n)]], { rv$step <- n }))
     observeEvent(input$prev_step, { if (rv$step > 1L) rv$step <- rv$step - 1L })
-    observeEvent(input$next_step, { if (rv$step < max(available_steps())) rv$step <- rv$step + 1L })
+    observeEvent(input$next_step, {
+      if (rv$step >= max(available_steps())) return()
+      if (!impact_can_advance(rv$ia, rv$step)) {
+        msgs <- impact_problem_messages(impact_step_problems(rv$ia, rv$step), i18n)
+        showNotification(tagList(strong(i18n$t("modules.impact_assessment.cannot_advance")), tags$ul(lapply(head(msgs, 3), tags$li))), type = "warning", duration = 8)
+        return()
+      }
+      rv$step <- rv$step + 1L
+    })
 
     text_section_ui <- function(section, fields, prefix, save_id, rows = 3) {
       vals <- rv$ia[[section]]

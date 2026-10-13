@@ -241,3 +241,24 @@ test_that("steps 5 and 6 persist their text", {
     expect_identical(ia$trade_offs$text, "S4: equity vs cost")
   })
 })
+
+test_that("next is blocked on step 2 without scenarios and on step 4 with a low-confidence cell lacking a driver", {
+  args <- srv(mk_project(NULL))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 2L; session$flushReact()
+    session$setInputs(next_step = 1); session$flushReact()
+    expect_identical(rv$step, 2L)
+    commit(impact_set_baseline(impact_add_scenario(rv$ia, new_impact_scenario("U1", "One")), "U1"))
+    session$setInputs(next_step = 2); session$flushReact()
+    expect_identical(rv$step, 3L)
+    session$setInputs(next_step = 3); session$flushReact()   # step 3 passes when displacement is not "yes"
+    expect_identical(rv$step, 4L)
+    cl <- new_impact_cell(); cl$direction <- "increase"; cl$confidence <- "low"
+    commit(impact_set_cell(rv$ia, "EE", "U1", cl))
+    session$setInputs(next_step = 4); session$flushReact()
+    expect_identical(rv$step, 4L)
+    cl$uncertainty_driver <- "data_gap"; commit(impact_set_cell(rv$ia, "EE", "U1", cl))
+    session$setInputs(next_step = 5); session$flushReact()
+    expect_identical(rv$step, 5L)
+  })
+})

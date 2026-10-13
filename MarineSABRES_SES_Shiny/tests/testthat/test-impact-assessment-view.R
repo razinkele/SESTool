@@ -92,3 +92,9 @@ test_that("impact_feasibility_rows returns the Arctic Table 8 cells, the Macaron
   expect_identical(nrow(impact_feasibility_rows("macaronesia", i18n)), 4L)
   expect_identical(nrow(impact_feasibility_rows("", i18n)), 0L)
 })
+
+test_that("impact_step_bar marks blocked steps", {
+  html <- as.character(impact_step_bar(2L, 1:7, i18n, shiny::NS("ia"), blocked = c(2L, 4L)))
+  expect_match(html, "btn-outline-warning", fixed = TRUE)
+  expect_equal(lengths(regmatches(html, gregexpr("!</button>", html))), 2L)
+})

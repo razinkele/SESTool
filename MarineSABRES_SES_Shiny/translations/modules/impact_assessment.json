@@ -1363,6 +1363,17 @@
       "it": "Fattibilità politica (D5.2, tabella 8)",
       "no": "Politisk gjennomførbarhet (D5.2, tabell 8)",
       "el": "Πολιτική σκοπιμότητα (D5.2, πίνακας 8)"
+    },
+    "modules.impact_assessment.cannot_advance": {
+      "en": "Fix these before moving on:",
+      "es": "Corrija esto antes de continuar:",
+      "fr": "Corrigez ceci avant de continuer :",
+      "de": "Bitte vor dem Weitergehen beheben:",
+      "lt": "Prieš tęsdami ištaisykite:",
+      "pt": "Corrija isto antes de continuar:",
+      "it": "Correggi questi punti prima di proseguire:",
+      "no": "Rett opp dette før du går videre:",
+      "el": "Διορθώστε τα παρακάτω πριν συνεχίσετε:"
     }
   }
 }

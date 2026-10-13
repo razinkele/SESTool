@@ -12,7 +12,7 @@ impact_step_keys <- function() {
 #' @param active Integer step number
 #' @param available Integer vector of steps that have a body (grows per task)
 #' @param ns Namespace function
-impact_step_bar <- function(active, available, i18n, ns) {
+impact_step_bar <- function(active, available, i18n, ns, blocked = integer(0)) {
   keys <- impact_step_keys()
   # i18n-ref: modules.impact_assessment.step.characterisation
   # i18n-ref: modules.impact_assessment.step.scenarios
@@ -22,8 +22,9 @@ impact_step_bar <- function(active, available, i18n, ns) {
   # i18n-ref: modules.impact_assessment.step.trade_offs
   # i18n-ref: modules.impact_assessment.step.recommendations
   items <- lapply(available, function(n) {
-    cls <- if (n == active) "btn btn-primary btn-sm me-1 mb-1" else "btn btn-outline-primary btn-sm me-1 mb-1"
-    actionButton(ns(paste0("goto_step_", n)), paste0(n, ". ", i18n$t(paste0("modules.impact_assessment.step.", keys[[as.character(n)]]))), class = cls)
+    cls <- if (n == active) "btn btn-primary btn-sm me-1 mb-1" else if (n %in% blocked) "btn btn-outline-warning btn-sm me-1 mb-1" else "btn btn-outline-primary btn-sm me-1 mb-1"
+    label <- paste0(n, ". ", i18n$t(paste0("modules.impact_assessment.step.", keys[[as.character(n)]])), if (n %in% blocked) " !" else "")
+    actionButton(ns(paste0("goto_step_", n)), label, class = cls)
   })
   div(class = "impact-step-bar", items)
 }
