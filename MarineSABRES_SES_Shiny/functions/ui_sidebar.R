@@ -395,15 +395,18 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
 
   # Response & Validation (intermediate and expert only)
   if (should_show_menu_item("Response & Validation", user_level)) {
+    show_scenarios <- if (!is.null(level_config)) isTRUE(level_config$show_scenario_builder) else TRUE
+    response_items <- list(
+      bs4SidebarMenuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
+      bs4SidebarMenuSubItem(safe_t("ui.sidebar.valuation_calculator", i18n_obj = i18n), tabName = "response_valuation"),
+      if (show_scenarios) bs4SidebarMenuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
+      bs4SidebarMenuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
+    )
     menu_items <- c(menu_items, list(
-      bs4SidebarMenuItem(
-        safe_t("ui.sidebar.response_validation", i18n_obj = i18n),
-        icon = icon("tasks"),
-        bs4SidebarMenuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
-        bs4SidebarMenuSubItem(safe_t("ui.sidebar.valuation_calculator", i18n_obj = i18n), tabName = "response_valuation"),
-        bs4SidebarMenuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
-        bs4SidebarMenuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
-      )
+      do.call(bs4SidebarMenuItem, c(
+        list(safe_t("ui.sidebar.response_validation", i18n_obj = i18n), icon = icon("tasks")),
+        Filter(Negate(is.null), response_items)
+      ))
     ))
   }
 
