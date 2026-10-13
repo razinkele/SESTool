@@ -25,3 +25,20 @@ test_that("impact_problem_messages translates step problems, prefixing cell prob
   expect_true(any(grepl("^EE / S1: modules.impact_assessment.problem.driver_required$", msgs4)))
   expect_length(impact_problem_messages(impact_step_problems(ia, 1), i18n), 0L)
 })
+
+test_that("impact_element_choices lists canonical and lowercase ISA frames", {
+  p <- create_empty_project("x")
+  p$data$isa_data$drivers <- data.frame(ID = "D001", Name = "Food demand", stringsAsFactors = FALSE)
+  p$data$isa_data$pressures <- data.frame(id = "P001", name = "Extraction", stringsAsFactors = FALSE)
+  ch <- impact_element_choices(p)
+  expect_setequal(unname(ch), c("D001", "P001"))
+  expect_true(any(grepl("Food demand", names(ch))))
+  expect_length(impact_element_choices(create_empty_project("empty")), 0L)
+})
+
+test_that("impact_indicator_choices returns registry codes for a DA and nothing without one", {
+  ch <- impact_indicator_choices("macaronesia", i18n)
+  expect_true(length(ch) > 0)
+  expect_true(all(nzchar(unname(ch))))
+  expect_length(impact_indicator_choices("", i18n), 0L)
+})

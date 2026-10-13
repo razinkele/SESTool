@@ -86,3 +86,32 @@ impact_problem_messages <- function(problems, i18n) {
     } else msg
   }, character(1))
 }
+
+#' Element picker choices from the ISA (both column cases, code map §5)
+impact_element_choices <- function(project) {
+  df <- tryCatch(get_all_isa_elements(project), error = function(e) data.frame())
+  if (!is.data.frame(df) || nrow(df) == 0) return(character(0))
+  # bind_rows over mixed-case frames yields BOTH id/ID (and name/Name) columns, each NA for the other
+  # frames' rows, so coalesce across the cases instead of picking one column.
+  pick <- function(cols) {
+    out <- rep(NA_character_, nrow(df))
+    for (cl in intersect(cols, names(df))) {
+      v <- as.character(df[[cl]]); fill <- (is.na(out) | !nzchar(out)) & !is.na(v)
+      out[fill] <- v[fill]
+    }
+    out
+  }
+  ids <- pick(c("id", "ID"))
+  if (all(is.na(ids))) return(character(0))
+  nms <- pick(c("name", "Name")); nms[is.na(nms)] <- ids[is.na(nms)]
+  keep <- !is.na(ids) & nzchar(ids)
+  stats::setNames(ids[keep], paste0(nms[keep], " (", ids[keep], ") [", df$element_type[keep], "]"))
+}
+
+#' Indicator picker choices for a DA from the WS-4 registry
+impact_indicator_choices <- function(da, i18n) {
+  if (!nzchar(da)) return(character(0))
+  rows <- tryCatch(list_indicators(da = da), error = function(e) NULL)
+  if (!is.data.frame(rows) || nrow(rows) == 0) return(character(0))
+  stats::setNames(as.character(rows$code), paste0(rows$name, " (", rows$code, ")"))
+}

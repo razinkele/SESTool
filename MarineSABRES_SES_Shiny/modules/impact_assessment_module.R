@@ -31,7 +31,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
 
     da <- reactive(wp5_da_for_project(project_data_reactive()))
     ref_status <- reactive(impact_reference_status(da()))
-    available_steps <- function() c(1L, 2L, 7L)   # grows: Task 6 adds 3; Part B adds 4-6
+    available_steps <- function() c(1L, 2L, 3L, 7L)   # grows: Part B adds 4-6
 
     # Build the working copy from the project; a fresh one starts from the DA's
     # published scenarios (nothing is written until the user acts).
@@ -206,6 +206,49 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       }, error = notify_impact_error)
     })
 
+    step3_ui <- function() {
+      sc <- rv$ia$scope
+      pd <- project_data_reactive()
+      el <- impact_element_choices(pd)
+      pressures <- el[grepl("\\[pressures\\]$", names(el))]
+      problems <- impact_problem_messages(impact_step_problems(rv$ia, 3), i18n)
+      # i18n-ref: modules.impact_assessment.displacement.yes
+      # i18n-ref: modules.impact_assessment.displacement.no
+      # i18n-ref: modules.impact_assessment.displacement.unsure
+      tagList(
+        p(class = "text-muted", i18n$t("modules.impact_assessment.scoping_intro")),
+        if (length(problems)) div(class = "alert alert-warning py-2", tags$ul(lapply(problems, tags$li))),
+        if (length(el) == 0) div(class = "alert alert-secondary py-2", i18n$t("modules.impact_assessment.no_isa_elements")),
+        selectizeInput(ns("scope_elements"), i18n$t("modules.impact_assessment.scope_elements"), choices = el,
+                       selected = sc$element_ids, multiple = TRUE, width = "100%"),
+        selectizeInput(ns("scope_indicators"), i18n$t("modules.impact_assessment.scope_indicators"),
+                       choices = impact_indicator_choices(da(), i18n), selected = sc$indicator_codes, multiple = TRUE, width = "100%"),
+        hr(),
+        h5(i18n$t("modules.impact_assessment.displacement_heading")),
+        p(class = "text-muted", i18n$t("modules.impact_assessment.displacement_question")),
+        radioButtons(ns("scope_displacement"), NULL,
+                     choices = stats::setNames(IMPACT_DISPLACEMENT_ANSWERS,
+                                               vapply(IMPACT_DISPLACEMENT_ANSWERS, function(a) i18n$t(paste0("modules.impact_assessment.displacement.", a)), character(1))),
+                     selected = if (nzchar(sc$displacement$answer %||% "")) sc$displacement$answer else "unsure", inline = TRUE),
+        textAreaInput(ns("scope_displacement_note"), i18n$t("modules.impact_assessment.displacement_note"), value = sc$displacement$note %||% "", rows = 2, width = "100%"),
+        selectizeInput(ns("scope_displaced_pressure"), i18n$t("modules.impact_assessment.displaced_pressure"),
+                       choices = c(stats::setNames("", i18n$t("modules.impact_assessment.displaced_pressure_none")), pressures),
+                       selected = sc$displacement$displaced_pressure_id %||% "", width = "100%"),
+        tags$small(class = "text-muted", i18n$t("modules.impact_assessment.displaced_pressure_hint")),
+        div(class = "mt-3", actionButton(ns("save_scope"), i18n$t("modules.impact_assessment.save_section"), icon = icon("save"), class = "btn-success"))
+      )
+    }
+    observeEvent(input$save_scope, {
+      tryCatch({
+        ia <- impact_set_scope_items(rv$ia, element_ids = as.character(input$scope_elements %||% character(0)),
+                                     indicator_codes = as.character(input$scope_indicators %||% character(0)))
+        ia <- impact_set_displacement(ia, input$scope_displacement %||% "unsure", input$scope_displacement_note %||% "",
+                                      input$scope_displaced_pressure %||% "")
+        commit(ia)
+        showNotification(i18n$t("modules.impact_assessment.saved"), type = "message", duration = 3)
+      }, error = notify_impact_error)
+    })
+
     output$step_body <- renderUI({
       req(rv$ia)
       if (identical(ref_status(), "valuation_only")) {
@@ -217,7 +260,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
                                                  onclick = "Shiny.setInputValue('impact_nav_target', 'response_valuation', {priority: 'event'})"))
         ))
       }
-      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
+      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
     })
 
     # Navigation to the valuation calculator (Tuscan empty state)

@@ -945,6 +945,149 @@
       "it": "Sottodimensione ha un valore non valido.",
       "no": "Underdimensjon har en ugyldig verdi.",
       "el": "Υποδιάσταση έχει μη έγκυρη τιμή."
+    },
+    "modules.impact_assessment.scoping_intro": {
+      "en": "Choose the DAPSI(W)R(M) elements and the indicators this assessment covers, then answer the displacement question (D5.2 §8.4).",
+      "es": "Elija los elementos DAPSI(W)R(M) y los indicadores que abarca esta evaluación y responda después a la pregunta sobre el desplazamiento (D5.2 §8.4).",
+      "fr": "Choisissez les éléments DAPSI(W)R(M) et les indicateurs couverts par cette évaluation, puis répondez à la question sur le déplacement (D5.2 §8.4).",
+      "de": "Wählen Sie die DAPSI(W)R(M)-Elemente und Indikatoren, die diese Bewertung abdeckt, und beantworten Sie anschließend die Verlagerungsfrage (D5.2 §8.4).",
+      "lt": "Pasirinkite DAPSI(W)R(M) elementus ir rodiklius, kuriuos apima šis vertinimas, tada atsakykite į poslinkio klausimą (D5.2 §8.4).",
+      "pt": "Escolha os elementos DAPSI(W)R(M) e os indicadores abrangidos por esta avaliação e depois responda à pergunta sobre o deslocamento (D5.2 §8.4).",
+      "it": "Scegliete gli elementi DAPSI(W)R(M) e gli indicatori coperti da questa valutazione, poi rispondete alla domanda sullo spostamento (D5.2 §8.4).",
+      "no": "Velg DAPSI(W)R(M)-elementene og indikatorene som denne vurderingen dekker, og svar deretter på spørsmålet om forflytning (D5.2 §8.4).",
+      "el": "Επιλέξτε τα στοιχεία DAPSI(W)R(M) και τους δείκτες που καλύπτει αυτή η αξιολόγηση και στη συνέχεια απαντήστε στην ερώτηση για τη μετατόπιση (D5.2 §8.4)."
+    },
+    "modules.impact_assessment.no_isa_elements": {
+      "en": "The project has no ISA elements yet; enter them in ISA Data Entry first.",
+      "es": "El proyecto aún no tiene elementos ISA; introdúzcalos primero en la entrada de datos ISA.",
+      "fr": "Le projet ne contient pas encore d'éléments ISA ; saisissez-les d'abord dans la saisie de données ISA.",
+      "de": "Das Projekt enthält noch keine ISA-Elemente; erfassen Sie sie zuerst in der ISA-Dateneingabe.",
+      "lt": "Projekte dar nėra ISA elementų; pirmiausia įveskite juos ISA duomenų įvedime.",
+      "pt": "O projeto ainda não tem elementos ISA; introduza-os primeiro na entrada de dados ISA.",
+      "it": "Il progetto non ha ancora elementi ISA; inseriteli prima nell'inserimento dati ISA.",
+      "no": "Prosjektet har ingen ISA-elementer ennå; legg dem først inn under ISA-dataregistrering.",
+      "el": "Το έργο δεν έχει ακόμη στοιχεία ISA· καταχωρίστε τα πρώτα στην Εισαγωγή δεδομένων ISA."
+    },
+    "modules.impact_assessment.scope_elements": {
+      "en": "Elements in scope",
+      "es": "Elementos en el alcance",
+      "fr": "Éléments dans le périmètre",
+      "de": "Elemente im Geltungsbereich",
+      "lt": "Aprėpties elementai",
+      "pt": "Elementos no âmbito",
+      "it": "Elementi nell'ambito",
+      "no": "Elementer i omfanget",
+      "el": "Στοιχεία εντός του πεδίου"
+    },
+    "modules.impact_assessment.scope_indicators": {
+      "en": "Indicators in scope",
+      "es": "Indicadores en el alcance",
+      "fr": "Indicateurs dans le périmètre",
+      "de": "Indikatoren im Geltungsbereich",
+      "lt": "Aprėpties rodikliai",
+      "pt": "Indicadores no âmbito",
+      "it": "Indicatori nell'ambito",
+      "no": "Indikatorer i omfanget",
+      "el": "Δείκτες εντός του πεδίου"
+    },
+    "modules.impact_assessment.displacement_heading": {
+      "en": "Displacement and leakage",
+      "es": "Desplazamiento y fugas",
+      "fr": "Déplacement et fuites",
+      "de": "Verlagerung und Leckage",
+      "lt": "Poslinkis ir nutekėjimas",
+      "pt": "Deslocamento e fugas",
+      "it": "Spostamento e dispersione",
+      "no": "Forflytning og lekkasje",
+      "el": "Μετατόπιση και διαρροή"
+    },
+    "modules.impact_assessment.displacement_question": {
+      "en": "Could this intervention move the activity or pressure elsewhere?",
+      "es": "¿Podría esta intervención trasladar la actividad o la presión a otro lugar?",
+      "fr": "Cette intervention pourrait-elle déplacer l'activité ou la pression ailleurs ?",
+      "de": "Könnte diese Maßnahme die Tätigkeit oder den Druck anderswohin verlagern?",
+      "lt": "Ar ši intervencija galėtų perkelti veiklą ar spaudimą kitur?",
+      "pt": "Poderá esta intervenção deslocar a atividade ou a pressão para outro local?",
+      "it": "Questo intervento potrebbe spostare altrove l'attività o la pressione?",
+      "no": "Kan dette tiltaket flytte aktiviteten eller påvirkningen et annet sted?",
+      "el": "Θα μπορούσε η παρέμβαση αυτή να μετακινήσει τη δραστηριότητα ή την πίεση αλλού;"
+    },
+    "modules.impact_assessment.displacement.yes": {
+      "en": "Yes",
+      "es": "Sí",
+      "fr": "Oui",
+      "de": "Ja",
+      "lt": "Taip",
+      "pt": "Sim",
+      "it": "Sì",
+      "no": "Ja",
+      "el": "Ναι"
+    },
+    "modules.impact_assessment.displacement.no": {
+      "en": "No",
+      "es": "No",
+      "fr": "Non",
+      "de": "Nein",
+      "lt": "Ne",
+      "pt": "Não",
+      "it": "No",
+      "no": "Nei",
+      "el": "Όχι"
+    },
+    "modules.impact_assessment.displacement.unsure": {
+      "en": "Unsure",
+      "es": "No estoy seguro",
+      "fr": "Incertain",
+      "de": "Unsicher",
+      "lt": "Neaišku",
+      "pt": "Incerto",
+      "it": "Incerto",
+      "no": "Usikker",
+      "el": "Αβέβαιο"
+    },
+    "modules.impact_assessment.displacement_note": {
+      "en": "Where and how could it move? (required for Yes)",
+      "es": "¿Dónde y cómo podría trasladarse? (obligatorio si la respuesta es Sí)",
+      "fr": "Où et comment pourrait-il se déplacer ? (obligatoire pour Oui)",
+      "de": "Wohin und wie könnte es sich verlagern? (erforderlich bei Ja)",
+      "lt": "Kur ir kaip tai galėtų persikelti? (privaloma, jei atsakyta Taip)",
+      "pt": "Para onde e como poderá deslocar-se? (obrigatório se a resposta for Sim)",
+      "it": "Dove e come potrebbe spostarsi? (obbligatorio se la risposta è Sì)",
+      "no": "Hvor og hvordan kan det flytte seg? (påkrevd ved Ja)",
+      "el": "Πού και πώς θα μπορούσε να μετακινηθεί; (υποχρεωτικό για το Ναι)"
+    },
+    "modules.impact_assessment.displaced_pressure": {
+      "en": "Existing pressure element that represents the displaced pressure",
+      "es": "Elemento de presión existente que representa la presión desplazada",
+      "fr": "Élément de pression existant qui représente la pression déplacée",
+      "de": "Vorhandenes Druck-Element, das den verlagerten Druck darstellt",
+      "lt": "Esamas spaudimo elementas, atspindintis perkeltą spaudimą",
+      "pt": "Elemento de pressão existente que representa a pressão deslocada",
+      "it": "Elemento di pressione esistente che rappresenta la pressione spostata",
+      "no": "Eksisterende påvirkningselement som representerer den forflyttede påvirkningen",
+      "el": "Υπάρχον στοιχείο πίεσης που αντιπροσωπεύει τη μετατοπισμένη πίεση"
+    },
+    "modules.impact_assessment.displaced_pressure_none": {
+      "en": "None",
+      "es": "Ninguno",
+      "fr": "Aucun",
+      "de": "Keines",
+      "lt": "Nėra",
+      "pt": "Nenhum",
+      "it": "Nessuno",
+      "no": "Ingen",
+      "el": "Κανένα"
+    },
+    "modules.impact_assessment.displaced_pressure_hint": {
+      "en": "Add the displaced pressure as a Pressure in ISA Data Entry first; creating it from here is not supported.",
+      "es": "Añada primero la presión desplazada como Presión en la entrada de datos ISA; no se puede crear desde aquí.",
+      "fr": "Ajoutez d'abord la pression déplacée comme Pression dans la saisie de données ISA ; la créer depuis ici n'est pas pris en charge.",
+      "de": "Fügen Sie den verlagerten Druck zuerst als Druck in der ISA-Dateneingabe hinzu; ein Anlegen von hier aus wird nicht unterstützt.",
+      "lt": "Pirmiausia pridėkite perkeltą spaudimą kaip Spaudimą ISA duomenų įvedime; sukurti jo čia nepalaikoma.",
+      "pt": "Adicione primeiro a pressão deslocada como Pressão na entrada de dados ISA; não é possível criá-la a partir daqui.",
+      "it": "Aggiungete prima la pressione spostata come Pressione nell'inserimento dati ISA; crearla da qui non è supportato.",
+      "no": "Legg først til den forflyttede påvirkningen som en Påvirkning i ISA-dataregistrering; å opprette den herfra støttes ikke.",
+      "el": "Προσθέστε πρώτα τη μετατοπισμένη πίεση ως Πίεση στην Εισαγωγή δεδομένων ISA· η δημιουργία της από εδώ δεν υποστηρίζεται."
     }
   }
 }

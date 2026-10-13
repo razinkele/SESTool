@@ -156,3 +156,22 @@ test_that("Load WP5 scenarios restores the published set for a DA with reference
     expect_identical(impact_scenario_codes(rv$ia), c("S1", "S2", "S3", "S4"))
   })
 })
+
+test_that("step 3 saves scope elements, indicators and the displacement answer; a yes needs a note", {
+  p <- mk_project("Macaronesia")
+  p$data$isa_data$pressures <- data.frame(ID = c("P001", "P002"), Name = c("Extraction", "Noise"), stringsAsFactors = FALSE)
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 3L; session$flushReact()
+    session$setInputs(scope_elements = "P001", scope_indicators = character(0), scope_displacement = "yes",
+                      scope_displacement_note = "", scope_displaced_pressure = "P002", save_scope = 1)
+    session$flushReact()
+    expect_match(as.character(output$step_body$html), "modules.impact_assessment.problem.displacement_note_missing", fixed = TRUE)
+    session$setInputs(scope_displacement_note = "Effort may move to ABNJ", save_scope = 2); session$flushReact()
+    ia <- get_impact_assessment(args$project_data_reactive())
+    expect_identical(ia$scope$element_ids, "P001")
+    expect_identical(ia$scope$displacement$answer, "yes")
+    expect_identical(ia$scope$displacement$displaced_pressure_id, "P002")
+    expect_false(any(grepl("displacement_note_missing", as.character(output$step_body$html))))
+  })
+})
