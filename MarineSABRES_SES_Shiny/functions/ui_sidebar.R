@@ -400,6 +400,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       bs4SidebarMenuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
       bs4SidebarMenuSubItem(safe_t("ui.sidebar.valuation_calculator", i18n_obj = i18n), tabName = "response_valuation"),
       if (show_scenarios) bs4SidebarMenuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
+      bs4SidebarMenuSubItem(safe_t("ui.sidebar.impact_assessment", i18n_obj = i18n), tabName = "response_impact"),
       bs4SidebarMenuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
     )
     menu_items <- c(menu_items, list(

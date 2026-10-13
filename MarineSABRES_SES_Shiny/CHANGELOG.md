@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.25.0] - 2026-10-13
+
+Minor release: WP5 impact-assessment module (WS-6a data layer + WS-6b wizard). Projects that contain an assessment require 1.25.0 or later.
+
+### Added (WP5 impact assessment, data layer — spec 2026-10-11 WS-6a)
+- D5.2 reference data for the impact-assessment module (`data/wp5_impact_reference.json`): Macaronesia Table 21 (5 criteria × S1–S4, with each scenario's confidence) and Arctic Tables 2–8 (revenue by scenario for the Faroe Islands, Greenland and Iceland; political feasibility per scenario). Tests check every value against the committed D5.2 extract. The Arctic revenue values are stored exactly as published, with a note that they conflict with D5.2's stated assumptions (partner question 2). Tuscany has no scenarios in D5.2.
+- The data model behind the module (no screens yet): ordinal criterion × scenario cells, up to 5 scenarios with a baseline, the rule that low confidence needs an uncertainty driver, the displacement/leakage check, copying a D5.2 reference cell into an editable cell, and mechanism and indicator suggestions per scenario and criterion. Assessments are stored at `data$analysis$impact_assessment` and survive `.json` and `.rds` save/load unchanged. Projects that contain one require 1.25.0.
+- Not included yet: D5.2 Arctic Tables 10–12, Macaronesia Table 23 and the C_01/F_02 scenario tables (only Tables 2–8 and 21 are in the reference data).
+
+### Added (WP5 impact-assessment module — spec 2026-10-11 WS-6b)
+- New page under Response & Validation: a seven-step impact assessment (D5.2 §1.4). Steps: characterisation; baseline and up to 5 scenarios (Macaronesia and Arctic start from the published WP5 scenarios); impact scoping with the displacement/leakage question; the criterion × scenario matrix with the ordinal rubric (direction, magnitude, timing, confidence, evidence, uncertainty driver, rationale, EQ/PI sub-dimension notes, linked indicators and financial mechanisms); uncertainty notes; trade-offs; recommendations. Each step is gated by the model's problem checks (for example low confidence needs an uncertainty driver).
+- WP5 reference ratings (Macaronesia Table 21) are shown read-only next to the cell and can be copied into WP5 reference scenarios only; the copy records the reference version. Arctic revenue tables (Tables 2–8) and political-feasibility ratings are shown read-only, exactly as published, with the partner-question-2 note. Tuscan projects get an empty state that points to the valuation calculator.
+- Heat map: arrow = direction, fill intensity = magnitude (the only ordinal→numeric map, badged as a toolbox extension), hatching = low confidence.
+- Not in this release: re-scoring under alternative assumptions (step 5 is notes only), the auto-drafted trade-off narrative and the Word/Excel report (WS-6c), and creating a new Pressure element for a displaced pressure (pick an existing one instead).
+
+### Fixed
+- Changing the ISA, importing Excel data or loading an SES model no longer wipes the whole analysis block: only loops and metrics are cleared, so WS-0 scenarios and the impact assessment survive (regression test added).
+- `wp5_da_for_project()` is the single place that maps a project's demonstration area to the WP5 contexts (previously an inline mapping in the Response module).
+
 ### Fixed (whole site hang — laguna outage 2026-10-13)
 - The AI ISA assistant's recovery observer could re-trigger itself forever. Its guard read `rv$elements$drivers`/`$activities` outside `isolate()` and then rewrote `rv$elements` with fresh timestamps, so a project with elements but no Drivers and no Activities kept Shiny's flush loop busy indefinitely. On open-source Shiny Server every user shares one R process, so one such session took the whole site down (HTTP 502 until the worker was restarted). The guard is now read inside `isolate()` and covers every element category. Regression test: `tests/testthat/test-ai-isa-recovery-loop.R`.
 
@@ -17,11 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Network metrics: eigenvector centrality was computed unguarded on the full graph in `calculate_network_metrics()`, although the same file already notes that igraph can hang on disconnected graphs. Both call sites now share `safe_eigen_centrality()`, which runs on the largest weakly connected component only.
 - Diagnostics: `app.R` now sets `options(keep.source = TRUE)` so production error traces show the file and line of the failing observer instead of an anonymous "51: observe". Two errors from the same logs ("missing value where TRUE/FALSE needed", "attempt to set an attribute on NULL" in `setNames`) could not be located without this and remain open.
 - Regression tests: `tests/testthat/test-prod-log-errors-2026-10-13.R`.
-
-### Added (WP5 impact assessment, data layer — spec 2026-10-11 WS-6a)
-- D5.2 reference data for the impact-assessment module (`data/wp5_impact_reference.json`): Macaronesia Table 21 (5 criteria × S1–S4, with each scenario's confidence) and Arctic Tables 2–8 (revenue by scenario for the Faroe Islands, Greenland and Iceland; political feasibility per scenario). Tests check every value against the committed D5.2 extract. The Arctic revenue values are stored exactly as published, with a note that they conflict with D5.2's stated assumptions (partner question 2). Tuscany has no scenarios in D5.2.
-- The data model behind the module (no screens yet): ordinal criterion × scenario cells, up to 5 scenarios with a baseline, the rule that low confidence needs an uncertainty driver, the displacement/leakage check, copying a D5.2 reference cell into an editable cell, and mechanism and indicator suggestions per scenario and criterion. Assessments are stored at `data$analysis$impact_assessment` and survive `.json` and `.rds` save/load unchanged. Projects that contain one require 1.25.0.
-- Not included yet: D5.2 Arctic Tables 10–12, Macaronesia Table 23 and the C_01/F_02 scenario tables (only Tables 2–8 and 21 are in the reference data).
 
 ## [1.24.0] - 2026-10-12
 

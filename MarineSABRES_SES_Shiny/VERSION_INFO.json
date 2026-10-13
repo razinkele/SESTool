@@ -1,7 +1,7 @@
 {
-  "version": "1.24.0",
-  "version_name": "WP5 indicator registry and Posidonia valuation calculator",
-  "release_date": "2026-10-12",
+  "version": "1.25.0",
+  "version_name": "WP5 impact assessment",
+  "release_date": "2026-10-13",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",

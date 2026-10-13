@@ -315,6 +315,16 @@ impact_assessment_from_reference <- function(da) {
   ia
 }
 
+#' The values a reference copy writes (shared with impact_cell_edited_since_copy
+#' so the edit check can never drift from the copy)
+#' @param ref An impact_reference_cell() result
+.impact_reference_copy_values <- function(da, ref, scenario_code) {
+  sc <- Find(function(s) identical(s$code, scenario_code), impact_reference_scenarios(da))
+  conf <- sc$confidence_codes %||% character(0)
+  list(rationale = if (nzchar(ref$rating_text)) paste0(ref$rating_text, " — ", ref$text) else ref$text,
+       confidence = if (length(conf) == 1) conf else "")
+}
+
 #' Copy a read-only WP5 reference cell into the editable assessment.
 #' Table 21 states one confidence per scenario; it is copied only when it is a
 #' single level (a published range such as Medium–High leaves the choice to
@@ -330,11 +340,10 @@ impact_copy_reference_cell <- function(ia, criterion, scenario_code, overwrite =
   if (!overwrite && !identical(impact_get_cell(ia, cr, scenario_code), new_impact_cell())) {
     .impact_error("cell_not_empty")
   }
-  sc <- Find(function(s) identical(s$code, scenario_code), impact_reference_scenarios(ia$da))
-  conf <- sc$confidence_codes %||% character(0)
+  vals <- .impact_reference_copy_values(ia$da, ref, scenario_code)
   cell <- new_impact_cell()
-  cell$rationale <- if (nzchar(ref$rating_text)) paste0(ref$rating_text, " — ", ref$text) else ref$text
-  cell$confidence <- if (length(conf) == 1) conf else ""
+  cell$rationale <- vals$rationale
+  cell$confidence <- vals$confidence
   # P5 snapshot: provenance + reference version, so later corrections are detectable
   cell$reference <- list(da = ia$da, table = ref$table, criterion = cr, scenario = scenario_code,
                          provenance = ref$provenance, ref_version = impact_reference_version())

@@ -570,7 +570,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       )
 
       # Clear analysis data since we're importing new data
-      project_data$data$analysis <- list(loops = NULL, metrics = NULL)
+      project_data <- clear_analysis_results(project_data)
 
       # Update metadata
       file_name <- if (!is.null(input$excel_file)) input$excel_file$name else "TuscanySES.xlsx"

@@ -42,7 +42,7 @@ Rscript scripts/add_translation.R
 ├── global.R              # Package loading, PROJECT_ROOT, utility functions
 ├── constants.R           # DAPSIWRM_ELEMENTS, colors, shapes, site configs
 ├── DESCRIPTION           # Package dependency manifest
-├── modules/              # Shiny modules (37 .R files in modules/ + 9 sub-modules in modules/ai_isa/)
+├── modules/              # Shiny modules (38 .R files in modules/, incl. `impact_assessment_module.R` (WP5 impact assessment) + 9 sub-modules in modules/ai_isa/)
 │   ├── *_module.R        # Module pattern: module_name_ui() + module_name_server()
 │   ├── analysis_*.R      # Analysis modules (loops, metrics, boolean, etc.)
 │   └── ai_isa/           # AI-assisted ISA workflow
