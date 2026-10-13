@@ -322,3 +322,117 @@ impact_report_data <- function(project, ia, i18n) {
                    trade_offs_text = as.character(ia$trade_offs$text %||% ""), recommendations = as.character(ia$recommendations$text %||% "")),
        labels = labels)
 }
+
+# ---- Word report -----------------------------------------------------------------
+# Same officer + flextable style as generate_word_report() (prepare_report_module.R:620).
+.ia_docx_table <- function(doc, df, labels, t) {
+  if (!is.data.frame(df) || nrow(df) == 0) return(officer::body_add_par(doc, t("modules.impact_assessment.report.empty"), style = "Normal"))
+  names(df) <- vapply(names(df), function(n) labels[[n]] %||% n, character(1))
+  ft <- flextable::flextable(df)
+  ft <- flextable::theme_vanilla(ft)
+  ft <- flextable::fontsize(ft, size = 8, part = "all")
+  ft <- flextable::autofit(ft)
+  # cells_long has 13 columns: without this the table runs off the right edge of a portrait page
+  ft <- flextable::set_table_properties(ft, width = 1, layout = "autofit")
+  flextable::body_add_flextable(doc, ft)
+}
+.ia_docx_text <- function(doc, text, t) {
+  if (!nzchar(text)) return(officer::body_add_par(doc, t("modules.impact_assessment.report.empty"), style = "Normal"))
+  for (p in strsplit(text, "\n\n", fixed = TRUE)[[1]]) doc <- officer::body_add_par(doc, p, style = "Normal")
+  doc
+}
+
+#' Word report (roadmap §8.6 structure). Raises on failure; the caller's tryCatch notifies.
+#' @param writer Function(doc, target); override in tests to force failures.
+build_impact_report_docx <- function(report, i18n, file, writer = function(doc, target) print(doc, target = target)) {
+  t <- .ia_t(i18n)
+  K <- "modules.impact_assessment.report."
+  # Heading / label keys built with t(paste0(K, ...)) below and in build_impact_report_xlsx():
+  # i18n-ref: modules.impact_assessment.report.title
+  # i18n-ref: modules.impact_assessment.report.subtitle
+  # i18n-ref: modules.impact_assessment.report.project
+  # i18n-ref: modules.impact_assessment.report.da
+  # i18n-ref: modules.impact_assessment.report.generated
+  # i18n-ref: modules.impact_assessment.report.ref_version
+  # i18n-ref: modules.impact_assessment.report.baseline
+  # i18n-ref: modules.impact_assessment.report.none
+  # i18n-ref: modules.impact_assessment.report.section.characterisation
+  # i18n-ref: modules.impact_assessment.report.section.scenarios
+  # i18n-ref: modules.impact_assessment.report.section.scope
+  # i18n-ref: modules.impact_assessment.report.section.matrix
+  # i18n-ref: modules.impact_assessment.report.section.uncertainty
+  # i18n-ref: modules.impact_assessment.report.section.trade_offs
+  # i18n-ref: modules.impact_assessment.report.section.recommendations
+  # i18n-ref: modules.impact_assessment.report.appendix_mechanisms
+  # i18n-ref: modules.impact_assessment.report.appendix_provenance
+  # i18n-ref: modules.impact_assessment.report.scope_elements
+  # i18n-ref: modules.impact_assessment.report.scope_indicators
+  # i18n-ref: modules.impact_assessment.report.displacement
+  # i18n-ref: modules.impact_assessment.report.matrix_summary
+  # i18n-ref: modules.impact_assessment.report.matrix_detail
+  # i18n-ref: modules.impact_assessment.report.draft_label
+  # i18n-ref: modules.impact_assessment.report.user_text_label
+  # i18n-ref: modules.impact_assessment.report.provenance_none
+  # i18n-ref: modules.impact_assessment.report.provenance_intro
+  r <- report; L <- r$labels
+  h1 <- function(doc, key) officer::body_add_par(doc, t(paste0(K, key)), style = "heading 1")
+  h2 <- function(doc, key) officer::body_add_par(doc, t(paste0(K, key)), style = "heading 2")
+  par <- function(doc, text) officer::body_add_par(doc, text, style = "Normal")
+
+  doc <- officer::read_docx()
+  doc <- officer::body_add_par(doc, t(paste0(K, "title")), style = "heading 1")   # same style set as generate_word_report()
+  doc <- par(doc, t(paste0(K, "subtitle")))
+  doc <- par(doc, paste0(t(paste0(K, "project")), ": ", r$meta$project_name))
+  doc <- par(doc, paste0(t(paste0(K, "da")), ": ", r$meta$da_label))
+  doc <- par(doc, paste0(t(paste0(K, "baseline")), ": ", if (nzchar(r$meta$baseline)) r$meta$baseline else t(paste0(K, "none"))))
+  doc <- par(doc, paste0(t(paste0(K, "ref_version")), ": ", if (nzchar(r$meta$ref_version)) r$meta$ref_version else t(paste0(K, "none"))))
+  doc <- par(doc, paste0(t(paste0(K, "generated")), ": ", r$meta$generated))
+
+  doc <- h1(doc, "section.characterisation")
+  doc <- .ia_docx_table(doc, r$characterisation[, c("label", "value")], L, t)
+
+  doc <- h1(doc, "section.scenarios")
+  doc <- .ia_docx_table(doc, r$scenarios, L, t)
+
+  doc <- h1(doc, "section.scope")
+  doc <- h2(doc, "scope_elements");   doc <- .ia_docx_table(doc, r$scope_elements, L, t)
+  doc <- h2(doc, "scope_indicators"); doc <- .ia_docx_table(doc, r$scope_indicators, L, t)
+  doc <- h2(doc, "displacement");     doc <- .ia_docx_table(doc, r$displacement, L, t)
+
+  doc <- h1(doc, "section.matrix")
+  doc <- h2(doc, "matrix_summary")
+  mw <- r$matrix_wide; mw$criterion <- wp5_vocab_label("criteria", mw$criterion, i18n)
+  doc <- .ia_docx_table(doc, mw, L, t)
+  doc <- h2(doc, "matrix_detail")
+  cl <- r$cells_long
+  if (nrow(cl)) cl$criterion <- wp5_vocab_label("criteria", cl$criterion, i18n)
+  doc <- .ia_docx_table(doc, cl, L, t)
+
+  doc <- h1(doc, "section.uncertainty");     doc <- .ia_docx_text(doc, r$text$uncertainty, t)
+  doc <- h1(doc, "section.trade_offs")
+  doc <- h2(doc, "draft_label");             doc <- .ia_docx_text(doc, r$text$trade_offs_draft, t)
+  doc <- h2(doc, "user_text_label");         doc <- .ia_docx_text(doc, r$text$trade_offs_text, t)
+  doc <- h1(doc, "section.recommendations"); doc <- .ia_docx_text(doc, r$text$recommendations, t)
+
+  doc <- h1(doc, "appendix_mechanisms")
+  mech <- r$mechanisms
+  if (nrow(mech)) mech <- mech[, c("id", "name", "provenance_label", "source_ref", "linked_to")]
+  doc <- .ia_docx_table(doc, mech, L, t)
+
+  doc <- h1(doc, "appendix_provenance")
+  doc <- par(doc, t(paste0(K, "provenance_intro")))
+  pv <- r$provenance
+  if (nrow(pv)) {
+    # i18n-ref: modules.impact_assessment.report.kind.reference_copy
+    # i18n-ref: modules.impact_assessment.report.kind.reference_copy_edited
+    # i18n-ref: modules.impact_assessment.report.kind.mechanism
+    # i18n-ref: modules.impact_assessment.report.kind.indicator
+    # i18n-ref: modules.impact_assessment.report.kind.toolbox_extension
+    pv$kind <- vapply(pv$kind, function(k) t(paste0(K, "kind.", k)), character(1))
+    pv <- pv[, c("kind", "item", "provenance_label", "detail")]
+    doc <- .ia_docx_table(doc, pv, L, t)
+  } else doc <- par(doc, t(paste0(K, "provenance_none")))
+
+  writer(doc, file)
+  invisible(file)
+}

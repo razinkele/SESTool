@@ -203,3 +203,45 @@ test_that("the report keys exist in all 9 languages", {
   for (k in paste0("modules.impact_assessment.report.", REPORT_KEYS)) for (l in LANGS) expect_true(nzchar(tr[[k]][[l]] %||% ""), info = paste(k, l))
   expect_true(nzchar(jsonlite::fromJSON(file.path(PROJECT_ROOT, "translations", "modules", "wp5_mechanisms.json"), simplifyVector = FALSE)$translation[["modules.wp5_mechanisms.provenance.wp5_source"]][["el"]] %||% ""))
 })
+
+# ---- docx ----------------------------------------------------------------------------
+docx_text <- function(path) officer::docx_summary(officer::read_docx(path))$text
+
+test_that("build_impact_report_docx writes every section, the matrix, both appendices and non-ASCII text", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  ia <- fixture_ia(); ia <- impact_set_section(ia, "trade_offs", list(text = "S4: equity vs cost", auto_draft = impact_narrative_draft(ia, i18n)))
+  r <- impact_report_data(report_project(ia), ia, i18n)
+  f <- tempfile(fileext = ".docx")
+  build_impact_report_docx(r, i18n, f)
+  expect_true(file.exists(f) && file.info(f)$size > 0)
+  txt <- paste(docx_text(f), collapse = "\n")
+  for (k in c("report.title", "report.section.characterisation", "report.section.scenarios", "report.section.scope", "report.section.matrix",
+              "report.section.uncertainty", "report.section.trade_offs", "report.section.recommendations",
+              "report.appendix_mechanisms", "report.appendix_provenance", "report.draft_label", "report.user_text_label"))
+    expect_match(txt, paste0("modules.impact_assessment.", k), fixed = TRUE, info = k)
+  expect_match(txt, "Corridor case", fixed = TRUE)
+  expect_match(txt, "Migratory corridor", fixed = TRUE)
+  expect_match(txt, "Pilot S3 first (Πιλοτικό)", fixed = TRUE)
+  expect_match(txt, "€0.25–1m/yr", fixed = TRUE)
+  expect_match(txt, "mac_01", fixed = TRUE)
+  expect_match(txt, "narrative.closing", fixed = TRUE)                     # the draft is in the document
+  expect_match(txt, "report.kind.reference_copy", fixed = TRUE)
+  expect_match(txt, "report.kind.toolbox_extension", fixed = TRUE)
+})
+
+test_that("an empty assessment still produces a valid document with the 'none' appendix line", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  r <- impact_report_data(create_empty_project("x"), new_impact_assessment(""), i18n)
+  f <- tempfile(fileext = ".docx")
+  build_impact_report_docx(r, i18n, f)
+  txt <- paste(docx_text(f), collapse = "\n")
+  expect_match(txt, "report.provenance_none", fixed = TRUE)
+  expect_match(txt, "report.empty", fixed = TRUE)
+})
+
+test_that("a forced writer failure propagates and leaves no file", {
+  r <- impact_report_data(report_project(), fixture_ia(), i18n)
+  f <- tempfile(fileext = ".docx")
+  expect_error(build_impact_report_docx(r, i18n, f, writer = function(doc, target) stop("disk full")), "disk full")
+  expect_false(file.exists(f))
+})
