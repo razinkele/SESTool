@@ -444,6 +444,30 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
   )
 }
 
+#' Drop recomputable analysis results, keep user work
+#'
+#' Loops and metrics are recomputed from the CLD and must be cleared when it
+#' changes. Everything else under data$analysis is user work (WS-0 scenarios,
+#' WS-6 impact assessment) and survives. Replaces the three former wholesale
+#' `data$analysis <- list(loops = NULL, metrics = NULL)` writes, which silently
+#' destroyed those blocks (WS-6a final review).
+#'
+#' @param project Project list (the value of project_data_reactive())
+#' @param reason Optional character; when given, cleared_at and reason are recorded
+#' @return The project list
+clear_analysis_results <- function(project, reason = NULL) {
+  a <- project$data$analysis
+  if (!is.list(a)) a <- list()
+  a$loops <- NULL
+  a$metrics <- NULL
+  if (!is.null(reason)) {
+    a$cleared_at <- Sys.time()
+    a$reason <- as.character(reason)
+  }
+  project$data$analysis <- a
+  project
+}
+
 #' Create empty element dataframe
 #' 
 #' @param element_type Type of DAPSI(W)R(M) element

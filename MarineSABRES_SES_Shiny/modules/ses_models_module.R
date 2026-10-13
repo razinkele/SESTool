@@ -774,7 +774,7 @@ perform_ses_model_import <- function(isa_data, elements, connections,
   )
 
   # Clear analysis data since we're importing new data
-  project_data$data$analysis <- list(loops = NULL, metrics = NULL)
+  project_data <- clear_analysis_results(project_data)
 
   # Update metadata
   project_data$data$metadata$imported_from <- file_name

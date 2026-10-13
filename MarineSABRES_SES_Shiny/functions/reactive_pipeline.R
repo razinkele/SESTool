@@ -236,12 +236,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       tryCatch(shinyjs::show("pipeline_status_indicator"), error = function(e) NULL)
 
       # Clear analysis data
-      data$data$analysis <- list(
-        loops = NULL,
-        metrics = NULL,
-        cleared_at = Sys.time(),
-        reason = "Data changed"
-      )
+      data <- clear_analysis_results(data, reason = "Data changed")
 
       data$last_modified <- Sys.time()
 
