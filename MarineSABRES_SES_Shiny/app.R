@@ -1033,7 +1033,8 @@ server <- function(input, output, session) {
   # CLD visualization
   # event_bus wired (review 2026-10-07 N22) so CLD edits trigger autosave and
   # stale-analysis notices; the module sets the pipeline skip flag first.
-  cld_viz_server("cld_visual", project_data, session_i18n, event_bus)
+  cld_viz_server("cld_visual", project_data, session_i18n, event_bus,
+                 user_level_reactive = user_level)
 
   # Analysis modules
   analysis_metrics_server("analysis_met", project_data, session_i18n, event_bus = event_bus)
