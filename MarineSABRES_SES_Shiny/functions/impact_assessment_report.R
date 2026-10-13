@@ -436,3 +436,44 @@ build_impact_report_docx <- function(report, i18n, file, writer = function(doc, 
   writer(doc, file)
   invisible(file)
 }
+
+# ---- Excel report ----------------------------------------------------------------
+#' Excel report: one sheet per block, translated headers, fixed sheet ids.
+#' Raises on failure; the caller's tryCatch notifies.
+#' @param saver Function(wb, file, overwrite); override in tests to force failures.
+build_impact_report_xlsx <- function(report, i18n, file, saver = openxlsx::saveWorkbook) {
+  t <- .ia_t(i18n)
+  K <- "modules.impact_assessment.report."
+  r <- report; L <- r$labels
+  wb <- openxlsx::createWorkbook()
+  add <- function(sheet, df, translate_headers = TRUE, start = 1) {
+    if (!sheet %in% openxlsx::sheets(wb)) openxlsx::addWorksheet(wb, sheet)
+    if (translate_headers && ncol(df)) names(df) <- vapply(names(df), function(n) L[[n]] %||% n, character(1))
+    openxlsx::writeData(wb, sheet, df, startRow = start)
+    if (ncol(df)) openxlsx::setColWidths(wb, sheet, cols = seq_len(ncol(df)), widths = pmin(60, pmax(12, nchar(names(df)) + 2)))
+    start + nrow(df) + 2
+  }
+  add("Overview", data.frame(
+    item = c(t(paste0(K, "project")), t(paste0(K, "da")), t(paste0(K, "baseline")), t(paste0(K, "ref_version")), t(paste0(K, "generated"))),
+    value = c(r$meta$project_name, r$meta$da_label, if (nzchar(r$meta$baseline)) r$meta$baseline else t(paste0(K, "none")),
+              if (nzchar(r$meta$ref_version)) r$meta$ref_version else t(paste0(K, "none")), r$meta$generated),
+    stringsAsFactors = FALSE), translate_headers = FALSE)
+  add("Scenarios", r$scenarios)
+  nxt <- add("Scope", r$scope_elements)
+  nxt <- add("Scope", r$scope_indicators, start = nxt)
+  add("Scope", r$displacement, start = nxt)
+  mw <- r$matrix_wide; mw$criterion <- wp5_vocab_label("criteria", mw$criterion, i18n)
+  add("Matrix", mw)
+  cl <- r$cells_long; if (nrow(cl)) cl$criterion <- wp5_vocab_label("criteria", cl$criterion, i18n)
+  add("Cells", cl)
+  mech <- r$mechanisms; if (nrow(mech)) mech <- mech[, c("id", "name", "provenance", "source_ref", "linked_to")]
+  add("Mechanisms", mech)
+  pv <- r$provenance; if (nrow(pv)) pv <- pv[, c("kind", "item", "provenance", "detail")]
+  add("Provenance", pv)
+  add("Text", data.frame(
+    section = c(t(paste0(K, "section.uncertainty")), t(paste0(K, "draft_label")), t(paste0(K, "user_text_label")), t(paste0(K, "section.recommendations"))),
+    text = c(r$text$uncertainty, r$text$trade_offs_draft, r$text$trade_offs_text, r$text$recommendations),
+    stringsAsFactors = FALSE), translate_headers = FALSE)
+  saver(wb, file, overwrite = TRUE)
+  invisible(file)
+}
