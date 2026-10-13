@@ -714,6 +714,17 @@
       "it": "Sfoglia e ripristina i salvataggi automatici recenti",
       "no": "Bla gjennom og gjenopprett nylige autolagringer",
       "el": "Περιήγηση και επαναφορά πρόσφατων αυτόματων αποθηκεύσεων"
+    },
+    "ui.sidebar.impact_assessment": {
+      "en": "Impact assessment",
+      "es": "Evaluación de impacto",
+      "fr": "Évaluation d'impact",
+      "de": "Wirkungsbewertung",
+      "lt": "Poveikio vertinimas",
+      "pt": "Avaliação de impacto",
+      "it": "Valutazione d'impatto",
+      "no": "Konsekvensvurdering",
+      "el": "Αξιολόγηση επιπτώσεων"
     }
   }
 }

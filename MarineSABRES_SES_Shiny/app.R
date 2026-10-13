@@ -105,6 +105,7 @@ OPTIONAL_MODULES <- c(
   "modules/response_module.R",           # Response measures (includes response_validation_server())
   "modules/valuation_calculator_module.R",  # WP5 WS-5 valuation calculator
   "modules/scenario_builder_module.R",   # Scenario Builder
+  "modules/impact_assessment_module.R",   # WP5 impact assessment (WS-6b)
   "modules/prepare_report_module.R",     # Report preparation (comprehensive)
   "modules/export_reports_module.R",     # Export & Reports (simple)
   "modules/local_storage_module.R",      # Local storage for saving to user's computer
@@ -515,6 +516,7 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
       bs4TabItem(tabName = "response_valuation", valuation_calculator_ui("valuation_calc", i18n)),
       bs4TabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
+      bs4TabItem(tabName = "response_impact", impact_assessment_ui("impact_assess", i18n)),
       bs4TabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
 
       # ==================== IMPORT DATA ====================
@@ -1060,6 +1062,7 @@ server <- function(input, output, session) {
   response_measures_server("resp_meas", project_data, session_i18n)
   valuation_calculator_server("valuation_calc", project_data, session_i18n)
   scenario_builder_server("scenario_builder", project_data, session_i18n)
+  impact_assessment_server("impact_assess", project_data, session_i18n, event_bus = event_bus)
   response_validation_server("resp_val", project_data, session_i18n)
 
   # Import Data module
