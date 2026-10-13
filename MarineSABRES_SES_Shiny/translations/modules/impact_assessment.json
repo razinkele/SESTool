@@ -1297,6 +1297,72 @@
       "it": "Cancella valutazione",
       "no": "Fjern vurdering",
       "el": "Εκκαθάριση αξιολόγησης"
+    },
+    "modules.impact_assessment.uncertainty_intro": {
+      "en": "Record the main uncertainties and how they could change the ratings. Re-scoring under alternative assumptions is not part of this version.",
+      "es": "Registre las principales incertidumbres y cómo podrían modificar las valoraciones. La reevaluación con supuestos alternativos no forma parte de esta versión.",
+      "fr": "Consignez les principales incertitudes et la manière dont elles pourraient modifier les évaluations. Le nouveau calcul selon d'autres hypothèses ne fait pas partie de cette version.",
+      "de": "Halten Sie die wichtigsten Unsicherheiten fest und wie sie die Bewertungen verändern könnten. Eine Neubewertung unter alternativen Annahmen ist nicht Teil dieser Version.",
+      "lt": "Užrašykite pagrindinius neapibrėžtumus ir kaip jie galėtų pakeisti vertinimus. Pakartotinis vertinimas pagal alternatyvias prielaidas į šią versiją neįtrauktas.",
+      "pt": "Registe as principais incertezas e como poderiam alterar as classificações. A reavaliação com pressupostos alternativos não faz parte desta versão.",
+      "it": "Registri le principali incertezze e il modo in cui potrebbero modificare le valutazioni. La rivalutazione con ipotesi alternative non fa parte di questa versione.",
+      "no": "Registrer de viktigste usikkerhetene og hvordan de kan endre vurderingene. Ny skåring under alternative forutsetninger er ikke en del av denne versjonen.",
+      "el": "Καταγράψτε τις κύριες αβεβαιότητες και πώς θα μπορούσαν να αλλάξουν τις βαθμολογίες. Η επαναβαθμολόγηση με εναλλακτικές παραδοχές δεν περιλαμβάνεται σε αυτή την έκδοση."
+    },
+    "modules.impact_assessment.trade_offs_intro": {
+      "en": "Describe where scenarios gain on one criterion at the expense of another, and where they reinforce each other.",
+      "es": "Describa dónde los escenarios ganan en un criterio a costa de otro, y dónde se refuerzan mutuamente.",
+      "fr": "Décrivez où les scénarios gagnent sur un critère au détriment d'un autre, et où ils se renforcent mutuellement.",
+      "de": "Beschreiben Sie, wo Szenarien bei einem Kriterium auf Kosten eines anderen gewinnen und wo sie sich gegenseitig verstärken.",
+      "lt": "Aprašykite, kur scenarijai laimi pagal vieną kriterijų kito sąskaita ir kur jie vienas kitą sustiprina.",
+      "pt": "Descreva onde os cenários ganham num critério à custa de outro e onde se reforçam mutuamente.",
+      "it": "Descriva dove gli scenari guadagnano su un criterio a scapito di un altro e dove si rafforzano a vicenda.",
+      "no": "Beskriv hvor scenariene vinner på ett kriterium på bekostning av et annet, og hvor de forsterker hverandre.",
+      "el": "Περιγράψτε πού τα σενάρια κερδίζουν ως προς ένα κριτήριο εις βάρος ενός άλλου και πού ενισχύουν το ένα το άλλο."
+    },
+    "modules.impact_assessment.auto_draft_heading": {
+      "en": "Draft narrative",
+      "es": "Borrador de narrativa",
+      "fr": "Brouillon de récit",
+      "de": "Entwurf der Beschreibung",
+      "lt": "Pasakojimo juodraštis",
+      "pt": "Rascunho da narrativa",
+      "it": "Bozza della narrazione",
+      "no": "Utkast til narrativ",
+      "el": "Προσχέδιο αφήγησης"
+    },
+    "modules.impact_assessment.arctic_revenue_heading": {
+      "en": "Published revenue by scenario (D5.2 Tables 2–8)",
+      "es": "Ingresos publicados por escenario (D5.2, tablas 2–8)",
+      "fr": "Revenus publiés par scénario (D5.2, tableaux 2–8)",
+      "de": "Veröffentlichte Einnahmen je Szenario (D5.2, Tabellen 2–8)",
+      "lt": "Paskelbtos pajamos pagal scenarijų (D5.2 2–8 lentelės)",
+      "pt": "Receitas publicadas por cenário (D5.2, quadros 2–8)",
+      "it": "Ricavi pubblicati per scenario (D5.2, tabelle 2–8)",
+      "no": "Publiserte inntekter per scenario (D5.2, tabell 2–8)",
+      "el": "Δημοσιευμένα έσοδα ανά σενάριο (D5.2, πίνακες 2–8)"
+    },
+    "modules.impact_assessment.arctic_revenue_note": {
+      "en": "Values are stored exactly as published and never recomputed; D5.2 itself notes inconsistencies with its scenario assumptions (partner question 2).",
+      "es": "Los valores se almacenan exactamente como se publicaron y nunca se recalculan; el propio D5.2 señala incoherencias con sus supuestos de escenario (pregunta 2 a los socios).",
+      "fr": "Les valeurs sont conservées exactement telles que publiées et ne sont jamais recalculées ; le D5.2 signale lui-même des incohérences avec ses hypothèses de scénario (question 2 aux partenaires).",
+      "de": "Die Werte werden genau wie veröffentlicht gespeichert und nie neu berechnet; D5.2 selbst weist auf Unstimmigkeiten mit seinen Szenarioannahmen hin (Partnerfrage 2).",
+      "lt": "Reikšmės saugomos tiksliai taip, kaip paskelbtos, ir niekada neperskaičiuojamos; pats D5.2 nurodo neatitikimų su savo scenarijų prielaidomis (partnerių klausimas 2).",
+      "pt": "Os valores são guardados exatamente como publicados e nunca são recalculados; o próprio D5.2 refere incoerências com os seus pressupostos de cenário (pergunta 2 aos parceiros).",
+      "it": "I valori sono conservati esattamente come pubblicati e non vengono mai ricalcolati; lo stesso D5.2 segnala incoerenze con le proprie ipotesi di scenario (domanda 2 ai partner).",
+      "no": "Verdiene lagres nøyaktig slik de er publisert og beregnes aldri på nytt; D5.2 påpeker selv uoverensstemmelser med sine scenarioforutsetninger (partnerspørsmål 2).",
+      "el": "Οι τιμές αποθηκεύονται ακριβώς όπως δημοσιεύθηκαν και δεν υπολογίζονται ποτέ εκ νέου· το ίδιο το D5.2 επισημαίνει ασυνέπειες με τις παραδοχές των σεναρίων του (ερώτημα 2 προς τους εταίρους)."
+    },
+    "modules.impact_assessment.arctic_feasibility_heading": {
+      "en": "Political feasibility (D5.2 Table 8)",
+      "es": "Viabilidad política (D5.2, tabla 8)",
+      "fr": "Faisabilité politique (D5.2, tableau 8)",
+      "de": "Politische Machbarkeit (D5.2, Tabelle 8)",
+      "lt": "Politinis įgyvendinamumas (D5.2 8 lentelė)",
+      "pt": "Viabilidade política (D5.2, quadro 8)",
+      "it": "Fattibilità politica (D5.2, tabella 8)",
+      "no": "Politisk gjennomførbarhet (D5.2, tabell 8)",
+      "el": "Πολιτική σκοπιμότητα (D5.2, πίνακας 8)"
     }
   }
 }

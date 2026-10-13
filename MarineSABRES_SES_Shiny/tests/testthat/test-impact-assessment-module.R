@@ -217,3 +217,27 @@ test_that("a user scenario reusing a reference code cannot receive reference tex
     expect_identical(impact_get_cell(rv$ia, "EE", "S1"), new_impact_cell())
   })
 })
+
+test_that("an Arctic project shows the read-only revenue table and feasibility cells on step 2", {
+  args <- srv(mk_project("Arctic Northeast Atlantic"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 2L; session$flushReact()
+    html <- as.character(output$step_body$html)
+    expect_match(html, "modules.impact_assessment.arctic_revenue_note", fixed = TRUE)
+    expect_match(html, "-arctic_revenue\"", fixed = TRUE)   # testServer namespaces as proxyN-
+    expect_identical(impact_scenario_codes(rv$ia), c("no_agreement", "partial_agreement", "full_agreement"))
+  })
+})
+
+test_that("steps 5 and 6 persist their text", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 5L; session$flushReact()
+    session$setInputs(unc_notes = "Compliance in ABNJ", save_uncertainty = 1); session$flushReact()
+    rv$step <- 6L; session$flushReact()
+    session$setInputs(to_text = "S4: equity vs cost", save_trade_offs = 1); session$flushReact()
+    ia <- get_impact_assessment(args$project_data_reactive())
+    expect_identical(ia$uncertainty$notes, "Compliance in ABNJ")
+    expect_identical(ia$trade_offs$text, "S4: equity vs cost")
+  })
+})

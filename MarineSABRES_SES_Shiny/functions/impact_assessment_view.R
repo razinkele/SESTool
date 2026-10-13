@@ -175,3 +175,31 @@ impact_reference_panel <- function(ref, is_ref_scenario, ns, i18n) {
     tags$small(class = "text-muted", ref$table),
     shiny::actionButton(ns("cell_copy_reference"), i18n$t("modules.impact_assessment.copy_reference"), class = "btn-outline-primary btn-sm ms-2"))
 }
+
+#' Arctic revenue rows, published display strings only (spec P3)
+impact_revenue_rows <- function(revenue) {
+  empty <- data.frame(country = character(), species = character(), landings_display = character(), price_display = character(),
+                      baseline = character(), no_agreement = character(), partial_agreement = character(), full_agreement = character(),
+                      stringsAsFactors = FALSE)
+  if (is.null(revenue) || length(revenue$countries) == 0) return(empty)
+  disp <- function(x) as.character(x[["display"]] %||% "")
+  rows <- lapply(revenue$countries, function(co) lapply(co$species, function(sp) {
+    data.frame(country = as.character(co$country), species = as.character(sp$species),
+               landings_display = as.character(sp$landings_display %||% ""), price_display = as.character(sp$price_display %||% ""),
+               baseline = disp(sp$baseline), no_agreement = disp(sp$no_agreement),
+               partial_agreement = disp(sp$partial_agreement), full_agreement = disp(sp$full_agreement),
+               stringsAsFactors = FALSE)
+  }))
+  do.call(rbind, c(list(empty), unlist(rows, recursive = FALSE)))
+}
+
+#' Political-feasibility reference cells (criterion PI) for a DA
+impact_feasibility_rows <- function(da, i18n) {
+  empty <- data.frame(scenario = character(), rating_text = character(), text = character(), stringsAsFactors = FALSE)
+  if (!nzchar(da)) return(empty)
+  rows <- lapply(impact_reference_scenarios(da), function(s) {
+    cl <- impact_reference_cell(da, "PI", s$code)
+    if (is.null(cl)) NULL else data.frame(scenario = s$code, rating_text = cl$rating_text, text = cl$text, stringsAsFactors = FALSE)
+  })
+  do.call(rbind, c(list(empty), Filter(Negate(is.null), rows)))
+}

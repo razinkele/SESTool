@@ -74,3 +74,21 @@ test_that("impact_reference_panel is NULL for a user scenario and shows the head
   expect_null(impact_reference_panel(ref, FALSE, shiny::NS("ia"), i18n))
   expect_match(as.character(impact_reference_panel(ref, TRUE, shiny::NS("ia"), i18n)), "modules.impact_assessment.reference_cell_heading", fixed = TRUE)
 })
+
+test_that("impact_revenue_rows shows the published Arctic displays verbatim and is empty elsewhere", {
+  rows <- impact_revenue_rows(impact_reference_revenue("arctic"))
+  expect_true(nrow(rows) > 0)
+  expect_true(all(c("country", "species", "baseline", "full_agreement") %in% names(rows)))
+  far <- rows[rows$country == "faroe_islands" & rows$species == "mackerel", ]
+  expect_identical(far$baseline, "$332.85 million")
+  expect_identical(far$full_agreement, "$285.6 million")
+  expect_identical(nrow(impact_revenue_rows(NULL)), 0L)
+})
+
+test_that("impact_feasibility_rows returns the Arctic Table 8 cells, the Macaronesia PI cells, and nothing without a DA", {
+  ar <- impact_feasibility_rows("arctic", i18n)
+  expect_identical(sort(ar$scenario), sort(c("no_agreement", "partial_agreement", "full_agreement")))
+  expect_true(all(nzchar(ar$text)))
+  expect_identical(nrow(impact_feasibility_rows("macaronesia", i18n)), 4L)
+  expect_identical(nrow(impact_feasibility_rows("", i18n)), 0L)
+})

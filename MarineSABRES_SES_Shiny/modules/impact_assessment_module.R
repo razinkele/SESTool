@@ -31,7 +31,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
 
     da <- reactive(wp5_da_for_project(project_data_reactive()))
     ref_status <- reactive(impact_reference_status(da()))
-    available_steps <- function() c(1L, 2L, 3L, 4L, 7L)   # grows: Part B adds 5-6
+    available_steps <- function() 1:7
 
     # Build the working copy from the project; a fresh one starts from the DA's
     # published scenarios (nothing is written until the user acts).
@@ -156,7 +156,8 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
               })),
             actionButton(ns("sc_add"), i18n$t("modules.impact_assessment.scenario_add"), icon = icon("plus"), class = "btn-success")
           ))
-        )
+        ),
+        arctic_panel()
       )
     }
     output$sc_table <- DT::renderDT({
@@ -345,6 +346,42 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
         removeModal(); show_cell_modal(rv$editing[["criterion"]], rv$editing[["scenario"]])
       }, error = notify_impact_error)
     })
+    # ---- Steps 5-6: uncertainty and trade-offs ------------------------------
+    step5_ui <- function() tagList(
+      p(class = "text-muted", i18n$t("modules.impact_assessment.uncertainty_intro")),
+      text_section_ui("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_", "save_uncertainty", rows = 6)
+    )
+    step6_ui <- function() tagList(
+      p(class = "text-muted", i18n$t("modules.impact_assessment.trade_offs_intro")),
+      if (nzchar(rv$ia$trade_offs$auto_draft %||% ""))
+        div(class = "alert alert-light border", strong(i18n$t("modules.impact_assessment.auto_draft_heading")), p(rv$ia$trade_offs$auto_draft)),
+      text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
+    )
+    observeEvent(input$save_uncertainty, save_section("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_"))
+    observeEvent(input$save_trade_offs, {
+      vals <- list(text = input$to_text %||% "", auto_draft = rv$ia$trade_offs$auto_draft %||% "")
+      if (isTRUE(try_commit(impact_set_section(rv$ia, "trade_offs", vals)))) {
+        showNotification(i18n$t("modules.impact_assessment.saved"), type = "message", duration = 3)
+      }
+    })
+
+    # ---- Arctic read-only reference panel (step 2); NULL for other DAs ------
+    arctic_panel <- function() {
+      rev <- impact_reference_revenue(da()); if (is.null(rev)) return(NULL)
+      feas <- impact_feasibility_rows(da(), i18n)
+      tagList(hr(), h5(i18n$t("modules.impact_assessment.arctic_revenue_heading"), " ", provenance_badge(rev$provenance, i18n)),
+        div(class = "alert alert-warning py-2", icon("exclamation-triangle"), " ", i18n$t("modules.impact_assessment.arctic_revenue_note"),
+            tags$small(class = "d-block text-muted", rev$data_quality_note)),
+        DT::DTOutput(ns("arctic_revenue")),
+        if (nrow(feas)) tagList(h6(i18n$t("modules.impact_assessment.arctic_feasibility_heading")),
+          tags$table(class = "table table-sm", tags$tbody(lapply(seq_len(nrow(feas)), function(i)
+            tags$tr(tags$td(feas$scenario[i]), tags$td(tags$b(feas$rating_text[i]), " ", feas$text[i])))))))
+    }
+    output$arctic_revenue <- DT::renderDT({
+      rows <- impact_revenue_rows(impact_reference_revenue(da()))
+      DT::datatable(rows, options = list(pageLength = 10, dom = "t"), rownames = FALSE)
+    })
+
     output$step_body <- renderUI({
       req(rv$ia)
       if (identical(ref_status(), "valuation_only")) {
@@ -356,7 +393,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
                                                  onclick = "Shiny.setInputValue('impact_nav_target', 'response_valuation', {priority: 'event'})"))
         ))
       }
-      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "4" = step4_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
+      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "4" = step4_ui(), "5" = step5_ui(), "6" = step6_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
     })
 
     # Navigation to the valuation calculator (Tuscan empty state)
