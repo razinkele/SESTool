@@ -146,3 +146,22 @@ get_allowed_graph_ops <- function(id, context = NULL) {
 
 # Auto-load on source (get_project_file() resolves the path from PROJECT_ROOT)
 .wp5_ops_autoload()
+
+#' WP5 demonstration-area key for a project
+#'
+#' Reads data$metadata$da_site (PIMS module) or the legacy metadata$da_site and
+#' maps it onto WP5_DA_CONTEXTS. Replaces the inline mapping that lived in
+#' response_module.R. "" when the project has no recognised DA.
+#' @param project Project list (may be NULL)
+#' @return "" or one of WP5_DA_CONTEXTS
+wp5_da_for_project <- function(project) {
+  if (is.null(project)) return("")
+  site <- project$data$metadata$da_site %||% project$metadata$da_site %||% NULL
+  if (is.null(site) || length(site) == 0) return("")
+  s <- tolower(paste(as.character(unlist(site)), collapse = " "))
+  if (!nzchar(trimws(s))) return("")
+  if (grepl("macaron", s)) return("macaronesia")
+  if (grepl("tuscan|toscan", s)) return("tuscan")
+  if (grepl("arctic|nordic|northeast atlantic", s)) return("arctic")
+  ""
+}

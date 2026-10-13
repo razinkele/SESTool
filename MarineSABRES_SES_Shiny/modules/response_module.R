@@ -991,13 +991,8 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       }
 
       pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
-      da <- if (is.null(pd)) NULL else (pd$data$metadata$da_site %||% pd$metadata$da_site %||% NULL)
-      da_lc <- if (is.null(da)) NULL else tolower(as.character(da))
-      da_key <- if (is.null(da_lc)) NULL
-                else if (grepl("macaron", da_lc)) "macaronesia"
-                else if (grepl("tuscan|toscan", da_lc)) "tuscan"
-                else if (grepl("arctic|nordic|northeast atlantic", da_lc)) "arctic"
-                else NULL
+      da_key <- wp5_da_for_project(pd)
+      if (!nzchar(da_key)) da_key <- NULL
 
       mechs <- if (is.null(da_key)) list() else tryCatch(get_mechanisms_for_da(da_key), error = function(e) list())
 

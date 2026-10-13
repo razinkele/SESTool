@@ -107,3 +107,18 @@ test_that("pathway_segment.pressure matches the app's Pressures terminology", {
   expect_equal(p$lt, "Spaudimas")    # app: "Spaudimai"; "Poveikis" means impact
   expect_equal(p$no, "Belastning")   # app: "Belastninger"
 })
+
+test_that("wp5_da_for_project maps DA_SITES values and free text to WP5_DA_CONTEXTS", {
+  mk <- function(site) { p <- create_empty_project("x"); p$data$metadata$da_site <- site; p }
+  expect_identical(wp5_da_for_project(mk("Macaronesia")), "macaronesia")
+  expect_identical(wp5_da_for_project(mk("Azores (Macaronesia)")), "macaronesia")
+  expect_identical(wp5_da_for_project(mk("Tuscan Archipelago")), "tuscan")
+  expect_identical(wp5_da_for_project(mk("Arcipelago Toscano")), "tuscan")
+  expect_identical(wp5_da_for_project(mk("Arctic Northeast Atlantic")), "arctic")
+  expect_identical(wp5_da_for_project(mk(list("Macaronesia"))), "macaronesia")
+  expect_identical(wp5_da_for_project(mk("Baltic Sea")), "")
+  expect_identical(wp5_da_for_project(mk(NULL)), "")
+  expect_identical(wp5_da_for_project(NULL), "")
+  legacy <- list(metadata = list(da_site = "Macaronesia"))
+  expect_identical(wp5_da_for_project(legacy), "macaronesia")
+})
