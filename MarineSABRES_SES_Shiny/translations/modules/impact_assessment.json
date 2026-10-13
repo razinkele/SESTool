@@ -1088,6 +1088,215 @@
       "it": "Aggiungete prima la pressione spostata come Pressione nell'inserimento dati ISA; crearla da qui non è supportato.",
       "no": "Legg først til den forflyttede påvirkningen som en Påvirkning i ISA-dataregistrering; å opprette den herfra støttes ikke.",
       "el": "Προσθέστε πρώτα τη μετατοπισμένη πίεση ως Πίεση στην Εισαγωγή δεδομένων ISA· η δημιουργία της από εδώ δεν υποστηρίζεται."
+    },
+    "modules.impact_assessment.matrix_intro": {
+      "en": "Rate each criterion under each scenario. Select a cell to open the editor; dashed outlines mark cells copied from the WP5 reference ratings.",
+      "es": "Valore cada criterio en cada escenario. Seleccione una celda para abrir el editor; los contornos discontinuos marcan las celdas copiadas de las valoraciones de referencia del WP5.",
+      "fr": "Évaluez chaque critère pour chaque scénario. Sélectionnez une cellule pour ouvrir l'éditeur ; les contours en pointillés signalent les cellules copiées des évaluations de référence du WP5.",
+      "de": "Bewerten Sie jedes Kriterium unter jedem Szenario. Wählen Sie eine Zelle, um den Editor zu öffnen; gestrichelte Umrandungen kennzeichnen aus den WP5-Referenzbewertungen kopierte Zellen.",
+      "lt": "Įvertinkite kiekvieną kriterijų pagal kiekvieną scenarijų. Pasirinkite langelį, kad atidarytumėte redaktorių; punktyrinis rėmelis žymi langelius, nukopijuotus iš WP5 etaloninių vertinimų.",
+      "pt": "Avalie cada critério em cada cenário. Selecione uma célula para abrir o editor; os contornos tracejados marcam as células copiadas das avaliações de referência do WP5.",
+      "it": "Valutate ogni criterio per ogni scenario. Selezionate una cella per aprire l'editor; i contorni tratteggiati indicano le celle copiate dalle valutazioni di riferimento del WP5.",
+      "no": "Vurder hvert kriterium under hvert scenario. Velg en celle for å åpne redigeringsvinduet; stiplede omriss markerer celler kopiert fra WP5-referansevurderingene.",
+      "el": "Αξιολογήστε κάθε κριτήριο σε κάθε σενάριο. Επιλέξτε ένα κελί για να ανοίξει ο επεξεργαστής· οι διακεκομμένες περιγραμμές επισημαίνουν κελιά που αντιγράφηκαν από τις αξιολογήσεις αναφοράς του WP5."
+    },
+    "modules.impact_assessment.cell_empty": {
+      "en": "not rated",
+      "es": "sin valorar",
+      "fr": "non évalué",
+      "de": "nicht bewertet",
+      "lt": "neįvertinta",
+      "pt": "não avaliado",
+      "it": "non valutato",
+      "no": "ikke vurdert",
+      "el": "μη αξιολογημένο"
+    },
+    "modules.impact_assessment.legend_glyph": {
+      "en": "↑ increase · ↓ decrease · ~ no change · ? uncertain",
+      "es": "↑ aumenta · ↓ disminuye · ~ sin cambio · ? incierto",
+      "fr": "↑ hausse · ↓ baisse · ~ sans changement · ? incertain",
+      "de": "↑ Zunahme · ↓ Abnahme · ~ keine Änderung · ? unsicher",
+      "lt": "↑ didėja · ↓ mažėja · ~ nekinta · ? neaišku",
+      "pt": "↑ aumenta · ↓ diminui · ~ sem alteração · ? incerto",
+      "it": "↑ aumenta · ↓ diminuisce · ~ nessun cambiamento · ? incerto",
+      "no": "↑ økning · ↓ nedgang · ~ ingen endring · ? usikkert",
+      "el": "↑ αύξηση · ↓ μείωση · ~ καμία αλλαγή · ? αβέβαιο"
+    },
+    "modules.impact_assessment.legend_fill": {
+      "en": "Fill intensity = magnitude",
+      "es": "Intensidad del relleno = magnitud",
+      "fr": "Intensité du remplissage = ampleur",
+      "de": "Füllintensität = Ausmaß",
+      "lt": "Užpildo intensyvumas = dydis",
+      "pt": "Intensidade do preenchimento = magnitude",
+      "it": "Intensità del riempimento = entità",
+      "no": "Fyllintensitet = omfang",
+      "el": "Ένταση γεμίσματος = μέγεθος"
+    },
+    "modules.impact_assessment.legend_hatch": {
+      "en": "Hatched = low confidence",
+      "es": "Rayado = confianza baja",
+      "fr": "Hachuré = confiance faible",
+      "de": "Schraffiert = geringe Konfidenz",
+      "lt": "Brūkšniuota = mažas patikimumas",
+      "pt": "Tracejado = confiança baixa",
+      "it": "Tratteggiato = bassa confidenza",
+      "no": "Skravert = lav tillit",
+      "el": "Διαγραμμισμένο = χαμηλή βεβαιότητα"
+    },
+    "modules.impact_assessment.not_set": {
+      "en": "— not set —",
+      "es": "— sin definir —",
+      "fr": "— non défini —",
+      "de": "— nicht gesetzt —",
+      "lt": "— nenustatyta —",
+      "pt": "— não definido —",
+      "it": "— non impostato —",
+      "no": "— ikke satt —",
+      "el": "— μη ορισμένο —"
+    },
+    "modules.impact_assessment.reference_cell_heading": {
+      "en": "WP5 reference rating (D5.2)",
+      "es": "Valoración de referencia del WP5 (D5.2)",
+      "fr": "Évaluation de référence du WP5 (D5.2)",
+      "de": "WP5-Referenzbewertung (D5.2)",
+      "lt": "WP5 etaloninis vertinimas (D5.2)",
+      "pt": "Avaliação de referência do WP5 (D5.2)",
+      "it": "Valutazione di riferimento del WP5 (D5.2)",
+      "no": "WP5-referansevurdering (D5.2)",
+      "el": "Αξιολόγηση αναφοράς WP5 (D5.2)"
+    },
+    "modules.impact_assessment.copy_reference": {
+      "en": "Copy into this cell",
+      "es": "Copiar en esta celda",
+      "fr": "Copier dans cette cellule",
+      "de": "In diese Zelle kopieren",
+      "lt": "Kopijuoti į šį langelį",
+      "pt": "Copiar para esta célula",
+      "it": "Copia in questa cella",
+      "no": "Kopier til denne cellen",
+      "el": "Αντιγραφή σε αυτό το κελί"
+    },
+    "modules.impact_assessment.cell_direction": {
+      "en": "Direction",
+      "es": "Dirección",
+      "fr": "Direction",
+      "de": "Richtung",
+      "lt": "Kryptis",
+      "pt": "Direção",
+      "it": "Direzione",
+      "no": "Retning",
+      "el": "Κατεύθυνση"
+    },
+    "modules.impact_assessment.cell_magnitude": {
+      "en": "Magnitude",
+      "es": "Magnitud",
+      "fr": "Ampleur",
+      "de": "Ausmaß",
+      "lt": "Dydis",
+      "pt": "Magnitude",
+      "it": "Entità",
+      "no": "Omfang",
+      "el": "Μέγεθος"
+    },
+    "modules.impact_assessment.cell_timing": {
+      "en": "Timing",
+      "es": "Plazo",
+      "fr": "Échéance",
+      "de": "Zeitrahmen",
+      "lt": "Laikas",
+      "pt": "Prazo",
+      "it": "Tempistica",
+      "no": "Tidsramme",
+      "el": "Χρονικό πλαίσιο"
+    },
+    "modules.impact_assessment.cell_confidence": {
+      "en": "Confidence",
+      "es": "Confianza",
+      "fr": "Confiance",
+      "de": "Konfidenz",
+      "lt": "Patikimumas",
+      "pt": "Confiança",
+      "it": "Confidenza",
+      "no": "Tillit",
+      "el": "Βεβαιότητα"
+    },
+    "modules.impact_assessment.cell_driver": {
+      "en": "Dominant uncertainty driver",
+      "es": "Principal factor de incertidumbre",
+      "fr": "Principal facteur d'incertitude",
+      "de": "Dominanter Unsicherheitsfaktor",
+      "lt": "Pagrindinis netikrumo veiksnys",
+      "pt": "Principal fator de incerteza",
+      "it": "Principale fattore di incertezza",
+      "no": "Dominerende usikkerhetsfaktor",
+      "el": "Κυρίαρχος παράγοντας αβεβαιότητας"
+    },
+    "modules.impact_assessment.cell_evidence": {
+      "en": "Evidence types",
+      "es": "Tipos de evidencia",
+      "fr": "Types de preuves",
+      "de": "Evidenztypen",
+      "lt": "Įrodymų tipai",
+      "pt": "Tipos de evidência",
+      "it": "Tipi di evidenza",
+      "no": "Typer evidens",
+      "el": "Τύποι τεκμηρίων"
+    },
+    "modules.impact_assessment.cell_rationale": {
+      "en": "Rationale",
+      "es": "Justificación",
+      "fr": "Justification",
+      "de": "Begründung",
+      "lt": "Pagrindimas",
+      "pt": "Justificação",
+      "it": "Motivazione",
+      "no": "Begrunnelse",
+      "el": "Αιτιολόγηση"
+    },
+    "modules.impact_assessment.cell_subdimensions": {
+      "en": "Sub-dimension notes",
+      "es": "Notas por subdimensión",
+      "fr": "Notes par sous-dimension",
+      "de": "Notizen zu Unterdimensionen",
+      "lt": "Poddimensijų pastabos",
+      "pt": "Notas por subdimensão",
+      "it": "Note per sottodimensione",
+      "no": "Notater per underdimensjon",
+      "el": "Σημειώσεις ανά υποδιάσταση"
+    },
+    "modules.impact_assessment.cell_indicators": {
+      "en": "Linked indicators",
+      "es": "Indicadores vinculados",
+      "fr": "Indicateurs liés",
+      "de": "Verknüpfte Indikatoren",
+      "lt": "Susieti rodikliai",
+      "pt": "Indicadores associados",
+      "it": "Indicatori collegati",
+      "no": "Tilknyttede indikatorer",
+      "el": "Συνδεδεμένοι δείκτες"
+    },
+    "modules.impact_assessment.cell_mechanisms": {
+      "en": "Linked financial mechanisms",
+      "es": "Mecanismos financieros vinculados",
+      "fr": "Mécanismes financiers liés",
+      "de": "Verknüpfte Finanzierungsmechanismen",
+      "lt": "Susieti finansiniai mechanizmai",
+      "pt": "Mecanismos financeiros associados",
+      "it": "Meccanismi finanziari collegati",
+      "no": "Tilknyttede finansieringsmekanismer",
+      "el": "Συνδεδεμένοι χρηματοδοτικοί μηχανισμοί"
+    },
+    "modules.impact_assessment.cell_clear": {
+      "en": "Clear rating",
+      "es": "Borrar valoración",
+      "fr": "Effacer l'évaluation",
+      "de": "Bewertung löschen",
+      "lt": "Išvalyti vertinimą",
+      "pt": "Limpar avaliação",
+      "it": "Cancella valutazione",
+      "no": "Fjern vurdering",
+      "el": "Εκκαθάριση αξιολόγησης"
     }
   }
 }

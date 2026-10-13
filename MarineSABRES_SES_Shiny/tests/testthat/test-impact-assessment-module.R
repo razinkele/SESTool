@@ -175,3 +175,45 @@ test_that("step 3 saves scope elements, indicators and the displacement answer; 
     expect_false(any(grepl("displacement_note_missing", as.character(output$step_body$html))))
   })
 })
+
+test_that("the cell modal saves a rating and the matrix reflects it; low confidence without a driver is listed as a problem", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 4L; session$flushReact()
+    session$setInputs(cell_EE_S2 = 1); session$flushReact()
+    expect_identical(rv$editing, c(criterion = "EE", scenario = "S2"))
+    session$setInputs(cell_direction = "increase", cell_magnitude = "moderate", cell_timing = "medium", cell_confidence = "low",
+                      cell_evidence = c("literature"), cell_driver = "", cell_rationale = "Corridor closure", cell_indicators = character(0),
+                      cell_mechanisms = character(0), cell_save = 1)
+    session$flushReact()
+    cl <- impact_get_cell(get_impact_assessment(args$project_data_reactive()), "EE", "S2")
+    expect_identical(cl$direction, "increase")
+    expect_match(as.character(output$step_body$html), "ia-fill-2 ia-dir-increase ia-conf-low", fixed = TRUE)
+    expect_match(as.character(output$step_body$html), "modules.impact_assessment.problem.driver_required", fixed = TRUE)
+  })
+})
+
+test_that("copy-from-reference fills a reference scenario cell once and reports cell_not_empty the second time", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 4L
+    session$setInputs(cell_EQ_S4 = 1); session$flushReact()
+    session$setInputs(cell_copy_reference = 1); session$flushReact()
+    cl <- impact_get_cell(rv$ia, "EQ", "S4")
+    expect_true(nzchar(cl$rationale)); expect_identical(cl$reference$provenance, "wp5_source")
+    session$setInputs(cell_copy_reference = 2); session$flushReact()   # must not crash; notification only
+    expect_identical(impact_get_cell(rv$ia, "EQ", "S4")$rationale, cl$rationale)
+  })
+})
+
+test_that("a user scenario reusing a reference code cannot receive reference text", {
+  args <- srv(mk_project(NULL))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    rv$ia$da <- "macaronesia"
+    commit(impact_add_scenario(rv$ia, new_impact_scenario("S1", "Mine")))
+    rv$step <- 4L; session$setInputs(cell_EE_S1 = 1); session$flushReact()
+    session$setInputs(cell_copy_reference = 1); session$flushReact()
+    expect_identical(impact_get_cell(rv$ia, "EE", "S1"), new_impact_cell())
+  })
+})

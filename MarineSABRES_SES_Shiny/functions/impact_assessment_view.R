@@ -115,3 +115,51 @@ impact_indicator_choices <- function(da, i18n) {
   if (!is.data.frame(rows) || nrow(rows) == 0) return(character(0))
   stats::setNames(as.character(rows$code), paste0(rows$name, " (", rows$code, ")"))
 }
+
+#' Arrow glyph for a direction code (empty for "")
+impact_direction_glyph <- function(direction) {
+  m <- c(increase = "\u2191", decrease = "\u2193", no_change = "~", uncertain = "?")
+  out <- unname(m[as.character(direction)]); out[is.na(out)] <- ""; out
+}
+
+#' Fill intensity for a magnitude code.
+#' toolbox_extension (spec P4): the ONLY ordinal->numeric map in the module;
+#' used for colour intensity, never for aggregation. incremental=1, moderate=2,
+#' substantial=3, anything else 0.
+impact_fill_level <- function(magnitude) {
+  m <- c(incremental = 1L, moderate = 2L, substantial = 3L)
+  out <- unname(m[as.character(magnitude)]); out[is.na(out)] <- 0L; out
+}
+
+impact_cell_css_class <- function(cell) {
+  cell <- .impact_fill_cell(cell)
+  paste("ia-cell", paste0("ia-fill-", impact_fill_level(cell$magnitude)),
+        paste0("ia-dir-", if (nzchar(cell$direction)) cell$direction else "none"),
+        paste0("ia-conf-", if (nzchar(cell$confidence)) cell$confidence else "none"))
+}
+
+#' The criterion x scenario matrix (step 4). Each cell is an actionLink.
+impact_matrix_table <- function(ia, i18n, ns) {
+  codes <- impact_scenario_codes(ia)
+  header <- tags$tr(tags$th(""), lapply(codes, function(cd) {
+    s <- ia$scenarios[[cd]]
+    tags$th(class = "text-center", cd, tags$br(), tags$small(s$name),
+            if (identical(ia$baseline_code, cd)) tags$span(class = "badge bg-secondary ms-1", i18n$t("modules.impact_assessment.baseline_label")))
+  }))
+  rows <- lapply(WP5_CRITERIA$code, function(cr) {
+    tags$tr(tags$th(wp5_vocab_label("criteria", cr, i18n)), lapply(codes, function(cd) {
+      cl <- impact_get_cell(ia, cr, cd)
+      has_ref <- length(cl$reference) > 0
+      label <- paste0(impact_direction_glyph(cl$direction), " ",
+                      if (nzchar(cl$magnitude)) wp5_vocab_label("magnitude", cl$magnitude, i18n) else "",
+                      if (nzchar(cl$confidence)) paste0(" (", wp5_vocab_label("confidence", cl$confidence, i18n), ")") else "")
+      tags$td(class = paste(impact_cell_css_class(cl), if (has_ref) "ia-ref"),
+              shiny::actionLink(ns(paste0("cell_", cr, "_", cd)), if (nzchar(trimws(label))) label else i18n$t("modules.impact_assessment.cell_empty"),
+                                class = "ia-cell-link d-block"))
+    }))
+  })
+  legend <- div(class = "small text-muted mt-2",
+    i18n$t("modules.impact_assessment.legend_glyph"), " \u00b7 ", i18n$t("modules.impact_assessment.legend_fill"), " ",
+    provenance_badge("toolbox_extension", i18n), " \u00b7 ", i18n$t("modules.impact_assessment.legend_hatch"))
+  tagList(tags$table(class = "table table-bordered ia-matrix", tags$thead(header), tags$tbody(rows)), legend)
+}

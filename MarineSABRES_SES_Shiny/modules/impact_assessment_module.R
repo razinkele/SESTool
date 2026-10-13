@@ -27,11 +27,11 @@ impact_assessment_ui <- function(id, i18n) {
 impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    rv <- reactiveValues(ia = NULL, step = 1L)
+    rv <- reactiveValues(ia = NULL, step = 1L, editing = NULL)
 
     da <- reactive(wp5_da_for_project(project_data_reactive()))
     ref_status <- reactive(impact_reference_status(da()))
-    available_steps <- function() c(1L, 2L, 3L, 7L)   # grows: Part B adds 4-6
+    available_steps <- function() c(1L, 2L, 3L, 4L, 7L)   # grows: Part B adds 5-6
 
     # Build the working copy from the project; a fresh one starts from the DA's
     # published scenarios (nothing is written until the user acts).
@@ -249,6 +249,106 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       }, error = notify_impact_error)
     })
 
+    # ---- Step 4: criterion x scenario matrix with a per-cell editor ----------
+    step4_ui <- function() {
+      problems <- impact_problem_messages(impact_step_problems(rv$ia, 4), i18n)
+      tagList(
+        p(class = "text-muted", i18n$t("modules.impact_assessment.matrix_intro")),
+        if (length(impact_scenario_codes(rv$ia)) == 0) div(class = "alert alert-warning py-2", i18n$t("modules.impact_assessment.problem.no_scenarios")),
+        impact_matrix_table(rv$ia, i18n, ns),
+        if (length(problems)) div(class = "alert alert-warning py-2", tags$ul(lapply(problems, tags$li)))
+      )
+    }
+    # One observer per cell link, registered once. The registry is a plain
+    # (non-reactive) environment: keeping it in reactiveValues would make this
+    # observer read and write the same reactive and re-trigger itself forever.
+    cell_obs <- new.env(parent = emptyenv())
+    observe({
+      req(rv$ia); codes <- impact_scenario_codes(rv$ia)
+      for (cr in WP5_CRITERIA$code) for (cd in codes) local({
+        id <- paste0("cell_", cr, "_", cd); cr_ <- cr; cd_ <- cd
+        if (!exists(id, envir = cell_obs, inherits = FALSE)) {
+          assign(id, observeEvent(input[[id]], {
+            rv$editing <- c(criterion = cr_, scenario = cd_)
+            show_cell_modal(cr_, cd_)
+          }, ignoreInit = TRUE), envir = cell_obs)
+        }
+      })
+    })
+    rubric_select <- function(id, vocab, key, selected, multiple = FALSE) {
+      choices <- stats::setNames(WP5_RUBRIC[[vocab]], wp5_vocab_label(vocab, WP5_RUBRIC[[vocab]], i18n))
+      if (!multiple) choices <- c(stats::setNames("", i18n$t("modules.impact_assessment.not_set")), choices)
+      selectizeInput(ns(id), i18n$t(key), choices = choices, selected = selected, multiple = multiple, width = "100%")
+    }
+    show_cell_modal <- function(cr, cd) {
+      cl <- impact_get_cell(rv$ia, cr, cd)
+      d <- da()
+      ref <- if (nzchar(d)) impact_reference_cell(d, cr, cd) else NULL
+      is_ref_scenario <- identical(rv$ia$scenarios[[cd]]$source, "wp5_reference")
+      subs <- WP5_CRITERION_SUBDIMENSIONS[[cr]] %||% character(0)
+      ind <- impact_indicator_suggestions(cr, d)
+      mech <- impact_mechanism_options(d, cd)
+      mech_labels <- if (nrow(mech)) paste0(mech$name, ifelse(is.na(mech$applicability), "", paste0(" \u2014 ", mech$applicability))) else character(0)
+      showModal(modalDialog(size = "l", easyClose = FALSE,
+        title = paste0(wp5_vocab_label("criteria", cr, i18n), " \u00d7 ", cd, " \u2014 ", rv$ia$scenarios[[cd]]$name),
+        if (!is.null(ref)) div(class = "alert alert-light border py-2",
+          strong(i18n$t("modules.impact_assessment.reference_cell_heading")), " ", provenance_badge(ref$provenance, i18n),
+          p(class = "mb-1", if (nzchar(ref$rating_text)) tags$b(ref$rating_text), " ", ref$text),
+          tags$small(class = "text-muted", ref$table),
+          if (is_ref_scenario) actionButton(ns("cell_copy_reference"), i18n$t("modules.impact_assessment.copy_reference"), class = "btn-outline-primary btn-sm ms-2")),
+        fluidRow(
+          column(6, rubric_select("cell_direction", "direction", "modules.impact_assessment.cell_direction", cl$direction),
+                    rubric_select("cell_magnitude", "magnitude", "modules.impact_assessment.cell_magnitude", cl$magnitude),
+                    rubric_select("cell_timing", "timing", "modules.impact_assessment.cell_timing", cl$timing)),
+          column(6, rubric_select("cell_confidence", "confidence", "modules.impact_assessment.cell_confidence", cl$confidence),
+                    rubric_select("cell_driver", "uncertainty_driver", "modules.impact_assessment.cell_driver", cl$uncertainty_driver),
+                    rubric_select("cell_evidence", "evidence", "modules.impact_assessment.cell_evidence", cl$evidence, multiple = TRUE))
+        ),
+        textAreaInput(ns("cell_rationale"), i18n$t("modules.impact_assessment.cell_rationale"), value = cl$rationale, rows = 3, width = "100%"),
+        if (length(subs)) tagList(h6(i18n$t("modules.impact_assessment.cell_subdimensions")),
+          lapply(subs, function(s) textInput(ns(paste0("cell_sub_", s)), wp5_vocab_label("subdimension", s, i18n), value = cl$subdimension_notes[[s]] %||% ""))),
+        selectizeInput(ns("cell_indicators"), i18n$t("modules.impact_assessment.cell_indicators"),
+                       choices = if (nrow(ind)) stats::setNames(ind$code, paste0(ind$name, " (", ind$code, ", ", wp5_vocab_label("indicator_role", ind$role, i18n), ")")) else character(0),
+                       selected = names(cl$indicator_roles), multiple = TRUE, width = "100%"),
+        selectizeInput(ns("cell_mechanisms"), i18n$t("modules.impact_assessment.cell_mechanisms"),
+                       choices = stats::setNames(mech$id, mech_labels), selected = cl$mechanism_ids, multiple = TRUE, width = "100%"),
+        footer = tagList(actionButton(ns("cell_clear"), i18n$t("modules.impact_assessment.cell_clear"), class = "btn-outline-danger"),
+                         modalButton(i18n$t("common.buttons.cancel")),
+                         actionButton(ns("cell_save"), i18n$t("modules.impact_assessment.save_section"), class = "btn-success"))
+      ))
+    }
+    cell_from_inputs <- function(cr, cd) {
+      cl <- impact_get_cell(rv$ia, cr, cd)
+      cl$direction <- input$cell_direction %||% ""; cl$magnitude <- input$cell_magnitude %||% ""
+      cl$timing <- input$cell_timing %||% ""; cl$confidence <- input$cell_confidence %||% ""
+      cl$uncertainty_driver <- input$cell_driver %||% ""; cl$evidence <- as.character(input$cell_evidence %||% character(0))
+      cl$rationale <- input$cell_rationale %||% ""
+      subs <- WP5_CRITERION_SUBDIMENSIONS[[cr]] %||% character(0)
+      notes <- setNames(lapply(subs, function(s) input[[paste0("cell_sub_", s)]] %||% ""), subs)
+      cl$subdimension_notes <- notes[vapply(notes, nzchar, logical(1))]
+      ind <- as.character(input$cell_indicators %||% character(0))
+      sugg <- impact_indicator_suggestions(cr, da())
+      cl$indicator_roles <- setNames(as.list(ifelse(ind %in% sugg$code, sugg$role[match(ind, sugg$code)], "supporting")), ind)
+      cl$mechanism_ids <- as.character(input$cell_mechanisms %||% character(0))
+      cl
+    }
+    observeEvent(input$cell_save, {
+      req(rv$editing); cr <- rv$editing[["criterion"]]; cd <- rv$editing[["scenario"]]
+      try_commit(impact_set_cell(rv$ia, cr, cd, cell_from_inputs(cr, cd)))
+      removeModal()
+    })
+    observeEvent(input$cell_clear, {
+      req(rv$editing)
+      try_commit(impact_set_cell(rv$ia, rv$editing[["criterion"]], rv$editing[["scenario"]], new_impact_cell()))
+      removeModal()
+    })
+    observeEvent(input$cell_copy_reference, {
+      req(rv$editing)
+      tryCatch({
+        commit(impact_copy_reference_cell(rv$ia, rv$editing[["criterion"]], rv$editing[["scenario"]]))
+        removeModal(); show_cell_modal(rv$editing[["criterion"]], rv$editing[["scenario"]])
+      }, error = notify_impact_error)
+    })
     output$step_body <- renderUI({
       req(rv$ia)
       if (identical(ref_status(), "valuation_only")) {
@@ -260,7 +360,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
                                                  onclick = "Shiny.setInputValue('impact_nav_target', 'response_valuation', {priority: 'event'})"))
         ))
       }
-      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
+      switch(as.character(rv$step), "1" = step1_ui(), "2" = step2_ui(), "3" = step3_ui(), "4" = step4_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
     })
 
     # Navigation to the valuation calculator (Tuscan empty state)
