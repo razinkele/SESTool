@@ -218,9 +218,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       debug_log("[AI ISA] Observer triggered\n")
 
-      # Only proceed if we don't already have elements and there's data to load
-      if (length(rv$elements$drivers) == 0 &&
-          length(rv$elements$activities) == 0) {
+      # Only proceed if we don't already have elements and there's data to load.
+      # The guard MUST be read inside isolate(): this observer rewrites
+      # rv$elements below (with fresh timestamps, so the value is never
+      # identical), and a reactive dependency on rv$elements made it
+      # re-trigger itself forever whenever the project had elements but no
+      # Drivers and no Activities. One such session froze the whole
+      # single-process Shiny Server on 2026-10-13 (laguna outage).
+      # Guard on every category so a run that fills only some categories
+      # cannot keep the guard TRUE either.
+      has_elements <- isolate(any(vapply(rv$elements, length, integer(1)) > 0))
+
+      if (!has_elements) {
 
         debug_log("[AI ISA] Elements are empty, checking for data\n")
 
@@ -2477,7 +2486,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # ========== ACTION HANDLERS ==========
     # Preview, save, start over, and element link handlers extracted to modules/ai_isa/action_handlers.R
-    setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus)
+    setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus,
+                          question_flow = QUESTION_FLOW)
 
     # ========== TEMPLATE HANDLERS ==========
     # Template loading handlers extracted to modules/ai_isa/template_handlers.R

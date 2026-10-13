@@ -48,7 +48,8 @@ pims_project_server <- function(id, project_data_reactive = NULL, i18n = NULL, e
 }
 
 cld_viz_ui <- function(id, i18n = NULL) minimal_ui(id)
-cld_viz_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL) {
+cld_viz_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL,
+                           user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 

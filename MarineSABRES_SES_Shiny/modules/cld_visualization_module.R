@@ -435,7 +435,9 @@ cld_viz_ui <- function(id, i18n) {
           )
         ),
 
-        # Edit Mode Controls
+        # Edit Mode Controls (hidden per user level: show_advanced_cld_controls)
+        div(
+        id = ns("advanced_edit_controls"),
         hr(style = "margin: 8px 0;"),
         h5(icon("edit"), " ", i18n$t("modules.cld.visualization.edit_mode"), style = "font-size: 14px; margin-bottom: 8px;"),
         div(
@@ -465,6 +467,7 @@ cld_viz_ui <- function(id, i18n) {
             tags$small(class = "text-muted", style = "display: block; margin-top: 4px;",
               i18n$t("modules.cld.visualization.merge_selected_hint"))
           )
+        )
         ),
 
         # Highlight Controls
@@ -557,11 +560,13 @@ cld_viz_ui <- function(id, i18n) {
 #' }
 #'
 #' @export
-cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
+                           user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # === REACTIVE VALUES ===
     rv <- reactiveValues(
+      edit_controls_visible = TRUE,
       nodes = NULL,
       edges = NULL,
       network_proxy = NULL,
@@ -575,6 +580,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       last_render_hash = NULL,  # Track last rendered network hash
       layout_render_trigger = 0  # Trigger to force re-render on layout changes
     )
+
+    # === USER LEVEL: show/hide edit-mode controls (show_advanced_cld_controls) ===
+    observe({
+      show <- if (is.null(user_level_reactive)) TRUE else
+        isTRUE(get_level_config(user_level_reactive())$show_advanced_cld_controls)
+      rv$edit_controls_visible <- show
+      shinyjs::toggle("advanced_edit_controls", condition = show)
+      if (!show && isTRUE(isolate(input$enable_manipulation))) {
+        shinyWidgets::updateMaterialSwitch(session, "enable_manipulation", value = FALSE)
+      }
+    })
 
     # === HELPER: Create network data signature ===
     # Uses digest for proper content-based hashing (not just row counts)
