@@ -1095,6 +1095,12 @@ server <- function(input, output, session) {
   # See functions/reactive_pipeline.R for implementation details.
   setup_reactive_pipeline(project_data, event_bus)
 
+  # ========== NAVIGATION REQUESTS ==========
+  # Modules ask to open another tab via event_bus$emit_navigation_request()
+  # (analysis recommendation links, impact wizard -> valuation calculator).
+  # Without this listener every such request is silently dropped.
+  setup_navigation_handler(event_bus, session)
+
   # ========== DASHBOARD ==========
   # Dashboard logic extracted to server/dashboard.R for better maintainability
 

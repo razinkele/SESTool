@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Navigation requests sent over the event bus now actually open the target tab. `setup_navigation_handler()` existed since the P3 refactor but was never called from `app.R`, so the "open valuation calculator" button in the impact assessment and the recommendation links in the Loops, Leverage and Decision Lens pages did nothing when clicked. Regression test: `tests/testthat/test-navigation-handler-wiring.R`.
+
 ## [1.25.0] - 2026-10-13
 
 Minor release: WP5 impact-assessment module (WS-6a data layer + WS-6b wizard). Projects that contain an assessment require 1.25.0 or later.
