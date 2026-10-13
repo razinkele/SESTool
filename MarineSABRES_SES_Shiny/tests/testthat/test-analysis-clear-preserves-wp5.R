@@ -42,8 +42,14 @@ test_that("reactive pipeline invalidation keeps scenarios and the impact assessm
       setup_reactive_pipeline(pd, bus)
     },
     {
-      bus$emit_cld_update("reactive_pipeline")
-      session$flushReact()
+      # Observer 1 warns "CLD regeneration failed" on this ISA-less fixture; not under test here.
+      expect_warning(
+        {
+          bus$emit_cld_update("reactive_pipeline")
+          session$flushReact()
+        },
+        "CLD regeneration failed"
+      )
       a <- pd()$data$analysis
       expect_null(a$loops)
       expect_identical(a$reason, "Data changed")
