@@ -450,6 +450,116 @@
       "it": "Quella sezione non esiste.",
       "no": "Den delen finnes ikke.",
       "el": "Αυτή η ενότητα δεν υπάρχει."
+    },
+    "modules.impact_assessment.field.focal_issue": {
+      "en": "Focal issue",
+      "es": "Cuestión central",
+      "fr": "Problématique centrale",
+      "de": "Zentrales Thema",
+      "lt": "Pagrindinis klausimas",
+      "pt": "Questão central",
+      "it": "Questione centrale",
+      "no": "Hovedspørsmål",
+      "el": "Κεντρικό ζήτημα"
+    },
+    "modules.impact_assessment.field.spatial_scope": {
+      "en": "Spatial scope",
+      "es": "Ámbito espacial",
+      "fr": "Portée spatiale",
+      "de": "Räumlicher Geltungsbereich",
+      "lt": "Erdvinė aprėptis",
+      "pt": "Âmbito espacial",
+      "it": "Ambito spaziale",
+      "no": "Geografisk omfang",
+      "el": "Χωρική εμβέλεια"
+    },
+    "modules.impact_assessment.field.time_horizon": {
+      "en": "Time horizon",
+      "es": "Horizonte temporal",
+      "fr": "Horizon temporel",
+      "de": "Zeithorizont",
+      "lt": "Laiko horizontas",
+      "pt": "Horizonte temporal",
+      "it": "Orizzonte temporale",
+      "no": "Tidshorisont",
+      "el": "Χρονικός ορίζοντας"
+    },
+    "modules.impact_assessment.field.stakeholders": {
+      "en": "Stakeholders involved",
+      "es": "Partes interesadas implicadas",
+      "fr": "Parties prenantes concernées",
+      "de": "Beteiligte Interessengruppen",
+      "lt": "Dalyvaujančios suinteresuotosios šalys",
+      "pt": "Partes interessadas envolvidas",
+      "it": "Portatori di interesse coinvolti",
+      "no": "Involverte interessenter",
+      "el": "Εμπλεκόμενοι ενδιαφερόμενοι φορείς"
+    },
+    "modules.impact_assessment.field.text": {
+      "en": "Text",
+      "es": "Texto",
+      "fr": "Texte",
+      "de": "Text",
+      "lt": "Tekstas",
+      "pt": "Texto",
+      "it": "Testo",
+      "no": "Tekst",
+      "el": "Κείμενο"
+    },
+    "modules.impact_assessment.field.notes": {
+      "en": "Notes",
+      "es": "Notas",
+      "fr": "Notes",
+      "de": "Notizen",
+      "lt": "Pastabos",
+      "pt": "Notas",
+      "it": "Note",
+      "no": "Notater",
+      "el": "Σημειώσεις"
+    },
+    "modules.impact_assessment.save_section": {
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Guardar",
+      "it": "Salva",
+      "no": "Lagre",
+      "el": "Αποθήκευση"
+    },
+    "modules.impact_assessment.saved": {
+      "en": "Saved to the project.",
+      "es": "Guardado en el proyecto.",
+      "fr": "Enregistré dans le projet.",
+      "de": "Im Projekt gespeichert.",
+      "lt": "Išsaugota projekte.",
+      "pt": "Guardado no projeto.",
+      "it": "Salvato nel progetto.",
+      "no": "Lagret i prosjektet.",
+      "el": "Αποθηκεύτηκε στο έργο."
+    },
+    "modules.impact_assessment.characterisation_intro": {
+      "en": "Describe the case: the focal issue, the area, the time horizon and the stakeholders. Some of this may already be in PIMS.",
+      "es": "Describa el caso: la cuestión central, la zona, el horizonte temporal y las partes interesadas. Parte de esta información puede estar ya en PIMS.",
+      "fr": "Décrivez le cas : la problématique centrale, la zone, l'horizon temporel et les parties prenantes. Une partie de ces informations figure peut-être déjà dans PIMS.",
+      "de": "Beschreiben Sie den Fall: das zentrale Thema, das Gebiet, den Zeithorizont und die Interessengruppen. Einiges davon steht möglicherweise bereits in PIMS.",
+      "lt": "Apibūdinkite atvejį: pagrindinį klausimą, teritoriją, laiko horizontą ir suinteresuotąsias šalis. Dalis šios informacijos gali jau būti PIMS sistemoje.",
+      "pt": "Descreva o caso: a questão central, a área, o horizonte temporal e as partes interessadas. Parte desta informação pode já constar do PIMS.",
+      "it": "Descrivete il caso: la questione centrale, l'area, l'orizzonte temporale e i portatori di interesse. Parte di queste informazioni potrebbe essere già presente in PIMS.",
+      "no": "Beskriv saken: hovedspørsmålet, området, tidshorisonten og interessentene. Noe av dette kan allerede finnes i PIMS.",
+      "el": "Περιγράψτε την περίπτωση: το κεντρικό ζήτημα, την περιοχή, τον χρονικό ορίζοντα και τους ενδιαφερόμενους φορείς. Μέρος αυτών των πληροφοριών μπορεί να υπάρχει ήδη στο PIMS."
+    },
+    "modules.impact_assessment.recommendations_intro": {
+      "en": "State what you recommend and why, drawing on the matrix, the uncertainty notes and the trade-offs.",
+      "es": "Indique qué recomienda y por qué, basándose en la matriz, las notas de incertidumbre y las compensaciones.",
+      "fr": "Indiquez ce que vous recommandez et pourquoi, en vous appuyant sur la matrice, les notes d'incertitude et les arbitrages.",
+      "de": "Geben Sie an, was Sie empfehlen und warum, gestützt auf die Matrix, die Unsicherheitsnotizen und die Zielkonflikte.",
+      "lt": "Nurodykite, ką rekomenduojate ir kodėl, remdamiesi matrica, neapibrėžtumo pastabomis ir kompromisais.",
+      "pt": "Indique o que recomenda e porquê, com base na matriz, nas notas de incerteza e nas compensações.",
+      "it": "Indicate cosa raccomandate e perché, basandovi sulla matrice, sulle note di incertezza e sui compromessi.",
+      "no": "Angi hva du anbefaler og hvorfor, basert på matrisen, usikkerhetsnotatene og avveiningene.",
+      "el": "Δηλώστε τι προτείνετε και γιατί, βασιζόμενοι στον πίνακα, στις σημειώσεις αβεβαιότητας και στους συμβιβασμούς."
     }
   }
 }

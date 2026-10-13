@@ -83,3 +83,28 @@ test_that("every modules.impact_assessment.* key used in the module exists in al
     for (l in langs) expect_true(nzchar(tr[[k]][[l]] %||% ""), label = paste(k, l))
   }
 })
+
+test_that("step 1 saves the four characterisation fields into the project", {
+  args <- srv(mk_project("Macaronesia"))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(char_focal_issue = "Migratory corridor", char_spatial_scope = "Azores EEZ",
+                      char_time_horizon = "2030", char_stakeholders = "Fishers; NGOs")
+    session$setInputs(save_characterisation = 1); session$flushReact()
+    ch <- get_impact_assessment(args$project_data_reactive())$characterisation
+    expect_identical(ch$focal_issue, "Migratory corridor")
+    expect_identical(ch$stakeholders, "Fishers; NGOs")
+    expect_identical(args$project_data_reactive()$min_app_version, WP5_IMPACT_MIN_APP_VERSION)
+  })
+})
+
+test_that("step 7 saves recommendations and prefills from the stored text", {
+  p <- set_impact_assessment(mk_project("Macaronesia"), impact_set_section(new_impact_assessment("macaronesia"), "recommendations", list(text = "Pilot S3")))
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact(); rv$step <- 7L; session$flushReact()
+    expect_match(as.character(output$step_body$html), "Pilot S3", fixed = TRUE)
+    session$setInputs(rec_text = "Pilot S3, then S4", save_recommendations = 1); session$flushReact()
+    expect_identical(get_impact_assessment(args$project_data_reactive())$recommendations$text, "Pilot S3, then S4")
+  })
+})

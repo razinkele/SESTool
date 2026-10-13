@@ -31,7 +31,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
 
     da <- reactive(wp5_da_for_project(project_data_reactive()))
     ref_status <- reactive(impact_reference_status(da()))
-    available_steps <- function() 1L   # grows: Task 4 adds 7; Task 5 adds 2; Task 6 adds 3; Part B adds 4-6
+    available_steps <- function() c(1L, 7L)   # grows: Task 5 adds 2; Task 6 adds 3; Part B adds 4-6
 
     # Build the working copy from the project; a fresh one starts from the DA's
     # published scenarios (nothing is written until the user acts).
@@ -84,7 +84,38 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(input$prev_step, { if (rv$step > 1L) rv$step <- rv$step - 1L })
     observeEvent(input$next_step, { if (rv$step < max(available_steps())) rv$step <- rv$step + 1L })
 
-    step1_ui <- function() div(i18n$t("modules.impact_assessment.step.characterisation"))  # replaced in Task 4
+    text_section_ui <- function(section, fields, prefix, save_id, rows = 3) {
+      vals <- rv$ia[[section]]
+      tagList(
+        lapply(fields, function(f) {
+          # i18n-ref: modules.impact_assessment.field.focal_issue
+          # i18n-ref: modules.impact_assessment.field.spatial_scope
+          # i18n-ref: modules.impact_assessment.field.time_horizon
+          # i18n-ref: modules.impact_assessment.field.stakeholders
+          # i18n-ref: modules.impact_assessment.field.text
+          # i18n-ref: modules.impact_assessment.field.notes
+          textAreaInput(ns(paste0(prefix, f)), i18n$t(paste0("modules.impact_assessment.field.", f)),
+                        value = vals[[f]] %||% "", rows = rows, width = "100%")
+        }),
+        actionButton(ns(save_id), i18n$t("modules.impact_assessment.save_section"), icon = icon("save"), class = "btn-success")
+      )
+    }
+    step1_ui <- function() tagList(
+      p(class = "text-muted", i18n$t("modules.impact_assessment.characterisation_intro")),
+      text_section_ui("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_", "save_characterisation", rows = 2)
+    )
+    step7_ui <- function() tagList(
+      p(class = "text-muted", i18n$t("modules.impact_assessment.recommendations_intro")),
+      text_section_ui("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_", "save_recommendations", rows = 6)
+    )
+    save_section <- function(section, fields, prefix) {
+      vals <- setNames(lapply(fields, function(f) input[[paste0(prefix, f)]] %||% ""), fields)
+      try_commit(impact_set_section(rv$ia, section, vals))
+      showNotification(i18n$t("modules.impact_assessment.saved"), type = "message", duration = 3)
+    }
+    observeEvent(input$save_characterisation, save_section("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_"))
+    observeEvent(input$save_recommendations, save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_"))
+
     output$step_body <- renderUI({
       req(rv$ia)
       if (identical(ref_status(), "valuation_only")) {
@@ -96,7 +127,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
                                                  onclick = "Shiny.setInputValue('impact_nav_target', 'response_valuation', {priority: 'event'})"))
         ))
       }
-      switch(as.character(rv$step), "1" = step1_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
+      switch(as.character(rv$step), "1" = step1_ui(), "7" = step7_ui(), div(i18n$t("modules.impact_assessment.step_not_available")))
     })
 
     # Navigation to the valuation calculator (Tuscan empty state)
