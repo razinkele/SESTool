@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.26.0] - 2026-10-14
+
+### Added (WP5 impact assessment — spec 2026-10-11 WS-6c)
+- Step 6 "Draft from the matrix": a deterministic, templated trade-off narrative built from the criterion × scenario matrix (per-scenario direction/magnitude/timing clauses, trade-offs and synergies between criteria, low-confidence cells with their uncertainty drivers, the displacement flag, unassessed-cell count). Available in all 9 languages, stored with the assessment, badged and labelled as a toolbox extension (not WP5 text). No free-generated prose.
+- Step 7 "Download Word report" / "Download Excel report": the full assessment following the seven D5.2 §1.4 steps, with Appendix A (linked financial mechanisms with provenance and source references) and Appendix B (provenance: every copied WP5 reference cell with its D5.2 table and reference-data version, whether it was edited since the copy, every linked mechanism/indicator that is not plain WP5 source, and every toolbox extension used). Excel keeps the provenance codes as data; Word shows the labels.
+- Not included: re-scoring under alternative assumptions (step 5 stays notes only) and one-page-per-mechanism fiches in the appendix (a summary table instead).
+
 ### Fixed
 - Navigation requests sent over the event bus now actually open the target tab. `setup_navigation_handler()` existed since the P3 refactor but was never called from `app.R`, so the "open valuation calculator" button in the impact assessment and the recommendation links in the Loops, Leverage and Decision Lens pages did nothing when clicked. Regression test: `tests/testthat/test-navigation-handler-wiring.R`.
 
