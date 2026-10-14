@@ -23,7 +23,7 @@ Out of scope for 7a: anything that writes to project data; mode C; the D5.3 "sam
 1. **Split 7a/7b** as above.
 2. **Operations table is advisory.** The user may run any mode. Picking an intervention type shows the operations the D5.3 matrix (`ops_xlsx`) and the EBM framework (`ops_ebm`) list for it, each tagged with its source, under a `provisional` badge, and shows a non-blocking amber note when the design uses an operation neither lists. Partner question Q4 remains open; the table stays replaceable reference data.
 3. **The existing page keeps its flow.** `analysis_intervention.R` gets two tabs: "Quick compare" (today's flow, unchanged) and "Designer (D5.3)".
-4. **Background execution.** Grids run in a separate R process via `callr::r_bg()`, so the single-process Shiny Server on laguna stays responsive for other users. Benchmarks on the laptop (reference BLAS): a 30-node sparse graph costs ~1 ms per configuration, so the 50,176-combination Tuscany grid takes ~50 s; synchronous execution would freeze every laguna session for that long.
+4. **Background execution.** Grids run in a separate R process via `callr::r_bg()`, so the single-process Shiny Server on laguna stays responsive for other users. Benchmarks on the laptop (reference BLAS): a 30-node sparse graph costs ~1-2 ms per configuration, so the 50,176-combination Tuscany grid takes ~1-2 min; synchronous execution would freeze every laguna session for that long.
 5. **Reuse the WS-1 operations table.** `data/wp5_intervention_ops.json` (30 interventions, `ops_xlsx`, `ops_ebm`, provisional `ebm_code`) and its loader in `functions/wp5_vocabulary.R` (`load_wp5_intervention_ops()`, `get_intervention_types()`, `get_allowed_graph_ops()`) already exist. No new reference file.
 
 ## 3. Core idea: one grid engine for modes A and B
@@ -61,8 +61,8 @@ These rules decide whether results match D5.3. They are normative for the implem
 ### 4.3 Grid size, cap and sampling
 
 - Grid size `N = prod(lengths(level_sets))`.
-- `N <= INTERVENTION_GRID_CAP` (50,000): exhaustive. Configurations are enumerated by index in chunks (mixed-radix decoding), never materialised all at once.
-- `N > cap`: a seeded random sample of 50,000 distinct indices, flagged `sampled = TRUE`; the page says the share is an estimate.
+- `N <= INTERVENTION_GRID_CAP` (65,536): exhaustive. Configurations are enumerated by index in chunks (mixed-radix decoding), never materialised all at once. The cap is chosen so D5.3's 50,176-combination Tuscany grid (4^5 × 7^2) is evaluated exhaustively and reported as an exact "x of N".
+- `N > cap`: a seeded random sample of 65,536 distinct indices, flagged `sampled = TRUE`; the page says the share is an estimate.
 - Chunk size: `INTERVENTION_CHUNK = 2048` configurations.
 
 ### 4.4 Batched evaluation
@@ -88,6 +88,7 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
 
 - If at least one attractor has every objective node ON: "pre-check passed".
 - If none does: "topology change needed", with a suggestion to add edges (mode B). The grid still runs if the user chooses.
+- The pre-check runs in the worker before the first chunk. Its status is reported through the progress channel at that point and shown above the progress bar while the grid runs, so a user who sees "topology change needed" can Cancel and add edges; otherwise the grid continues.
 - Graphs above `DYNAMICS_MAX_BOOLEAN_NODES` (20) are skipped by `boolean_model()`. The page then says "pre-check skipped (N nodes > 20)". The Tuscany network (28 nodes) is in this case.
 
 ### 4.7 Outputs
@@ -95,14 +96,14 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
 - Success share: "x of N (p%)", marked exhaustive or sampled.
 - Counts passing (a), (a and b), (a, b and c).
 - Top 20 configurations by rank: one column per variable edge with its ordinal label, plus a, b, c, d.
-- For a selected configuration: the existing final-state comparison (`ses_compare_interventions()`) plotted as on the Quick compare tab.
+- For a selected configuration: base vs configuration final (normalised) state, computed with the run's recorded initial state, steps and rescaling (§4.1) by `ses_config_final_state()`, so its signs agree with criteria (a)/(b); plotted like the Quick compare tab. (`ses_compare_interventions()` is not used here: it draws its own initial state, runs 500 unrescaled steps and stops at the divergence cutoff, so its signs can contradict the ranking.)
 - Run metadata: seed, steps, window, grid size, sampled flag, elapsed time.
 
 ## 5. Components
 
 | File | Kind | Contents |
 |---|---|---|
-| `functions/intervention_designer.R` | new, pure (no Shiny) | `ses_add_edges()`, `ses_self_loop_candidates()`, `ses_design_matrix()`, `ses_intervention_grid()`, `ses_grid_decode()`, `ses_grid_evaluate()`, `ses_is_stable_attractor()`, `rank_simplest()`, `ses_boolean_precheck()`, `ses_evidence_prior_range()`, `ses_run_design()` (the whole pipeline, called by the worker) |
+| `functions/intervention_designer.R` | new, pure (no Shiny) | `ses_add_edges()`, `ses_self_loop_candidates()`, `ses_design_matrix()`, `ses_intervention_grid()`, `ses_grid_decode()`, `ses_grid_evaluate()`, `ses_is_stable_attractor()`, `rank_simplest()`, `ses_boolean_precheck()`, `ses_evidence_prior_range()`, `ses_config_final_state()` (comparison plot), `ses_run_design()` (the whole pipeline, called by the worker) |
 | `functions/intervention_designer_job.R` | new | `designer_job_start(payload)`, `designer_job_poll(job)`, `designer_job_cancel(job)`; wraps `callr::r_bg()`; progress through a temp file |
 | `modules/intervention_designer_module.R` | new sub-module | `intervention_designer_ui(id, i18n)`, `intervention_designer_server(id, project_data_reactive, i18n, event_bus = NULL)` |
 | `modules/analysis_intervention.R` | changed | wraps the existing UI in a `tabsetPanel`: "Quick compare" + "Designer (D5.3)"; mounts the sub-module |
@@ -111,7 +112,7 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
 | `translations/modules/intervention_designer.json` | new | UI chrome + labels for the 30 intervention types, 9 languages |
 | `deployment/required_packages.R`, `DESCRIPTION` | changed | add `callr` (already installed locally and on laguna, 3.7.6) |
 
-**Worker contract.** The payload is a plain list: base matrix (with dimnames), node types, the design (new node name or NULL, variable edges with level sets), objective and also-sustain node names, seed, steps, window, cap, chunk, top-k, and the absolute path of `functions/intervention_designer.R`. The worker sources only that file and `library(Matrix)`, runs `ses_run_design()`, and writes progress (`done`, `total`) to a temp file after each chunk. The result is a plain list (no Shiny objects).
+**Worker contract.** The payload is a plain list: base matrix (with dimnames), node types, the design (new node name or NULL, variable edges with level sets), objective and also-sustain node names, seed, steps, window, cap, chunk, top-k, and the absolute path of `functions/intervention_designer.R`. The worker sources only that file and `library(Matrix)`, runs `ses_run_design()`, and writes progress (`done`, `total`, and the Boolean pre-check status once known) to a temp file: once after the pre-check, then after each chunk and during the stability checks. The result is a plain list (no Shiny objects) that includes the shared initial state `x0`. Worker errors and timeouts come back as an error state with a reason (`engine` / `timeout`); the raw message is only logged.
 
 ## 6. Designer tab: user flow and data flow
 
@@ -122,9 +123,9 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
    - "Add intervention node": pick target nodes (outgoing) and indicator nodes (incoming).
    - "Add edge between existing nodes": pick from and to; a "Self-loop" shortcut lists Marine Processes & Functioning nodes.
    - Each variable edge is a table row: from, to, minimum level, maximum level, remove. A per-row "sign rule" shortcut sets the range to ≤ 0 or ≥ 0.
-   - New edges between existing nodes are checked with `validate_connection()` (`functions/dapsiwrm_connection_rules.R`). A rule violation shows the validator's message as a warning and is still allowed.
+   - New edges between existing nodes are checked with `validate_connection_with_feedback()` (`functions/dapsiwrm_connection_rules.R`). A rule violation shows a translated warning naming the edge (the validator's English message is not shown) and is still allowed.
 3. **Objectives.** Objective nodes (required); also-sustain nodes (default all Goods & Benefits).
-4. **Run.** A line shows "N combinations — exhaustive" or "N combinations — sampled 50,000". Run is disabled with a reason when the design has no variable edge, an empty level range, or no objective.
+4. **Run.** A line shows "N combinations — exhaustive" or "N combinations — sampled 65,536". Run is disabled with a reason when the design has no variable edge, an edge that no longer matches the CLD, an empty level range, or no objective.
 
 **Right column:** pre-check result, then a progress bar with Cancel while the job runs, then the outputs of §4.7. Selecting a row of the top-20 table draws its final-state comparison.
 
@@ -145,7 +146,7 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
 - **Equivalence:** `ses_grid_evaluate()` equals a per-configuration reference loop on random small designs (modes A, B and combined).
 - **D5.3 fixture:** the Tuscany "additional moorings" structure built from the edges D5.3 describes in text (C§4.3; FIN:1461-1585), with the P. oceanica self-loop. Asserts a non-zero success share with a strong self-loop and a higher share than without the self-loop (D5.3's qualitative finding, FIN:1513-1558). Exact percentages are not asserted: D5.3's "before" graph exists only as a figure, and `data/TuscanySES.xlsx` is a different version (28 nodes, anchoring folded into "Marine traffic (including anchoring)", no Boat moorings → P. oceanica edge).
 - **Realistic size:** a run on `data/TuscanySES.xlsx` with a 2,000-configuration design completes and returns well-formed results (no timing assertion).
-- `test-intervention-designer-job.R`: start, poll and collect on a tiny design; cancel kills the process.
+- `test-intervention-designer-job.R`: start, poll and collect on a tiny design; cancel kills the process; a running poll returns the pre-check status. Boolean pre-check tests that need BoolNet use `skip_if_not_installed("BoolNet")` (CI has no BoolNet; laguna does).
 - `test-intervention-designer-module.R`: UI renders and namespaces IDs; `testServer()` behaviour test drives a tiny design to results with the job helpers stubbed (real server re-bound from `.GlobalEnv`, per `CLAUDE.md`). Existing `analysis_intervention` tests keep passing.
 - i18n: `scripts/_i18n_audit.py` reports missing = 0, hardcoded = 0.
 
@@ -154,4 +155,4 @@ Before the grid runs, `ses_boolean_precheck()` builds the signed matrix with eve
 - Q4: authoritative operations table, per-DA matrices, definitions of the undefined rows (C§0.3, C§5.6).
 - Mode C and "Apply to project" (7b).
 - New-node one-step delay (FIN:1273): documented in help; a "same-step" option is a later decision.
-- Performance: if laguna users need grids above 50,000, a compiled inner loop (Rcpp) is the next step; not needed for D5.3's published grids.
+- Performance: if laguna users need grids above 65,536 (the cap, chosen so D5.3's 50,176-combination Tuscany grid stays exhaustive), a compiled inner loop (Rcpp) is the next step; not needed for D5.3's published grids.

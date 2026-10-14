@@ -17,7 +17,7 @@
   `"C:/Program Files/R/R-4.4.1/bin/Rscript.exe" -e ".libPaths(c('C:/Users/arturas.baziukas/AppData/Local/R/win-library/4.4', .libPaths())); testthat::test_dir('tests/testthat', filter='^<name>$', stop_on_failure=FALSE)"` where `<name>` is the test file name without `test-` and `.R`.
 - `git commit -F -` does not work from the PowerShell tool; write the message to a scratch file and use `-F <file>`. Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
 - Levels: `INTERVENTION_GRID_LEVELS = c(-1, -0.5, -0.25, 0, 0.25, 0.5, 1)`; 0 = edge absent.
-- Cap: `INTERVENTION_GRID_CAP = 50000`; above it, a seeded sample of 50,000 distinct indices.
+- Cap: `INTERVENTION_GRID_CAP = 65536`; above it, a seeded sample of 65,536 distinct indices. The cap is chosen so D5.3's 50,176-combination Tuscany grid (4^5 × 7^2) stays exhaustive.
 - Steps 1000, window 100 (last 100 steps), rescale every 10 steps by the L1 norm.
 - Criterion (a)/(b): strictly `> 0` at **each** of the last 100 steps (not a sign product).
 - Criterion (c): all eigenvalues of `diag(rowSums(A)) - A` have `abs(Im) <= 1e-9`.
@@ -35,9 +35,10 @@
 
 1. **Node labels with punctuation** ("P. oceanica extension", "Marine traffic (including anchoring)") are matrix dimnames and Boolean rule names; the pipeline must work with them. Pinned in Task 5 (fixture uses such labels) and Task 4 (pre-check with punctuated labels).
 2. **Renaming the intervention after adding its edges** must carry the edges to the new name, not leave them pointing at the old one. Pinned in Task 8 (edges stored with a placeholder, substituted at run time).
-3. **The network changes after a run.** The comparison plot for a selected row must use the network the run used (`result$base`), not the current one. Pinned in Task 8.
-4. **Very large grids** (above 2^31 combinations, e.g. 12 edges × 7 levels) must sample 50,000 distinct indices without integer overflow. Pinned in Task 1.
-5. **A failing worker** (engine error, crash, timeout) must show a translated error and re-enable Run. Pinned in Task 6 (job returns an error state) and Task 8 (module resets).
+3. **The network changes after a run.** The comparison plot for a selected row must use the network, initial state and steps the run used (`result$base`, `result$x0`, `result$steps`, through `ses_config_final_state()`), not the current network, and its signs must agree with criterion (a). Pinned in Task 5 (`ses_config_final_state()` gives every objective > 0 for top rows with `a = TRUE`) and Task 8 (the plot is built from the stored run after the network changes).
+4. **Very large grids** (above 2^31 combinations, e.g. 12 edges × 7 levels) must sample 65,536 distinct indices without integer overflow, while D5.3's 50,176-combination grid stays exhaustive. Pinned in Task 1.
+5. **A failing worker** (engine error, crash, timeout) must show a translated error through `format_user_error()` (never the raw worker text) and re-enable Run. Pinned in Task 6 (the job returns an error state with `reason = "engine"` or `"timeout"`) and Task 8 (the module resets; the test asserts the raw text is kept only in `rv$error_detail` and does not appear in `rv$error`).
+6. **The Boolean pre-check is visible before the grid result.** Its status is reported through the progress callback before the first chunk and shown above the progress bar while the job runs, so the user can Cancel on "topology change needed". Pinned in Task 5 (the first progress call carries the status), Task 6 (poll returns it while running) and Task 8 (the running card shows it above the bar).
 
 ---
 
@@ -74,7 +75,7 @@ LV <- c(-1, -0.5, -0.25, 0, 0.25, 0.5, 1)
 
 test_that("constants match the spec", {
   expect_equal(INTERVENTION_GRID_LEVELS, LV)
-  expect_equal(INTERVENTION_GRID_CAP, 50000)
+  expect_equal(INTERVENTION_GRID_CAP, 65536)
   expect_equal(INTERVENTION_N_STEPS, 1000L)
   expect_equal(INTERVENTION_WINDOW, 100L)
 })
@@ -88,20 +89,28 @@ test_that("level sets come from min/max ranges", {
 })
 
 test_that("grid size, exhaustive vs sampled", {
-  g <- ses_intervention_grid(list(1:7, 1:4), cap = 50000, seed = 1)
+  g <- ses_intervention_grid(list(1:7, 1:4), cap = 65536, seed = 1)
   expect_equal(g$n_total, 28); expect_false(g$sampled); expect_null(g$indices); expect_equal(g$n_eval, 28)
-  g2 <- ses_intervention_grid(rep(list(1:7), 6), cap = 50000, seed = 1)   # 117,649
-  expect_true(g2$sampled); expect_equal(g2$n_eval, 50000)
-  expect_equal(length(unique(g2$indices)), 50000L)
+  g2 <- ses_intervention_grid(rep(list(1:7), 6), cap = 65536, seed = 1)   # 117,649
+  expect_true(g2$sampled); expect_equal(g2$n_eval, 65536)
+  expect_equal(length(unique(g2$indices)), 65536L)
   expect_true(all(g2$indices >= 1 & g2$indices <= 117649))
   expect_false(is.unsorted(g2$indices))
 })
 
+test_that("D5.3's 50,176-combination Tuscany grid is exhaustive under the cap", {
+  g <- ses_intervention_grid(c(rep(list(1:4), 5), rep(list(1:7), 2)), cap = INTERVENTION_GRID_CAP, seed = 1)
+  expect_equal(g$n_total, 50176)
+  expect_false(g$sampled)
+  expect_equal(g$n_eval, 50176)
+  expect_null(g$indices)
+})
+
 test_that("grids above 2^31 sample without overflow (review focus 4)", {
-  g <- ses_intervention_grid(rep(list(LV), 12), cap = 50000, seed = 7)     # 7^12 = 13.8e9
+  g <- ses_intervention_grid(rep(list(LV), 12), cap = 65536, seed = 7)     # 7^12 = 13.8e9
   expect_equal(g$n_total, 7^12)
   expect_true(g$sampled)
-  expect_equal(length(unique(g$indices)), 50000L)
+  expect_equal(length(unique(g$indices)), 65536L)
   expect_true(max(g$indices) <= 7^12 && min(g$indices) >= 1)
   d <- ses_grid_decode(g$indices[1:5], rep(list(LV), 12))
   expect_equal(dim(d), c(12L, 5L))
@@ -122,10 +131,10 @@ test_that("mixed-radix decoding enumerates every combination once, edge 1 fastes
 
 test_that("seeded sampling is reproducible and leaves the global RNG alone", {
   set.seed(99); before <- runif(1); set.seed(99)
-  a <- ses_intervention_grid(rep(list(1:7), 6), cap = 50000, seed = 3)$indices
+  a <- ses_intervention_grid(rep(list(1:7), 6), cap = 65536, seed = 3)$indices
   after <- runif(1)
   expect_equal(before, after)
-  b <- ses_intervention_grid(rep(list(1:7), 6), cap = 50000, seed = 3)$indices
+  b <- ses_intervention_grid(rep(list(1:7), 6), cap = 65536, seed = 3)$indices
   expect_identical(a, b)
 })
 
@@ -163,7 +172,7 @@ Append to `constants.R`:
 # ============================================================================
 # D5.3 ordinal grid (C§5.2): strong/medium/weak negative, none, weak/medium/strong positive.
 INTERVENTION_GRID_LEVELS <- c(-1, -0.5, -0.25, 0, 0.25, 0.5, 1)
-INTERVENTION_GRID_CAP <- 50000          # exhaustive up to this; seeded sample above
+INTERVENTION_GRID_CAP <- 65536          # exhaustive up to this (keeps D5.3's 50,176 Tuscany grid exhaustive); seeded sample above
 INTERVENTION_CHUNK <- 2048L             # configurations stepped together
 INTERVENTION_N_STEPS <- 1000L           # D5.3 FIN:1198
 INTERVENTION_WINDOW <- 100L             # objective judged over the last 100 steps
@@ -310,7 +319,7 @@ git -C C:/Users/arturas.baziukas/wt-ws7a commit -F <msgfile>   # "feat(wp5): WS-
   - `ses_apply_config(dm, levels)` → numeric matrix with `levels` written into `dm$cells`.
   - `ses_add_edges(mat, edges_df)` → matrix with `edges_df$weight` written at (`from`, `to`); errors on unknown nodes.
   - `ses_self_loop_candidates(labels, types)` → labels whose type is `"Marine Processes & Functioning"`.
-  - `ses_check_new_edge(from_type, to_type)` → `NULL` or a character warning (main process only).
+  - `ses_check_new_edge(from_type, to_type)` → `TRUE` when the DAPSIWRM transition is non-standard or invalid, else `FALSE` (main process only; the module builds the translated warning, the validator's English text is never shown).
   - `ses_level_code(x)` → character codes `strong_neg medium_neg weak_neg none weak_pos medium_pos strong_pos`.
 
 - [ ] **Step 1: Write the failing tests**
@@ -380,10 +389,10 @@ test_that("self-loop candidates are Marine Processes & Functioning nodes", {
     c("Activities", "Marine Processes & Functioning", "Goods & Benefits")), "b")
 })
 
-test_that("new-edge check returns a warning only for non-standard transitions", {
+test_that("new-edge check flags only non-standard transitions", {
   skip_if_not(exists("validate_connection_with_feedback", mode = "function"))
-  expect_null(ses_check_new_edge("Drivers", "Activities"))
-  expect_type(ses_check_new_edge("Goods & Benefits", "Pressures"), "character")
+  expect_false(ses_check_new_edge("Drivers", "Activities"))
+  expect_true(ses_check_new_edge("Goods & Benefits", "Pressures"))
 })
 
 test_that("level codes", {
@@ -466,11 +475,13 @@ ses_self_loop_candidates <- function(labels, types) {
 }
 
 #' DAPSIWRM check for a new edge between existing nodes (main process only).
-#' @return NULL when the transition is standard, else the validator's message
+#' Returns a logical so the caller can build a translated warning; the
+#' validator's own message is untranslated English and is not shown.
+#' @return TRUE when the transition is non-standard or invalid, else FALSE
 ses_check_new_edge <- function(from_type, to_type) {
-  if (!exists("validate_connection_with_feedback", mode = "function")) return(NULL)
+  if (!exists("validate_connection_with_feedback", mode = "function")) return(FALSE)
   fb <- validate_connection_with_feedback(from_type, to_type, strict = FALSE)
-  if (isTRUE(fb$warning) || !isTRUE(fb$valid)) fb$message else NULL
+  isTRUE(fb$warning) || !isTRUE(fb$valid)
 }
 
 #' Ordinal code of a level (labels live in translations, key suffix level.<code>).
@@ -534,7 +545,7 @@ test_that("batched evaluation equals the per-configuration reference (modes A, B
     dm <- ses_design_matrix(rd$base, rd$design, LV)
     n <- nrow(dm$matrix)
     x0 <- c(runif(nrow(rd$base)), if (case[1]) 0.5)
-    g <- ses_intervention_grid(dm$level_sets, cap = 50000, seed = 1)
+    g <- ses_intervention_grid(dm$level_sets, cap = 65536, seed = 1)
     idx <- seq_len(min(g$n_eval, 300))
     cfg <- ses_grid_decode(idx, dm$level_sets)
     got <- ses_grid_evaluate(dm, cfg, objective_idx = 1L, sustain_idx = c(2L, 5L), x0 = x0,
@@ -641,9 +652,9 @@ Append:
 
 ```r
 test_that("stability: complex Laplacian eigenvalues mean unstable", {
-  rot <- matrix(c(0, 1, -1, 0), 2, 2)                 # L = -rot has eigenvalues ±i
-  expect_false(ses_is_stable_attractor(rot))
-  sym <- matrix(c(0, 0.5, 0.5, 0), 2, 2)
+  cyc <- matrix(0, 3, 3); cyc[1, 2] <- cyc[2, 3] <- cyc[3, 1] <- 1   # directed 3-cycle: L = I - P, eigenvalues 0 and 1.5 ± 0.866i
+  expect_false(ses_is_stable_attractor(cyc))
+  sym <- matrix(c(0, 0.5, 0.5, 0), 2, 2)              # symmetric matrix -> symmetric Laplacian, real eigenvalues
   expect_true(ses_is_stable_attractor(sym))
 })
 
@@ -656,12 +667,18 @@ test_that("rank_simplest orders by a, b, c desc then d asc, ties keep grid order
   expect_equal(rank_simplest(df)$index, c(5L, 4L, 1L, 6L, 2L, 3L))
 })
 
-test_that("Boolean pre-check: passed, topology change needed, skipped (review focus 1)", {
+precheck_fixture <- function() {
   nm <- c("Act. (x)", "P. oceanica extension")
   base <- matrix(0, 2, 2, dimnames = list(nm, nm))
   dm_ok <- ses_design_matrix(base, list(new_node = "IV", edges = data.frame(
     from = c("IV", "P. oceanica extension"), to = c("P. oceanica extension", "IV"),
     kind = "intervention", min_level = c(0, 0), max_level = c(1, 1))), LV)
+  list(base = base, dm_ok = dm_ok)
+}
+
+test_that("Boolean pre-check: passed and topology change needed (review focus 1)", {
+  skip_if_not_installed("BoolNet")                          # CI has no BoolNet; laguna does
+  fx <- precheck_fixture(); base <- fx$base; dm_ok <- fx$dm_ok
   pc <- ses_boolean_precheck(dm_ok, objective_idx = 2L, max_nodes = 20L)
   expect_equal(pc$status, "passed")
   expect_gte(pc$n_desirable, 1L)
@@ -672,8 +689,13 @@ test_that("Boolean pre-check: passed, topology change needed, skipped (review fo
     from = "P. oceanica extension", to = "P. oceanica extension", kind = "context",
     min_level = -1, max_level = -0.25)), LV)
   expect_equal(ses_boolean_precheck(dm_bad, 2L, max_nodes = 20L)$status, "topology_change_needed")
+})
 
-  expect_equal(ses_boolean_precheck(dm_ok, 2L, max_nodes = 2L)$status, "skipped")
+test_that("Boolean pre-check: skipped when the network exceeds max_nodes (no BoolNet needed)", {
+  dm_ok <- precheck_fixture()$dm_ok                         # 3 nodes: 2 base + IV
+  pc <- ses_boolean_precheck(dm_ok, 2L, max_nodes = nrow(dm_ok$matrix) - 1L)
+  expect_equal(pc$status, "skipped")                        # early return, before boolean_model()
+  expect_equal(pc$n_nodes, 3L)
 })
 ```
 
@@ -721,7 +743,7 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
 }
 ```
 
-- [ ] **Step 4: Run to verify pass** — filter `^intervention-designer$`; all PASS.
+- [ ] **Step 4: Run to verify pass** — filter `^intervention-designer$`; all PASS. Without BoolNet (as on CI) the "passed and topology change needed" test is skipped, matching the existing `skip_if_not_installed("BoolNet")` pattern in `test-ses-dynamics.R`; do not add BoolNet to `REQUIRED_PACKAGES`.
 
   If the "passed" case fails, print `boolean_model(...)$analysis$attractors` for the fixture and check that the attractor columns follow node order; do not change the criterion.
 
@@ -737,9 +759,12 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
 
 **Interfaces:**
 - Consumes: everything from Tasks 1–4.
-- Produces: `ses_run_design(payload, progress = NULL)` where `payload` is
+- Produces:
+  - `ses_config_final_state(M, x0, steps)` → numeric vector named by `rownames(M)`: the final state of one configuration matrix `M`, stepped and L1-rescaled exactly as `ses_grid_evaluate()` does, so its signs agree with criteria (a)/(b). Used by the Task 8 comparison plot.
+  - `ses_run_design(payload, progress = NULL)` where `payload` is
   `list(base, design, levels, objectives, sustain, seed, steps, window, cap, chunk, top_k, max_boolean_nodes)`
-  (`objectives`/`sustain`: node labels; `progress`: `function(done, total)` or NULL). Returns:
+  (`objectives`/`sustain`: node labels; `progress`: `function(done, total, precheck = NULL)` or NULL).
+  Progress is reported in fixed units (`total = 1000`) so the bar only moves forward: one call `progress(0, 1000, <pre-check status>)` right after the Boolean pre-check and before the first chunk (spec §4.6), then 0–900 across the grid chunks, 900–1000 across the stability checks (every 500 successes), ending with `progress(1000, 1000)`. Returns:
 
   ```
   list(n_total, n_eval, sampled, n_a, n_ab, n_abc, share,          # share = n_a / n_eval
@@ -747,7 +772,8 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
        top = data.frame(rank, index, a, b, c, d),                  # top_k rows
        top_levels = <numeric matrix: variable edges x top_k>,
        design_matrix = <dm from ses_design_matrix()>,
-       base = payload$base, objectives, sustain,
+       base = payload$base, x0,                                  # x0: shared initial state (0.5 for a new node)
+       objectives, sustain,
        seed, steps, window, elapsed_s)
   ```
 
@@ -792,7 +818,7 @@ moorings_payload <- function(self_loop) {
     stringsAsFactors = FALSE)
   list(base = base, design = list(new_node = am, edges = edges), levels = LV,
        objectives = OBJ, sustain = c("Extension of natural habitats", "Tourism revenue"),
-       seed = 20261014L, steps = 1000L, window = 100L, cap = 50000, chunk = 2048L,
+       seed = 20261014L, steps = 1000L, window = 100L, cap = 65536, chunk = 2048L,
        top_k = 20L, max_boolean_nodes = 20L)
 }
 
@@ -821,10 +847,11 @@ test_that("pipeline result is well formed and ranked", {
 })
 
 test_that("pipeline counts equal the per-configuration reference", {
-  p <- moorings_payload(1)
+  p <- moorings_payload(1); p$chunk <- 100L     # 11 chunks, ragged last one: checks chunk boundaries
   r <- ses_run_design(p)
   dm <- r$design_matrix
   x0 <- c(.with_seed(p$seed, stats::runif(nrow(p$base))), 0.5)
+  expect_equal(r$x0, x0)
   cfg <- ses_grid_decode(seq_len(r$n_eval), dm$level_sets)
   obj <- match(p$objectives, rownames(dm$matrix))
   a_ref <- vapply(seq_len(r$n_eval), function(i) {
@@ -834,12 +861,34 @@ test_that("pipeline counts equal the per-configuration reference", {
     ok
   }, logical(1))
   expect_equal(r$n_a, sum(a_ref))
+  expect_equal(r$n_a, ses_run_design(moorings_payload(1))$n_a)   # independent of chunk size
 })
 
-test_that("progress callback reports completion", {
-  seen <- numeric(0)
-  ses_run_design(moorings_payload(1), progress = function(done, total) seen <<- c(seen, done / total))
-  expect_equal(tail(seen, 1), 1)
+test_that("progress: pre-check status first, then forward-only to completion (spec §4.6)", {
+  calls <- list()
+  p <- moorings_payload(1); p$chunk <- 100L
+  ses_run_design(p, progress = function(done, total, precheck = NULL)
+    calls[[length(calls) + 1L]] <<- list(done = done, total = total, precheck = precheck))
+  done <- vapply(calls, function(x) x$done, numeric(1))
+  expect_equal(calls[[1]]$done, 0)
+  expect_true(calls[[1]]$precheck %in% c("passed", "topology_change_needed", "skipped", "unavailable"))
+  expect_true(all(vapply(calls[-1], function(x) is.null(x$precheck), logical(1))))
+  expect_true(all(vapply(calls, function(x) x$total == 1000, logical(1))))
+  expect_true(all(diff(done) >= 0))
+  expect_equal(sum(done > 0 & done <= 900), 11)              # one call per grid chunk
+  expect_equal(tail(done, 1), 1000)
+})
+
+test_that("ses_config_final_state agrees with criterion (a) for top configurations (review focus 3)", {
+  r <- ses_run_design(moorings_payload(1))
+  obj <- match(r$objectives, rownames(r$design_matrix$matrix))
+  expect_true(any(r$top$a))
+  for (k in which(r$top$a)) {
+    fs <- ses_config_final_state(ses_apply_config(r$design_matrix, r$top_levels[, k]), r$x0, r$steps)
+    expect_true(all(fs[obj] > 0), info = paste("top row", k))
+  }
+  fb <- ses_config_final_state(r$base, r$x0[seq_len(nrow(r$base))], r$steps)
+  expect_equal(names(fb), rownames(r$base))
 })
 
 test_that("realistic size: the repo's Tuscany network runs a 2,401-configuration design", {
@@ -858,7 +907,7 @@ test_that("realistic size: the repo's Tuscany network runs a 2,401-configuration
                "Boat moorings", "Spatial planning (MPA)"),
       kind = "intervention", min_level = -1, max_level = 1, stringsAsFactors = FALSE)),
     levels = LV, objectives = "P. oceanica extension", sustain = character(0),
-    seed = 1L, steps = 1000L, window = 100L, cap = 50000, chunk = 2048L, top_k = 20L,
+    seed = 1L, steps = 1000L, window = 100L, cap = 65536, chunk = 2048L, top_k = 20L,
     max_boolean_nodes = 20L)
   r <- ses_run_design(p)
   expect_equal(r$n_eval, 7^4)
@@ -874,12 +923,36 @@ test_that("realistic size: the repo's Tuscany network runs a 2,401-configuration
 Append to `functions/intervention_designer.R`:
 
 ```r
+#' Final state of one configuration matrix, stepped exactly as ses_grid_evaluate()
+#' does (x[t] = t(M) %*% x[t-1], L1 rescaling every 10 steps), so its signs agree
+#' with criteria (a)/(b). Used for the Designer's comparison plot (spec §4.7).
+#' @return numeric vector named by rownames(M)
+ses_config_final_state <- function(M, x0, steps) {
+  At <- t(M)
+  x <- as.numeric(x0)
+  for (t in 2:steps) {
+    x <- as.vector(At %*% x)
+    if (t %% 10L == 0L) {
+      s <- sum(abs(x))
+      if (s > 0) x <- x / s
+    }
+  }
+  stats::setNames(x, rownames(M))
+}
+
 #' Run a whole design (called in the background worker).
 #' @param payload list(base, design, levels, objectives, sustain, seed, steps,
 #'   window, cap, chunk, top_k, max_boolean_nodes)
-#' @param progress optional function(done, total)
+#' @param progress optional function(done, total, precheck = NULL). Called once
+#'   with done = 0 and the pre-check status before the grid runs (spec §4.6),
+#'   then in fixed units of 1000: 0-900 over the grid chunks, 900-1000 over the
+#'   stability checks, ending at 1000 (the bar never jumps back).
 ses_run_design <- function(payload, progress = NULL) {
   t0 <- Sys.time()
+  report <- function(done, precheck = NULL) {
+    if (!is.function(progress)) return(invisible())
+    if (is.null(precheck)) progress(done, 1000) else progress(done, 1000, precheck)
+  }
   dm <- ses_design_matrix(payload$base, payload$design, payload$levels)
   nm <- rownames(dm$matrix)
   obj <- match(payload$objectives, nm)
@@ -892,6 +965,7 @@ ses_run_design <- function(payload, progress = NULL) {
   precheck <- tryCatch(ses_boolean_precheck(dm, obj, payload$max_boolean_nodes),
                        error = function(e) list(status = "unavailable", n_nodes = nrow(dm$matrix),
                                                 n_attractors = NA_integer_, n_desirable = NA_integer_))
+  report(0, precheck$status)                     # visible while the grid runs (spec §4.6, §6)
   n_eval <- grid$n_eval
   index <- if (grid$sampled) grid$indices else seq_len(n_eval)
   a <- logical(n_eval); b <- logical(n_eval); d <- integer(n_eval)
@@ -902,12 +976,17 @@ ses_run_design <- function(payload, progress = NULL) {
     a[pos] <- r$a
     b[pos] <- r$b
     d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != 0))
-    if (is.function(progress)) progress(max(pos), n_eval)
+    report(floor(900 * max(pos) / n_eval))
   }
   c_ok <- rep(NA, n_eval)
-  for (i in which(a)) {
+  succ <- which(a)
+  n_succ <- length(succ)
+  for (j in seq_along(succ)) {
+    i <- succ[j]
     c_ok[i] <- ses_is_stable_attractor(ses_apply_config(dm, ses_grid_decode(index[i], dm$level_sets)[, 1]))
+    if (j %% 500L == 0L) report(900 + floor(100 * j / n_succ))
   }
+  report(1000)
   ranked <- rank_simplest(data.frame(index = index, a = a, b = b, c = c_ok, d = d))
   top <- utils::head(ranked, payload$top_k)
   top$rank <- seq_len(nrow(top))
@@ -920,7 +999,7 @@ ses_run_design <- function(payload, progress = NULL) {
     precheck = precheck,
     top = top,
     top_levels = ses_grid_decode(top$index, dm$level_sets),
-    design_matrix = dm, base = payload$base,
+    design_matrix = dm, base = payload$base, x0 = x0,
     objectives = payload$objectives, sustain = payload$sustain,
     seed = payload$seed, steps = payload$steps, window = payload$window,
     elapsed_s = as.numeric(difftime(Sys.time(), t0, units = "secs"))
@@ -944,11 +1023,12 @@ ses_run_design <- function(payload, progress = NULL) {
 - Create: `MarineSABRES_SES_Shiny/tests/testthat/test-intervention-designer-job.R`
 
 **Interfaces:**
-- Consumes: `ses_run_design(payload, progress)` (Task 5), sourced in the worker from absolute paths.
+- Consumes: `ses_run_design(payload, progress)` with `progress(done, total, precheck = NULL)` (Task 5), sourced in the worker from absolute paths.
 - Produces:
   - `designer_engine_files(root = NULL)` → absolute paths of `functions/ses_dynamics.R` and `functions/intervention_designer.R`
   - `designer_job_start(payload, engine_files = designer_engine_files())` → `job = list(process, progress_file, started)`
-  - `designer_job_poll(job, timeout_s = INTERVENTION_JOB_TIMEOUT_S)` → `list(state = "running", done, total)` | `list(state = "done", result)` | `list(state = "error", message)`
+  - Progress file: one line `"<done> <total> [<precheck status>]"`; the worker writes the pre-check status from its first call on and repeats it on every later write.
+  - `designer_job_poll(job, timeout_s = INTERVENTION_JOB_TIMEOUT_S)` → `list(state = "running", done, total, precheck)` (`precheck` is the pre-check status once reported, else NULL) | `list(state = "done", result)` | `list(state = "error", reason = "engine" | "timeout", message)` (`message` is the raw worker text, for the log only; the module never shows it)
   - `designer_job_cancel(job)` → invisible TRUE
   - `designer_job_api()` → `list(start, poll, cancel)` (the module takes this, tests replace it)
 
@@ -968,7 +1048,7 @@ tiny_payload <- function(objectives = "b") {
          from = c("IV", "b"), to = c("a", "IV"), kind = "intervention",
          min_level = -1, max_level = 1, stringsAsFactors = FALSE)),
        levels = LV, objectives = objectives, sustain = character(0), seed = 1L,
-       steps = 200L, window = 50L, cap = 50000, chunk = 2048L, top_k = 5L, max_boolean_nodes = 20L)
+       steps = 200L, window = 50L, cap = 65536, chunk = 2048L, top_k = 5L, max_boolean_nodes = 20L)
 }
 wait_for <- function(job, secs = 120) {
   t_end <- Sys.time() + secs
@@ -999,6 +1079,7 @@ test_that("an engine error comes back as an error state (review focus 5)", {
   job <- designer_job_start(tiny_payload(objectives = "no such node"), designer_engine_files(app_root()))
   st <- wait_for(job)
   expect_equal(st$state, "error")
+  expect_identical(st$reason, "engine")
   expect_match(st$message, "objective nodes not found")
 })
 
@@ -1020,7 +1101,22 @@ test_that("a job past its timeout is killed and reported", {
   job$started <- Sys.time() - 1000
   st <- designer_job_poll(job, timeout_s = 1)
   expect_equal(st$state, "error")
+  expect_identical(st$reason, "timeout")
   expect_match(st$message, "timed out")
+})
+
+test_that("a running poll reports the pre-check status from the progress file (spec §4.6)", {
+  skip_if_not_installed("callr")
+  job <- list(process = callr::r_bg(function() Sys.sleep(30)),
+              progress_file = tempfile("designer_progress_", fileext = ".txt"), started = Sys.time())
+  on.exit(designer_job_cancel(job), add = TRUE)
+  writeLines("0 1000 topology_change_needed", job$progress_file)
+  st <- designer_job_poll(job, timeout_s = 600)
+  expect_equal(st$state, "running")
+  expect_equal(st$done, 0); expect_equal(st$total, 1000)
+  expect_equal(st$precheck, "topology_change_needed")
+  writeLines("450 1000", job$progress_file)                  # no status token: precheck is NULL
+  expect_null(designer_job_poll(job, timeout_s = 600)$precheck)
 })
 ```
 
@@ -1035,7 +1131,7 @@ Create `functions/intervention_designer_job.R`:
 # =============================================================================
 # Background execution for the WS-7a intervention designer (spec §2.4, §5).
 # laguna runs open-source Shiny Server: one R process serves every user, so
-# grids (up to ~50 s) run in a separate R process via callr.
+# grids (about 1-2 min at the 65,536 cap) run in a separate R process via callr.
 # =============================================================================
 
 #' Absolute paths of the engine files the worker sources.
@@ -1054,9 +1150,11 @@ designer_job_start <- function(payload, engine_files = designer_engine_files()) 
     function(payload, engine_files, progress_file) {
       suppressMessages(library(Matrix))
       for (f in engine_files) source(f, local = FALSE)
-      progress <- function(done, total) {
+      pc_state <- ""                       # pre-check status, repeated on every write
+      progress <- function(done, total, precheck = NULL) {
+        if (!is.null(precheck)) pc_state <<- precheck
         tmp <- paste0(progress_file, ".tmp")
-        writeLines(sprintf("%.0f %.0f", done, total), tmp)
+        writeLines(trimws(sprintf("%.0f %.0f %s", done, total, pc_state)), tmp)
         file.rename(tmp, progress_file)
       }
       ses_run_design(payload, progress = progress)
@@ -1073,20 +1171,24 @@ designer_job_poll <- function(job, timeout_s = INTERVENTION_JOB_TIMEOUT_S) {
   if (p$is_alive()) {
     if (as.numeric(difftime(Sys.time(), job$started, units = "secs")) > timeout_s) {
       designer_job_cancel(job)
-      return(list(state = "error", message = sprintf("designer run timed out after %.0f s", timeout_s)))
+      return(list(state = "error", reason = "timeout",
+                  message = sprintf("designer run timed out after %.0f s", timeout_s)))
     }
-    prog <- tryCatch(scan(job$progress_file, quiet = TRUE), error = function(e) numeric(0),
-                     warning = function(w) numeric(0))
+    # "<done> <total> [<precheck>]": the third token is text, so no scan()
+    tok <- tryCatch(strsplit(trimws(readLines(job$progress_file, warn = FALSE)[1]), "\\s+")[[1]],
+                    error = function(e) character(0), warning = function(w) character(0))
+    tok <- tok[!is.na(tok) & nzchar(tok)]
     return(list(state = "running",
-                done = if (length(prog) >= 1) prog[1] else 0,
-                total = if (length(prog) >= 2) prog[2] else NA_real_))
+                done = if (length(tok) >= 1) as.numeric(tok[1]) else 0,
+                total = if (length(tok) >= 2) as.numeric(tok[2]) else NA_real_,
+                precheck = if (length(tok) >= 3) tok[3] else NULL))
   }
   res <- tryCatch(p$get_result(), error = function(e) e)
   unlink(c(job$progress_file, paste0(job$progress_file, ".tmp")))
   if (inherits(res, "error")) {
     msg <- if (!is.null(res$parent)) conditionMessage(res$parent) else conditionMessage(res)
     if (exists("debug_log", mode = "function")) debug_log(paste("Designer job failed:", msg), "INTERVENTION")
-    return(list(state = "error", message = msg))
+    return(list(state = "error", reason = "engine", message = msg))
   }
   list(state = "done", result = res)
 }
@@ -1232,11 +1334,10 @@ English values (key suffix → text):
 | `sustain` | Also sustain (default: all Goods & Benefits) |
 | `combinations` | combinations |
 | `exhaustive` | every combination is tested |
-| `sampled` | a random sample of 50,000 is tested |
+| `sampled` | a random sample of 65,536 is tested |
 | `run` | Run |
 | `cancel` | Cancel |
 | `running` | Running |
-| `progress_of` | of |
 | `need_edges` | Add at least one edge to vary. |
 | `empty_range` | An edge has no levels in its range. |
 | `need_objective` | Choose at least one objective node. |
@@ -1244,8 +1345,10 @@ English values (key suffix → text):
 | `name_clash` | The intervention name matches an existing node. Choose another name. |
 | `need_target` | Choose at least one node the intervention acts on. |
 | `job_running` | A run is already in progress. |
-| `context_run` | Starting the designer run |
-| `run_failed` | The designer run failed: |
+| `stale_edges` | Some edges refer to elements that are no longer in the CLD. Remove them and add them again. |
+| `context_run` | starting the designer run |
+| `context_job` | running the designer |
+| `context_timeout` | running the designer: the time limit was reached and the run was stopped |
 | `cancelled` | Run cancelled. |
 | `precheck.passed` | Boolean pre-check passed: at least one attractor keeps every objective on. |
 | `precheck.topology_change_needed` | Boolean pre-check: no attractor keeps every objective on. A topology change is needed; consider adding edges between existing nodes. |
@@ -1268,8 +1371,11 @@ English values (key suffix → text):
 | `compare_title` | Final states: network vs selected combination |
 | `compare_original` | Network |
 | `compare_selected` | Selected combination |
+| `compare_state` | Final state (normalised) |
 | `run_meta` | Seed, steps and window |
-| `help_designer` | The Designer adds an intervention node, new edges between existing nodes, or both. Each edge takes every level in its range; the tool tests every combination (or a random sample of 50,000) over 1,000 steps and keeps those whose objective nodes stay positive over the last 100. Results are ranked by objective, also-sustain nodes, stability and the number of edges used, as in D5.3. |
+| `grid_size` | Grid size |
+| `elapsed` | Elapsed |
+| `help_designer` | The Designer adds an intervention node, new edges between existing nodes, or both. Each edge takes every level in its range; the tool tests every combination (or a random sample of 65,536) over 1,000 steps and keeps those whose objective nodes stay positive over the last 100. Results are ranked by objective, also-sustain nodes, stability and the number of edges used, as in D5.3. |
 | `help_delay` | A new intervention node acts one step after its indicators change. D5.3 notes that this delay can destabilise the system. |
 | `group.behavioural` | Mainly behavioural |
 | `group.management` | Mainly management |
@@ -1317,15 +1423,17 @@ English values (key suffix → text):
 **Files:**
 - Create: `MarineSABRES_SES_Shiny/modules/intervention_designer_module.R`
 - Modify: `MarineSABRES_SES_Shiny/modules/analysis_intervention.R` (UI function lines 20–29; server: help observer ~line 71 and a new line after `setup_cld_gate(...)`)
-- Modify: `MarineSABRES_SES_Shiny/app.R:114` — add `"modules/intervention_designer_module.R",` to the `CRITICAL_MODULES` vector immediately before `"modules/analysis_intervention.R",`
+- Modify: `MarineSABRES_SES_Shiny/app.R:114` — add `"modules/intervention_designer_module.R",` to the `OPTIONAL_MODULES` vector (app.R:93-117) on the line immediately before `"modules/analysis_intervention.R",` (line 114)
+- Modify: `MarineSABRES_SES_Shiny/tests/testthat/test-analysis-modules-batch.R:3` — add `"modules/intervention_designer_module.R"` to the `source_for_test()` vector before `"modules/analysis_intervention.R"` (its N34 `testServer()` drives the real `analysis_intervention_server`, which now calls the designer)
+- Modify: `MarineSABRES_SES_Shiny/tests/testthat/test-modules-comprehensive.R:15-31` — add `"modules/intervention_designer_module.R"` to the `source_for_test()` vector immediately before `"modules/analysis_intervention.R"` (otherwise its `test_ui_function()` turns the missing function into a silent skip)
 - Modify: `MarineSABRES_SES_Shiny/tests/testthat/helper-stubs.R` only if it stubs `analysis_intervention_ui`/`_server` (keep stub signatures matching)
 - Create: `MarineSABRES_SES_Shiny/tests/testthat/test-intervention-designer-module.R`
 
 **Interfaces:**
-- Consumes: `ses_design_matrix`, `ses_level_sets`, `ses_intervention_grid`, `ses_apply_config`, `ses_self_loop_candidates`, `ses_check_new_edge`, `ses_level_code`, `ses_evidence_prior_range` (Tasks 1–5); `designer_job_api()` (Task 6); `get_intervention_types()`, `get_allowed_graph_ops()`, `get_intervention_ebm_codes()`, `load_wp5_intervention_ops()` (wp5_vocabulary); `cld_to_numeric_matrix()`, `ses_compare_interventions()` (ses_dynamics); `has_valid_cld()`; `provenance_badge()`; `format_user_error()`; translation keys from Task 7.
+- Consumes: `ses_design_matrix`, `ses_level_sets`, `ses_intervention_grid`, `ses_apply_config`, `ses_self_loop_candidates`, `ses_check_new_edge`, `ses_level_code`, `ses_evidence_prior_range` (Tasks 1–5); `designer_job_api()` (Task 6); `ses_config_final_state()` (Task 5); `get_intervention_types()`, `get_allowed_graph_ops()`, `get_intervention_ebm_codes()`, `load_wp5_intervention_ops()` (wp5_vocabulary); `cld_to_numeric_matrix()` (ses_dynamics); `has_valid_cld()`; `provenance_badge()`; `format_user_error()`; `shinyjs::toggleState()` (`useShinyjs()` is already called once in app.R); translation keys from Task 7.
 - Produces:
   - `intervention_designer_ui(id, i18n)`
-  - `intervention_designer_server(id, project_data_reactive, i18n, event_bus = NULL, job_api = designer_job_api())` — returns `rv` invisibly is not needed; tests read `rv` inside `testServer()`.
+  - `intervention_designer_server(id, project_data_reactive, i18n, event_bus = NULL, job_api = designer_job_api())` — returns `rv` invisibly is not needed; tests read `rv`, `net()`, `node_sig()`, `run_block_reason()` and `selected_comparison()` inside `testServer()`. `job_api$poll()` follows the Task 6 return shapes (`running` carries `precheck`; `error` carries `reason` and a raw `message`).
   - `.designer_payload(net, edges, name, objectives, sustain)` → payload list (pure; placeholder substitution, review focus 2)
 
 - [ ] **Step 1: Write the failing tests**
@@ -1351,7 +1459,7 @@ proj <- function() {
 # Synchronous fake job API: runs the engine in-process.
 fake_api <- function(fail = FALSE) {
   list(start = function(payload) list(payload = payload),
-       poll = function(job) if (fail) list(state = "error", message = "boom")
+       poll = function(job) if (fail) list(state = "error", reason = "engine", message = "boom")
                             else list(state = "done", result = ses_run_design(job$payload)),
        cancel = function(job) invisible(TRUE))
 }
@@ -1401,6 +1509,7 @@ test_that("server drives a design to results with a fake job API", {
     expect_false(is.null(rv$result))
     expect_equal(rv$result$n_eval, 7^3)
     expect_equal(rv$result$design_matrix$new_node, "Moorings")
+    expect_error(output$results_ui, NA)
   })
 })
 
@@ -1414,6 +1523,12 @@ test_that("renaming after adding edges carries them to the new name (review focu
     session$setInputs(run = 1)
     session$elapse(1100)
     expect_equal(rv$result$design_matrix$new_node, "New name")
+    # One variable edge: the top table still has one row per configuration and one level column
+    expect_equal(nrow(rv$result$top_levels), 1L)
+    js <- jsonlite::fromJSON(output$top_table)
+    expect_equal(lengths(regmatches(js$x$container, gregexpr("<th>", js$x$container))),
+                 5L + nrow(rv$result$design_matrix$edges))
+    expect_false(grepl(">NA<", js$x$container, fixed = TRUE))
   })
 })
 
@@ -1451,9 +1566,140 @@ test_that("a failing job shows an error and frees Run (review focus 5)", {
     session$elapse(1100)
     expect_null(rv$job)
     expect_null(rv$result)
-    expect_match(rv$error, "boom")
+    expect_match(rv$error_detail, "boom")                    # raw worker text: log/detail only
+    expect_match(rv$error, "modules.intervention_designer.context_job", fixed = TRUE)
+    expect_false(grepl("boom", rv$error, fixed = TRUE))       # never shown to the user
     expect_null(run_block_reason())
   })
+})
+
+test_that("a timed-out job shows the translated timeout context", {
+  api <- fake_api(); api$poll <- function(job) list(state = "error", reason = "timeout",
+                                                    message = "designer run timed out after 600 s")
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = api), {
+    session$setInputs(name = "IV", type = "", node_targets = "Anchoring", node_indicators = NULL)
+    session$setInputs(add_node_edges = 1, objectives = "P. oceanica extension", sustain = NULL)
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_null(rv$job)
+    expect_match(rv$error, "modules.intervention_designer.context_timeout", fixed = TRUE)
+    expect_false(grepl("timed out", rv$error, fixed = TRUE))
+  })
+})
+
+test_that("the pre-check is shown above the progress bar while the job runs (spec §6)", {
+  api <- fake_api()
+  api$poll <- function(job) list(state = "running", done = 0, total = 1000,
+                                 precheck = "topology_change_needed")
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = api), {
+    session$setInputs(name = "IV", type = "", node_targets = "Anchoring", node_indicators = NULL)
+    session$setInputs(add_node_edges = 1, objectives = "P. oceanica extension", sustain = NULL)
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_false(is.null(rv$job))
+    expect_equal(run_block_reason(), "modules.intervention_designer.job_running")
+    html <- as.character(output$results_ui$html)
+    pc_at <- regexpr("modules.intervention_designer.precheck.topology_change_needed", html, fixed = TRUE)
+    expect_gt(pc_at, 0)
+    expect_lt(pc_at, regexpr("progress-bar", html, fixed = TRUE))
+    expect_true(grepl("modules.intervention_designer.cancel", html, fixed = TRUE))
+    session$setInputs(cancel = 1)
+    expect_null(rv$job)
+  })
+})
+
+test_that("node choices equal the matrix dimnames when CLD labels repeat", {
+  p <- proj(); p$data$cld$nodes$label[5] <- "Demand"         # GB_1 relabelled to a duplicate
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(p), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    expect_identical(net()$labels, rownames(net()$matrix))
+    expect_equal(net()$labels[c(1, 5)], c("Demand", "Demand_1"))
+    expect_equal(net()$types[match("Demand_1", net()$labels)], "Goods & Benefits")
+  })
+})
+
+test_that("a self-loop that already exists in the network is refused", {
+  p <- proj()
+  p$data$cld$edges <- rbind(p$data$cld$edges, data.frame(from = "MPF_1", to = "MPF_1", polarity = "+",
+                                                         strength = "medium", stringsAsFactors = FALSE))
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(p), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    session$setInputs(self_loop_node = "P. oceanica extension", add_self_loop = 1)
+    expect_equal(nrow(rv$edges), 0L)
+  })
+})
+
+test_that("the edge editor keeps the selected edge and shows its range", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    session$setInputs(edge_from = "Demand", edge_to = "Anchoring", add_edge = 1)
+    session$setInputs(edge_from = "Boating", edge_to = "Habitat", add_edge = 2)
+    session$setInputs(edge_from = "Demand", edge_to = "Habitat", add_edge = 3)
+    expect_equal(nrow(rv$edges), 3L)
+    session$setInputs(edit_edge = "3", min_level = "0", max_level = "1", apply_range = 1)
+    expect_equal(c(rv$edges$min_level[3], rv$edges$max_level[3]), c(0, 1))
+    html <- as.character(output$edge_editor_ui$html)
+    expect_true(grepl('<option value="3" selected>', html, fixed = TRUE))   # selection survives the re-render
+    session$setInputs(sign_nonpos = 1)
+    expect_equal(c(rv$edges$min_level[3], rv$edges$max_level[3]), c(0, 0))
+    expect_equal(c(rv$edges$min_level[1], rv$edges$max_level[1]), c(-1, 1))
+  })
+})
+
+test_that("the design panel keeps the user's entries when project data is written", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    session$setInputs(name = "Moorings", objectives = "P. oceanica extension")
+    s1 <- node_sig()
+    p3 <- proj(); p3$last_modified <- Sys.time(); pd(p3)       # e.g. a Quick compare run writing back
+    session$flushReact()
+    expect_identical(node_sig(), s1)                          # same node set: the panel is not rebuilt
+    p4 <- proj()
+    p4$data$cld$nodes <- rbind(p4$data$cld$nodes, data.frame(id = "MPF_2", label = "Seagrass",
+      group = "Marine Processes & Functioning", stringsAsFactors = FALSE))
+    p4$data$cld$edges <- rbind(p4$data$cld$edges, data.frame(from = "MPF_2", to = "GB_1", polarity = "+",
+      strength = "medium", stringsAsFactors = FALSE))
+    pd(p4)
+    session$flushReact()
+    html <- as.character(output$design_ui$html)
+    expect_true(grepl("Seagrass", html, fixed = TRUE))
+    expect_true(grepl('value="Moorings"', html, fixed = TRUE))
+    expect_true(grepl('<option value="P. oceanica extension" selected>', html, fixed = TRUE))
+  })
+})
+
+test_that("edges that no longer match the CLD block Run", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    session$setInputs(edge_from = "Demand", edge_to = "Habitat", add_edge = 1,
+                      objectives = "P. oceanica extension")
+    expect_null(run_block_reason())
+    p2 <- proj(); p2$data$cld$nodes <- p2$data$cld$nodes[-5, ]; p2$data$cld$edges <- p2$data$cld$edges[1:3, ]
+    pd(p2)                                                    # "Habitat" deleted from the CLD
+    expect_equal(run_block_reason(), "modules.intervention_designer.stale_edges")
+    p3 <- proj()
+    p3$data$cld$edges <- rbind(p3$data$cld$edges, data.frame(from = "D_1", to = "GB_1", polarity = "+",
+                                                             strength = "medium", stringsAsFactors = FALSE))
+    pd(p3)                                                    # the designed edge now exists in the CLD
+    expect_equal(run_block_reason(), "modules.intervention_designer.edge_exists")
+  })
+})
+
+test_that("app.R loads intervention_designer_module.R in OPTIONAL_MODULES", {
+  root <- function() { td <- getwd(); if (basename(td) == "testthat") dirname(dirname(td)) else td }
+  app_src <- paste(readLines(file.path(root(), "app.R"), warn = FALSE), collapse = "\n")
+  opt <- regmatches(app_src, regexpr("(?s)OPTIONAL_MODULES <- c\\(.*?\\n\\)", app_src, perl = TRUE))  # to the closing ")" line; comments contain ")"
+  expect_length(opt, 1)
+  expect_true(grepl("modules/intervention_designer_module.R", opt, fixed = TRUE))
 })
 
 test_that("the comparison uses the network the run used, not the current one (review focus 3)", {
@@ -1468,9 +1714,18 @@ test_that("the comparison uses the network the run used, not the current one (re
     pd(p2)
     session$setInputs(top_table_rows_selected = 1)
     cmp <- selected_comparison()
-    expect_equal(sum(rv$result$base != 0), 4L)               # the run's network, 4 edges
-    expect_equal(cmp, ses_compare_interventions(
-      rv$result$base, ses_apply_config(rv$result$design_matrix, rv$result$top_levels[, 1])))
+    r <- rv$result
+    expect_equal(sum(r$base != 0), 4L)                       # the run's network, 4 edges
+    nodes <- rownames(r$base)
+    fo <- ses_config_final_state(r$base, r$x0[seq_len(nrow(r$base))], r$steps)
+    fi <- ses_config_final_state(ses_apply_config(r$design_matrix, r$top_levels[, 1]), r$x0, r$steps)
+    expect_equal(cmp$node, nodes)
+    expect_equal(cmp$state_original, unname(fo[nodes]))
+    expect_equal(cmp$state_intervention, unname(fi[nodes]))
+    if (isTRUE(r$top$a[1])) {                                 # signs agree with criterion (a)
+      expect_true(all(cmp$state_intervention[match(r$objectives, cmp$node)] > 0))
+    }
+    expect_error(output$compare_plot, NA)
   })
 })
 ```
@@ -1529,7 +1784,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     rv <- reactiveValues(edges = .designer_empty_edges(), job = NULL, result = NULL,
-                         progress = NULL, error = NULL, analysis_complete = FALSE)
+                         progress = NULL, error = NULL, error_detail = NULL,
+                         analysis_complete = FALSE)
 
     lvl_label <- function(x) {
       # i18n-ref: modules.intervention_designer.level.strong_neg
@@ -1542,6 +1798,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       vapply(ses_level_code(x), function(cd) i18n$t(paste0("modules.intervention_designer.level.", cd)),
              character(1))
     }
+    # Every stored min/max level is a member of INTERVENTION_GRID_LEVELS (evidence
+    # priors are 0.25/0.5/1, sign shortcuts use 0), so as.character() matches a choice.
     level_choices <- function() setNames(as.character(INTERVENTION_GRID_LEVELS),
                                          lvl_label(INTERVENTION_GRID_LEVELS))
     node_name <- reactive(trimws(input$name %||% ""))
@@ -1552,10 +1810,22 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       data <- project_data_reactive()
       req(data, has_valid_cld(data))
       nodes <- data$data$cld$nodes
-      labels <- ifelse(is.na(nodes$label) | nodes$label == "", nodes$id, nodes$label)
+      mat <- cld_to_numeric_matrix(nodes, data$data$cld$edges, use_labels = TRUE)
+      req(!is.null(mat))
       types <- if ("group" %in% names(nodes)) as.character(nodes$group) else rep(NA_character_, nrow(nodes))
-      list(labels = labels, types = types,
-           matrix = cld_to_numeric_matrix(nodes, data$data$cld$edges, use_labels = TRUE))
+      # labels MUST equal the matrix dimnames (make.unique'd on duplicate labels, id
+      # fallback), so choices, lookups and the name-clash check match the matrix.
+      # cld_to_numeric_matrix keeps the nodes' row order, so `types` stays aligned.
+      list(labels = rownames(mat), types = types, matrix = mat)
+    })
+
+    # The design panel is rebuilt only when the node set changes, not on every
+    # project_data write (Quick compare and other analyses write it back).
+    node_sig <- reactiveVal(NULL)
+    observe({
+      n <- net()
+      s <- paste(n$labels, n$types, sep = "\t", collapse = "\r")
+      if (!identical(s, isolate(node_sig()))) node_sig(s)
     })
 
     # Stale results after an ISA change (standard analysis pattern)
@@ -1570,14 +1840,46 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
 
     # ── Design panel ───────────────────────────────────────────────────────
     output$design_ui <- renderUI({
-      n <- net()
+      req(node_sig())
+      n <- isolate(net())
       lab <- n$labels
+      keep <- function(v) intersect(v %||% character(0), lab)   # drop picks that left the network
       types_df <- tryCatch({ load_wp5_intervention_ops(); get_intervention_types() },
                            error = function(e) data.frame(id = character(), group = character()))
       # i18n-ref: modules.intervention_designer.group.behavioural
       # i18n-ref: modules.intervention_designer.group.management
       # i18n-ref: modules.intervention_designer.group.economic
       # i18n-ref: modules.intervention_designer.group.governance
+      # i18n-ref: modules.intervention_designer.type.nudge
+      # i18n-ref: modules.intervention_designer.type.certification
+      # i18n-ref: modules.intervention_designer.type.traceability
+      # i18n-ref: modules.intervention_designer.type.norms_influence
+      # i18n-ref: modules.intervention_designer.type.data_valuing
+      # i18n-ref: modules.intervention_designer.type.change_in_accessibility
+      # i18n-ref: modules.intervention_designer.type.participation_in_governance
+      # i18n-ref: modules.intervention_designer.type.cascade_creation
+      # i18n-ref: modules.intervention_designer.type.remote_market_access
+      # i18n-ref: modules.intervention_designer.type.change_in_practices
+      # i18n-ref: modules.intervention_designer.type.quota_license
+      # i18n-ref: modules.intervention_designer.type.mpa_oecm
+      # i18n-ref: modules.intervention_designer.type.subsidies
+      # i18n-ref: modules.intervention_designer.type.incentives
+      # i18n-ref: modules.intervention_designer.type.trade_agreements
+      # i18n-ref: modules.intervention_designer.type.payment_goods_services
+      # i18n-ref: modules.intervention_designer.type.payment_non_market_services
+      # i18n-ref: modules.intervention_designer.type.externalities_in_prices
+      # i18n-ref: modules.intervention_designer.type.one_off_recosting
+      # i18n-ref: modules.intervention_designer.type.ongoing_recosting
+      # i18n-ref: modules.intervention_designer.type.multi_level_governance
+      # i18n-ref: modules.intervention_designer.type.change_power_dynamics
+      # i18n-ref: modules.intervention_designer.type.cross_sector_coordination
+      # i18n-ref: modules.intervention_designer.type.enhance_governance_capacity
+      # i18n-ref: modules.intervention_designer.type.incorporate_society_values
+      # i18n-ref: modules.intervention_designer.type.enhance_trust
+      # i18n-ref: modules.intervention_designer.type.reduce_conflicts
+      # i18n-ref: modules.intervention_designer.type.increase_collaboration
+      # i18n-ref: modules.intervention_designer.type.increase_participation
+      # i18n-ref: modules.intervention_designer.type.enhance_compliance_monitoring
       type_choices <- c(setNames("", i18n$t("modules.intervention_designer.type_none")),
         lapply(split(types_df$id, types_df$group), function(ids)
           setNames(ids, vapply(ids, function(x) i18n$t(paste0("modules.intervention_designer.type.", x)),
@@ -1586,20 +1888,25 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         i18n$t(paste0("modules.intervention_designer.group.", g)), character(1))
       gb <- lab[!is.na(n$types) & n$types == "Goods & Benefits"]
       loops <- ses_self_loop_candidates(lab, n$types)
+      sustain_now <- isolate(input$sustain)
       tagList(
         bs4Card(title = i18n$t("modules.intervention_designer.step_intervention"), width = 12,
                 status = "primary", collapsible = FALSE,
           textInput(ns("name"), i18n$t("modules.intervention_designer.name"),
+                    value = isolate(input$name) %||% "",
                     placeholder = i18n$t("modules.intervention_designer.name_placeholder")),
-          selectizeInput(ns("type"), i18n$t("modules.intervention_designer.type"), choices = type_choices),
+          # allowEmptyOption keeps "No type" selectable after a type was picked
+          selectizeInput(ns("type"), i18n$t("modules.intervention_designer.type"), choices = type_choices,
+                         selected = isolate(input$type) %||% "",
+                         options = list(allowEmptyOption = TRUE)),
           uiOutput(ns("ops_ui"))),
         bs4Card(title = i18n$t("modules.intervention_designer.step_edges"), width = 12,
                 status = "primary", collapsible = FALSE,
           h6(i18n$t("modules.intervention_designer.add_node_heading")),
           selectizeInput(ns("node_targets"), i18n$t("modules.intervention_designer.node_targets"),
-                         choices = lab, multiple = TRUE),
+                         choices = lab, selected = keep(isolate(input$node_targets)), multiple = TRUE),
           selectizeInput(ns("node_indicators"), i18n$t("modules.intervention_designer.node_indicators"),
-                         choices = lab, multiple = TRUE),
+                         choices = lab, selected = keep(isolate(input$node_indicators)), multiple = TRUE),
           actionButton(ns("add_node_edges"), i18n$t("modules.intervention_designer.add_node_edges"),
                        icon = icon("plus")),
           hr(),
@@ -1617,9 +1924,10 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         bs4Card(title = i18n$t("modules.intervention_designer.step_objectives"), width = 12,
                 status = "primary", collapsible = FALSE,
           selectizeInput(ns("objectives"), i18n$t("modules.intervention_designer.objectives"),
-                         choices = lab, multiple = TRUE),
+                         choices = lab, selected = keep(isolate(input$objectives)), multiple = TRUE),
           selectizeInput(ns("sustain"), i18n$t("modules.intervention_designer.sustain"),
-                         choices = lab, selected = gb, multiple = TRUE)),
+                         choices = lab, selected = if (is.null(sustain_now)) gb else keep(sustain_now),
+                         multiple = TRUE)),
         bs4Card(title = i18n$t("modules.intervention_designer.step_run"), width = 12,
                 status = "success", collapsible = FALSE,
           uiOutput(ns("grid_info")),
@@ -1638,6 +1946,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       # i18n-ref: modules.intervention_designer.op.new_node
       # i18n-ref: modules.intervention_designer.op.new_edge
       # i18n-ref: modules.intervention_designer.op.reweight_edge
+      # i18n-ref: modules.intervention_designer.ops_source_xlsx
+      # i18n-ref: modules.intervention_designer.ops_source_ebm
       src_lbl <- function(s) paste(vapply(strsplit(s, "+", fixed = TRUE)[[1]], function(x)
         i18n$t(paste0("modules.intervention_designer.ops_source_", x)), character(1)), collapse = ", ")
       tagList(
@@ -1677,14 +1987,16 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
 
     add_context_edge <- function(from, to) {
       n <- net()
-      if (from != to && n$matrix[from, to] != 0) {
+      # Covers self-loops too: an existing self-loop is re-weighting (mode C)
+      if (n$matrix[from, to] != 0) {
         showNotification(i18n$t("modules.intervention_designer.edge_exists"), type = "warning")
         return(invisible(FALSE))
       }
-      if (from != to) {
-        msg <- ses_check_new_edge(n$types[match(from, n$labels)], n$types[match(to, n$labels)])
-        if (!is.null(msg)) showNotification(
-          paste(i18n$t("modules.intervention_designer.edge_rule_warning"), msg), type = "warning")
+      if (from != to && isTRUE(ses_check_new_edge(n$types[match(from, n$labels)],
+                                                  n$types[match(to, n$labels)]))) {
+        # Translated prefix + the user's own node labels (user data, not translated)
+        showNotification(paste(i18n$t("modules.intervention_designer.edge_rule_warning"), from, "→", to),
+                         type = "warning")
       }
       add_rows(data.frame(from = from, to = to, kind = "context", min_level = -1, max_level = 1,
                           stringsAsFactors = FALSE))
@@ -1707,17 +2019,22 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
           i18n$t("modules.intervention_designer.col_kind"), i18n$t("modules.intervention_designer.col_range")))
     }, striped = TRUE, spacing = "xs")
 
+    # Re-rendered when rv$edges changes; keeps the selected edge and shows its range.
+    # The name is isolated so typing in the name field does not rebuild the editor.
     output$edge_editor_ui <- renderUI({
       e <- rv$edges
       if (!nrow(e)) return(NULL)
-      choices <- setNames(as.character(seq_len(nrow(e))),
-                          paste0(seq_len(nrow(e)), ": ", show_name(e$from), " → ", show_name(e$to)))
+      lbl <- isolate(paste0(seq_len(nrow(e)), ": ", show_name(e$from), " → ", show_name(e$to)))
+      choices <- setNames(as.character(seq_len(nrow(e))), lbl)
+      prev <- isolate(input$edit_edge)
+      sel <- if (!is.null(prev) && prev %in% choices) prev else tail(unname(choices), 1)
+      i <- as.integer(sel)
       tagList(
-        selectInput(ns("edit_edge"), i18n$t("modules.intervention_designer.edit_edge"), choices),
+        selectInput(ns("edit_edge"), i18n$t("modules.intervention_designer.edit_edge"), choices, selected = sel),
         fluidRow(column(6, selectInput(ns("min_level"), i18n$t("modules.intervention_designer.min_level"),
-                                       level_choices(), selected = "-1")),
+                                       level_choices(), selected = as.character(e$min_level[i]))),
                  column(6, selectInput(ns("max_level"), i18n$t("modules.intervention_designer.max_level"),
-                                       level_choices(), selected = "1"))),
+                                       level_choices(), selected = as.character(e$max_level[i])))),
         actionButton(ns("apply_range"), i18n$t("modules.intervention_designer.apply_range"), class = "btn-sm"),
         actionButton(ns("sign_nonpos"), i18n$t("modules.intervention_designer.sign_nonpos"), class = "btn-sm"),
         actionButton(ns("sign_nonneg"), i18n$t("modules.intervention_designer.sign_nonneg"), class = "btn-sm"),
@@ -1726,6 +2043,12 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       )
     })
     edit_row <- reactive(as.integer(input$edit_edge %||% NA))
+    # Picking another edge shows that edge's current range
+    observeEvent(input$edit_edge, {
+      i <- edit_row(); req(!is.na(i), i <= nrow(rv$edges))
+      updateSelectInput(session, "min_level", selected = as.character(rv$edges$min_level[i]))
+      updateSelectInput(session, "max_level", selected = as.character(rv$edges$max_level[i]))
+    }, ignoreInit = TRUE)
     observeEvent(input$apply_range, {
       i <- edit_row(); req(!is.na(i), i <= nrow(rv$edges))
       e <- rv$edges; e$min_level[i] <- as.numeric(input$min_level); e$max_level[i] <- as.numeric(input$max_level)
@@ -1746,18 +2069,39 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
 
     # ── Run gating ─────────────────────────────────────────────────────────
     level_sets <- reactive(ses_level_sets(rv$edges, INTERVENTION_GRID_LEVELS))
+    # Returns an i18n key (translated by the callers) or NULL.
+    # i18n-ref: modules.intervention_designer.job_running
+    # i18n-ref: modules.intervention_designer.need_edges
+    # i18n-ref: modules.intervention_designer.stale_edges
+    # i18n-ref: modules.intervention_designer.edge_exists
+    # i18n-ref: modules.intervention_designer.empty_range
+    # i18n-ref: modules.intervention_designer.need_name
+    # i18n-ref: modules.intervention_designer.name_clash
+    # i18n-ref: modules.intervention_designer.need_objective
     run_block_reason <- reactive({
       e <- rv$edges
       if (!is.null(rv$job)) return("modules.intervention_designer.job_running")
       if (!nrow(e)) return("modules.intervention_designer.need_edges")
+      # The CLD may have changed since the edges were added (renamed/deleted nodes,
+      # or a designed edge that now exists): catch it here, not in the worker.
+      lab <- net()$labels
+      ends <- setdiff(c(e$from, e$to), .DESIGNER_NEW)
+      if (!all(ends %in% lab)) return("modules.intervention_designer.stale_edges")
+      ctx <- e[e$from != .DESIGNER_NEW & e$to != .DESIGNER_NEW, , drop = FALSE]
+      if (nrow(ctx) && any(net()$matrix[cbind(ctx$from, ctx$to)] != 0)) {
+        return("modules.intervention_designer.edge_exists")
+      }
       if (any(lengths(level_sets()) == 0)) return("modules.intervention_designer.empty_range")
       if (any(e$from == .DESIGNER_NEW | e$to == .DESIGNER_NEW)) {
         if (!nzchar(node_name())) return("modules.intervention_designer.need_name")
-        if (node_name() %in% net()$labels) return("modules.intervention_designer.name_clash")
+        if (node_name() %in% lab) return("modules.intervention_designer.name_clash")
       }
       if (!length(input$objectives)) return("modules.intervention_designer.need_objective")
       NULL
     })
+    # Run is disabled while a reason applies or a job is active (spec §6); the
+    # click guard in observeEvent(input$run) stays as a backstop.
+    observe(shinyjs::toggleState("run", condition = is.null(run_block_reason())))
 
     output$grid_info <- renderUI({
       reason <- run_block_reason()
@@ -1765,6 +2109,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         return(div(class = "text-muted small mb-2", i18n$t(reason)))
       }
       g <- ses_intervention_grid(level_sets(), cap = INTERVENTION_GRID_CAP, seed = INTERVENTION_DEFAULT_SEED)
+      # i18n-ref: modules.intervention_designer.sampled
+      # i18n-ref: modules.intervention_designer.exhaustive
       div(class = "small mb-2",
           format(g$n_total, big.mark = ",", scientific = FALSE), " ",
           i18n$t("modules.intervention_designer.combinations"), " — ",
@@ -1777,9 +2123,11 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       reason <- run_block_reason()
       if (!is.null(reason)) { showNotification(i18n$t(reason), type = "warning"); return() }
       payload <- .designer_payload(net(), rv$edges, node_name(), input$objectives, input$sustain)
-      rv$result <- NULL; rv$error <- NULL; rv$progress <- list(done = 0, total = NA_real_)
+      rv$result <- NULL; rv$error <- NULL; rv$error_detail <- NULL
+      rv$progress <- list(done = 0, total = NA_real_)
       rv$job <- tryCatch(job_api$start(payload), error = function(e) {
         rv$error <- format_user_error(e, i18n = i18n, context_key = "modules.intervention_designer.context_run")
+        showNotification(rv$error, type = "error")
         NULL
       })
     })
@@ -1788,7 +2136,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       job <- rv$job
       req(job)
       invalidateLater(1000)
-      st <- job_api$poll(job)
+      st <- tryCatch(job_api$poll(job),
+                     error = function(e) list(state = "error", reason = "engine", message = conditionMessage(e)))
       if (identical(st$state, "running")) { rv$progress <- st; return() }
       rv$job <- NULL
       rv$progress <- NULL
@@ -1796,7 +2145,15 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         rv$result <- st$result
         rv$analysis_complete <- TRUE
       } else {
-        rv$error <- paste(i18n$t("modules.intervention_designer.run_failed"), st$message %||% "")
+        # The raw worker text goes to the log (format_user_error logs it) and to
+        # rv$error_detail; the page shows only the translated message (spec §7).
+        rv$error_detail <- st$message %||% ""
+        # i18n-ref: modules.intervention_designer.context_timeout
+        # i18n-ref: modules.intervention_designer.context_job
+        ctx <- if (identical(st$reason, "timeout")) "modules.intervention_designer.context_timeout"
+               else "modules.intervention_designer.context_job"
+        rv$error <- format_user_error(simpleError(rv$error_detail), i18n = i18n, context_key = ctx)
+        showNotification(rv$error, type = "error")
       }
     })
 
@@ -1812,29 +2169,37 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
 
     # ── Results ────────────────────────────────────────────────────────────
-    output$results_ui <- renderUI({
-      if (!is.null(rv$job)) {
-        pr <- rv$progress
-        pct <- if (!is.null(pr) && is.finite(pr$total) && pr$total > 0) round(100 * pr$done / pr$total) else 0
-        return(bs4Card(title = i18n$t("modules.intervention_designer.running"), width = 12, collapsible = FALSE,
-          div(class = "progress mb-2", div(class = "progress-bar", role = "progressbar",
-                                           style = sprintf("width: %d%%", pct), sprintf("%d%%", pct))),
-          actionButton(ns("cancel"), i18n$t("modules.intervention_designer.cancel"),
-                       icon = icon("stop"), class = "btn-outline-danger")))
-      }
-      if (!is.null(rv$error)) return(div(class = "alert alert-danger", rv$error))
-      r <- rv$result
-      if (is.null(r)) return(div(class = "text-muted mt-4", i18n$t("modules.intervention_designer.help_designer")))
+    precheck_alert <- function(status) {
       # i18n-ref: modules.intervention_designer.precheck.passed
       # i18n-ref: modules.intervention_designer.precheck.topology_change_needed
       # i18n-ref: modules.intervention_designer.precheck.skipped
       # i18n-ref: modules.intervention_designer.precheck.unavailable
-      pc_class <- switch(r$precheck$status, passed = "alert-success",
-                         topology_change_needed = "alert-warning", "alert-secondary")
+      cls <- switch(status, passed = "alert-success", topology_change_needed = "alert-warning",
+                    "alert-secondary")
+      div(class = paste("alert py-2", cls), i18n$t(paste0("modules.intervention_designer.precheck.", status)))
+    }
+
+    output$results_ui <- renderUI({
+      if (!is.null(rv$job)) {
+        pr <- rv$progress
+        pct <- if (!is.null(pr) && is.finite(pr$total) && pr$total > 0) round(100 * pr$done / pr$total) else 0
+        # Pre-check first (spec §6): on "topology change needed" the user can Cancel
+        return(tagList(
+          if (!is.null(pr$precheck)) precheck_alert(pr$precheck),
+          bs4Card(title = i18n$t("modules.intervention_designer.running"), width = 12, collapsible = FALSE,
+            div(class = "progress mb-2", div(class = "progress-bar", role = "progressbar",
+                                             style = sprintf("width: %d%%", pct), sprintf("%d%%", pct))),
+            actionButton(ns("cancel"), i18n$t("modules.intervention_designer.cancel"),
+                         icon = icon("stop"), class = "btn-outline-danger"))))
+      }
+      if (!is.null(rv$error)) return(div(class = "alert alert-danger", rv$error))
+      r <- rv$result
+      if (is.null(r)) return(div(class = "text-muted mt-4", i18n$t("modules.intervention_designer.help_designer")))
       fmt <- function(x) format(x, big.mark = ",", scientific = FALSE)
+      # i18n-ref: modules.intervention_designer.sampled
+      # i18n-ref: modules.intervention_designer.exhaustive
       tagList(
-        div(class = paste("alert py-2", pc_class),
-            i18n$t(paste0("modules.intervention_designer.precheck.", r$precheck$status))),
+        precheck_alert(r$precheck$status),
         bs4Card(title = i18n$t("modules.intervention_designer.result_share"), width = 12, collapsible = FALSE,
           h4(sprintf("%s / %s (%.1f%%)", fmt(r$n_a), fmt(r$n_eval), 100 * r$share)),
           if (isTRUE(r$sampled)) p(class = "text-warning small", i18n$t("modules.intervention_designer.estimate_note")),
@@ -1842,8 +2207,13 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
             tags$li(i18n$t("modules.intervention_designer.result_pass_a"), ": ", fmt(r$n_a)),
             tags$li(i18n$t("modules.intervention_designer.result_pass_ab"), ": ", fmt(r$n_ab)),
             tags$li(i18n$t("modules.intervention_designer.result_pass_abc"), ": ", fmt(r$n_abc))),
-          tags$small(class = "text-muted", i18n$t("modules.intervention_designer.run_meta"), ": ",
-                     r$seed, " / ", r$steps, " / ", r$window)),
+          tags$small(class = "text-muted",
+                     i18n$t("modules.intervention_designer.run_meta"), ": ",
+                     r$seed, " / ", r$steps, " / ", r$window, " · ",
+                     i18n$t("modules.intervention_designer.grid_size"), ": ", fmt(r$n_total), " (",
+                     i18n$t(if (isTRUE(r$sampled)) "modules.intervention_designer.sampled"
+                            else "modules.intervention_designer.exhaustive"), ") · ",
+                     i18n$t("modules.intervention_designer.elapsed"), ": ", sprintf("%.1f s", r$elapsed_s))),
         bs4Card(title = i18n$t("modules.intervention_designer.top_heading"), width = 12, collapsible = FALSE,
           DT::DTOutput(ns("top_table")),
           p(class = "text-muted small mt-2", i18n$t("modules.intervention_designer.select_row_hint")),
@@ -1856,7 +2226,10 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       yn <- function(x) ifelse(x %in% TRUE, i18n$t("modules.intervention_designer.yes"),
                                i18n$t("modules.intervention_designer.no"))
       e <- r$design_matrix$edges
-      lv <- as.data.frame(t(apply(r$top_levels, 2, lvl_label)), stringsAsFactors = FALSE)
+      # One row per top configuration, one column per variable edge (also with a single edge,
+      # where apply() would simplify to a vector)
+      lv <- as.data.frame(t(matrix(lvl_label(r$top_levels), nrow = nrow(r$top_levels))),
+                          stringsAsFactors = FALSE)
       names(lv) <- paste(e$from, "→", e$to)
       df <- cbind(data.frame(r$top$rank, yn(r$top$a), yn(r$top$b), yn(r$top$c), r$top$d,
                              stringsAsFactors = FALSE), lv)
@@ -1869,11 +2242,16 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
                     options = list(pageLength = 10, scrollX = TRUE, dom = "tip"))
     })
 
-    # Uses the network stored with the result (review focus 3)
+    # Uses the network, initial state and steps stored with the result (review
+    # focus 3), stepped like the grid, so signs agree with criteria (a)/(b).
     selected_comparison <- reactive({
       r <- rv$result; i <- input$top_table_rows_selected
       req(r, length(i) == 1)
-      ses_compare_interventions(r$base, ses_apply_config(r$design_matrix, r$top_levels[, i]))
+      nodes <- rownames(r$base)
+      fo <- ses_config_final_state(r$base, r$x0[seq_along(nodes)], r$steps)
+      fi <- ses_config_final_state(ses_apply_config(r$design_matrix, r$top_levels[, i]), r$x0, r$steps)
+      data.frame(node = nodes, state_original = unname(fo[nodes]), state_intervention = unname(fi[nodes]),
+                 delta = unname(fi[nodes] - fo[nodes]), stringsAsFactors = FALSE)
     })
 
     output$compare_plot <- plotly::renderPlotly({
@@ -1882,7 +2260,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         plotly::add_bars(y = ~state_original, name = i18n$t("modules.intervention_designer.compare_original")) |>
         plotly::add_bars(y = ~state_intervention, name = i18n$t("modules.intervention_designer.compare_selected")) |>
         plotly::layout(title = i18n$t("modules.intervention_designer.compare_title"), barmode = "group",
-                       xaxis = list(title = ""), yaxis = list(title = ""))
+                       xaxis = list(title = ""),
+                       yaxis = list(title = i18n$t("modules.intervention_designer.compare_state")))
     })
   })
 }
@@ -1920,22 +2299,46 @@ and after the `setup_cld_gate(...)` call add:
     intervention_designer_server("designer", project_data_reactive, i18n, event_bus = event_bus)
 ```
 
-In `app.R`, add to the `CRITICAL_MODULES` vector, on the line before `"modules/analysis_intervention.R",`:
+In `app.R`, add to the `OPTIONAL_MODULES` vector (app.R:93-117; `analysis_intervention.R` is optional, so its sub-module is too), on the line before `"modules/analysis_intervention.R",` (line 114):
 
 ```r
   "modules/intervention_designer_module.R",  # WP5 WS-7a Designer tab (sub-module of the Intervention page)
 ```
 
+The existing tests that load `modules/analysis_intervention.R` must now also load the sub-module (global.R sources only `functions/`; the engine and job files come from there after Tasks 1 and 6):
+
+- `tests/testthat/test-analysis-modules-batch.R` line 3 becomes:
+
+```r
+source_for_test(c("modules/intervention_designer_module.R", "modules/analysis_intervention.R",
+                  "modules/scenario_builder_module.R",
+                  "modules/analysis_decision_lens.R", "modules/connection_review_tabbed.R",
+                  "modules/analysis_simulation.R"))
+```
+
+- `tests/testthat/test-modules-comprehensive.R`: in the `source_for_test(c(...))` vector, insert on the line before `"modules/analysis_intervention.R",`:
+
+```r
+  "modules/intervention_designer_module.R",
+```
+
 - [ ] **Step 5: Run to verify pass**
 
-Filters: `^intervention-designer-module$`, `^intervention-designer$`, `^intervention-designer-d53$`, `^modules$`, `^module-signatures$`, `^i18n-enforcement$`, `^functions-sourced-in-app$`. Expected: all PASS.
-Then `micromamba run -n shiny python scripts/_i18n_audit.py` → `missing=0, hardcoded=0`.
+Filters: `^intervention-designer-module$`, `^intervention-designer$`, `^intervention-designer-d53$`, `^modules$`, `^module-signatures$`, `^analysis-modules-batch$`, `^modules-comprehensive$`, `^i18n-enforcement$`, `^functions-sourced-in-app$`. Expected: all PASS; N34 in `analysis-modules-batch` passes, and "analysis_intervention_ui exists and renders" in `modules-comprehensive` passes rather than being skipped.
+Then `micromamba run -n shiny python scripts/_i18n_audit.py` → `missing=0, hardcoded=0`, and no `modules.intervention_designer.*` key in its unused-keys list (every dynamic lookup has an `# i18n-ref:` sentinel).
 
 - [ ] **Step 6: Smoke-run the app**
 
-Start the app from the worktree app dir (`Rscript -e ".libPaths(c('C:/Users/arturas.baziukas/AppData/Local/R/win-library/4.4', .libPaths())); shiny::runApp('.', port = 4848, launch.browser = FALSE)"` in the background), load a template project with a CLD, open Intervention → Designer (D5.3), add a node with two targets and one indicator, choose an objective, Run. Confirm progress, results, the top table, and the comparison plot; confirm Quick compare still works. Stop the app.
+Start the app from the worktree app dir (`Rscript -e ".libPaths(c('C:/Users/arturas.baziukas/AppData/Local/R/win-library/4.4', .libPaths())); shiny::runApp('.', port = 4848, launch.browser = FALSE)"` in the background), load a template project with a CLD, open Intervention → Designer (D5.3), add a node with two targets and one indicator, choose an objective, Run. Confirm the pre-check line above the progress bar, progress, results, the top table, and the comparison plot; confirm Run is disabled while the job runs and Quick compare still works. Stop the app.
 
-- [ ] **Step 7: Commit** — `"feat(wp5): WS-7a Designer tab on the Intervention page"`.
+- [ ] **Step 7: Commit**
+
+```bash
+git -C C:/Users/arturas.baziukas/wt-ws7a add MarineSABRES_SES_Shiny/modules/intervention_designer_module.R MarineSABRES_SES_Shiny/modules/analysis_intervention.R MarineSABRES_SES_Shiny/app.R MarineSABRES_SES_Shiny/tests/testthat/test-intervention-designer-module.R MarineSABRES_SES_Shiny/tests/testthat/test-analysis-modules-batch.R MarineSABRES_SES_Shiny/tests/testthat/test-modules-comprehensive.R
+git -C C:/Users/arturas.baziukas/wt-ws7a commit -F <msgfile>   # "feat(wp5): WS-7a Designer tab on the Intervention page"
+```
+
+Also stage `tests/testthat/helper-stubs.R` if Step 4 changed it.
 
 ---
 
@@ -1954,9 +2357,9 @@ Start the app from the worktree app dir (`Rscript -e ".libPaths(c('C:/Users/artu
 ## [1.27.0] - <today>
 
 ### Added (WP5 intervention designer — spec 2026-10-14 WS-7a)
-- Intervention page gets a "Designer (D5.3)" tab next to "Quick compare". It adds a new intervention node (mode A), new edges between existing nodes including a biological self-loop helper (mode B), or both, and tests every combination of ordinal levels (−1 … 1) on those edges, or a seeded sample of 50,000 above that size.
-- Results follow D5.3: share of combinations whose objective nodes stay positive over the last 100 of 1,000 steps, also-sustain nodes (default all Goods & Benefits), stability (all Laplacian eigenvalues real) and the number of intervention edges used; top 20 combinations with a final-state comparison.
-- Boolean pre-check reports "topology change needed" when no attractor keeps the objectives on (skipped above 20 nodes).
+- Intervention page gets a "Designer (D5.3)" tab next to "Quick compare". It adds a new intervention node (mode A), new edges between existing nodes including a biological self-loop helper (mode B), or both, and tests every combination of ordinal levels (−1 … 1) on those edges, or a seeded sample of 65,536 above that size (D5.3's 50,176-combination Tuscany grid stays exhaustive).
+- Results follow D5.3: share of combinations whose objective nodes stay positive over the last 100 of 1,000 steps, also-sustain nodes (default all Goods & Benefits), stability (all Laplacian eigenvalues real) and the number of intervention edges used; top 20 combinations with a final-state comparison computed with the run's own initial state and steps.
+- Boolean pre-check reports "topology change needed" when no attractor keeps the objectives on (skipped above 20 nodes); its result is shown above the progress bar while the grid runs.
 - Picking an intervention type shows the operations the D5.3 matrix and the EBM framework list for it (provisional, advisory) and pre-fills default ranges from the evidence priors (toolbox extension).
 - Grids run in a background R process (callr), so other users of the server are not blocked; Cancel stops a run.
 
