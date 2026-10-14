@@ -1109,7 +1109,7 @@ test_that("a running poll reports the pre-check status from the progress file (s
   skip_if_not_installed("callr")
   job <- list(process = callr::r_bg(function() Sys.sleep(30)),
               progress_file = tempfile("designer_progress_", fileext = ".txt"), started = Sys.time())
-  on.exit(designer_job_cancel(job), add = TRUE)
+  withr::defer(designer_job_cancel(job))
   writeLines("0 1000 topology_change_needed", job$progress_file)
   st <- designer_job_poll(job, timeout_s = 600)
   expect_equal(st$state, "running")
@@ -1931,8 +1931,11 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         bs4Card(title = i18n$t("modules.intervention_designer.step_run"), width = 12,
                 status = "success", collapsible = FALSE,
           uiOutput(ns("grid_info")),
+          # Rendered disabled when a reason already applies; the toggleState observer
+          # below keeps it in sync between rebuilds of this panel.
           actionButton(ns("run"), i18n$t("modules.intervention_designer.run"),
-                       icon = icon("play"), class = "btn-success"))
+                       icon = icon("play"), class = "btn-success",
+                       disabled = !is.null(isolate(run_block_reason()))))
       )
     })
 
