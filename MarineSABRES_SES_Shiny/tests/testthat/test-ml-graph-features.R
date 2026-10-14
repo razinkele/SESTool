@@ -363,6 +363,60 @@ test_that("batch extraction is reasonably fast", {
   expect_equal(ncol(features_matrix), 8)
 })
 
+test_that("batch extraction matches the single-pair extractor on awkward inputs", {
+  set.seed(42)
+  types <- c("Drivers", "Activities", "Pressures", "Marine Processes & Functioning",
+             "Ecosystem Services", "Goods & Benefits", "Responses")
+  nodes <- data.frame(
+    id = paste0("N", 1:25),
+    label = paste("Node", 1:25),
+    group = c(sample(types, 24, replace = TRUE), "Not a DAPSIWRM type"),
+    stringsAsFactors = FALSE
+  )
+  # Sparse edges so many pairs are unreachable; N25 is isolated
+  edges <- unique(data.frame(
+    from = sample(nodes$id[1:24], 30, replace = TRUE),
+    to = sample(nodes$id[1:24], 30, replace = TRUE),
+    stringsAsFactors = FALSE
+  ))
+  edges <- edges[edges$from != edges$to, ]
+  # One self-loop, the case where cached neighbour lists could diverge from igraph
+  edges <- rbind(edges, data.frame(from = "N1", to = "N1", stringsAsFactors = FALSE))
+  graph <- create_igraph_from_data(nodes, edges)
+
+  ids <- c(nodes$id, "MISSING")
+  source_ids <- c(sample(ids, 150, replace = TRUE), "N1", "N25", "MISSING")
+  target_ids <- c(sample(ids, 150, replace = TRUE), "N1", "N3", "N2")
+
+  single <- function(s, t, g) {
+    t(mapply(function(a, b) suppressWarnings(extract_graph_features(a, b, g, nodes)),
+             s, t, USE.NAMES = FALSE))
+  }
+
+  batch <- suppressWarnings(extract_graph_features_batch(source_ids, target_ids, graph, nodes))
+  expect_equal(unname(batch), unname(single(source_ids, target_ids, graph)))
+
+  # Single pair keeps a 1 x 8 matrix
+  one <- extract_graph_features_batch("N1", "N2", graph, nodes)
+  expect_equal(dim(one), c(1L, 8L))
+  expect_equal(unname(one), unname(single("N1", "N2", graph)))
+
+  # Graph with no edges: every pair unreachable
+  empty_graph <- create_igraph_from_data(nodes, edges[0, ])
+  expect_equal(
+    unname(extract_graph_features_batch(source_ids[1:20], target_ids[1:20], empty_graph, nodes)),
+    unname(single(source_ids[1:20], target_ids[1:20], empty_graph))
+  )
+
+  # Weighted graph: path length must follow igraph's weighted shortest path
+  weighted <- graph
+  igraph::E(weighted)$weight <- sample(c(1, 5, 20), igraph::ecount(weighted), replace = TRUE)
+  expect_equal(
+    unname(suppressWarnings(extract_graph_features_batch(source_ids, target_ids, weighted, nodes))),
+    unname(single(source_ids, target_ids, weighted))
+  )
+})
+
 # ==============================================================================
 # Integration Test
 # ==============================================================================

@@ -256,105 +256,117 @@ extract_graph_features_batch <- function(source_ids, target_ids, graph, nodes) {
     return(matrix(0, nrow = n_pairs, ncol = 8))
   }
 
-  # Pre-compute betweenness for all nodes (expensive operation)
+  # Everything graph-level is computed once here; the per-pair work below is
+  # plain R lookups. Per-pair igraph calls (shortest_paths, neighbors) cost
+  # ~3 ms each in argument matching and vertex-sequence indexing, and every
+  # unreachable pair raised an igraph warning, which made R's warning
+  # collection the dominant cost for sparse graphs.
+  vnames <- V(graph)$name
+  source_ids <- as.character(source_ids)
+  target_ids <- as.character(target_ids)
+
+  features_matrix <- matrix(0, nrow = n_pairs, ncol = 8)
+  valid <- which(source_ids %in% vnames & target_ids %in% vnames)
+  if (length(valid) == 0) {
+    return(features_matrix)
+  }
+  vs <- source_ids[valid]
+  vt <- target_ids[valid]
+
+  # Feature 1-2: Degrees
+  outdegree_lookup <- setNames(degree(graph, mode = "out"), vnames)
+  indegree_lookup <- setNames(degree(graph, mode = "in"), vnames)
+
+  # Feature 3-4: Betweenness, normalised to 0-1 by the graph maximum
   betweenness_scores <- tryCatch(
     betweenness(graph, directed = TRUE),
     error = function(e) rep(0, vcount(graph))
   )
-  betweenness_lookup <- setNames(betweenness_scores, V(graph)$name)
+  betweenness_lookup <- setNames(betweenness_scores, vnames)
   max_betweenness <- max(betweenness_scores, na.rm = TRUE)
-
-  # Pre-compute degrees for all nodes
-  outdegree_lookup <- setNames(degree(graph, mode = "out"), V(graph)$name)
-  indegree_lookup <- setNames(degree(graph, mode = "in"), V(graph)$name)
-
-  # Create type lookup
-  type_lookup <- setNames(nodes$group, nodes$id)
-
-  # Extract features for each pair
-  features_list <- lapply(1:n_pairs, function(i) {
-    source_id <- source_ids[i]
-    target_id <- target_ids[i]
-
-    # Check existence
-    source_exists <- source_id %in% V(graph)$name
-    target_exists <- target_id %in% V(graph)$name
-
-    if (!source_exists || !target_exists) {
-      return(rep(0, 8))
-    }
-
-    # Feature 1-2: Degrees
-    source_outdegree <- outdegree_lookup[source_id]
-    target_indegree <- indegree_lookup[target_id]
-
-    # Feature 3-4: Betweenness
-    source_betweenness <- betweenness_lookup[source_id]
-    target_betweenness <- betweenness_lookup[target_id]
-
-    if (max_betweenness > 0) {
-      source_betweenness <- source_betweenness / max_betweenness
-      target_betweenness <- target_betweenness / max_betweenness
-    }
-
-    # Feature 5: Shortest path
-    shortest_path_length <- tryCatch({
-      path <- shortest_paths(
-        graph,
-        from = source_id,
-        to = target_id,
-        mode = "out"
-      )$vpath[[1]]
-
-      if (length(path) == 0) 10 else min(length(path) - 1, 10)
-    }, error = function(e) 10)
-
-    # Feature 6-7: DAPSIWRM
-    source_type <- type_lookup[source_id]
-    target_type <- type_lookup[target_id]
-
-    if (is.na(source_type) || is.na(target_type)) {
-      dapsiwrm_distance <- 5
-      valid_transition <- 0
-    } else {
-      dapsiwrm_distance <- calculate_dapsiwrm_distance(source_type, target_type)
-      valid_transition <- check_valid_dapsiwrm_transition(source_type, target_type)
-    }
-
-    # Feature 8: Common neighbors
-    common_neighbors <- tryCatch({
-      source_neighbors <- neighbors(graph, v = source_id, mode = "out")
-      target_neighbors <- neighbors(graph, v = target_id, mode = "in")
-
-      source_neighbor_names <- V(graph)[source_neighbors]$name
-      target_neighbor_names <- V(graph)[target_neighbors]$name
-
-      length(intersect(source_neighbor_names, target_neighbor_names))
-    }, error = function(e) 0)
-
-    # Return feature vector
-    c(
-      source_outdegree,
-      target_indegree,
-      source_betweenness,
-      target_betweenness,
-      shortest_path_length,
-      dapsiwrm_distance,
-      valid_transition,
-      common_neighbors
-    )
-  })
-
-  # Convert to matrix
-  features_matrix <- do.call(rbind, features_list)
-
-  # Ensure numeric and no NAs
-  # Use drop=FALSE to preserve matrix structure even with 1 row
-  if (n_pairs == 1) {
-    features_matrix <- matrix(as.numeric(features_matrix), nrow = 1, ncol = 8)
-  } else {
-    features_matrix <- apply(features_matrix, 2, as.numeric)
+  source_betweenness <- unname(betweenness_lookup[vs])
+  target_betweenness <- unname(betweenness_lookup[vt])
+  if (max_betweenness > 0) {
+    source_betweenness <- source_betweenness / max_betweenness
+    target_betweenness <- target_betweenness / max_betweenness
   }
+
+  # Feature 5: Shortest path length in edges, capped at 10 (10 = unreachable).
+  # Unweighted graphs (everything create_igraph_from_data builds) use one hop
+  # matrix for all distinct sources. A graph with a "weight" attribute keeps
+  # the per-pair weighted search, because the hop count of the weighted
+  # shortest path can differ from the unweighted one.
+  if ("weight" %in% edge_attr_names(graph)) {
+    shortest_path_length <- vapply(seq_along(vs), function(i) {
+      tryCatch({
+        path <- suppressWarnings(shortest_paths(
+          graph, from = vs[i], to = vt[i], mode = "out"
+        ))$vpath[[1]]
+        if (length(path) == 0) 10 else min(length(path) - 1, 10)
+      }, error = function(e) 10)
+    }, numeric(1))
+  } else {
+    sources <- unique(vs)
+    hops <- tryCatch(
+      distances(graph, v = sources, to = V(graph), mode = "out", weights = NA),
+      error = function(e) NULL
+    )
+    if (is.null(hops)) {
+      shortest_path_length <- rep(10, length(vs))
+    } else {
+      shortest_path_length <- hops[cbind(match(vs, sources), match(vt, vnames))]
+      shortest_path_length[!is.finite(shortest_path_length)] <- 10
+      shortest_path_length <- pmin(shortest_path_length, 10)
+    }
+  }
+
+  # Feature 6-7: DAPSIWRM type distance and transition validity
+  type_lookup <- setNames(nodes$group, nodes$id)
+  source_type <- unname(type_lookup[vs])
+  target_type <- unname(type_lookup[vt])
+  dapsiwrm_distance <- rep(5, length(vs))
+  valid_transition <- rep(0, length(vs))
+  typed <- which(!is.na(source_type) & !is.na(target_type))
+  if (length(typed) > 0) {
+    dapsiwrm_distance[typed] <- mapply(
+      calculate_dapsiwrm_distance, source_type[typed], target_type[typed],
+      USE.NAMES = FALSE
+    )
+    valid_transition[typed] <- mapply(
+      check_valid_dapsiwrm_transition, source_type[typed], target_type[typed],
+      USE.NAMES = FALSE
+    )
+  }
+
+  # Feature 8: Common neighbours (out-neighbours of source that are also
+  # in-neighbours of target)
+  common_neighbors <- tryCatch({
+    out_nb <- setNames(
+      lapply(adjacent_vertices(graph, V(graph), mode = "out"),
+             function(x) vnames[as.integer(x)]),
+      vnames
+    )
+    in_nb <- setNames(
+      lapply(adjacent_vertices(graph, V(graph), mode = "in"),
+             function(x) vnames[as.integer(x)]),
+      vnames
+    )
+    vapply(seq_along(vs), function(i) {
+      length(intersect(out_nb[[vs[i]]], in_nb[[vt[i]]]))
+    }, numeric(1))
+  }, error = function(e) rep(0, length(vs)))
+
+  features_matrix[valid, ] <- cbind(
+    unname(outdegree_lookup[vs]),
+    unname(indegree_lookup[vt]),
+    source_betweenness,
+    target_betweenness,
+    shortest_path_length,
+    dapsiwrm_distance,
+    valid_transition,
+    common_neighbors
+  )
+
   features_matrix[is.na(features_matrix)] <- 0
 
   return(features_matrix)

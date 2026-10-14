@@ -1,8 +1,8 @@
 {
-  "version": "1.26.0",
+  "version": "1.26.1",
   "version_name": "WP5 impact assessment: narrative and report",
   "release_date": "2026-10-14",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -17,6 +17,9 @@
     "WP5 impact assessment: deterministic trade-off narrative (step 6) and Word/Excel report with mechanism and provenance appendices (step 7) (WS-6c)."
   ],
   "fixes": {
+    "performance": [
+      "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
+    ],
     "high": [
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
     ]
@@ -38,7 +41,7 @@
   "migration_notes": [
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save."
   ],
-  "previous_version": "1.23.0",
+  "previous_version": "1.26.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
