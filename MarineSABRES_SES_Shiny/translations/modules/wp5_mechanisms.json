@@ -462,6 +462,17 @@
       "it": "Fonte WP5",
       "no": "WP5-kilde",
       "el": "Πηγή WP5"
+    },
+    "modules.wp5_mechanisms.provenance.unknown": {
+      "en": "Not in the current knowledge base",
+      "es": "No figura en la base de conocimiento actual",
+      "fr": "Absent de la base de connaissances actuelle",
+      "de": "Nicht in der aktuellen Wissensbasis enthalten",
+      "lt": "Nėra dabartinėje žinių bazėje",
+      "pt": "Não consta da base de conhecimento atual",
+      "it": "Non presente nella base di conoscenza attuale",
+      "no": "Finnes ikke i den gjeldende kunnskapsbasen",
+      "el": "Δεν υπάρχει στην τρέχουσα βάση γνώσεων"
     }
   }
 }

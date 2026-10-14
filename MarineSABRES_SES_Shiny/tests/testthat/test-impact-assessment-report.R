@@ -177,6 +177,42 @@ test_that("unknown mechanism ids / indicator codes and canonical ID/Name columns
   expect_identical(r$scope_indicators$name[r$scope_indicators$code == "NOPE_1"], "")
   gone <- r$mechanisms[r$mechanisms$id == "gone_99", ]
   expect_identical(gone$name, "gone_99"); expect_identical(gone$provenance, "")
+  # ids that vanished from the KB / registry still reach Appendix B, as "unknown"
+  pm <- r$provenance[r$provenance$kind == "mechanism" & r$provenance$item == "gone_99", ]
+  expect_identical(nrow(pm), 1L); expect_identical(pm$provenance, "unknown")
+  pind <- r$provenance[r$provenance$kind == "indicator" & r$provenance$item == "NOPE_1", ]
+  expect_identical(nrow(pind), 1L); expect_identical(pind$provenance, "unknown"); expect_identical(pind$detail, "NOPE_1")
+  expect_identical(pind$provenance_label, "modules.wp5_mechanisms.provenance.unknown")
+  expect_true("provenance_label" %in% names(r$scope_indicators))
+})
+
+test_that("the printed trade-off draft is regenerated from the current matrix, not the stored one", {
+  ia <- fixture_ia()
+  ia <- impact_set_section(ia, "trade_offs", list(auto_draft = "STALE"))
+  cl <- impact_get_cell(ia, "EE", "S2"); cl$magnitude <- "substantial"; ia <- impact_set_cell(ia, "EE", "S2", cl)
+  r <- impact_report_data(report_project(ia), ia, i18n)
+  expect_false(grepl("STALE", r$text$trade_offs_draft, fixed = TRUE))
+  expect_true(grepl("narrative.closing", r$text$trade_offs_draft, fixed = TRUE))
+  expect_true("toolbox_extension" %in% r$provenance$kind)
+  r0 <- impact_report_data(report_project(fixture_ia()), fixture_ia(), i18n)       # nothing stored: stays empty
+  expect_identical(r0$text$trade_offs_draft, "")
+})
+
+test_that("a copied cell with an empty reference version has no bare trailing ' v'", {
+  ia <- fixture_ia()
+  cl <- impact_get_cell(ia, "EE", "S3"); cl$reference$ref_version <- ""; ia <- impact_set_cell(ia, "EE", "S3", cl)
+  r <- impact_report_data(report_project(ia), ia, i18n)
+  ref <- r$cells_long$reference[r$cells_long$criterion == "EE" & r$cells_long$scenario == "S3"]
+  expect_false(grepl(" v$", ref))
+})
+
+test_that(".ia_docx_text splits single line breaks into paragraphs and treats whitespace as empty", {
+  skip_if_not_installed("officer")
+  doc <- .ia_docx_text(officer::read_docx(), "one\r\ntwo\n\nthree", i18n$t)
+  txt <- officer::docx_summary(doc)$text
+  expect_true(all(c("one", "two", "three") %in% txt))
+  doc2 <- .ia_docx_text(officer::read_docx(), "  \n ", i18n$t)
+  expect_true("modules.impact_assessment.report.empty" %in% officer::docx_summary(doc2)$text)
 })
 
 test_that("an empty assessment yields empty tables and '(not provided)' text, not an error", {
@@ -259,12 +295,14 @@ test_that("build_impact_report_xlsx writes the eight sheets with translated head
   expect_true(any(grepl("€0.25–1m/yr", cells[[9]], fixed = TRUE)))
   ov <- openxlsx::read.xlsx(f, sheet = "Overview", colNames = FALSE)
   expect_true("Corridor case" %in% unlist(ov))
+  expect_true("Migratory corridor" %in% unlist(ov))                                            # step 1 on the Overview sheet
   mx <- openxlsx::read.xlsx(f, sheet = "Matrix")
   expect_identical(names(mx)[-1], c("S1", "S2", "S3", "S4"))
   pv <- openxlsx::read.xlsx(f, sheet = "Provenance")
   expect_true("toolbox_extension" %in% unlist(pv))
   tx <- openxlsx::read.xlsx(f, sheet = "Text")
   expect_true(any(grepl("Πιλοτικό", unlist(tx), fixed = TRUE)))
+  expect_identical(names(tx), c("modules.impact_assessment.report.col.label", "modules.impact_assessment.report.col.value"))
   sc <- openxlsx::read.xlsx(f, sheet = "Scope", colNames = FALSE)
   expect_true("Trawling pressure" %in% unlist(sc))
 })

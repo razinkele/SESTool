@@ -389,6 +389,21 @@ test_that("step 7 offers Word and Excel downloads that contain the assessment", 
   })
 })
 
+test_that("a download made on step 7 persists and contains the pending, unsaved recommendations", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  p <- set_impact_assessment(mk_project("Macaronesia"), ia_with_matrix())
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_7 = 1); session$flushReact()
+    session$setInputs(rec_text = "Typed, not saved")
+    f <- output$download_docx
+    txt <- paste(officer::docx_summary(officer::read_docx(f))$text, collapse = "\n")
+    expect_match(txt, "Typed, not saved", fixed = TRUE)
+    expect_identical(rv$ia$recommendations$text, "Typed, not saved")
+  })
+})
+
 test_that("the download handlers follow the hardening pattern (tryCatch, notification, stop(e))", {
   s <- paste(readLines(file.path(PROJECT_ROOT, "modules", "impact_assessment_module.R"), warn = FALSE), collapse = "\n")
   expect_match(s, "build_impact_report_docx(", fixed = TRUE)
@@ -396,4 +411,5 @@ test_that("the download handlers follow the hardening pattern (tryCatch, notific
   expect_match(s, "common.messages.word_export_failed", fixed = TRUE)
   expect_match(s, "common.messages.excel_export_failed", fixed = TRUE)
   expect_identical(lengths(regmatches(s, gregexpr("stop(e)", s, fixed = TRUE))), 2L)
+  expect_false(grepl("ms-2", s, fixed = TRUE))                                      # Bootstrap-5 class; bs4Dash is Bootstrap 4
 })

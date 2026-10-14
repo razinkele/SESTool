@@ -1600,7 +1600,7 @@
       "es": "%1$s implica un equilibrio entre objetivos: las ganancias en %2$s conllevan pérdidas en %3$s.",
       "fr": "%1$s implique un arbitrage : les gains en %2$s s'accompagnent de pertes en %3$s.",
       "de": "%1$s beinhaltet einen Zielkonflikt: Gewinne bei %2$s gehen mit Verlusten bei %3$s einher.",
-      "lt": "%1$s reiškia kompromisą: laimėjimai (%2$s) lemia nuostolius (%3$s).",
+      "lt": "%1$s reiškia kompromisą: laimėjimus (%2$s) lydi nuostoliai (%3$s).",
       "pt": "%1$s implica uma permuta: os ganhos em %2$s acompanham perdas em %3$s.",
       "it": "%1$s comporta un compromesso: i guadagni in %2$s si accompagnano a perdite in %3$s.",
       "no": "%1$s innebærer en avveining: gevinster i %2$s følges av tap i %3$s.",
@@ -1688,7 +1688,7 @@
       "es": "Este borrador fue generado por la herramienta a partir de la matriz; no es texto del WP5. Revíselo y edítelo antes de usarlo.",
       "fr": "Ce brouillon a été généré par la boîte à outils à partir de la matrice ; ce n'est pas un texte du WP5. Relisez-le et modifiez-le avant de l'utiliser.",
       "de": "Dieser Entwurf wurde von der Toolbox aus der Matrix erzeugt; er ist kein WP5-Text. Bitte vor der Verwendung prüfen und bearbeiten.",
-      "lt": "Šį projektą iš matricos sugeneravo įrankių rinkinys; tai nėra WP5 tekstas. Prieš naudodami peržiūrėkite ir redaguokite.",
+      "lt": "Šį juodraštį iš matricos sugeneravo įrankių rinkinys; tai nėra WP5 tekstas. Prieš naudodami peržiūrėkite ir redaguokite.",
       "pt": "Este rascunho foi gerado pela caixa de ferramentas a partir da matriz; não é texto do WP5. Reveja-o e edite-o antes de utilizar.",
       "it": "Questa bozza è stata generata dalla toolbox a partire dalla matrice; non è un testo del WP5. Rivedila e modificala prima dell'uso.",
       "no": "Dette utkastet ble generert av verktøykassen ut fra matrisen; det er ikke WP5-tekst. Gjennomgå og rediger det før bruk.",
@@ -2080,15 +2080,15 @@
       "el": "Δεν αντιγράφηκαν δεδομένα αναφοράς του WP5 και δεν χρησιμοποιήθηκε καμία επέκταση του εργαλειοπακέτου."
     },
     "modules.impact_assessment.report.provenance_intro": {
-      "en": "Rows marked wp5_derived or toolbox_extension are not WP5 findings. Copied reference cells cite their D5.2 table and the reference data version.",
-      "es": "Las filas marcadas como wp5_derived o toolbox_extension no son resultados del WP5. Las celdas de referencia copiadas citan su tabla del D5.2 y la versión de los datos de referencia.",
-      "fr": "Les lignes marquées wp5_derived ou toolbox_extension ne sont pas des résultats du WP5. Les cellules de référence copiées citent leur tableau du D5.2 et la version des données de référence.",
-      "de": "Als wp5_derived oder toolbox_extension gekennzeichnete Zeilen sind keine WP5-Ergebnisse. Kopierte Referenzzellen nennen ihre D5.2-Tabelle und die Version der Referenzdaten.",
-      "lt": "Eilutės, pažymėtos wp5_derived arba toolbox_extension, nėra WP5 rezultatai. Nukopijuotuose pamatiniuose langeliuose nurodoma jų D5.2 lentelė ir pamatinių duomenų versija.",
-      "pt": "As linhas assinaladas como wp5_derived ou toolbox_extension não são resultados do WP5. As células de referência copiadas citam a respetiva tabela do D5.2 e a versão dos dados de referência.",
-      "it": "Le righe contrassegnate come wp5_derived o toolbox_extension non sono risultati del WP5. Le celle di riferimento copiate citano la relativa tabella del D5.2 e la versione dei dati di riferimento.",
-      "no": "Rader merket wp5_derived eller toolbox_extension er ikke WP5-funn. Kopierte referanseceller viser til tabellen i D5.2 og versjonen av referansedataene.",
-      "el": "Οι γραμμές που φέρουν την ένδειξη wp5_derived ή toolbox_extension δεν αποτελούν ευρήματα του WP5. Τα αντιγραμμένα κελιά αναφοράς παραπέμπουν στον πίνακα του D5.2 και στην έκδοση των δεδομένων αναφοράς."
+      "en": "Rows whose provenance is not \"WP5 source\" are not WP5 findings. Copied reference cells cite their D5.2 table and the reference data version; direction, magnitude and timing on copied cells are always the author's.",
+      "es": "Las filas cuya procedencia no es \"Fuente del WP5\" no son resultados del WP5. Las celdas de referencia copiadas citan su tabla del D5.2 y la versión de los datos de referencia; la dirección, la magnitud y el plazo de las celdas copiadas son siempre del autor.",
+      "fr": "Les lignes dont la provenance n'est pas « Source WP5 » ne sont pas des résultats du WP5. Les cellules de référence copiées citent leur tableau du D5.2 et la version des données de référence ; la direction, l'ampleur et le calendrier des cellules copiées relèvent toujours de l'auteur.",
+      "de": "Zeilen, deren Herkunft nicht „WP5-Quelle“ lautet, sind keine WP5-Ergebnisse. Kopierte Referenzzellen nennen ihre D5.2-Tabelle und die Version der Referenzdaten; Richtung, Ausmaß und Zeitrahmen kopierter Zellen stammen stets von der Autorin bzw. dem Autor.",
+      "lt": "Eilutės, kurių kilmė nėra „WP5 šaltinis“, nėra WP5 rezultatai. Nukopijuotuose pamatiniuose langeliuose nurodoma jų D5.2 lentelė ir pamatinių duomenų versija; nukopijuotų langelių kryptį, mastą ir laiką visada nustato autorius.",
+      "pt": "As linhas cuja proveniência não é «Fonte do WP5» não são resultados do WP5. As células de referência copiadas citam a respetiva tabela do D5.2 e a versão dos dados de referência; a direção, a magnitude e o prazo das células copiadas são sempre do autor.",
+      "it": "Le righe la cui provenienza non è «Fonte WP5» non sono risultati del WP5. Le celle di riferimento copiate citano la relativa tabella del D5.2 e la versione dei dati di riferimento; direzione, entità e tempistica delle celle copiate sono sempre dell'autore.",
+      "no": "Rader der opphavet ikke er «WP5-kilde», er ikke WP5-funn. Kopierte referanseceller viser til tabellen i D5.2 og versjonen av referansedataene; retning, størrelse og tidsramme i kopierte celler er alltid forfatterens.",
+      "el": "Οι γραμμές των οποίων η προέλευση δεν είναι «Πηγή WP5» δεν αποτελούν ευρήματα του WP5. Τα αντιγραμμένα κελιά αναφοράς παραπέμπουν στον πίνακα του D5.2 και στην έκδοση των δεδομένων αναφοράς· η κατεύθυνση, το μέγεθος και ο χρονισμός στα αντιγραμμένα κελιά είναι πάντοτε του συντάκτη."
     },
     "modules.impact_assessment.report.kind.reference_copy": {
       "en": "Copied WP5 reference cell",

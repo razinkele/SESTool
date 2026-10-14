@@ -18,7 +18,7 @@ impact_assessment_ui <- function(id, i18n) {
     fluidRow(column(12,
       div(class = "mt-3",
         actionButton(ns("prev_step"), i18n$t("modules.impact_assessment.prev"), icon = icon("arrow-left"), class = "btn-outline-secondary"),
-        actionButton(ns("next_step"), i18n$t("modules.impact_assessment.next"), icon = icon("arrow-right"), class = "btn-primary ms-2")
+        actionButton(ns("next_step"), i18n$t("modules.impact_assessment.next"), icon = icon("arrow-right"), class = "btn-primary ml-2")
       )
     ))
   )
@@ -150,7 +150,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       h5(i18n$t("modules.impact_assessment.report_heading")),
       p(class = "text-muted", i18n$t("modules.impact_assessment.report_intro")),
       downloadButton(ns("download_docx"), i18n$t("modules.impact_assessment.download_docx"), class = "btn-outline-primary"),
-      downloadButton(ns("download_xlsx"), i18n$t("modules.impact_assessment.download_xlsx"), class = "btn-outline-primary ms-2")
+      downloadButton(ns("download_xlsx"), i18n$t("modules.impact_assessment.download_xlsx"), class = "btn-outline-primary ml-2")
     )
     save_section <- function(section, fields, prefix) {
       vals <- setNames(lapply(fields, function(f) input[[paste0(prefix, f)]] %||% ""), fields)
@@ -161,8 +161,15 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(input$save_characterisation, save_section("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_"))
     observeEvent(input$save_recommendations, save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_"))
 
-    # Reports are built from the stored assessment (what the user saved), never from unsaved inputs.
-    report_data <- function() impact_report_data(isolate(project_data_reactive()), rv$ia, i18n)
+    # Reports are built from the stored assessment. A download first persists pending step-7 text
+    # (same decision as the step-6 Draft button), but only when it differs, so it never writes needlessly.
+    report_data <- function() {
+      pending <- isolate(input$rec_text)
+      if (!is.null(pending) && !identical(pending, rv$ia$recommendations$text %||% "")) {
+        save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_")
+      }
+      impact_report_data(isolate(project_data_reactive()), rv$ia, i18n)
+    }
     output$download_docx <- downloadHandler(
       filename = function() generate_export_filename("Impact_Assessment", ".docx"),
       content = function(file) {
@@ -199,7 +206,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
             div(class = "mt-2",
               actionButton(ns("sc_remove"), i18n$t("modules.impact_assessment.scenario_remove"), icon = icon("trash"), class = "btn-outline-danger btn-sm"),
               if (identical(ref_status(), "available"))
-                actionButton(ns("sc_load_reference"), i18n$t("modules.impact_assessment.scenario_load_reference"), icon = icon("download"), class = "btn-outline-primary btn-sm ms-2")
+                actionButton(ns("sc_load_reference"), i18n$t("modules.impact_assessment.scenario_load_reference"), icon = icon("download"), class = "btn-outline-primary btn-sm ml-2")
             ),
             if (nrow(df) > 0) radioButtons(ns("sc_baseline"), i18n$t("modules.impact_assessment.baseline_label"),
                                            choices = stats::setNames(df$code, paste(df$code, df$name, sep = " — ")),

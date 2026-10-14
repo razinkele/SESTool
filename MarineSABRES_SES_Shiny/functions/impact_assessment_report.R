@@ -135,7 +135,8 @@ impact_narrative_draft <- function(ia, i18n) {
   # i18n-ref: modules.wp5_mechanisms.provenance.wp5_derived
   # i18n-ref: modules.wp5_mechanisms.provenance.toolbox_extension
   # i18n-ref: modules.wp5_mechanisms.provenance.provisional
-  vapply(as.character(p), function(x) if (nzchar(x)) t(paste0("modules.wp5_mechanisms.provenance.", x)) else "", character(1), USE.NAMES = FALSE)
+  # i18n-ref: modules.wp5_mechanisms.provenance.unknown
+  vapply(as.character(p), function(x) t(paste0("modules.wp5_mechanisms.provenance.", if (nzchar(x)) x else "unknown")), character(1), USE.NAMES = FALSE)
 }
 
 #' Everything the Word and Excel reports show, already translated. Pure; no file I/O.
@@ -196,7 +197,7 @@ impact_report_data <- function(project, ia, i18n) {
   reg <- tryCatch(list_indicators(), error = function(e) NULL)
   ind_row <- function(code) {
     r <- if (is.data.frame(reg)) reg[reg$code == code, , drop = FALSE] else NULL
-    if (is.null(r) || nrow(r) == 0) return(data.frame(code = code, name = "", provenance = "", stub = FALSE, stringsAsFactors = FALSE))
+    if (is.null(r) || nrow(r) == 0) return(data.frame(code = code, name = "", provenance = "unknown", stub = FALSE, stringsAsFactors = FALSE))
     data.frame(code = code, name = as.character(r$name[1]), provenance = as.character(r$provenance[1]), stub = isTRUE(r$stub[1]), stringsAsFactors = FALSE)
   }
   scope_indicators <- do.call(rbind, c(list(data.frame(code = character(), name = character(), provenance = character(), stub = logical(), stringsAsFactors = FALSE)),
@@ -225,7 +226,8 @@ impact_report_data <- function(project, ia, i18n) {
     subs <- if (length(cl$subdimension_notes)) paste(paste0(vapply(names(cl$subdimension_notes), function(s) lbl("subdimension", s), character(1)), ": ", unlist(cl$subdimension_notes)), collapse = "; ") else ""
     inds <- if (length(cl$indicator_roles)) paste(paste0(names(cl$indicator_roles), " (", vapply(unlist(cl$indicator_roles), function(r) lbl("indicator_role", r), character(1)), ")"), collapse = ", ") else ""
     mechs <- if (length(cl$mechanism_ids)) paste(cl$mechanism_ids, collapse = ", ") else ""   # ids; Appendix A maps id -> name
-    ref <- if (length(cl$reference)) paste0(cl$reference$table %||% "", " v", cl$reference$ref_version %||% "") else ""
+    ref_ver <- as.character(cl$reference$ref_version %||% "")
+    ref <- if (length(cl$reference)) paste0(cl$reference$table %||% "", if (nzchar(ref_ver)) paste0(" v", ref_ver) else "") else ""
     cell_rows[[length(cell_rows) + 1]] <- data.frame(criterion = cr, scenario = cd,
       direction = lbl("direction", cl$direction), magnitude = lbl("magnitude", cl$magnitude), timing = lbl("timing", cl$timing),
       confidence = lbl("confidence", cl$confidence),
@@ -244,7 +246,7 @@ impact_report_data <- function(project, ia, i18n) {
       r <- ind_row(code)
       if (isTRUE(r$stub) || (nzchar(r$provenance) && !identical(r$provenance, "wp5_source"))) {
         prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "indicator", item = code, provenance = r$provenance,
-          detail = if (isTRUE(r$stub)) t(paste0(K, "stub")) else r$name, stringsAsFactors = FALSE)
+          detail = if (isTRUE(r$stub)) t(paste0(K, "stub")) else if (nzchar(r$name)) r$name else code, stringsAsFactors = FALSE)
       }
     }
   }
@@ -261,13 +263,16 @@ impact_report_data <- function(project, ia, i18n) {
     linked_to = vapply(mech_ids, function(id) paste(unique(mech_links[[id]]), collapse = ", "), character(1)),
     stringsAsFactors = FALSE, row.names = NULL)
   mechanisms$provenance_label <- .ia_provenance_label(mechanisms$provenance, t)
-  for (i in seq_len(nrow(mechanisms))) if (nzchar(mechanisms$provenance[i]) && !identical(mechanisms$provenance[i], "wp5_source")) {
-    prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "mechanism", item = mechanisms$id[i], provenance = mechanisms$provenance[i],
+  # An id missing from the current KB has provenance "" and still needs an Appendix B row ("unknown")
+  for (i in seq_len(nrow(mechanisms))) if (!identical(mechanisms$provenance[i], "wp5_source")) {
+    prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "mechanism", item = mechanisms$id[i],
+      provenance = if (nzchar(mechanisms$provenance[i])) mechanisms$provenance[i] else "unknown",
       detail = mechanisms$name[i], stringsAsFactors = FALSE)
   }
   for (i in seq_len(nrow(scope_indicators))) if (isTRUE(scope_indicators$stub[i]) || (nzchar(scope_indicators$provenance[i]) && !identical(scope_indicators$provenance[i], "wp5_source"))) {
     prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "indicator", item = scope_indicators$code[i], provenance = scope_indicators$provenance[i],
-      detail = if (isTRUE(scope_indicators$stub[i])) t(paste0(K, "stub")) else scope_indicators$name[i], stringsAsFactors = FALSE)
+      detail = if (isTRUE(scope_indicators$stub[i])) t(paste0(K, "stub")) else if (nzchar(scope_indicators$name[i])) scope_indicators$name[i] else scope_indicators$code[i],
+      stringsAsFactors = FALSE)
   }
   if (nzchar(ia$trade_offs$auto_draft %||% "")) {
     prov_rows[[length(prov_rows) + 1]] <- data.frame(kind = "toolbox_extension", item = t(paste0(K, "narrative_item")),
@@ -277,6 +282,7 @@ impact_report_data <- function(project, ia, i18n) {
   provenance <- provenance[!duplicated(provenance[, c("kind", "item")]), , drop = FALSE]
   rownames(provenance) <- NULL
   provenance$provenance_label <- .ia_provenance_label(provenance$provenance, t)
+  scope_indicators$provenance_label <- .ia_provenance_label(scope_indicators$provenance, t)
   scope_indicators$stub <- NULL
 
   # i18n-ref: modules.impact_assessment.report.col.code
@@ -315,10 +321,14 @@ impact_report_data <- function(project, ia, i18n) {
   labels <- as.list(stats::setNames(vapply(col_keys, function(k) t(paste0(K, "col.", k)), character(1)), col_keys))
   labels[["provenance_label"]] <- labels[["provenance"]]
 
+  # The stored draft is only the trigger for the toolbox_extension row: print a fresh one so the report
+  # never contradicts its own matrix or comes out in another language.
+  draft <- if (nzchar(ia$trade_offs$auto_draft %||% "")) impact_narrative_draft(ia, i18n) else ""
+
   list(meta = meta, characterisation = characterisation, scenarios = scenarios, scope_elements = scope_elements,
        scope_indicators = scope_indicators, displacement = displacement, matrix_wide = matrix_wide, cells_long = cells_long,
        mechanisms = mechanisms, provenance = provenance,
-       text = list(uncertainty = as.character(ia$uncertainty$notes %||% ""), trade_offs_draft = as.character(ia$trade_offs$auto_draft %||% ""),
+       text = list(uncertainty = as.character(ia$uncertainty$notes %||% ""), trade_offs_draft = draft,
                    trade_offs_text = as.character(ia$trade_offs$text %||% ""), recommendations = as.character(ia$recommendations$text %||% "")),
        labels = labels)
 }
@@ -338,7 +348,10 @@ impact_report_data <- function(project, ia, i18n) {
 }
 .ia_docx_text <- function(doc, text, t) {
   if (!nzchar(text)) return(officer::body_add_par(doc, t("modules.impact_assessment.report.empty"), style = "Normal"))
-  for (p in strsplit(text, "\n\n", fixed = TRUE)[[1]]) doc <- officer::body_add_par(doc, p, style = "Normal")
+  text <- trimws(text)
+  if (!nzchar(text)) return(officer::body_add_par(doc, t("modules.impact_assessment.report.empty"), style = "Normal"))
+  # Blank lines and single line breaks both start a new paragraph (one-item-per-line recommendations)
+  for (p in strsplit(text, "\r?\n", perl = TRUE)[[1]]) if (nzchar(trimws(p))) doc <- officer::body_add_par(doc, trimws(p), style = "Normal")
   doc
 }
 
@@ -396,7 +409,9 @@ build_impact_report_docx <- function(report, i18n, file, writer = function(doc, 
 
   doc <- h1(doc, "section.scope")
   doc <- h2(doc, "scope_elements");   doc <- .ia_docx_table(doc, r$scope_elements, L, t)
-  doc <- h2(doc, "scope_indicators"); doc <- .ia_docx_table(doc, r$scope_indicators, L, t)
+  si <- r$scope_indicators
+  if (nrow(si)) si <- si[, c("code", "name", "provenance_label")]
+  doc <- h2(doc, "scope_indicators"); doc <- .ia_docx_table(doc, si, L, t)
   doc <- h2(doc, "displacement");     doc <- .ia_docx_table(doc, r$displacement, L, t)
 
   doc <- h1(doc, "section.matrix")
@@ -446,21 +461,29 @@ build_impact_report_xlsx <- function(report, i18n, file, saver = openxlsx::saveW
   K <- "modules.impact_assessment.report."
   r <- report; L <- r$labels
   wb <- openxlsx::createWorkbook()
-  add <- function(sheet, df, translate_headers = TRUE, start = 1) {
+  add <- function(sheet, df, start = 1) {
     if (!sheet %in% openxlsx::sheets(wb)) openxlsx::addWorksheet(wb, sheet)
-    if (translate_headers && ncol(df)) names(df) <- vapply(names(df), function(n) L[[n]] %||% n, character(1))
+    if (ncol(df)) names(df) <- vapply(names(df), function(n) L[[n]] %||% n, character(1))
     openxlsx::writeData(wb, sheet, df, startRow = start)
-    if (ncol(df)) openxlsx::setColWidths(wb, sheet, cols = seq_len(ncol(df)), widths = pmin(60, pmax(12, nchar(names(df)) + 2)))
+    if (ncol(df)) {
+      # header width + 2, grown to the longest cell, capped at 60
+      w <- vapply(seq_len(ncol(df)), function(j) {
+        cell_w <- if (nrow(df)) max(nchar(as.character(df[[j]]), type = "chars"), na.rm = TRUE) else 0
+        max(nchar(names(df)[j]) + 2, min(60, cell_w))
+      }, numeric(1))
+      openxlsx::setColWidths(wb, sheet, cols = seq_len(ncol(df)), widths = pmin(60, pmax(12, w)))
+    }
     start + nrow(df) + 2
   }
-  add("Overview", data.frame(
-    item = c(t(paste0(K, "project")), t(paste0(K, "da")), t(paste0(K, "baseline")), t(paste0(K, "ref_version")), t(paste0(K, "generated"))),
+  nxt <- add("Overview", data.frame(
+    label = c(t(paste0(K, "project")), t(paste0(K, "da")), t(paste0(K, "baseline")), t(paste0(K, "ref_version")), t(paste0(K, "generated"))),
     value = c(r$meta$project_name, r$meta$da_label, if (nzchar(r$meta$baseline)) r$meta$baseline else t(paste0(K, "none")),
               if (nzchar(r$meta$ref_version)) r$meta$ref_version else t(paste0(K, "none")), r$meta$generated),
-    stringsAsFactors = FALSE), translate_headers = FALSE)
+    stringsAsFactors = FALSE))
+  add("Overview", r$characterisation[, c("label", "value")], start = nxt)
   add("Scenarios", r$scenarios)
   nxt <- add("Scope", r$scope_elements)
-  nxt <- add("Scope", r$scope_indicators, start = nxt)
+  nxt <- add("Scope", r$scope_indicators[, c("code", "name", "provenance", "provenance_label")], start = nxt)
   add("Scope", r$displacement, start = nxt)
   mw <- r$matrix_wide; mw$criterion <- wp5_vocab_label("criteria", mw$criterion, i18n)
   add("Matrix", mw)
@@ -471,9 +494,9 @@ build_impact_report_xlsx <- function(report, i18n, file, saver = openxlsx::saveW
   pv <- r$provenance; if (nrow(pv)) pv <- pv[, c("kind", "item", "provenance", "detail")]
   add("Provenance", pv)
   add("Text", data.frame(
-    section = c(t(paste0(K, "section.uncertainty")), t(paste0(K, "draft_label")), t(paste0(K, "user_text_label")), t(paste0(K, "section.recommendations"))),
-    text = c(r$text$uncertainty, r$text$trade_offs_draft, r$text$trade_offs_text, r$text$recommendations),
-    stringsAsFactors = FALSE), translate_headers = FALSE)
+    label = c(t(paste0(K, "section.uncertainty")), t(paste0(K, "draft_label")), t(paste0(K, "user_text_label")), t(paste0(K, "section.recommendations"))),
+    value = c(r$text$uncertainty, r$text$trade_offs_draft, r$text$trade_offs_text, r$text$recommendations),
+    stringsAsFactors = FALSE))
   saver(wb, file, overwrite = TRUE)
   invisible(file)
 }
