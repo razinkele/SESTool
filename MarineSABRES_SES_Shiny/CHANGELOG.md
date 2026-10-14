@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.26.1] - 2026-10-14
+
 ### Performance
 - Batch graph-feature extraction for ML connection suggestions (`extract_graph_features_batch`) now computes shortest-path hops, neighbour sets, degrees and betweenness once per call instead of calling igraph for every pair. Each unreachable pair also no longer raises an igraph warning, which had been the dominant cost on sparse networks. Output is unchanged, and a new test checks it against the single-pair extractor, including unreachable pairs, unknown IDs, self-loops, edgeless and weighted graphs. Measured speedups: 100 pairs on 7 nodes 2.0 s to 0.2 s; 2000 pairs on 200 nodes 35 s to 0.2 s. This also removes the laptop-only failure of the 2-second timing test in `test-ml-graph-features.R`.
 
