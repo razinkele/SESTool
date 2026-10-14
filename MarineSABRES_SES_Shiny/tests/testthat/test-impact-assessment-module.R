@@ -366,3 +366,34 @@ test_that("drafting on an assessment without scenarios stores the 'empty' senten
     expect_match(rv$ia$trade_offs$auto_draft, "narrative.empty", fixed = TRUE)
   })
 })
+
+# ---- WS-6c: step 7 downloads -----------------------------------------------------------
+test_that("step 7 offers Word and Excel downloads that contain the assessment", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  p <- set_impact_assessment(mk_project("Macaronesia"), impact_set_section(ia_with_matrix(), "recommendations", list(text = "Pilot S2 (Πιλοτικό)")))
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_7 = 1); session$flushReact()
+    html <- as.character(output$step_body$html)
+    expect_match(html, "-download_docx\"", fixed = TRUE)
+    expect_match(html, "-download_xlsx\"", fixed = TRUE)
+    f <- output$download_docx
+    expect_true(file.exists(f) && file.info(f)$size > 0)
+    txt <- paste(officer::docx_summary(officer::read_docx(f))$text, collapse = "\n")
+    expect_match(txt, "Pilot S2 (Πιλοτικό)", fixed = TRUE)
+    expect_match(txt, "modules.impact_assessment.report.section.matrix", fixed = TRUE)
+    x <- output$download_xlsx
+    expect_identical(openxlsx::getSheetNames(x)[1], "Overview")
+    expect_true(any(grepl("Pilot S2", unlist(openxlsx::read.xlsx(x, sheet = "Text")), fixed = TRUE)))
+  })
+})
+
+test_that("the download handlers follow the hardening pattern (tryCatch, notification, stop(e))", {
+  s <- paste(readLines(file.path(PROJECT_ROOT, "modules", "impact_assessment_module.R"), warn = FALSE), collapse = "\n")
+  expect_match(s, "build_impact_report_docx(", fixed = TRUE)
+  expect_match(s, "build_impact_report_xlsx(", fixed = TRUE)
+  expect_match(s, "common.messages.word_export_failed", fixed = TRUE)
+  expect_match(s, "common.messages.excel_export_failed", fixed = TRUE)
+  expect_identical(lengths(regmatches(s, gregexpr("stop(e)", s, fixed = TRUE))), 2L)
+})

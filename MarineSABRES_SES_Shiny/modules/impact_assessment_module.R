@@ -145,7 +145,12 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     )
     step7_ui <- function() tagList(
       p(class = "text-muted", i18n$t("modules.impact_assessment.recommendations_intro")),
-      text_section_ui("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_", "save_recommendations", rows = 6)
+      text_section_ui("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_", "save_recommendations", rows = 6),
+      hr(),
+      h5(i18n$t("modules.impact_assessment.report_heading")),
+      p(class = "text-muted", i18n$t("modules.impact_assessment.report_intro")),
+      downloadButton(ns("download_docx"), i18n$t("modules.impact_assessment.download_docx"), class = "btn-outline-primary"),
+      downloadButton(ns("download_xlsx"), i18n$t("modules.impact_assessment.download_xlsx"), class = "btn-outline-primary ms-2")
     )
     save_section <- function(section, fields, prefix) {
       vals <- setNames(lapply(fields, function(f) input[[paste0(prefix, f)]] %||% ""), fields)
@@ -155,6 +160,29 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     }
     observeEvent(input$save_characterisation, save_section("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_"))
     observeEvent(input$save_recommendations, save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_"))
+
+    # Reports are built from the stored assessment (what the user saved), never from unsaved inputs.
+    report_data <- function() impact_report_data(isolate(project_data_reactive()), rv$ia, i18n)
+    output$download_docx <- downloadHandler(
+      filename = function() generate_export_filename("Impact_Assessment", ".docx"),
+      content = function(file) {
+        req(rv$ia)
+        tryCatch(build_impact_report_docx(report_data(), i18n, file), error = function(e) {
+          debug_log(paste("Impact report (docx) failed:", e$message), "EXPORT")
+          showNotification(paste0(i18n$t("common.messages.word_export_failed"), " (", e$message, ")"), type = "error", duration = NULL)
+          stop(e)
+        })
+      })
+    output$download_xlsx <- downloadHandler(
+      filename = function() generate_export_filename("Impact_Assessment", ".xlsx"),
+      content = function(file) {
+        req(rv$ia)
+        tryCatch(build_impact_report_xlsx(report_data(), i18n, file), error = function(e) {
+          debug_log(paste("Impact report (xlsx) failed:", e$message), "EXPORT")
+          showNotification(paste0(i18n$t("common.messages.excel_export_failed"), " (", e$message, ")"), type = "error", duration = NULL)
+          stop(e)
+        })
+      })
 
     # sprintf only when the translated text carries a placeholder (the test stub returns the bare key)
     fmt_n <- function(key, n) { f <- i18n$t(key); if (grepl("%", f, fixed = TRUE)) sprintf(f, n) else f }

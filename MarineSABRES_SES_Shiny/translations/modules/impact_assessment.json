@@ -2452,6 +2452,50 @@
       "it": "Valore",
       "no": "Verdi",
       "el": "Τιμή"
+    },
+    "modules.impact_assessment.report_heading": {
+      "en": "Export the assessment",
+      "es": "Exportar la evaluación",
+      "fr": "Exporter l'évaluation",
+      "de": "Bewertung exportieren",
+      "lt": "Eksportuoti vertinimą",
+      "pt": "Exportar a avaliação",
+      "it": "Esporta la valutazione",
+      "no": "Eksporter vurderingen",
+      "el": "Εξαγωγή της αξιολόγησης"
+    },
+    "modules.impact_assessment.report_intro": {
+      "en": "The Word report follows the seven D5.2 steps and ends with the linked-mechanisms and provenance appendices. The Excel file holds the same content as tables.",
+      "es": "El informe de Word sigue los siete pasos del D5.2 y termina con los anexos de mecanismos vinculados y de procedencia. El archivo de Excel contiene el mismo contenido en forma de tablas.",
+      "fr": "Le rapport Word suit les sept étapes du D5.2 et se termine par les annexes sur les mécanismes liés et sur la provenance. Le fichier Excel contient le même contenu sous forme de tableaux.",
+      "de": "Der Word-Bericht folgt den sieben Schritten des D5.2 und endet mit den Anhängen zu verknüpften Mechanismen und zur Herkunft der Daten. Die Excel-Datei enthält denselben Inhalt in Tabellenform.",
+      "lt": "Word ataskaita seka septynis D5.2 žingsnius ir baigiasi susijusių mechanizmų ir kilmės priedais. Excel faile pateiktas tas pats turinys lentelių pavidalu.",
+      "pt": "O relatório Word segue os sete passos do D5.2 e termina com os anexos sobre mecanismos associados e proveniência. O ficheiro Excel contém o mesmo conteúdo sob a forma de tabelas.",
+      "it": "Il rapporto Word segue i sette passaggi del D5.2 e si conclude con le appendici sui meccanismi collegati e sulla provenienza. Il file Excel contiene lo stesso contenuto in forma di tabelle.",
+      "no": "Word-rapporten følger de sju trinnene i D5.2 og avsluttes med vedleggene om koblede mekanismer og opphav. Excel-filen inneholder det samme innholdet som tabeller.",
+      "el": "Η αναφορά Word ακολουθεί τα επτά βήματα του D5.2 και ολοκληρώνεται με τα παραρτήματα για τους συνδεδεμένους μηχανισμούς και την προέλευση. Το αρχείο Excel περιέχει το ίδιο περιεχόμενο υπό μορφή πινάκων."
+    },
+    "modules.impact_assessment.download_docx": {
+      "en": "Download Word report",
+      "es": "Descargar informe de Word",
+      "fr": "Télécharger le rapport Word",
+      "de": "Word-Bericht herunterladen",
+      "lt": "Atsisiųsti Word ataskaitą",
+      "pt": "Transferir relatório Word",
+      "it": "Scarica il rapporto Word",
+      "no": "Last ned Word-rapport",
+      "el": "Λήψη αναφοράς Word"
+    },
+    "modules.impact_assessment.download_xlsx": {
+      "en": "Download Excel report",
+      "es": "Descargar informe de Excel",
+      "fr": "Télécharger le rapport Excel",
+      "de": "Excel-Bericht herunterladen",
+      "lt": "Atsisiųsti Excel ataskaitą",
+      "pt": "Transferir relatório Excel",
+      "it": "Scarica il rapporto Excel",
+      "no": "Last ned Excel-rapport",
+      "el": "Λήψη αναφοράς Excel"
     }
   }
 }
