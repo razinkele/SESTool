@@ -86,3 +86,76 @@ test_that("get_intervention_ebm_codes reads the WS-1 operations table", {
   expect_equal(get_intervention_ebm_codes("cascade_creation"), character(0))
   expect_equal(get_intervention_ebm_codes("no_such_type"), character(0))
 })
+
+base3 <- function() {
+  m <- matrix(0, 3, 3, dimnames = rep(list(c("A x", "P. y", "C (z)")), 2))
+  m["A x", "P. y"] <- 0.5; m["P. y", "C (z)"] <- -0.5
+  m
+}
+edges_df <- function(...) {
+  d <- data.frame(..., stringsAsFactors = FALSE)
+  if (is.null(d$min_level)) d$min_level <- -1
+  if (is.null(d$max_level)) d$max_level <- 1
+  d
+}
+
+test_that("mode A design adds one zero row/column and zeroes variable cells", {
+  des <- list(new_node = "AM", edges = edges_df(from = c("AM", "C (z)"), to = c("A x", "AM"),
+                                                kind = "intervention"))
+  dm <- ses_design_matrix(base3(), des, LV)
+  expect_equal(dim(dm$matrix), c(4L, 4L))
+  expect_equal(rownames(dm$matrix), c("A x", "P. y", "C (z)", "AM"))
+  expect_equal(unname(dm$cells[1, ]), c(4L, 1L))
+  expect_equal(dm$matrix[dm$cells], c(0, 0))
+  expect_equal(dm$matrix["A x", "P. y"], 0.5)             # base kept
+  expect_equal(dm$count_rows, 1:2)
+})
+
+test_that("mode B design: self-loop and context edges; d counts intervention edges only", {
+  des <- list(new_node = "AM", edges = edges_df(
+    from = c("C (z)", "AM"), to = c("C (z)", "A x"), kind = c("context", "intervention")))
+  dm <- ses_design_matrix(base3(), des, LV)
+  expect_equal(dm$count_rows, 2L)
+  des_b <- list(new_node = NULL, edges = edges_df(from = "C (z)", to = "C (z)", kind = "context"))
+  dm_b <- ses_design_matrix(base3(), des_b, LV)
+  expect_equal(dim(dm_b$matrix), c(3L, 3L))
+  expect_equal(dm_b$count_rows, 1L)                         # mode-B-only: all edges count
+})
+
+test_that("design errors: unknown node, existing edge, duplicate, name clash", {
+  expect_error(ses_design_matrix(base3(), list(new_node = NULL,
+    edges = edges_df(from = "nope", to = "A x", kind = "context")), LV), "unknown node")
+  expect_error(ses_design_matrix(base3(), list(new_node = NULL,
+    edges = edges_df(from = "A x", to = "P. y", kind = "context")), LV), "already exists")
+  expect_error(ses_design_matrix(base3(), list(new_node = NULL,
+    edges = edges_df(from = c("A x", "A x"), to = c("C (z)", "C (z)"), kind = "context")), LV), "duplicate")
+  expect_error(ses_design_matrix(base3(), list(new_node = "A x",
+    edges = edges_df(from = "A x", to = "P. y", kind = "intervention")), LV), "already exists in the network")
+})
+
+test_that("apply_config and add_edges write weights", {
+  des <- list(new_node = "AM", edges = edges_df(from = c("AM", "C (z)"), to = c("A x", "AM"),
+                                                kind = "intervention"))
+  dm <- ses_design_matrix(base3(), des, LV)
+  m <- ses_apply_config(dm, c(-0.5, 1))
+  expect_equal(m["AM", "A x"], -0.5); expect_equal(m["C (z)", "AM"], 1)
+  m2 <- ses_add_edges(base3(), data.frame(from = "C (z)", to = "C (z)", weight = 0.25))
+  expect_equal(m2["C (z)", "C (z)"], 0.25)
+  expect_error(ses_add_edges(base3(), data.frame(from = "x", to = "A x", weight = 1)), "unknown node")
+})
+
+test_that("self-loop candidates are Marine Processes & Functioning nodes", {
+  expect_equal(ses_self_loop_candidates(c("a", "b", "c"),
+    c("Activities", "Marine Processes & Functioning", "Goods & Benefits")), "b")
+})
+
+test_that("new-edge check flags only non-standard transitions", {
+  skip_if_not(exists("validate_connection_with_feedback", mode = "function"))
+  expect_false(ses_check_new_edge("Drivers", "Activities"))
+  expect_true(ses_check_new_edge("Goods & Benefits", "Pressures"))
+})
+
+test_that("level codes", {
+  expect_equal(ses_level_code(LV), c("strong_neg", "medium_neg", "weak_neg", "none",
+                                     "weak_pos", "medium_pos", "strong_pos"))
+})
