@@ -319,3 +319,97 @@ test_that("next is blocked on step 2 without scenarios and on step 4 with a low-
     expect_identical(rv$step, 5L)
   })
 })
+
+# ---- WS-6c: step 6 draft -------------------------------------------------------
+ia_with_matrix <- function() {
+  ia <- impact_assessment_from_reference("macaronesia")
+  up <- new_impact_cell(); up$direction <- "increase"; up$magnitude <- "moderate"; up$confidence <- "high"
+  dn <- new_impact_cell(); dn$direction <- "decrease"; dn$magnitude <- "incremental"; dn$confidence <- "medium"
+  ia <- impact_set_cell(ia, "EE", "S2", up)
+  impact_set_cell(ia, "FF", "S2", dn)
+}
+
+test_that("step 6 drafts the narrative from the matrix, stores it, shows it with the toolbox badge, and can copy it into the text box", {
+  p <- set_impact_assessment(mk_project("Macaronesia"), ia_with_matrix())
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_6 = 1); session$flushReact()
+    html <- as.character(output$step_body$html)
+    expect_match(html, "-draft_trade_offs\"", fixed = TRUE)
+    expect_false(grepl("-use_draft\"", html, fixed = TRUE))              # no draft yet
+    expect_identical(rv$ia$trade_offs$auto_draft, "")
+    session$setInputs(to_text = "My own notes", draft_trade_offs = 1); session$flushReact()
+    draft <- rv$ia$trade_offs$auto_draft
+    expect_match(draft, "modules.impact_assessment.narrative.trade_off", fixed = TRUE)
+    expect_identical(rv$ia$trade_offs$text, "My own notes")              # unsaved text box content is kept
+    expect_identical(get_impact_assessment(args$project_data_reactive())$trade_offs$auto_draft, draft)
+    html <- as.character(output$step_body$html)
+    expect_match(html, "modules.impact_assessment.auto_draft_heading", fixed = TRUE)
+    expect_match(html, "modules.wp5_mechanisms.provenance.toolbox_extension", fixed = TRUE)
+    expect_match(html, "-use_draft\"", fixed = TRUE)
+    paras <- strsplit(draft, "\n\n", fixed = TRUE)[[1]]
+    expect_gte(length(paras), 2)                                          # several narrative paragraphs
+    alert <- sub("^.*alert alert-light border", "", html)
+    expect_gte(lengths(regmatches(alert, gregexpr("<p>", alert))), length(paras))   # each rendered as its own <p>
+    expect_match(html, paras[[2]], fixed = TRUE)
+    session$setInputs(use_draft = 1); session$flushReact()                 # updateTextAreaInput is a no-op in tests;
+    expect_identical(rv$ia$trade_offs$auto_draft, draft)                  # the button must not alter stored state
+  })
+})
+
+test_that("drafting on an assessment without scenarios stores the 'empty' sentence and does not error", {
+  args <- srv(mk_project(NULL))
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_6 = 1, draft_trade_offs = 1); session$flushReact()
+    expect_match(rv$ia$trade_offs$auto_draft, "narrative.empty", fixed = TRUE)
+  })
+})
+
+# ---- WS-6c: step 7 downloads -----------------------------------------------------------
+test_that("step 7 offers Word and Excel downloads that contain the assessment", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  p <- set_impact_assessment(mk_project("Macaronesia"), impact_set_section(ia_with_matrix(), "recommendations", list(text = "Pilot S2 (Πιλοτικό)")))
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_7 = 1); session$flushReact()
+    html <- as.character(output$step_body$html)
+    expect_match(html, "-download_docx\"", fixed = TRUE)
+    expect_match(html, "-download_xlsx\"", fixed = TRUE)
+    f <- output$download_docx
+    expect_true(file.exists(f) && file.info(f)$size > 0)
+    txt <- paste(officer::docx_summary(officer::read_docx(f))$text, collapse = "\n")
+    expect_match(txt, "Pilot S2 (Πιλοτικό)", fixed = TRUE)
+    expect_match(txt, "modules.impact_assessment.report.section.matrix", fixed = TRUE)
+    x <- output$download_xlsx
+    expect_identical(openxlsx::getSheetNames(x)[1], "Overview")
+    expect_true(any(grepl("Pilot S2", unlist(openxlsx::read.xlsx(x, sheet = "Text")), fixed = TRUE)))
+  })
+})
+
+test_that("a download made on step 7 persists and contains the pending, unsaved recommendations", {
+  skip_if_not_installed("officer"); skip_if_not_installed("flextable")
+  p <- set_impact_assessment(mk_project("Macaronesia"), ia_with_matrix())
+  args <- srv(p)
+  testServer(impact_assessment_server, args = args, {
+    session$flushReact()
+    session$setInputs(goto_step_7 = 1); session$flushReact()
+    session$setInputs(rec_text = "Typed, not saved")
+    f <- output$download_docx
+    txt <- paste(officer::docx_summary(officer::read_docx(f))$text, collapse = "\n")
+    expect_match(txt, "Typed, not saved", fixed = TRUE)
+    expect_identical(rv$ia$recommendations$text, "Typed, not saved")
+  })
+})
+
+test_that("the download handlers follow the hardening pattern (tryCatch, notification, stop(e))", {
+  s <- paste(readLines(file.path(PROJECT_ROOT, "modules", "impact_assessment_module.R"), warn = FALSE), collapse = "\n")
+  expect_match(s, "build_impact_report_docx(", fixed = TRUE)
+  expect_match(s, "build_impact_report_xlsx(", fixed = TRUE)
+  expect_match(s, "common.messages.word_export_failed", fixed = TRUE)
+  expect_match(s, "common.messages.excel_export_failed", fixed = TRUE)
+  expect_identical(lengths(regmatches(s, gregexpr("stop(e)", s, fixed = TRUE))), 2L)
+  expect_false(grepl("ms-2", s, fixed = TRUE))                                      # Bootstrap-5 class; bs4Dash is Bootstrap 4
+})

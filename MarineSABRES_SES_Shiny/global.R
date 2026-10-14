@@ -712,6 +712,7 @@ source("functions/indicator_registry.R", local = FALSE)
 source("functions/indicator_snapshot.R", local = FALSE)
 source("functions/impact_reference.R", local = FALSE)
 source("functions/impact_assessment_model.R", local = FALSE)
+source("functions/impact_assessment_report.R", local = FALSE)
 source("functions/impact_assessment_view.R", local = FALSE)
 
 # Country Governance and Socio-Economic Database loader

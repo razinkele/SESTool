@@ -451,6 +451,28 @@
       "it": "Indicatori citati",
       "no": "Indikatorer det vises til",
       "el": "Δείκτες που αναφέρονται"
+    },
+    "modules.wp5_mechanisms.provenance.wp5_source": {
+      "en": "WP5 source",
+      "es": "Fuente del WP5",
+      "fr": "Source WP5",
+      "de": "WP5-Quelle",
+      "lt": "WP5 šaltinis",
+      "pt": "Fonte do WP5",
+      "it": "Fonte WP5",
+      "no": "WP5-kilde",
+      "el": "Πηγή WP5"
+    },
+    "modules.wp5_mechanisms.provenance.unknown": {
+      "en": "Not in the current knowledge base",
+      "es": "No figura en la base de conocimiento actual",
+      "fr": "Absent de la base de connaissances actuelle",
+      "de": "Nicht in der aktuellen Wissensbasis enthalten",
+      "lt": "Nėra dabartinėje žinių bazėje",
+      "pt": "Não consta da base de conhecimento atual",
+      "it": "Non presente nella base di conoscenza attuale",
+      "no": "Finnes ikke i den gjeldende kunnskapsbasen",
+      "el": "Δεν υπάρχει στην τρέχουσα βάση γνώσεων"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "version": "1.25.0",
-  "version_name": "WP5 impact assessment",
-  "release_date": "2026-10-13",
+  "version": "1.26.0",
+  "version_name": "WP5 impact assessment: narrative and report",
+  "release_date": "2026-10-14",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -13,7 +13,8 @@
   "security_updates": false,
   "features": [
     "WP5 indicator registry: 95 indicators with D5.2 provenance; Standard Entry indicator fields and picker; drift warning and review on load (WS-4).",
-    "Posidonia oceanica valuation calculator under Response & Validation: D5.2 Table 19 values, discounted totals, restoration cost, survival-adjusted break-even, Excel export (WS-5)."
+    "Posidonia oceanica valuation calculator under Response & Validation: D5.2 Table 19 values, discounted totals, restoration cost, survival-adjusted break-even, Excel export (WS-5).",
+    "WP5 impact assessment: deterministic trade-off narrative (step 6) and Word/Excel report with mechanism and provenance appendices (step 7) (WS-6c)."
   ],
   "fixes": {
     "high": [

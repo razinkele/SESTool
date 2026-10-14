@@ -18,7 +18,7 @@ impact_assessment_ui <- function(id, i18n) {
     fluidRow(column(12,
       div(class = "mt-3",
         actionButton(ns("prev_step"), i18n$t("modules.impact_assessment.prev"), icon = icon("arrow-left"), class = "btn-outline-secondary"),
-        actionButton(ns("next_step"), i18n$t("modules.impact_assessment.next"), icon = icon("arrow-right"), class = "btn-primary ms-2")
+        actionButton(ns("next_step"), i18n$t("modules.impact_assessment.next"), icon = icon("arrow-right"), class = "btn-primary ml-2")
       )
     ))
   )
@@ -145,7 +145,12 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     )
     step7_ui <- function() tagList(
       p(class = "text-muted", i18n$t("modules.impact_assessment.recommendations_intro")),
-      text_section_ui("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_", "save_recommendations", rows = 6)
+      text_section_ui("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_", "save_recommendations", rows = 6),
+      hr(),
+      h5(i18n$t("modules.impact_assessment.report_heading")),
+      p(class = "text-muted", i18n$t("modules.impact_assessment.report_intro")),
+      downloadButton(ns("download_docx"), i18n$t("modules.impact_assessment.download_docx"), class = "btn-outline-primary"),
+      downloadButton(ns("download_xlsx"), i18n$t("modules.impact_assessment.download_xlsx"), class = "btn-outline-primary ml-2")
     )
     save_section <- function(section, fields, prefix) {
       vals <- setNames(lapply(fields, function(f) input[[paste0(prefix, f)]] %||% ""), fields)
@@ -155,6 +160,36 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
     }
     observeEvent(input$save_characterisation, save_section("characterisation", IMPACT_TEXT_SECTIONS$characterisation, "char_"))
     observeEvent(input$save_recommendations, save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_"))
+
+    # Reports are built from the stored assessment. A download first persists pending step-7 text
+    # (same decision as the step-6 Draft button), but only when it differs, so it never writes needlessly.
+    report_data <- function() {
+      pending <- isolate(input$rec_text)
+      if (!is.null(pending) && !identical(pending, rv$ia$recommendations$text %||% "")) {
+        save_section("recommendations", IMPACT_TEXT_SECTIONS$recommendations, "rec_")
+      }
+      impact_report_data(isolate(project_data_reactive()), rv$ia, i18n)
+    }
+    output$download_docx <- downloadHandler(
+      filename = function() generate_export_filename("Impact_Assessment", ".docx"),
+      content = function(file) {
+        req(rv$ia)
+        tryCatch(build_impact_report_docx(report_data(), i18n, file), error = function(e) {
+          debug_log(paste("Impact report (docx) failed:", e$message), "EXPORT")
+          showNotification(paste0(i18n$t("common.messages.word_export_failed"), " (", e$message, ")"), type = "error", duration = NULL)
+          stop(e)
+        })
+      })
+    output$download_xlsx <- downloadHandler(
+      filename = function() generate_export_filename("Impact_Assessment", ".xlsx"),
+      content = function(file) {
+        req(rv$ia)
+        tryCatch(build_impact_report_xlsx(report_data(), i18n, file), error = function(e) {
+          debug_log(paste("Impact report (xlsx) failed:", e$message), "EXPORT")
+          showNotification(paste0(i18n$t("common.messages.excel_export_failed"), " (", e$message, ")"), type = "error", duration = NULL)
+          stop(e)
+        })
+      })
 
     # sprintf only when the translated text carries a placeholder (the test stub returns the bare key)
     fmt_n <- function(key, n) { f <- i18n$t(key); if (grepl("%", f, fixed = TRUE)) sprintf(f, n) else f }
@@ -171,7 +206,7 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
             div(class = "mt-2",
               actionButton(ns("sc_remove"), i18n$t("modules.impact_assessment.scenario_remove"), icon = icon("trash"), class = "btn-outline-danger btn-sm"),
               if (identical(ref_status(), "available"))
-                actionButton(ns("sc_load_reference"), i18n$t("modules.impact_assessment.scenario_load_reference"), icon = icon("download"), class = "btn-outline-primary btn-sm ms-2")
+                actionButton(ns("sc_load_reference"), i18n$t("modules.impact_assessment.scenario_load_reference"), icon = icon("download"), class = "btn-outline-primary btn-sm ml-2")
             ),
             if (nrow(df) > 0) radioButtons(ns("sc_baseline"), i18n$t("modules.impact_assessment.baseline_label"),
                                            choices = stats::setNames(df$code, paste(df$code, df$name, sep = " — ")),
@@ -390,12 +425,34 @@ impact_assessment_server <- function(id, project_data_reactive, i18n, event_bus 
       p(class = "text-muted", i18n$t("modules.impact_assessment.uncertainty_intro")),
       text_section_ui("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_", "save_uncertainty", rows = 6)
     )
-    step6_ui <- function() tagList(
-      p(class = "text-muted", i18n$t("modules.impact_assessment.trade_offs_intro")),
-      if (nzchar(rv$ia$trade_offs$auto_draft %||% ""))
-        div(class = "alert alert-light border", strong(i18n$t("modules.impact_assessment.auto_draft_heading")), p(rv$ia$trade_offs$auto_draft)),
-      text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
-    )
+    step6_ui <- function() {
+      draft <- rv$ia$trade_offs$auto_draft %||% ""
+      tagList(
+        p(class = "text-muted", i18n$t("modules.impact_assessment.trade_offs_intro")),
+        div(class = "mb-2",
+          actionButton(ns("draft_trade_offs"), i18n$t("modules.impact_assessment.draft_button"), icon = icon("magic"), class = "btn-outline-primary btn-sm"),
+          " ", provenance_badge("toolbox_extension", i18n),
+          tags$small(class = "d-block text-muted", i18n$t("modules.impact_assessment.draft_hint"))),
+        if (nzchar(draft))
+          div(class = "alert alert-light border",
+              strong(i18n$t("modules.impact_assessment.auto_draft_heading")), " ", provenance_badge("toolbox_extension", i18n),
+              lapply(strsplit(draft, "\n\n", fixed = TRUE)[[1]], p),
+              actionButton(ns("use_draft"), i18n$t("modules.impact_assessment.draft_use"), class = "btn-link btn-sm p-0")),
+        text_section_ui("trade_offs", "text", "to_", "save_trade_offs", rows = 6)
+      )
+    }
+    # The draft is regenerated on demand and stored next to the author's text. The current
+    # text-box content is COMMITTED in the same write (so "Draft" also acts as "Save" for the
+    # text): the step body re-renders on rv$ia change, which would otherwise wipe unsaved typing.
+    observeEvent(input$draft_trade_offs, {
+      vals <- list(text = input$to_text %||% rv$ia$trade_offs$text %||% "", auto_draft = impact_narrative_draft(rv$ia, i18n))
+      if (isTRUE(try_commit(impact_set_section(rv$ia, "trade_offs", vals)))) {
+        showNotification(i18n$t("modules.impact_assessment.draft_created"), type = "message", duration = 3)
+      }
+    })
+    observeEvent(input$use_draft, {
+      updateTextAreaInput(session, "to_text", value = rv$ia$trade_offs$auto_draft %||% "")
+    })
     observeEvent(input$save_uncertainty, save_section("uncertainty", IMPACT_TEXT_SECTIONS$uncertainty, "unc_"))
     observeEvent(input$save_trade_offs, {
       vals <- list(text = input$to_text %||% "", auto_draft = rv$ia$trade_offs$auto_draft %||% "")
