@@ -63,3 +63,44 @@ test_that("(d) counts links that differ from the baseline", {
   expect_equal(r$top$d[col_of(c(1, 0.5))], 1L)
   expect_equal(r$top$d[col_of(c(1, 0.25))], 2L)
 })
+
+test_that("decode positions match decoded values", {
+  ls <- list(c(0.25, 0.5, 1), c(-1, -0.5, -0.25), c(0, 1))
+  idx <- c(1, 5, 18)
+  pos <- ses_grid_decode_positions(idx, ls)
+  expect_true(is.integer(pos))
+  vals <- ses_grid_decode(idx, ls)
+  for (k in seq_along(ls)) expect_equal(ls[[k]][pos[k, ]], vals[k, ])
+})
+
+test_that("edge dependence: decisive = successes use a strict subset of levels", {
+  ls <- list(c(0.25, 0.5, 1), c(-1, -0.5, -0.25), c(0, 1))
+  e <- data.frame(from = c("a", "b", "IV"), to = c("d", "d", "a"),
+                  kind = c("reweight", "reweight", "intervention"), stringsAsFactors = FALSE)
+  codes <- rbind(rep(3L, 30), rep(1:3, length.out = 30), rep(1:2, 15))
+  dep <- ses_edge_dependence(codes, ls, e, min_success = 30L)
+  expect_equal(dep$decisive, c(TRUE, FALSE, FALSE))
+  expect_equal(dep$needed_levels[[1]], 1)
+  expect_equal(dep$shares[[1]], c(0, 0, 1))
+  expect_equal(dep$levels[[2]], c(-1, -0.5, -0.25))
+  expect_equal(attr(dep, "n_success"), 30L)
+})
+
+test_that("edge dependence: below the threshold no verdict (29 vs 30, review focus 3)", {
+  ls <- list(c(0.25, 0.5, 1))
+  e <- data.frame(from = "a", to = "d", kind = "reweight", stringsAsFactors = FALSE)
+  expect_true(is.na(ses_edge_dependence(matrix(3L, 1, 29), ls, e, 30L)$decisive))
+  expect_true(ses_edge_dependence(matrix(3L, 1, 30), ls, e, 30L)$decisive)
+  expect_null(ses_edge_dependence(NULL, ls, e, 30L))
+  expect_null(ses_edge_dependence(matrix(integer(0), 1, 0), ls, e, 30L))
+})
+
+test_that("run returns dependence over the (a)-passing configurations", {
+  p <- dep_payload(rbind(rw("a", "d"), rw("d", "e")))
+  p$dependence_min_success <- 1L
+  dep <- ses_run_design(p)$dependence
+  expect_equal(dep$decisive, c(TRUE, FALSE))
+  expect_equal(dep$needed_levels[[1]], 1)                       # success needs a -> d strong
+  expect_equal(dep$shares[[2]], c(1, 1, 1) / 3)
+  expect_true(is.na(ses_run_design(dep_payload(rbind(rw("a", "d"), rw("d", "e"))))$dependence$decisive[1]))
+})

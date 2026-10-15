@@ -67,6 +67,42 @@ ses_grid_decode <- function(idx, level_sets) {
   out
 }
 
+#' Decode 1-based grid indices into level positions (same mixed radix as
+#' ses_grid_decode()): integer matrix, one row per variable edge.
+ses_grid_decode_positions <- function(idx, level_sets) {
+  sizes <- lengths(level_sets)
+  r <- as.numeric(idx) - 1
+  out <- matrix(0L, nrow = length(sizes), ncol = length(idx))
+  for (j in seq_along(sizes)) {
+    d <- r %% sizes[j]
+    out[j, ] <- as.integer(d + 1)
+    r <- (r - d) / sizes[j]
+  }
+  out
+}
+
+#' D5.3 "success depended on" (FIN:584-592, spec 2026-10-15 §3.3): share of the
+#' successful configurations at each level of every variable edge. An edge is
+#' decisive when successes use a strict subset of its levels; with fewer than
+#' `min_success` successes no verdict is given (decisive = NA).
+#' @param codes integer matrix (variable edges x successful configurations) of level positions
+#' @return NULL when there are no successes, else a data.frame (see spec)
+ses_edge_dependence <- function(codes, level_sets, edges, min_success) {
+  if (is.null(codes) || ncol(codes) == 0) return(NULL)
+  n_s <- ncol(codes)
+  shares <- lapply(seq_along(level_sets), function(k)
+    tabulate(codes[k, ], nbins = length(level_sets[[k]])) / n_s)
+  decisive <- vapply(shares, function(s) if (n_s < min_success) NA else any(s == 0), logical(1))
+  out <- data.frame(from = edges$from, to = edges$to, kind = edges$kind, decisive = decisive,
+                    stringsAsFactors = FALSE)
+  out$levels <- level_sets
+  out$shares <- shares
+  out$needed_levels <- lapply(seq_along(level_sets), function(k)
+    if (isTRUE(decisive[k])) level_sets[[k]][shares[[k]] > 0] else numeric(0))
+  attr(out, "n_success") <- n_s
+  out
+}
+
 #' Default |level| range from an intervention type's EBM codes (C§3).
 #' Behavioural (2.x) evidence is weakest and wins over every other code;
 #' legal/regulatory (1.x), output and spatial measures are medium; else full.
@@ -288,7 +324,7 @@ ses_config_final_state <- function(M, x0, steps) {
 
 #' Run a whole design (called in the background worker).
 #' @param payload list(base, design, levels, objectives, sustain, seed, steps,
-#'   window, cap, chunk, top_k, max_boolean_nodes, stability_budget_s). The
+#'   window, cap, chunk, top_k, max_boolean_nodes, stability_budget_s, dependence_min_success). The
 #'   stability checks stop once the run has taken stability_budget_s seconds
 #'   (NULL = no limit); rows left unchecked keep c = NA and the result has
 #'   stability_partial = TRUE.
@@ -318,15 +354,20 @@ ses_run_design <- function(payload, progress = NULL) {
   n_eval <- grid$n_eval
   index <- if (grid$sampled) grid$indices else seq_len(n_eval)
   a <- logical(n_eval); b <- logical(n_eval); d <- integer(n_eval)
+  succ_codes <- list()
   for (s in seq(1, n_eval, by = payload$chunk)) {
     pos <- s:min(n_eval, s + payload$chunk - 1)
     cfg <- ses_grid_decode(index[pos], dm$level_sets)
     r <- ses_grid_evaluate(dm, cfg, obj, sus, x0, payload$steps, payload$window)
     a[pos] <- r$a
     b[pos] <- r$b
+    if (any(r$a)) succ_codes[[length(succ_codes) + 1L]] <- ses_grid_decode_positions(index[pos][r$a], dm$level_sets)
     d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != dm$base_levels[dm$count_rows]))
     report(floor(900 * max(pos) / n_eval))
   }
+  min_success <- if (is.null(payload$dependence_min_success)) 30L else as.integer(payload$dependence_min_success)
+  dependence <- ses_edge_dependence(if (length(succ_codes)) do.call(cbind, succ_codes) else NULL,
+                                    dm$level_sets, dm$edges, min_success)
   # (c) for (a)&(b) rows first (so n_abc is exact), then (a)-only rows, until the
   # time budget (measured from the start of the run) is used up (spec §4.2(c)).
   budget <- if (is.null(payload$stability_budget_s)) Inf else as.numeric(payload$stability_budget_s)
@@ -355,6 +396,7 @@ ses_run_design <- function(payload, progress = NULL) {
     precheck = precheck,
     top = top,
     top_levels = ses_grid_decode(top$index, dm$level_sets),
+    dependence = dependence,
     design_matrix = dm, base = payload$base, x0 = x0,
     objectives = payload$objectives, sustain = payload$sustain,
     seed = payload$seed, steps = payload$steps, window = payload$window,

@@ -923,6 +923,7 @@ INTERVENTION_JOB_TIMEOUT_S <- 600
 INTERVENTION_STABILITY_BUDGET_FRACTION <- 0.7
 # Evidence priors (C§3; toolbox_extension): max |level| by instrument evidence.
 INTERVENTION_EVIDENCE_PRIORS <- c(behavioural = 0.25, regulatory = 0.5)
+INTERVENTION_DEPENDENCE_MIN_SUCCESS <- 30L  # fewest successes for a "decisive link" verdict (WS-7b §3.3)
 
 # ============================================================================
 # END OF CONSTANTS
