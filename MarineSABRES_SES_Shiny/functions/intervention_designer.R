@@ -95,7 +95,7 @@ ses_evidence_prior_range <- function(ebm_codes, priors) {
 #' Build the design matrix: base (+ the new node) with variable cells zeroed.
 #' @param design list(new_node = NULL|name, edges = data.frame(from, to, kind,
 #'   min_level, max_level))
-#' @return list(matrix, cells, level_sets, new_node, edges, count_rows)
+#' @return list(matrix, cells, level_sets, new_node, edges, base_levels, count_rows)
 ses_design_matrix <- function(base, design, levels) {
   if (!is.matrix(base) || nrow(base) != ncol(base) || is.null(rownames(base))) {
     stop("base must be a square matrix with node names")
@@ -117,19 +117,31 @@ ses_design_matrix <- function(base, design, levels) {
   ci <- idx$ci
   if (anyDuplicated(paste(ri, ci))) stop("duplicate variable edge in design")
   existing_cell <- ri <= nrow(base) & ci <= ncol(base)
-  if (any(base[cbind(ri[existing_cell], ci[existing_cell])] != 0)) {
+  is_rw <- edges$kind == "reweight"
+  base_w <- numeric(nrow(edges))
+  base_w[existing_cell] <- base[cbind(ri[existing_cell], ci[existing_cell])]
+  if (any(is_rw & base_w == 0)) stop("a re-weighted edge must exist in the network")
+  if (any(!is_rw & base_w != 0)) {
     stop("a variable edge already exists in the network (re-weighting is mode C)")
   }
   cells <- cbind(row = ri, col = ci)
   mat[cells] <- 0
+  level_sets <- ses_level_sets(edges, levels)
+  # Mode C (spec 2026-10-15 §3.1): the link's own sign, weak/medium/strong, within [min, max]
+  for (k in which(is_rw)) {
+    cand <- sort(sign(base_w[k]) * c(0.25, 0.5, 1))
+    level_sets[[k]] <- cand[cand >= edges$min_level[k] - 1e-12 & cand <= edges$max_level[k] + 1e-12]
+  }
   is_int <- edges$kind == "intervention"
   list(
     matrix = mat,
     cells = cells,
-    level_sets = ses_level_sets(edges, levels),
+    level_sets = level_sets,
     new_node = new_node,
     edges = edges,
-    count_rows = if (any(is_int)) which(is_int) else seq_len(nrow(edges))
+    base_levels = ifelse(is_rw, base_w, 0),
+    # (d) counts the intervention's own edges plus every re-weighted link (§3.2)
+    count_rows = if (any(is_int)) sort(c(which(is_int), which(is_rw))) else seq_len(nrow(edges))
   )
 }
 
@@ -312,7 +324,7 @@ ses_run_design <- function(payload, progress = NULL) {
     r <- ses_grid_evaluate(dm, cfg, obj, sus, x0, payload$steps, payload$window)
     a[pos] <- r$a
     b[pos] <- r$b
-    d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != 0))
+    d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != dm$base_levels[dm$count_rows]))
     report(floor(900 * max(pos) / n_eval))
   }
   # (c) for (a)&(b) rows first (so n_abc is exact), then (a)-only rows, until the
