@@ -278,17 +278,47 @@ rank_simplest <- function(df) {
   df[order(-df$a, -df$b, -cc, df$d, df$index), , drop = FALSE]
 }
 
-#' Boolean pre-check (spec section 4.6): every variable edge at the strongest level of
-#' its allowed sign; does any attractor keep every objective node ON?
-ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
-  n <- nrow(dm$matrix)
+#' Link ranking for mode C (spec 2026-10-15 §3.4): sensitivity of the dominant
+#' eigenvalue of J = t(mat) (x_t = J x_{t-1}) to each existing link,
+#' |d lambda / d mat[i, j]| = |w_j v_i / (w . v)|. Independent of node order,
+#' unlike per-component participation ratio.
+#' @return NULL when there is no single dominant mode (or eigen fails), else a
+#'   data.frame(from, to, weight, sensitivity) sorted by sensitivity, descending
+ses_link_sensitivity <- function(mat) {
+  if (!is.matrix(mat) || nrow(mat) != ncol(mat) || !any(mat != 0)) return(NULL)
+  er <- tryCatch(eigen(t(mat)), error = function(e) NULL)       # right eigenvectors of J
+  el <- tryCatch(eigen(mat), error = function(e) NULL)          # t(J) == mat: left eigenvectors of J
+  if (is.null(er) || is.null(el)) return(NULL)
+  mods <- Mod(er$values)
+  top <- max(mods)
+  if (top < 1e-12) return(NULL)
+  tol <- 1e-9 * max(1, top)
+  cand <- which(abs(mods - top) <= tol)
+  if (length(cand) > 2) return(NULL)
+  if (length(cand) == 2 && Mod(er$values[cand[1]] - Conj(er$values[cand[2]])) > tol) return(NULL)
+  k <- cand[which.max(Im(er$values[cand]))]
+  lam <- er$values[k]
+  v <- er$vectors[, k]
+  w <- el$vectors[, which.min(Mod(el$values - lam))]           # not solve(V): fails on defective matrices
+  wv <- sum(w * v)
+  if (Mod(wv) < 1e-12) return(NULL)
+  idx <- which(mat != 0, arr.ind = TRUE)
+  out <- data.frame(from = rownames(mat)[idx[, 1]], to = colnames(mat)[idx[, 2]], weight = mat[idx],
+                    sensitivity = Mod(w[idx[, 2]] * v[idx[, 1]] / wv), stringsAsFactors = FALSE)
+  out <- out[order(-out$sensitivity, out$from, out$to), , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}
+
+#' Boolean attractors of one matrix: does any attractor keep every objective node ON?
+#' @return list(status, n_nodes, n_attractors, n_desirable)
+ses_boolean_attractor_summary <- function(M, objective_idx, max_nodes) {
+  n <- nrow(M)
   out <- function(status, n_att = NA_integer_, n_des = NA_integer_) {
     list(status = status, n_nodes = n, n_attractors = n_att, n_desirable = n_des)
   }
   if (n > max_nodes) return(out("skipped"))
-  extreme <- vapply(dm$level_sets, function(s) if (max(s) > 0) max(s) else min(s), numeric(1))
-  bm <- tryCatch(boolean_model(ses_apply_config(dm, extreme), max_nodes = max_nodes),
-                 error = function(e) NULL)
+  bm <- tryCatch(boolean_model(M, max_nodes = max_nodes), error = function(e) NULL)
   if (is.null(bm)) return(out("unavailable"))
   if (isTRUE(bm$skipped) || is.null(bm$analysis)) return(out("skipped"))
   att <- bm$analysis$attractors
@@ -296,8 +326,14 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
     if (is.null(a) || !is.data.frame(a) || nrow(a) == 0) return(FALSE)
     all(as.matrix(a[, objective_idx, drop = FALSE]) == 1)
   }, logical(1))
-  out(if (any(desirable)) "passed" else "topology_change_needed",
-      length(att), sum(desirable))
+  out(if (any(desirable)) "passed" else "topology_change_needed", length(att), sum(desirable))
+}
+
+#' Boolean pre-check (spec section 4.6): every variable edge at the strongest level of
+#' its allowed sign; does any attractor keep every objective node ON?
+ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
+  extreme <- vapply(dm$level_sets, function(s) if (max(s) > 0) max(s) else min(s), numeric(1))
+  ses_boolean_attractor_summary(ses_apply_config(dm, extreme), objective_idx, max_nodes)
 }
 
 #' Final state of one configuration matrix, stepped exactly as ses_grid_evaluate()

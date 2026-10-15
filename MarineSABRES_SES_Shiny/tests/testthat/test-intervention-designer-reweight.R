@@ -104,3 +104,50 @@ test_that("run returns dependence over the (a)-passing configurations", {
   expect_equal(dep$shares[[2]], c(1, 1, 1) / 3)
   expect_true(is.na(ses_run_design(dep_payload(rbind(rw("a", "d"), rw("d", "e"))))$dependence$decisive[1]))
 })
+
+sens_small <- function() {
+  m <- matrix(0, 4, 4, dimnames = rep(list(c("a", "b", "c", "d")), 2))
+  m["a", "b"] <- 1; m["b", "a"] <- 0.5; m["b", "c"] <- 0.25; m["c", "a"] <- 0.25; m["d", "a"] <- 0.5
+  m
+}
+dominant <- function(m, near) { ev <- eigen(t(m))$values; ev[which.min(Mod(ev - near))] }
+
+test_that("link sensitivity equals a finite-difference estimate", {
+  m <- sens_small()
+  s <- ses_link_sensitivity(m)
+  lam <- dominant(m, 10)
+  for (i in seq_len(nrow(s))) {
+    m2 <- m; m2[s$from[i], s$to[i]] <- m2[s$from[i], s$to[i]] + 1e-6
+    expect_equal(Mod((dominant(m2, lam) - lam) / 1e-6), s$sensitivity[i], tolerance = 1e-4)
+  }
+  expect_equal(s$sensitivity[s$from == "d"], 0)                 # d has no incoming links
+  expect_equal(s$sensitivity, sort(s$sensitivity, decreasing = TRUE))
+})
+
+test_that("link sensitivity does not depend on node order", {
+  m <- sens_small()
+  s1 <- ses_link_sensitivity(m)
+  p <- c(3, 1, 4, 2)
+  s2 <- ses_link_sensitivity(m[p, p])
+  k1 <- paste(s1$from, s1$to); k2 <- paste(s2$from, s2$to)
+  expect_equal(s2$sensitivity[match(k1, k2)], s1$sensitivity, tolerance = 1e-8)
+})
+
+test_that("link sensitivity: degenerate networks give NULL (review focus 4)", {
+  expect_null(ses_link_sensitivity(matrix(0, 2, 2)))
+  cyc <- matrix(0, 3, 3, dimnames = rep(list(c("a", "b", "c")), 2))
+  cyc["a", "b"] <- cyc["b", "c"] <- cyc["c", "a"] <- 0.5        # three eigenvalues of equal modulus
+  expect_null(ses_link_sensitivity(cyc))
+  two <- matrix(c(0, 1, 1, 0), 2, 2, dimnames = rep(list(c("a", "b")), 2))   # eigenvalues 1 and -1
+  expect_null(ses_link_sensitivity(two))
+})
+
+test_that("attractor summary: skipped above the node limit, same result as the pre-check", {
+  big <- matrix(0, 25, 25, dimnames = rep(list(paste0("n", 1:25)), 2))
+  expect_equal(ses_boolean_attractor_summary(big, 1L, 20L)$status, "skipped")
+  skip_if_not_installed("BoolNet")
+  m <- dep_base()
+  s <- ses_boolean_attractor_summary(m, match("d", rownames(m)), 20L)
+  expect_true(s$status %in% c("passed", "topology_change_needed"))
+  expect_true(s$n_attractors >= s$n_desirable)
+})
