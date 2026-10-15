@@ -135,7 +135,7 @@ test_that("realistic size: the repo's Tuscany network runs a 2,401-configuration
 test_that("default run checks every (a) row: counts unchanged, not partial", {
   r <- ses_run_design(moorings_payload(1))                  # no stability_budget_s: no limit
   expect_false(r$stability_partial)
-  expect_equal(c(r$n_a, r$n_ab, r$n_abc), c(733, 733, 4))   # values before the budget existed
+  expect_equal(c(r$n_a, r$n_ab, r$n_abc), c(733, 733, 5))   # grid row 893 included, see below
   p <- moorings_payload(1); p$stability_budget_s <- Inf
   expect_identical(ses_run_design(p)$n_abc, r$n_abc)
 })
@@ -162,9 +162,9 @@ test_that("stability is checked for (a)&(b) rows before (a)-only rows, each in g
   p <- moorings_payload(1); p$sustain <- "Anchoring"
   seen <- list()
   orig <- get("ses_is_stable_attractor", envir = globalenv())
-  assign("ses_is_stable_attractor", function(mat, tol = 1e-9) {
+  assign("ses_is_stable_attractor", function(mat, ...) {
     seen[[length(seen) + 1L]] <<- mat
-    orig(mat, tol)
+    orig(mat, ...)
   }, envir = globalenv())
   withr::defer(assign("ses_is_stable_attractor", orig, envir = globalenv()))
   r <- ses_run_design(p)
@@ -180,4 +180,14 @@ test_that("stability is checked for (a)&(b) rows before (a)-only rows, each in g
   checked <- match(vapply(seen, function(m) paste(m[dm$cells], collapse = ","), character(1)), cfg_key)
   expect_equal(checked, expected)
   expect_false(r$stability_partial)
+})
+
+test_that("a repeated real Laplacian eigenvalue counts as stable on every BLAS build", {
+  # Grid row 893 has a double eigenvalue 0.5. Rounding splits it into
+  # 0.5 +/- 1.6e-8i with Windows' reference LAPACK but not with OpenBLAS, so an
+  # absolute 1e-9 tolerance gave n_abc 4 on Windows and 5 on Linux CI.
+  dm <- ses_design_matrix(moorings_payload(1)$base, moorings_payload(1)$design, LV)
+  m <- ses_apply_config(dm, ses_grid_decode(893, dm$level_sets)[, 1])
+  expect_equal(unname(ses_grid_decode(893, dm$level_sets)[, 1]), c(0, 1, 0, -0.5, 1))
+  expect_true(ses_is_stable_attractor(m))
 })

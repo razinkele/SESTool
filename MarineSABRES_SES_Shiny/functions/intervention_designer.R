@@ -215,10 +215,13 @@ ses_grid_evaluate <- function(dm, configs, objective_idx, sustain_idx, x0, steps
 
 #' D5.3 stability (FIN:1517): every Laplacian eigenvalue is real.
 #' laplacian_eigenvalues() drops imaginary parts, so it cannot be reused here.
-ses_is_stable_attractor <- function(mat, tol = 1e-9) {
+#' tol is relative to the largest |eigenvalue|: rounding splits a repeated real
+#' eigenvalue of multiplicity k into a pair about eps^(1/k) apart (~1.5e-8 for
+#' k = 2, ~6e-6 for k = 3), and how it splits depends on the BLAS/LAPACK build.
+ses_is_stable_attractor <- function(mat, tol = 1e-5) {
   L <- diag(rowSums(mat), nrow = nrow(mat)) - mat
   ev <- eigen(L, only.values = TRUE)$values
-  all(abs(Im(ev)) <= tol)
+  all(abs(Im(ev)) <= tol * max(1, Mod(ev)))
 }
 
 #' D5.3 ranking (C section 5.2 step 6): a, b, c descending, d ascending, grid order.
