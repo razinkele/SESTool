@@ -36,7 +36,9 @@ Imports:
     shiny.i18n,
     htmltools,
     officer,
-    flextable
+    flextable,
+    callr,
+    Matrix
 Suggests:
     torch,
     testthat (>= 3.0.0),

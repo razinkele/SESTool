@@ -715,6 +715,7 @@ source("functions/impact_assessment_model.R", local = FALSE)
 source("functions/impact_assessment_report.R", local = FALSE)
 source("functions/impact_assessment_view.R", local = FALSE)
 source("functions/intervention_designer.R", local = FALSE)
+source("functions/intervention_designer_job.R", local = FALSE)
 
 # Country Governance and Socio-Economic Database loader
 # Must be global scope for country-specific governance and socioeconomic element suggestions
