@@ -175,6 +175,8 @@ ses_grid_evaluate <- function(dm, configs, objective_idx, sustain_idx, x0, steps
   A <- dm$matrix
   n <- nrow(A)
   C <- ncol(configs)
+  stopifnot(steps >= 2, window >= 1, window <= steps,
+            nrow(configs) == nrow(dm$cells), length(x0) == n)
   cells <- dm$cells
   fixed_t <- Matrix::Matrix(t(A), sparse = TRUE)
   X <- matrix(x0, nrow = n, ncol = C)

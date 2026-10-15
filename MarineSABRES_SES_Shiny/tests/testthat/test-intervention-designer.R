@@ -174,7 +174,9 @@ rand_design <- function(seed, n = 6, new_node = TRUE, self_loop = TRUE) {
   set.seed(seed)
   nm <- paste0("N", 1:n)
   base <- matrix(0, n, n, dimnames = list(nm, nm))
-  base[cbind(sample(n, 9, TRUE), sample(n, 9, TRUE))] <- sample(c(-1, -0.5, 0.5, 1), 9, TRUE)
+  # positive-biased weights so outcomes vary across configurations (non-vacuous)
+  base[cbind(sample(n, 12, TRUE), sample(n, 12, TRUE))] <-
+    sample(c(-1, -0.5, 0.5, 1), 12, TRUE, prob = c(0.1, 0.1, 0.4, 0.4))
   diag(base) <- 0
   e <- data.frame(from = character(), to = character(), kind = character(), stringsAsFactors = FALSE)
   if (new_node) e <- rbind(e, data.frame(from = c("IV", "IV", "N3"), to = c("N1", "N2", "IV"),
@@ -186,16 +188,20 @@ rand_design <- function(seed, n = 6, new_node = TRUE, self_loop = TRUE) {
 
 test_that("batched evaluation equals the per-configuration reference (modes A, B, A+B)", {
   for (case in list(c(TRUE, FALSE), c(FALSE, TRUE), c(TRUE, TRUE))) {
-    rd <- rand_design(11, new_node = case[1], self_loop = case[2])
+    rd <- rand_design(38, new_node = case[1], self_loop = case[2])
     dm <- ses_design_matrix(rd$base, rd$design, LV)
     n <- nrow(dm$matrix)
-    x0 <- c(runif(nrow(rd$base)), if (case[1]) 0.5)
+    set.seed(5)
+    x0 <- c(runif(nrow(rd$base), 0.2, 1), if (case[1]) 0.5)
     g <- ses_intervention_grid(dm$level_sets, cap = 65536, seed = 1)
     idx <- seq_len(min(g$n_eval, 300))
     cfg <- ses_grid_decode(idx, dm$level_sets)
     got <- ses_grid_evaluate(dm, cfg, objective_idx = 1L, sustain_idx = c(2L, 5L), x0 = x0,
                              steps = 200L, window = 50L)
     want <- vapply(idx, function(i) ref_eval(dm, cfg[, i], 1L, c(2L, 5L), x0, 200L, 50L), logical(2))
+    # non-vacuity: both outcomes occur for (a) and (b), so a swap or window bug shows
+    expect_true(any(got$a) && !all(got$a))
+    expect_true(any(got$b) && !all(got$b))
     expect_identical(got$a, unname(want["a", ]))
     expect_identical(got$b, unname(want["b", ]))
   }
@@ -213,10 +219,21 @@ test_that("criterion (a) is strict positivity at every window step, not a sign p
 })
 
 test_that("a growing system is judged on signs, not discarded (rescaling)", {
-  base <- matrix(c(2, 0, 0, 2), 2, 2, dimnames = rep(list(c("a", "b")), 2))
+  base <- matrix(c(4, 0, 0, 4), 2, 2, dimnames = rep(list(c("a", "b")), 2))
   dm <- ses_design_matrix(base, list(new_node = NULL, edges = data.frame(
     from = "a", to = "b", kind = "context", min_level = 0, max_level = 1)), LV)
   cfg <- ses_grid_decode(1:4, dm$level_sets)
   r <- ses_grid_evaluate(dm, cfg, 1L, 2L, c(1, 1), steps = 1000L, window = 100L)
   expect_true(all(r$a)); expect_true(all(r$b))
+})
+
+test_that("ses_grid_evaluate rejects inconsistent arguments", {
+  base <- matrix(c(0, 1, 1, 0), 2, 2, dimnames = rep(list(c("a", "b")), 2))
+  dm <- ses_design_matrix(base, list(new_node = NULL, edges = data.frame(
+    from = "a", to = "a", kind = "context", min_level = 0, max_level = 1)), LV)
+  cfg <- matrix(0, 1, 2)
+  expect_error(ses_grid_evaluate(dm, cfg, 1L, 2L, c(1, 1), steps = 1L, window = 1L))
+  expect_error(ses_grid_evaluate(dm, cfg, 1L, 2L, c(1, 1), steps = 10L, window = 11L))
+  expect_error(ses_grid_evaluate(dm, matrix(0, 2, 2), 1L, 2L, c(1, 1), steps = 10L, window = 5L))
+  expect_error(ses_grid_evaluate(dm, cfg, 1L, 2L, 1, steps = 10L, window = 5L))
 })
