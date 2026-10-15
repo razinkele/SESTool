@@ -242,3 +242,86 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
   out(if (any(desirable)) "passed" else "topology_change_needed",
       length(att), sum(desirable))
 }
+
+#' Final state of one configuration matrix, stepped exactly as ses_grid_evaluate()
+#' does (x[t] = t(M) %*% x[t-1], L1 rescaling every 10 steps), so its signs agree
+#' with criteria (a)/(b). Used for the Designer's comparison plot (spec §4.7).
+#' @return numeric vector named by rownames(M)
+ses_config_final_state <- function(M, x0, steps) {
+  At <- t(M)
+  x <- as.numeric(x0)
+  for (t in 2:steps) {
+    x <- as.vector(At %*% x)
+    if (t %% 10L == 0L) {
+      s <- sum(abs(x))
+      if (s > 0) x <- x / s
+    }
+  }
+  stats::setNames(x, rownames(M))
+}
+
+#' Run a whole design (called in the background worker).
+#' @param payload list(base, design, levels, objectives, sustain, seed, steps,
+#'   window, cap, chunk, top_k, max_boolean_nodes)
+#' @param progress optional function(done, total, precheck = NULL). Called once
+#'   with done = 0 and the pre-check status before the grid runs (spec §4.6),
+#'   then in fixed units of 1000: 0-900 over the grid chunks, 900-1000 over the
+#'   stability checks, ending at 1000 (the bar never jumps back).
+ses_run_design <- function(payload, progress = NULL) {
+  t0 <- Sys.time()
+  report <- function(done, precheck = NULL) {
+    if (!is.function(progress)) return(invisible())
+    if (is.null(precheck)) progress(done, 1000) else progress(done, 1000, precheck)
+  }
+  dm <- ses_design_matrix(payload$base, payload$design, payload$levels)
+  nm <- rownames(dm$matrix)
+  obj <- match(payload$objectives, nm)
+  if (!length(obj) || anyNA(obj)) stop("objective nodes not found in the network")
+  sus <- match(payload$sustain, nm)
+  sus <- sus[!is.na(sus)]
+  grid <- ses_intervention_grid(dm$level_sets, cap = payload$cap, seed = payload$seed)
+  x0 <- .with_seed(payload$seed, stats::runif(nrow(payload$base)))
+  if (!is.null(dm$new_node)) x0 <- c(x0, 0.5)
+  precheck <- tryCatch(ses_boolean_precheck(dm, obj, payload$max_boolean_nodes),
+                       error = function(e) list(status = "unavailable", n_nodes = nrow(dm$matrix),
+                                                n_attractors = NA_integer_, n_desirable = NA_integer_))
+  report(0, precheck$status)                     # visible while the grid runs (spec §4.6, §6)
+  n_eval <- grid$n_eval
+  index <- if (grid$sampled) grid$indices else seq_len(n_eval)
+  a <- logical(n_eval); b <- logical(n_eval); d <- integer(n_eval)
+  for (s in seq(1, n_eval, by = payload$chunk)) {
+    pos <- s:min(n_eval, s + payload$chunk - 1)
+    cfg <- ses_grid_decode(index[pos], dm$level_sets)
+    r <- ses_grid_evaluate(dm, cfg, obj, sus, x0, payload$steps, payload$window)
+    a[pos] <- r$a
+    b[pos] <- r$b
+    d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != 0))
+    report(floor(900 * max(pos) / n_eval))
+  }
+  c_ok <- rep(NA, n_eval)
+  succ <- which(a)
+  n_succ <- length(succ)
+  for (j in seq_along(succ)) {
+    i <- succ[j]
+    c_ok[i] <- ses_is_stable_attractor(ses_apply_config(dm, ses_grid_decode(index[i], dm$level_sets)[, 1]))
+    if (j %% 500L == 0L) report(900 + floor(100 * j / n_succ))
+  }
+  report(1000)
+  ranked <- rank_simplest(data.frame(index = index, a = a, b = b, c = c_ok, d = d))
+  top <- utils::head(ranked, payload$top_k)
+  top$rank <- seq_len(nrow(top))
+  top <- top[, c("rank", "index", "a", "b", "c", "d")]
+  rownames(top) <- NULL
+  list(
+    n_total = grid$n_total, n_eval = n_eval, sampled = grid$sampled,
+    n_a = sum(a), n_ab = sum(a & b), n_abc = sum(a & b & (c_ok %in% TRUE)),
+    share = sum(a) / n_eval,
+    precheck = precheck,
+    top = top,
+    top_levels = ses_grid_decode(top$index, dm$level_sets),
+    design_matrix = dm, base = payload$base, x0 = x0,
+    objectives = payload$objectives, sustain = payload$sustain,
+    seed = payload$seed, steps = payload$steps, window = payload$window,
+    elapsed_s = as.numeric(difftime(Sys.time(), t0, units = "secs"))
+  )
+}
