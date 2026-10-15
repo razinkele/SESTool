@@ -162,3 +162,45 @@ ses_level_code <- function(x) {
              "0.25" = "weak_pos", "0.5" = "medium_pos", "1" = "strong_pos")
   unname(codes[as.character(x)])
 }
+
+#' Evaluate a chunk of configurations together (spec §4.1, §4.4).
+#'
+#' x[t] = t(A) %*% x[t-1]; the fixed part of A is applied as one sparse
+#' product, each variable cell (r, c) adds level * x[r] to x[c]. States are
+#' divided by their L1 norm every 10 steps (exact for signs: the model is
+#' linear). (a)/(b): strictly > 0 at each of the last `window` steps.
+#' @param configs numeric matrix, one row per variable edge, one column per configuration
+#' @return list(a = logical, b = logical), one element per configuration
+ses_grid_evaluate <- function(dm, configs, objective_idx, sustain_idx, x0, steps, window) {
+  A <- dm$matrix
+  n <- nrow(A)
+  C <- ncol(configs)
+  cells <- dm$cells
+  fixed_t <- Matrix::Matrix(t(A), sparse = TRUE)
+  X <- matrix(x0, nrow = n, ncol = C)
+  ok_a <- rep(TRUE, C)
+  ok_b <- rep(TRUE, C)
+  first_check <- steps - window + 1L
+  for (t in 2:steps) {
+    Xn <- as.matrix(fixed_t %*% X)
+    for (k in seq_len(nrow(cells))) {
+      tgt <- cells[k, 2]
+      Xn[tgt, ] <- Xn[tgt, ] + configs[k, ] * X[cells[k, 1], ]
+    }
+    X <- Xn
+    if (t %% 10L == 0L) {
+      s <- colSums(abs(X))
+      s[s == 0] <- 1
+      X <- X / rep(s, each = n)
+    }
+    if (t >= first_check) {
+      if (length(objective_idx)) {
+        ok_a <- ok_a & colSums(X[objective_idx, , drop = FALSE] > 0) == length(objective_idx)
+      }
+      if (length(sustain_idx)) {
+        ok_b <- ok_b & colSums(X[sustain_idx, , drop = FALSE] > 0) == length(sustain_idx)
+      }
+    }
+  }
+  list(a = unname(ok_a), b = unname(ok_b))
+}
