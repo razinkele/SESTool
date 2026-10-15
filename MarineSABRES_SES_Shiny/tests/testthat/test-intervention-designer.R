@@ -48,6 +48,18 @@ test_that("grids above 2^31 sample without overflow (review focus 4)", {
   expect_true(all(d %in% LV))
 })
 
+test_that("designs too large to sample exactly are refused (final review item 1)", {
+  expect_error(ses_intervention_grid(rep(list(LV), 20), cap = 65536, seed = 1),   # 7^20 = 8e16
+               "too many combinations")
+  expect_error(ses_intervention_grid(rep(list(LV), 19), cap = 65536, seed = 1),   # 7^19: sample.int fails here
+               "too many combinations")
+  g <- ses_intervention_grid(rep(list(LV), 18), cap = 16, seed = 1)               # 7^18 = 1.6e15: still sampled
+  expect_true(g$sampled)
+  expect_true(all(g$indices >= 1 & g$indices <= 7^18))
+  expect_lte(7^18, SES_MAX_GRID_COMBINATIONS)
+  expect_lte(SES_MAX_GRID_COMBINATIONS, 2^52)                                    # indices stay exact doubles
+})
+
 test_that("empty designs and empty ranges are rejected", {
   expect_error(ses_intervention_grid(list(), cap = 10, seed = 1), "no variable edges")
   expect_error(ses_intervention_grid(list(1:3, numeric(0)), cap = 10, seed = 1), "empty level range")

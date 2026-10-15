@@ -167,10 +167,12 @@ test_that("the pre-check is shown above the progress bar while the job runs (spe
     expect_false(is.null(rv$job))
     expect_equal(run_block_reason(), "modules.intervention_designer.job_running")
     html <- as.character(output$results_ui$html)
-    pc_at <- regexpr("modules.intervention_designer.precheck.topology_change_needed", html, fixed = TRUE)
-    expect_gt(pc_at, 0)
-    expect_lt(pc_at, regexpr("progress-bar", html, fixed = TRUE))
     expect_true(grepl("modules.intervention_designer.cancel", html, fixed = TRUE))
+    prog <- as.character(output$progress_ui$html)
+    pc_at <- regexpr("modules.intervention_designer.precheck.topology_change_needed", prog, fixed = TRUE)
+    expect_gt(pc_at, 0)
+    expect_lt(pc_at, regexpr("progress-bar", prog, fixed = TRUE))
+    expect_false(grepl("modules.intervention_designer.cancel", prog, fixed = TRUE))
     session$setInputs(cancel = 1)
     expect_null(rv$job)
   })
@@ -314,5 +316,152 @@ test_that("the comparison uses the network the run used, not the current one (re
     expect_false(isTRUE(all.equal(cmp$state_original, unname(fo_cur[nodes]))))
     expect_false(isTRUE(all.equal(cmp$state_intervention, unname(fi_cur[nodes]))))
     expect_error(output$compare_plot, NA)
+  })
+})
+
+# -- Final review fix wave --------------------------------------------------------
+# i18n stub that counts how often each key is translated (a key's count grows
+# each time the output that uses it re-renders).
+counting_i18n <- function() {
+  cnt <- new.env()
+  list(t = function(k, ...) { assign(k, get0(k, envir = cnt, inherits = FALSE, ifnotfound = 0) + 1, envir = cnt); k },
+       translator = NULL,
+       count = function(k) get0(k, envir = cnt, inherits = FALSE, ifnotfound = 0))
+}
+# 20 full-range context edges on empty cells of proj(): 7^20 combinations
+many_edges <- function() {
+  lab <- c("Demand", "Boating", "Anchoring", "P. oceanica extension", "Habitat")
+  pairs <- expand.grid(from = lab, to = lab, stringsAsFactors = FALSE)
+  existing <- paste(c("Demand", "Boating", "Anchoring", "P. oceanica extension"),
+                    c("Boating", "Anchoring", "P. oceanica extension", "Habitat"))
+  pairs <- pairs[!paste(pairs$from, pairs$to) %in% existing, ][1:20, ]
+  data.frame(from = pairs$from, to = pairs$to, kind = "context", min_level = -1, max_level = 1,
+             stringsAsFactors = FALSE)
+}
+
+test_that("a design with too many combinations blocks Run and grid_info does not error (item 1)", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    session$setInputs(objectives = "P. oceanica extension", sustain = NULL)
+    rv$edges <- many_edges()
+    session$flushReact()
+    expect_equal(nrow(rv$edges), 20L)
+    expect_equal(run_block_reason(), "modules.intervention_designer.too_many_combinations")
+    expect_error(output$grid_info, NA)
+    expect_true(grepl("modules.intervention_designer.too_many_combinations",
+                      as.character(output$grid_info$html), fixed = TRUE))
+  })
+})
+
+test_that("grid_info does not error when edges grow too many while a job runs (item 1)", {
+  api <- fake_api()
+  api$poll <- function(job) list(state = "running", done = 0, total = 1000)
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = api), {
+    session$setInputs(edge_from = "Demand", edge_to = "Habitat", add_edge = 1,
+                      objectives = "P. oceanica extension", sustain = NULL)
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_false(is.null(rv$job))
+    rv$edges <- many_edges()
+    expect_error(session$flushReact(), NA)
+    expect_error(output$grid_info, NA)
+    expect_true(grepl("modules.intervention_designer.too_many_combinations",
+                      as.character(output$grid_info$html), fixed = TRUE))
+  })
+})
+
+test_that("payload carries the stability budget; a partial result shows the note (item 2)", {
+  net <- list(matrix = matrix(0, 2, 2, dimnames = rep(list(c("a", "b")), 2)))
+  e <- data.frame(from = "a", to = "b", kind = "context", min_level = -1, max_level = 1)
+  expect_equal(.designer_payload(net, e, "", "a", character(0))$stability_budget_s,
+               INTERVENTION_STABILITY_BUDGET_FRACTION * INTERVENTION_JOB_TIMEOUT_S)
+  expect_equal(INTERVENTION_STABILITY_BUDGET_FRACTION, 0.7)
+  run_with <- function(budget) {
+    api <- fake_api()
+    api$poll <- function(job) { job$payload$stability_budget_s <- budget
+                                list(state = "done", result = ses_run_design(job$payload)) }
+    html <- NULL
+    # Positive P -> MPF and a self-loop on the objective: some rows pass (a)
+    p <- proj(); p$data$cld$edges$polarity[3] <- "+"
+    p$data$cld$edges <- rbind(p$data$cld$edges, data.frame(from = "MPF_1", to = "MPF_1", polarity = "+",
+                                                           strength = "strong", stringsAsFactors = FALSE))
+    testServer(real_designer_server,
+               args = list(project_data_reactive = shiny::reactiveVal(p), i18n = i18n_echo,
+                           job_api = api), {
+      session$setInputs(name = "IV", type = "", node_targets = "Anchoring", node_indicators = NULL)
+      session$setInputs(add_node_edges = 1, objectives = "P. oceanica extension", sustain = NULL)
+      session$setInputs(run = 1)
+      session$elapse(1100)
+      expect_gt(rv$result$n_a, 0)
+      html <<- as.character(output$results_ui$html)
+    })
+    html
+  }
+  expect_true(grepl("modules.intervention_designer.stability_partial", run_with(0), fixed = TRUE))
+  expect_false(grepl("modules.intervention_designer.stability_partial", run_with(NULL), fixed = TRUE))
+})
+
+test_that("a stale edge or self-loop label is ignored without ending the session (item 5)", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    expect_error(session$setInputs(edge_from = "Gone", edge_to = "Demand", add_edge = 1), NA)
+    expect_error(session$setInputs(edge_from = "Demand", edge_to = "Gone", add_edge = 2), NA)
+    expect_error(session$setInputs(self_loop_node = "Gone", add_self_loop = 1), NA)
+    expect_equal(nrow(rv$edges), 0L)
+    session$setInputs(edge_from = "Demand", edge_to = "Habitat", add_edge = 3)   # still works afterwards
+    expect_equal(nrow(rv$edges), 1L)
+  })
+})
+
+test_that("progress ticks re-render only the progress output, not the card with Cancel (item 6)", {
+  tick <- 0
+  api <- fake_api()
+  api$poll <- function(job) { tick <<- tick + 100
+                              list(state = "running", done = tick, total = 1000, precheck = "passed") }
+  i18n_c <- counting_i18n()
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_c,
+                         job_api = api), {
+    session$setInputs(name = "IV", type = "", node_targets = "Anchoring", node_indicators = NULL)
+    session$setInputs(add_node_edges = 1, objectives = "P. oceanica extension", sustain = NULL)
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_true(grepl("modules.intervention_designer.cancel", as.character(output$results_ui$html), fixed = TRUE))
+    p1 <- as.character(output$progress_ui$html)
+    n_card <- i18n_c$count("modules.intervention_designer.cancel")
+    n_pc <- i18n_c$count("modules.intervention_designer.precheck.passed")
+    expect_gt(n_card, 0)
+    session$elapse(1000)
+    session$elapse(1000)
+    expect_gt(tick, 200)
+    p2 <- as.character(output$progress_ui$html)
+    expect_false(identical(p1, p2))                                  # the bar moved
+    expect_equal(i18n_c$count("modules.intervention_designer.cancel"), n_card)   # the card did not re-render
+    expect_equal(i18n_c$count("modules.intervention_designer.precheck.passed"), n_pc + 2)
+  })
+})
+
+test_that("Cancel after the job finished does nothing (item 7)", {
+  n_cancel <- 0
+  api <- fake_api()
+  api$cancel <- function(job) { n_cancel <<- n_cancel + 1; invisible(TRUE) }
+  i18n_c <- counting_i18n()
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_c,
+                         job_api = api), {
+    session$setInputs(name = "IV", type = "", node_targets = "Anchoring", node_indicators = NULL)
+    session$setInputs(add_node_edges = 1, objectives = "P. oceanica extension", sustain = NULL)
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_null(rv$job)
+    expect_false(is.null(rv$result))
+    session$setInputs(cancel = 1)                                   # stale click
+    expect_equal(n_cancel, 0)
+    expect_equal(i18n_c$count("modules.intervention_designer.cancelled"), 0)
+    expect_false(is.null(rv$result))
   })
 })

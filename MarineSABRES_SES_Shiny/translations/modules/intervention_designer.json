@@ -715,6 +715,17 @@
       "no": "Velg minst én målnode.",
       "el": "Επιλέξτε τουλάχιστον έναν κόμβο στόχο."
     },
+    "modules.intervention_designer.too_many_combinations": {
+      "en": "Too many combinations. Narrow some edge ranges or remove edges.",
+      "es": "Demasiadas combinaciones. Reduzca el rango de algunas aristas o elimine aristas.",
+      "fr": "Trop de combinaisons. Réduisez la plage de certaines arêtes ou supprimez des arêtes.",
+      "de": "Zu viele Kombinationen. Schränken Sie den Bereich einiger Kanten ein oder entfernen Sie Kanten.",
+      "lt": "Per daug derinių. Susiaurinkite kai kurių briaunų intervalus arba pašalinkite briaunas.",
+      "pt": "Demasiadas combinações. Reduza o intervalo de algumas arestas ou remova arestas.",
+      "it": "Troppe combinazioni. Restringa l'intervallo di alcuni archi o rimuova degli archi.",
+      "no": "For mange kombinasjoner. Begrens området for noen kanter eller fjern kanter.",
+      "el": "Πάρα πολλοί συνδυασμοί. Περιορίστε το εύρος ορισμένων ακμών ή αφαιρέστε ακμές."
+    },
     "modules.intervention_designer.need_name": {
       "en": "Name the intervention node.",
       "es": "Ponga nombre al nodo de intervención.",
@@ -896,11 +907,22 @@
       "es": "... y estable (a, b, c)",
       "fr": "... et stable (a, b, c)",
       "de": "... und stabil (a, b, c)",
-      "lt": "... ir stabilu (a, b, c)",
+      "lt": "... ir stabilus (a, b, c)",
       "pt": "... e estável (a, b, c)",
       "it": "... e stabile (a, b, c)",
       "no": "... og stabilt (a, b, c)",
       "el": "... και σταθερό (a, b, c)"
+    },
+    "modules.intervention_designer.stability_partial": {
+      "en": "Stability was checked for part of the combinations only, to stay within the time limit. Unchecked rows show —.",
+      "es": "La estabilidad solo se comprobó para una parte de las combinaciones, para no superar el límite de tiempo. Las filas no comprobadas muestran —.",
+      "fr": "La stabilité n'a été vérifiée que pour une partie des combinaisons, afin de respecter la limite de temps. Les lignes non vérifiées affichent —.",
+      "de": "Die Stabilität wurde nur für einen Teil der Kombinationen geprüft, um das Zeitlimit einzuhalten. Nicht geprüfte Zeilen zeigen —.",
+      "lt": "Stabilumas patikrintas tik daliai derinių, kad nebūtų viršytas laiko limitas. Nepatikrintose eilutėse rodoma —.",
+      "pt": "A estabilidade só foi verificada para parte das combinações, para respeitar o limite de tempo. As linhas não verificadas mostram —.",
+      "it": "La stabilità è stata verificata solo per una parte delle combinazioni, per rispettare il limite di tempo. Le righe non verificate mostrano —.",
+      "no": "Stabiliteten ble bare kontrollert for en del av kombinasjonene, for å holde seg innenfor tidsgrensen. Rader som ikke er kontrollert, viser —.",
+      "el": "Η σταθερότητα ελέγχθηκε μόνο για μέρος των συνδυασμών, ώστε να τηρηθεί το χρονικό όριο. Οι γραμμές που δεν ελέγχθηκαν εμφανίζουν —."
     },
     "modules.intervention_designer.estimate_note": {
       "en": "Estimated from a random sample.",
@@ -962,7 +984,7 @@
       "es": "Estable",
       "fr": "Stable",
       "de": "Stabil",
-      "lt": "Stabilu",
+      "lt": "Stabilus",
       "pt": "Estável",
       "it": "Stabile",
       "no": "Stabil",

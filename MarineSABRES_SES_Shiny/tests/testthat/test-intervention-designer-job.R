@@ -89,3 +89,39 @@ test_that("a running poll reports the pre-check status from the progress file (s
   writeLines("450 1000", job$progress_file)                  # no status token: precheck is NULL
   expect_null(designer_job_poll(job, timeout_s = 600)$precheck)
 })
+
+# -- Final review items 3 and 4 -------------------------------------------------
+test_that("worker env pins BLAS/OpenMP to one thread and reaches the worker", {
+  env <- .designer_worker_env()
+  expect_identical(unname(env["OPENBLAS_NUM_THREADS"]), "1")
+  expect_identical(unname(env["OMP_NUM_THREADS"]), "1")
+  expect_true(all(names(callr::rcmd_safe_env()) %in% names(env)))
+  skip_if_not_installed("callr")
+  got <- callr::r(function() Sys.getenv(c("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS")),
+                  env = .designer_worker_env())
+  expect_equal(unname(got), c("1", "1"))
+})
+
+test_that("a designer job has no unread stdout/stderr pipes", {
+  skip_if_not_installed("callr")
+  job <- designer_job_start(tiny_payload(), designer_engine_files(app_root()))
+  withr::defer(designer_job_cancel(job))
+  expect_false(job$process$has_output_connection())
+  expect_false(job$process$has_error_connection())
+  expect_equal(wait_for(job)$state, "done")
+})
+
+test_that("the timeout branch writes a debug_log line", {
+  skip_if_not_installed("callr")
+  logged <- character(0)
+  had <- exists("debug_log", envir = globalenv(), inherits = FALSE)
+  old <- if (had) get("debug_log", envir = globalenv()) else NULL
+  assign("debug_log", function(msg, ctx = "") logged <<- c(logged, paste(ctx, msg)), envir = globalenv())
+  withr::defer(if (had) assign("debug_log", old, envir = globalenv()) else rm("debug_log", envir = globalenv()))
+  job <- list(process = callr::r_bg(function() Sys.sleep(30)),
+              progress_file = tempfile("designer_progress_", fileext = ".txt"), started = Sys.time() - 1000)
+  withr::defer(designer_job_cancel(job))
+  st <- designer_job_poll(job, timeout_s = 1)
+  expect_identical(st$reason, "timeout")
+  expect_true(any(grepl("timed out", logged)))
+})

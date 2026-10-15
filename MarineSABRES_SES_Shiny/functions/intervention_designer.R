@@ -32,7 +32,12 @@ ses_level_sets <- function(edges, levels) {
     ses_level_set(edges$min_level[i], edges$max_level[i], levels))
 }
 
+#' Largest grid the engine accepts: sample.int() rejects n > 4.5e15 (just below
+#' 2^52, where double indices stop being exact), so larger designs are refused.
+SES_MAX_GRID_COMBINATIONS <- 4.5e15
+
 #' Grid over the level sets: exhaustive up to `cap`, else a seeded sample.
+#' Stops on designs with more than SES_MAX_GRID_COMBINATIONS combinations.
 #' @return list(n_total, sampled, n_eval, indices); indices are 1-based doubles,
 #'   sorted, and NULL when the grid is exhaustive.
 ses_intervention_grid <- function(level_sets, cap, seed) {
@@ -40,6 +45,7 @@ ses_intervention_grid <- function(level_sets, cap, seed) {
   if (length(sizes) == 0) stop("design has no variable edges")
   if (any(sizes == 0)) stop("a variable edge has an empty level range")
   n_total <- prod(as.numeric(sizes))
+  if (n_total > SES_MAX_GRID_COMBINATIONS) stop("design has too many combinations")
   if (n_total <= cap) {
     return(list(n_total = n_total, sampled = FALSE, n_eval = n_total, indices = NULL))
   }
@@ -260,9 +266,17 @@ ses_config_final_state <- function(M, x0, steps) {
   stats::setNames(x, rownames(M))
 }
 
+#' Order of the stability checks (spec §4.2(c)): rows passing (a) and (b) first,
+#' then rows passing (a) only, each in grid order.
+#' @keywords internal
+.ses_stability_order <- function(a, b) c(which(a & b), which(a & !b))
+
 #' Run a whole design (called in the background worker).
 #' @param payload list(base, design, levels, objectives, sustain, seed, steps,
-#'   window, cap, chunk, top_k, max_boolean_nodes)
+#'   window, cap, chunk, top_k, max_boolean_nodes, stability_budget_s). The
+#'   stability checks stop once the run has taken stability_budget_s seconds
+#'   (NULL = no limit); rows left unchecked keep c = NA and the result has
+#'   stability_partial = TRUE.
 #' @param progress optional function(done, total, precheck = NULL). Called once
 #'   with done = 0 and the pre-check status before the grid runs (spec §4.6),
 #'   then in fixed units of 1000: 0-900 over the grid chunks, 900-1000 over the
@@ -298,12 +312,18 @@ ses_run_design <- function(payload, progress = NULL) {
     d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != 0))
     report(floor(900 * max(pos) / n_eval))
   }
+  # (c) for (a)&(b) rows first (so n_abc is exact), then (a)-only rows, until the
+  # time budget (measured from the start of the run) is used up (spec §4.2(c)).
+  budget <- if (is.null(payload$stability_budget_s)) Inf else as.numeric(payload$stability_budget_s)
   c_ok <- rep(NA, n_eval)
-  succ <- which(a)
+  succ <- .ses_stability_order(a, b)
   n_succ <- length(succ)
+  n_checked <- 0L
   for (j in seq_along(succ)) {
+    if (as.numeric(difftime(Sys.time(), t0, units = "secs")) >= budget) break
     i <- succ[j]
     c_ok[i] <- ses_is_stable_attractor(ses_apply_config(dm, ses_grid_decode(index[i], dm$level_sets)[, 1]))
+    n_checked <- j
     if (j %% 500L == 0L) report(900 + floor(100 * j / n_succ))
   }
   report(1000)
@@ -315,6 +335,7 @@ ses_run_design <- function(payload, progress = NULL) {
   list(
     n_total = grid$n_total, n_eval = n_eval, sampled = grid$sampled,
     n_a = sum(a), n_ab = sum(a & b), n_abc = sum(a & b & (c_ok %in% TRUE)),
+    stability_partial = n_checked < n_succ,
     share = sum(a) / n_eval,
     precheck = precheck,
     top = top,

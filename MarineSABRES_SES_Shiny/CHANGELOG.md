@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added (WP5 intervention designer — spec 2026-10-14 WS-7a)
 - Intervention page gets a "Designer (D5.3)" tab next to "Quick compare". It adds a new intervention node (mode A), new edges between existing nodes including a biological self-loop helper (mode B), or both, and tests every combination of ordinal levels (−1 … 1) on those edges, or a seeded sample of 65,536 above that size (D5.3's 50,176-combination Tuscany grid stays exhaustive).
-- Results follow D5.3: share of combinations whose objective nodes stay positive over the last 100 of 1,000 steps, also-sustain nodes (default all Goods & Benefits), stability (all Laplacian eigenvalues real) and the number of intervention edges used; top 20 combinations with a final-state comparison computed with the run's own initial state and steps.
+- Results follow D5.3: share of combinations whose objective nodes stay positive over the last 100 of 1,000 steps, also-sustain nodes (default all Goods & Benefits), stability (all Laplacian eigenvalues real; checked first for combinations that pass both (a) and (b), and stopped at 70% of the 10-minute job limit, in which case the page says that only part of the combinations was checked) and the number of intervention edges used; top 20 combinations with a final-state comparison computed with the run's own initial state and steps.
 - Boolean pre-check reports "topology change needed" when no attractor keeps the objectives on (skipped above 20 nodes); its result is shown above the progress bar while the grid runs.
 - Picking an intervention type shows the operations the D5.3 matrix and the EBM framework list for it (provisional, advisory) and pre-fills default ranges from the evidence priors (toolbox extension).
-- Grids run in a background R process (callr), so other users of the server are not blocked; Cancel stops a run.
+- Grids run in a background R process (callr), so other users of the server are not blocked; Cancel stops a run. The worker runs single-threaded BLAS/OpenMP at lower priority, and designs with more than 4.5 × 10^15 combinations are refused with a message instead of an error.
 
 ### Dependencies
 - `callr` and `Matrix` added to the required packages (both already installed on laguna).

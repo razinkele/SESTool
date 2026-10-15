@@ -130,3 +130,54 @@ test_that("realistic size: the repo's Tuscany network runs a 2,401-configuration
   expect_equal(r$precheck$status, "skipped")                # 29 nodes > 20
   expect_true(is.numeric(r$share) && r$share >= 0 && r$share <= 1)
 })
+
+# -- Stability time budget (final review item 2) -------------------------------
+test_that("default run checks every (a) row: counts unchanged, not partial", {
+  r <- ses_run_design(moorings_payload(1))                  # no stability_budget_s: no limit
+  expect_false(r$stability_partial)
+  expect_equal(c(r$n_a, r$n_ab, r$n_abc), c(733, 733, 4))   # values before the budget existed
+  p <- moorings_payload(1); p$stability_budget_s <- Inf
+  expect_identical(ses_run_design(p)$n_abc, r$n_abc)
+})
+
+test_that("a zero stability budget leaves (c) unchecked and flags the result partial", {
+  p <- moorings_payload(1); p$stability_budget_s <- 0
+  calls <- list()
+  r <- ses_run_design(p, progress = function(done, total, precheck = NULL)
+    calls[[length(calls) + 1L]] <<- done)
+  expect_true(r$stability_partial)
+  expect_equal(r$n_a, 733)
+  expect_true(all(is.na(r$top$c[r$top$a])))                 # unchecked rows keep NA
+  expect_equal(r$n_abc, 0)
+  done <- unlist(calls)
+  expect_true(all(diff(done) >= 0))
+  expect_equal(tail(done, 1), 1000)
+})
+
+test_that("stability is checked for (a)&(b) rows before (a)-only rows, each in grid order", {
+  expect_equal(.ses_stability_order(c(TRUE, TRUE, FALSE, TRUE, TRUE), c(FALSE, TRUE, TRUE, FALSE, TRUE)),
+               c(2L, 5L, 1L, 4L))
+  # The real run calls the stability check in exactly that order. Sustaining
+  # "Anchoring" leaves many rows that pass (a) but not (b).
+  p <- moorings_payload(1); p$sustain <- "Anchoring"
+  seen <- list()
+  orig <- get("ses_is_stable_attractor", envir = globalenv())
+  assign("ses_is_stable_attractor", function(mat, tol = 1e-9) {
+    seen[[length(seen) + 1L]] <<- mat
+    orig(mat, tol)
+  }, envir = globalenv())
+  withr::defer(assign("ses_is_stable_attractor", orig, envir = globalenv()))
+  r <- ses_run_design(p)
+  expect_false(r$sampled)                                   # grid index == position
+  dm <- r$design_matrix
+  cfg <- ses_grid_decode(seq_len(r$n_eval), dm$level_sets)
+  ev <- ses_grid_evaluate(dm, cfg, match(p$objectives, rownames(dm$matrix)),
+                          match(p$sustain, rownames(dm$matrix)), r$x0, p$steps, p$window)
+  expected <- c(which(ev$a & ev$b), which(ev$a & !ev$b))
+  expect_gt(sum(ev$a & ev$b), 0)
+  expect_gt(sum(ev$a & !ev$b), 0)
+  cfg_key <- apply(cfg, 2, paste, collapse = ",")
+  checked <- match(vapply(seen, function(m) paste(m[dm$cells], collapse = ","), character(1)), cfg_key)
+  expect_equal(checked, expected)
+  expect_false(r$stability_partial)
+})

@@ -918,6 +918,9 @@ INTERVENTION_WINDOW <- 100L             # objective judged over the last 100 ste
 INTERVENTION_DEFAULT_SEED <- 20261014L  # initial state + sampling seed (recorded in results)
 INTERVENTION_TOP_K <- 20L
 INTERVENTION_JOB_TIMEOUT_S <- 600
+# Stability checks (criterion c) stop once the run has used this share of the
+# job timeout; the rest of the rows keep c = NA (spec §4.2(c)).
+INTERVENTION_STABILITY_BUDGET_FRACTION <- 0.7
 # Evidence priors (C§3; toolbox_extension): max |level| by instrument evidence.
 INTERVENTION_EVIDENCE_PRIORS <- c(behavioural = 0.25, regulatory = 0.5)
 

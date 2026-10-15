@@ -25,7 +25,13 @@
        seed = INTERVENTION_DEFAULT_SEED, steps = INTERVENTION_N_STEPS,
        window = INTERVENTION_WINDOW, cap = INTERVENTION_GRID_CAP,
        chunk = INTERVENTION_CHUNK, top_k = INTERVENTION_TOP_K,
-       max_boolean_nodes = DYNAMICS_MAX_BOOLEAN_NODES)
+       max_boolean_nodes = DYNAMICS_MAX_BOOLEAN_NODES,
+       stability_budget_s = INTERVENTION_STABILITY_BUDGET_FRACTION * INTERVENTION_JOB_TIMEOUT_S)
+}
+
+# TRUE when the level sets span more combinations than the engine accepts.
+.designer_too_many <- function(level_sets) {
+  prod(as.numeric(lengths(level_sets))) > SES_MAX_GRID_COMBINATIONS
 }
 
 intervention_designer_ui <- function(id, i18n) {
@@ -254,6 +260,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
 
     add_context_edge <- function(from, to) {
       n <- net()
+      # A stale pick (node renamed/deleted since the panel was built) is ignored
+      req(from %in% n$labels, to %in% n$labels)
       # Covers self-loops too: an existing self-loop is re-weighting (mode C)
       if (n$matrix[from, to] != 0) {
         showNotification(i18n$t("modules.intervention_designer.edge_exists"), type = "warning")
@@ -347,6 +355,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # i18n-ref: modules.intervention_designer.stale_edges
     # i18n-ref: modules.intervention_designer.edge_exists
     # i18n-ref: modules.intervention_designer.empty_range
+    # i18n-ref: modules.intervention_designer.too_many_combinations
     # i18n-ref: modules.intervention_designer.need_name
     # i18n-ref: modules.intervention_designer.name_clash
     # i18n-ref: modules.intervention_designer.need_objective
@@ -364,6 +373,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         return("modules.intervention_designer.edge_exists")
       }
       if (any(lengths(level_sets()) == 0)) return("modules.intervention_designer.empty_range")
+      if (.designer_too_many(level_sets())) return("modules.intervention_designer.too_many_combinations")
       if (any(e$from == .DESIGNER_NEW | e$to == .DESIGNER_NEW)) {
         if (!nzchar(node_name())) return("modules.intervention_designer.need_name")
         if (node_name() %in% lab) return("modules.intervention_designer.name_clash")
@@ -379,6 +389,10 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       reason <- run_block_reason()
       if (!is.null(reason) && reason != "modules.intervention_designer.job_running") {
         return(div(class = "text-muted small mb-2", i18n$t(reason)))
+      }
+      # Edges stay editable while a job runs: never build an oversized grid here
+      if (.designer_too_many(level_sets())) {
+        return(div(class = "text-muted small mb-2", i18n$t("modules.intervention_designer.too_many_combinations")))
       }
       g <- ses_intervention_grid(level_sets(), cap = INTERVENTION_GRID_CAP, seed = INTERVENTION_DEFAULT_SEED)
       # i18n-ref: modules.intervention_designer.sampled
@@ -430,6 +444,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
 
     observeEvent(input$cancel, {
+      if (is.null(rv$job)) return()              # stale click after the job finished
       job_api$cancel(rv$job)
       rv$job <- NULL; rv$progress <- NULL
       showNotification(i18n$t("modules.intervention_designer.cancelled"), type = "message")
@@ -451,18 +466,26 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       div(class = paste("alert py-2", cls), i18n$t(paste0("modules.intervention_designer.precheck.", status)))
     }
 
+    # Pre-check (once known) and progress bar: re-rendered on every progress tick,
+    # so it lives in its own output, away from the Cancel button.
+    output$progress_ui <- renderUI({
+      req(rv$job)
+      pr <- rv$progress
+      pct <- if (!is.null(pr) && is.finite(pr$total) && pr$total > 0) round(100 * pr$done / pr$total) else 0
+      # Pre-check first (spec §6): on "topology change needed" the user can Cancel
+      tagList(
+        if (!is.null(pr$precheck)) precheck_alert(pr$precheck),
+        div(class = "progress mb-2", div(class = "progress-bar", role = "progressbar",
+                                         style = sprintf("width: %d%%", pct), sprintf("%d%%", pct))))
+    })
+
     output$results_ui <- renderUI({
       if (!is.null(rv$job)) {
-        pr <- rv$progress
-        pct <- if (!is.null(pr) && is.finite(pr$total) && pr$total > 0) round(100 * pr$done / pr$total) else 0
-        # Pre-check first (spec §6): on "topology change needed" the user can Cancel
-        return(tagList(
-          if (!is.null(pr$precheck)) precheck_alert(pr$precheck),
-          bs4Card(title = i18n$t("modules.intervention_designer.running"), width = 12, collapsible = FALSE,
-            div(class = "progress mb-2", div(class = "progress-bar", role = "progressbar",
-                                             style = sprintf("width: %d%%", pct), sprintf("%d%%", pct))),
-            actionButton(ns("cancel"), i18n$t("modules.intervention_designer.cancel"),
-                         icon = icon("stop"), class = "btn-outline-danger"))))
+        # Static while the job runs (depends on rv$job only), so Cancel clicks are not lost
+        return(bs4Card(title = i18n$t("modules.intervention_designer.running"), width = 12, collapsible = FALSE,
+          uiOutput(ns("progress_ui")),
+          actionButton(ns("cancel"), i18n$t("modules.intervention_designer.cancel"),
+                       icon = icon("stop"), class = "btn-outline-danger")))
       }
       if (!is.null(rv$error)) return(div(class = "alert alert-danger", rv$error))
       r <- rv$result
@@ -479,6 +502,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
             tags$li(i18n$t("modules.intervention_designer.result_pass_a"), ": ", fmt(r$n_a)),
             tags$li(i18n$t("modules.intervention_designer.result_pass_ab"), ": ", fmt(r$n_ab)),
             tags$li(i18n$t("modules.intervention_designer.result_pass_abc"), ": ", fmt(r$n_abc))),
+          if (isTRUE(r$stability_partial))
+            p(class = "text-warning small", i18n$t("modules.intervention_designer.stability_partial")),
           tags$small(class = "text-muted",
                      i18n$t("modules.intervention_designer.run_meta"), ": ",
                      r$seed, " / ", r$steps, " / ", r$window, " · ",
