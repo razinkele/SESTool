@@ -488,7 +488,9 @@ base_cld <- function() {
 mods <- function(...) {
   m <- list(nodes_added = list(), nodes_removed = c(), nodes_modified = list(),
             links_added = list(), links_removed = c(), links_modified = list())
-  utils::modifyList(m, list(...))
+  args <- list(...)
+  m[names(args)] <- args       # not modifyList(): it merges list(list(...)) into list() and drops it
+  m
 }
 
 test_that("links_modified changes polarity and strength of the link with the same endpoints", {
@@ -1626,7 +1628,7 @@ test_that("combined design: self-loop + new node + one re-weight runs end to end
   expect_equal(nrow(r$top_levels), 6L)
 })
 
-test_that("Arctic DA file: a 3^6 mode-C design completes (no D5.3 numbers asserted)", {
+test_that("Arctic DA file: a mode-C design on Pelagic fishing links completes (no D5.3 numbers asserted)", {
   f <- file.path(app_root_d53(), "SESModels", "Arctic DA", "Arctic Model edge and node data 20.02.2025V3.xlsx")
   skip_if_not(file.exists(f))
   skip_if_not_installed("openxlsx")
@@ -1641,19 +1643,21 @@ test_that("Arctic DA file: a 3^6 mode-C design completes (no D5.3 numbers assert
   expect_equal(sum(ok), nrow(ed))                               # cleaning matched every endpoint
   m[cbind(ed$From[ok], ed$To[ok])] <- w[ok]
   pf <- "Pelagic fishing"
-  idx <- which(m != 0 & (row(m) == match(pf, lab) | col(m) == match(pf, lab)), arr.ind = TRUE)[1:6, ]
+  idx <- which(m != 0 & (row(m) == match(pf, lab) | col(m) == match(pf, lab)), arr.ind = TRUE)
+  idx <- idx[seq_len(min(6L, nrow(idx))), , drop = FALSE]
+  expect_gte(nrow(idx), 3L)
   e <- data.frame(from = lab[idx[, 1]], to = lab[idx[, 2]], kind = "reweight", min_level = -1, max_level = 1,
                   stringsAsFactors = FALSE)
   r <- ses_run_design(list(base = m, design = list(new_node = NULL, edges = e), levels = LV,
                            objectives = c("Fish occurrence", "Reproductive success"), sustain = character(0),
                            seed = 1L, steps = 1000L, window = 100L, cap = 65536, chunk = 2048L, top_k = 5L,
                            max_boolean_nodes = 20L))
-  expect_equal(r$n_eval, 3^6)
+  expect_equal(r$n_eval, 3^nrow(idx))
   expect_true(r$share >= 0 && r$share <= 1)
 })
 ```
 
-At the top of the file add `app_root_d53 <- function() { td <- getwd(); if (basename(td) == "testthat") dirname(dirname(td)) else td }`. If "Pelagic fishing" has fewer than 6 links in the file, use `seq_len(min(6, nrow(...)))` and assert `3^nrow(e)`.
+At the top of the file add `app_root_d53 <- function() { td <- getwd(); if (basename(td) == "testthat") dirname(dirname(td)) else td }`.
 
 - [ ] **Step 2: Run** `'^intervention-designer-d53$'` — Expected: PASS.
 
