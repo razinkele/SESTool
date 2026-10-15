@@ -28,20 +28,20 @@ Out of scope: writing a configuration into the project CLD/ISA itself; sign flip
 
 ### 3.1 Edge kind `reweight`
 
-- `edges$kind` gains the value `"reweight"` (existing: `"intervention"`, `"new_edge"`).
+- `edges$kind` gains the value `"reweight"` (existing: `"intervention"` for edges of the new node, `"context"` for new edges between existing nodes; the spec's operation name for `"context"` edges is `new_edge`).
 - `ses_design_matrix()`:
   - a `reweight` edge must sit on an **existing non-zero** cell of `base`; otherwise `stop("a re-weighted edge must exist in the network")`;
   - the existing check (a non-`reweight` variable edge on an existing cell is an error) stays;
   - a `reweight` edge's level set is `sign(base[from, to]) * c(0.25, 0.5, 1)`, intersected with the row's `min_level`/`max_level` range (so the user can narrow it, never flip it). An empty intersection is an error, as for other kinds;
-  - the result gains `base_levels`: the baseline weight of each variable edge (0 for `intervention` and `new_edge`).
+  - the result gains `base_levels`: the baseline weight of each variable edge (0 for `intervention` and `context`).
 - `ses_apply_config()` is unchanged (variable cells are zeroed in `dm$matrix` and overwritten by the configuration).
 
 ### 3.2 Criterion (d)
 
-(d) becomes **the number of variable edges whose level differs from `base_levels`**, counted over `count_rows`. For `intervention` and `new_edge` rows `base_levels` is 0, so 7a values are unchanged. For `reweight` rows (d) counts changed links, so among equally successful configurations the one closest to today's system ranks first.
+(d) becomes **the number of variable edges whose level differs from `base_levels`**, counted over `count_rows`. For `intervention` and `context` rows `base_levels` is 0, so 7a values are unchanged. For `reweight` rows (d) counts changed links, so among equally successful configurations the one closest to today's system ranks first.
 
 `count_rows` (which rows (d) counts):
-- 7a rule, unchanged: when the design has `intervention` rows, only those rows; otherwise all rows. So a self-loop pre-step (`new_edge`) next to a new node is not counted, as in 7a.
+- 7a rule, unchanged: when the design has `intervention` rows, only those rows; otherwise all rows. So a self-loop pre-step (`context`) next to a new node is not counted, as in 7a.
 - 7b addition: `reweight` rows are always counted.
 
 Example: self-loop + new node with 3 edges + 2 re-weighted links → (d) counts the 3 node edges at non-zero levels plus the re-weighted links that differ from baseline.
@@ -73,7 +73,7 @@ The toolbox's `participation_ratio()` and the Simulation page are not changed in
 
 ### 3.5 Configured network and scenario builders
 
-- `ses_config_network(dm, levels, cld)`: CLD-shaped `list(nodes, edges)` for one configuration. Weights map to `polarity` (`+`/`-`) and `strength` (`weak`/`medium`/`strong`, from `DYNAMICS_WEIGHT_MAP`); level 0 = no edge; the new node gets `dapsi`/`group` "Responses" and a generated id. Node and edge ids come from `cld` (matrix rows are labels; the label → id map is `cld$nodes`).
+- `ses_config_network(dm, levels, cld)`: CLD-shaped `list(nodes, edges)` for one configuration, defined as `scenario_apply_modifications(cld, ses_config_to_scenario(dm, levels, cld, meta)$modifications)`, so what Compare shows is exactly what Apply writes. Weights map to `polarity` (`+`/`-`) and `strength` (`weak`/`medium`/`strong`); level 0 = no edge; the new node gets `dapsi`/`group` "Responses". Matrix row names map to node ids **positionally**, with the same naming rule as `cld_to_numeric_matrix()` (label, else id; `make.unique(sep = "_")` on duplicates), never by `match(label, nodes$label)`.
 - `ses_config_to_scenario(dm, levels, cld, meta)`: the scenario list of §5.1.
 
 ### 3.6 Grid size
@@ -86,7 +86,7 @@ Mode C grows grids as 3^n. The existing limits apply unchanged: the 65,536 cap w
 
 - A third button next to "Add intervention node" and "Add edge between existing nodes".
 - It opens a panel listing `ses_link_sensitivity()` for the current CLD (computed once per CLD version, cached in the module): link, sign, current strength, sensitivity bar, checkbox. A short help line explains the score ("how strongly this link drives the system's long-run behaviour").
-- Ticking a link adds it as a `reweight` row; unticking removes it. "Add all links of a node" (a node picker) ticks every existing link into or out of that node, D5.3's "all edges connected to" a component (FIN:580).
+- Ticked links are added as `reweight` rows with an "Add ticked links" button (rows are removed in the edge editor, like other rows). "Add all links of a node" (a node picker) ticks every existing link into or out of that node, D5.3's "all edges connected to" a component (FIN:580).
 - A "from → to" picker of existing links adds single links.
 - Variable-edge table: `reweight` rows show kind "re-weight" and a fixed-sign badge; min/max selectors offer only weak / medium / strong of that sign.
 - The run-size line is unchanged ("3^12 = 531,441 combinations — sampled 65,536").
@@ -108,9 +108,10 @@ Added to 7a's reasons: a `reweight` row whose link no longer exists in the CLD, 
 
 ### 4.4 Compare job
 
-- `designer_job_start()` gains a `type` argument: `"run"` (7a, default) or `"compare"`. The compare worker sources `functions/ses_dynamics.R` (for `boolean_model()`), `functions/network_analysis.R` and `functions/intervention_designer.R`, loads `igraph`, defines a no-op `debug_log()` before sourcing (`network_analysis.R` calls it unguarded), and returns `list(loops = list(baseline, config), leverage = list(baseline, config), attractors = list(baseline, config))` as plain data. The payload carries the two CLD-shaped networks (baseline CLD and `ses_config_network()` output, built in the Shiny process), the two matrices, and the objective indices.
+- `designer_job_start()` gains a `type` argument: `"run"` (7a, default) or `"compare"`. The compare worker sources `functions/ses_dynamics.R` (for `boolean_model()`), `functions/network_analysis.R`, `functions/scenario_network.R` and `functions/intervention_designer.R`, loads `igraph` and `dplyr`, assigns a no-op `debug_log()` in the global environment before sourcing, and returns `list(loops = list(baseline, config), leverage = list(baseline, config), attractors = list(baseline, config))` as plain data. The payload carries the two CLD-shaped networks (baseline CLD and `ses_config_network()` output, built in the Shiny process), the two matrices, and the objective indices.
 - `designer_engine_files()` gains the extra path for the compare type; `test-functions-sourced-in-app.R` is unaffected (no new functions file).
-- `scenario_loops()` moves from `modules/scenario_builder_module.R` to `functions/network_analysis.R` (unchanged body) so the worker can source it; the Scenario Builder keeps calling it by name. `tests/testthat/test-scenario-builder-module.R` sources only the module file, so it must also source `functions/network_analysis.R` (the `scenario_loops` tests in `test-analysis-modules-batch.R` too, if they source the module alone).
+- `scenario_loops()` and the pure part of `apply_scenario_modifications()` move from `modules/scenario_builder_module.R` to a new `functions/scenario_network.R` (sourced in `global.R`), so the worker and the Designer can use them; the Scenario Builder keeps calling them by name. Tests that source only the module file must also source `functions/scenario_network.R` and `functions/network_analysis.R`.
+- Worker environment: `network_analysis.R` needs `igraph` and `dplyr` (`%>%`, `filter`, `bind_rows`) and calls `debug_log()` unguarded. The no-op `debug_log` must be assigned in the **global** environment of the worker (`assign("debug_log", ..., envir = globalenv())`): files are sourced with `local = FALSE`, and a function-local stub is not found, which `scenario_loops()`'s own `tryCatch` turns into a silent 0 loops (found while planning).
 - One job per session at a time (run or compare); same timeout and cancel as 7a.
 
 ### 4.5 Stale results
@@ -126,9 +127,9 @@ Modal: name (default "‹intervention name› — configuration #‹rank›", "(
 | Variable edge in the configuration | Scenario entry |
 |---|---|
 | new intervention node (design has `new_node`) | `nodes_added`: `{id, label, dapsi = "Responses", description}` |
-| `intervention` / `new_edge`, level ≠ 0 | `links_added`: `{id, from, to, polarity, strength}`; `from`/`to` are node ids |
+| `intervention` / `context`, level ≠ 0 | `links_added`: `{id, from, to, polarity, strength}`; `from`/`to` are node ids |
 | any variable edge at level 0 | nothing |
-| `reweight`, level ≠ baseline | `links_modified`: `{edge_id, from, to, polarity, strength, previous_strength}` |
+| `reweight`, level ≠ baseline | `links_modified`: `{from, to, polarity, strength, previous_strength}`; `from`/`to` are node ids |
 | `reweight`, level = baseline | nothing |
 
 Ids: the new node gets `scenario_node_<ms>` and added links `scenario_link_<ms>_<k>` (k = row number, so links written in the same millisecond stay distinct), the same prefixes the builder uses.
@@ -143,7 +144,7 @@ It is appended to `project_data$data$analysis$scenarios` through `project_data_r
 
 - `apply_scenario_modifications()`:
   - `links_added` entries use `strength` when present; entries without it get `"medium"`;
-  - new step: `links_modified` entries set `polarity` and `strength` on the baseline edge with `id == edge_id`; entries whose edge no longer exists are skipped.
+  - new step: `links_modified` entries set `polarity` and `strength` on the baseline edge(s) with the same `from` and `to` node ids; entries whose edge no longer exists are skipped. Edges are matched by endpoints, not by `id`: CLD edge ids are row numbers that the CLD editor renumbers (`rv$edges$id <- seq_len(nrow(rv$edges))`), so a stored id can point at a different link after an edit (ruling 2026-10-15, plan review).
 - `validate_modifications()`: a translated warning lists `links_modified` entries whose edge no longer exists (warning, not an error).
 - The modification-count line and the scenario detail list include modified links, shown as "A → B: weak → strong".
 - `predict_impacts()` (the builder's heuristic impact table) treats a node touched by a `links_modified` entry like one touched by an added link: direction from the link's polarity, magnitude 1 for one strength step and 2 for two, reason "link strength changed". Without this a re-weight-only scenario reports "no impact".
@@ -156,7 +157,7 @@ It is appended to `project_data$data$analysis$scenarios` through `project_data_r
 |---|---|---|
 | `functions/intervention_designer.R` | changed | `reweight` kind, `base_levels`, (d) rule, `ses_edge_dependence()`, `ses_link_sensitivity()`, `ses_boolean_attractor_summary()`, `ses_config_network()`, `ses_config_to_scenario()`; `ses_run_design()` returns `dependence` |
 | `functions/intervention_designer_job.R` | changed | `type = "compare"` worker |
-| `functions/network_analysis.R` | changed | receives `scenario_loops()` |
+| `functions/scenario_network.R` | new | `scenario_loops()` (moved), `scenario_apply_modifications()` (moved out of the builder server, + `links_modified`, + `strength`); sourced in `global.R` |
 | `constants.R` | changed | `INTERVENTION_DEPENDENCE_MIN_SUCCESS <- 30L` |
 | `modules/intervention_designer_module.R` | changed | mode C panel, dependence table, compare panel, Apply modal |
 | `modules/scenario_builder_module.R` | changed | `links_modified`, `strength` on `links_added`, counts/details; `scenario_loops()` removed (moved) |
