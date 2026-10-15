@@ -907,6 +907,24 @@ IMPACT_TEXT_SECTIONS <- list(
 WP5_IMPACT_MIN_APP_VERSION <- "1.25.0"
 
 # ============================================================================
+# WP5 INTERVENTION DESIGNER (spec 2026-10-14 WS-7a)
+# ============================================================================
+# D5.3 ordinal grid (C§5.2): strong/medium/weak negative, none, weak/medium/strong positive.
+INTERVENTION_GRID_LEVELS <- c(-1, -0.5, -0.25, 0, 0.25, 0.5, 1)
+INTERVENTION_GRID_CAP <- 65536          # exhaustive up to this (keeps D5.3's 50,176 Tuscany grid exhaustive); seeded sample above
+INTERVENTION_CHUNK <- 2048L             # configurations stepped together
+INTERVENTION_N_STEPS <- 1000L           # D5.3 FIN:1198
+INTERVENTION_WINDOW <- 100L             # objective judged over the last 100 steps
+INTERVENTION_DEFAULT_SEED <- 20261014L  # initial state + sampling seed (recorded in results)
+INTERVENTION_TOP_K <- 20L
+INTERVENTION_JOB_TIMEOUT_S <- 600
+# Stability checks (criterion c) stop once the run has used this share of the
+# job timeout; the rest of the rows keep c = NA (spec §4.2(c)).
+INTERVENTION_STABILITY_BUDGET_FRACTION <- 0.7
+# Evidence priors (C§3; toolbox_extension): max |level| by instrument evidence.
+INTERVENTION_EVIDENCE_PRIORS <- c(behavioural = 0.25, regulatory = 0.5)
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 

@@ -61,7 +61,9 @@ REQUIRED_PACKAGES <- unique(c(
   "promises",        # async operations
   "waiter",          # loading screens
   "fresh",           # bs4Dash theming
-  "sortable"         # drag-and-drop UI
+  "sortable",        # drag-and-drop UI
+  "callr",           # background R process for the intervention designer (WS-7a)
+  "Matrix"           # sparse products in the intervention designer (WS-7a)
 ))
 
 # Optional packages — app starts without them, but some features are disabled

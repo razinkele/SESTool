@@ -1,8 +1,8 @@
 {
-  "version": "1.26.1",
-  "version_name": "WP5 impact assessment: narrative and report",
-  "release_date": "2026-10-14",
-  "release_type": "patch",
+  "version": "1.27.0",
+  "version_name": "WP5 intervention designer (D5.3 modes A and B)",
+  "release_date": "2026-10-15",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -14,7 +14,8 @@
   "features": [
     "WP5 indicator registry: 95 indicators with D5.2 provenance; Standard Entry indicator fields and picker; drift warning and review on load (WS-4).",
     "Posidonia oceanica valuation calculator under Response & Validation: D5.2 Table 19 values, discounted totals, restoration cost, survival-adjusted break-even, Excel export (WS-5).",
-    "WP5 impact assessment: deterministic trade-off narrative (step 6) and Word/Excel report with mechanism and provenance appendices (step 7) (WS-6c)."
+    "WP5 impact assessment: deterministic trade-off narrative (step 6) and Word/Excel report with mechanism and provenance appendices (step 7) (WS-6c).",
+    "WP5 intervention designer (D5.3): exhaustive ordinal grid over a new intervention node and/or new edges between existing nodes, ranked by objective, also-sustain, stability and simplicity; Boolean pre-check; runs in a background process (WS-7a)."
   ],
   "fixes": {
     "performance": [
@@ -41,7 +42,7 @@
   "migration_notes": [
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save."
   ],
-  "previous_version": "1.26.0",
+  "previous_version": "1.26.1",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }

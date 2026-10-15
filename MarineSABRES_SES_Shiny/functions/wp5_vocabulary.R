@@ -133,6 +133,15 @@ get_allowed_graph_ops <- function(id, context = NULL) {
   data.frame(op = ops, source = src, stringsAsFactors = FALSE)
 }
 
+#' EBM codes the operations table proposes for an intervention type (master row).
+#' Provisional (spec Q4). Empty when the type is unknown or has no code.
+get_intervention_ebm_codes <- function(id) {
+  rows <- .wp5_ops_env$db$interventions %||% list()
+  pick <- Find(function(r) identical(r$id, id) && is.null(r$context), rows)
+  if (is.null(pick)) return(character(0))
+  as.character(unlist(pick$ebm_code))
+}
+
 #' Startup load: a missing/corrupt table warns AND is logged (never silent)
 #' @keywords internal
 .wp5_ops_autoload <- function(path = NULL) {

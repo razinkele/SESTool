@@ -111,6 +111,7 @@ OPTIONAL_MODULES <- c(
   "modules/local_storage_module.R",      # Local storage for saving to user's computer
   "modules/analysis_boolean.R",          # Boolean Network & Laplacian Stability (DTU)
   "modules/analysis_simulation.R",       # Dynamic Simulation & State-Shift (DTU)
+  "modules/intervention_designer_module.R",  # WP5 WS-7a Designer tab (sub-module of the Intervention page)
   "modules/analysis_intervention.R",     # Intervention Simulation (DTU)
   "modules/guidebook_module.R",          # Standalone Guidebook
   "modules/feedback_admin_module.R"      # Admin feedback analysis (ADMIN_MODE only)

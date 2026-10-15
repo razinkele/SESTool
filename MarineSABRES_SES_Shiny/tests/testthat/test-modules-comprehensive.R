@@ -20,6 +20,7 @@ source_for_test(c(
   "modules/analysis_bot.R",
   "modules/analysis_boolean.R",
   "modules/analysis_simulation.R",
+  "modules/intervention_designer_module.R",
   "modules/analysis_intervention.R",
   "modules/analysis_leverage.R",
   "modules/analysis_simplify.R",
