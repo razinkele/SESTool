@@ -616,6 +616,7 @@ source("functions/data_accessors.R", local = TRUE)
 
 # Network analysis functions
 source("functions/network_analysis.R", local = TRUE)
+source("functions/scenario_network.R", local = TRUE)   # WS-7b: scenario_loops + scenario_apply_modifications
 
 # visNetwork helper functions
 source("functions/visnetwork_helpers.R", local = TRUE)

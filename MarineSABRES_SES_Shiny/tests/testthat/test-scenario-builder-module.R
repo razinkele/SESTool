@@ -7,7 +7,8 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-source_for_test("modules/scenario_builder_module.R")
+source_for_test(c("functions/network_analysis.R", "functions/scenario_network.R",
+                  "modules/scenario_builder_module.R"))
 i18n <- list(t = function(key) key)
 
 # ============================================================================
@@ -102,5 +103,27 @@ test_that("builder shows legacy scenarios when canonical slot is an empty list (
              args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
     session$flushReact()
     expect_equal(vapply(scenarios(), `[[`, "", "id"), "legacy_only")
+  })
+})
+
+test_that("predict_impacts reports re-weighted links and survives removed links", {
+  cld <- list(nodes = data.frame(id = c("D_1", "A_1", "P_1"), label = c("Demand", "Boating", "Anchoring"),
+                                 group = c("Drivers", "Activities", "Pressures"), stringsAsFactors = FALSE),
+              edges = data.frame(id = 1:2, from = c("D_1", "A_1"), to = c("A_1", "P_1"),
+                                 polarity = "+", strength = c("medium", "weak"), stringsAsFactors = FALSE))
+  sc <- list(id = "s1", name = "s", description = "", created = Sys.time(), modified = Sys.time(),
+             modifications = list(nodes_added = list(), nodes_removed = c(), nodes_modified = list(),
+                                  links_added = list(), links_removed = c("1"),
+                                  links_modified = list(list(from = "A_1", to = "P_1", polarity = "+",
+                                                             strength = "strong", previous_strength = "weak"))),
+             results = NULL)
+  data <- list(data = list(cld = cld, analysis = list(scenarios = list(sc))))
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = shiny::reactiveVal(data), i18n = list(t = function(k, ...) k)), {
+    net <- scenario_apply_modifications(cld, sc$modifications)
+    imp <- predict_impacts(cld, net, sc$modifications)
+    expect_equal(imp$reason[imp$node == "Anchoring"], "modules.scenario.builder.scenario_link_strength_changed")
+    expect_equal(imp$impact_magnitude[imp$node == "Anchoring"], 2)    # weak -> strong = two steps
+    expect_equal(imp$impact_direction[imp$node == "Demand"], "negative")  # touched by the removed link 1
   })
 })
