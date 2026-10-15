@@ -206,3 +206,39 @@ ses_grid_evaluate <- function(dm, configs, objective_idx, sustain_idx, x0, steps
   }
   list(a = unname(ok_a), b = unname(ok_b))
 }
+
+#' D5.3 stability (FIN:1517): every Laplacian eigenvalue is real.
+#' laplacian_eigenvalues() drops imaginary parts, so it cannot be reused here.
+ses_is_stable_attractor <- function(mat, tol = 1e-9) {
+  L <- diag(rowSums(mat), nrow = nrow(mat)) - mat
+  ev <- eigen(L, only.values = TRUE)$values
+  all(abs(Im(ev)) <= tol)
+}
+
+#' D5.3 ranking (C section 5.2 step 6): a, b, c descending, d ascending, grid order.
+rank_simplest <- function(df) {
+  cc <- df$c %in% TRUE
+  df[order(-df$a, -df$b, -cc, df$d, df$index), , drop = FALSE]
+}
+
+#' Boolean pre-check (spec section 4.6): every variable edge at the strongest level of
+#' its allowed sign; does any attractor keep every objective node ON?
+ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
+  n <- nrow(dm$matrix)
+  out <- function(status, n_att = NA_integer_, n_des = NA_integer_) {
+    list(status = status, n_nodes = n, n_attractors = n_att, n_desirable = n_des)
+  }
+  if (n > max_nodes) return(out("skipped"))
+  extreme <- vapply(dm$level_sets, function(s) if (max(s) > 0) max(s) else min(s), numeric(1))
+  bm <- tryCatch(boolean_model(ses_apply_config(dm, extreme), max_nodes = max_nodes),
+                 error = function(e) NULL)
+  if (is.null(bm)) return(out("unavailable"))
+  if (isTRUE(bm$skipped) || is.null(bm$analysis)) return(out("skipped"))
+  att <- bm$analysis$attractors
+  desirable <- vapply(att, function(a) {
+    if (is.null(a) || !is.data.frame(a) || nrow(a) == 0) return(FALSE)
+    all(as.matrix(a[, objective_idx, drop = FALSE]) == 1)
+  }, logical(1))
+  out(if (any(desirable)) "passed" else "topology_change_needed",
+      length(att), sum(desirable))
+}

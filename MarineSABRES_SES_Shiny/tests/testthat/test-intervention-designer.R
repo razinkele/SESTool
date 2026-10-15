@@ -237,3 +237,50 @@ test_that("ses_grid_evaluate rejects inconsistent arguments", {
   expect_error(ses_grid_evaluate(dm, matrix(0, 2, 2), 1L, 2L, c(1, 1), steps = 10L, window = 5L))
   expect_error(ses_grid_evaluate(dm, cfg, 1L, 2L, 1, steps = 10L, window = 5L))
 })
+
+test_that("stability: complex Laplacian eigenvalues mean unstable", {
+  cyc <- matrix(0, 3, 3); cyc[1, 2] <- cyc[2, 3] <- cyc[3, 1] <- 1   # directed 3-cycle: L = I - P, eigenvalues 0 and 1.5 +/- 0.866i
+  expect_false(ses_is_stable_attractor(cyc))
+  sym <- matrix(c(0, 0.5, 0.5, 0), 2, 2)              # symmetric matrix -> symmetric Laplacian, real eigenvalues
+  expect_true(ses_is_stable_attractor(sym))
+})
+
+test_that("rank_simplest orders by a, b, c desc then d asc, ties keep grid order", {
+  df <- data.frame(index = 1:6,
+                   a = c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE),
+                   b = c(TRUE, FALSE, TRUE, TRUE, TRUE, TRUE),
+                   c = c(FALSE, NA, NA, TRUE, TRUE, FALSE),
+                   d = c(1L, 0L, 0L, 3L, 2L, 1L))
+  expect_equal(rank_simplest(df)$index, c(5L, 4L, 1L, 6L, 2L, 3L))
+})
+
+precheck_fixture <- function() {
+  nm <- c("Act. (x)", "P. oceanica extension")
+  base <- matrix(0, 2, 2, dimnames = list(nm, nm))
+  dm_ok <- ses_design_matrix(base, list(new_node = "IV", edges = data.frame(
+    from = c("IV", "P. oceanica extension"), to = c("P. oceanica extension", "IV"),
+    kind = "intervention", min_level = c(0, 0), max_level = c(1, 1))), LV)
+  list(base = base, dm_ok = dm_ok)
+}
+
+test_that("Boolean pre-check: passed and topology change needed (review focus 1)", {
+  skip_if_not_installed("BoolNet")                          # CI has no BoolNet; laguna does
+  fx <- precheck_fixture(); base <- fx$base; dm_ok <- fx$dm_ok
+  pc <- ses_boolean_precheck(dm_ok, objective_idx = 2L, max_nodes = 20L)
+  expect_equal(pc$status, "passed")
+  expect_gte(pc$n_desirable, 1L)
+
+  # A negative self-loop makes P. oceanica oscillate (rule P = !P): no attractor
+  # keeps it ON in every state.
+  dm_bad <- ses_design_matrix(base, list(new_node = NULL, edges = data.frame(
+    from = "P. oceanica extension", to = "P. oceanica extension", kind = "context",
+    min_level = -1, max_level = -0.25)), LV)
+  expect_equal(ses_boolean_precheck(dm_bad, 2L, max_nodes = 20L)$status, "topology_change_needed")
+})
+
+test_that("Boolean pre-check: skipped when the network exceeds max_nodes (no BoolNet needed)", {
+  dm_ok <- precheck_fixture()$dm_ok                         # 3 nodes: 2 base + IV
+  pc <- ses_boolean_precheck(dm_ok, 2L, max_nodes = nrow(dm_ok$matrix) - 1L)
+  expect_equal(pc$status, "skipped")                        # early return, before boolean_model()
+  expect_equal(pc$n_nodes, 3L)
+})
