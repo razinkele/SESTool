@@ -24,7 +24,13 @@ analysis_intervention_ui <- function(id, i18n) {
   tagList(
     uiOutput(ns("module_header")),
     uiOutput(ns("cld_check_ui")),
-    uiOutput(ns("main_ui"))
+    tabsetPanel(
+      id = ns("mode_tabs"), type = "tabs",
+      tabPanel(title = i18n$t("modules.intervention_designer.tab_quick"), value = "quick",
+               uiOutput(ns("main_ui"))),
+      tabPanel(title = i18n$t("modules.intervention_designer.tab_designer"), value = "designer",
+               intervention_designer_ui(ns("designer"), i18n))
+    )
   )
 }
 
@@ -75,7 +81,9 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
       content = tagList(
         h4(i18n$t("modules.analysis_intervention.help_heading")),
         p(i18n$t("modules.analysis_intervention.help_design")),
-        p(i18n$t("modules.analysis_intervention.help_compare"))
+        p(i18n$t("modules.analysis_intervention.help_compare")),
+        p(i18n$t("modules.intervention_designer.help_designer")),
+        p(i18n$t("modules.intervention_designer.help_delay"))
       ),
       i18n = i18n
     )
@@ -85,6 +93,9 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
       "modules.analysis_intervention.no_cld_data",
       "modules.analysis_intervention.no_cld_data_hint"
     )
+
+    # ── WS-7a Designer tab ───────────────────────────────────────────────
+    intervention_designer_server("designer", project_data_reactive, i18n, event_bus = event_bus)
 
     # ── Main UI ──────────────────────────────────────────────────────────
     output$main_ui <- renderUI({

@@ -1,0 +1,545 @@
+# modules/intervention_designer_module.R
+# =============================================================================
+# WP5 WS-7a Designer tab (spec 2026-10-14 §6): build a design (new node and/or
+# new edges), run it in the background, show D5.3-ranked results.
+# Depends on: functions/intervention_designer.R, functions/intervention_designer_job.R,
+#             functions/wp5_vocabulary.R, functions/ses_dynamics.R
+# =============================================================================
+
+.DESIGNER_NEW <- ".NEW_NODE."
+
+.designer_empty_edges <- function() {
+  data.frame(from = character(), to = character(), kind = character(),
+             min_level = numeric(), max_level = numeric(), stringsAsFactors = FALSE)
+}
+
+#' Payload for the worker; substitutes the node placeholder with `name`.
+.designer_payload <- function(net, edges, name, objectives, sustain) {
+  has_node <- any(edges$from == .DESIGNER_NEW | edges$to == .DESIGNER_NEW)
+  edges$from[edges$from == .DESIGNER_NEW] <- name
+  edges$to[edges$to == .DESIGNER_NEW] <- name
+  list(base = net$matrix,
+       design = list(new_node = if (has_node) name else NULL, edges = edges),
+       levels = INTERVENTION_GRID_LEVELS,
+       objectives = objectives, sustain = sustain %||% character(0),
+       seed = INTERVENTION_DEFAULT_SEED, steps = INTERVENTION_N_STEPS,
+       window = INTERVENTION_WINDOW, cap = INTERVENTION_GRID_CAP,
+       chunk = INTERVENTION_CHUNK, top_k = INTERVENTION_TOP_K,
+       max_boolean_nodes = DYNAMICS_MAX_BOOLEAN_NODES)
+}
+
+intervention_designer_ui <- function(id, i18n) {
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
+  ns <- NS(id)
+  tagList(
+    p(class = "text-muted mt-2", i18n$t("modules.intervention_designer.intro")),
+    fluidRow(
+      column(5, uiOutput(ns("design_ui"))),
+      column(7, uiOutput(ns("results_ui")))
+    )
+  )
+}
+
+intervention_designer_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
+                                         job_api = designer_job_api()) {
+  moduleServer(id, function(input, output, session) {
+    ns <- session$ns
+    rv <- reactiveValues(edges = .designer_empty_edges(), job = NULL, result = NULL,
+                         progress = NULL, error = NULL, error_detail = NULL,
+                         analysis_complete = FALSE)
+
+    lvl_label <- function(x) {
+      # i18n-ref: modules.intervention_designer.level.strong_neg
+      # i18n-ref: modules.intervention_designer.level.medium_neg
+      # i18n-ref: modules.intervention_designer.level.weak_neg
+      # i18n-ref: modules.intervention_designer.level.none
+      # i18n-ref: modules.intervention_designer.level.weak_pos
+      # i18n-ref: modules.intervention_designer.level.medium_pos
+      # i18n-ref: modules.intervention_designer.level.strong_pos
+      vapply(ses_level_code(x), function(cd) i18n$t(paste0("modules.intervention_designer.level.", cd)),
+             character(1))
+    }
+    # Every stored min/max level is a member of INTERVENTION_GRID_LEVELS (evidence
+    # priors are 0.25/0.5/1, sign shortcuts use 0), so as.character() matches a choice.
+    level_choices <- function() setNames(as.character(INTERVENTION_GRID_LEVELS),
+                                         lvl_label(INTERVENTION_GRID_LEVELS))
+    node_name <- reactive(trimws(input$name %||% ""))
+    show_name <- function(x) ifelse(x == .DESIGNER_NEW,
+      if (nzchar(node_name())) node_name() else i18n$t("modules.intervention_designer.new_node_placeholder"), x)
+
+    net <- reactive({
+      data <- project_data_reactive()
+      req(data, has_valid_cld(data))
+      nodes <- data$data$cld$nodes
+      mat <- cld_to_numeric_matrix(nodes, data$data$cld$edges, use_labels = TRUE)
+      req(!is.null(mat))
+      # cld_to_numeric_matrix names its dimnames by node id; drop those names so
+      # choices and lookups use the labels themselves.
+      dimnames(mat) <- lapply(dimnames(mat), unname)
+      types <- if ("group" %in% names(nodes)) as.character(nodes$group) else rep(NA_character_, nrow(nodes))
+      # labels MUST equal the matrix dimnames (make.unique'd on duplicate labels, id
+      # fallback), so choices, lookups and the name-clash check match the matrix.
+      # cld_to_numeric_matrix keeps the nodes' row order, so `types` stays aligned.
+      list(labels = rownames(mat), types = types, matrix = mat)
+    })
+
+    # The design panel is rebuilt only when the node set changes, not on every
+    # project_data write (Quick compare and other analyses write it back).
+    node_sig <- reactiveVal(NULL)
+    observe({
+      n <- net()
+      s <- paste(n$labels, n$types, sep = "\t", collapse = "\r")
+      if (!identical(s, isolate(node_sig()))) node_sig(s)
+    })
+
+    # Stale results after an ISA change (standard analysis pattern)
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(rv$analysis_complete)) {
+        showNotification(i18n$t("modules.analysis.common.data_changed_rerun"),
+                         type = "warning", duration = 5, id = ns("stale_data"))
+      }
+    })
+
+    # ── Design panel ───────────────────────────────────────────────────────
+    output$design_ui <- renderUI({
+      req(node_sig())
+      n <- isolate(net())
+      lab <- n$labels
+      keep <- function(v) intersect(v %||% character(0), lab)   # drop picks that left the network
+      types_df <- tryCatch({ load_wp5_intervention_ops(); get_intervention_types() },
+                           error = function(e) data.frame(id = character(), group = character()))
+      # i18n-ref: modules.intervention_designer.group.behavioural
+      # i18n-ref: modules.intervention_designer.group.management
+      # i18n-ref: modules.intervention_designer.group.economic
+      # i18n-ref: modules.intervention_designer.group.governance
+      # i18n-ref: modules.intervention_designer.type.nudge
+      # i18n-ref: modules.intervention_designer.type.certification
+      # i18n-ref: modules.intervention_designer.type.traceability
+      # i18n-ref: modules.intervention_designer.type.norms_influence
+      # i18n-ref: modules.intervention_designer.type.data_valuing
+      # i18n-ref: modules.intervention_designer.type.change_in_accessibility
+      # i18n-ref: modules.intervention_designer.type.participation_in_governance
+      # i18n-ref: modules.intervention_designer.type.cascade_creation
+      # i18n-ref: modules.intervention_designer.type.remote_market_access
+      # i18n-ref: modules.intervention_designer.type.change_in_practices
+      # i18n-ref: modules.intervention_designer.type.quota_license
+      # i18n-ref: modules.intervention_designer.type.mpa_oecm
+      # i18n-ref: modules.intervention_designer.type.subsidies
+      # i18n-ref: modules.intervention_designer.type.incentives
+      # i18n-ref: modules.intervention_designer.type.trade_agreements
+      # i18n-ref: modules.intervention_designer.type.payment_goods_services
+      # i18n-ref: modules.intervention_designer.type.payment_non_market_services
+      # i18n-ref: modules.intervention_designer.type.externalities_in_prices
+      # i18n-ref: modules.intervention_designer.type.one_off_recosting
+      # i18n-ref: modules.intervention_designer.type.ongoing_recosting
+      # i18n-ref: modules.intervention_designer.type.multi_level_governance
+      # i18n-ref: modules.intervention_designer.type.change_power_dynamics
+      # i18n-ref: modules.intervention_designer.type.cross_sector_coordination
+      # i18n-ref: modules.intervention_designer.type.enhance_governance_capacity
+      # i18n-ref: modules.intervention_designer.type.incorporate_society_values
+      # i18n-ref: modules.intervention_designer.type.enhance_trust
+      # i18n-ref: modules.intervention_designer.type.reduce_conflicts
+      # i18n-ref: modules.intervention_designer.type.increase_collaboration
+      # i18n-ref: modules.intervention_designer.type.increase_participation
+      # i18n-ref: modules.intervention_designer.type.enhance_compliance_monitoring
+      type_choices <- c(setNames("", i18n$t("modules.intervention_designer.type_none")),
+        lapply(split(types_df$id, types_df$group), function(ids)
+          setNames(ids, vapply(ids, function(x) i18n$t(paste0("modules.intervention_designer.type.", x)),
+                               character(1)))))
+      names(type_choices)[-1] <- vapply(names(type_choices)[-1], function(g)
+        i18n$t(paste0("modules.intervention_designer.group.", g)), character(1))
+      gb <- lab[!is.na(n$types) & n$types == "Goods & Benefits"]
+      loops <- ses_self_loop_candidates(lab, n$types)
+      sustain_now <- isolate(input$sustain)
+      tagList(
+        bs4Card(title = i18n$t("modules.intervention_designer.step_intervention"), width = 12,
+                status = "primary", collapsible = FALSE,
+          textInput(ns("name"), i18n$t("modules.intervention_designer.name"),
+                    value = isolate(input$name) %||% "",
+                    placeholder = i18n$t("modules.intervention_designer.name_placeholder")),
+          # allowEmptyOption keeps "No type" selectable after a type was picked
+          selectizeInput(ns("type"), i18n$t("modules.intervention_designer.type"), choices = type_choices,
+                         selected = isolate(input$type) %||% "",
+                         options = list(allowEmptyOption = TRUE)),
+          uiOutput(ns("ops_ui"))),
+        bs4Card(title = i18n$t("modules.intervention_designer.step_edges"), width = 12,
+                status = "primary", collapsible = FALSE,
+          h6(i18n$t("modules.intervention_designer.add_node_heading")),
+          selectizeInput(ns("node_targets"), i18n$t("modules.intervention_designer.node_targets"),
+                         choices = lab, selected = keep(isolate(input$node_targets)), multiple = TRUE),
+          selectizeInput(ns("node_indicators"), i18n$t("modules.intervention_designer.node_indicators"),
+                         choices = lab, selected = keep(isolate(input$node_indicators)), multiple = TRUE),
+          actionButton(ns("add_node_edges"), i18n$t("modules.intervention_designer.add_node_edges"),
+                       icon = icon("plus")),
+          hr(),
+          h6(i18n$t("modules.intervention_designer.add_edge_heading")),
+          fluidRow(column(6, selectInput(ns("edge_from"), i18n$t("modules.intervention_designer.edge_from"), lab)),
+                   column(6, selectInput(ns("edge_to"), i18n$t("modules.intervention_designer.edge_to"), lab))),
+          actionButton(ns("add_edge"), i18n$t("modules.intervention_designer.add_edge"), icon = icon("plus")),
+          if (length(loops)) tagList(
+            selectInput(ns("self_loop_node"), i18n$t("modules.intervention_designer.self_loop_node"), loops),
+            actionButton(ns("add_self_loop"), i18n$t("modules.intervention_designer.add_self_loop"),
+                         icon = icon("redo"))),
+          hr(),
+          tableOutput(ns("edges_table")),
+          uiOutput(ns("edge_editor_ui"))),
+        bs4Card(title = i18n$t("modules.intervention_designer.step_objectives"), width = 12,
+                status = "primary", collapsible = FALSE,
+          selectizeInput(ns("objectives"), i18n$t("modules.intervention_designer.objectives"),
+                         choices = lab, selected = keep(isolate(input$objectives)), multiple = TRUE),
+          selectizeInput(ns("sustain"), i18n$t("modules.intervention_designer.sustain"),
+                         choices = lab, selected = if (is.null(sustain_now)) gb else keep(sustain_now),
+                         multiple = TRUE)),
+        bs4Card(title = i18n$t("modules.intervention_designer.step_run"), width = 12,
+                status = "success", collapsible = FALSE,
+          uiOutput(ns("grid_info")),
+          # Rendered disabled when a reason already applies; the toggleState observer
+          # below keeps it in sync between rebuilds of this panel.
+          actionButton(ns("run"), i18n$t("modules.intervention_designer.run"),
+                       icon = icon("play"), class = "btn-success",
+                       disabled = !is.null(isolate(run_block_reason()))))
+      )
+    })
+
+    # ── Operations table (advisory, spec decision 2) ───────────────────────
+    output$ops_ui <- renderUI({
+      tp <- input$type %||% ""
+      if (!nzchar(tp)) return(NULL)
+      ops <- get_allowed_graph_ops(tp)
+      used <- c(if (any(rv$edges$kind == "intervention")) "new_node",
+                if (any(rv$edges$kind == "context")) "new_edge")
+      # i18n-ref: modules.intervention_designer.op.new_node
+      # i18n-ref: modules.intervention_designer.op.new_edge
+      # i18n-ref: modules.intervention_designer.op.reweight_edge
+      # i18n-ref: modules.intervention_designer.ops_source_xlsx
+      # i18n-ref: modules.intervention_designer.ops_source_ebm
+      src_lbl <- function(s) paste(vapply(strsplit(s, "+", fixed = TRUE)[[1]], function(x)
+        i18n$t(paste0("modules.intervention_designer.ops_source_", x)), character(1)), collapse = ", ")
+      tagList(
+        tags$small(strong(i18n$t("modules.intervention_designer.ops_heading")),
+                   provenance_badge("provisional", i18n)),
+        tags$ul(class = "small mb-1", lapply(seq_len(nrow(ops)), function(i)
+          tags$li(i18n$t(paste0("modules.intervention_designer.op.", ops$op[i])), " (", src_lbl(ops$source[i]), ")"))),
+        if (length(setdiff(used, ops$op)))
+          div(class = "alert alert-warning py-1 small", i18n$t("modules.intervention_designer.ops_mismatch")),
+        tags$small(class = "text-muted", i18n$t("modules.intervention_designer.prior_note"),
+                   provenance_badge("toolbox_extension", i18n))
+      )
+    })
+
+    # ── Adding and editing edges ──────────────────────────────────────────
+    add_rows <- function(new) {
+      cur <- rv$edges
+      key <- paste(cur$from, cur$to, sep = "\r")
+      new <- new[!paste(new$from, new$to, sep = "\r") %in% key, , drop = FALSE]
+      rv$edges <- rbind(cur, new)
+    }
+    prior <- reactive(ses_evidence_prior_range(get_intervention_ebm_codes(input$type %||% ""),
+                                               INTERVENTION_EVIDENCE_PRIORS))
+
+    observeEvent(input$add_node_edges, {
+      targets <- input$node_targets %||% character(0)
+      inds <- input$node_indicators %||% character(0)
+      if (!length(targets)) {
+        showNotification(i18n$t("modules.intervention_designer.need_target"), type = "warning")
+        return()
+      }
+      pr <- prior()
+      mk <- function(from, to) data.frame(from = from, to = to, kind = "intervention",
+        min_level = pr[["min"]], max_level = pr[["max"]], stringsAsFactors = FALSE)
+      add_rows(rbind(mk(.DESIGNER_NEW, targets), if (length(inds)) mk(inds, .DESIGNER_NEW)))
+    })
+
+    add_context_edge <- function(from, to) {
+      n <- net()
+      # Covers self-loops too: an existing self-loop is re-weighting (mode C)
+      if (n$matrix[from, to] != 0) {
+        showNotification(i18n$t("modules.intervention_designer.edge_exists"), type = "warning")
+        return(invisible(FALSE))
+      }
+      if (from != to && isTRUE(ses_check_new_edge(n$types[match(from, n$labels)],
+                                                  n$types[match(to, n$labels)]))) {
+        # Translated prefix + the user's own node labels (user data, not translated)
+        showNotification(paste(i18n$t("modules.intervention_designer.edge_rule_warning"), from, "→", to),
+                         type = "warning")
+      }
+      add_rows(data.frame(from = from, to = to, kind = "context", min_level = -1, max_level = 1,
+                          stringsAsFactors = FALSE))
+      invisible(TRUE)
+    }
+    observeEvent(input$add_edge, { req(input$edge_from, input$edge_to); add_context_edge(input$edge_from, input$edge_to) })
+    observeEvent(input$add_self_loop, { req(input$self_loop_node); add_context_edge(input$self_loop_node, input$self_loop_node) })
+
+    output$edges_table <- renderTable({
+      e <- rv$edges
+      if (!nrow(e)) return(data.frame(x = i18n$t("modules.intervention_designer.no_edges")) |>
+                             setNames(" "))
+      # i18n-ref: modules.intervention_designer.kind.intervention
+      # i18n-ref: modules.intervention_designer.kind.context
+      setNames(data.frame(
+        seq_len(nrow(e)), show_name(e$from), show_name(e$to),
+        vapply(e$kind, function(k) i18n$t(paste0("modules.intervention_designer.kind.", k)), character(1)),
+        paste(lvl_label(e$min_level), "…", lvl_label(e$max_level)), stringsAsFactors = FALSE),
+        c("#", i18n$t("modules.intervention_designer.col_from"), i18n$t("modules.intervention_designer.col_to"),
+          i18n$t("modules.intervention_designer.col_kind"), i18n$t("modules.intervention_designer.col_range")))
+    }, striped = TRUE, spacing = "xs")
+
+    # Re-rendered when rv$edges changes; keeps the selected edge and shows its range.
+    # The name is isolated so typing in the name field does not rebuild the editor.
+    output$edge_editor_ui <- renderUI({
+      e <- rv$edges
+      if (!nrow(e)) return(NULL)
+      lbl <- isolate(paste0(seq_len(nrow(e)), ": ", show_name(e$from), " → ", show_name(e$to)))
+      choices <- setNames(as.character(seq_len(nrow(e))), lbl)
+      prev <- isolate(input$edit_edge)
+      sel <- if (!is.null(prev) && prev %in% choices) prev else tail(unname(choices), 1)
+      i <- as.integer(sel)
+      tagList(
+        selectInput(ns("edit_edge"), i18n$t("modules.intervention_designer.edit_edge"), choices, selected = sel),
+        fluidRow(column(6, selectInput(ns("min_level"), i18n$t("modules.intervention_designer.min_level"),
+                                       level_choices(), selected = as.character(e$min_level[i]))),
+                 column(6, selectInput(ns("max_level"), i18n$t("modules.intervention_designer.max_level"),
+                                       level_choices(), selected = as.character(e$max_level[i])))),
+        actionButton(ns("apply_range"), i18n$t("modules.intervention_designer.apply_range"), class = "btn-sm"),
+        actionButton(ns("sign_nonpos"), i18n$t("modules.intervention_designer.sign_nonpos"), class = "btn-sm"),
+        actionButton(ns("sign_nonneg"), i18n$t("modules.intervention_designer.sign_nonneg"), class = "btn-sm"),
+        actionButton(ns("remove_edge"), i18n$t("modules.intervention_designer.remove_edge"),
+                     class = "btn-sm btn-outline-danger")
+      )
+    })
+    edit_row <- reactive(as.integer(input$edit_edge %||% NA))
+    # The selected edge row, or stop the observer if it no longer exists
+    req_edit_row <- function() {
+      i <- edit_row(); req(!is.na(i), i <= nrow(rv$edges))
+      i
+    }
+    # Picking another edge shows that edge's current range
+    observeEvent(input$edit_edge, {
+      i <- req_edit_row()
+      updateSelectInput(session, "min_level", selected = as.character(rv$edges$min_level[i]))
+      updateSelectInput(session, "max_level", selected = as.character(rv$edges$max_level[i]))
+    }, ignoreInit = TRUE)
+    observeEvent(input$apply_range, {
+      i <- req_edit_row()
+      e <- rv$edges; e$min_level[i] <- as.numeric(input$min_level); e$max_level[i] <- as.numeric(input$max_level)
+      rv$edges <- e
+    })
+    observeEvent(input$sign_nonpos, {
+      i <- req_edit_row()
+      e <- rv$edges; e$min_level[i] <- min(e$min_level[i], 0); e$max_level[i] <- 0; rv$edges <- e
+    })
+    observeEvent(input$sign_nonneg, {
+      i <- req_edit_row()
+      e <- rv$edges; e$min_level[i] <- 0; e$max_level[i] <- max(e$max_level[i], 0); rv$edges <- e
+    })
+    observeEvent(input$remove_edge, {
+      i <- req_edit_row()
+      rv$edges <- rv$edges[-i, , drop = FALSE]
+    })
+
+    # ── Run gating ─────────────────────────────────────────────────────────
+    level_sets <- reactive(ses_level_sets(rv$edges, INTERVENTION_GRID_LEVELS))
+    # Returns an i18n key (translated by the callers) or NULL.
+    # i18n-ref: modules.intervention_designer.job_running
+    # i18n-ref: modules.intervention_designer.need_edges
+    # i18n-ref: modules.intervention_designer.stale_edges
+    # i18n-ref: modules.intervention_designer.edge_exists
+    # i18n-ref: modules.intervention_designer.empty_range
+    # i18n-ref: modules.intervention_designer.need_name
+    # i18n-ref: modules.intervention_designer.name_clash
+    # i18n-ref: modules.intervention_designer.need_objective
+    run_block_reason <- reactive({
+      e <- rv$edges
+      if (!is.null(rv$job)) return("modules.intervention_designer.job_running")
+      if (!nrow(e)) return("modules.intervention_designer.need_edges")
+      # The CLD may have changed since the edges were added (renamed/deleted nodes,
+      # or a designed edge that now exists): catch it here, not in the worker.
+      lab <- net()$labels
+      ends <- setdiff(c(e$from, e$to), .DESIGNER_NEW)
+      if (!all(ends %in% lab)) return("modules.intervention_designer.stale_edges")
+      ctx <- e[e$from != .DESIGNER_NEW & e$to != .DESIGNER_NEW, , drop = FALSE]
+      if (nrow(ctx) && any(net()$matrix[cbind(ctx$from, ctx$to)] != 0)) {
+        return("modules.intervention_designer.edge_exists")
+      }
+      if (any(lengths(level_sets()) == 0)) return("modules.intervention_designer.empty_range")
+      if (any(e$from == .DESIGNER_NEW | e$to == .DESIGNER_NEW)) {
+        if (!nzchar(node_name())) return("modules.intervention_designer.need_name")
+        if (node_name() %in% lab) return("modules.intervention_designer.name_clash")
+      }
+      if (!length(input$objectives)) return("modules.intervention_designer.need_objective")
+      NULL
+    })
+    # Run is disabled while a reason applies or a job is active (spec §6); the
+    # click guard in observeEvent(input$run) stays as a backstop.
+    observe(shinyjs::toggleState("run", condition = is.null(run_block_reason())))
+
+    output$grid_info <- renderUI({
+      reason <- run_block_reason()
+      if (!is.null(reason) && reason != "modules.intervention_designer.job_running") {
+        return(div(class = "text-muted small mb-2", i18n$t(reason)))
+      }
+      g <- ses_intervention_grid(level_sets(), cap = INTERVENTION_GRID_CAP, seed = INTERVENTION_DEFAULT_SEED)
+      # i18n-ref: modules.intervention_designer.sampled
+      # i18n-ref: modules.intervention_designer.exhaustive
+      div(class = "small mb-2",
+          format(g$n_total, big.mark = ",", scientific = FALSE), " ",
+          i18n$t("modules.intervention_designer.combinations"), " — ",
+          i18n$t(if (g$sampled) "modules.intervention_designer.sampled"
+                 else "modules.intervention_designer.exhaustive"))
+    })
+
+    # ── Run, poll, cancel ──────────────────────────────────────────────────
+    observeEvent(input$run, {
+      reason <- run_block_reason()
+      if (!is.null(reason)) { showNotification(i18n$t(reason), type = "warning"); return() }
+      payload <- .designer_payload(net(), rv$edges, node_name(), input$objectives, input$sustain)
+      rv$result <- NULL; rv$error <- NULL; rv$error_detail <- NULL
+      rv$progress <- list(done = 0, total = NA_real_)
+      rv$job <- tryCatch(job_api$start(payload), error = function(e) {
+        rv$error <- format_user_error(e, i18n = i18n, context_key = "modules.intervention_designer.context_run")
+        showNotification(rv$error, type = "error")
+        NULL
+      })
+    })
+
+    observe({
+      job <- rv$job
+      req(job)
+      invalidateLater(1000)
+      st <- tryCatch(job_api$poll(job),
+                     error = function(e) list(state = "error", reason = "engine", message = conditionMessage(e)))
+      if (identical(st$state, "running")) { rv$progress <- st; return() }
+      rv$job <- NULL
+      rv$progress <- NULL
+      if (identical(st$state, "done")) {
+        rv$result <- st$result
+        rv$analysis_complete <- TRUE
+      } else {
+        # The raw worker text goes to the log (format_user_error logs it) and to
+        # rv$error_detail; the page shows only the translated message (spec §7).
+        rv$error_detail <- st$message %||% ""
+        # i18n-ref: modules.intervention_designer.context_timeout
+        # i18n-ref: modules.intervention_designer.context_job
+        ctx <- if (identical(st$reason, "timeout")) "modules.intervention_designer.context_timeout"
+               else "modules.intervention_designer.context_job"
+        rv$error <- format_user_error(simpleError(rv$error_detail), i18n = i18n, context_key = ctx)
+        showNotification(rv$error, type = "error")
+      }
+    })
+
+    observeEvent(input$cancel, {
+      job_api$cancel(rv$job)
+      rv$job <- NULL; rv$progress <- NULL
+      showNotification(i18n$t("modules.intervention_designer.cancelled"), type = "message")
+    })
+
+    session$onSessionEnded(function() {
+      j <- isolate(rv$job)
+      if (!is.null(j)) job_api$cancel(j)
+    })
+
+    # ── Results ────────────────────────────────────────────────────────────
+    precheck_alert <- function(status) {
+      # i18n-ref: modules.intervention_designer.precheck.passed
+      # i18n-ref: modules.intervention_designer.precheck.topology_change_needed
+      # i18n-ref: modules.intervention_designer.precheck.skipped
+      # i18n-ref: modules.intervention_designer.precheck.unavailable
+      cls <- switch(status, passed = "alert-success", topology_change_needed = "alert-warning",
+                    "alert-secondary")
+      div(class = paste("alert py-2", cls), i18n$t(paste0("modules.intervention_designer.precheck.", status)))
+    }
+
+    output$results_ui <- renderUI({
+      if (!is.null(rv$job)) {
+        pr <- rv$progress
+        pct <- if (!is.null(pr) && is.finite(pr$total) && pr$total > 0) round(100 * pr$done / pr$total) else 0
+        # Pre-check first (spec §6): on "topology change needed" the user can Cancel
+        return(tagList(
+          if (!is.null(pr$precheck)) precheck_alert(pr$precheck),
+          bs4Card(title = i18n$t("modules.intervention_designer.running"), width = 12, collapsible = FALSE,
+            div(class = "progress mb-2", div(class = "progress-bar", role = "progressbar",
+                                             style = sprintf("width: %d%%", pct), sprintf("%d%%", pct))),
+            actionButton(ns("cancel"), i18n$t("modules.intervention_designer.cancel"),
+                         icon = icon("stop"), class = "btn-outline-danger"))))
+      }
+      if (!is.null(rv$error)) return(div(class = "alert alert-danger", rv$error))
+      r <- rv$result
+      if (is.null(r)) return(div(class = "text-muted mt-4", i18n$t("modules.intervention_designer.help_designer")))
+      fmt <- function(x) format(x, big.mark = ",", scientific = FALSE)
+      # i18n-ref: modules.intervention_designer.sampled
+      # i18n-ref: modules.intervention_designer.exhaustive
+      tagList(
+        precheck_alert(r$precheck$status),
+        bs4Card(title = i18n$t("modules.intervention_designer.result_share"), width = 12, collapsible = FALSE,
+          h4(sprintf("%s / %s (%.1f%%)", fmt(r$n_a), fmt(r$n_eval), 100 * r$share)),
+          if (isTRUE(r$sampled)) p(class = "text-warning small", i18n$t("modules.intervention_designer.estimate_note")),
+          tags$ul(class = "small",
+            tags$li(i18n$t("modules.intervention_designer.result_pass_a"), ": ", fmt(r$n_a)),
+            tags$li(i18n$t("modules.intervention_designer.result_pass_ab"), ": ", fmt(r$n_ab)),
+            tags$li(i18n$t("modules.intervention_designer.result_pass_abc"), ": ", fmt(r$n_abc))),
+          tags$small(class = "text-muted",
+                     i18n$t("modules.intervention_designer.run_meta"), ": ",
+                     r$seed, " / ", r$steps, " / ", r$window, " · ",
+                     i18n$t("modules.intervention_designer.grid_size"), ": ", fmt(r$n_total), " (",
+                     i18n$t(if (isTRUE(r$sampled)) "modules.intervention_designer.sampled"
+                            else "modules.intervention_designer.exhaustive"), ") · ",
+                     i18n$t("modules.intervention_designer.elapsed"), ": ", sprintf("%.1f s", r$elapsed_s))),
+        bs4Card(title = i18n$t("modules.intervention_designer.top_heading"), width = 12, collapsible = FALSE,
+          DT::DTOutput(ns("top_table")),
+          p(class = "text-muted small mt-2", i18n$t("modules.intervention_designer.select_row_hint")),
+          plotly::plotlyOutput(ns("compare_plot"), height = "350px"))
+      )
+    })
+
+    # The top table's data (a reactive so tests can read it: DT sends rows by ajax)
+    top_df <- reactive({
+      r <- rv$result; req(r)
+      yn <- function(x) ifelse(x %in% TRUE, i18n$t("modules.intervention_designer.yes"),
+                               i18n$t("modules.intervention_designer.no"))
+      # (c) is only checked for rows that passed (a); NA means "not evaluated"
+      yn_c <- function(x) ifelse(is.na(x), "\u2014", yn(x))
+      e <- r$design_matrix$edges
+      # One row per top configuration, one column per variable edge (also with a single edge,
+      # where apply() would simplify to a vector)
+      lv <- as.data.frame(t(matrix(lvl_label(r$top_levels), nrow = nrow(r$top_levels))),
+                          stringsAsFactors = FALSE)
+      names(lv) <- paste(e$from, "→", e$to)
+      df <- cbind(data.frame(r$top$rank, yn(r$top$a), yn(r$top$b), yn_c(r$top$c), r$top$d,
+                             stringsAsFactors = FALSE), lv)
+      names(df)[1:5] <- c(i18n$t("modules.intervention_designer.col_rank"),
+                          i18n$t("modules.intervention_designer.col_a"),
+                          i18n$t("modules.intervention_designer.col_b"),
+                          i18n$t("modules.intervention_designer.col_c"),
+                          i18n$t("modules.intervention_designer.col_d"))
+      df
+    })
+    output$top_table <- DT::renderDT({
+      DT::datatable(top_df(), selection = "single", rownames = FALSE,
+                    options = list(pageLength = 10, scrollX = TRUE, dom = "tip"))
+    })
+
+    # Uses the network, initial state and steps stored with the result (review
+    # focus 3), stepped like the grid, so signs agree with criteria (a)/(b).
+    selected_comparison <- reactive({
+      r <- rv$result; i <- input$top_table_rows_selected
+      req(r, length(i) == 1)
+      nodes <- rownames(r$base)
+      fo <- ses_config_final_state(r$base, r$x0[seq_along(nodes)], r$steps)
+      fi <- ses_config_final_state(ses_apply_config(r$design_matrix, r$top_levels[, i]), r$x0, r$steps)
+      data.frame(node = nodes, state_original = unname(fo[nodes]), state_intervention = unname(fi[nodes]),
+                 delta = unname(fi[nodes] - fo[nodes]), stringsAsFactors = FALSE)
+    })
+
+    output$compare_plot <- plotly::renderPlotly({
+      cmp <- selected_comparison()
+      plotly::plot_ly(cmp, x = ~node) |>
+        plotly::add_bars(y = ~state_original, name = i18n$t("modules.intervention_designer.compare_original")) |>
+        plotly::add_bars(y = ~state_intervention, name = i18n$t("modules.intervention_designer.compare_selected")) |>
+        plotly::layout(title = i18n$t("modules.intervention_designer.compare_title"), barmode = "group",
+                       xaxis = list(title = ""),
+                       yaxis = list(title = i18n$t("modules.intervention_designer.compare_state")))
+    })
+  })
+}
