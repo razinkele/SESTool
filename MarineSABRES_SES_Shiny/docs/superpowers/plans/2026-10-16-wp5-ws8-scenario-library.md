@@ -27,7 +27,7 @@ All paths below are relative to `MarineSABRES_SES_Shiny/` in the worktree `C:/Us
 
 ## Rulings made while planning
 
-1. **Appendix 1 `*` marks are not used.** The spec said they agree with Table 4's "X"; the prototype showed 8 cells where the Appendix omits the `*`. Table 4 is the only source for `wv_more_conducive`; the `*` is stripped from the rationale (spec §3.3/§7 amended in Task 1).
+1. **Appendix 1 `*` marks are not used.** The spec said they agree with Table 4's "X"; the prototype showed 8 cells where the Appendix omits the `*`. Table 4 is the only source for `wv_more_conducive`; the `*` is stripped from the rationale (spec §3.2/§7 amended in Task 1).
 2. **The `general` slice is hidden when empty** (12 of 24 cells have no general text); it is not shown with a gap note. Gap notes apply to the three sector slices only.
 3. **`PESTLE_CODES` lives in `constants.R`** and `functions/wp5_scenarios.R` uses it (one definition).
 4. **The worldview text, the scenario narratives and the rationale are not translated** (spec decision 1); the strategy paragraphs and source notes are our wording and are translated.
@@ -64,7 +64,7 @@ All paths below are relative to `MarineSABRES_SES_Shiny/` in the worktree `C:/Us
 
 **Files:**
 - Create: `scripts/build_wp5_scenarios.py`, `scripts/tests/test_build_wp5_scenarios.py`, `data/wp5_scenarios_ssp.json`, `data/wp5_worldview_matrix.json`
-- Modify (docs, force-add): `docs/superpowers/specs/2026-10-16-wp5-ws8-scenario-library-design.md` (§3.3 and §7: remove the Appendix-`*` agreement check — ruling 1)
+- Modify (docs, force-add): `docs/superpowers/specs/2026-10-16-wp5-ws8-scenario-library-design.md` (§3.2 and §7: Appendix-`*` wording and source_ref format — ruling 1)
 
 **Interfaces:**
 - Produces: the two JSON files with exactly the structure in spec §3.1/§3.2 (`source_notes` ids: `summary_hierarchy_ssp`, `hierarchy_ssp2_misprint`, `conducive_row_label`, `ssp3_hierarchy_cells`, `generic_europe`; their `text_key` is `modules.wp5_scenarios.source_note.<id>`; `strategies`: `behavioural`, `accepted_instruments`, `limits_of_acceptable_change`; gap codes `ssp_not_in_futuremares`, `no_afmec_lines`, `no_source_text`).
@@ -135,6 +135,19 @@ def test_committed_json_matches_a_fresh_build(tmp_path):
     build.build(SRC, tmp_path)
     for name in ("wp5_scenarios_ssp.json", "wp5_worldview_matrix.json"):
         assert (APP / "data" / name).read_bytes() == (tmp_path / name).read_bytes()
+
+
+def test_wingdings_and_expected_exceptions():
+    assert (build.TICK, build.CROSS) == ("\u00fc", "\u00fd")
+    assert build.EXPECTED_X_DIFF == {("hierarchy", "ssp3_70", "political")}
+    assert build.EXPECTED_TRANSFORM_DIFF == {("hierarchy", "ssp3_70", "political"),
+                                             ("hierarchy", "ssp3_70", "environmental")}
+
+
+@needs_src
+def test_spreadsheet_checks_pass(tmp_path):
+    _, matrix = build.build(SRC, tmp_path)
+    assert build.check_against_spreadsheet(SRC, matrix) == []
 
 
 def test_committed_json_shape():
@@ -383,7 +396,7 @@ def build(src, out):
     out.mkdir(parents=True, exist_ok=True)
     for name, obj in (("wp5_scenarios_ssp.json", scen), ("wp5_worldview_matrix.json", matrix)):
         (out / name).write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-                                encoding="utf-8")
+                                encoding="utf-8", newline="\n")
     return scen, matrix
 
 
@@ -406,11 +419,11 @@ if __name__ == "__main__":
 micromamba run -n shiny python scripts/build_wp5_scenarios.py --src "C:/Users/arturas.baziukas/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny/WP5/Task 5.1 Application of Scenarios"
 micromamba run -n shiny python -m pytest scripts/tests -q
 ```
-Expected: "wrote wp5_scenarios_ssp.json and wp5_worldview_matrix.json to …/data"; 5 passed.
+Expected: "wrote wp5_scenarios_ssp.json and wp5_worldview_matrix.json to …/data"; 7 passed (the source-dependent tests run locally because the default path points at the main checkout; on CI they skip).
 
-- [ ] **Step 5: Amend the spec** (ruling 1): in §3.3 and §7 of the spec, replace the clause "Appendix 1 `*` marks agree with Table 4 \"X\"" with "Appendix 1 `*` marks are incomplete (8 cells lack one) and are not used; Table 4's \"X\" is the source".
+- [ ] **Step 5: Amend the spec** (ruling 1 and the source-ref format): in §3.2 change "a leading `*` marks \"worldview more conducive\" and is stripped" to "a leading `*` (present on some, not all, worldview-more-conducive cells) is stripped; `wv_more_conducive` comes from Table 4 only", and change the matrix `source_ref` example to the label form the script writes: `{ "table4": "<worldview>:<pestle>:c<col>", "table5": "<worldview>:c<col>", "appendix1": "<worldview>:<pestle>:c<col>" }`. In §7 replace the clause "Appendix 1 `*` marks agree with Table 4 \"X\"" with "Appendix 1 `*` marks are incomplete (8 cells lack one) and are not used; Table 4's \"X\" is the source".
 
-- [ ] **Step 6: Commit** (`git add -f` the spec) — `feat(wp5): D5.1 scenario x worldview data build (WS-8)`.
+- [ ] **Step 6: Commit** exactly these files (pytest creates `__pycache__/` folders under `scripts/`, which are not gitignored — do not add them): `git -C C:/Users/arturas.baziukas/wt-ws8 add MarineSABRES_SES_Shiny/scripts/build_wp5_scenarios.py MarineSABRES_SES_Shiny/scripts/tests/test_build_wp5_scenarios.py MarineSABRES_SES_Shiny/data/wp5_scenarios_ssp.json MarineSABRES_SES_Shiny/data/wp5_worldview_matrix.json`, plus `git -C C:/Users/arturas.baziukas/wt-ws8 add -f MarineSABRES_SES_Shiny/docs/superpowers/specs/2026-10-16-wp5-ws8-scenario-library-design.md` — `feat(wp5): D5.1 scenario x worldview data build (WS-8)`.
 
 ---
 
@@ -600,7 +613,7 @@ source("functions/wp5_scenarios.R", local = FALSE)   # WS-8: D5.1 scenario x wor
 ### Task 3: `PestleTag` on Response register measures
 
 **Files:**
-- Modify: `constants.R:831-840` (`RM_REGISTER_COLUMNS`), `functions/response_measures_schema.R` (`normalize_response_measures()` ~line 49-83; `rm_display_label()` ~104-133; `rm_translate_for_display()` ~147-160), `modules/response_module.R` (governance section ~lines 131-160; `add_response` ~518-556; register table `visible_cols` ~739)
+- Modify: `constants.R:831-840` (`RM_REGISTER_COLUMNS`), `functions/response_measures_schema.R` (`normalize_response_measures()` ~line 49-83; `rm_display_label()` ~104-133; `rm_translate_for_display()` ~147-160), `modules/response_module.R` (governance section ~lines 131-160; `add_response` ~518-556; and `constants.R` `RM_DISPLAY_COLUMNS` ~843-845 for the register table)
 - Test: `tests/testthat/test-response-measures-schema.R`, `tests/testthat/test-response-module.R` (append)
 
 **Interfaces:**
@@ -617,6 +630,14 @@ test_that("PestleTag: added to legacy registers, unknown codes dropped, order ke
   expect_equal(out$PestleTag, "")
   tagged <- data.frame(ID = "R2", Name = "b", PestleTag = "legal;bogus;political", stringsAsFactors = FALSE)
   expect_equal(normalize_response_measures(tagged)$PestleTag, "political;legal")   # PESTLE order, unknown dropped
+})
+
+test_that("PestleTag survives a JSON save/load round trip and is a register display column", {
+  reg <- normalize_response_measures(data.frame(ID = c("R1", "R2"), Name = c("a", "b"),
+                                                PestleTag = c("political;legal", ""), stringsAsFactors = FALSE))
+  back <- normalize_response_measures(jsonlite::fromJSON(jsonlite::toJSON(reg), simplifyVector = FALSE))
+  expect_equal(back$PestleTag, c("political;legal", ""))
+  expect_true("PestleTag" %in% RM_DISPLAY_COLUMNS)
 })
 
 test_that("PestleTag is shown as translated labels", {
@@ -702,7 +723,7 @@ In `rm_translate_for_display()`, after the `pairs` loop:
 
 - In `observeEvent(input$add_response, ...)`'s `data.frame(...)`, after `PairedWith = input$rm_paired_with %||% "",` add `PestleTag = paste(input$rm_pestle %||% character(0), collapse = ";"),`.
 - In the "Clear inputs" block add `updateSelectizeInput(session, "rm_pestle", selected = character(0))`.
-- In the register table add `"PestleTag"` to `visible_cols` after `"GovernanceLevel"`.
+- The register table (`output$response_table`, via `display_view()`) shows only `RM_DISPLAY_COLUMNS`: in `constants.R` add `"PestleTag"` to `RM_DISPLAY_COLUMNS` after `"GovernanceLevel"` (do **not** touch the priority table's `visible_cols`).
 
 - [ ] **Step 4: Run tests** — `'^response-measures-schema$'`, `'^response-module$'`, `'^isa-responses'`. Expected: PASS.
 
@@ -747,9 +768,7 @@ In `rm_translate_for_display()`, after the `pairs` loop:
 | `pestle.technological` | Technological |
 | `pestle.legal` | Legal |
 | `pestle.environmental` | Environmental |
-| `col_element` | Element |
 | `col_match` | Worldview and scenario |
-| `col_transformation` | Transformation |
 | `col_rationale` | Analysts' reasoning |
 | `col_worldview_view` | Worldview |
 | `col_scenario` | Scenario narrative |
@@ -822,6 +841,7 @@ source_for_test(c("functions/wp5_scenarios.R", "modules/wp5_scenario_reference_m
                   "modules/scenario_builder_module.R"))
 i18n_echo <- list(t = function(k, ...) k, translator = NULL)
 real_ref_server <- get("wp5_scenario_reference_server", envir = .GlobalEnv)
+real_sb_ui <- get("scenario_builder_ui", envir = .GlobalEnv)   # helper-stubs.R shadows it with a 1-argument stub
 
 proj_with <- function(register) {
   p <- create_empty_project("t")
@@ -837,7 +857,7 @@ test_that("UI contract: renders, namespaced", {
 })
 
 test_that("Scenario Builder UI has both tabs; the reference tab is outside the CLD gate", {
-  html <- as.character(scenario_builder_ui("sb", i18n_echo))
+  html <- as.character(real_sb_ui("sb", i18n_echo))
   expect_match(html, "modules.wp5_scenarios.tab_my_scenarios", fixed = TRUE)
   expect_match(html, "modules.wp5_scenarios.tab_reference", fixed = TRUE)
   expect_match(html, "sb-wp5_ref-", fixed = TRUE)
@@ -847,6 +867,7 @@ test_that("renders with no project; default cell has area-level elements (review
   testServer(real_ref_server, args = list(project_data_reactive = shiny::reactiveVal(NULL), i18n = i18n_echo), {
     expect_true(length(wp5_area_elements(load_wp5_worldview_matrix(), selected()$worldview, selected()$ssp)) > 0)
     expect_error(output$heatmap, NA)
+    expect_match(as.character(output$body$html), "modules.wp5_scenarios.strategy.behavioural", fixed = TRUE)
     expect_match(as.character(output$responses$html), "modules.wp5_scenarios.responses_no_project")
   })
 })
@@ -883,9 +904,10 @@ test_that("legacy register without PestleTag shows the hint (review focus 1)", {
 })
 
 test_that("missing reference data shows the notice (review focus 2)", {
-  old_s <- .wp5_scen_env$scenarios; old_m <- .wp5_scen_env$matrix
-  withr::defer({ .wp5_scen_env$scenarios <- old_s; .wp5_scen_env$matrix <- old_m })
-  load_wp5_worldview_matrix(path = tempfile(fileext = ".json"), force_reload = TRUE)
+  # The loader caches only successful loads, so stub it rather than poisoning the cache
+  old <- get("load_wp5_worldview_matrix", envir = .GlobalEnv)
+  assign("load_wp5_worldview_matrix", function(...) NULL, envir = .GlobalEnv)
+  withr::defer(assign("load_wp5_worldview_matrix", old, envir = .GlobalEnv))
   testServer(real_ref_server, args = list(project_data_reactive = shiny::reactiveVal(NULL), i18n = i18n_echo), {
     expect_match(as.character(output$body$html), "modules.wp5_scenarios.unavailable", fixed = TRUE)
   })
@@ -953,6 +975,36 @@ wp5_scenario_reference_server <- function(id, project_data_reactive, i18n, event
     # i18n-ref: modules.wp5_scenarios.source_note.conducive_row_label
     # i18n-ref: modules.wp5_scenarios.source_note.ssp3_hierarchy_cells
     # i18n-ref: modules.wp5_scenarios.source_note.generic_europe
+    # i18n-ref: modules.wp5_scenarios.unavailable
+    # i18n-ref: modules.wp5_scenarios.scope_note
+    # i18n-ref: modules.wp5_scenarios.english_source
+    # i18n-ref: modules.wp5_scenarios.warming
+    # i18n-ref: modules.wp5_scenarios.conducive
+    # i18n-ref: modules.wp5_scenarios.heatmap_title
+    # i18n-ref: modules.wp5_scenarios.heatmap_help
+    # i18n-ref: modules.wp5_scenarios.area_count
+    # i18n-ref: modules.wp5_scenarios.europe_count
+    # i18n-ref: modules.wp5_scenarios.pattern
+    # i18n-ref: modules.wp5_scenarios.col_match
+    # i18n-ref: modules.wp5_scenarios.match.yes
+    # i18n-ref: modules.wp5_scenarios.match.no
+    # i18n-ref: modules.wp5_scenarios.more_conducive
+    # i18n-ref: modules.wp5_scenarios.col_rationale
+    # i18n-ref: modules.wp5_scenarios.col_worldview_view
+    # i18n-ref: modules.wp5_scenarios.col_scenario
+    # i18n-ref: modules.wp5_scenarios.guiding_question
+    # i18n-ref: modules.wp5_scenarios.strategies_title
+    # i18n-ref: modules.wp5_scenarios.strategies_provenance
+    # i18n-ref: modules.wp5_scenarios.source_notes_title
+    # i18n-ref: modules.wp5_scenarios.responses_title
+    # i18n-ref: modules.wp5_scenarios.responses_none
+    # i18n-ref: modules.wp5_scenarios.responses_hint
+    # i18n-ref: modules.wp5_scenarios.responses_not_area
+    # i18n-ref: modules.wp5_scenarios.responses_no_project
+    # i18n-ref: modules.wp5_scenarios.col_response
+    # i18n-ref: modules.wp5_scenarios.col_tags
+    # i18n-ref: modules.wp5_scenarios.col_kind
+    # i18n-ref: modules.wp5_scenarios.col_ebm_code
     tr <- function(k) i18n$t(paste0("modules.wp5_scenarios.", k))
     src_badge <- function() span(class = "badge badge-light ml-1", tr("english_source"))
     ssp_label <- function(sid) {
@@ -980,11 +1032,11 @@ wp5_scenario_reference_server <- function(id, project_data_reactive, i18n, event
         fluidRow(lapply(scen$scenarios, function(s) column(3, bs4Card(
           title = paste0(s$ssp, "-RCP", s$rcp), width = 12, collapsible = FALSE,
           p(strong(s$name), src_badge()),
-          p(class = "small", tr("warming"), ": ", s$warming_cap, " \u00b0C"),
+          p(class = "small", tr("warming"), ": ", sub("^<=", "\u2264", s$warming_cap), " \u00b0C"),
           p(class = "small", tr("conducive"), ": ",
             span(class = paste("badge", switch(s$ebm_conducive, yes = "badge-success", somewhat = "badge-warning",
                                                "badge-danger")), tr(paste0("conducive.", s$ebm_conducive)))),
-          p(class = "small", s$global_summary))))),
+          p(class = "small", s$global_summary, src_badge()))))),
         h5(tr("heatmap_title")), p(class = "small text-muted", tr("heatmap_help")),
         uiOutput(ns("heatmap")),
         uiOutput(ns("drilldown")),
