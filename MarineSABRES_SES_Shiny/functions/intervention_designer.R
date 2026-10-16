@@ -67,6 +67,42 @@ ses_grid_decode <- function(idx, level_sets) {
   out
 }
 
+#' Decode 1-based grid indices into level positions (same mixed radix as
+#' ses_grid_decode()): integer matrix, one row per variable edge.
+ses_grid_decode_positions <- function(idx, level_sets) {
+  sizes <- lengths(level_sets)
+  r <- as.numeric(idx) - 1
+  out <- matrix(0L, nrow = length(sizes), ncol = length(idx))
+  for (j in seq_along(sizes)) {
+    d <- r %% sizes[j]
+    out[j, ] <- as.integer(d + 1)
+    r <- (r - d) / sizes[j]
+  }
+  out
+}
+
+#' D5.3 "success depended on" (FIN:584-592, spec 2026-10-15 §3.3): share of the
+#' successful configurations at each level of every variable edge. An edge is
+#' decisive when successes use a strict subset of its levels; with fewer than
+#' `min_success` successes no verdict is given (decisive = NA).
+#' @param codes integer matrix (variable edges x successful configurations) of level positions
+#' @return NULL when there are no successes, else a data.frame (see spec)
+ses_edge_dependence <- function(codes, level_sets, edges, min_success) {
+  if (is.null(codes) || ncol(codes) == 0) return(NULL)
+  n_s <- ncol(codes)
+  shares <- lapply(seq_along(level_sets), function(k)
+    tabulate(codes[k, ], nbins = length(level_sets[[k]])) / n_s)
+  decisive <- vapply(shares, function(s) if (n_s < min_success) NA else any(s == 0), logical(1))
+  out <- data.frame(from = edges$from, to = edges$to, kind = edges$kind, decisive = decisive,
+                    stringsAsFactors = FALSE)
+  out$levels <- level_sets
+  out$shares <- shares
+  out$needed_levels <- lapply(seq_along(level_sets), function(k)
+    if (isTRUE(decisive[k])) level_sets[[k]][shares[[k]] > 0] else numeric(0))
+  attr(out, "n_success") <- n_s
+  out
+}
+
 #' Default |level| range from an intervention type's EBM codes (C§3).
 #' Behavioural (2.x) evidence is weakest and wins over every other code;
 #' legal/regulatory (1.x), output and spatial measures are medium; else full.
@@ -95,7 +131,7 @@ ses_evidence_prior_range <- function(ebm_codes, priors) {
 #' Build the design matrix: base (+ the new node) with variable cells zeroed.
 #' @param design list(new_node = NULL|name, edges = data.frame(from, to, kind,
 #'   min_level, max_level))
-#' @return list(matrix, cells, level_sets, new_node, edges, count_rows)
+#' @return list(matrix, cells, level_sets, new_node, edges, base_levels, count_rows)
 ses_design_matrix <- function(base, design, levels) {
   if (!is.matrix(base) || nrow(base) != ncol(base) || is.null(rownames(base))) {
     stop("base must be a square matrix with node names")
@@ -117,19 +153,31 @@ ses_design_matrix <- function(base, design, levels) {
   ci <- idx$ci
   if (anyDuplicated(paste(ri, ci))) stop("duplicate variable edge in design")
   existing_cell <- ri <= nrow(base) & ci <= ncol(base)
-  if (any(base[cbind(ri[existing_cell], ci[existing_cell])] != 0)) {
+  is_rw <- edges$kind == "reweight"
+  base_w <- numeric(nrow(edges))
+  base_w[existing_cell] <- base[cbind(ri[existing_cell], ci[existing_cell])]
+  if (any(is_rw & base_w == 0)) stop("a re-weighted edge must exist in the network")
+  if (any(!is_rw & base_w != 0)) {
     stop("a variable edge already exists in the network (re-weighting is mode C)")
   }
   cells <- cbind(row = ri, col = ci)
   mat[cells] <- 0
+  level_sets <- ses_level_sets(edges, levels)
+  # Mode C (spec 2026-10-15 §3.1): the link's own sign, weak/medium/strong, within [min, max]
+  for (k in which(is_rw)) {
+    cand <- sort(sign(base_w[k]) * c(0.25, 0.5, 1))
+    level_sets[[k]] <- cand[cand >= edges$min_level[k] - 1e-12 & cand <= edges$max_level[k] + 1e-12]
+  }
   is_int <- edges$kind == "intervention"
   list(
     matrix = mat,
     cells = cells,
-    level_sets = ses_level_sets(edges, levels),
+    level_sets = level_sets,
     new_node = new_node,
     edges = edges,
-    count_rows = if (any(is_int)) which(is_int) else seq_len(nrow(edges))
+    base_levels = ifelse(is_rw, base_w, 0),
+    # (d) counts the intervention's own edges plus every re-weighted link (§3.2)
+    count_rows = if (any(is_int)) sort(c(which(is_int), which(is_rw))) else seq_len(nrow(edges))
   )
 }
 
@@ -230,17 +278,47 @@ rank_simplest <- function(df) {
   df[order(-df$a, -df$b, -cc, df$d, df$index), , drop = FALSE]
 }
 
-#' Boolean pre-check (spec section 4.6): every variable edge at the strongest level of
-#' its allowed sign; does any attractor keep every objective node ON?
-ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
-  n <- nrow(dm$matrix)
+#' Link ranking for mode C (spec 2026-10-15 §3.4): sensitivity of the dominant
+#' eigenvalue of J = t(mat) (x_t = J x_{t-1}) to each existing link,
+#' |d lambda / d mat[i, j]| = |w_j v_i / (w . v)|. Independent of node order,
+#' unlike per-component participation ratio.
+#' @return NULL when there is no single dominant mode (or eigen fails), else a
+#'   data.frame(from, to, weight, sensitivity) sorted by sensitivity, descending
+ses_link_sensitivity <- function(mat) {
+  if (!is.matrix(mat) || nrow(mat) != ncol(mat) || !any(mat != 0)) return(NULL)
+  er <- tryCatch(eigen(t(mat)), error = function(e) NULL)       # right eigenvectors of J
+  el <- tryCatch(eigen(mat), error = function(e) NULL)          # t(J) == mat: left eigenvectors of J
+  if (is.null(er) || is.null(el)) return(NULL)
+  mods <- Mod(er$values)
+  top <- max(mods)
+  if (top < 1e-12) return(NULL)
+  tol <- 1e-9 * max(1, top)
+  cand <- which(abs(mods - top) <= tol)
+  if (length(cand) > 2) return(NULL)
+  if (length(cand) == 2 && Mod(er$values[cand[1]] - Conj(er$values[cand[2]])) > tol) return(NULL)
+  k <- cand[which.max(Im(er$values[cand]))]
+  lam <- er$values[k]
+  v <- er$vectors[, k]
+  w <- el$vectors[, which.min(Mod(el$values - lam))]           # not solve(V): fails on defective matrices
+  wv <- sum(w * v)
+  if (Mod(wv) < 1e-12) return(NULL)
+  idx <- which(mat != 0, arr.ind = TRUE)
+  out <- data.frame(from = rownames(mat)[idx[, 1]], to = colnames(mat)[idx[, 2]], weight = mat[idx],
+                    sensitivity = Mod(w[idx[, 2]] * v[idx[, 1]] / wv), stringsAsFactors = FALSE)
+  out <- out[order(-out$sensitivity, out$from, out$to), , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}
+
+#' Boolean attractors of one matrix: does any attractor keep every objective node ON?
+#' @return list(status, n_nodes, n_attractors, n_desirable)
+ses_boolean_attractor_summary <- function(M, objective_idx, max_nodes) {
+  n <- nrow(M)
   out <- function(status, n_att = NA_integer_, n_des = NA_integer_) {
     list(status = status, n_nodes = n, n_attractors = n_att, n_desirable = n_des)
   }
   if (n > max_nodes) return(out("skipped"))
-  extreme <- vapply(dm$level_sets, function(s) if (max(s) > 0) max(s) else min(s), numeric(1))
-  bm <- tryCatch(boolean_model(ses_apply_config(dm, extreme), max_nodes = max_nodes),
-                 error = function(e) NULL)
+  bm <- tryCatch(boolean_model(M, max_nodes = max_nodes), error = function(e) NULL)
   if (is.null(bm)) return(out("unavailable"))
   if (isTRUE(bm$skipped) || is.null(bm$analysis)) return(out("skipped"))
   att <- bm$analysis$attractors
@@ -248,8 +326,14 @@ ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
     if (is.null(a) || !is.data.frame(a) || nrow(a) == 0) return(FALSE)
     all(as.matrix(a[, objective_idx, drop = FALSE]) == 1)
   }, logical(1))
-  out(if (any(desirable)) "passed" else "topology_change_needed",
-      length(att), sum(desirable))
+  out(if (any(desirable)) "passed" else "topology_change_needed", length(att), sum(desirable))
+}
+
+#' Boolean pre-check (spec section 4.6): every variable edge at the strongest level of
+#' its allowed sign; does any attractor keep every objective node ON?
+ses_boolean_precheck <- function(dm, objective_idx, max_nodes) {
+  extreme <- vapply(dm$level_sets, function(s) if (max(s) > 0) max(s) else min(s), numeric(1))
+  ses_boolean_attractor_summary(ses_apply_config(dm, extreme), objective_idx, max_nodes)
 }
 
 #' Final state of one configuration matrix, stepped exactly as ses_grid_evaluate()
@@ -276,7 +360,7 @@ ses_config_final_state <- function(M, x0, steps) {
 
 #' Run a whole design (called in the background worker).
 #' @param payload list(base, design, levels, objectives, sustain, seed, steps,
-#'   window, cap, chunk, top_k, max_boolean_nodes, stability_budget_s). The
+#'   window, cap, chunk, top_k, max_boolean_nodes, stability_budget_s, dependence_min_success). The
 #'   stability checks stop once the run has taken stability_budget_s seconds
 #'   (NULL = no limit); rows left unchecked keep c = NA and the result has
 #'   stability_partial = TRUE.
@@ -306,15 +390,20 @@ ses_run_design <- function(payload, progress = NULL) {
   n_eval <- grid$n_eval
   index <- if (grid$sampled) grid$indices else seq_len(n_eval)
   a <- logical(n_eval); b <- logical(n_eval); d <- integer(n_eval)
+  succ_codes <- list()
   for (s in seq(1, n_eval, by = payload$chunk)) {
     pos <- s:min(n_eval, s + payload$chunk - 1)
     cfg <- ses_grid_decode(index[pos], dm$level_sets)
     r <- ses_grid_evaluate(dm, cfg, obj, sus, x0, payload$steps, payload$window)
     a[pos] <- r$a
     b[pos] <- r$b
-    d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != 0))
+    if (any(r$a)) succ_codes[[length(succ_codes) + 1L]] <- ses_grid_decode_positions(index[pos][r$a], dm$level_sets)
+    d[pos] <- as.integer(colSums(cfg[dm$count_rows, , drop = FALSE] != dm$base_levels[dm$count_rows]))
     report(floor(900 * max(pos) / n_eval))
   }
+  min_success <- if (is.null(payload$dependence_min_success)) 30L else as.integer(payload$dependence_min_success)
+  dependence <- ses_edge_dependence(if (length(succ_codes)) do.call(cbind, succ_codes) else NULL,
+                                    dm$level_sets, dm$edges, min_success)
   # (c) for (a)&(b) rows first (so n_abc is exact), then (a)-only rows, until the
   # time budget (measured from the start of the run) is used up (spec §4.2(c)).
   budget <- if (is.null(payload$stability_budget_s)) Inf else as.numeric(payload$stability_budget_s)
@@ -343,9 +432,117 @@ ses_run_design <- function(payload, progress = NULL) {
     precheck = precheck,
     top = top,
     top_levels = ses_grid_decode(top$index, dm$level_sets),
+    dependence = dependence,
     design_matrix = dm, base = payload$base, x0 = x0,
     objectives = payload$objectives, sustain = payload$sustain,
     seed = payload$seed, steps = payload$steps, window = payload$window,
     elapsed_s = as.numeric(difftime(Sys.time(), t0, units = "secs"))
   )
+}
+
+# ── WS-7b: configuration -> scenario / network, compare (spec 2026-10-15 §3.5, §4.4, §5) ──
+
+#' Node ids named by matrix row name, using cld_to_numeric_matrix() naming
+#' rule (label, else id; make.unique on duplicates). Positional, never match().
+ses_matrix_node_ids <- function(nodes) {
+  nm <- ifelse(is.na(nodes$label) | nodes$label == "", nodes$id, nodes$label)
+  if (anyDuplicated(nm)) nm <- make.unique(nm, sep = "_")
+  stats::setNames(as.character(nodes$id), nm)
+}
+
+.ses_strength_name <- function(w) {
+  c("0.25" = "weak", "0.5" = "medium", "1" = "strong")[[as.character(abs(w))]]
+}
+
+#' The scenario Apply writes for one configuration (spec §5.1).
+#' @param meta list(name, description, intervention_type, ebm_code, now)
+ses_config_to_scenario <- function(dm, levels, cld, meta) {
+  ids <- ses_matrix_node_ids(cld$nodes)
+  ms <- format(round(as.numeric(meta$now) * 1000), scientific = FALSE)
+  node_id <- if (!is.null(dm$new_node)) paste0("scenario_node_", ms) else NULL
+  id_of <- function(label) {
+    if (!is.null(dm$new_node) && identical(label, dm$new_node)) return(node_id)
+    if (!label %in% names(ids)) stop(sprintf("unknown node: %s", label))
+    ids[[label]]
+  }
+  na_chr <- function(x) if (is.null(x) || !length(x) || is.na(x[1]) || !nzchar(x[1])) NA_character_ else as.character(x[1])
+  op_rec <- function(op, from, to, weight) list(op = op, from = from, to = to, weight = weight,
+                                                intervention_type = na_chr(meta$intervention_type),
+                                                ebm_code = na_chr(meta$ebm_code))
+  nodes_added <- list(); links_added <- list(); links_modified <- list(); ops <- list()
+  if (!is.null(dm$new_node)) {
+    nodes_added <- list(list(id = node_id, label = dm$new_node, dapsi = "Responses", description = ""))
+    ops <- list(op_rec("new_node", NA_character_, dm$new_node, NA_real_))
+  }
+  e <- dm$edges
+  for (k in seq_len(nrow(e))) {
+    lv <- levels[k]
+    from <- id_of(e$from[k]); to <- id_of(e$to[k])
+    if (e$kind[k] == "reweight") {
+      if (lv == dm$base_levels[k]) next
+      links_modified[[length(links_modified) + 1L]] <- list(
+        from = from, to = to, polarity = if (lv > 0) "+" else "-", strength = .ses_strength_name(lv),
+        previous_strength = .ses_strength_name(dm$base_levels[k]))
+      ops[[length(ops) + 1L]] <- op_rec("reweight_edge", e$from[k], e$to[k], lv)
+    } else if (lv != 0) {
+      links_added[[length(links_added) + 1L]] <- list(
+        id = paste0("scenario_link_", ms, "_", k), from = from, to = to,
+        polarity = if (lv > 0) "+" else "-", strength = .ses_strength_name(lv))
+      ops[[length(ops) + 1L]] <- op_rec("new_edge", e$from[k], e$to[k], lv)
+    }
+  }
+  list(id = paste0("scenario_", ms), name = meta$name, description = meta$description,
+       created = meta$now, modified = meta$now,
+       modifications = list(nodes_added = nodes_added, nodes_removed = c(), nodes_modified = list(),
+                            links_added = links_added, links_removed = c(), links_modified = links_modified),
+       results = NULL, ops = ops, source = "intervention_designer")
+}
+
+#' CLD-shaped network of one configuration: exactly what Apply would write.
+ses_config_network <- function(dm, levels, cld, now) {
+  sc <- ses_config_to_scenario(dm, levels, cld, list(name = "", description = "", now = now))
+  scenario_apply_modifications(cld, sc$modifications)
+}
+
+#' "name", or "name (2)", "name (3)" ... when taken.
+.scenario_unique_name <- function(name, existing) {
+  if (!name %in% existing) return(name)
+  k <- 2L
+  while (sprintf("%s (%d)", name, k) %in% existing) k <- k + 1L
+  sprintf("%s (%d)", name, k)
+}
+
+#' Loop key: node sequence rotated to start at its alphabetically first node.
+ses_loop_key <- function(nodes) {
+  i <- which.min(rank(nodes, ties.method = "first"))
+  paste(c(nodes[i:length(nodes)], nodes[seq_len(i - 1)]), collapse = "\r")
+}
+
+#' Loops gained, lost and changed in type between two scenario_loops() lists.
+ses_loop_diff <- function(base_loops, cfg_loops, cap = 500L) {
+  kb <- vapply(base_loops, function(l) ses_loop_key(l$nodes), "")
+  kc <- vapply(cfg_loops, function(l) ses_loop_key(l$nodes), "")
+  tb <- vapply(base_loops, function(l) l$type, ""); tc <- vapply(cfg_loops, function(l) l$type, "")
+  both <- intersect(kb, kc)
+  changed <- both[tb[match(both, kb)] != tc[match(both, kc)]]
+  nodes_of <- function(keys) lapply(keys, function(k) strsplit(k, "\r", fixed = TRUE)[[1]])
+  list(gained = nodes_of(setdiff(kc, kb)), lost = nodes_of(setdiff(kb, kc)), changed = nodes_of(changed),
+       truncated = length(base_loops) >= cap || length(cfg_loops) >= cap)
+}
+
+#' Before/after structure (spec §4.3 item 2); runs in the compare worker.
+ses_compare_structure <- function(payload) {
+  side <- function(net, M) {
+    obj <- match(payload$objectives, rownames(M))
+    list(loops = scenario_loops(net),
+         leverage = identify_leverage_points(net$nodes, net$edges, top_n = 10),
+         attractors = tryCatch(ses_boolean_attractor_summary(M, obj[!is.na(obj)], payload$max_boolean_nodes),
+                               error = function(e) list(status = "unavailable")))
+  }
+  b <- side(payload$baseline, payload$base_matrix)
+  cf <- side(payload$config, payload$config_matrix)
+  list(loops = list(baseline = b$loops, config = cf$loops),
+       loop_diff = ses_loop_diff(b$loops$loops, cf$loops$loops),
+       leverage = list(baseline = b$leverage, config = cf$leverage),
+       attractors = list(baseline = b$attractors, config = cf$attractors))
 }

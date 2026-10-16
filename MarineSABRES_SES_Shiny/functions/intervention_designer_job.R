@@ -6,12 +6,16 @@
 # =============================================================================
 
 #' Absolute paths of the engine files the worker sources.
-designer_engine_files <- function(root = NULL) {
+designer_engine_files <- function(root = NULL, type = "run") {
   if (is.null(root)) {
     root <- if (exists("PROJECT_ROOT", inherits = TRUE)) get("PROJECT_ROOT", inherits = TRUE) else getwd()
   }
-  normalizePath(file.path(root, "functions", c("ses_dynamics.R", "intervention_designer.R")),
-                winslash = "/", mustWork = TRUE)
+  files <- if (identical(type, "compare")) {
+    c("ses_dynamics.R", "network_analysis.R", "scenario_network.R", "intervention_designer.R")
+  } else {
+    c("ses_dynamics.R", "intervention_designer.R")
+  }
+  normalizePath(file.path(root, "functions", files), winslash = "/", mustWork = TRUE)
 }
 
 # Remove a job's progress file (and its atomic-write temp file).
@@ -29,12 +33,19 @@ designer_engine_files <- function(root = NULL) {
 }
 
 #' Start a designer run in a background R process.
-designer_job_start <- function(payload, engine_files = designer_engine_files()) {
+designer_job_start <- function(payload, engine_files = designer_engine_files(type = type), type = "run") {
   progress_file <- tempfile("designer_progress_", fileext = ".txt")
   proc <- callr::r_bg(
-    function(payload, engine_files, progress_file) {
+    function(payload, engine_files, progress_file, type) {
       suppressMessages(library(Matrix))
+      if (identical(type, "compare")) {
+        suppressMessages({ library(igraph); library(dplyr) })
+        # Global, not local: files sourced with local = FALSE look debug_log up in
+        # globalenv; a missing one makes scenario_loops() silently return 0 loops.
+        assign("debug_log", function(...) invisible(NULL), envir = globalenv())
+      }
       for (f in engine_files) source(f, local = FALSE)
+      if (identical(type, "compare")) return(ses_compare_structure(payload))
       pc_state <- ""                       # pre-check status, repeated on every write
       progress <- function(done, total, precheck = NULL) {
         if (!is.null(precheck)) pc_state <<- precheck
@@ -44,7 +55,7 @@ designer_job_start <- function(payload, engine_files = designer_engine_files()) 
       }
       ses_run_design(payload, progress = progress)
     },
-    args = list(payload = payload, engine_files = engine_files, progress_file = progress_file),
+    args = list(payload = payload, engine_files = engine_files, progress_file = progress_file, type = type),
     # Nobody reads the worker's output: no pipes that could fill up and stall it
     stdout = NULL, stderr = NULL,
     env = .designer_worker_env(),
@@ -52,7 +63,7 @@ designer_job_start <- function(payload, engine_files = designer_engine_files()) 
   )
   # Lower the worker's priority where the OS supports it (no-op elsewhere)
   tryCatch(tools::psnice(proc$get_pid(), 10L), error = function(e) NULL, warning = function(w) NULL)
-  list(process = proc, progress_file = progress_file, started = Sys.time())
+  list(process = proc, progress_file = progress_file, started = Sys.time(), type = type)
 }
 
 #' Poll a designer job.
@@ -94,6 +105,7 @@ designer_job_cancel <- function(job) {
 #' The job functions the designer module uses (tests pass a fake).
 designer_job_api <- function() {
   list(start = function(payload) designer_job_start(payload),
+       start_compare = function(payload) designer_job_start(payload, type = "compare"),
        poll = designer_job_poll,
        cancel = designer_job_cancel)
 }

@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.28.0] - 2026-10-16
+
+### Added (WP5 intervention designer — spec 2026-10-15 WS-7b)
+- Mode C in the Designer: re-weight existing links with the sign fixed and the strength set to weak, medium or strong (levels are sign x {0.25, 0.5, 1} within the chosen range, never 0 and never the opposite sign). Can be combined with a new node and new edges in the same design.
+- Link ranking by dominant-eigenvalue sensitivity, to choose which links to vary.
+- "What success depends on" table: the links that decide whether combinations succeed (shown once at least 30 combinations succeed).
+- "Compare structure": loops gained, lost and changed, leverage top 10 and Boolean attractors, before and after a design, run as a background job.
+- "Apply to project": writes a Scenario Builder scenario with `ops` records and `links_modified` (matched by link endpoints, not edge id). Scenario Builder shows modified links and their impact.
+
+### Fixed
+- Scenario Builder `predict_impacts()` crashed on scenarios that remove a link.
+- Added links failed to bind to baseline edges that carry extra columns.
+- Designer (1.27.0): the Run button could stay greyed out with no reason shown after the network's node set changed, even for a valid design.
+- Designer: a structure comparison still running when another top configuration was selected was shown under the new selection.
+- Designer: after loading another project (or starting a new one), Compare and Apply still used the previous run; they are now disabled until the design is run again on the current network.
+- Designer: Apply records the intervention type and EBM codes the run used (not the type picked afterwards), and its pre-filled description states whether the grid was exhaustive or sampled.
+- Designer: re-weighted links show their fixed sign, (+) or (−), in the edges table.
+- Projects with a Designer scenario that re-weights links are stamped "requires 1.28.0", so older versions warn instead of silently dropping the re-weights.
+
+### Notes
+- The per-component participation ratio depends on the eigen-solver mode order (spec section 3.4); open item for DTU and the D5.3 authors.
+
 ## [1.27.0] - 2026-10-15
 
 ### Added (WP5 intervention designer — spec 2026-10-14 WS-7a)

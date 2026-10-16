@@ -1,6 +1,7 @@
 # tests/testthat/test-analysis-modules-batch.R
 # Review 2026-10-07, analysis-module batch: N30-N36.
-source_for_test(c("modules/intervention_designer_module.R", "modules/analysis_intervention.R",
+source_for_test(c("functions/network_analysis.R", "functions/scenario_network.R",
+                  "modules/intervention_designer_module.R", "modules/analysis_intervention.R",
                   "modules/scenario_builder_module.R",
                   "modules/analysis_decision_lens.R", "modules/connection_review_tabbed.R",
                   "modules/analysis_simulation.R"))

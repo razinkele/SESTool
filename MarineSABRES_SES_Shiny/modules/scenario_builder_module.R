@@ -253,7 +253,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
             length(scenario$modifications$nodes_added) +
             length(scenario$modifications$nodes_removed) +
             length(scenario$modifications$links_added) +
-            length(scenario$modifications$links_removed),
+            length(scenario$modifications$links_removed) +
+            length(scenario$modifications$links_modified),
             " ", i18n$t("modules.scenario.builder.scenario_changes")
           )
         )
@@ -713,8 +714,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
       added_links <- active_scenario$modifications$links_added
       removed_links <- active_scenario$modifications$links_removed
+      modified_links <- active_scenario$modifications$links_modified
 
-      if (length(added_links) == 0 && length(removed_links) == 0) {
+      if (length(added_links) == 0 && length(removed_links) == 0 && length(modified_links) == 0) {
         return(p(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.scenario.builder.scenario_no_modifications_yet")))
       }
 
@@ -738,6 +740,18 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
               span(class = "modification-badge link-removed",
                   icon("times"), " ", edge$from_label, " → ", edge$to_label)
             }
+          })
+        },
+        if (length(modified_links) > 0) {
+          # i18n-ref: modules.scenario.builder.strength_weak
+          # i18n-ref: modules.scenario.builder.strength_medium
+          # i18n-ref: modules.scenario.builder.strength_strong
+          st <- function(x) i18n$t(paste0("modules.scenario.builder.strength_", x))
+          lapply(modified_links, function(link) {
+            span(class = "modification-badge link-modified", icon("sliders-h"), " ",
+                 get_node_label(link$from, data, active_scenario), " → ",
+                 get_node_label(link$to, data, active_scenario), ": ",
+                 st(link$previous_strength), " → ", st(link$strength))
           })
         }
       )
@@ -858,6 +872,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
           duration = 5
         )
         return()
+      }
+      if (length(validation$warnings)) {
+        showNotification(paste(validation$warnings, collapse = "; "), type = "warning", duration = 8)
       }
 
       withProgress(message = i18n$t("modules.scenario.builder.scenario_running_impact_analysis"), {
@@ -1212,88 +1229,21 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
-      list(
-        valid = length(errors) == 0,
-        errors = errors
-      )
+      warnings <- character()
+      for (l in modifications$links_modified) {
+        if (!any(baseline_cld$edges$from == l$from & baseline_cld$edges$to == l$to)) {
+          warnings <- c(warnings, sprintf(i18n$t("modules.scenario.builder.link_modified_missing"),
+                                          get_node_label_by_id(l$from, baseline_cld$nodes),
+                                          get_node_label_by_id(l$to, baseline_cld$nodes)))
+        }
+      }
+
+      list(valid = length(errors) == 0, errors = errors, warnings = warnings)
     }
 
     # Apply scenario modifications to network
     apply_scenario_modifications <- function(baseline_cld, modifications) {
-      # Copy baseline
-      nodes <- baseline_cld$nodes
-      edges <- baseline_cld$edges
-
-      # Remove nodes
-      if (length(modifications$nodes_removed) > 0) {
-        nodes <- nodes[!nodes$id %in% modifications$nodes_removed, ]
-        # Also remove connected edges
-        edges <- edges[!edges$from %in% modifications$nodes_removed &
-                      !edges$to %in% modifications$nodes_removed, ]
-      }
-
-      # Add nodes
-      if (length(modifications$nodes_added) > 0) {
-        # Get baseline column structure
-        baseline_cols <- names(baseline_cld$nodes)
-
-        new_nodes <- do.call(rbind, lapply(modifications$nodes_added, function(n) {
-          # Create base node with required columns
-          new_node <- data.frame(
-            id = n$id,
-            label = n$label,
-            dapsi = n$dapsi,
-            description = ifelse(is.null(n$description), "", n$description)
-            
-          )
-
-          # Add any missing columns from baseline with default values
-          for (col in baseline_cols) {
-            if (!(col %in% names(new_node))) {
-              if (col == "group") {
-                new_node[[col]] <- n$dapsi  # Use DAPSI as group
-              } else if (col == "color") {
-                new_node[[col]] <- "#999999"  # Default gray
-              } else if (col == "size") {
-                new_node[[col]] <- 20  # Default size
-              } else if (col == "confidence") {
-                new_node[[col]] <- 3  # Default confidence
-              } else {
-                new_node[[col]] <- NA  # Default NA for other columns
-              }
-            }
-          }
-
-          new_node
-        }))
-        nodes <- rbind(nodes, new_nodes)
-      }
-
-      # Remove links
-      if (length(modifications$links_removed) > 0) {
-        edges <- edges[!edges$id %in% modifications$links_removed, ]
-      }
-
-      # Add links
-      if (length(modifications$links_added) > 0) {
-        new_edges <- do.call(rbind, lapply(modifications$links_added, function(l) {
-          from_label <- get_node_label_by_id(l$from, nodes)
-          to_label <- get_node_label_by_id(l$to, nodes)
-
-          data.frame(
-            id = l$id,
-            from = l$from,
-            to = l$to,
-            from_label = from_label,
-            to_label = to_label,
-            polarity = l$polarity
-            
-          )
-        }))
-        edges <- rbind(edges, new_edges)
-      }
-
-      list(nodes = nodes, edges = edges)
+      scenario_apply_modifications(baseline_cld, modifications)
     }
 
     # Helper to get label by ID
@@ -1345,13 +1295,14 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
         removed_links <- modifications$links_removed
 
         # Links where this node is involved
-        connected_links_added <- sapply(added_links, function(l) {
+        connected_links_added <- vapply(added_links, function(l) {
           l$from == node_id || l$to == node_id
-        })
+        }, logical(1))
 
-        connected_links_removed <- sapply(removed_links, function(l) {
-          l$from == node_id || l$to == node_id
-        })
+        removed_ids <- as.character(removed_links)
+        removed_edges <- baseline$edges[as.character(baseline$edges$id) %in% removed_ids, , drop = FALSE]
+        connected_links_removed <- removed_edges$from == node_id | removed_edges$to == node_id
+        modified <- Filter(function(l) l$from == node_id || l$to == node_id, modifications$links_modified)
 
         # Calculate impact
         impact_magnitude <- 0
@@ -1388,6 +1339,15 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
             reason <- sprintf(i18n$t("modules.scenario.builder.scenario_mixed_links_added"), length(link_polarities))
           }
 
+        } else if (length(modified)) {
+          steps <- c(weak = 1, medium = 2, strong = 3)
+          delta <- max(vapply(modified, function(l)
+            abs(steps[[l$strength]] - steps[[l$previous_strength]]), numeric(1)))
+          pol <- vapply(modified, function(l) l$polarity, character(1))
+          impact_magnitude <- delta
+          impact_direction <- if (all(pol == "+")) "positive" else if (all(pol == "-")) "negative" else "mixed"
+          reason <- i18n$t("modules.scenario.builder.scenario_link_strength_changed")
+
         } else if (any(connected_links_removed)) {
           # Links removed involving this node - negative impact
           impact_magnitude <- 2
@@ -1417,35 +1377,5 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Return reactive project data
     return(reactive(project_data_reactive()))
-  })
-}
-
-#' Feedback loops of a scenario network (review 2026-10-07 N33)
-#'
-#' Uses the shared cycle finder with the Loops tab defaults (no self-loops or
-#' 2-node cycles) and returns loop objects the "Affected loops" panel can show.
-#' @param network list(nodes, edges) in CLD shape
-#' @return list(count = integer, loops = list of list(type, nodes))
-scenario_loops <- function(network) {
-  empty <- list(count = 0L, loops = list())
-  if (is.null(network) || !is.data.frame(network$edges) || nrow(network$edges) == 0 ||
-      !is.data.frame(network$nodes) || nrow(network$nodes) == 0) return(empty)
-  tryCatch({
-    cycles <- find_all_cycles(network$nodes, network$edges, max_length = 8, max_cycles = 500,
-                              timeout_seconds = if (exists("LOOP_ANALYSIS_TIMEOUT_SECONDS")) LOOP_ANALYSIS_TIMEOUT_SECONDS else 30)
-    cycles <- Filter(function(l) length(l) > 2, cycles)
-    if (length(cycles) == 0) return(empty)
-    # same builder find_all_cycles uses, so cycle vertex indices line up
-    g <- create_igraph_from_data(network$nodes, network$edges)
-    info <- process_cycles_to_loops(cycles, network$nodes, network$edges, g, validate_dapsirwrm = FALSE)
-    if (!is.data.frame(info) || nrow(info) == 0) return(empty)
-    loops <- lapply(seq_len(nrow(info)), function(i) list(
-      type = as.character(info$Type[i]),
-      nodes = trimws(strsplit(as.character(info$Elements[i]), "→", fixed = TRUE)[[1]])
-    ))
-    list(count = length(loops), loops = loops)
-  }, error = function(e) {
-    if (exists("debug_log", mode = "function")) debug_log(sprintf("scenario_loops: %s", conditionMessage(e)), "SCENARIO-BUILDER")
-    empty
   })
 }

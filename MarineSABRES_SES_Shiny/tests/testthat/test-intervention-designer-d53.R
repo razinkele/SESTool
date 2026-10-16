@@ -2,6 +2,7 @@
 # D5.3 Tuscany "additional moorings" (C§4.3, FIN:1461-1585), built from the
 # edges D5.3 describes in text. Labels keep D5.3's punctuation on purpose.
 source_for_test("functions/intervention_designer.R")
+app_root_d53 <- function() { td <- getwd(); if (basename(td) == "testthat") dirname(dirname(td)) else td }
 
 LV <- c(-1, -0.5, -0.25, 0, 0.25, 0.5, 1)
 OBJ <- "P. oceanica extension"
@@ -190,4 +191,51 @@ test_that("a repeated real Laplacian eigenvalue counts as stable on every BLAS b
   m <- ses_apply_config(dm, ses_grid_decode(893, dm$level_sets)[, 1])
   expect_equal(unname(ses_grid_decode(893, dm$level_sets)[, 1]), c(0, 1, 0, -0.5, 1))
   expect_true(ses_is_stable_attractor(m))
+})
+
+test_that("mode C on Tuscany: 3^2 sign-preserving configurations", {
+  e <- data.frame(from = c("Boat moorings", "Anchoring"), to = c(OBJ, OBJ), kind = "reweight",
+                  min_level = -1, max_level = 1, stringsAsFactors = FALSE)
+  p <- moorings_payload(1); p$design <- list(new_node = NULL, edges = e)
+  r <- ses_run_design(p)
+  expect_equal(r$n_eval, 9)
+  expect_true(all(r$top_levels < 0))                            # both links stay negative
+  expect_false(is.null(r$dependence) && r$n_a > 0)
+})
+
+test_that("combined design: self-loop + new node + one re-weight runs end to end", {
+  p <- moorings_payload(1)
+  p$design$edges <- rbind(p$design$edges,
+    data.frame(from = "Boat moorings", to = OBJ, kind = "reweight", min_level = -1, max_level = -0.25))
+  r <- ses_run_design(p)
+  expect_equal(r$n_eval, 4^5 * 3)
+  expect_equal(nrow(r$top_levels), 6L)
+})
+
+test_that("Arctic DA file: a mode-C design on Pelagic fishing links completes (no D5.3 numbers asserted)", {
+  f <- file.path(app_root_d53(), "SESModels", "Arctic DA", "Arctic Model edge and node data 20.02.2025V3.xlsx")
+  skip_if_not(file.exists(f))
+  skip_if_not_installed("openxlsx")
+  # The file pads labels with U+00A0 / U+202F, which trimws() does not strip
+  clean <- function(x) trimws(gsub("[[:space:]\u00a0\u202f]+", " ", enc2utf8(x)))
+  nd <- openxlsx::read.xlsx(f, 1); ed <- openxlsx::read.xlsx(f, 2)
+  lab <- clean(nd$Label); ed$From <- clean(ed$From); ed$To <- clean(ed$To)
+  s <- tolower(clean(ed$Strength))
+  w <- ifelse(grepl("strong", s), 1, ifelse(grepl("medium", s), 0.5, 0.25)) * ifelse(grepl("negative", s), -1, 1)
+  m <- matrix(0, length(lab), length(lab), dimnames = list(lab, lab))
+  ok <- ed$From %in% lab & ed$To %in% lab
+  expect_equal(sum(ok), nrow(ed))                               # cleaning matched every endpoint
+  m[cbind(ed$From[ok], ed$To[ok])] <- w[ok]
+  pf <- "Pelagic fishing"
+  idx <- which(m != 0 & (row(m) == match(pf, lab) | col(m) == match(pf, lab)), arr.ind = TRUE)
+  idx <- idx[seq_len(min(6L, nrow(idx))), , drop = FALSE]
+  expect_gte(nrow(idx), 3L)
+  e <- data.frame(from = lab[idx[, 1]], to = lab[idx[, 2]], kind = "reweight", min_level = -1, max_level = 1,
+                  stringsAsFactors = FALSE)
+  r <- ses_run_design(list(base = m, design = list(new_node = NULL, edges = e), levels = LV,
+                           objectives = c("Fish occurrence", "Reproductive success"), sustain = character(0),
+                           seed = 1L, steps = 1000L, window = 100L, cap = 65536, chunk = 2048L, top_k = 5L,
+                           max_boolean_nodes = 20L))
+  expect_equal(r$n_eval, 3^nrow(idx))
+  expect_true(r$share >= 0 && r$share <= 1)
 })
