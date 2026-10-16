@@ -621,9 +621,10 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
           plotly::plotlyOutput(ns("compare_plot"), height = "350px")),
         uiOutput(ns("dependence_ui")),
         bs4Card(title = i18n$t("modules.intervention_designer.compare_heading"), width = 12, collapsible = FALSE,
-          actionButton(ns("compare"), i18n$t("modules.intervention_designer.compare_structure"), icon = icon("project-diagram")),
+          actionButton(ns("compare"), i18n$t("modules.intervention_designer.compare_structure"), icon = icon("project-diagram"),
+                       disabled = if (isolate(actions_ok())) NULL else NA),
           actionButton(ns("apply"), i18n$t("modules.intervention_designer.apply"), icon = icon("save"),
-                       class = "btn-primary ml-2"),
+                       class = "btn-primary ml-2", disabled = if (isolate(actions_ok())) NULL else NA),
           uiOutput(ns("compare_ui")))
       )
     })
@@ -710,12 +711,12 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
 
     # i18n-ref: modules.intervention_designer.context_compare
+    actions_ok <- reactive(!isTRUE(rv$stale) && is.null(rv$job) && is.null(rv$cmp_job))
     # Compare/Apply are disabled while the results are stale or a job is active (spec 4.5);
     # the click-time guards below stay as a backstop.
     observe({
-      ok <- !isTRUE(rv$stale) && is.null(rv$job) && is.null(rv$cmp_job)
-      shinyjs::toggleState("compare", condition = ok)
-      shinyjs::toggleState("apply", condition = ok)
+      shinyjs::toggleState("compare", condition = actions_ok())
+      shinyjs::toggleState("apply", condition = actions_ok())
     })
     # A comparison belongs to one selected row: never show another row's
     observeEvent(input$top_table_rows_selected, { rv$compare <- NULL }, ignoreNULL = FALSE)

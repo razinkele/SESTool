@@ -607,3 +607,27 @@ test_that("changing the selected row clears the comparison", {
     expect_null(rv$compare)
   })
 })
+
+test_that("Compare/Apply render disabled while stale and enabled otherwise (spec 4.5)", {
+  btn_disabled <- function(html, id) {
+    m <- regmatches(html, regexpr(sprintf('<button[^>]*id="[^"]*%s"[^>]*>', id), html))
+    length(m) == 1L && grepl("disabled", m)
+  }
+  pd <- shiny::reactiveVal(proj())
+  eb <- list(on_isa_change = function() pd())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api(), event_bus = eb), {
+    run_mode_c(session)
+    html <- as.character(output$results_ui$html)
+    expect_true(grepl("compare", html, fixed = TRUE))
+    expect_false(btn_disabled(html, "compare"))
+    expect_false(btn_disabled(html, "apply"))
+    p <- proj(); p$data$cld$edges$strength[1] <- "strong"; pd(p)
+    session$flushReact()
+    expect_true(rv$stale)
+    rv$error <- "x"; session$flushReact(); rv$error <- NULL; session$flushReact()   # force a results_ui re-render
+    html <- as.character(output$results_ui$html)
+    expect_true(btn_disabled(html, "compare"))
+    expect_true(btn_disabled(html, "apply"))
+  })
+})
