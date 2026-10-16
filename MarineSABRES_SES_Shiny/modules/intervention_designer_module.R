@@ -53,7 +53,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     ns <- session$ns
     rv <- reactiveValues(edges = .designer_empty_edges(), job = NULL, result = NULL,
                          progress = NULL, error = NULL, error_detail = NULL,
-                         analysis_complete = FALSE, cmp_job = NULL, compare = NULL, stale = FALSE)
+                         analysis_complete = FALSE, cmp_job = NULL, compare = NULL, stale = FALSE,
+                         cmp_row = NULL, job_prov = NULL, result_prov = NULL)
 
     lvl_label <- function(x) {
       # i18n-ref: modules.intervention_designer.level.strong_neg
@@ -231,7 +232,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
           # below keeps it in sync between rebuilds of this panel.
           actionButton(ns("run"), i18n$t("modules.intervention_designer.run"),
                        icon = icon("play"), class = "btn-success",
-                       disabled = !is.null(isolate(run_block_reason()))))
+                       # NULL/NA, never FALSE: bs4Dash renders disabled="FALSE" (= disabled)
+                       disabled = if (is.null(isolate(run_block_reason()))) NULL else NA))
       )
     })
 
@@ -371,9 +373,12 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       # i18n-ref: modules.intervention_designer.kind.intervention
       # i18n-ref: modules.intervention_designer.kind.context
       # i18n-ref: modules.intervention_designer.kind.reweight
+      kind <- vapply(e$kind, function(k) i18n$t(paste0("modules.intervention_designer.kind.", k)), character(1))
+      # Re-weight rows keep the link's sign (spec 4.1): show it as a fixed-sign badge
+      rw <- e$kind == "reweight"
+      kind[rw] <- paste0(kind[rw], ifelse(e$max_level[rw] > 0, " (+)", " (−)"))
       setNames(data.frame(
-        seq_len(nrow(e)), show_name(e$from), show_name(e$to),
-        vapply(e$kind, function(k) i18n$t(paste0("modules.intervention_designer.kind.", k)), character(1)),
+        seq_len(nrow(e)), show_name(e$from), show_name(e$to), unname(kind),
         paste(lvl_label(e$min_level), "…", lvl_label(e$max_level)), stringsAsFactors = FALSE),
         c("#", i18n$t("modules.intervention_designer.col_from"), i18n$t("modules.intervention_designer.col_to"),
           i18n$t("modules.intervention_designer.col_kind"), i18n$t("modules.intervention_designer.col_range")))
@@ -510,7 +515,9 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       reason <- run_block_reason()
       if (!is.null(reason)) { showNotification(i18n$t(reason), type = "warning"); return() }
       payload <- .designer_payload(net(), rv$edges, node_name(), input$objectives, input$sustain)
-      rv$result <- NULL; rv$error <- NULL; rv$error_detail <- NULL
+      tp <- input$type %||% ""                 # provenance of this run, recorded by Apply
+      rv$job_prov <- list(type = tp, ebm_code = if (nzchar(tp)) paste(unlist(get_intervention_ebm_codes(tp)), collapse = ";") else NA_character_)
+      rv$result <- NULL; rv$result_prov <- NULL; rv$error <- NULL; rv$error_detail <- NULL
       rv$progress <- list(done = 0, total = NA_real_)
       rv$job <- tryCatch(job_api$start(payload), error = function(e) {
         rv$error <- format_user_error(e, i18n = i18n, context_key = "modules.intervention_designer.context_run")
@@ -530,6 +537,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       rv$progress <- NULL
       if (identical(st$state, "done")) {
         rv$result <- st$result
+        rv$result_prov <- isolate(rv$job_prov)
         rv$analysis_complete <- TRUE
         rv$stale <- FALSE; rv$compare <- NULL
       } else {
@@ -711,7 +719,13 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
 
     # i18n-ref: modules.intervention_designer.context_compare
-    actions_ok <- reactive(!isTRUE(rv$stale) && is.null(rv$job) && is.null(rv$cmp_job))
+    # Results belong to the network they were run on: a project load/new project
+    # replaces the CLD without an ISA-change event, so compare the matrices too.
+    result_matches_net <- reactive(tryCatch(
+      !is.null(rv$result) && identical(net()$matrix, rv$result$base),
+      error = function(e) FALSE))                                 # net() req() fails on an empty project
+    results_stale <- function() isTRUE(rv$stale) || !isTRUE(result_matches_net())
+    actions_ok <- reactive(!results_stale() && is.null(rv$job) && is.null(rv$cmp_job))
     # Compare/Apply are disabled while the results are stale or a job is active (spec 4.5);
     # the click-time guards below stay as a backstop.
     observe({
@@ -721,7 +735,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # A comparison belongs to one selected row: never show another row's
     observeEvent(input$top_table_rows_selected, { rv$compare <- NULL }, ignoreNULL = FALSE)
     observeEvent(input$compare, {
-      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (results_stale()) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
       if (!length(input$top_table_rows_selected)) {
         showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
       }
@@ -736,6 +750,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
                          type = "error"); return()
       }
       rv$compare <- NULL
+      rv$cmp_row <- input$top_table_rows_selected               # the result belongs to this row
       rv$cmp_job <- tryCatch(job_api$start_compare(payload), error = function(e) {
         showNotification(format_user_error(e, i18n = i18n, context_key = "modules.intervention_designer.context_compare"),
                          type = "error"); NULL })
@@ -747,8 +762,11 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       st <- tryCatch(job_api$poll(job), error = function(e) list(state = "error", message = conditionMessage(e)))
       if (identical(st$state, "running")) return()
       rv$cmp_job <- NULL
-      if (identical(st$state, "done")) rv$compare <- st$result
-      else showNotification(format_user_error(simpleError(st$message %||% ""), i18n = i18n,
+      if (identical(st$state, "done")) {
+        # Drop a result whose row is no longer selected (the selection changed mid-job)
+        same_row <- identical(as.integer(isolate(rv$cmp_row)), as.integer(isolate(input$top_table_rows_selected)))
+        if (same_row) rv$compare <- st$result
+      } else showNotification(format_user_error(simpleError(st$message %||% ""), i18n = i18n,
                                               context_key = "modules.intervention_designer.context_compare"), type = "error")
     })
 
@@ -799,8 +817,31 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       )
     })
 
+    # Pre-filled scenario description (spec 5.1): translated labels and the run's
+    # own numbers only. Row i of the top table.
+    # i18n-ref: modules.intervention_designer.apply_summary
+    # i18n-ref: modules.intervention_designer.grid_size
+    # i18n-ref: modules.intervention_designer.sampled
+    # i18n-ref: modules.intervention_designer.exhaustive
+    # i18n-ref: modules.intervention_designer.run_meta
+    # i18n-ref: modules.intervention_designer.col_a
+    # i18n-ref: modules.intervention_designer.col_b
+    # i18n-ref: modules.intervention_designer.col_c
+    # i18n-ref: modules.intervention_designer.col_d
+    # i18n-ref: modules.intervention_designer.yes
+    # i18n-ref: modules.intervention_designer.no
+    apply_description <- function(r, i) {
+      t <- function(k) i18n$t(paste0("modules.intervention_designer.", k))
+      fmt <- function(x) format(x, big.mark = ",", scientific = FALSE)
+      yn <- function(x) if (is.na(x)) "—" else if (isTRUE(x)) t("yes") else t("no")
+      paste0(t("apply_summary"), ": ", fmt(r$n_a), " / ", fmt(r$n_eval), sprintf(" (%.1f%%)", 100 * r$share), "; ",
+             t("grid_size"), ": ", fmt(r$n_total), " (", t(if (isTRUE(r$sampled)) "sampled" else "exhaustive"), "); ",
+             t("run_meta"), ": ", r$seed, " / ", r$steps, " / ", r$window, "; ",
+             t("col_a"), ": ", yn(r$top$a[i]), ", ", t("col_b"), ": ", yn(r$top$b[i]), ", ",
+             t("col_c"), ": ", yn(r$top$c[i]), ", ", t("col_d"), ": ", r$top$d[i])
+    }
     observeEvent(input$apply, {
-      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (results_stale()) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
       if (!is.null(rv$job) || !is.null(rv$cmp_job)) return()
       if (!length(input$top_table_rows_selected)) {
         showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
@@ -812,29 +853,26 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         textInput(ns("apply_name"), i18n$t("modules.intervention_designer.apply_name"),
                   value = sprintf("%s — %s #%d", label, i18n$t("modules.intervention_designer.configuration"), r$top$rank[i])),
         textAreaInput(ns("apply_description"), i18n$t("modules.intervention_designer.apply_description"), rows = 3,
-                      value = sprintf("%s: seed %s, %s/%s (%.1f%%), a=%s b=%s c=%s d=%s",
-                                      i18n$t("modules.intervention_designer.apply_summary"), r$seed,
-                                      format(r$n_a, big.mark = ","), format(r$n_eval, big.mark = ","), 100 * r$share,
-                                      r$top$a[i], r$top$b[i], r$top$c[i], r$top$d[i])),
+                      value = apply_description(r, i)),
         footer = tagList(modalButton(i18n$t("common.buttons.cancel")),
                          actionButton(ns("confirm_apply"), i18n$t("modules.intervention_designer.apply_confirm"),
                                       class = "btn-primary"))))
     })
     # i18n-ref: modules.intervention_designer.context_apply
     observeEvent(input$confirm_apply, {
-      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (results_stale()) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
       if (!is.null(rv$job) || !is.null(rv$cmp_job)) return()
       req(length(input$top_table_rows_selected) == 1)
       r <- rv$result
       data <- project_data_reactive()
       if (exists("migrate_legacy_scenarios", mode = "function")) data <- migrate_legacy_scenarios(data)
       existing <- data$data$analysis$scenarios %||% list()
-      tp <- input$type %||% ""
+      prov <- rv$result_prov                                     # the type the run used, not the live input
       sc <- tryCatch(ses_config_to_scenario(r$design_matrix, selected_levels(), data$data$cld, list(
         name = .scenario_unique_name(trimws(input$apply_name %||% ""), vapply(existing, function(s) s$name %||% "", "")),
         description = input$apply_description %||% "",
-        intervention_type = tp,
-        ebm_code = if (nzchar(tp)) paste(unlist(get_intervention_ebm_codes(tp)), collapse = ";") else NA_character_,
+        intervention_type = prov$type,
+        ebm_code = prov$ebm_code,
         now = Sys.time())), error = function(e) e)
       if (inherits(sc, "error")) {
         showNotification(format_user_error(sc, i18n = i18n, context_key = "modules.intervention_designer.context_apply"),
@@ -842,6 +880,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       }
       if (!is.list(data$data$analysis)) data$data$analysis <- list()
       data$data$analysis$scenarios <- c(existing, list(sc))
+      # 1.27.0 and older ignore links_modified: stamp so they warn instead of dropping re-weights
+      if (length(sc$modifications$links_modified)) data <- stamp_min_app_version(data, WP5_DESIGNER_MIN_APP_VERSION)
       data$last_modified <- Sys.time()
       project_data_reactive(data)
       removeModal()

@@ -40,6 +40,9 @@ test_that("a background job runs a tiny design to a result", {
   st <- wait_for(job)
   expect_equal(st$state, "done")
   expect_equal(st$result$n_eval, 49)
+  # The Designer treats results as current only while identical(net()$matrix, result$base):
+  # the matrix must survive the worker round-trip bit for bit.
+  expect_identical(st$result$base, tiny_payload()$base)
   expect_false(file.exists(job$progress_file))
 })
 

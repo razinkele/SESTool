@@ -26,6 +26,11 @@ fake_api <- function(fail = FALSE) {
        cancel = function(job) invisible(TRUE))
 }
 real_designer_server <- get("intervention_designer_server", envir = .GlobalEnv)
+# TRUE when the <button> with this id carries a disabled attribute in rendered HTML
+btn_disabled <- function(html, id) {
+  m <- regmatches(html, regexpr(sprintf('<button[^>]*id="[^"]*%s"[^>]*>', id), html))
+  length(m) == 1L && grepl("disabled", m)
+}
 
 test_that("designer UI has the conventional contract", {
   ui <- intervention_designer_ui("dz", i18n_echo)
@@ -609,10 +614,6 @@ test_that("changing the selected row clears the comparison", {
 })
 
 test_that("Compare/Apply render disabled while stale and enabled otherwise (spec 4.5)", {
-  btn_disabled <- function(html, id) {
-    m <- regmatches(html, regexpr(sprintf('<button[^>]*id="[^"]*%s"[^>]*>', id), html))
-    length(m) == 1L && grepl("disabled", m)
-  }
   pd <- shiny::reactiveVal(proj())
   eb <- list(on_isa_change = function() pd())
   testServer(real_designer_server,
@@ -629,5 +630,132 @@ test_that("Compare/Apply render disabled while stale and enabled otherwise (spec
     html <- as.character(output$results_ui$html)
     expect_true(btn_disabled(html, "compare"))
     expect_true(btn_disabled(html, "apply"))
+  })
+})
+
+# -- Final whole-branch review fix wave (WS-7b) -----------------------------------
+
+test_that("Run renders enabled for a runnable design and disabled when blocked (final review 1)", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    session$flushReact()
+    expect_true(btn_disabled(as.character(output$design_ui$html), "run"))    # no edges yet
+    session$setInputs(name = "", type = "", edge_from = "Demand", edge_to = "Habitat", add_edge = 1,
+                      objectives = "P. oceanica extension", sustain = NULL)
+    expect_null(run_block_reason())
+    p4 <- proj()                                                   # node set changes: panel is rebuilt
+    p4$data$cld$nodes <- rbind(p4$data$cld$nodes, data.frame(id = "MPF_2", label = "Seagrass",
+      group = "Marine Processes & Functioning", stringsAsFactors = FALSE))
+    pd(p4)
+    session$flushReact()
+    html <- as.character(output$design_ui$html)
+    expect_true(grepl("Seagrass", html, fixed = TRUE))
+    expect_false(btn_disabled(html, "run"))
+    expect_false(grepl('disabled="FALSE"', html, fixed = TRUE))
+  })
+})
+
+test_that("a Compare result is dropped when the selected row changed while it ran (final review 2)", {
+  done <- FALSE
+  api <- fake_api()
+  base_poll <- api$poll
+  api$poll <- function(job) if (identical(job$type, "compare") && !done) list(state = "running") else base_poll(job)
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = api), {
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1, compare = 1)
+    session$elapse(1100)
+    expect_false(is.null(rv$cmp_job))                             # still running
+    session$setInputs(top_table_rows_selected = 2)
+    done <<- TRUE
+    session$elapse(1100)
+    expect_null(rv$cmp_job)
+    expect_null(rv$compare)                                       # row 1's result is not shown under row 2
+    # positive control: the same row stays selected -> the result is kept
+    done <<- FALSE
+    session$setInputs(compare = 2)
+    session$elapse(1100)
+    done <<- TRUE
+    session$elapse(1100)
+    expect_named(rv$compare, c("loops", "loop_diff", "leverage", "attractors"))
+  })
+})
+
+test_that("replacing the project without an ISA event refuses Compare/Apply (final review 3)", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {   # no event bus
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1)
+    expect_true(actions_ok())
+    p <- proj(); p$data$cld$edges$strength[1] <- "strong"; pd(p)  # e.g. a project load
+    session$flushReact()
+    expect_false(rv$stale)                                        # no event fired ...
+    expect_false(actions_ok())                                    # ... but the network differs
+    session$setInputs(compare = 1)
+    session$elapse(1100)
+    expect_null(rv$cmp_job); expect_null(rv$compare)
+    session$setInputs(apply = 1, apply_name = "S", apply_description = "", confirm_apply = 1)
+    expect_length(pd()$data$analysis$scenarios, 0L)
+    rv$error <- "x"; session$flushReact(); rv$error <- NULL; session$flushReact()   # force a results_ui re-render
+    html <- as.character(output$results_ui$html)
+    expect_true(btn_disabled(html, "compare"))
+    expect_true(btn_disabled(html, "apply"))
+  })
+})
+
+test_that("Apply records the run's type and EBM codes and stamps min_app_version (final review 4, 5)", {
+  load_wp5_intervention_ops()
+  types <- get_intervention_types()$id
+  coded <- types[vapply(types, function(x) length(get_intervention_ebm_codes(x)) > 0, logical(1))]
+  skip_if(length(coded) < 1 || length(types) < 2, "intervention ops table not available")
+  t_run <- coded[1]; t_later <- setdiff(types, t_run)[1]
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    session$setInputs(name = "", type = t_run, rw_links = c("Boating\rAnchoring", "Anchoring\rP. oceanica extension"),
+                      objectives = "Habitat", sustain = NULL)
+    session$setInputs(add_reweight = 1, run = 1)
+    session$elapse(1100)
+    session$setInputs(type = t_later)                             # changed after the run
+    r <- rv$result; e <- r$design_matrix$edges
+    row <- which(apply(r$top_levels != r$base[cbind(e$from, e$to)], 2, any))[1]   # a row that re-weights
+    expect_false(is.na(row))
+    session$setInputs(top_table_rows_selected = row)
+    session$setInputs(apply = 1, apply_name = "S", apply_description = "d", confirm_apply = 1)
+    sc <- pd()$data$analysis$scenarios
+    expect_length(sc, 1L)
+    expect_true(length(sc[[1]]$modifications$links_modified) > 0)
+    types_rec <- unique(vapply(sc[[1]]$ops, function(o) o$intervention_type, ""))
+    expect_equal(types_rec, t_run)
+    expect_equal(unique(vapply(sc[[1]]$ops, function(o) o$ebm_code, "")),
+                 paste(get_intervention_ebm_codes(t_run), collapse = ";"))
+    expect_equal(pd()$min_app_version, WP5_DESIGNER_MIN_APP_VERSION)
+  })
+})
+
+test_that("re-weight rows show a fixed-sign badge in the edges table (spec 4.1)", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = fake_api()), {
+    session$setInputs(name = "", type = "", rw_links = c("Boating\rAnchoring", "Anchoring\rP. oceanica extension"))
+    session$setInputs(add_reweight = 1)
+    html <- as.character(output$edges_table)
+    expect_true(grepl("modules.intervention_designer.kind.reweight (+)", html, fixed = TRUE))
+    expect_true(grepl("modules.intervention_designer.kind.reweight (\u2212)", html, fixed = TRUE))
+  })
+})
+
+test_that("the Apply description says exhaustive or sampled, in translated words only (final review 4)", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = fake_api()), {
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1, apply = 1)
+    desc <- apply_description(rv$result, 1)
+    expect_match(desc, "modules.intervention_designer.exhaustive", fixed = TRUE)
+    expect_match(desc, "modules.intervention_designer.run_meta", fixed = TRUE)
+    # with the echo stub every word is a key: strip keys and numbers, no English words remain
+    rest <- gsub("modules[.]intervention_designer[.][a-z_]+", "", desc)
+    expect_false(grepl("[A-Za-z]", rest))
   })
 })
