@@ -439,3 +439,110 @@ ses_run_design <- function(payload, progress = NULL) {
     elapsed_s = as.numeric(difftime(Sys.time(), t0, units = "secs"))
   )
 }
+
+# ── WS-7b: configuration -> scenario / network, compare (spec 2026-10-15 §3.5, §4.4, §5) ──
+
+#' Node ids named by matrix row name, using cld_to_numeric_matrix() naming
+#' rule (label, else id; make.unique on duplicates). Positional, never match().
+ses_matrix_node_ids <- function(nodes) {
+  nm <- ifelse(is.na(nodes$label) | nodes$label == "", nodes$id, nodes$label)
+  if (anyDuplicated(nm)) nm <- make.unique(nm, sep = "_")
+  stats::setNames(as.character(nodes$id), nm)
+}
+
+.ses_strength_name <- function(w) {
+  c("0.25" = "weak", "0.5" = "medium", "1" = "strong")[[as.character(abs(w))]]
+}
+
+#' The scenario Apply writes for one configuration (spec §5.1).
+#' @param meta list(name, description, intervention_type, ebm_code, now)
+ses_config_to_scenario <- function(dm, levels, cld, meta) {
+  ids <- ses_matrix_node_ids(cld$nodes)
+  ms <- format(round(as.numeric(meta$now) * 1000), scientific = FALSE)
+  node_id <- if (!is.null(dm$new_node)) paste0("scenario_node_", ms) else NULL
+  id_of <- function(label) {
+    if (!is.null(dm$new_node) && identical(label, dm$new_node)) return(node_id)
+    if (!label %in% names(ids)) stop(sprintf("unknown node: %s", label))
+    ids[[label]]
+  }
+  na_chr <- function(x) if (is.null(x) || !length(x) || is.na(x[1]) || !nzchar(x[1])) NA_character_ else as.character(x[1])
+  op_rec <- function(op, from, to, weight) list(op = op, from = from, to = to, weight = weight,
+                                                intervention_type = na_chr(meta$intervention_type),
+                                                ebm_code = na_chr(meta$ebm_code))
+  nodes_added <- list(); links_added <- list(); links_modified <- list(); ops <- list()
+  if (!is.null(dm$new_node)) {
+    nodes_added <- list(list(id = node_id, label = dm$new_node, dapsi = "Responses", description = ""))
+    ops <- list(op_rec("new_node", NA_character_, dm$new_node, NA_real_))
+  }
+  e <- dm$edges
+  for (k in seq_len(nrow(e))) {
+    lv <- levels[k]
+    from <- id_of(e$from[k]); to <- id_of(e$to[k])
+    if (e$kind[k] == "reweight") {
+      if (lv == dm$base_levels[k]) next
+      links_modified[[length(links_modified) + 1L]] <- list(
+        from = from, to = to, polarity = if (lv > 0) "+" else "-", strength = .ses_strength_name(lv),
+        previous_strength = .ses_strength_name(dm$base_levels[k]))
+      ops[[length(ops) + 1L]] <- op_rec("reweight_edge", e$from[k], e$to[k], lv)
+    } else if (lv != 0) {
+      links_added[[length(links_added) + 1L]] <- list(
+        id = paste0("scenario_link_", ms, "_", k), from = from, to = to,
+        polarity = if (lv > 0) "+" else "-", strength = .ses_strength_name(lv))
+      ops[[length(ops) + 1L]] <- op_rec("new_edge", e$from[k], e$to[k], lv)
+    }
+  }
+  list(id = paste0("scenario_", ms), name = meta$name, description = meta$description,
+       created = meta$now, modified = meta$now,
+       modifications = list(nodes_added = nodes_added, nodes_removed = c(), nodes_modified = list(),
+                            links_added = links_added, links_removed = c(), links_modified = links_modified),
+       results = NULL, ops = ops, source = "intervention_designer")
+}
+
+#' CLD-shaped network of one configuration: exactly what Apply would write.
+ses_config_network <- function(dm, levels, cld, now) {
+  sc <- ses_config_to_scenario(dm, levels, cld, list(name = "", description = "", now = now))
+  scenario_apply_modifications(cld, sc$modifications)
+}
+
+#' "name", or "name (2)", "name (3)" ... when taken.
+.scenario_unique_name <- function(name, existing) {
+  if (!name %in% existing) return(name)
+  k <- 2L
+  while (sprintf("%s (%d)", name, k) %in% existing) k <- k + 1L
+  sprintf("%s (%d)", name, k)
+}
+
+#' Loop key: node sequence rotated to start at its alphabetically first node.
+ses_loop_key <- function(nodes) {
+  i <- which.min(rank(nodes, ties.method = "first"))
+  paste(c(nodes[i:length(nodes)], nodes[seq_len(i - 1)]), collapse = "\r")
+}
+
+#' Loops gained, lost and changed in type between two scenario_loops() lists.
+ses_loop_diff <- function(base_loops, cfg_loops, cap = 500L) {
+  kb <- vapply(base_loops, function(l) ses_loop_key(l$nodes), "")
+  kc <- vapply(cfg_loops, function(l) ses_loop_key(l$nodes), "")
+  tb <- vapply(base_loops, function(l) l$type, ""); tc <- vapply(cfg_loops, function(l) l$type, "")
+  both <- intersect(kb, kc)
+  changed <- both[tb[match(both, kb)] != tc[match(both, kc)]]
+  nodes_of <- function(keys) lapply(keys, function(k) strsplit(k, "\r", fixed = TRUE)[[1]])
+  list(gained = nodes_of(setdiff(kc, kb)), lost = nodes_of(setdiff(kb, kc)), changed = nodes_of(changed),
+       truncated = length(base_loops) >= cap || length(cfg_loops) >= cap)
+}
+
+#' Before/after structure (spec §4.3 item 2); runs in the compare worker.
+ses_compare_structure <- function(payload) {
+  side <- function(net, M) {
+    obj <- match(payload$objectives, rownames(M))
+    list(loops = scenario_loops(net),
+         leverage = identify_leverage_points(net$nodes, net$edges, top_n = 10),
+         attractors = tryCatch(ses_boolean_attractor_summary(M, obj[!is.na(obj)], payload$max_boolean_nodes),
+                               error = function(e) list(status = "unavailable")))
+  }
+  b <- side(payload$baseline, payload$base_matrix)
+  cf <- side(payload$config, payload$config_matrix)
+  list(loops = list(baseline = b$loops, config = cf$loops),
+       loop_diff = ses_loop_diff(b$loops$loops, cf$loops$loops),
+       leverage = list(baseline = b$leverage, config = cf$leverage),
+       attractors = list(baseline = b$attractors, config = cf$attractors))
+}

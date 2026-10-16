@@ -125,3 +125,18 @@ test_that("the timeout branch writes a debug_log line", {
   expect_identical(st$reason, "timeout")
   expect_true(any(grepl("timed out", logged)))
 })
+
+test_that("compare job runs in a real background process and finds loops", {
+  nodes <- data.frame(id = c("a", "b", "c", "d"), label = c("A", "B", "C", "D"), group = "Activities",
+                      stringsAsFactors = FALSE)
+  edges <- data.frame(from = c("a", "b", "c", "c", "d"), to = c("b", "c", "a", "d", "a"),
+                      polarity = c("+", "+", "-", "+", "+"), strength = "medium", stringsAsFactors = FALSE)
+  m <- matrix(0, 4, 4, dimnames = rep(list(c("A", "B", "C", "D")), 2))
+  p <- list(baseline = list(nodes = nodes, edges = edges), config = list(nodes = nodes, edges = edges),
+            base_matrix = m, config_matrix = m, objectives = "A", max_boolean_nodes = 20L)
+  job <- designer_job_start(p, engine_files = designer_engine_files(app_root(), type = "compare"), type = "compare")
+  st <- wait_for(job)
+  expect_equal(st$state, "done")
+  # a non-zero count proves the worker's debug_log stub is visible to sourced files
+  expect_equal(length(st$result$loops$baseline$loops), 2L)
+})
