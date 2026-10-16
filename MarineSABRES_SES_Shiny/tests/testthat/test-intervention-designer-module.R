@@ -1,5 +1,6 @@
 # tests/testthat/test-intervention-designer-module.R
-source_for_test(c("functions/intervention_designer.R", "functions/intervention_designer_job.R",
+source_for_test(c("functions/network_analysis.R", "functions/scenario_network.R",
+                  "functions/intervention_designer.R", "functions/intervention_designer_job.R",
                   "modules/intervention_designer_module.R", "modules/analysis_intervention.R"))
 
 i18n_echo <- list(t = function(k, ...) k, translator = NULL)
@@ -15,9 +16,13 @@ proj <- function() {
 }
 # Synchronous fake job API: runs the engine in-process.
 fake_api <- function(fail = FALSE) {
-  list(start = function(payload) list(payload = payload),
-       poll = function(job) if (fail) list(state = "error", reason = "engine", message = "boom")
-                            else list(state = "done", result = ses_run_design(job$payload)),
+  list(start = function(payload) list(payload = payload, type = "run"),
+       start_compare = function(payload) list(payload = payload, type = "compare"),
+       poll = function(job) {
+         if (fail) return(list(state = "error", reason = "engine", message = "boom"))
+         if (identical(job$type, "compare")) return(list(state = "done", result = suppressWarnings(ses_compare_structure(job$payload))))  # igraph warns on the acyclic fixture
+         list(state = "done", result = ses_run_design(job$payload))
+       },
        cancel = function(job) invisible(TRUE))
 }
 real_designer_server <- get("intervention_designer_server", envir = .GlobalEnv)
@@ -510,5 +515,66 @@ test_that("mode C: ranking falls back to an unranked list (review focus 4)", {
     expect_null(link_rank()$ranked)
     expect_equal(nrow(link_rank()$links), 2L)
     expect_match(as.character(output$reweight_ui$html), "modules.intervention_designer.ranking_unavailable")
+  })
+})
+
+run_mode_c <- function(session) {
+  session$setInputs(name = "", type = "", rw_links = c("Boating\rAnchoring", "Anchoring\rP. oceanica extension"),
+                    objectives = "Habitat", sustain = NULL)
+  session$setInputs(add_reweight = 1)
+  session$setInputs(run = 1)
+  session$elapse(1100)
+}
+
+test_that("dependence table is built from the result", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = fake_api()), {
+    run_mode_c(session)
+    expect_false(is.null(rv$result$dependence) && rv$result$n_a > 0)
+    expect_error(output$dependence_ui, NA)
+  })
+})
+
+test_that("Compare runs as its own job and fills rv$compare", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = fake_api()), {
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1)
+    session$setInputs(compare = 1)
+    session$elapse(1100)
+    expect_null(rv$cmp_job)
+    expect_named(rv$compare, c("loops", "loop_diff", "leverage", "attractors"))
+    expect_error(output$compare_ui, NA)
+  })
+})
+
+test_that("Apply writes one designer scenario into the project", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1)
+    session$setInputs(apply = 1)
+    session$setInputs(apply_name = "My scenario", apply_description = "x", confirm_apply = 1)
+    sc <- pd()$data$analysis$scenarios
+    expect_length(sc, 1L)
+    expect_equal(sc[[1]]$source, "intervention_designer")
+    expect_equal(sc[[1]]$name, "My scenario")
+    session$setInputs(confirm_apply = 2)                        # same name again
+    expect_equal(pd()$data$analysis$scenarios[[2]]$name, "My scenario (2)")
+  })
+})
+
+test_that("Apply is refused after the network changed", {
+  pd <- shiny::reactiveVal(proj())
+  eb <- list(on_isa_change = function() pd())                   # minimal bus: fires on project change
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api(), event_bus = eb), {
+    run_mode_c(session)
+    p <- proj(); p$data$cld$edges$strength[1] <- "strong"; pd(p)
+    session$flushReact()
+    expect_true(rv$stale)
+    session$setInputs(top_table_rows_selected = 1, apply = 1, apply_name = "S", apply_description = "", confirm_apply = 1)
+    expect_length(pd()$data$analysis$scenarios, 0L)
   })
 })

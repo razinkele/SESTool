@@ -53,7 +53,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     ns <- session$ns
     rv <- reactiveValues(edges = .designer_empty_edges(), job = NULL, result = NULL,
                          progress = NULL, error = NULL, error_detail = NULL,
-                         analysis_complete = FALSE)
+                         analysis_complete = FALSE, cmp_job = NULL, compare = NULL, stale = FALSE)
 
     lvl_label <- function(x) {
       # i18n-ref: modules.intervention_designer.level.strong_neg
@@ -126,6 +126,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       req(!is.null(event_bus))
       event_bus$on_isa_change()
       if (isolate(rv$analysis_complete)) {
+        rv$stale <- TRUE
         showNotification(i18n$t("modules.analysis.common.data_changed_rerun"),
                          type = "warning", duration = 5, id = ns("stale_data"))
       }
@@ -456,7 +457,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # i18n-ref: modules.intervention_designer.need_objective
     run_block_reason <- reactive({
       e <- rv$edges
-      if (!is.null(rv$job)) return("modules.intervention_designer.job_running")
+      if (!is.null(rv$job) || !is.null(rv$cmp_job)) return("modules.intervention_designer.job_running")
       if (!nrow(e)) return("modules.intervention_designer.need_edges")
       # The CLD may have changed since the edges were added (renamed/deleted nodes,
       # or a designed edge that now exists): catch it here, not in the worker.
@@ -530,6 +531,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       if (identical(st$state, "done")) {
         rv$result <- st$result
         rv$analysis_complete <- TRUE
+        rv$stale <- FALSE; rv$compare <- NULL
       } else {
         # The raw worker text goes to the log (format_user_error logs it) and to
         # rv$error_detail; the page shows only the translated message (spec §7).
@@ -553,6 +555,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     session$onSessionEnded(function() {
       j <- isolate(rv$job)
       if (!is.null(j)) job_api$cancel(j)
+      cj <- isolate(rv$cmp_job)
+      if (!is.null(cj)) job_api$cancel(cj)
     })
 
     # ── Results ────────────────────────────────────────────────────────────
@@ -614,7 +618,13 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         bs4Card(title = i18n$t("modules.intervention_designer.top_heading"), width = 12, collapsible = FALSE,
           DT::DTOutput(ns("top_table")),
           p(class = "text-muted small mt-2", i18n$t("modules.intervention_designer.select_row_hint")),
-          plotly::plotlyOutput(ns("compare_plot"), height = "350px"))
+          plotly::plotlyOutput(ns("compare_plot"), height = "350px")),
+        uiOutput(ns("dependence_ui")),
+        bs4Card(title = i18n$t("modules.intervention_designer.compare_heading"), width = 12, collapsible = FALSE,
+          actionButton(ns("compare"), i18n$t("modules.intervention_designer.compare_structure"), icon = icon("project-diagram")),
+          actionButton(ns("apply"), i18n$t("modules.intervention_designer.apply"), icon = icon("save"),
+                       class = "btn-primary ml-2"),
+          uiOutput(ns("compare_ui")))
       )
     })
 
@@ -665,6 +675,164 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
         plotly::layout(title = i18n$t("modules.intervention_designer.compare_title"), barmode = "group",
                        xaxis = list(title = ""),
                        yaxis = list(title = i18n$t("modules.intervention_designer.compare_state")))
+    })
+
+    # ── Dependence table, structure comparison, Apply to project (WS-7b) ───
+    selected_levels <- reactive({
+      r <- rv$result; i <- input$top_table_rows_selected
+      req(r, length(i) == 1)
+      r$top_levels[, i]
+    })
+    cld_now <- reactive(project_data_reactive()$data$cld)
+
+    output$dependence_ui <- renderUI({
+      dep <- rv$result$dependence
+      if (is.null(dep)) return(NULL)
+      pct <- function(x) sprintf("%.0f%%", 100 * x)
+      rows <- lapply(seq_len(nrow(dep)), function(k) {
+        shares <- paste(paste(lvl_label(dep$levels[[k]]), pct(dep$shares[[k]])), collapse = " · ")
+        verdict <- if (isTRUE(dep$decisive[k])) {
+          strong(i18n$t("modules.intervention_designer.dependence_needs"), " ",
+                 dep$from[k], " → ", dep$to[k], " ", i18n$t("modules.intervention_designer.dependence_at"), " ",
+                 paste(lvl_label(dep$needed_levels[[k]]), collapse = ", "))
+        } else if (isFALSE(dep$decisive[k])) {
+          span(class = "text-muted", i18n$t("modules.intervention_designer.dependence_any"))
+        }
+        tags$tr(tags$td(paste(dep$from[k], "→", dep$to[k])), tags$td(class = "small", shares), tags$td(verdict))
+      })
+      bs4Card(title = i18n$t("modules.intervention_designer.dependence_heading"), width = 12, collapsible = FALSE,
+        if (anyNA(dep$decisive)) p(class = "text-warning small", i18n$t("modules.intervention_designer.dependence_few")),
+        if (isTRUE(rv$result$sampled)) p(class = "text-muted small", i18n$t("modules.intervention_designer.dependence_estimated")),
+        tags$table(class = "table table-sm",
+          tags$thead(tags$tr(tags$th(i18n$t("modules.intervention_designer.col_link")),
+                             tags$th(i18n$t("modules.intervention_designer.col_shares")), tags$th(""))),
+          tags$tbody(rows)))
+    })
+
+    # i18n-ref: modules.intervention_designer.context_compare
+    observeEvent(input$compare, {
+      if (!length(input$top_table_rows_selected)) {
+        showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
+      }
+      if (!is.null(rv$job) || !is.null(rv$cmp_job)) return()
+      r <- rv$result; lv <- selected_levels()
+      payload <- tryCatch(list(
+        baseline = cld_now(), config = ses_config_network(r$design_matrix, lv, cld_now(), Sys.time()),
+        base_matrix = r$base, config_matrix = ses_apply_config(r$design_matrix, lv),
+        objectives = r$objectives, max_boolean_nodes = DYNAMICS_MAX_BOOLEAN_NODES), error = function(e) e)
+      if (inherits(payload, "error")) {
+        showNotification(format_user_error(payload, i18n = i18n, context_key = "modules.intervention_designer.context_compare"),
+                         type = "error"); return()
+      }
+      rv$compare <- NULL
+      rv$cmp_job <- tryCatch(job_api$start_compare(payload), error = function(e) {
+        showNotification(format_user_error(e, i18n = i18n, context_key = "modules.intervention_designer.context_compare"),
+                         type = "error"); NULL })
+    })
+    observe({
+      job <- rv$cmp_job
+      req(job)
+      invalidateLater(1000)
+      st <- tryCatch(job_api$poll(job), error = function(e) list(state = "error", message = conditionMessage(e)))
+      if (identical(st$state, "running")) return()
+      rv$cmp_job <- NULL
+      if (identical(st$state, "done")) rv$compare <- st$result
+      else showNotification(format_user_error(simpleError(st$message %||% ""), i18n = i18n,
+                                              context_key = "modules.intervention_designer.context_compare"), type = "error")
+    })
+
+    output$compare_ui <- renderUI({
+      if (!is.null(rv$cmp_job)) return(p(class = "text-muted mt-2", i18n$t("modules.intervention_designer.compare_running")))
+      cmp <- rv$compare
+      if (is.null(cmp)) return(NULL)
+      cnt <- function(l, type) sum(vapply(l$loops, function(x) identical(x$type, type), logical(1)))
+      loop_list <- function(x) if (!length(x)) i18n$t("modules.intervention_designer.none") else
+        tags$ul(class = "small", lapply(x, function(n) tags$li(paste(n, collapse = " → "))))
+      lev_b <- cmp$leverage$baseline$Name; lev_c <- cmp$leverage$config$Name
+      at <- function(v, i) if (i > length(v) || is.na(v[i])) "" else as.character(v[i])   # NA / out of range -> ""
+      att <- function(a) if (!identical(a$status, "passed") && !identical(a$status, "topology_change_needed"))
+        i18n$t("modules.intervention_designer.attractors_skipped") else
+        paste0(i18n$t("modules.intervention_designer.attractors_total"), ": ", a$n_attractors, " · ",
+               i18n$t("modules.intervention_designer.attractors_desirable"), ": ", a$n_desirable)
+      tagList(
+        h6(class = "mt-3", i18n$t("modules.intervention_designer.loops_heading")),
+        tags$table(class = "table table-sm",
+          tags$thead(tags$tr(tags$th(""), tags$th(i18n$t("modules.intervention_designer.col_before")),
+                             tags$th(i18n$t("modules.intervention_designer.col_after")))),
+          tags$tbody(
+            tags$tr(tags$td(i18n$t("modules.intervention_designer.loops_reinforcing")),
+                    tags$td(cnt(cmp$loops$baseline, "Reinforcing")), tags$td(cnt(cmp$loops$config, "Reinforcing"))),
+            tags$tr(tags$td(i18n$t("modules.intervention_designer.loops_balancing")),
+                    tags$td(cnt(cmp$loops$baseline, "Balancing")), tags$td(cnt(cmp$loops$config, "Balancing"))))),
+        if (isTRUE(cmp$loop_diff$truncated)) p(class = "text-warning small", i18n$t("modules.intervention_designer.loops_truncated")),
+        strong(i18n$t("modules.intervention_designer.loops_gained")), loop_list(cmp$loop_diff$gained),
+        strong(i18n$t("modules.intervention_designer.loops_lost")), loop_list(cmp$loop_diff$lost),
+        strong(i18n$t("modules.intervention_designer.loops_changed")), loop_list(cmp$loop_diff$changed),
+        h6(class = "mt-3", i18n$t("modules.intervention_designer.leverage_heading")),
+        tags$table(class = "table table-sm",
+          tags$thead(tags$tr(tags$th("#"), tags$th(i18n$t("modules.intervention_designer.col_before")),
+                             tags$th(i18n$t("modules.intervention_designer.col_after")))),
+          tags$tbody(lapply(seq_len(max(length(lev_b), length(lev_c))), function(i) {
+            after <- at(lev_c, i)
+            moved <- if (!nzchar(after)) "" else {
+              j <- match(after, lev_b)
+              if (is.na(j)) paste0(" (", i18n$t("modules.intervention_designer.leverage_new"), ")")
+              else if (j > i) " ↑" else if (j < i) " ↓" else ""
+            }
+            tags$tr(tags$td(i), tags$td(at(lev_b, i)), tags$td(paste0(after, moved)))
+          }))),
+        h6(class = "mt-3", i18n$t("modules.intervention_designer.attractors_heading")),
+        tags$ul(class = "small",
+          tags$li(i18n$t("modules.intervention_designer.col_before"), ": ", att(cmp$attractors$baseline)),
+          tags$li(i18n$t("modules.intervention_designer.col_after"), ": ", att(cmp$attractors$config)))
+      )
+    })
+
+    observeEvent(input$apply, {
+      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (!length(input$top_table_rows_selected)) {
+        showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
+      }
+      r <- rv$result; i <- input$top_table_rows_selected
+      label <- r$design_matrix$new_node %||% i18n$t("modules.intervention_designer.reweight_heading")
+      showModal(modalDialog(
+        title = i18n$t("modules.intervention_designer.apply_title"),
+        textInput(ns("apply_name"), i18n$t("modules.intervention_designer.apply_name"),
+                  value = sprintf("%s — %s #%d", label, i18n$t("modules.intervention_designer.configuration"), r$top$rank[i])),
+        textAreaInput(ns("apply_description"), i18n$t("modules.intervention_designer.apply_description"), rows = 3,
+                      value = sprintf("%s: seed %s, %s/%s (%.1f%%), a=%s b=%s c=%s d=%s",
+                                      i18n$t("modules.intervention_designer.apply_summary"), r$seed,
+                                      format(r$n_a, big.mark = ","), format(r$n_eval, big.mark = ","), 100 * r$share,
+                                      r$top$a[i], r$top$b[i], r$top$c[i], r$top$d[i])),
+        footer = tagList(modalButton(i18n$t("common.buttons.cancel")),
+                         actionButton(ns("confirm_apply"), i18n$t("modules.intervention_designer.apply_confirm"),
+                                      class = "btn-primary"))))
+    })
+    # i18n-ref: modules.intervention_designer.context_apply
+    observeEvent(input$confirm_apply, {
+      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      req(length(input$top_table_rows_selected) == 1)
+      r <- rv$result
+      data <- project_data_reactive()
+      if (exists("migrate_legacy_scenarios", mode = "function")) data <- migrate_legacy_scenarios(data)
+      existing <- data$data$analysis$scenarios %||% list()
+      tp <- input$type %||% ""
+      sc <- tryCatch(ses_config_to_scenario(r$design_matrix, selected_levels(), data$data$cld, list(
+        name = .scenario_unique_name(trimws(input$apply_name %||% ""), vapply(existing, function(s) s$name %||% "", "")),
+        description = input$apply_description %||% "",
+        intervention_type = tp,
+        ebm_code = if (nzchar(tp)) paste(unlist(get_intervention_ebm_codes(tp)), collapse = ";") else NA_character_,
+        now = Sys.time())), error = function(e) e)
+      if (inherits(sc, "error")) {
+        showNotification(format_user_error(sc, i18n = i18n, context_key = "modules.intervention_designer.context_apply"),
+                         type = "error"); return()
+      }
+      if (!is.list(data$data$analysis)) data$data$analysis <- list()
+      data$data$analysis$scenarios <- c(existing, list(sc))
+      data$last_modified <- Sys.time()
+      project_data_reactive(data)
+      removeModal()
+      showNotification(i18n$t("modules.intervention_designer.applied"), type = "message")
     })
   })
 }
