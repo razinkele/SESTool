@@ -21,6 +21,7 @@
   list(base = net$matrix,
        design = list(new_node = if (has_node) name else NULL, edges = edges),
        levels = INTERVENTION_GRID_LEVELS,
+       dependence_min_success = INTERVENTION_DEPENDENCE_MIN_SUCCESS,
        objectives = objectives, sustain = sustain %||% character(0),
        seed = INTERVENTION_DEFAULT_SEED, steps = INTERVENTION_N_STEPS,
        window = INTERVENTION_WINDOW, cap = INTERVENTION_GRID_CAP,
@@ -69,6 +70,15 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # priors are 0.25/0.5/1, sign shortcuts use 0), so as.character() matches a choice.
     level_choices <- function() setNames(as.character(INTERVENTION_GRID_LEVELS),
                                          lvl_label(INTERVENTION_GRID_LEVELS))
+    # Re-weighted links keep the link's own sign: only sign(w) x {0.25, 0.5, 1} is offered.
+    reweight_choices <- function(kind, max_level) {
+      ch <- level_choices()
+      if (identical(kind, "reweight")) {
+        s <- sign(max_level)
+        ch <- ch[as.numeric(ch) %in% (s * c(0.25, 0.5, 1))]
+      }
+      ch
+    }
     node_name <- reactive(trimws(input$name %||% ""))
     show_name <- function(x) ifelse(x == .DESIGNER_NEW,
       if (nzchar(node_name())) node_name() else i18n$t("modules.intervention_designer.new_node_placeholder"), x)
@@ -87,6 +97,19 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       # fallback), so choices, lookups and the name-clash check match the matrix.
       # cld_to_numeric_matrix keeps the nodes' row order, so `types` stays aligned.
       list(labels = rownames(mat), types = types, matrix = mat)
+    })
+
+    # Mode C link list (spec 2026-10-15 §3.4, §4.1): ranked by dominant-eigenvalue
+    # sensitivity; when no single dominant mode exists, listed unranked.
+    link_rank <- reactive({
+      m <- net()$matrix
+      ranked <- tryCatch(ses_link_sensitivity(m), error = function(e) NULL)
+      links <- if (!is.null(ranked)) ranked else {
+        idx <- which(m != 0, arr.ind = TRUE)
+        data.frame(from = rownames(m)[idx[, 1]], to = colnames(m)[idx[, 2]], weight = m[idx],
+                   sensitivity = NA_real_, stringsAsFactors = FALSE)
+      }
+      list(ranked = ranked, links = links)
     })
 
     # The design panel is rebuilt only when the node set changes, not on every
@@ -189,6 +212,8 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
             actionButton(ns("add_self_loop"), i18n$t("modules.intervention_designer.add_self_loop"),
                          icon = icon("redo"))),
           hr(),
+          uiOutput(ns("reweight_ui")),
+          hr(),
           tableOutput(ns("edges_table")),
           uiOutput(ns("edge_editor_ui"))),
         bs4Card(title = i18n$t("modules.intervention_designer.step_objectives"), width = 12,
@@ -209,13 +234,41 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       )
     })
 
+    output$reweight_ui <- renderUI({
+      lr <- link_rank(); l <- lr$links
+      if (!nrow(l)) return(NULL)
+      top <- if (is.null(lr$ranked)) 1 else max(l$sensitivity, 1e-12)
+      names_ui <- lapply(seq_len(nrow(l)), function(i) {
+        bar <- if (is.na(l$sensitivity[i])) NULL else
+          span(style = sprintf("display:inline-block;height:6px;width:%dpx;background:#3c8dbc;margin-left:6px;",
+                               round(60 * l$sensitivity[i] / top)))
+        tagList(paste0(l$from[i], " → ", l$to[i], " (", lvl_label(l$weight[i]), ")"), bar)
+      })
+      tagList(
+        h6(i18n$t("modules.intervention_designer.reweight_heading")),
+        p(class = "small text-muted", i18n$t("modules.intervention_designer.reweight_help")),
+        if (is.null(lr$ranked)) div(class = "alert alert-secondary py-1 small",
+                                    i18n$t("modules.intervention_designer.ranking_unavailable")),
+        div(style = "max-height: 220px; overflow-y: auto;",
+            checkboxGroupInput(ns("rw_links"), i18n$t("modules.intervention_designer.reweight_links"),
+                               choiceNames = names_ui, choiceValues = paste(l$from, l$to, sep = "\r"),
+                               selected = isolate(input$rw_links))),
+        actionButton(ns("add_reweight"), i18n$t("modules.intervention_designer.add_reweight"), icon = icon("plus")),
+        fluidRow(column(8, selectInput(ns("rw_node"), i18n$t("modules.intervention_designer.reweight_node"),
+                                       net()$labels)),
+                 column(4, actionButton(ns("add_node_links"), i18n$t("modules.intervention_designer.add_node_links"),
+                                        class = "mt-4")))
+      )
+    })
+
     # ── Operations table (advisory, spec decision 2) ───────────────────────
     output$ops_ui <- renderUI({
       tp <- input$type %||% ""
       if (!nzchar(tp)) return(NULL)
       ops <- get_allowed_graph_ops(tp)
       used <- c(if (any(rv$edges$kind == "intervention")) "new_node",
-                if (any(rv$edges$kind == "context")) "new_edge")
+                if (any(rv$edges$kind == "context")) "new_edge",
+                if (any(rv$edges$kind == "reweight")) "reweight_edge")
       # i18n-ref: modules.intervention_designer.op.new_node
       # i18n-ref: modules.intervention_designer.op.new_edge
       # i18n-ref: modules.intervention_designer.op.reweight_edge
@@ -280,12 +333,43 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     observeEvent(input$add_edge, { req(input$edge_from, input$edge_to); add_context_edge(input$edge_from, input$edge_to) })
     observeEvent(input$add_self_loop, { req(input$self_loop_node); add_context_edge(input$self_loop_node, input$self_loop_node) })
 
+    # Mode C rows: the link's own sign, weak..strong (spec §3.1)
+    add_reweight_rows <- function(from, to) {
+      m <- net()$matrix
+      ok <- from %in% rownames(m) & to %in% colnames(m)
+      from <- from[ok]; to <- to[ok]
+      w <- m[cbind(from, to)]
+      from <- from[w != 0]; to <- to[w != 0]; w <- w[w != 0]
+      if (!length(w)) return(invisible(FALSE))
+      s <- sign(w)
+      add_rows(data.frame(from = from, to = to, kind = "reweight",
+                          min_level = pmin(s * 0.25, s * 1), max_level = pmax(s * 0.25, s * 1),
+                          stringsAsFactors = FALSE))
+      invisible(TRUE)
+    }
+    observeEvent(input$add_reweight, {
+      keys <- input$rw_links %||% character(0)
+      if (!length(keys)) {
+        showNotification(i18n$t("modules.intervention_designer.need_link"), type = "warning")
+        return()
+      }
+      parts <- strsplit(keys, "\r", fixed = TRUE)
+      add_reweight_rows(vapply(parts, `[`, "", 1), vapply(parts, `[`, "", 2))
+    })
+    observeEvent(input$add_node_links, {
+      req(input$rw_node)
+      l <- link_rank()$links
+      hit <- l$from == input$rw_node | l$to == input$rw_node
+      add_reweight_rows(l$from[hit], l$to[hit])
+    })
+
     output$edges_table <- renderTable({
       e <- rv$edges
       if (!nrow(e)) return(data.frame(x = i18n$t("modules.intervention_designer.no_edges")) |>
                              setNames(" "))
       # i18n-ref: modules.intervention_designer.kind.intervention
       # i18n-ref: modules.intervention_designer.kind.context
+      # i18n-ref: modules.intervention_designer.kind.reweight
       setNames(data.frame(
         seq_len(nrow(e)), show_name(e$from), show_name(e$to),
         vapply(e$kind, function(k) i18n$t(paste0("modules.intervention_designer.kind.", k)), character(1)),
@@ -304,12 +388,13 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       prev <- isolate(input$edit_edge)
       sel <- if (!is.null(prev) && prev %in% choices) prev else tail(unname(choices), 1)
       i <- as.integer(sel)
+      ch <- reweight_choices(e$kind[i], e$max_level[i])
       tagList(
         selectInput(ns("edit_edge"), i18n$t("modules.intervention_designer.edit_edge"), choices, selected = sel),
         fluidRow(column(6, selectInput(ns("min_level"), i18n$t("modules.intervention_designer.min_level"),
-                                       level_choices(), selected = as.character(e$min_level[i]))),
+                                       ch, selected = as.character(e$min_level[i]))),
                  column(6, selectInput(ns("max_level"), i18n$t("modules.intervention_designer.max_level"),
-                                       level_choices(), selected = as.character(e$max_level[i])))),
+                                       ch, selected = as.character(e$max_level[i])))),
         actionButton(ns("apply_range"), i18n$t("modules.intervention_designer.apply_range"), class = "btn-sm"),
         actionButton(ns("sign_nonpos"), i18n$t("modules.intervention_designer.sign_nonpos"), class = "btn-sm"),
         actionButton(ns("sign_nonneg"), i18n$t("modules.intervention_designer.sign_nonneg"), class = "btn-sm"),
@@ -326,8 +411,9 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # Picking another edge shows that edge's current range
     observeEvent(input$edit_edge, {
       i <- req_edit_row()
-      updateSelectInput(session, "min_level", selected = as.character(rv$edges$min_level[i]))
-      updateSelectInput(session, "max_level", selected = as.character(rv$edges$max_level[i]))
+      ch <- reweight_choices(rv$edges$kind[i], rv$edges$max_level[i])
+      updateSelectInput(session, "min_level", choices = ch, selected = as.character(rv$edges$min_level[i]))
+      updateSelectInput(session, "max_level", choices = ch, selected = as.character(rv$edges$max_level[i]))
     }, ignoreInit = TRUE)
     observeEvent(input$apply_range, {
       i <- req_edit_row()
@@ -336,10 +422,18 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
     observeEvent(input$sign_nonpos, {
       i <- req_edit_row()
+      if (identical(rv$edges$kind[i], "reweight")) {
+        showNotification(i18n$t("modules.intervention_designer.reweight_fixed_sign"), type = "message")
+        return()
+      }
       e <- rv$edges; e$min_level[i] <- min(e$min_level[i], 0); e$max_level[i] <- 0; rv$edges <- e
     })
     observeEvent(input$sign_nonneg, {
       i <- req_edit_row()
+      if (identical(rv$edges$kind[i], "reweight")) {
+        showNotification(i18n$t("modules.intervention_designer.reweight_fixed_sign"), type = "message")
+        return()
+      }
       e <- rv$edges; e$min_level[i] <- 0; e$max_level[i] <- max(e$max_level[i], 0); rv$edges <- e
     })
     observeEvent(input$remove_edge, {
@@ -354,6 +448,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # i18n-ref: modules.intervention_designer.need_edges
     # i18n-ref: modules.intervention_designer.stale_edges
     # i18n-ref: modules.intervention_designer.edge_exists
+    # i18n-ref: modules.intervention_designer.reweight_stale
     # i18n-ref: modules.intervention_designer.empty_range
     # i18n-ref: modules.intervention_designer.too_many_combinations
     # i18n-ref: modules.intervention_designer.need_name
@@ -368,9 +463,14 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
       lab <- net()$labels
       ends <- setdiff(c(e$from, e$to), .DESIGNER_NEW)
       if (!all(ends %in% lab)) return("modules.intervention_designer.stale_edges")
-      ctx <- e[e$from != .DESIGNER_NEW & e$to != .DESIGNER_NEW, , drop = FALSE]
+      ctx <- e[e$from != .DESIGNER_NEW & e$to != .DESIGNER_NEW & e$kind != "reweight", , drop = FALSE]
       if (nrow(ctx) && any(net()$matrix[cbind(ctx$from, ctx$to)] != 0)) {
         return("modules.intervention_designer.edge_exists")
+      }
+      rw_rows <- e[e$kind == "reweight", , drop = FALSE]
+      if (nrow(rw_rows)) {
+        w <- net()$matrix[cbind(rw_rows$from, rw_rows$to)]
+        if (any(w == 0 | sign(w) != sign(rw_rows$max_level))) return("modules.intervention_designer.reweight_stale")
       }
       if (any(lengths(level_sets()) == 0)) return("modules.intervention_designer.empty_range")
       if (.designer_too_many(level_sets())) return("modules.intervention_designer.too_many_combinations")

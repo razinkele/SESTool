@@ -465,3 +465,50 @@ test_that("Cancel after the job finished does nothing (item 7)", {
     expect_false(is.null(rv$result))
   })
 })
+
+test_that("mode C: ticked links become sign-fixed reweight rows", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo,
+                         job_api = fake_api()), {
+    session$setInputs(name = "", type = "", rw_links = c("Boating\rAnchoring", "Anchoring\rP. oceanica extension"))
+    session$setInputs(add_reweight = 1)
+    expect_equal(rv$edges$kind, c("reweight", "reweight"))
+    expect_equal(rv$edges$min_level, c(0.25, -1))
+    expect_equal(rv$edges$max_level, c(1, -0.25))
+    session$setInputs(rw_node = "Demand", add_node_links = 1)
+    expect_equal(nrow(rv$edges), 3L)                            # Demand -> Boating added once
+    session$setInputs(objectives = "P. oceanica extension", sustain = NULL)
+    expect_null(run_block_reason())
+    session$setInputs(run = 1)
+    session$elapse(1100)
+    expect_equal(rv$result$n_eval, 27)
+  })
+})
+
+test_that("mode C: a link that changed sign or vanished blocks Run (review focus 1)", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api()), {
+    session$setInputs(name = "", type = "", rw_links = "Boating\rAnchoring", objectives = "Habitat")
+    session$setInputs(add_reweight = 1)
+    expect_null(run_block_reason())
+    p <- proj(); p$data$cld$edges$polarity[2] <- "-"; pd(p)    # Boating -> Anchoring flipped
+    session$flushReact()
+    expect_equal(run_block_reason(), "modules.intervention_designer.reweight_stale")
+    p$data$cld$edges <- p$data$cld$edges[-2, ]; pd(p)          # and now deleted
+    session$flushReact()
+    expect_equal(run_block_reason(), "modules.intervention_designer.reweight_stale")
+  })
+})
+
+test_that("mode C: ranking falls back to an unranked list (review focus 4)", {
+  p <- proj()
+  p$data$cld$edges <- data.frame(from = c("D_1", "A_1"), to = c("A_1", "D_1"), polarity = "+",
+                                 strength = "strong", stringsAsFactors = FALSE)   # eigenvalues 1 and -1
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(p), i18n = i18n_echo, job_api = fake_api()), {
+    expect_null(link_rank()$ranked)
+    expect_equal(nrow(link_rank()$links), 2L)
+    expect_match(as.character(output$reweight_ui$html), "modules.intervention_designer.ranking_unavailable")
+  })
+})
