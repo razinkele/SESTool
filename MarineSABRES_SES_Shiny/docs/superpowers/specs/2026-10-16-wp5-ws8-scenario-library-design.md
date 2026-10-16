@@ -1,14 +1,13 @@
 # WP5 WS-8: Scenario × worldview reference library (D5.1) — design
 
 **Date:** 2026-10-16
-**Status:** design approved in brainstorming (sections 1-4, sections 1 and 4 amended after an in-loop review against the source files); written spec reviewed in-loop twice (2026-10-16); awaiting user approval
+**Status:** design approved in brainstorming (sections 1-4, sections 1 and 4 amended after an in-loop review against the source files); written spec reviewed in-loop three times (2026-10-16); awaiting user approval
 **Master spec:** `2026-10-11-wp5-practical-integration-specs.md` §WS-8 (and §WS-3 for `pestle_tag`)
 **Source audit:** `docs/wp5-source-audit/2026-10-11/B_D5.1_scenarios.md`
 **Sources** (under `WP5/Task 5.1 Application of Scenarios/`):
-- `Deliverable report T5.1/Marine SABRES D5.1 scenarios report_v2 final.docx` (D5.1; Table 5 = per-cell transformation result)
+- `Deliverable report T5.1/Marine SABRES D5.1 scenarios report_v2 final.docx` (D5.1, the published deliverable — primary source for every grid field): Table 3 = worldview descriptions (docx table 9), Table 4 = match / worldview-more-conducive grid (docx table 10, diagonal layout), Table 5 = per-cell transformation result (docx tables 5 and 11, two identical copies), Appendix 1 table = analyst rationale per cell (docx table 13)
 - `Deliverable report T5.1/SSP-RCP regionalisation table.docx` (table 2 = global, expanded and merged EU narratives)
-- `Scenarios vs worldviews paper/results breakdown.xlsx` (Sheet1 = 72-cell grid; Sheet2 = analyst rationale for every cell)
-- `Deliverable report T5.1/WORLDVIEWS SCENARIOS FOR deliverable 5_1.xlsx` (worldview descriptions)
+- `Scenarios vs worldviews paper/results breakdown.xlsx` (working spreadsheet: Sheet1 = 72-cell grid, Sheet2 = rationale drafts) — consistency check only
 - `Scenarios vs worldviews paper/D5.1 Journal draft.docx` (strategies for non-aligned worldviews)
 
 ## 1. Purpose and scope
@@ -28,7 +27,8 @@ Out of scope (master spec, partner question Q5): applying a scenario to the CLD 
 1. **Narratives stay English source text.** The long scenario narratives are shown as quoted English source with a "source text (English)" badge; every label, heading, PESTLE name, state name, note and strategy text is translated in the 9 app languages.
 2. **Build `pestle_tag` now**, as a manual multi-select (no inference from the EBM code).
 3. **Reproducible build script** rather than hand-curated JSON: `scripts/build_wp5_scenarios.py` reads the source files and writes the two JSON files with cell-level provenance; the JSON is committed.
-4. **Per-cell result = D5.1 Table 5** (in-loop review 2026-10-16). The spreadsheet's six decision rules do not map one-to-one to D5.1's four outcome classes, and its "transformation needed" tick mixes area-level and Europe-wide cases. D5.1's own per-cell answer is Table 5, which shades every cell as area-level transformation (blue `0070C0`), Europe-wide transformation (dark grey `808080`) or not needed (light grey `D9D9D9`). The dataset stores that three-state result as the primary field.
+4. **The published deliverable is the source; the spreadsheet is a check** (third in-loop review). D5.1's Tables 3, 4, 5 and Appendix 1 hold every grid field, and they are mutually consistent; the working spreadsheet differs in one cell's "more conducive" mark, leaves Hierarchy × economic blank, and has earlier wordings of the rationale.
+5. **Per-cell result = D5.1 Table 5** (in-loop review 2026-10-16). The spreadsheet's six decision rules do not map one-to-one to D5.1's four outcome classes, and its "transformation needed" tick mixes area-level and Europe-wide cases. D5.1's own per-cell answer is Table 5, which shades every cell as area-level transformation (blue `0070C0`), Europe-wide transformation (dark grey `808080`) or not needed (light grey `D9D9D9`). The dataset stores that three-state result as the primary field.
 
 ## 3. Data
 
@@ -59,28 +59,28 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 ### 3.2 `data/wp5_worldview_matrix.json`
 
 ```
-{ "version": "1.0", "source": "D5.1 Table 5 + results breakdown.xlsx", "built_by": "scripts/build_wp5_scenarios.py",
+{ "version": "1.0", "source": "D5.1 Tables 3, 4, 5 and Appendix 1", "built_by": "scripts/build_wp5_scenarios.py",
   "worldviews": [ { "id": "egalitarian"|"individualist"|"hierarchy", "keywords": "<English>", "problem": "...",
                     "solution": "...", "summary": "...",
                     "pestle": { "political": "<English>"|null, ..., "legal": "<ideas of justice>", "environmental": "..." },
-                    "source_ref": "WV description!<column>" } ],
+                    "source_ref": "D5.1 Table 3, column <n>" } ],
   "cells": [ { "worldview": "...", "ssp": "ssp1_26", "pestle": "political",
                "transformation": "area"|"europe"|"none",
                "match": true|false, "wv_more_conducive": true|false|null,
                "rationale": "<English analyst justification>",
-               "source_ref": { "table5": "r<row>:c<col>", "breakdown": "Sheet1!<cell>", "rationale": "Sheet2!<cell>" } } ],
+               "source_ref": { "table4": "r<row>:c<col>", "table5": "r<row>:c<col>", "appendix1": "r<row>:c<col>" } } ],
   "source_notes": [ { "id": "...", "text_key": "<i18n key>" } ],
   "strategies": [ "behavioural", "accepted_instruments", "limits_of_acceptable_change" ] }
 ```
 
-- 72 cells (3 × 4 × 6). `transformation` from Table 5 cell shading. `match` from Sheet1 row "WV & SSP match"; `wv_more_conducive` from row "WV more conducive to EBM" (`-` → `null`).
-- `rationale` from Sheet2 (present for all 72 cells).
-- Worldviews come from `WORLDVIEWS SCENARIOS FOR deliverable 5_1.xlsx`, sheet "WV description": rows Key words, Problem definition, Solution, Summary, then one row per PESTLE element (the Legal row is the worldview's justice principle). Rows are read by position, not label (the sheet spells "Tecnological"). Hierarchy × economic is blank in the source → `null`, shown with the `no_source_text` gap note. Worldview names are mapped from the source spellings (INDIVIDUALIST / HIERARCHY / EGALITARIAN in the sheet; "Hierarchical" in Table 5) to the three ids.
+- 72 cells (3 × 4 × 6). `transformation` from Table 5 cell shading. `match` and `wv_more_conducive` from Table 4: rows are worldview × PESTLE, columns scenario × PESTLE, and only the same-element (diagonal) cell carries the result — fill `92D050` = match, `FF0000` = mismatch, text "X" = worldview more conducive to EBM than the scenario; `wv_more_conducive` is `null` for matches (as in the source).
+- `rationale` from the Appendix 1 table (all 72 cells; a leading `*` marks "worldview more conducive" and is stripped).
+- Worldviews come from D5.1 Table 3: rows Key words, Problem definition, Solution, Summary, a blank separator row, then one row per PESTLE element (the Legal row is the worldview's justice principle). Rows are read by position, not label (the source spells "Tecnological"). Worldview names are mapped from the source spellings (INDIVIDUALIST / HIERARCHY / EGALITARIAN in Table 3; "Hierarchical" in Tables 4/5) to the three ids. All 18 PESTLE descriptions are present in D5.1 (the working spreadsheet leaves Hierarchy × economic blank).
 - `source_notes` (each rendered from a translated key):
   - `summary_hierarchy_ssp` — D5.1's Summary places Hierarchy's four PESTLE elements under SSP1; Table 5, the spreadsheet and the journal draft put them under SSP2.
   - `hierarchy_ssp2_misprint` — D5.1 prints the Hierarchy × SSP2 match pattern as `__LE`.
   - `conducive_row_label` — the spreadsheet row "Worldview conducive to EBM?" holds the scenario's conduciveness (SSP2 "somewhat" coded Y); not used.
-  - `ssp3_block_europe` — Table 5 shades the whole SSP3 block Europe-wide, including Hierarchy × SSP3 × political, which the spreadsheet marks as not needing transformation; and the spreadsheet's "?" for Hierarchy × SSP3 × environmental.
+  - `ssp3_hierarchy_cells` — for Hierarchy × SSP3 the published tables differ from the working spreadsheet in two cells: political (spreadsheet: worldview more conducive, no transformation; D5.1 Tables 4 and 5: less conducive, Europe-wide transformation) and environmental (spreadsheet "?"; D5.1: Europe-wide). The app follows D5.1.
   - `generic_europe` — results are generic for Europe and identical for all DAs; an analyst panel, not a stakeholder survey.
 - `strategies`: ids of the journal draft's three strategies; their text is our translated wording (§4), with a provenance badge.
 
@@ -90,7 +90,7 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 - reads the sources above (paths relative to the app dir), writes both JSON files with sorted keys and stable ordering (byte-identical on re-run);
 - locates Table 5 by its layout (worldview rows × 24 PESTLE columns with cell shading); D5.1 contains two copies (main text and appendix) — the build requires both to agree and uses the first;
 - decodes the spreadsheet's Wingdings glyphs (`0xFC` = needed, `0xFD` = not needed) only for the consistency check;
-- **consistency check** (fails the build): for each cell, Table 5 says area or Europe-wide exactly when the spreadsheet ticks "transformation needed", except the cells listed in `ssp3_block_europe`; the check prints and exits non-zero on any other difference;
+- **consistency checks** against the working spreadsheet (fail the build, printing every unexpected difference): (a) Table 4 match = Sheet1 match for all 72 cells; (b) Table 4 "X" = Sheet1 "WV more conducive" = Y for all cells except Hierarchy × SSP3 × political; (c) Table 5 area/Europe-wide = Sheet1 "transformation needed" tick for all cells except Hierarchy × SSP3 × political and × environmental; (d) both Table 5 copies agree;
 - counts: 4 scenarios, 6 PESTLE, 72 matrix cells, every null narrative has a gap note.
 
 ## 4. The reference tab
@@ -145,7 +145,7 @@ Below the drill-down, when a project is loaded: the Response register measures w
 - Unknown `PestleTag` codes → dropped on normalise, logged.
 
 **Tests:**
-- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON; both Table 5 copies agree; 12 cells carry a `general` slice; both spellings of the AFMEC gap phrase map to `no_afmec_lines`; Hierarchy × economic worldview text is null with a gap note.
+- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON; the four consistency checks (a)-(d) pass, and each exception is exactly the listed cells; 12 cells carry a `general` slice; both spellings of the AFMEC gap phrase map to `no_afmec_lines`; all 18 worldview PESTLE descriptions are non-empty; Appendix 1 `*` marks agree with Table 4 "X".
 - `tests/testthat/test-wp5-scenarios.R`: JSON integrity (4 scenarios, 6 PESTLE, 4 slices, 3 worldviews, 72 cells, states in {area, europe, none}); spot checks from D5.1 (not computed by the build): area-level cells are exactly Individualist × SSP1 (all six), Individualist × SSP2 (political, economic, social, environmental), Hierarchy × SSP1 (social), Hierarchy × SSP2 (political, economic, social, technological); Egalitarian has none; Individualist × SSP5 matches on all six elements; every cell has a rationale.
 - `wp5_matched_responses()`: only `area` elements match; legacy registers without `PestleTag`; multiple tags.
 - `tests/testthat/test-response-measures-schema.R` (extended): `PestleTag` added to legacy data, unknown codes dropped, save/load round trip; form round trip via `testServer()`.
@@ -158,5 +158,5 @@ Below the drill-down, when a project is loaded: the Response register measures w
 ## 8. Open items
 
 - Q5: WP5 questionnaire (self-assessment) and an endorsed narrative → DAPSIWRM mapping (apply-scenario-to-CLD).
-- Confirm with D5.1 authors the summary error and the SSP3 block shading versus the spreadsheet (`source_notes`).
+- Confirm with D5.1 authors the summary error and the two Hierarchy × SSP3 cells where the spreadsheet differs from the published tables (`source_notes`).
 - Tourism narratives are UK-derived (AFMEC) and lack technological/legal lines.
