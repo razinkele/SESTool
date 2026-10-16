@@ -1,7 +1,7 @@
 # WP5 WS-8: Scenario × worldview reference library (D5.1) — design
 
 **Date:** 2026-10-16
-**Status:** design approved in brainstorming (sections 1-4, section 1 and 4 amended after an in-loop review against the source files); written spec awaiting user review
+**Status:** design approved in brainstorming (sections 1-4, sections 1 and 4 amended after an in-loop review against the source files); written spec reviewed in-loop twice (2026-10-16); awaiting user approval
 **Master spec:** `2026-10-11-wp5-practical-integration-specs.md` §WS-8 (and §WS-3 for `pestle_tag`)
 **Source audit:** `docs/wp5-source-audit/2026-10-11/B_D5.1_scenarios.md`
 **Sources** (under `WP5/Task 5.1 Application of Scenarios/`):
@@ -51,7 +51,9 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 
 - Scenario ids: `ssp1_26`, `ssp2_45`, `ssp3_70`, `ssp5_85`. `warming_cap`: `<=2`, `<=3`, `<=4`, `>4` (°C). `ebm_conducive`: `yes`, `somewhat`, `no`, `no` (D5.1 Box 1).
 - Slices: `general` (text before the first sector heading in a cell; CERES generic), `hrmc` (habitat restoration and marine conservation), `sh` (seafood harvesting), `lh` (tourism and leisure). A cell's text is split on the uppercase sector headings.
-- `gap_note` codes: `ssp_not_in_futuremares` (text "SSP not featured in Future MARES, no specific lines in CERES"), `no_afmec_lines` ("No specific lines in AFMEC"), `no_source_text` (slice heading absent). A slice with a gap note has `text: null`.
+- Sector headings in the source are exactly `HABITAT RESTORATION AND MARINE CONSERVATION`, `SEAFOOD HARVESTING`, `TOURISM AND LEISURE`; text before the first heading is the `general` slice (present in 12 of the 24 cells).
+- `gap_note` codes: `ssp_not_in_futuremares` (text "SSP not featured in Future MARES, no specific lines in CERES."), `no_afmec_lines` ("No specific lines in AFMEC", with or without a final full stop), `no_source_text` (slice heading absent, or empty source cell). A slice with a gap note has `text: null`.
+- Scenario name, global summary and expanded narrative come from table 2 rows 0-2; warming caps and EBM conduciveness are fixed values in the script from D5.1 Box 1 (not parsed), each with a comment citing Box 1.
 - `driver_mapping: null` is an explicit curation placeholder (deferred, Q5).
 
 ### 3.2 `data/wp5_worldview_matrix.json`
@@ -59,7 +61,9 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 ```
 { "version": "1.0", "source": "D5.1 Table 5 + results breakdown.xlsx", "built_by": "scripts/build_wp5_scenarios.py",
   "worldviews": [ { "id": "egalitarian"|"individualist"|"hierarchy", "keywords": "<English>", "problem": "...",
-                    "solution": "...", "justice_principle": "...", "environment": "..." } ],
+                    "solution": "...", "summary": "...",
+                    "pestle": { "political": "<English>"|null, ..., "legal": "<ideas of justice>", "environmental": "..." },
+                    "source_ref": "WV description!<column>" } ],
   "cells": [ { "worldview": "...", "ssp": "ssp1_26", "pestle": "political",
                "transformation": "area"|"europe"|"none",
                "match": true|false, "wv_more_conducive": true|false|null,
@@ -71,6 +75,7 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 
 - 72 cells (3 × 4 × 6). `transformation` from Table 5 cell shading. `match` from Sheet1 row "WV & SSP match"; `wv_more_conducive` from row "WV more conducive to EBM" (`-` → `null`).
 - `rationale` from Sheet2 (present for all 72 cells).
+- Worldviews come from `WORLDVIEWS SCENARIOS FOR deliverable 5_1.xlsx`, sheet "WV description": rows Key words, Problem definition, Solution, Summary, then one row per PESTLE element (the Legal row is the worldview's justice principle). Rows are read by position, not label (the sheet spells "Tecnological"). Hierarchy × economic is blank in the source → `null`, shown with the `no_source_text` gap note. Worldview names are mapped from the source spellings (INDIVIDUALIST / HIERARCHY / EGALITARIAN in the sheet; "Hierarchical" in Table 5) to the three ids.
 - `source_notes` (each rendered from a translated key):
   - `summary_hierarchy_ssp` — D5.1's Summary places Hierarchy's four PESTLE elements under SSP1; Table 5, the spreadsheet and the journal draft put them under SSP2.
   - `hierarchy_ssp2_misprint` — D5.1 prints the Hierarchy × SSP2 match pattern as `__LE`.
@@ -83,6 +88,7 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
 
 `scripts/build_wp5_scenarios.py` (python-docx, openpyxl; run with `micromamba run -n shiny python`):
 - reads the sources above (paths relative to the app dir), writes both JSON files with sorted keys and stable ordering (byte-identical on re-run);
+- locates Table 5 by its layout (worldview rows × 24 PESTLE columns with cell shading); D5.1 contains two copies (main text and appendix) — the build requires both to agree and uses the first;
 - decodes the spreadsheet's Wingdings glyphs (`0xFC` = needed, `0xFD` = not needed) only for the consistency check;
 - **consistency check** (fails the build): for each cell, Table 5 says area or Europe-wide exactly when the spreadsheet ticks "transformation needed", except the cells listed in `ssp3_block_europe`; the check prints and exits non-zero on any other difference;
 - counts: 4 scenarios, 6 PESTLE, 72 matrix cells, every null narrative has a gap note.
@@ -102,7 +108,8 @@ New sub-module `modules/wp5_scenario_reference_module.R`: `wp5_scenario_referenc
 1. **Scope note** (translated): generic Europe-scale results, identical for all areas; from an analyst panel (D5.1, 2024), not a stakeholder survey.
 2. **Scenario cards** (4): name, warming cap, EBM-conduciveness badge, global summary (English source badge).
 3. **Heat map** (plain HTML table, translated headers): worldview rows × scenario columns, 12 cells. Each cell shows the number of PESTLE elements needing area-level transformation (colour scale on that count) and, as a secondary mark, the number needing Europe-wide transformation; plus the match pattern as letters (e.g. `PE_TLE`). Clicking a cell selects it.
-4. **Drill-down** for the selected cell: six PESTLE rows, each with match / mismatch, the transformation state (translated: "area level", "Europe-wide (outside the project's reach)", "not needed"), the analyst rationale (English source), and the scenario narrative for that element with slice tabs (general, conservation, seafood harvesting, tourism), each marked with its area focus, or the translated gap note.
+4. **Drill-down** for the selected cell: six PESTLE rows, each with match / mismatch, the transformation state (translated: "area level", "Europe-wide (outside the project's reach)", "not needed"), the analyst rationale (English source), and side by side the worldview's view of that element and the scenario narrative for that element (slice tabs: general, conservation, seafood harvesting, tourism, each marked with its area focus), or the translated gap note.
+   Cell selection: each heat-map cell has an `onclick` that sends `Shiny.setInputValue(ns("cell"), "<worldview>|<ssp>", {priority: "event"})` (the pattern the Scenario Builder already uses for scenario cards); the first cell with any area-level element is selected by default.
 5. **Strategies for non-aligned worldviews**: three translated paragraphs (our wording of the journal draft), provenance badge.
 6. **Source notes**: collapsible, rendering `source_notes`.
 
@@ -114,7 +121,7 @@ Below the drill-down, when a project is loaded: the Response register measures w
 
 - **Storage:** new register column `PestleTag` in `RM_REGISTER_COLUMNS` (`constants.R`), value = `;`-joined codes from new `PESTLE_CODES <- c("political","economic","social","technological","legal","environmental")`; empty = not tagged. `normalize_response_measures()` adds it to legacy registers (empty) and drops unknown codes (with `debug_log`).
 - **Entry:** `modules/response_module.R`, WS-3 governance section: `selectizeInput(multiple = TRUE)` "PESTLE elements addressed", choices = translated PESTLE names, with a hint that it links the response to the WP5 scenario results. Saved and restored with the other governance fields.
-- **Display:** the register table shows tags as translated short labels.
+- **Display:** `rm_translate_for_display()` gains a `PestleTag` case that splits on `;`, maps each code to its translated short label and joins with ", "; the register table shows that.
 
 ## 6. Components
 
@@ -126,7 +133,7 @@ Below the drill-down, when a project is loaded: the Response register measures w
 | `modules/wp5_scenario_reference_module.R` | new | §4 |
 | `modules/scenario_builder_module.R` | changed | tabsetPanel; mounts the sub-module |
 | `modules/response_module.R`, `functions/response_measures_schema.R`, `constants.R` | changed | §5 |
-| `global.R` / `app.R` | changed | source the new functions file and module so `test-functions-sourced-in-app.R` passes |
+| `global.R` / `app.R` | changed | `source("functions/wp5_scenarios.R")` in `global.R` (so `test-functions-sourced-in-app.R` passes); `modules/wp5_scenario_reference_module.R` added to `OPTIONAL_MODULES` in `app.R` next to the Scenario Builder. `scenario_builder_server()` mounts the sub-module only if `wp5_scenario_reference_server` exists, so a failed optional load leaves the builder working |
 | `translations/modules/wp5_scenarios.json` (new), `translations/modules/response_governance.json` | new/changed | all new keys, 9 languages |
 | `VERSION`, `VERSION_INFO.json`, `DESCRIPTION`, `CHANGELOG.md` | changed | release 1.29.0 |
 
@@ -138,7 +145,7 @@ Below the drill-down, when a project is loaded: the Response register measures w
 - Unknown `PestleTag` codes → dropped on normalise, logged.
 
 **Tests:**
-- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON.
+- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON; both Table 5 copies agree; 12 cells carry a `general` slice; both spellings of the AFMEC gap phrase map to `no_afmec_lines`; Hierarchy × economic worldview text is null with a gap note.
 - `tests/testthat/test-wp5-scenarios.R`: JSON integrity (4 scenarios, 6 PESTLE, 4 slices, 3 worldviews, 72 cells, states in {area, europe, none}); spot checks from D5.1 (not computed by the build): area-level cells are exactly Individualist × SSP1 (all six), Individualist × SSP2 (political, economic, social, environmental), Hierarchy × SSP1 (social), Hierarchy × SSP2 (political, economic, social, technological); Egalitarian has none; Individualist × SSP5 matches on all six elements; every cell has a rationale.
 - `wp5_matched_responses()`: only `area` elements match; legacy registers without `PestleTag`; multiple tags.
 - `tests/testthat/test-response-measures-schema.R` (extended): `PestleTag` added to legacy data, unknown codes dropped, save/load round trip; form round trip via `testServer()`.
