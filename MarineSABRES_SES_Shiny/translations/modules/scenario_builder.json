@@ -1187,6 +1187,61 @@
       "it": "Il collegamento fa riferimento a un nodo 'a' inesistente: %s",
       "no": "Lenken refererer til en ikke-eksisterende 'til'-node: %s",
       "el": "Ο σύνδεσμος αναφέρεται σε ανύπαρκτο κόμβο 'προς': %s"
+    },
+    "modules.scenario.builder.link_modified_missing": {
+      "en": "Modified link no longer exists: %s → %s",
+      "es": "El enlace modificado ya no existe: %s → %s",
+      "fr": "Le lien modifié n'existe plus : %s → %s",
+      "de": "Die geänderte Verknüpfung existiert nicht mehr: %s → %s",
+      "lt": "Pakeistas ryšys nebeegzistuoja: %s → %s",
+      "pt": "A ligação modificada já não existe: %s → %s",
+      "it": "Il collegamento modificato non esiste più: %s → %s",
+      "no": "Den endrede lenken finnes ikke lenger: %s → %s",
+      "el": "Ο τροποποιημένος σύνδεσμος δεν υπάρχει πλέον: %s → %s"
+    },
+    "modules.scenario.builder.scenario_link_strength_changed": {
+      "en": "Link strength changed",
+      "es": "Intensidad del enlace modificada",
+      "fr": "Intensité du lien modifiée",
+      "de": "Verknüpfungsstärke geändert",
+      "lt": "Ryšio stiprumas pakeistas",
+      "pt": "Intensidade da ligação alterada",
+      "it": "Intensità del collegamento modificata",
+      "no": "Lenkestyrke endret",
+      "el": "Η ισχύς του συνδέσμου άλλαξε"
+    },
+    "modules.scenario.builder.strength_weak": {
+      "en": "weak",
+      "es": "débil",
+      "fr": "faible",
+      "de": "schwach",
+      "lt": "silpnas",
+      "pt": "fraco",
+      "it": "debole",
+      "no": "svak",
+      "el": "ασθενές"
+    },
+    "modules.scenario.builder.strength_medium": {
+      "en": "medium",
+      "es": "medio",
+      "fr": "moyen",
+      "de": "mittel",
+      "lt": "vidutinis",
+      "pt": "médio",
+      "it": "medio",
+      "no": "middels",
+      "el": "μέτριο"
+    },
+    "modules.scenario.builder.strength_strong": {
+      "en": "strong",
+      "es": "fuerte",
+      "fr": "fort",
+      "de": "stark",
+      "lt": "stiprus",
+      "pt": "forte",
+      "it": "forte",
+      "no": "sterk",
+      "el": "ισχυρό"
     }
   }
 }
