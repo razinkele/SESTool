@@ -578,3 +578,32 @@ test_that("Apply is refused after the network changed", {
     expect_length(pd()$data$analysis$scenarios, 0L)
   })
 })
+
+test_that("Compare is refused after the network changed (spec 4.5)", {
+  pd <- shiny::reactiveVal(proj())
+  eb <- list(on_isa_change = function() pd())
+  testServer(real_designer_server,
+             args = list(project_data_reactive = pd, i18n = i18n_echo, job_api = fake_api(), event_bus = eb), {
+    run_mode_c(session)
+    p <- proj(); p$data$cld$edges$strength[1] <- "strong"; pd(p)
+    session$flushReact()
+    expect_true(rv$stale)
+    session$setInputs(top_table_rows_selected = 1, compare = 1)
+    session$elapse(1100)
+    expect_null(rv$cmp_job)
+    expect_null(rv$compare)
+  })
+})
+
+test_that("changing the selected row clears the comparison", {
+  testServer(real_designer_server,
+             args = list(project_data_reactive = shiny::reactiveVal(proj()), i18n = i18n_echo, job_api = fake_api()), {
+    run_mode_c(session)
+    session$setInputs(top_table_rows_selected = 1)
+    session$setInputs(compare = 1)
+    session$elapse(1100)
+    expect_false(is.null(rv$compare))
+    session$setInputs(top_table_rows_selected = 2)
+    expect_null(rv$compare)
+  })
+})

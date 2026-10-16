@@ -710,7 +710,17 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     })
 
     # i18n-ref: modules.intervention_designer.context_compare
+    # Compare/Apply are disabled while the results are stale or a job is active (spec 4.5);
+    # the click-time guards below stay as a backstop.
+    observe({
+      ok <- !isTRUE(rv$stale) && is.null(rv$job) && is.null(rv$cmp_job)
+      shinyjs::toggleState("compare", condition = ok)
+      shinyjs::toggleState("apply", condition = ok)
+    })
+    # A comparison belongs to one selected row: never show another row's
+    observeEvent(input$top_table_rows_selected, { rv$compare <- NULL }, ignoreNULL = FALSE)
     observeEvent(input$compare, {
+      if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
       if (!length(input$top_table_rows_selected)) {
         showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
       }
@@ -790,6 +800,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
 
     observeEvent(input$apply, {
       if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (!is.null(rv$job) || !is.null(rv$cmp_job)) return()
       if (!length(input$top_table_rows_selected)) {
         showNotification(i18n$t("modules.intervention_designer.need_row"), type = "warning"); return()
       }
@@ -811,6 +822,7 @@ intervention_designer_server <- function(id, project_data_reactive, i18n, event_
     # i18n-ref: modules.intervention_designer.context_apply
     observeEvent(input$confirm_apply, {
       if (isTRUE(rv$stale)) { showNotification(i18n$t("modules.intervention_designer.apply_stale"), type = "warning"); return() }
+      if (!is.null(rv$job) || !is.null(rv$cmp_job)) return()
       req(length(input$top_table_rows_selected) == 1)
       r <- rv$result
       data <- project_data_reactive()
