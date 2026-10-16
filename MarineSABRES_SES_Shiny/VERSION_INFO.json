@@ -1,7 +1,7 @@
 {
-  "version": "1.27.0",
-  "version_name": "WP5 intervention designer (D5.3 modes A and B)",
-  "release_date": "2026-10-15",
+  "version": "1.28.0",
+  "version_name": "WP5 intervention designer — mode C, before/after, Apply to project",
+  "release_date": "2026-10-16",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,12 +12,16 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "WP5 indicator registry: 95 indicators with D5.2 provenance; Standard Entry indicator fields and picker; drift warning and review on load (WS-4).",
-    "Posidonia oceanica valuation calculator under Response & Validation: D5.2 Table 19 values, discounted totals, restoration cost, survival-adjusted break-even, Excel export (WS-5).",
-    "WP5 impact assessment: deterministic trade-off narrative (step 6) and Word/Excel report with mechanism and provenance appendices (step 7) (WS-6c).",
-    "WP5 intervention designer (D5.3): exhaustive ordinal grid over a new intervention node and/or new edges between existing nodes, ranked by objective, also-sustain, stability and simplicity; Boolean pre-check; runs in a background process (WS-7a)."
+    "WP5 intervention designer mode C (D5.3): re-weights existing links with the sign fixed and strength weak, medium or strong; combines with new node and new edges in one design (WS-7b).",
+    "Link ranking by dominant-eigenvalue sensitivity, and a \"What success depends on\" table of decisive links (30-success threshold) (WS-7b).",
+    "Compare structure: loops gained, lost and changed, leverage top 10 and Boolean attractors, before and after a design, as a background job (WS-7b).",
+    "Apply to project: writes a Scenario Builder scenario with ops records and links_modified (matched by link endpoints); Scenario Builder shows modified links and their impact (WS-7b)."
   ],
   "fixes": {
+    "medium": [
+      "Scenario Builder impact analysis crashed on scenarios that remove a link.",
+      "Added links failed to bind to baseline edges that carry extra columns."
+    ],
     "performance": [
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
@@ -42,7 +46,7 @@
   "migration_notes": [
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save."
   ],
-  "previous_version": "1.26.1",
+  "previous_version": "1.27.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
