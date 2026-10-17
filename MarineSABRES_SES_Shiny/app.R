@@ -102,6 +102,7 @@ OPTIONAL_MODULES <- c(
   "modules/analysis_simplify.R",         # Network Simplification Tools
   "modules/analysis_leverage.R",         # Leverage Point Analysis
   "modules/analysis_decision_lens.R",    # Decision Lens (QSEM factor classification)
+  "modules/wp5_governance_context_module.R",   # WS-9a D5.4 governance tab (sub-module of the Response module)
   "modules/response_module.R",           # Response measures (includes response_validation_server())
   "modules/valuation_calculator_module.R",  # WP5 WS-5 valuation calculator
   "modules/wp5_scenario_reference_module.R",   # WS-8 D5.1 reference tab (sub-module of the Scenario Builder)

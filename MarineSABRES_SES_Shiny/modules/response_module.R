@@ -409,6 +409,12 @@ response_measures_ui <- function(id, i18n) {
                        i18n$t("modules.wp5_mechanisms.pane.subtitle")),
             hr(),
             uiOutput(ns("wp5_reference_pane"))
+          ),
+
+          # Tab 7: WP5 governance context (D5.4, WS-9a) ----
+          tabPanel(i18n$t("modules.wp5_governance.context_tab"),
+            if (exists("wp5_governance_context_ui", mode = "function"))
+              wp5_governance_context_ui(ns("gov_ctx"), i18n)
           )
         )
       )
@@ -494,6 +500,24 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       if (!is.null(rm$counter))    response_data$counter    <- rm$counter
     }, ignoreNULL = FALSE)
 
+    # WS-9a: the governance-context tab adds D5.4 recommendations through the
+    # register (it reloads its state only on project change, so nothing else may
+    # write response_measures directly)
+    register_api <- list(
+      measures = reactive(response_data$measures),
+      add = function(fields) {
+        response_data$counter <- safe_counter(response_data$counter, response_data$measures$ID, ELEMENT_ID_PREFIX$measures)
+        response_data$counter <- response_data$counter + 1
+        new_id <- next_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
+        row <- normalize_response_measures(as.data.frame(c(list(ID = new_id), fields), stringsAsFactors = FALSE))
+        response_data$measures <- rbind(normalize_response_measures(response_data$measures), row)
+        sync_to_project_data()
+        new_id
+      })
+    if (exists("wp5_governance_context_server", mode = "function")) {
+      wp5_governance_context_server("gov_ctx", project_data_reactive, i18n, event_bus = event_bus, register = register_api)
+    }
+
     # WS-3a: EBM picker follows the chosen kind; a measure type suggests the target
     observeEvent(input$rm_kind, {
       updateSelectizeInput(session, "rm_ebm_code", choices = ebm_code_choices(input$rm_kind, i18n), selected = "")
@@ -526,8 +550,9 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(input$add_response, {
       req(input$rm_name, input$rm_type)
 
+      response_data$counter <- safe_counter(response_data$counter, response_data$measures$ID, ELEMENT_ID_PREFIX$measures)
       response_data$counter <- response_data$counter + 1
-      new_id <- generate_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
+      new_id <- next_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
       # WS-3a: build through the register schema so columns always match
       new_row <- normalize_response_measures(data.frame(

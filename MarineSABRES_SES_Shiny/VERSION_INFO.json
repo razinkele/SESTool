@@ -1,6 +1,6 @@
 {
-  "version": "1.29.0",
-  "version_name": "WP5 scenario × worldview reference library (D5.1)",
+  "version": "1.30.0",
+  "version_name": "WP5 governance profiles (D5.4)",
   "release_date": "2026-10-17",
   "release_type": "minor",
   "status": "stable",
@@ -12,13 +12,15 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "WP5 scenarios (D5.1) tab in the Scenario Builder, readable without a CLD: scenario cards for SSP1-2.6, SSP2-4.5, SSP3-7.0 and SSP5-8.5, and a heat map of where transformation is needed per worldview x scenario (WS-8).",
-    "PESTLE drill-down per heat-map cell with the worldview's and the scenario's English source text, strategies and source notes (WS-8).",
-    "Reproducible build script scripts/build_wp5_scenarios.py with pytest tests, and the data files data/wp5_scenarios_ssp.json and data/wp5_worldview_matrix.json (WS-8).",
-    "PESTLE tag (multi-select) on Response register measures, and a link from a heat-map cell to the project's responses tagged with the elements needing area-level transformation (WS-8)."
+    "Governance context (D5.4) tab in the Response module: barrier and enabler cards from D5.4 Tables 5-7 per demonstration area, and recommendation cards with Add to register (WS-9a).",
+    "Load DA actor list and a D5.4 roles column (Newton & Elliott typology) in PIMS stakeholders (WS-9a).",
+    "Optional Policy_Target column on indicators (WS-9a).",
+    "Greenland, Faroe Islands and seven regional bodies (NEAFC, ICES, GFCM, ACCOBAMS, Pelagos, MedPAN, Nordic Council) in the country database (WS-9a).",
+    "Curated governance profiles in data/wp5_governance_profiles.json, verified word for word against deliverable D5.4 (WS-9a)."
   ],
   "fixes": {
     "medium": [
+      "Adding a second stakeholder, engagement, communication or response measure created duplicate rows (since 1.16.5).",
       "Scenario Builder impact analysis crashed on scenarios that remove a link.",
       "Added links failed to bind to baseline edges that carry extra columns."
     ],
@@ -45,9 +47,10 @@
   },
   "migration_notes": [
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save.",
-    "Projects with an intervention-designer scenario that re-weights links (links_modified) are stamped min_app_version 1.28.0; 1.27.0 and older would ignore the re-weights and show the scenario as unchanged."
+    "Projects with an intervention-designer scenario that re-weights links (links_modified) are stamped min_app_version 1.28.0; 1.27.0 and older would ignore the re-weights and show the scenario as unchanged.",
+    "Projects with stakeholders saved by 1.30.0 (or with Policy_Target) need app 1.30.0; older apps cannot add stakeholders to the 14-column register."
   ],
-  "previous_version": "1.28.0",
+  "previous_version": "1.29.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }

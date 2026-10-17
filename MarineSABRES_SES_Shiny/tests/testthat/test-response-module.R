@@ -229,3 +229,34 @@ test_that("the governance section offers the PESTLE multi-select", {
   expect_match(ui, "t-rm_pestle", fixed = TRUE)
   expect_match(ui, 'value="environmental"', fixed = TRUE)
 })
+
+test_that("adding two measures gives two rows with distinct ids", {
+  proj <- create_empty_project("t"); pd <- reactiveVal(proj)
+  testServer(real_response_measures_server, args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$setInputs(rm_name = "A", rm_type = "regulatory", add_response = 1)
+    session$setInputs(rm_name = "B", rm_type = "regulatory", add_response = 2)
+    m <- pd()$data$response_measures$measures
+    expect_equal(nrow(m), 2L)
+    expect_equal(m$ID, c("RM001", "RM002"))
+  })
+})
+
+test_that("safe_counter takes the max of the counter and the id suffixes", {
+  expect_equal(safe_counter(0, c("RM001", "RM007", "x"), "RM"), 7)
+  expect_equal(safe_counter(NULL, NULL, "RM"), 0)
+  expect_equal(safe_counter(NA, c("RM003", "RMabc"), "RM"), 3)
+  expect_equal(safe_counter(9, "RM002", "RM"), 9)
+})
+
+test_that("a loaded project without a counter does not reuse measure ids", {
+  proj <- create_empty_project("t"); proj$project_id <- "p1"
+  proj$data$response_measures$measures <- normalize_response_measures(data.frame(
+    ID = c("RM001", "RM002"), Name = c("a", "b"), Type = "regulatory", stringsAsFactors = FALSE))
+  proj$data$response_measures$counter <- NULL
+  pd <- reactiveVal(proj)
+  testServer(real_response_measures_server, args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$flushReact()
+    session$setInputs(rm_name = "C", rm_type = "regulatory", add_response = 1)
+    expect_equal(pd()$data$response_measures$measures$ID, c("RM001", "RM002", "RM003"))
+  })
+})

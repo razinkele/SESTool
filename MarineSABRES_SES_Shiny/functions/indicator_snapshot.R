@@ -14,7 +14,7 @@ indicator_col <- function(df, name) {
 }
 
 .IND_INPUT_IDS <- c(Indicator = "indicator", Indicator_Unit = "indunit", Data_Source = "datasource",
-                    Registry_Id = "registry")
+                    Registry_Id = "registry", Policy_Target = "policytarget")
 
 #' Indicator form values for live panels -> df(ID, Indicator, Indicator_Unit, Data_Source, Registry_Id)
 collect_indicator_inputs <- function(input, prefix, ids) {
@@ -75,6 +75,13 @@ indicator_provenance_ui <- function(code, i18n) {
 project_has_registry_snapshot <- function(isa_data) {
   if (!is.list(isa_data)) return(FALSE)
   any(vapply(ISA_ELEMENT_KEYS, function(k) any(nzchar(indicator_col(isa_data[[k]], "Registry_Id"))),
+             logical(1)))
+}
+
+#' TRUE when any of the six element frames holds a non-empty Policy_Target (WS-9a)
+project_has_policy_target <- function(isa_data) {
+  if (!is.list(isa_data)) return(FALSE)
+  any(vapply(ISA_ELEMENT_KEYS, function(k) any(nzchar(indicator_col(isa_data[[k]], "Policy_Target"))),
              logical(1)))
 }
 

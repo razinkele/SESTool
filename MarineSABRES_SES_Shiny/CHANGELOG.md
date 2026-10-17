@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.30.0] - 2026-10-17
+
+### Added (WP5 governance profiles — spec 2026-10-17 WS-9a)
+- "Governance context (D5.4)" tab in the Response module: barrier and enabler cards from D5.4 Tables 5-7 per demonstration area, and recommendation cards with "Add to register".
+- "Load DA actor list" and a D5.4 roles column (Newton & Elliott typology) in PIMS stakeholders.
+- Optional Policy_Target column on indicators.
+- Greenland, Faroe Islands and seven regional bodies (NEAFC, ICES, GFCM, ACCOBAMS, Pelagos, MedPAN, Nordic Council) in the country database.
+- Curated data file `data/wp5_governance_profiles.json`, verified word for word against deliverable D5.4.
+
+### Fixed
+- Adding a second stakeholder, engagement, communication or response measure created duplicate rows (since 1.16.5).
+- Projects that already hold duplicated rows from the old bug are not repaired automatically.
+
+### Notes
+- Findings are qualitative; power/interest grids are shown only where published (Tuscany, Madeira).
+- The readiness questionnaire follows in WS-9b.
+- The stakeholder Type field still stores translated labels.
+- Projects that use the new fields need app 1.30.0.
+
 ## [1.29.0] - 2026-10-17
 
 ### Added (WP5 scenario x worldview library — spec 2026-10-16 WS-8)

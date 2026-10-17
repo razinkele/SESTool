@@ -851,7 +851,7 @@ RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "Gove
 # create_empty_element_df() schema (indicator / indicator_unit / data_source),
 # so merge_collected_with_existing() (tolower alignment) and the JSON loader
 # (lowercases element columns) keep a single column per field.
-ISA_INDICATOR_COLUMNS <- c("Indicator", "Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version")
+ISA_INDICATOR_COLUMNS <- c("Indicator", "Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version", "Policy_Target")
 ISA_ELEMENT_KEYS <- c("drivers", "activities", "pressures", "marine_processes",
                       "ecosystem_services", "goods_benefits")
 # The six Standard Entry element prefixes. Responses ("r") are deliberately
@@ -930,6 +930,31 @@ WP5_DESIGNER_MIN_APP_VERSION <- "1.28.0"
 
 # WP5 WS-8: PESTLE elements (D5.1), in this order everywhere
 PESTLE_CODES <- c("political", "economic", "social", "technological", "legal", "environmental")
+
+# ============================================================================
+# WP5 GOVERNANCE PROFILES (spec 2026-10-17 WS-9a, D5.4)
+# ============================================================================
+WP5_GOV_DIMENSIONS <- NPG_DIMENSIONS   # WS-1 vocabulary; labels via wp5_vocab_label("npg", code, i18n)
+WP5_GOV_POLARITIES <- c("enabler", "barrier")   # D5.4 "What is working well" / "Areas of improvement"
+WP5_POLICY_TARGETS <- c("kmgbf_30x30", "eu_nrr", "msfd_ges_d1", "msfd_ges_d6", "national_mpa_pct")
+# PIMS stakeholder register; NERoles = ';'-joined STAKEHOLDER_TYPES codes (D5.4 actor typology),
+# SourceId = "d54:<actor id>" for actors loaded from a D5.4 profile
+PIMS_STAKEHOLDER_COLUMNS <- c("ID", "Name", "Type", "Sector", "Contact", "Interests", "Role", "Power",
+                              "Interest", "Attitude", "EngagementLevel", "DateAdded", "NERoles", "SourceId")
+# Translation keys of the PIMS "Type" options (the form stores the translated label)
+PIMS_STAKEHOLDER_TYPE_KEYS <- c(
+  resource_users = "modules.pims.stakeholder.resource_users",
+  industrybusiness = "modules.pims.stakeholder.industrybusiness",
+  governmentregulators = "modules.pims.stakeholder.governmentregulators",
+  ngocivil_society = "modules.pims.stakeholder.ngocivil_society",
+  scientificacademic = "modules.pims.stakeholder.scientificacademic",
+  local_communities = "modules.pims.stakeholder.local_communities",
+  indigenous_groups = "modules.pims.stakeholder.indigenous_groups",
+  other = "modules.isa.ai_assistant.other")
+# Older apps rbind() a 12-column stakeholder row onto the 14-column register and drop Policy_Target:
+# stamp whenever a project with at least one stakeholder is written or loaded by 1.30 (the register
+# always has the 14-column schema), or any element has a non-empty Policy_Target (WS-0 stamp_min_app_version()).
+WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"
 
 # ============================================================================
 # END OF CONSTANTS
