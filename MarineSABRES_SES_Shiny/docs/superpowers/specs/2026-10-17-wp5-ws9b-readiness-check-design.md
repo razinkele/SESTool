@@ -21,6 +21,7 @@ A demonstration-area team collects the D5.4 stakeholder questionnaire from sever
 | D3 | Only current-state items feed the indicator; attitude items and the Annex 7 priority ranking are shown as distributions next to it. |
 | D4 | Item text is translated into 9 languages (respondents read it); the English D5.4 wording is the source and is verified against the PDF. |
 | D5 | A new PIMS sidebar item with its own module, not a tab in the stakeholder module. |
+| D6 | Yes/No items score ±1 and "Sometimes" 0 (agree scale ±2); rank 1 = highest priority; Q39 has no NPG dimension; the "Other" role is stored as a code only. |
 
 ## 3. Item bank
 
@@ -39,8 +40,8 @@ Hand-written, UTF-8, LF (pinned in the app `.gitattributes`). Shape:
   "scales": {
     "agree7":  { "codes": ["completely_agree", "agree", "neither", "disagree", "completely_disagree", "dont_know", "prefer_not"],
                  "points": [2, 1, 0, -1, -2, null, null] },
-    "yes_no":  { "codes": ["yes", "no"], "points": [2, -2] },
-    "yes_no_sometimes": { "codes": ["yes", "sometimes", "no"], "points": [2, 0, -2] },
+    "yes_no":  { "codes": ["yes", "no"], "points": [1, -1] },
+    "yes_no_sometimes": { "codes": ["yes", "sometimes", "no"], "points": [1, 0, -1] },
     "extent5": { "codes": ["very_little", "occasionally", "neutral", "regularly", "very_much"], "points": [-2, -1, 0, 1, 2] },
     "rank5":   { "codes": ["1", "2", "3", "4", "5"], "points": null }
   },
@@ -85,7 +86,7 @@ Rules: `dimension` ∈ `NPG_DIMENSIONS` (null only for q39); `text_en` is the D5
 
 ## 5. Scoring (pure, `functions/wp5_readiness.R`)
 
-- Item points from the scale; `reverse` flips the sign; `dont_know`/`prefer_not`/"" are excluded.
+- Item points from the scale (yes/no items score ±1, not ±2: a "yes" states presence, not intensity, so it counts like "agree" — decision D6); `reverse` flips the sign; `dont_know`/`prefer_not`/"" are excluded.
 - Per dimension: mean of the points over all scored (`kind == "state"`) item answers of all respondents; returns `score`, `n_respondents` (with ≥ 1 scored answer in the dimension), `n_answers`, `n_items`, and a coverage flag: `none` (no state items — cross_sectoral), `low` (one state item — knowledge), `ok`.
 - Attitude items: answer-code counts per item. Priority items: mean rank and counts per area.
 - Role breakdown: the same per-dimension summary per role, returned only for roles with ≥ 5 respondents.
