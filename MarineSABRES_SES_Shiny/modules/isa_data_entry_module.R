@@ -302,6 +302,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         pd <- stamp_min_app_version(pd, WP5_INDICATOR_MIN_APP_VERSION)
       }
 
+      # WS-9a: Policy_Target is a new element column older apps drop
+      if (project_has_policy_target(pd$data$isa_data)) {
+        pd <- stamp_min_app_version(pd, WP5_GOVERNANCE_MIN_APP_VERSION)
+      }
+
       project_data_reactive(pd)
     }
 

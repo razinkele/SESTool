@@ -410,3 +410,42 @@ test_that("the registry-snapshot stamp names a release newer than 1.23.0 (which 
   # and drop Registry_Id/Registry_Version on save, so the stamp must be later.
   expect_equal(utils::compareVersion(WP5_INDICATOR_MIN_APP_VERSION, "1.23.0"), 1L)
 })
+
+# ---- WS-9a: Policy_Target -----------------------------------------------------
+test_that("Policy_Target is an indicator column, a panel input and is collected", {
+  expect_true("Policy_Target" %in% ISA_INDICATOR_COLUMNS)
+  ui <- as.character(build_entry_panel_ui(shiny::NS("m"), "p", "P001",
+                     isa_fields_p(make_test_i18n(), c("")), make_test_i18n()))
+  expect_match(ui, "m-p_policytarget_P001", fixed = TRUE)
+  expect_match(ui, 'value="kmgbf_30x30"', fixed = TRUE)
+  expect_match(ui, "modules.indicator_registry.policy_target_help", fixed = TRUE)
+  out <- collect_indicator_inputs(list(p_policytarget_P001 = "Regional 20% target"), "p", c("P001", "P002"))
+  expect_equal(out$Policy_Target, c("Regional 20% target", ""))
+})
+
+test_that("Policy_Target survives a carried-over save and a JSON load; legacy rows read ''", {
+  existing <- data.frame(ID = "GB001", Name = "Fish catch", Policy_Target = "eu_nrr", stringsAsFactors = FALSE)
+  out <- merge_collected_with_existing(existing, data.frame(), "GB001", character(0), c(gb_cols, ISA_INDICATOR_COLUMNS))
+  expect_equal(out$Policy_Target, "eu_nrr")
+  pd <- list(data = list(isa_data = list(goods_benefits = existing)))
+  back <- normalize_json_project_data(jsonlite::fromJSON(jsonlite::toJSON(pd, auto_unbox = TRUE), simplifyVector = FALSE))
+  expect_equal(indicator_col(back$data$isa_data$goods_benefits, "Policy_Target"), "eu_nrr")
+  legacy <- data.frame(ID = "GB002", Name = "x", stringsAsFactors = FALSE)
+  expect_equal(indicator_col(legacy, "Policy_Target"), "")
+})
+
+test_that("project_has_policy_target and the save stamp", {
+  expect_false(project_has_policy_target(list(activities = data.frame(ID = "A001", Policy_Target = ""))))
+  expect_true(project_has_policy_target(list(activities = data.frame(ID = "A001", policy_target = "eu_nrr"))))
+  pdr <- shiny::reactiveVal(list(project_id = "p1", data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = srv_args(pdr), {
+    session$flushReact()
+    isa_data$pressures <- data.frame(ID = "P001", Name = "Overfishing", stringsAsFactors = FALSE)
+    session$setInputs(add_a = 1)
+    aid <- isa_data$a_panel_ids[[length(isa_data$a_panel_ids)]]
+    set_panel(session, "a", aid, name = "Fishing", policytarget = "kmgbf_30x30")
+    session$setInputs(save_ex4 = 1)
+    expect_equal(indicator_col(isa_data$activities, "Policy_Target"), "kmgbf_30x30")
+    expect_equal(pdr()$min_app_version, WP5_GOVERNANCE_MIN_APP_VERSION)
+  })
+})

@@ -34,6 +34,11 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
   build_field <- function(field) {
     input_id <- ns(paste0(prefix, "_", field$id, "_", current_id))
     if (identical(field$type, "select")) {
+      if (isTRUE(field$create)) {
+        # WS-9a: picklist that also accepts free text
+        return(column(field$width, selectizeInput(input_id, field$label, choices = field$choices,
+                                                  options = list(create = TRUE, placeholder = ""))))
+      }
       if (isTRUE(field$multiple)) {
         # Multi-select forward link (N:M): an element can pick many targets in
         # one panel. Drop the leading "" placeholder — an empty selection (no
@@ -74,7 +79,8 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
       do.call(fluidRow, lapply(isa_indicator_fields(i18n, element_key), build_field)),
       fluidRow(column(12,
         uiOutput(ns(paste0(prefix, "_regbadge_", current_id))),
-        tags$small(class = "text-muted", i18n$t("modules.indicator_registry.picker_help"))
+        tags$small(class = "text-muted", i18n$t("modules.indicator_registry.picker_help")),
+        tags$br(), tags$small(class = "text-muted", i18n$t("modules.indicator_registry.policy_target_help"))
       ))
     )
   }
@@ -92,12 +98,21 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
 #' Indicator fields shown as the third row of every element entry panel (WS-4)
 isa_indicator_fields <- function(i18n, element_key) {
   list(
-    list(id = "registry", type = "select", width = 4,
+    list(id = "registry", type = "select", width = 3,
          label = i18n$t("modules.indicator_registry.picker_label"),
          choices = indicator_picker_choices(element_key, i18n)),
     list(id = "indicator", type = "text", width = 3, label = i18n$t("modules.indicator_registry.field_indicator")),
     list(id = "indunit", type = "text", width = 2, label = i18n$t("modules.indicator_registry.field_unit")),
-    list(id = "datasource", type = "text", width = 3, label = i18n$t("modules.indicator_registry.field_data_source"))
+    list(id = "datasource", type = "text", width = 2, label = i18n$t("modules.indicator_registry.field_data_source")),
+    # i18n-ref: modules.indicator_registry.policy_target.kmgbf_30x30
+    # i18n-ref: modules.indicator_registry.policy_target.eu_nrr
+    # i18n-ref: modules.indicator_registry.policy_target.msfd_ges_d1
+    # i18n-ref: modules.indicator_registry.policy_target.msfd_ges_d6
+    # i18n-ref: modules.indicator_registry.policy_target.national_mpa_pct
+    list(id = "policytarget", type = "select", create = TRUE, width = 2,
+         label = i18n$t("modules.indicator_registry.field_policy_target"),
+         choices = c(stats::setNames("", ""), stats::setNames(WP5_POLICY_TARGETS, vapply(WP5_POLICY_TARGETS,
+           function(t) i18n$t(paste0("modules.indicator_registry.policy_target.", t)), character(1)))))
   )
 }
 

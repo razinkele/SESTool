@@ -851,7 +851,7 @@ RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "Gove
 # create_empty_element_df() schema (indicator / indicator_unit / data_source),
 # so merge_collected_with_existing() (tolower alignment) and the JSON loader
 # (lowercases element columns) keep a single column per field.
-ISA_INDICATOR_COLUMNS <- c("Indicator", "Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version")
+ISA_INDICATOR_COLUMNS <- c("Indicator", "Indicator_Unit", "Data_Source", "Registry_Id", "Registry_Version", "Policy_Target")
 ISA_ELEMENT_KEYS <- c("drivers", "activities", "pressures", "marine_processes",
                       "ecosystem_services", "goods_benefits")
 # The six Standard Entry element prefixes. Responses ("r") are deliberately
