@@ -54,7 +54,8 @@ normalize_readiness <- function(readiness, bank) {
     for (id in ids) out[[id]][!out[[id]] %in% readiness_scale_codes(bank, readiness_item(bank, id)$scale)] <- ""
     out$Role[!out$Role %in% unlist(bank$roles)] <- ""
   }
-  list(version = "1.0", respondents = out)
+  cnt <- safe_counter(if (is.list(readiness)) readiness$counter else 0, out$RespondentId, READINESS_ID_PREFIX)
+  list(version = "1.0", respondents = out, counter = as.integer(cnt))
 }
 
 readiness_has_respondents <- function(readiness) {
@@ -121,7 +122,9 @@ readiness_role_breakdown <- function(respondents, bank, min_n = 5L) {
   out <- Filter(Negate(is.null), lapply(roles, function(r) {
     sub <- respondents[respondents$Role == r, , drop = FALSE]
     if (nrow(sub) < min_n) return(NULL)
-    cbind(role = r, readiness_score(sub, bank), stringsAsFactors = FALSE)
+    sc <- readiness_score(sub, bank)
+    sc$score[sc$n_respondents < min_n] <- NA_real_  # a cell below min_n could expose one person
+    cbind(role = r, sc, stringsAsFactors = FALSE)
   }))
   if (!length(out)) NULL else do.call(rbind, out)
 }
@@ -130,7 +133,7 @@ readiness_role_breakdown <- function(respondents, bank, min_n = 5L) {
 readiness_append <- function(readiness, rows, source, bank) {
   rd <- normalize_readiness(readiness, bank)
   if (!is.data.frame(rows) || nrow(rows) == 0) return(rd)
-  start <- safe_counter(0, rd$respondents$RespondentId, READINESS_ID_PREFIX)
+  start <- rd$counter
   rows$RespondentId <- vapply(seq_len(nrow(rows)), function(i) next_element_id(READINESS_ID_PREFIX, start + i), character(1))
   rows$EnteredAt <- as.character(Sys.Date())
   rows$Source <- source
@@ -141,6 +144,7 @@ readiness_append <- function(readiness, rows, source, bank) {
     df[, cols, drop = FALSE]
   }
   rd$respondents <- rbind(fill(rd$respondents), fill(new))
+  rd$counter <- as.integer(start + nrow(rows))
   rd
 }
 
@@ -219,7 +223,10 @@ readiness_read_file <- function(path, name = path) {
     sheets <- openxlsx::getSheetNames(path)
     openxlsx::read.xlsx(path, sheet = if ("answers" %in% sheets) "answers" else 1, colNames = TRUE, skipEmptyRows = TRUE)
   } else if (ext == "csv") {
-    utils::read.csv(path, colClasses = "character", check.names = FALSE, encoding = "UTF-8", na.strings = c("", "NA"))
+    rd <- function(sep) utils::read.csv(path, sep = sep, colClasses = "character", check.names = FALSE, encoding = "UTF-8", na.strings = c("", "NA"))
+    d <- rd(",")
+    if (ncol(d) == 1 && grepl(";", names(d)[1], fixed = TRUE)) d <- rd(";")  # Excel in non-English locales
+    d
   } else stop("Unsupported file type: ", ext)
   if (is.null(df)) data.frame() else df
 }

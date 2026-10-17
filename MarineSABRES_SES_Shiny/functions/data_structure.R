@@ -195,7 +195,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           NERoles = character(),
           SourceId = character()
         ),
-        readiness = list(version = "1.0", respondents = data.frame(RespondentId = character(), EnteredAt = character(), Source = character(), Role = character(), stringsAsFactors = FALSE)),
+        readiness = list(version = "1.0", respondents = data.frame(RespondentId = character(), EnteredAt = character(), Source = character(), Role = character(), stringsAsFactors = FALSE), counter = 0),
 
         engagements = data.frame(
           ID = character(),

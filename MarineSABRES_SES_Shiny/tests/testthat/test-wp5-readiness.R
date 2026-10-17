@@ -170,3 +170,35 @@ test_that("export workbook has answers, indicator and priorities", {
   wb <- readiness_export_wb(rd, bank, make_test_i18n())
   expect_equal(openxlsx::sheets(wb), c("about", "answers", "indicator", "priorities"))
 })
+
+test_that("role cells resting on fewer than 5 respondents are hidden (final review)", {
+  rows <- c(rep(list(list(Role = "fishers", q6 = "agree")), 4), list(list(Role = "fishers", q6 = "agree", q19 = "agree")))
+  rb <- readiness_role_breakdown(fix(do.call(rows_of, rows)), bank)
+  d6 <- bank$items[[which(readiness_item_ids(bank) == "q6")]]$dimension
+  d19 <- bank$items[[which(readiness_item_ids(bank) == "q19")]]$dimension
+  skip_if(identical(d6, d19))
+  expect_false(is.na(rb$score[rb$dimension == d6]))
+  expect_true(is.na(rb$score[rb$dimension == d19]))
+})
+
+test_that("semicolon-separated csv is read with sep ';' (final review)", {
+  f <- tempfile(fileext = ".csv"); writeLines(c("role;q6", "manager;agree"), f)
+  df <- readiness_read_file(f, "a.csv")
+  expect_equal(names(df), c("role", "q6"))
+  p <- readiness_parse_import(df, bank, readiness_translations())
+  expect_equal(c(p$rows$Role, p$rows$q6), c("manager", "agree"))
+})
+
+test_that("respondent ids are never reused after a delete; counter survives JSON (final review)", {
+  rd <- readiness_append(NULL, fix(rows_of(list(q6 = "agree"), list(q6 = "agree"), list(q6 = "agree"))), "form", bank)
+  expect_equal(rd$counter, 3L)
+  rd <- readiness_delete(rd, "R003", bank)
+  expect_equal(rd$counter, 3L)
+  rd <- readiness_append(rd, fix(rows_of(list(q6 = "agree"))), "form", bank)
+  expect_equal(rd$respondents$RespondentId, c("R001", "R002", "R004"))
+  rt <- normalize_readiness(jsonlite::fromJSON(jsonlite::toJSON(rd, auto_unbox = TRUE), simplifyVector = FALSE), bank)
+  expect_equal(rt$counter, 4L)
+  legacy <- normalize_readiness(list(respondents = rd$respondents), bank)
+  expect_equal(legacy$counter, 4L)
+  expect_equal(create_empty_project("t")$data$pims$readiness$counter, 0)
+})
