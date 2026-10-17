@@ -94,11 +94,29 @@ pims_stakeholder_ui <- function(id, i18n) {
                                  selected = "")
                     )
                   ),
+                  # WS-9a: D5.4 actor typology (Newton & Elliott 2016)
+                  # i18n-ref: modules.wp5_governance.role.inputters
+                  # i18n-ref: modules.wp5_governance.role.extractors
+                  # i18n-ref: modules.wp5_governance.role.regulators
+                  # i18n-ref: modules.wp5_governance.role.affectees
+                  # i18n-ref: modules.wp5_governance.role.beneficiaries
+                  # i18n-ref: modules.wp5_governance.role.influencers
+                  fluidRow(
+                    column(12,
+                      selectizeInput(ns("sh_ne_roles"), i18n$t("modules.wp5_governance.ne_roles"),
+                        choices = setNames(STAKEHOLDER_TYPES, vapply(STAKEHOLDER_TYPES, function(r)
+                          i18n$t(paste0("modules.wp5_governance.role.", tolower(r))), character(1))),
+                        multiple = TRUE),
+                      tags$small(class = "text-muted", i18n$t("modules.wp5_governance.ne_roles_hint"))
+                    )
+                  ),
                   actionButton(ns("add_stakeholder"), i18n$t("modules.pims.stakeholder.add_stakeholder"),
                               icon = icon("plus"), class = "btn-success")
                 )
               )
             ),
+
+            fluidRow(column(12, uiOutput(ns("seed_da_ui")))),
 
             hr(),
 
@@ -370,21 +388,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Reactive values to store stakeholder data ----
     stakeholder_data <- reactiveValues(
-      stakeholders = data.frame(
-        ID = character(),
-        Name = character(),
-        Type = character(),
-        Sector = character(),
-        Contact = character(),
-        Interests = character(),
-        Role = character(),
-        Power = character(),
-        Interest = character(),
-        Attitude = character(),
-        EngagementLevel = character(),
-        DateAdded = character()
-        
-      ),
+      stakeholders = normalize_stakeholders(NULL),
 
       engagements = data.frame(
         ID = character(),
@@ -427,6 +431,9 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       pd$data$pims$stakeholder_counter  <- stakeholder_data$stakeholder_counter
       pd$data$pims$engagement_counter   <- stakeholder_data$engagement_counter
       pd$data$pims$communication_counter <- stakeholder_data$communication_counter
+      if (stakeholders_use_governance_fields(stakeholder_data$stakeholders)) {
+        pd <- stamp_min_app_version(pd, WP5_GOVERNANCE_MIN_APP_VERSION)
+      }
       project_data_reactive(pd)
     }
 
@@ -436,7 +443,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(project_data_reactive()$project_id, {
       pims <- project_data_reactive()$data$pims
       if (is.null(pims)) return()
-      if (!is.null(pims$stakeholders))         stakeholder_data$stakeholders         <- pims$stakeholders
+      if (!is.null(pims$stakeholders))         stakeholder_data$stakeholders         <- normalize_stakeholders(pims$stakeholders)
       if (!is.null(pims$engagements))          stakeholder_data$engagements          <- pims$engagements
       if (!is.null(pims$communications))       stakeholder_data$communications       <- pims$communications
       if (!is.null(pims$stakeholder_counter))  stakeholder_data$stakeholder_counter  <- pims$stakeholder_counter
@@ -451,23 +458,24 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       stakeholder_data$stakeholder_counter <- stakeholder_data$stakeholder_counter + 1
       new_id <- next_element_id(PIMS_ID_PREFIX$stakeholder, stakeholder_data$stakeholder_counter)
 
-      new_row <- data.frame(
+      new_row <- normalize_stakeholders(data.frame(
         ID = new_id,
         Name = input$sh_name,
         Type = input$sh_type,
-        Sector = input$sh_sector,
-        Contact = input$sh_contact,
-        Interests = input$sh_interests,
-        Role = input$sh_role,
-        Power = input$sh_power,
-        Interest = input$sh_interest,
-        Attitude = input$sh_attitude,
-        EngagementLevel = input$sh_engagement_level,
-        DateAdded = as.character(Sys.Date())
-        
-      )
+        Sector = input$sh_sector %||% "",
+        Contact = input$sh_contact %||% "",
+        Interests = input$sh_interests %||% "",
+        Role = input$sh_role %||% "",
+        Power = input$sh_power %||% "",
+        Interest = input$sh_interest %||% "",
+        Attitude = input$sh_attitude %||% "",
+        EngagementLevel = input$sh_engagement_level %||% "",
+        DateAdded = as.character(Sys.Date()),
+        NERoles = paste(input$sh_ne_roles %||% character(0), collapse = ";"),
+        stringsAsFactors = FALSE
+      ))
 
-      stakeholder_data$stakeholders <- rbind(stakeholder_data$stakeholders, new_row)
+      stakeholder_data$stakeholders <- rbind(normalize_stakeholders(stakeholder_data$stakeholders), new_row)
       sync_to_project_data()
 
       # Clear inputs
@@ -481,13 +489,73 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       updateSelectInput(session, "sh_interest", selected = "")
       updateSelectInput(session, "sh_attitude", selected = "")
       updateSelectInput(session, "sh_engagement_level", selected = "")
+      updateSelectizeInput(session, "sh_ne_roles", selected = character(0))
 
       showNotification(i18n$t("modules.pims.stakeholder.stakeholder_added_successfully"), type = "message")
     })
 
+    # WS-9a: load the actors of the project's DA from the D5.4 profile ----
+    gov_profile <- reactive({
+      site <- tryCatch(project_data_reactive()$data$metadata$da_site, error = function(e) NULL)
+      wp5_gov_profile_for_site(load_wp5_governance_profiles(), site %||% "")
+    })
+    # i18n-ref: modules.wp5_governance.sub_area_greenland
+    # i18n-ref: modules.wp5_governance.sub_area_iceland
+    # i18n-ref: modules.wp5_governance.sub_area_faroe_islands
+    # i18n-ref: modules.wp5_governance.sub_area_azores
+    # i18n-ref: modules.wp5_governance.sub_area_madeira
+    # i18n-ref: modules.wp5_governance.sub_area_canaries
+    # i18n-ref: modules.wp5_governance.grid_note.no_published_grid
+    # i18n-ref: modules.wp5_governance.grid_note.grid_madeira_only
+    output$seed_da_ui <- renderUI({
+      if (is.null(load_wp5_governance_profiles())) {
+        return(tags$small(class = "text-muted", i18n$t("modules.wp5_governance.unavailable")))
+      }
+      if (is.null(gov_profile())) {
+        return(tags$small(class = "text-muted", i18n$t("modules.wp5_governance.seed_no_da")))
+      }
+      tagList(actionButton(ns("seed_da"), i18n$t("modules.wp5_governance.seed_button"),
+                           icon = icon("users"), class = "btn-outline-primary"),
+              tags$small(class = "text-muted ml-2", i18n$t("modules.wp5_governance.seed_hint")))
+    })
+
+    observeEvent(input$seed_da, {
+      prof <- gov_profile(); req(prof)
+      subs <- unlist(prof$sub_areas)
+      showModal(modalDialog(
+        title = paste(i18n$t("modules.wp5_governance.seed_title"), prof$da_site),
+        p(i18n$t("modules.wp5_governance.seed_body")),
+        if (length(subs)) selectizeInput(ns("seed_sub_areas"), i18n$t("modules.wp5_governance.sub_area"),
+          choices = setNames(subs, vapply(subs, function(s) i18n$t(paste0("modules.wp5_governance.sub_area_", s)),
+                                          character(1))),
+          selected = subs, multiple = TRUE),
+        if (!is.null(prof$grid_note)) p(class = "small text-muted",
+                                        i18n$t(paste0("modules.wp5_governance.grid_note.", prof$grid_note))),
+        footer = tagList(modalButton(i18n$t("common.buttons.cancel")),
+                         actionButton(ns("seed_da_confirm"), i18n$t("modules.wp5_governance.seed_confirm"),
+                                      class = "btn-primary")),
+        easyClose = TRUE))
+    })
+
+    observeEvent(input$seed_da_confirm, {
+      prof <- gov_profile(); req(prof)
+      subs <- if (length(prof$sub_areas)) (input$seed_sub_areas %||% character(0)) else NULL
+      res <- seed_da_actors(stakeholder_data$stakeholders, prof, subs, i18n, stakeholder_data$stakeholder_counter)
+      stakeholder_data$stakeholders <- res$stakeholders
+      stakeholder_data$stakeholder_counter <- res$counter
+      sync_to_project_data()
+      removeModal()
+      msg <- paste(i18n$t("modules.wp5_governance.seed_added"), res$added, "·",
+                   i18n$t("modules.wp5_governance.seed_skipped"), res$skipped)
+      if (!is.null(prof$grid_note)) {
+        msg <- paste(msg, "—", i18n$t(paste0("modules.wp5_governance.grid_note.", prof$grid_note)))
+      }
+      showNotification(msg, type = "message", duration = 8)
+    })
+
     # Stakeholder Table ----
     output$stakeholder_table <- renderDT({
-      datatable(stakeholder_data$stakeholders,
+      datatable(stakeholders_display_view(stakeholder_data$stakeholders, i18n),
                selection = 'multiple',
                options = list(pageLength = 10, scrollX = TRUE),
                rownames = FALSE)
