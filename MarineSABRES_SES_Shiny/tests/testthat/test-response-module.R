@@ -213,3 +213,19 @@ test_that("implementation plan uses the curated columns (no Tenet_/ID-list colum
   expect_false(any(grepl("^Tenet_|ImplementingStakeholders|PairedWith", txt)))
   expect_true(any(grepl("modules.response.measures.regulatory", txt, fixed = TRUE)))
 })
+
+test_that("the PESTLE selection is saved as codes; none selected saves '' (review focus 5)", {
+  base <- list(rm_name = "Quota cut", rm_type = "regulatory", rm_target = "pressures", rm_status = "planned",
+               rm_description = "", rm_mechanism = "", rm_target_element = "", rm_effectiveness = "HIGH",
+               rm_feasibility = "MEDIUM", rm_cost = 4, rm_stakeholders = "", rm_barriers = "")
+  m1 <- rm_add(c(base, list(rm_pestle = c("legal", "political"))))
+  expect_equal(m1$PestleTag, "political;legal")
+  m2 <- rm_add(base)
+  expect_equal(m2$PestleTag, "")
+})
+
+test_that("the governance section offers the PESTLE multi-select", {
+  ui <- as.character(real_response_measures_ui("t", make_test_i18n()))
+  expect_match(ui, "t-rm_pestle", fixed = TRUE)
+  expect_match(ui, 'value="environmental"', fixed = TRUE)
+})

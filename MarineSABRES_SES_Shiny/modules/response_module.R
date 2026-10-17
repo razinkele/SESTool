@@ -152,6 +152,13 @@ response_measures_ui <- function(id, i18n) {
                     choices = NULL, multiple = TRUE),
                   tags$small(class = "text-muted", i18n$t("modules.response.governance.no_stakeholders_hint"))
                 )),
+                fluidRow(column(12,
+                  selectizeInput(ns("rm_pestle"), i18n$t("modules.response.governance.pestle"),
+                    choices = setNames(PESTLE_CODES, vapply(PESTLE_CODES, function(cd)
+                      i18n$t(paste0("modules.wp5_scenarios.pestle.", cd)), character(1))),
+                    multiple = TRUE),
+                  tags$small(class = "text-muted", i18n$t("modules.response.governance.pestle_hint"))
+                )),
                 # 11-tenet appraisal (EBM framework); "intermediate" exists only for ecological effectiveness
                 # i18n-ref: modules.response.governance.tenet_level.minimal
                 # i18n-ref: modules.response.governance.tenet_level.intermediate
@@ -536,6 +543,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         LegalBasis = input$rm_legal_basis %||% "",
         ImplementingStakeholders = encode_ids(input$rm_impl_stakeholders),
         PairedWith = input$rm_paired_with %||% "",
+        PestleTag = paste(input$rm_pestle %||% character(0), collapse = ";"),
         setNames(lapply(EBM_TENETS$code, function(cd) input[[paste0("rm_tenet_", cd)]] %||% ""),
                  paste0("Tenet_", EBM_TENETS$code)),
         stringsAsFactors = FALSE))
@@ -553,6 +561,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       updateTextInput(session, "rm_competent_authority", value = "")
       updateTextInput(session, "rm_legal_basis", value = "")
       updateSelectizeInput(session, "rm_impl_stakeholders", selected = character(0))
+      updateSelectizeInput(session, "rm_pestle", selected = character(0))
       for (cd in EBM_TENETS$code) updateSelectInput(session, paste0("rm_tenet_", cd), selected = "")
 
       # v1.16.1: bandit write-side feedback. The user's chosen
