@@ -1,0 +1,1092 @@
+{
+  "built_by": "scripts/build_wp5_scenarios.py",
+  "cells": [
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "SSP view is focussed on top-down international regulation, WV is focussed on community-based management.",
+      "source_ref": {
+        "appendix1": "egalitarian:political:c2",
+        "table4": "egalitarian:political:c2",
+        "table5": "egalitarian:c1"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "political",
+      "rationale": "Both involve governance and role of groups at local/community level, partially congruent to the low-level focus (assuming that in the SSP ‘regional’ is not something like European, and more like a watershed or else).",
+      "source_ref": {
+        "appendix1": "egalitarian:political:c3",
+        "table4": "egalitarian:political:c8",
+        "table5": "egalitarian:c7"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "SSP focuses on national interest and needs with environment less important, while in WV nation states become less important.",
+      "source_ref": {
+        "appendix1": "egalitarian:political:c4",
+        "table4": "egalitarian:political:c14",
+        "table5": "egalitarian:c13"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "SSP political focus is on individuals while WV is on communities.",
+      "source_ref": {
+        "appendix1": "egalitarian:political:c5",
+        "table4": "egalitarian:political:c20",
+        "table5": "egalitarian:c19"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "economic",
+      "rationale": "SSP the world is reducing profit to focus on environmental protection, WV similar approach.",
+      "source_ref": {
+        "appendix1": "egalitarian:economic:c2",
+        "table4": "egalitarian:economic:c3",
+        "table5": "egalitarian:c2"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "economic",
+      "rationale": "Both focus on local/community, local resources and cooperatives.",
+      "source_ref": {
+        "appendix1": "egalitarian:economic:c3",
+        "table4": "egalitarian:economic:c9",
+        "table5": "egalitarian:c8"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP economic focus shifts from environmental protection to tradeable goods, while WV prioritises sustainability of environmental systems over narrow economic considerations.",
+      "source_ref": {
+        "appendix1": "egalitarian:economic:c4",
+        "table4": "egalitarian:economic:c15",
+        "table5": "egalitarian:c14"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP low-cost, high profit from environment/natural resources; WV economy dematerialised and steady state (no growth) is essential.",
+      "source_ref": {
+        "appendix1": "egalitarian:economic:c5",
+        "table4": "egalitarian:economic:c21",
+        "table5": "egalitarian:c20"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "social",
+      "rationale": "Both are focussed on low impact society, equality and social shifts needed to achieve sustainability.",
+      "source_ref": {
+        "appendix1": "egalitarian:social:c2",
+        "table4": "egalitarian:social:c4",
+        "table5": "egalitarian:c3"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "social",
+      "rationale": "SSP and WV both incorporate equity and more sustainable use of resources (vegetarian diets, traceability, domestic tourism).",
+      "source_ref": {
+        "appendix1": "egalitarian:social:c3",
+        "table4": "egalitarian:social:c10",
+        "table5": "egalitarian:c9"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "SSP nationalistic focus and environmental protection focused on that of direct benefit to humans, while WV has more focus on flat understanding of biodiversity separate from its benefit to humans.",
+      "source_ref": {
+        "appendix1": "egalitarian:social:c4",
+        "table4": "egalitarian:social:c16",
+        "table5": "egalitarian:c15"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "SSP society is willing to protect the environment if it benefits the individual; WV society is willing to care for the whole of society.",
+      "source_ref": {
+        "appendix1": "egalitarian:social:c5",
+        "table4": "egalitarian:social:c22",
+        "table5": "egalitarian:c21"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "SSP focus on technology investment and sharing to reach a sustainable future while WV includes technology but more focus on local solutions and possible reduction in technology.",
+      "source_ref": {
+        "appendix1": "egalitarian:technological:c2",
+        "table4": "egalitarian:technological:c5",
+        "table5": "egalitarian:c4"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "SSP technology is applied to support local resource use while WV applies technology to complement nature rather than use resources. Economic activity and windfarms disrupting fisheries (SSP) is not aligned with working with nature, reducing flights or spiritual development (WV).",
+      "source_ref": {
+        "appendix1": "egalitarian:technological:c3",
+        "table4": "egalitarian:technological:c11",
+        "table5": "egalitarian:c10"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "SSP technology development for domestic culture and food but not for marine conservation, development slows as no sharing; while WV focuses on sharing technology.",
+      "source_ref": {
+        "appendix1": "egalitarian:technological:c4",
+        "table4": "egalitarian:technological:c17",
+        "table5": "egalitarian:c16"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "technological",
+      "rationale": "SSP has technological investment (for market/profit) with no ethical constraints; WV uses technology but brings in focus on craftwork because driver for technology development is for society to work with nature ethically.",
+      "source_ref": {
+        "appendix1": "egalitarian:technological:c5",
+        "table4": "egalitarian:technological:c23",
+        "table5": "egalitarian:c22"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "WV focusses on equal treatment of all (benefits and costs), while SSP recognises different needs, abilities and responsibilities at the wider global scale (e.g. loss/damage, climate justice).",
+      "source_ref": {
+        "appendix1": "egalitarian:legal:c2",
+        "table4": "egalitarian:legal:c6",
+        "table5": "egalitarian:c5"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "SSP legal tools differ between countries (so are not ‘equal’) while WV works on equal access to resources. Mother earth as an equal claimant (WV) means a step back in the fisheries impact and therefore no need for quotas (SSP), an administrative enforcement of wisdom.",
+      "source_ref": {
+        "appendix1": "egalitarian:legal:c3",
+        "table4": "egalitarian:legal:c12",
+        "table5": "egalitarian:c11"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "WV is equal shares, SSP protects particular elements nationally (quotas) and internationally (leading to transboundary disputes).",
+      "source_ref": {
+        "appendix1": "egalitarian:legal:c4",
+        "table4": "egalitarian:legal:c18",
+        "table5": "egalitarian:c17"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "SSP legal framework arranged around markets and trade, WV is focussed on equal distribution rather than markets.",
+      "source_ref": {
+        "appendix1": "egalitarian:legal:c5",
+        "table4": "egalitarian:legal:c24",
+        "table5": "egalitarian:c23"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP has less climate impact and a focus on environmental protection/global green goals (e.g. carbon reduction by offshore windfarms), potentially at the expense of food production; WV focus is on sustainability at the local level while also producing sufficient food.",
+      "source_ref": {
+        "appendix1": "egalitarian:environmental:c2",
+        "table4": "egalitarian:environmental:c7",
+        "table5": "egalitarian:c6"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "environmental",
+      "rationale": "Both involve conserving the natural landscape and sustainable use.",
+      "source_ref": {
+        "appendix1": "egalitarian:environmental:c3",
+        "table4": "egalitarian:environmental:c13",
+        "table5": "egalitarian:c12"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP focus on food production and environment is less important while climate degrades environments; WV protects environment and manages food production sustainably.",
+      "source_ref": {
+        "appendix1": "egalitarian:environmental:c4",
+        "table4": "egalitarian:environmental:c19",
+        "table5": "egalitarian:c18"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP focus on individual and market profit has degraded the environment; WV protects priority elements of the environment (e.g. coral reefs) and sustainable use of food resources for their intrinsic value.",
+      "source_ref": {
+        "appendix1": "egalitarian:environmental:c5",
+        "table4": "egalitarian:environmental:c25",
+        "table5": "egalitarian:c24"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "egalitarian",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "Regulated SSP view versus deregulated market-based WV.",
+      "source_ref": {
+        "appendix1": "individualist:political:c2",
+        "table4": "individualist:political:c2",
+        "table5": "individualist:c1"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "The WV is market based, with low interference from the estate and zero reference for sustainability; SSP has a focus in conservation, self-sufficiency, etc.",
+      "source_ref": {
+        "appendix1": "individualist:political:c3",
+        "table4": "individualist:political:c8",
+        "table5": "individualist:c7"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "Decreased importance of nation states versus nation is the ultimate.",
+      "source_ref": {
+        "appendix1": "individualist:political:c4",
+        "table4": "individualist:political:c14",
+        "table5": "individualist:c13"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "political",
+      "rationale": "Both focussed on markets and individuals.",
+      "source_ref": {
+        "appendix1": "individualist:political:c5",
+        "table4": "individualist:political:c20",
+        "table5": "individualist:c19"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP focus on costs of protection while WV focus is on free markets and deregulation.",
+      "source_ref": {
+        "appendix1": "individualist:economic:c2",
+        "table4": "individualist:economic:c3",
+        "table5": "individualist:c2"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP has community driven and converging economics while WV has diverging economics. Liberty of markets (WV) clashes with the small-scale economic activity and reduced income gap of SSP.",
+      "source_ref": {
+        "appendix1": "individualist:economic:c3",
+        "table4": "individualist:economic:c9",
+        "table5": "individualist:c8"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP includes trade barriers and subsidies while WV main focus is on free/efficient markets.",
+      "source_ref": {
+        "appendix1": "individualist:economic:c4",
+        "table4": "individualist:economic:c15",
+        "table5": "individualist:c14"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "economic",
+      "rationale": "WV is free markets and trade, similar to SSP.",
+      "source_ref": {
+        "appendix1": "individualist:economic:c5",
+        "table4": "individualist:economic:c21",
+        "table5": "individualist:c20"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "WV is focussed on individual desires and needs rather than SSP whole-society view on sustainable future.",
+      "source_ref": {
+        "appendix1": "individualist:social:c2",
+        "table4": "individualist:social:c4",
+        "table5": "individualist:c3"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "SSP focuses on sustainable use of resources while WV focuses on individual health. Equity (SSP) is incongruent with markets (WV).",
+      "source_ref": {
+        "appendix1": "individualist:social:c3",
+        "table4": "individualist:social:c10",
+        "table5": "individualist:c9"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "SSP focuses on supporting national employment and resource use while WV focuses on individual lifestyles.",
+      "source_ref": {
+        "appendix1": "individualist:social:c4",
+        "table4": "individualist:social:c16",
+        "table5": "individualist:c15"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "social",
+      "rationale": "Both focus on individuals’ wellbeing (SSP focused on individual and material wealth, while individualist WV focuses on choices on wellbeing at individual level).",
+      "source_ref": {
+        "appendix1": "individualist:social:c5",
+        "table4": "individualist:social:c22",
+        "table5": "individualist:c21"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "Both focus on technology development but SSP is for societal good while WV is for individual good.",
+      "source_ref": {
+        "appendix1": "individualist:technological:c2",
+        "table4": "individualist:technological:c5",
+        "table5": "individualist:c4"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "technological",
+      "rationale": "The idea of the individual exploitation of resources and the technological development pushing this individual use of resources (SSP) is congruent with private modes of transport and technologies to enhance individual power (WV).",
+      "source_ref": {
+        "appendix1": "individualist:technological:c3",
+        "table4": "individualist:technological:c11",
+        "table5": "individualist:c10"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "WV technology is focussed on the individual's needs/priorities whereas SSP is focussed on local/national.",
+      "source_ref": {
+        "appendix1": "individualist:technological:c4",
+        "table4": "individualist:technological:c17",
+        "table5": "individualist:c16"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "technological",
+      "rationale": "Both focus on economic growth and efficiency.",
+      "source_ref": {
+        "appendix1": "individualist:technological:c5",
+        "table4": "individualist:technological:c23",
+        "table5": "individualist:c22"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "SSP focus on penalising failure to respect agreements, while WV focuses on competition for resources and finances and powerful interests gaining priority.",
+      "source_ref": {
+        "appendix1": "individualist:legal:c2",
+        "table4": "individualist:legal:c6",
+        "table5": "individualist:c5"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "legal",
+      "rationale": "SSP and WV both include each country acting on their own interests, which infers competition.",
+      "source_ref": {
+        "appendix1": "individualist:legal:c3",
+        "table4": "individualist:legal:c12",
+        "table5": "individualist:c11"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "WV is first come first served, while SSP is mainly not supportive of first come first served (eg quotas, protectionism); only international legal disputes are supportive of first come first served approach.",
+      "source_ref": {
+        "appendix1": "individualist:legal:c4",
+        "table4": "individualist:legal:c18",
+        "table5": "individualist:c17"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "legal",
+      "rationale": "SSP legal framework arranged around markets and trade, WV is also aligned to individualist views of market (competition etc).",
+      "source_ref": {
+        "appendix1": "individualist:legal:c5",
+        "table4": "individualist:legal:c24",
+        "table5": "individualist:c23"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP prioritises environmental protection for sustainability goals and recognises need for large-scale environmental intervention, while WV protects environment only for market goals - if it is scarce and thus valuable and assumes environments are naturally resilient (may encourage degradation).",
+      "source_ref": {
+        "appendix1": "individualist:environmental:c2",
+        "table4": "individualist:environmental:c7",
+        "table5": "individualist:c6"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP conserves and sustainably uses natural resources while WV nature has value because of scarcity, which causes further degradation to some resources.",
+      "source_ref": {
+        "appendix1": "individualist:environmental:c3",
+        "table4": "individualist:environmental:c13",
+        "table5": "individualist:c12"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "individualist",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "environmental",
+      "rationale": "Food security important in both scenarios; biodiversity declines in both scenarios.",
+      "source_ref": {
+        "appendix1": "individualist:environmental:c4",
+        "table4": "individualist:environmental:c19",
+        "table5": "individualist:c18"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "environmental",
+      "rationale": "SSP focus on individual and market profit has degraded the environment; WV markets protect the value of the environmental resources which makes them scarce.",
+      "source_ref": {
+        "appendix1": "individualist:environmental:c5",
+        "table4": "individualist:environmental:c25",
+        "table5": "individualist:c24"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "europe",
+      "worldview": "individualist",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "political",
+      "rationale": "Both focussed on high-level international cooperation.",
+      "source_ref": {
+        "appendix1": "hierarchy:political:c2",
+        "table4": "hierarchy:political:c2",
+        "table5": "hierarchy:c1"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "SSP focuses on local and regional governance while WV focus is on international connections.",
+      "source_ref": {
+        "appendix1": "hierarchy:political:c3",
+        "table4": "hierarchy:political:c8",
+        "table5": "hierarchy:c7"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "WV focuses on international negotiation and agreements while SSP has lack of agreements between nation states.",
+      "source_ref": {
+        "appendix1": "hierarchy:political:c4",
+        "table4": "hierarchy:political:c14",
+        "table5": "hierarchy:c13"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "political",
+      "rationale": "WV retains importance of global and international collaboration (big-state), while SSP is on individuals.",
+      "source_ref": {
+        "appendix1": "hierarchy:political:c5",
+        "table4": "hierarchy:political:c20",
+        "table5": "hierarchy:c19"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "economic",
+      "rationale": "SSP government drives the financial mechanisms to protect environment, aligned with WV.",
+      "source_ref": {
+        "appendix1": "hierarchy:economic:c2",
+        "table4": "hierarchy:economic:c3",
+        "table5": "hierarchy:c2"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "SSP has community driven economic focus while WV focuses on national economic needs and multinationals.",
+      "source_ref": {
+        "appendix1": "hierarchy:economic:c3",
+        "table4": "hierarchy:economic:c9",
+        "table5": "hierarchy:c8"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "economic",
+      "rationale": "SSP and WV use economic instruments to protect national interests.",
+      "source_ref": {
+        "appendix1": "hierarchy:economic:c4",
+        "table4": "hierarchy:economic:c15",
+        "table5": "hierarchy:c14"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "economic",
+      "rationale": "WV internalises environmental costs (polluter pays), SSP does not.",
+      "source_ref": {
+        "appendix1": "hierarchy:economic:c5",
+        "table4": "hierarchy:economic:c21",
+        "table5": "hierarchy:c20"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "Both have similar aims but SSP is whole-society approach while WV has top down state-driven change.",
+      "source_ref": {
+        "appendix1": "hierarchy:social:c2",
+        "table4": "hierarchy:social:c4",
+        "table5": "hierarchy:c3"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "area",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "SSP has a local focus while WV has top-down national focus.",
+      "source_ref": {
+        "appendix1": "hierarchy:social:c3",
+        "table4": "hierarchy:social:c10",
+        "table5": "hierarchy:c9"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "social",
+      "rationale": "Both focus on the national good (SSP on employment and tourism, WV on health and consumption).",
+      "source_ref": {
+        "appendix1": "hierarchy:social:c4",
+        "table4": "hierarchy:social:c16",
+        "table5": "hierarchy:c15"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "social",
+      "rationale": "WV also protects society but with government control (WV is by community).",
+      "source_ref": {
+        "appendix1": "hierarchy:social:c5",
+        "table4": "hierarchy:social:c22",
+        "table5": "hierarchy:c21"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "technological",
+      "rationale": "Both focussed on technology as the optimal solution.",
+      "source_ref": {
+        "appendix1": "hierarchy:technological:c2",
+        "table4": "hierarchy:technological:c5",
+        "table5": "hierarchy:c4"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "SSP technologies are local/regional while WV technology is large-scale and centralised (e.g. locally-owned vessels and fish farms versus large scale wind farms and centralized economy of scale).",
+      "source_ref": {
+        "appendix1": "hierarchy:technological:c3",
+        "table4": "hierarchy:technological:c11",
+        "table5": "hierarchy:c10"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "area",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": true,
+      "pestle": "technological",
+      "rationale": "Both have technology development (particularly for control) and little external sharing of technology.",
+      "source_ref": {
+        "appendix1": "hierarchy:technological:c4",
+        "table4": "hierarchy:technological:c17",
+        "table5": "hierarchy:c16"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "technological",
+      "rationale": "WV investment in technology is used to improve environmental protection, while in SSP it is about profit.",
+      "source_ref": {
+        "appendix1": "hierarchy:technological:c5",
+        "table4": "hierarchy:technological:c23",
+        "table5": "hierarchy:c22"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "legal",
+      "rationale": "Both aligned in focus on proportionality between incentive, need, damage and punishment.",
+      "source_ref": {
+        "appendix1": "hierarchy:legal:c2",
+        "table4": "hierarchy:legal:c6",
+        "table5": "hierarchy:c5"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "legal",
+      "rationale": "The proportionality (WV administrative determination of rank, contribution or need) can underpin the fishing quotas, the mosaic of byelaws and regional management and strictly enforced regulations (SSP).",
+      "source_ref": {
+        "appendix1": "hierarchy:legal:c3",
+        "table4": "hierarchy:legal:c12",
+        "table5": "hierarchy:c11"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "SSP emphasis on disagreement and individual approach/national protectionism while WV emphasises proportionality (attributing based on need etc).",
+      "source_ref": {
+        "appendix1": "hierarchy:legal:c4",
+        "table4": "hierarchy:legal:c18",
+        "table5": "hierarchy:c17"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "legal",
+      "rationale": "SSP legal framework arranged around markets and trade, WV is focussed on proportionality not individual/free-for-all.",
+      "source_ref": {
+        "appendix1": "hierarchy:legal:c5",
+        "table4": "hierarchy:legal:c24",
+        "table5": "hierarchy:c23"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    },
+    {
+      "match": true,
+      "pestle": "environmental",
+      "rationale": "Both put emphasis on stabilising/reducing carbon emissions and protecting the environment.",
+      "source_ref": {
+        "appendix1": "hierarchy:environmental:c2",
+        "table4": "hierarchy:environmental:c7",
+        "table5": "hierarchy:c6"
+      },
+      "ssp": "ssp1_26",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": true,
+      "pestle": "environmental",
+      "rationale": "The eco-friendly activity and the development in keeping the natural landscape (SSP) with the “governments to plot the path that maximizes environmental returns for a given investment“ (WV). Despite sustainable stocks suggesting strong management (WV), the lack of coordination with transnational species (SSP) shows the opposite.",
+      "source_ref": {
+        "appendix1": "hierarchy:environmental:c3",
+        "table4": "hierarchy:environmental:c13",
+        "table5": "hierarchy:c12"
+      },
+      "ssp": "ssp2_45",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": null
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "WV climate and impacts controlled by international co-operation and focus on environment; SSP focus on food and little international co-operation.",
+      "source_ref": {
+        "appendix1": "hierarchy:environmental:c4",
+        "table4": "hierarchy:environmental:c19",
+        "table5": "hierarchy:c18"
+      },
+      "ssp": "ssp3_70",
+      "transformation": "europe",
+      "worldview": "hierarchy",
+      "wv_more_conducive": false
+    },
+    {
+      "match": false,
+      "pestle": "environmental",
+      "rationale": "SSP focus on individual and market profit has degraded the environment; WV large-scale initiatives to protect or mitigate environmental problems.",
+      "source_ref": {
+        "appendix1": "hierarchy:environmental:c5",
+        "table4": "hierarchy:environmental:c25",
+        "table5": "hierarchy:c24"
+      },
+      "ssp": "ssp5_85",
+      "transformation": "none",
+      "worldview": "hierarchy",
+      "wv_more_conducive": true
+    }
+  ],
+  "source": "D5.1 Tables 3, 4, 5 and Appendix 1",
+  "source_notes": [
+    {
+      "id": "summary_hierarchy_ssp",
+      "text_key": "modules.wp5_scenarios.source_note.summary_hierarchy_ssp"
+    },
+    {
+      "id": "hierarchy_ssp2_misprint",
+      "text_key": "modules.wp5_scenarios.source_note.hierarchy_ssp2_misprint"
+    },
+    {
+      "id": "conducive_row_label",
+      "text_key": "modules.wp5_scenarios.source_note.conducive_row_label"
+    },
+    {
+      "id": "ssp3_hierarchy_cells",
+      "text_key": "modules.wp5_scenarios.source_note.ssp3_hierarchy_cells"
+    },
+    {
+      "id": "generic_europe",
+      "text_key": "modules.wp5_scenarios.source_note.generic_europe"
+    }
+  ],
+  "strategies": [
+    "behavioural",
+    "accepted_instruments",
+    "limits_of_acceptable_change"
+  ],
+  "version": "1.0",
+  "worldviews": [
+    {
+      "id": "egalitarian",
+      "keywords": "Prevention, urgency, fragility, participation, new relationship with nature, decentralization, community, spirituality.",
+      "pestle": {
+        "economic": "Steady-state economies are essential. To stay within environmental limits, there are major changes in consumption. Sustainability of environmental systems and community solidarity take precedence over narrow economic considerations. Any proposed projects and activities have to demonstrate that they have no undesirable environmental or social impacts. The economy is greatly dematerialized, with reduced materials flows. This is consistent with the growth of the information economy, where value is based on content rather than bulk. Industrial trade is almost totally in high-tech products; food and building materials are largely derived from local resources. This is partly possible because of advances in using local biomass for fertilisers, plastics, etc. International commerce is partly trade-based, partly aid-based, on principles of solidarity and justice. There is great emphasis on low resource intensity and self-sufficiency. In combination with lifestyle changes, resource flows drop by a factor of 10 to 100. High-tech applications such as solar cells and electronic devices are manufactured on a large scale. Manufacturing and retail are run as community-based co-operatives, along the lines of Migros, Switzerland’s largest supermarket chain in the 1990s. Since owners and consumers are the same people, there are incentives for low prices and good service, rather than high profits. The system also distributes resources much more fairly.",
+        "environmental": "Despite drastic emissions reductions, climate change materializes as expected because of apparent high climate sensitivity. Those who suffer are helped or compensated for by other communities on the basis of a transient intercommunity Climate Change Victim Fund. Coral reefs, wetlands and mangroves preserved for what they are: an integral and valuable part of the biosphere. Economic considerations are not allowed to affect their [non] management. Fish is a valuable food resource, all fisheries are managed sustainably. Forms of aquaculture are also used to provide highly productive protein sources. Communities depend largely on local resources for food, with land management based on strict principles of sustainability. Some also produce food for export to nearby communities. Ecosystems are managed sustainably at the local level, some emphasizing sustainable harvesting, others a return to wilderness. There are significant population migrations as people find they cannot live sustainably in many parts of the world that previously supported urban and industrial life. At the same time, those cities are made sustainable by city shrinking, pioneered in the Bay Area of Northern California in the 1990s. Undisturbed nature has a spiritual role as a teacher of life, as a way to reach out to the divine.",
+        "legal": "The third principle of distribution is parity. This can be understood as the egalitarian principle of equal shares to all claimants.",
+        "political": "Nation states become less important as the role of communities is strengthened, and children are brought up with the idea of one humanity. People derive their community identity more from their river basin than from old-style national and regional boundaries.\nE-mail and computer-based democracy ensure a highly transparent and democratic political system. Higher institutional levels are vestigial and exist solely to support the community level. All kinds of temporary coalitions and alliances are formed for regional issues, including environmental ones, evolving from present networks and NGOs. Although such arrangements may lack long-term stability, they prevent bureaucracy and ensure a vital and active involvement of communities in political affairs. Free rider behaviour is dealt with primarily through sanctions at the community level, or through community coalitions and alliances (“we don’t do that kind of thing in our community”).",
+        "social": "Given the finite carrying capacity of the Earth, the world’s population is slowing down and eventually decreasing. Responsible behaviour, recognising Mother Earth’s carrying capacity and the rights of the other species who share her with us, ensures that by the middle of the century the human population is around three or four billion. In the process, the basic needs of the poor are fulfilled by redressing the unequal distribution of resources. Diets are largely vegetarian, with animal supplements depending on the local environment. In more technological communities, the supplement is a biotechnological broth which uses trace minerals and sunlight.",
+        "technological": "Where technologies are prevalent, they emphasize subtle and sophisticated ways of working with nature, such as wind turbines based on tree design and lining, the use of medicine in harmony with bodily clocks or integrated pest management techniques. They also focus on the spiritual rather than the material, with greater emphasis on traditional skills and insights, and craft work. There is greater emotional and spiritual depth, based on a sounder understanding of local ecosystems. There is great use of e-mail and computer communications, to share solutions to technical, economic and other issues. Physical transport is minimized, with an international flight being a once-in-a-lifetime experience. Rather than global uniformity, technologies are designed to fit closely with their surroundings, maximizing social and environmental harmony."
+      },
+      "problem": "Driven by government bureaucrats and reckless free markets that promote material consumption, society has overshot the world's natural limits, and also damaged community and the basis of society.",
+      "solution": "Rebuild community life, and drastically reduce human interventions in ecosystems, to meet spiritual and social needs.",
+      "source_ref": "D5.1 Table 3, column 3",
+      "summary": "Environmental problems are seen to be truly serious, necessitating radical change in direction, before it is too late. Growing dissatisfaction with, and distrust of, government and big business catalyses a new bottom-up approach to decision-making and action. The message of non-government organisations (NGOs), grassroots initiatives and spiritual groups is seen to be right: humanity is an intrinsic part of the natural world, and must live in harmony with it. Societal organization focuses on communities and groups rather than on rigid hierarchical structures. Groups promote fairness and solidarity, forbidding the exploitation of fellow man or nature. This allows the regeneration of an active community that reduces the gaps between rich and poor, employed and unemployed, men and women. Rather than seeking wasteful and destructive consumption, people take a greater interest in their communities and in their inner lives, and realize that this is the source of true quality of life. Different communities evolve different responses. Some emphasise the use of sophisticated technologies and tools to minimize environmental impacts and improve social functioning. Others are more fundamentalist, rejecting technological “progress“ with all the social and environmental damage it has brought, and adopting simpler and more holistic approaches to work, community, education, and the environment."
+    },
+    {
+      "id": "individualist",
+      "keywords": "Rapid change, technological innovation, no limits, cultural diversity, maximizing quality of life at individual level.",
+      "pestle": {
+        "economic": "Worldwide free markets and trade, where the key government role is to ensure efficient market functioning, including strict anti-monopoly laws. Growing diversity of working and employment patterns, with many taking on 3-day working weeks to allow greater focus on leisure, learning, etc., while others work 80-hour weeks. Information, skills, learning increasingly important. Equality of opportunity, maintenance of level playing field. But very different outcomes, with some choosing to work hard and become rich in material terms, others working less and becoming rich in community, spiritual, artistic, educational or health terms. Diversity of scale, form, sectors. New ways of measuring progress (towards improved quality of life) gradually replace the limited monetary and material bias of the system of the 1990s. Companies flexibly organized, avoiding large bureaucratic multinationals, which prove unable to innovate rapidly or keep costs low enough, or are broken up in anti-trust cases.",
+        "environmental": "Increased emissions do lead to climate change, but the low climate sensitivity means that changes are gentle, slow, and non-destructive – not as bad as everyone thought. Ecosystems are resilient, agriculture benefits. Negative effects are addressed by adaptation. Coral reefs, wetlands, mangroves, fisheries etc., are preserved by markets because of their increasing scarcity and acknowledgement of their economic value (notably for tourism, leisure activity). Demand for fish increasingly satisfied by fish farms, restocking the oceans if necessary. Large increases in agricultural productivity, opening up large Areas in North for nature development. Productivity also increases in South, successfully addressing malnutrition. Other economic values of forests are recognized, leading to the slowing of deforestation and increased regeneration. This is particularly true for tropical forests and their biodiversity which is central to a vigorous biotechnology industry.",
+        "legal": "This usage frees the term priority to be applied to distributional outcomes that are achieved through successful competition: in other words, first in time, first in right.",
+        "political": "Decreasing importance of nation states, their role focussing on enhancing equality of opportunity (for example, in access to education systems). Shifting role of United Nations (UN) organizations towards facilitating market functioning (built on the World Trade Organization). Increasing importance of function-based informal institutions, which are often transitory.",
+        "social": "Rate of population growth is declining because of the worldwide demographic transition brought about by economic growth. People place growing importance on health as part of quality of life, either through prevention through individually chosen healthy lifestyles, or new bio-technological treatment. Wide nutritional diversity, from organic produce to high-tech bioengineered foodstuffs for investment bankers too busy to eat.",
+        "technological": "New diverse technologies at appropriate scales, notably communication, biotechnology, computing, and cognitive technologies to enhance brainpower (the cornerstone of value creation in the information economy). Private modes of transport dominate, including remaining privatized public networks, but they are clean, and co-exist with bicycles and pedestrians. High-tech communications facilities are ubiquitous (everywhere)."
+      },
+      "problem": "Global systems are resilient. The real challenge is overcoming obstacles to the innovation and growth that are key to improving quality of life.",
+      "solution": "Free markets to promote growth and innovation, focussing on quality of life at the individual level.",
+      "source_ref": "D5.1 Table 3, column 1",
+      "summary": "The global environmental concerns of the 1990s were clearly unfounded. With the planet resilient, humanity is free to concentrate on maximizing qualify of life. Free markets drive innovation. New technologies, especially in information, computing, biotechnology and cognitive science, revolutionize economic activity and lifestyles. A clean environment is pursued as part of a high quality of life, and enjoyed during free time. There is a wide diversity of lifestyles and kinds of work. At one end of the spectrum are low-consumption lifestyles, featuring preventative approaches to health, three days’ work a week, and time for arts and leisure. At the other are high-income, hard-working professionals, with wealth to spend on exotic technologies and pursuits. Clean growth in the South leads to early demographic transitions, while economic growth and employment in the North is revitalized as entire economies begin to re-tool and rebuild with clean technologies."
+    },
+    {
+      "id": "hierarchy",
+      "keywords": "Sustainability, managerialism, targets, steering, scientific expertise, international negotiation, control, optimization.",
+      "pestle": {
+        "economic": "A comprehensive system of regulation and economic instruments is in place to internalize environmental costs, including large scale ecological tax reform. The revenues make up a substantial portion of tax income and are redistributed through a number of environmental programmes and subsidies. This gives rise to many trade distortions, which are unfortunate but unavoidable given the priority of attaining environmental and social goals, including employment, at the national level. Large consortia of multinationals form to provide the necessary economic weight to compete effectively on world markets. Large multinationals are central in most sectors and form the centre of most people’s lives: a community as well as a place of work. They provide a high degree of protection and quality of life, in exchange for the loyalty and service of employees. Corporations adopt voluntary “partnership“ style environmental agreements with governments, allowing a smooth, controlled transition to sustainability.",
+        "environmental": "Emissions continue to grow but are gradually stabilised and eventually controlled through protocols under the Framework Convention on Climate Change. Negative impacts due to manifest climate change are compensated for by an internationally controlled aid programme. Climate change is a problem, but manageable. Growing knowledge and understanding help governments to plot the path that maximizes environmental returns for a given investment. Large-scale, highly engineered solutions. Agreements and protocols for oceans, fresh water and enclosed coastal seas. Different protocols for different levels, but all consistent and integrated, including a highly developed quota system. Land-use management by planning: nested form of planning in the form of an internationally negotiated Land-Use Protocol. Increasing productivity accompanied by designated preserves. Massive and successful development co-operation programmes prevent deforestation, land degradation and soil erosion, and promote more efficient use of water. Managed top-down.",
+        "legal": "Proportionality to indicate a distributive outcome where benefits are allocated in accordance with an administrative determination of rank, contribution or need",
+        "political": "International negotiations produce successful agreements for action on climate change, and United Nations Environment Programme (UNEP) is strengthened to form the World Environment Organization (WEO), which includes a structured network of international experts that work on a wide range of problems related to environment and development. Growing importance and complexity of international organizations. Formal structure is generic and recursive down to level of local government.",
+        "social": "Population growth is steered and controlled by education and family planning. World population stabilizes at about 10-11 billion people. The health system is state-provided, with high-tech and preventative measures. A lot of government money is spent on public goods, such as the health system and environmental services. Better health habits are encouraged by public information and education. Consumption is changed by public service advertising campaigns, and by banning advertising that encourages unhealthy habits.",
+        "technological": "The transition to a cleaner economy is steered by technology forcing. Technologies include alternative clean sources of energy and zero-waste production processes. Technological systems tend to be large-scale and centralized so as to optimise economies of scale. There is detailed technology assessment for new developments to ensure environmental compatibility, and a comprehensive system of permitting, labelling and regulatory control. Information and communications technologies are central to the control systems at all levels, with greater use of sophisticated computer technology to produce carefully regulated and optimal solutions, and also to ensure monitoring. There is an optimally structured mix between individual transport and integrated and public transport systems. There is growing use of technology to control criminal activity and black markets, for example using sophisticated informatics."
+      },
+      "problem": "Global environmental and economic systems are not under control.",
+      "solution": "Development of better control systems and institutional arrangements to manage the globe.",
+      "source_ref": "D5.1 Table 3, column 2",
+      "summary": "Governments play a major role in correcting social and environmental market externalities through regulation and economic instruments, thus steering the world onto a sustainable path that carefully balances economic and environmental objectives, and provides the best possible world for the greatest number of people. Environmental problems are serious but are resolved, without major social and economic upheavals, as countries muster the international commitments to identify the changes needed, and to implement those changes in a fair and enforceable way. Governments draw widely on the expertise and skills of industry, academia and the public in ensuring optimal decision making, and the pursuit of cost-effective policies. The role of the United Nations and international government grows, to ensure effective co-ordination of economic and environmental policies. Careful stewardship enables continued but modest economic growth, needed to feed the growing population."
+    }
+  ]
+}

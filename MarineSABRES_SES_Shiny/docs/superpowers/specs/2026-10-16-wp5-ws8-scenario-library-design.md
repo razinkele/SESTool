@@ -68,13 +68,13 @@ CELL = { "text": "<English>" | null, "gap_note": null | "<code>", "source_ref": 
                "transformation": "area"|"europe"|"none",
                "match": true|false, "wv_more_conducive": true|false|null,
                "rationale": "<English analyst justification>",
-               "source_ref": { "table4": "r<row>:c<col>", "table5": "r<row>:c<col>", "appendix1": "r<row>:c<col>" } } ],
+               "source_ref": { "table4": "<worldview>:<pestle>:c<col>", "table5": "<worldview>:c<col>", "appendix1": "<worldview>:<pestle>:c<col>" } } ],
   "source_notes": [ { "id": "...", "text_key": "<i18n key>" } ],
   "strategies": [ "behavioural", "accepted_instruments", "limits_of_acceptable_change" ] }
 ```
 
 - 72 cells (3 × 4 × 6). `transformation` from Table 5 cell shading. `match` and `wv_more_conducive` from Table 4: rows are worldview × PESTLE, columns scenario × PESTLE, and only the same-element (diagonal) cell carries the result — fill `92D050` = match, `FF0000` = mismatch, text "X" = worldview more conducive to EBM than the scenario; `wv_more_conducive` is `null` for matches (as in the source).
-- `rationale` from the Appendix 1 table (all 72 cells; a leading `*` marks "worldview more conducive" and is stripped).
+- `rationale` from the Appendix 1 table (all 72 cells; a leading `*` (present on some, not all, worldview-more-conducive cells) is stripped; `wv_more_conducive` comes from Table 4 only).
 - Worldviews come from D5.1 Table 3: rows Key words, Problem definition, Solution, Summary, a blank separator row, then one row per PESTLE element (the Legal row is the worldview's justice principle). Rows are read by position, not label (the source spells "Tecnological"). Worldview names are mapped from the source spellings (INDIVIDUALIST / HIERARCHY / EGALITARIAN in Table 3; "Hierarchical" in Tables 4/5) to the three ids. All 18 PESTLE descriptions are present in D5.1 (the working spreadsheet leaves Hierarchy × economic blank).
 - `source_notes` (each rendered from a translated key):
   - `summary_hierarchy_ssp` — D5.1's Summary places Hierarchy's four PESTLE elements under SSP1; Table 5, the spreadsheet and the journal draft put them under SSP2.
@@ -145,7 +145,7 @@ Below the drill-down, when a project is loaded: the Response register measures w
 - Unknown `PestleTag` codes → dropped on normalise, logged.
 
 **Tests:**
-- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON; the four consistency checks (a)-(d) pass, and each exception is exactly the listed cells; 12 cells carry a `general` slice; both spellings of the AFMEC gap phrase map to `no_afmec_lines`; all 18 worldview PESTLE descriptions are non-empty; Appendix 1 `*` marks agree with Table 4 "X".
+- Build script (pytest 8.4.2 in the micromamba `shiny` env, new `scripts/tests/test_build_wp5_scenarios.py`; scripts/ has no test folder yet): consistency check passes on the real sources; Wingdings decoding; 72 cells; null narrative ⇒ gap note; two runs give byte-identical JSON; the four consistency checks (a)-(d) pass, and each exception is exactly the listed cells; 12 cells carry a `general` slice; both spellings of the AFMEC gap phrase map to `no_afmec_lines`; all 18 worldview PESTLE descriptions are non-empty; Appendix 1 `*` marks are incomplete (8 cells lack one) and are not used; Table 4's "X" is the source.
 - `tests/testthat/test-wp5-scenarios.R`: JSON integrity (4 scenarios, 6 PESTLE, 4 slices, 3 worldviews, 72 cells, states in {area, europe, none}); spot checks from D5.1 (not computed by the build): area-level cells are exactly Individualist × SSP1 (all six), Individualist × SSP2 (political, economic, social, environmental), Hierarchy × SSP1 (social), Hierarchy × SSP2 (political, economic, social, technological); Egalitarian has none; Individualist × SSP5 matches on all six elements; every cell has a rationale.
 - `wp5_matched_responses()`: only `area` elements match; legacy registers without `PestleTag`; multiple tags.
 - `tests/testthat/test-response-measures-schema.R` (extended): `PestleTag` added to legacy data, unknown codes dropped, save/load round trip; form round trip via `testServer()`.
