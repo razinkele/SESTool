@@ -242,6 +242,17 @@
       "no": "Oversikt over prosjektstatus og nøkkelparametre",
       "el": "Επισκόπηση της κατάστασης του έργου σας και βασικών μετρήσεων"
     },
+    "ui.sidebar.governance_readiness": {
+      "en": "Governance readiness (D5.4)",
+      "es": "Preparación en gobernanza (D5.4)",
+      "fr": "Préparation à la gouvernance (D5.4)",
+      "de": "Governance-Bereitschaft (D5.4)",
+      "lt": "Valdysenos parengtis (D5.4)",
+      "pt": "Preparação para a governação (D5.4)",
+      "it": "Prontezza di governance (D5.4)",
+      "no": "Styringsberedskap (D5.4)",
+      "el": "Ετοιμότητα διακυβέρνησης (D5.4)"
+    },
     "ui.sidebar.pims": {
       "en": "PIMS",
       "es": "PIMS",
