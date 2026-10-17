@@ -179,7 +179,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           Interest = character(),
           Attitude = character(),
           EngagementLevel = character(),
-          DateAdded = character()
+          DateAdded = character(),
+          NERoles = character(),
+          SourceId = character()
         ),
 
         engagements = data.frame(
@@ -981,6 +983,12 @@ normalize_json_project_data <- function(data) {
   if (is.list(data$data) && is.list(data$data$response_measures) &&
       exists("normalize_response_measures", mode = "function")) {
     data$data$response_measures$measures <- normalize_response_measures(data$data$response_measures$measures)
+  }
+
+  # PIMS stakeholders: WS-9a schema (NERoles, SourceId) on every JSON load path
+  if (is.list(data$data) && is.list(data$data$pims) && !is.null(data$data$pims$stakeholders) &&
+      exists("normalize_stakeholders", mode = "function")) {
+    data$data$pims$stakeholders <- normalize_stakeholders(data$data$pims$stakeholders)
   }
 
   # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here

@@ -932,6 +932,30 @@ WP5_DESIGNER_MIN_APP_VERSION <- "1.28.0"
 PESTLE_CODES <- c("political", "economic", "social", "technological", "legal", "environmental")
 
 # ============================================================================
+# WP5 GOVERNANCE PROFILES (spec 2026-10-17 WS-9a, D5.4)
+# ============================================================================
+WP5_GOV_DIMENSIONS <- NPG_DIMENSIONS   # WS-1 vocabulary; labels via wp5_vocab_label("npg", code, i18n)
+WP5_GOV_POLARITIES <- c("enabler", "barrier")   # D5.4 "What is working well" / "Areas of improvement"
+WP5_POLICY_TARGETS <- c("kmgbf_30x30", "eu_nrr", "msfd_ges_d1", "msfd_ges_d6", "national_mpa_pct")
+# PIMS stakeholder register; NERoles = ';'-joined STAKEHOLDER_TYPES codes (D5.4 actor typology),
+# SourceId = "d54:<actor id>" for actors loaded from a D5.4 profile
+PIMS_STAKEHOLDER_COLUMNS <- c("ID", "Name", "Type", "Sector", "Contact", "Interests", "Role", "Power",
+                              "Interest", "Attitude", "EngagementLevel", "DateAdded", "NERoles", "SourceId")
+# Translation keys of the PIMS "Type" options (the form stores the translated label)
+PIMS_STAKEHOLDER_TYPE_KEYS <- c(
+  resource_users = "modules.pims.stakeholder.resource_users",
+  industrybusiness = "modules.pims.stakeholder.industrybusiness",
+  governmentregulators = "modules.pims.stakeholder.governmentregulators",
+  ngocivil_society = "modules.pims.stakeholder.ngocivil_society",
+  scientificacademic = "modules.pims.stakeholder.scientificacademic",
+  local_communities = "modules.pims.stakeholder.local_communities",
+  indigenous_groups = "modules.pims.stakeholder.indigenous_groups",
+  other = "modules.isa.ai_assistant.other")
+# Older apps rbind() a 12-column stakeholder row onto the frame and drop Policy_Target,
+# so a project using either needs this version (WS-0 stamp_min_app_version()).
+WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 
