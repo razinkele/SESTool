@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.31.0] - 2026-10-17
+
+### Added (WP5 governance-readiness check — spec 2026-10-17 WS-9b)
+- PIMS "Governance readiness (D5.4)" page: anonymous respondents enter answers through a form or an xlsx/csv template.
+- Per-dimension toolbox readiness indicator, item distributions and the Annex 7 priority ranking.
+- Role breakdown from 5 respondents and xlsx export of the results.
+- Item bank verified against D5.4 Annexes 5 and 7.
+
+### Notes
+- The indicator is a toolbox construct, not a WP5 score.
+- Only current-state questions are scored; attitudes and priorities are shown separately.
+- Cross-sectoral coordination has no D5.4 question.
+- Yes/no answers score +1/-1.
+- No names or free text are collected.
+- Projects with readiness answers need app 1.31.0.
+
 ## [1.30.0] - 2026-10-17
 
 ### Added (WP5 governance profiles — spec 2026-10-17 WS-9a)
