@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "description": "Country governance and socio-economic database for MarineSABRES SES Toolbox. Provides country-level governance frameworks, regional conventions, and income-stratified socioeconomic DAPSI(W)R(M) elements.",
-  "last_updated": "2026-03-15",
+  "last_updated": "2026-10-17",
   "countries_by_sea": {
     "baltic": [
       "SE",
@@ -91,7 +91,9 @@
       "DK",
       "IS",
       "SE",
-      "FI"
+      "FI",
+      "GL",
+      "FO"
     ],
     "atlantic": [
       "PT",
@@ -104,7 +106,9 @@
       "AR",
       "UY",
       "CV",
-      "SN"
+      "SN",
+      "GL",
+      "FO"
     ],
     "pacific": [
       "AU",
@@ -156,7 +160,9 @@
       "governance_group": "eu",
       "regional_conventions": [
         "helcom",
-        "ospar"
+        "ospar",
+        "ices",
+        "nordic_council"
       ]
     },
     "FI": {
@@ -166,7 +172,9 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "helcom"
+        "helcom",
+        "ices",
+        "nordic_council"
       ]
     },
     "EE": {
@@ -176,7 +184,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "helcom"
+        "helcom",
+        "ices"
       ]
     },
     "LV": {
@@ -186,7 +195,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "helcom"
+        "helcom",
+        "ices"
       ]
     },
     "LT": {
@@ -196,7 +206,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "helcom"
+        "helcom",
+        "ices"
       ]
     },
     "PL": {
@@ -206,7 +217,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "helcom"
+        "helcom",
+        "ices"
       ]
     },
     "DE": {
@@ -217,7 +229,8 @@
       "governance_group": "eu",
       "regional_conventions": [
         "helcom",
-        "ospar"
+        "ospar",
+        "ices"
       ]
     },
     "DK": {
@@ -228,7 +241,10 @@
       "governance_group": "eu",
       "regional_conventions": [
         "helcom",
-        "ospar"
+        "ospar",
+        "neafc",
+        "ices",
+        "nordic_council"
       ]
     },
     "RU": {
@@ -250,7 +266,11 @@
       "governance_group": "eu",
       "regional_conventions": [
         "ospar",
-        "unep_map"
+        "unep_map",
+        "ices",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "FR": {
@@ -261,7 +281,12 @@
       "governance_group": "eu",
       "regional_conventions": [
         "ospar",
-        "unep_map"
+        "unep_map",
+        "ices",
+        "gfcm",
+        "accobams",
+        "pelagos",
+        "medpan"
       ]
     },
     "IT": {
@@ -271,7 +296,11 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "pelagos",
+        "medpan"
       ]
     },
     "GR": {
@@ -281,7 +310,10 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "TR": {
@@ -292,7 +324,10 @@
       "governance_group": "non_eu_european",
       "regional_conventions": [
         "unep_map",
-        "bucharest"
+        "bucharest",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "HR": {
@@ -302,7 +337,10 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "ME": {
@@ -312,7 +350,10 @@
       "income_level": "upper_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "AL": {
@@ -322,7 +363,10 @@
       "income_level": "upper_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "TN": {
@@ -332,7 +376,10 @@
       "income_level": "lower_middle",
       "governance_group": "african_coastal",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "DZ": {
@@ -342,7 +389,10 @@
       "income_level": "lower_middle",
       "governance_group": "african_coastal",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "MA": {
@@ -352,7 +402,10 @@
       "income_level": "lower_middle",
       "governance_group": "african_coastal",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "EG": {
@@ -362,7 +415,10 @@
       "income_level": "lower_middle",
       "governance_group": "african_coastal",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "IL": {
@@ -372,7 +428,9 @@
       "income_level": "high",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "medpan"
       ]
     },
     "LB": {
@@ -382,7 +440,10 @@
       "income_level": "lower_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "SY": {
@@ -392,7 +453,10 @@
       "income_level": "lower_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "CY": {
@@ -402,7 +466,10 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "MT": {
@@ -412,7 +479,10 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "SI": {
@@ -422,7 +492,10 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "LY": {
@@ -432,7 +505,10 @@
       "income_level": "upper_middle",
       "governance_group": "african_coastal",
       "regional_conventions": [
-        "unep_map"
+        "unep_map",
+        "gfcm",
+        "accobams",
+        "medpan"
       ]
     },
     "GB": {
@@ -442,7 +518,9 @@
       "income_level": "high",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "neafc",
+        "ices"
       ]
     },
     "NO": {
@@ -452,7 +530,10 @@
       "income_level": "high",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "neafc",
+        "ices",
+        "nordic_council"
       ]
     },
     "NL": {
@@ -462,7 +543,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "ices"
       ]
     },
     "BE": {
@@ -472,7 +554,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "ices"
       ]
     },
     "IE": {
@@ -482,7 +565,8 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "ices"
       ]
     },
     "IS": {
@@ -492,7 +576,10 @@
       "income_level": "high",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "neafc",
+        "ices",
+        "nordic_council"
       ]
     },
     "PT": {
@@ -502,7 +589,9 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "ospar"
+        "ospar",
+        "ices",
+        "accobams"
       ]
     },
     "RO": {
@@ -512,7 +601,9 @@
       "income_level": "high",
       "governance_group": "eu",
       "regional_conventions": [
-        "bucharest"
+        "bucharest",
+        "gfcm",
+        "accobams"
       ]
     },
     "BG": {
@@ -522,7 +613,9 @@
       "income_level": "upper_middle",
       "governance_group": "eu",
       "regional_conventions": [
-        "bucharest"
+        "bucharest",
+        "gfcm",
+        "accobams"
       ]
     },
     "UA": {
@@ -532,7 +625,8 @@
       "income_level": "lower_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "bucharest"
+        "bucharest",
+        "accobams"
       ]
     },
     "GE": {
@@ -542,7 +636,9 @@
       "income_level": "upper_middle",
       "governance_group": "non_eu_european",
       "regional_conventions": [
-        "bucharest"
+        "bucharest",
+        "gfcm",
+        "accobams"
       ]
     },
     "CA": {
@@ -551,7 +647,9 @@
       "eu_member": false,
       "income_level": "high",
       "governance_group": "non_eu_european",
-      "regional_conventions": []
+      "regional_conventions": [
+        "ices"
+      ]
     },
     "US": {
       "code": "US",
@@ -559,7 +657,9 @@
       "eu_member": false,
       "income_level": "high",
       "governance_group": "non_eu_european",
-      "regional_conventions": []
+      "regional_conventions": [
+        "ices"
+      ]
     },
     "CU": {
       "code": "CU",
@@ -1103,6 +1203,30 @@
         "nairobi",
         "abidjan"
       ]
+    },
+    "GL": {
+      "code": "GL",
+      "name_en": "Greenland",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "ospar",
+        "neafc",
+        "nordic_council"
+      ]
+    },
+    "FO": {
+      "code": "FO",
+      "name_en": "Faroe Islands",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "ospar",
+        "neafc",
+        "nordic_council"
+      ]
     }
   },
   "governance_elements": {
@@ -1490,6 +1614,178 @@
         "Abidjan Convention ICZM Protocol for coastal zone management",
         "Large Marine Ecosystem programmes (Guinea Current, Canary Current)",
         "Abidjan Convention Protocol on environmental standards from seabed activities"
+      ]
+    },
+    "neafc": {
+      "name": "NEAFC (North-East Atlantic Fisheries Commission)",
+      "full_name": "North-East Atlantic Fisheries Commission",
+      "member_codes": [
+        "DK",
+        "FO",
+        "GL",
+        "IS",
+        "NO",
+        "GB"
+      ],
+      "responses": [
+        "NEAFC annual Management Measures for pelagic and deep-sea stocks",
+        "NEAFC bottom-fishing closures to protect vulnerable marine ecosystems",
+        "NEAFC Scheme of Control and Enforcement (port state control, vessel monitoring)"
+      ]
+    },
+    "ices": {
+      "name": "ICES (International Council for the Exploration of the Sea)",
+      "full_name": "International Council for the Exploration of the Sea",
+      "member_codes": [
+        "BE",
+        "CA",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "DE",
+        "IS",
+        "IE",
+        "LV",
+        "LT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "ES",
+        "SE",
+        "GB",
+        "US"
+      ],
+      "responses": [
+        "ICES advice on fishing opportunities (catch limits)",
+        "ICES ecosystem overviews and integrated ecosystem assessments",
+        "ICES advice on bycatch and vulnerable marine ecosystems"
+      ]
+    },
+    "gfcm": {
+      "name": "GFCM (General Fisheries Commission for the Mediterranean)",
+      "full_name": "General Fisheries Commission for the Mediterranean",
+      "member_codes": [
+        "AL",
+        "DZ",
+        "BG",
+        "HR",
+        "CY",
+        "EG",
+        "FR",
+        "GE",
+        "GR",
+        "IL",
+        "IT",
+        "LB",
+        "LY",
+        "MT",
+        "ME",
+        "MA",
+        "RO",
+        "SI",
+        "ES",
+        "SY",
+        "TN",
+        "TR"
+      ],
+      "responses": [
+        "GFCM multiannual management plans for demersal and small pelagic stocks",
+        "GFCM fisheries restricted areas",
+        "GFCM minimum conservation reference sizes and gear rules"
+      ]
+    },
+    "accobams": {
+      "name": "ACCOBAMS",
+      "full_name": "Agreement on the Conservation of Cetaceans of the Black Sea, Mediterranean Sea and contiguous Atlantic area",
+      "member_codes": [
+        "AL",
+        "DZ",
+        "BG",
+        "HR",
+        "CY",
+        "EG",
+        "FR",
+        "GE",
+        "GR",
+        "IT",
+        "LB",
+        "LY",
+        "MT",
+        "ME",
+        "MA",
+        "PT",
+        "RO",
+        "SI",
+        "ES",
+        "SY",
+        "TN",
+        "TR",
+        "UA"
+      ],
+      "responses": [
+        "ACCOBAMS cetacean bycatch mitigation measures",
+        "ACCOBAMS guidelines on underwater noise",
+        "ACCOBAMS High Standard Whale-watching certification"
+      ]
+    },
+    "pelagos": {
+      "name": "Pelagos Sanctuary",
+      "full_name": "Pelagos Sanctuary for Mediterranean Marine Mammals",
+      "member_codes": [
+        "FR",
+        "IT"
+      ],
+      "responses": [
+        "Pelagos Sanctuary marine mammal protection measures",
+        "Pelagos ship-strike reduction and whale-watching codes of conduct"
+      ]
+    },
+    "medpan": {
+      "name": "MedPAN",
+      "full_name": "Network of Marine Protected Area managers in the Mediterranean",
+      "member_codes": [
+        "ES",
+        "FR",
+        "IT",
+        "GR",
+        "TR",
+        "HR",
+        "ME",
+        "AL",
+        "TN",
+        "DZ",
+        "MA",
+        "EG",
+        "IL",
+        "LB",
+        "SY",
+        "CY",
+        "MT",
+        "SI",
+        "LY"
+      ],
+      "responses": [
+        "MedPAN MPA management capacity building",
+        "MedPAN small grants and MPA networking"
+      ]
+    },
+    "nordic_council": {
+      "name": "Nordic Council of Ministers",
+      "full_name": "Nordic Council of Ministers",
+      "member_codes": [
+        "DK",
+        "FI",
+        "IS",
+        "NO",
+        "SE",
+        "GL",
+        "FO"
+      ],
+      "responses": [
+        "Nordic cooperation programmes on fisheries and the marine environment",
+        "Nordic knowledge exchange on ecosystem-based management"
       ]
     }
   }

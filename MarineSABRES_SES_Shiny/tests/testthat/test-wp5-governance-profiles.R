@@ -110,3 +110,26 @@ test_that("legal instruments and gaps are present for every DA", {
     for (li in gp$das[[k]]$legal_instruments) expect_true(li$level %in% GOVERNANCE_LEVELS, info = li$name)
   }
 })
+
+test_that("country DB: GL and FO, the seven bodies, both directions of membership", {
+  db <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "data", "country_governance_db.json"), simplifyVector = FALSE)
+  expect_true(all(c("GL", "FO") %in% names(db$countries)))
+  bodies <- c("neafc", "ices", "gfcm", "accobams", "pelagos", "medpan", "nordic_council")
+  expect_true(all(bodies %in% names(db$regional_conventions)))
+  for (b in bodies) {
+    rc <- db$regional_conventions[[b]]
+    expect_true(nzchar(rc$name) && nzchar(rc$full_name), info = b)
+    expect_gte(length(rc$responses), 2L)
+    for (cc in unlist(rc$member_codes)) {
+      expect_true(cc %in% names(db$countries), info = paste(b, cc))
+      expect_true(b %in% unlist(db$countries[[cc]]$regional_conventions), info = paste(b, cc))
+    }
+  }
+  expect_true(all(c("GL", "FO") %in% unlist(db$countries_by_sea$arctic)))
+})
+
+test_that("get_countries_for_sea('arctic') now includes Greenland and the Faroe Islands", {
+  load_country_governance_db(force_reload = TRUE)
+  codes <- vapply(get_countries_for_sea("arctic"), function(r) r$code, character(1))
+  expect_true(all(c("GL", "FO", "IS", "NO") %in% codes))
+})
