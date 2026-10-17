@@ -20,7 +20,7 @@ All paths below are relative to `MarineSABRES_SES_Shiny/` in the worktree `C:/Us
   `Rscript -e ".libPaths(c('C:/Users/arturas.baziukas/AppData/Local/R/win-library/4.4', .libPaths())); testthat::test_dir('tests/testthat', filter = '^wp5-governance-profiles$')"`
   "package built under R version 4.4.3" warnings are known environment noise.
 - D5.4 roles = `STAKEHOLDER_TYPES` codes (`Inputters, Extractors, Regulators, Affectees, Beneficiaries, Influencers`), `;`-joined in `NERoles`, canonical order = `STAKEHOLDER_TYPES` order.
-- NPG dimension ids, in this order everywhere: `knowledge, collaboration, values_conflicts, legitimacy, cross_sectoral`. Polarity: `enabler` (D5.4 "What is working well"), `barrier` ("Areas of improvement").
+- NPG dimension ids = the WS-1 vocabulary `NPG_DIMENSIONS`: `knowledge, collaboration, values_conflict, legitimacy_equity, cross_sectoral`; labels via `wp5_vocab_label("npg", code, i18n)` (already in 9 languages). Polarity: `enabler` (D5.4 "What is working well"), `barrier` ("Areas of improvement").
 - `WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"`. Stamp on save when any stakeholder has non-empty `NERoles` or `SourceId`, or any element has non-empty `Policy_Target`.
 - Card, actor, legal-instrument, gap and recommendation text is English source data shown with a "Source text (English)" badge; every label goes through `i18n$t()` in 9 languages (en, es, fr, de, lt, pt, it, no, el). The audit `micromamba run -n shiny python scripts/_i18n_audit.py` must show `missing=0` and `hardcoded=0` on its "Totals:" line. Dynamic keys get `# i18n-ref:` sentinels. Never edit `translations/_merged_translations.json`.
 - Logging via `debug_log()`; user errors via `format_user_error(e, i18n = i18n, context_key = ...)`.
@@ -37,6 +37,7 @@ All paths below are relative to `MarineSABRES_SES_Shiny/` in the worktree `C:/Us
 6. **The governance tab's DA selector defaults to "Project's demonstration area"** (empty value = `metadata$da_site`), so it follows the project without update observers.
 7. **Recommendation "Add to register" goes through a register API** passed from `response_measures_server()`; the sub-module never writes `response_measures` itself (the register reloads its state only on project change, so a direct write would be overwritten).
 8. **The profiles loader caches only default-path loads** (fixes the WS-8 parked minor for this loader).
+9. **Dimensions reuse the WS-1 vocabulary** (ruling during Task 1): ids are `NPG_DIMENSIONS` (`values_conflict`, `legitimacy_equity`, not `values_conflicts`, `legitimacy`), `WP5_GOV_DIMENSIONS` is an alias of it, labels come from `wp5_vocab_label("npg", ...)`, and no `modules.wp5_governance.dimension.*` keys are added.
 
 ## Review Focus
 
@@ -151,7 +152,7 @@ for ti, t in enumerate(d.tables):
 library(testthat)
 
 gp <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "data", "wp5_governance_profiles.json"), simplifyVector = FALSE)
-dims <- c("knowledge", "collaboration", "values_conflicts", "legitimacy", "cross_sectoral")
+dims <- NPG_DIMENSIONS
 pims_types <- c("resource_users", "industrybusiness", "governmentregulators", "ngocivil_society",
                 "scientificacademic", "local_communities", "indigenous_groups", "other")
 ebm_types <- EBM_POLICY_INSTRUMENTS$code[EBM_POLICY_INSTRUMENTS$level == "type"]
@@ -368,7 +369,7 @@ def test_a_made_up_card_is_rejected():
   "version": "1.0",
   "source": { "doc": "D5.4 Governance Arrangements (final)", "date": "2026-05-29", "doi": "10.48481/rifs.2026.011",
               "characterisations": ["MarineSABRES_Characterisation_TuscanArchipelago.docx", "MarineSABRES_Characterisation_Macaronesia.docx"] },
-  "dimensions": ["knowledge", "collaboration", "values_conflicts", "legitimacy", "cross_sectoral"],
+  "dimensions": ["knowledge", "collaboration", "values_conflict", "legitimacy_equity", "cross_sectoral"],
   "das": {
     "arctic_nea": {
       "da_site": "Arctic Northeast Atlantic",
@@ -396,7 +397,7 @@ def test_a_made_up_card_is_rejected():
 
 Curation rules:
 - **`source_ref`** cites the *printed* page number (PDF page − 1), e.g. `"D5.4 Table 5, p. 23"`, `"D5.4 Annex 1, p. 54"`, `"Characterisation Tuscan Archipelago, stakeholder grid"`.
-- **Cards** (Tables 5, 6, 7 only — `cards_by_column.txt`): one card per bullet (`o …`), bullet glyph removed, the bold lead-in kept as the start of the text. Card ids `<da>_c01…` in table order. `dimension` from the row label (Table rows: "Incorporation of knowledge" → `knowledge`; "Collaborative structures" → `collaboration`; "Values, conflicts and decision making" / "Value centred …, trust, reduction of conflicts and compliance" → `values_conflicts`; "Inclusivity and legitimacy" / "Democratic legitimacy …" → `legitimacy`; "Cross-sectoral coordination …" → `cross_sectoral`). `polarity`: middle column → `enabler`, right column → `barrier`. Where a cell starts a group with a place label ("Iceland:", "Greenland:", "Azores:", "Madeira:", "Canary Islands:"), set `sub_area` on the bullets below it and do not include the label in the text. A bullet that continues on the next page is one card (join the parts).
+- **Cards** (Tables 5, 6, 7 only — `cards_by_column.txt`): one card per bullet (`o …`), bullet glyph removed, the bold lead-in kept as the start of the text. Card ids `<da>_c01…` in table order. `dimension` from the row label (Table rows: "Incorporation of knowledge" → `knowledge`; "Collaborative structures" → `collaboration`; "Values, conflicts and decision making" / "Value centred …, trust, reduction of conflicts and compliance" → `values_conflict`; "Inclusivity and legitimacy" / "Democratic legitimacy …" → `legitimacy_equity`; "Cross-sectoral coordination …" → `cross_sectoral`). `polarity`: middle column → `enabler`, right column → `barrier`. Where a cell starts a group with a place label ("Iceland:", "Greenland:", "Azores:", "Madeira:", "Canary Islands:"), set `sub_area` on the bullets below it and do not include the label in the text. A bullet that continues on the next page is one card (join the parts).
 - **Actors** (one row per entity; `source_doc` = where its `name` is printed verbatim):
   - Arctic (`d54`, Annex 1 and §4.1): Greenland — Ministry of Fisheries and Hunting; Greenland Fisheries and Hunting Control; Greenland Institute of Natural Resources. Iceland — the Ministry of Industries; Directorate of Fisheries; Marine and Freshwater Research Institute. Faroe Islands — the fisheries ministry (use the name as D5.4 prints it in Annex 1); Faroe Islands Fisheries Inspection; Faroe Marine Research Institute. DA-wide (`sub_area` null): ICES, NEAFC, Nordic Council of Ministers, Marine Stewardship Council. Levels: national for the nine; `regional_sea` for NEAFC; `international` for ICES, Nordic Council, MSC. Roles: ministries/inspections/NEAFC `Regulators`; research institutes, ICES `Influencers`; MSC `Influencers`; Nordic Council `Influencers`. `pims_type`: authorities `governmentregulators`; institutes and ICES `scientificacademic`; MSC `ngocivil_society`; Nordic Council `governmentregulators`.
   - Macaronesia: Azores, Madeira and Canary Islands organisations named in Annex 2's actors sections (`d54`; `sub_area` accordingly; level `regional` for autonomous-region bodies, `island` for Cabildos, `local` for municipalities, `national` for state bodies such as MITECO, MAPA, DGRM, Puertos del Estado); plus the Madeira stakeholder groups of the characterisation grid (`char_mac`, `sub_area` "madeira", e.g. professional fishers, recreational fishers, aquaculture, diving centres, whale watching, local community, schools, tourists). Madeira entities in the grid get `power`/`interest` from it; an organisation listed both in D5.4 and in the grid is one actor (name as in D5.4, `source_doc` `d54`, grid values copied, `source_ref` citing both). Roles: from the characterisation's Newton & Elliott typology for the Madeira groups; authorities `Regulators`; universities/research `Influencers`.
@@ -752,7 +753,7 @@ test_that("empty project and JSON load carry the new stakeholder columns", {
 # ============================================================================
 # WP5 GOVERNANCE PROFILES (spec 2026-10-17 WS-9a, D5.4)
 # ============================================================================
-WP5_GOV_DIMENSIONS <- c("knowledge", "collaboration", "values_conflicts", "legitimacy", "cross_sectoral")
+WP5_GOV_DIMENSIONS <- NPG_DIMENSIONS   # WS-1 vocabulary; labels via wp5_vocab_label("npg", code, i18n)
 WP5_GOV_POLARITIES <- c("enabler", "barrier")   # D5.4 "What is working well" / "Areas of improvement"
 WP5_POLICY_TARGETS <- c("kmgbf_30x30", "eu_nrr", "msfd_ges_d1", "msfd_ges_d6", "national_mpa_pct")
 # PIMS stakeholder register; NERoles = ';'-joined STAKEHOLDER_TYPES codes (D5.4 actor typology),
@@ -1014,11 +1015,6 @@ source("functions/wp5_governance.R", local = FALSE)       # WS-9a: D5.4 governan
 | `already_in_register` | Already in register |
 | `added_to_register` | Added to the Response register as |
 | `context_add` | Adding the recommendation to the register |
-| `dimension.knowledge` | Incorporation of knowledge |
-| `dimension.collaboration` | Collaborative structures |
-| `dimension.values_conflicts` | Values, conflicts and decision making |
-| `dimension.legitimacy` | Inclusivity and legitimacy |
-| `dimension.cross_sectoral` | Cross-sectoral coordination |
 | `polarity.enabler` | Enabler – working well |
 | `polarity.barrier` | Barrier – area of improvement |
 | `sub_area_greenland` | Greenland |
@@ -1304,7 +1300,7 @@ test_that("project DA drives the cards; filters narrow them", {
                                           i18n = i18n_echo, register = fake_register()), {
     session$flushReact()
     html <- as.character(output$body$html)
-    expect_match(html, "modules.wp5_governance.dimension.knowledge", fixed = TRUE)
+    expect_match(html, "<h6 class=\"mt-3\">knowledge</h6>", fixed = TRUE)   # echo i18n: wp5_vocab_label falls back to the code
     expect_match(html, tus$cards[[1]]$source_ref, fixed = TRUE)
     session$setInputs(polarity = "barrier")
     html <- as.character(output$body$html)
@@ -1378,11 +1374,11 @@ test_that("inside the Response module, Add to register lands in the register and
 # Depends on: functions/wp5_governance.R, functions/stakeholder_schema.R
 # =============================================================================
 
-# i18n-ref: modules.wp5_governance.dimension.knowledge
-# i18n-ref: modules.wp5_governance.dimension.collaboration
-# i18n-ref: modules.wp5_governance.dimension.values_conflicts
-# i18n-ref: modules.wp5_governance.dimension.legitimacy
-# i18n-ref: modules.wp5_governance.dimension.cross_sectoral
+# i18n-ref: modules.wp5_vocabulary.npg.knowledge
+# i18n-ref: modules.wp5_vocabulary.npg.collaboration
+# i18n-ref: modules.wp5_vocabulary.npg.values_conflict
+# i18n-ref: modules.wp5_vocabulary.npg.legitimacy_equity
+# i18n-ref: modules.wp5_vocabulary.npg.cross_sectoral
 # i18n-ref: modules.wp5_governance.polarity.enabler
 # i18n-ref: modules.wp5_governance.polarity.barrier
 # i18n-ref: modules.wp5_governance.sub_area_greenland
@@ -1430,7 +1426,7 @@ wp5_governance_context_ui <- function(id, i18n) {
                             choices = c(stats::setNames("", tr("project_da")), stats::setNames(sites, sites)))),
       column(3, selectInput(ns("dimension"), tr("filter_dimension"),
                             choices = c(stats::setNames("", tr("all")), stats::setNames(WP5_GOV_DIMENSIONS,
-                              vapply(WP5_GOV_DIMENSIONS, function(d) tr(paste0("dimension.", d)), character(1)))))),
+                              wp5_vocab_label("npg", WP5_GOV_DIMENSIONS, i18n))))),
       column(3, selectInput(ns("polarity"), tr("filter_polarity"),
                             choices = c(stats::setNames("", tr("both")), stats::setNames(WP5_GOV_POLARITIES,
                               vapply(WP5_GOV_POLARITIES, function(p) tr(paste0("polarity.", p)), character(1)))))),
@@ -1482,7 +1478,7 @@ wp5_governance_context_server <- function(id, project_data_reactive, i18n, event
         h5(tr("cards_title")),
         if (!length(cards)) p(class = "text-muted", tr("no_cards")),
         lapply(dims, function(d) tagList(
-          h6(class = "mt-3", tr(paste0("dimension.", d))),
+          h6(class = "mt-3", wp5_vocab_label("npg", d, i18n)),
           lapply(Filter(function(cd) identical(cd$dimension, d), cards), card_ui))),
         h5(class = "mt-4", tr("recommendations_title")),
         uiOutput(ns("recommendations")))
