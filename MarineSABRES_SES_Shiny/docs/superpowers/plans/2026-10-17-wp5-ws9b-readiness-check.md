@@ -33,6 +33,8 @@ All paths are relative to `MarineSABRES_SES_Shiny/` in the worktree `C:/Users/ar
 3. **Rank items get no answer labels** (codes `1`…`5`).
 4. **Fully empty imported rows are dropped** and counted, not added as empty respondents.
 5. **Respondent ids keep the spec's `R001` form**; they live in `data$pims$readiness`, separate from ISA Response element ids.
+6. **Consent is per respondent**: after each save the consent box is cleared, which hides the form again until the next respondent's consent is confirmed.
+7. **Clearing radio buttons after a save uses `updateRadioButtons(selected = character(0))`.** This only affects the browser (testServer inputs do not change), so module tests must not rely on the form being cleared between two saves.
 
 ## Review Focus
 
@@ -212,15 +214,15 @@ def test_a_made_up_item_is_rejected():
     { "id": "q19", "kind": "state", "dimension": "knowledge", "scale": "agree7", "reverse": false,
       "text_en": "Decision making, management, and conservation activities are transparent for all stakeholders.", "source_ref": "D5.4 Annex 5 Q19, p. 142", "annex7_ref": "Q32" },
     { "id": "q35", "kind": "priority", "dimension": "values_conflict", "scale": "rank5", "reverse": false,
-      "text_en": "Improving the mechanisms to solve conflicts between different stakeholders", "source_ref": "D5.4 Annex 7 Q35, p. 151", "annex7_ref": "Q35" },
+      "text_en": "Improving the mechanisms to solve conflicts between different stakeholders", "source_ref": "D5.4 Annex 7 Q35, p. 152", "annex7_ref": "Q35" },
     { "id": "q36", "kind": "priority", "dimension": "values_conflict", "scale": "rank5", "reverse": false,
-      "text_en": "Improving trust among/between people and organisations", "source_ref": "D5.4 Annex 7 Q36, p. 151", "annex7_ref": "Q36" },
+      "text_en": "Improving trust among/between people and organisations", "source_ref": "D5.4 Annex 7 Q36, p. 152", "annex7_ref": "Q36" },
     { "id": "q37", "kind": "priority", "dimension": "legitimacy_equity", "scale": "rank5", "reverse": false,
-      "text_en": "Improving representation and inclusivity of people/organisations (in decision-making processes)", "source_ref": "D5.4 Annex 7 Q37, p. 151", "annex7_ref": "Q37" },
+      "text_en": "Improving representation and inclusivity of people/organisations (in decision-making processes)", "source_ref": "D5.4 Annex 7 Q37, p. 152", "annex7_ref": "Q37" },
     { "id": "q38", "kind": "priority", "dimension": "cross_sectoral", "scale": "rank5", "reverse": false,
-      "text_en": "Improving integration between different sectors (cross-sectoral approaches)", "source_ref": "D5.4 Annex 7 Q38, p. 151", "annex7_ref": "Q38" },
+      "text_en": "Improving integration between different sectors (cross-sectoral approaches)", "source_ref": "D5.4 Annex 7 Q38, p. 152", "annex7_ref": "Q38" },
     { "id": "q39", "kind": "priority", "dimension": null, "scale": "rank5", "reverse": false,
-      "text_en": "Strengthening organisational capacities including through more access to financial resources, equipment, people and infrastructure", "source_ref": "D5.4 Annex 7 Q39, p. 151", "annex7_ref": "Q39" }
+      "text_en": "Strengthening organisational capacities including through more access to financial resources, equipment, people and infrastructure", "source_ref": "D5.4 Annex 7 Q39, p. 152", "annex7_ref": "Q39" }
   ]
 }
 ```
@@ -266,7 +268,8 @@ test_that("normalize: NULL, list rows from JSON, bad codes blanked, unknown item
                                                          q99 = "yes", Role = "fishers"))), bank)
   r <- rd$respondents
   expect_equal(c(r$q6, r$q4, r$q99, r$Role), c("agree", "", "yes", "fishers"))
-  expect_false("q99" %in% names(readiness_score(r, bank)))          # not scored (only dimensions returned)
+  without <- r[, setdiff(names(r), "q99"), drop = FALSE]
+  expect_equal(readiness_score(r, bank), readiness_score(without, bank))   # the unknown item does not affect the score
 })
 
 test_that("points: scales, reverse, exclusions (D6)", {
