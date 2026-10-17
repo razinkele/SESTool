@@ -43,7 +43,7 @@ Hand-curated, UTF-8, LF line endings (add the file to the app `.gitattributes` `
 {
   "version": "1.0",
   "source": { "doc": "D5.4 Governance Arrangements (final)", "date": "2026-05-29", "doi": "10.48481/rifs.2026.011" },
-  "dimensions": ["knowledge", "collaboration", "values_conflicts", "legitimacy", "cross_sectoral"],
+  "dimensions": ["knowledge", "collaboration", "values_conflict", "legitimacy_equity", "cross_sectoral"],
   "das": {
     "tuscan_archipelago": {
       "da_site": "Tuscan Archipelago",
@@ -71,7 +71,7 @@ Hand-curated, UTF-8, LF line endings (add the file to the app `.gitattributes` `
 
 Field rules:
 - `da_site` equals an entry of `DA_SITES` exactly.
-- `dimensions`: the five NPG dimensions of D5.4 Tables 5–7 — incorporation of knowledge; collaborative structures; values, conflicts and decision making; inclusivity and legitimacy; cross-sectoral coordination (Tuscany: "and transboundary cooperation").
+- `dimensions`: `knowledge`, `collaboration`, `values_conflict`, `legitimacy_equity`, `cross_sectoral` (the WS-1 `NPG_DIMENSIONS` vocabulary; labels via `wp5_vocab_label("npg", code, i18n)`) — the five NPG dimensions of D5.4 Tables 5–7: incorporation of knowledge; collaborative structures; values, conflicts and decision making; inclusivity and legitimacy; cross-sectoral coordination (Tuscany: "and transboundary cooperation").
 - `ne_roles` ⊆ `STAKEHOLDER_TYPES` (Inputters, Extractors, Regulators, Affectees, Beneficiaries, Influencers); an actor may have several.
 - `source_doc` ∈ `d54`, `char_tus`, `char_mac`: the document where the actor's `name` is printed verbatim.
 - `pims_type` is one of the existing PIMS Type option keys: `resource_users`, `industrybusiness`, `governmentregulators`, `ngocivil_society`, `scientificacademic`, `local_communities`, `indigenous_groups`, `other` (the suffixes of the `modules.pims.stakeholder.*` keys the form uses; `other` maps to `modules.isa.ai_assistant.other`).
@@ -93,7 +93,7 @@ Recommendations: 4 Arctic, 6 Macaronesia, 4 Tuscany (audit §2.2–2.4).
 
 ### 3.4 Verification
 
-- `scripts/tests/test_wp5_governance_profiles.py` (pytest; skips when the D5.4 PDF is absent; source path from env `WP5_D54_SRC` or the main-checkout default): extracts the PDF text with PyMuPDF (`fitz`, in the `shiny` env), normalises whitespace and hyphenation at line ends, and asserts every `card.text`, every D5.4-sourced actor `name` and every recommendation `title` occurs in it. Each actor's `name` is checked against the document named by its `source_doc`; recommendation `text` is checked too (python-docx).
+- `scripts/tests/test_wp5_governance_profiles.py` (pytest; skips when the D5.4 PDF is absent; source path from env `WP5_DIR` (the WP5 folder root) or the main-checkout default): extracts the PDF text with PyMuPDF (`fitz`, in the `shiny` env), normalises whitespace and hyphenation at line ends, and asserts every `card.text`, every D5.4-sourced actor `name` and every recommendation `title` occurs in it. Each actor's `name` is checked against the document named by its `source_doc`; recommendation `text` is checked too (python-docx).
 - R tests (`tests/testthat/test-wp5-governance-profiles.R`): schema — keys present, `da_site` ∈ `DA_SITES`, dimensions ⊆ the five ids, `ne_roles` ⊆ `STAKEHOLDER_TYPES`, `pims_type`, `rm_type`, `governance_level`, `ebm_code` valid, ids unique, `implementing_actor_ids` resolve, recommendation counts 4/6/4, every DA has ≥ 1 card per dimension; country DB has GL and FO, the seven bodies, and `get_countries_for_sea("arctic")` includes GL and FO.
 
 ## 4. Stakeholder roles and seeding (PIMS)

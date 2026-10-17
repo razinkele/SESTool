@@ -3,7 +3,7 @@
 library(testthat)
 
 gp <- jsonlite::fromJSON(file.path(PROJECT_ROOT, "data", "wp5_governance_profiles.json"), simplifyVector = FALSE)
-dims <- c("knowledge", "collaboration", "values_conflicts", "legitimacy", "cross_sectoral")
+dims <- NPG_DIMENSIONS
 pims_types <- c("resource_users", "industrybusiness", "governmentregulators", "ngocivil_society",
                 "scientificacademic", "local_communities", "indigenous_groups", "other")
 ebm_types <- EBM_POLICY_INSTRUMENTS$code[EBM_POLICY_INSTRUMENTS$level == "type"]
