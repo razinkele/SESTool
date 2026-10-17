@@ -928,6 +928,9 @@ INTERVENTION_DEPENDENCE_MIN_SUCCESS <- 30L  # fewest successes for a "decisive l
 # applies them; 1.27.0 and older silently drop them, so Apply stamps 1.28.0.
 WP5_DESIGNER_MIN_APP_VERSION <- "1.28.0"
 
+# WP5 WS-8: PESTLE elements (D5.1), in this order everywhere
+PESTLE_CODES <- c("political", "economic", "social", "technological", "legal", "environmental")
+
 # ============================================================================
 # END OF CONSTANTS
 # ============================================================================

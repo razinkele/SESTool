@@ -709,6 +709,7 @@ source("functions/valuation_calculations.R", local = FALSE)
 source("functions/wp5_vocabulary.R", local = FALSE)
 source("functions/response_measures_schema.R", local = FALSE)
 source("functions/wp5_typing_lint.R", local = FALSE)
+source("functions/wp5_scenarios.R", local = FALSE)   # WS-8: D5.1 scenario x worldview reference data
 source("functions/indicator_registry.R", local = FALSE)
 source("functions/indicator_snapshot.R", local = FALSE)
 source("functions/impact_reference.R", local = FALSE)
