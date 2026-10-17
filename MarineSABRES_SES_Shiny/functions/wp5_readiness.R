@@ -150,3 +150,113 @@ readiness_delete <- function(readiness, ids, bank) {
   rownames(rd$respondents) <- NULL
   rd
 }
+
+# ---- Import / template / export (WS-9b Task 4) --------------------------------
+
+.ready_key <- function(x) {
+  x <- as.character(x)
+  if (requireNamespace("stringi", quietly = TRUE)) x <- stringi::stri_trans_general(x, "Latin-ASCII")
+  gsub("\\s+", " ", trimws(tolower(x)))
+}
+
+#' The readiness translation table: key -> list(lang -> text)
+readiness_translations <- function(path = NULL) {
+  if (is.null(path)) {
+    path <- if (exists("get_project_file", mode = "function")) get_project_file("translations", "modules", "wp5_readiness.json")
+            else file.path("translations", "modules", "wp5_readiness.json")
+  }
+  tryCatch(jsonlite::fromJSON(path, simplifyVector = FALSE)$translation, error = function(e) list())
+}
+
+#' Label -> code map for one set of codes: the code itself and its label in every
+#' language; a label that maps to two codes is ambiguous (NA)
+readiness_value_map <- function(codes, key_prefix, tr) {
+  pairs <- do.call(rbind, lapply(codes, function(cd) {
+    labs <- c(cd, as.character(unlist(tr[[paste0(key_prefix, cd)]])))
+    data.frame(lab = .ready_key(labs), code = cd, stringsAsFactors = FALSE)
+  }))
+  pairs <- unique(pairs[nzchar(pairs$lab), , drop = FALSE])
+  n_codes <- tapply(pairs$code, pairs$lab, function(z) length(unique(z)))
+  m <- stats::setNames(pairs$code, pairs$lab)
+  m <- m[!duplicated(names(m))]
+  m[names(m) %in% names(n_codes)[n_codes > 1]] <- NA_character_
+  m
+}
+
+#' Parse an imported answers table. Only `role` and item-id columns are read.
+readiness_parse_import <- function(df, bank, tr = readiness_translations()) {
+  if (!is.data.frame(df)) df <- data.frame()
+  names(df) <- .ready_key(names(df))
+  ids <- readiness_item_ids(bank)
+  if (nrow(df) > 1000) return(list(ok = FALSE, error = "too_many_rows", expected = NULL))
+  if (!length(intersect(names(df), ids))) return(list(ok = FALSE, error = "no_item_columns", expected = ids))
+  blanked <- 0L
+  conv <- function(v, map) {
+    k <- .ready_key(v); k[is.na(v)] <- ""
+    res <- unname(map[k])
+    bad <- nzchar(k) & is.na(res)
+    res[is.na(res)] <- ""
+    blanked <<- blanked + sum(bad)
+    res
+  }
+  out <- data.frame(Role = rep("", nrow(df)), stringsAsFactors = FALSE)
+  if ("role" %in% names(df)) out$Role <- conv(df$role, readiness_value_map(unlist(bank$roles), "modules.wp5_readiness.role.", tr))
+  for (id in ids) {
+    out[[id]] <- if (id %in% names(df)) {
+      conv(df[[id]], readiness_value_map(readiness_scale_codes(bank, readiness_item(bank, id)$scale),
+                                         "modules.wp5_readiness.answer.", tr))
+    } else rep("", nrow(df))
+  }
+  keep <- if (nrow(out)) (rowSums(out[, ids, drop = FALSE] != "") > 0) | out$Role != "" else logical(0)
+  list(ok = TRUE, rows = out[keep, , drop = FALSE], blanked = as.integer(blanked),
+       ignored = setdiff(names(df), c("role", ids)), dropped_empty = as.integer(sum(!keep)))
+}
+
+#' Read an uploaded xlsx (sheet "answers" if present) or csv as character data
+readiness_read_file <- function(path, name = path) {
+  ext <- tolower(tools::file_ext(name))
+  df <- if (ext == "xlsx") {
+    sheets <- openxlsx::getSheetNames(path)
+    openxlsx::read.xlsx(path, sheet = if ("answers" %in% sheets) "answers" else 1, colNames = TRUE, skipEmptyRows = TRUE)
+  } else if (ext == "csv") {
+    utils::read.csv(path, colClasses = "character", check.names = FALSE, encoding = "UTF-8", na.strings = c("", "NA"))
+  } else stop("Unsupported file type: ", ext)
+  if (is.null(df)) data.frame() else df
+}
+
+#' xlsx template: answers (header only), items (current language), roles
+readiness_template_wb <- function(bank, i18n) {
+  ids <- readiness_item_ids(bank)
+  lab <- function(key) as.character(i18n$t(key))
+  allowed <- function(it) {
+    cds <- readiness_scale_codes(bank, it$scale)
+    if (identical(it$scale, "rank5")) return(paste(cds, collapse = "; "))
+    paste(paste0(cds, " = ", vapply(cds, function(cd) lab(paste0("modules.wp5_readiness.answer.", cd)), "")), collapse = "; ")
+  }
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "answers")
+  openxlsx::writeData(wb, "answers", as.data.frame(stats::setNames(rep(list(character(0)), length(ids) + 1), c("role", ids))))
+  openxlsx::addWorksheet(wb, "items")
+  openxlsx::writeData(wb, "items", data.frame(
+    id = ids, question = vapply(ids, function(id) lab(paste0("modules.wp5_readiness.item.", id)), ""),
+    allowed = vapply(bank$items, allowed, ""), stringsAsFactors = FALSE))
+  roles <- unlist(bank$roles)
+  openxlsx::addWorksheet(wb, "roles")
+  openxlsx::writeData(wb, "roles", data.frame(code = roles,
+    label = vapply(roles, function(r) lab(paste0("modules.wp5_readiness.role.", r)), ""), stringsAsFactors = FALSE))
+  wb
+}
+
+#' xlsx export: about (indicator caveat), anonymous answers, indicator, priorities
+readiness_export_wb <- function(readiness, bank, i18n) {
+  rd <- normalize_readiness(readiness, bank)
+  sc <- readiness_score(rd$respondents, bank)
+  sc$label <- vapply(sc$dimension, function(d) wp5_vocab_label("npg", d, i18n), "")
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "about")
+  openxlsx::writeData(wb, "about", data.frame(note = as.character(i18n$t("modules.wp5_readiness.indicator_label"))))
+  openxlsx::addWorksheet(wb, "answers"); openxlsx::writeData(wb, "answers", rd$respondents)
+  openxlsx::addWorksheet(wb, "indicator"); openxlsx::writeData(wb, "indicator", sc)
+  openxlsx::addWorksheet(wb, "priorities"); openxlsx::writeData(wb, "priorities", readiness_priority(rd$respondents, bank))
+  wb
+}
