@@ -78,6 +78,15 @@ normalize_response_measures <- function(df) {
   out$Type   <- .map_codes(out$Type,   m$type,   names(RM_TYPE_CODES))
   out$Target <- .map_codes(out$Target, m$target, names(RM_TARGET_CODES))
   out$Status <- .map_codes(out$Status, m$status, names(RM_STATUS_CODES))
+  out$PestleTag <- vapply(strsplit(out$PestleTag, ";", fixed = TRUE), function(t) {
+    t <- trimws(t)
+    bad <- setdiff(t[nzchar(t)], PESTLE_CODES)
+    if (length(bad) && exists("debug_log", mode = "function")) {
+      debug_log(sprintf("normalize_response_measures: dropped unknown PESTLE code(s): %s",
+                        paste(bad, collapse = ", ")), "WARN")
+    }
+    paste(PESTLE_CODES[PESTLE_CODES %in% t], collapse = ";")
+  }, character(1))
   out
 }
 
@@ -114,6 +123,7 @@ rm_display_label <- function(vocab, code, i18n) {
       kind   = if (cd %in% c("instrument", "measure")) paste0("modules.response.governance.kind.", cd),
       governance_level = if (cd %in% GOVERNANCE_LEVELS) paste0("modules.response.governance.level.", cd),
       tenet_level = if (cd %in% TENET_LEVELS) paste0("modules.response.governance.tenet_level.", cd),
+      pestle = if (cd %in% PESTLE_CODES) paste0("modules.wp5_scenarios.pestle.", cd),
       level  = if (cd %in% c("HIGH", "MEDIUM", "LOW", "UNKNOWN")) paste0("modules.response.measures.", tolower(cd)),
       NULL)
   }
@@ -154,6 +164,16 @@ rm_translate_for_display <- function(df, i18n) {
                 c("Target", "target"), c("Status", "status"), c("Kind", "kind"),
                 c("EbmCode", "ebm_code"), c("GovernanceLevel", "governance_level"))
   for (p in pairs) if (p[1] %in% names(df)) df[[p[1]]] <- rm_display_label(p[2], df[[p[1]]], i18n)
+  if ("PestleTag" %in% names(df)) {
+    # i18n-ref: modules.wp5_scenarios.pestle.political
+    # i18n-ref: modules.wp5_scenarios.pestle.economic
+    # i18n-ref: modules.wp5_scenarios.pestle.social
+    # i18n-ref: modules.wp5_scenarios.pestle.technological
+    # i18n-ref: modules.wp5_scenarios.pestle.legal
+    # i18n-ref: modules.wp5_scenarios.pestle.environmental
+    df$PestleTag <- vapply(strsplit(ifelse(is.na(df$PestleTag), "", df$PestleTag), ";", fixed = TRUE),
+                           function(t) paste(rm_display_label("pestle", t, i18n), collapse = ", "), character(1))
+  }
   for (cl in grep("^Tenet_", names(df), value = TRUE)) df[[cl]] <- rm_display_label("tenet_level", df[[cl]], i18n)
   df
 }

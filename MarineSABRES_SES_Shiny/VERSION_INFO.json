@@ -1,7 +1,7 @@
 {
-  "version": "1.28.0",
-  "version_name": "WP5 intervention designer — mode C, before/after, Apply to project",
-  "release_date": "2026-10-16",
+  "version": "1.29.0",
+  "version_name": "WP5 scenario × worldview reference library (D5.1)",
+  "release_date": "2026-10-17",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,10 +12,10 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "WP5 intervention designer mode C (D5.3): re-weights existing links with the sign fixed and strength weak, medium or strong; combines with new node and new edges in one design (WS-7b).",
-    "Link ranking by dominant-eigenvalue sensitivity, and a \"What success depends on\" table of decisive links (30-success threshold) (WS-7b).",
-    "Compare structure: loops gained, lost and changed, leverage top 10 and Boolean attractors, before and after a design, as a background job (WS-7b).",
-    "Apply to project: writes a Scenario Builder scenario with ops records and links_modified (matched by link endpoints); Scenario Builder shows modified links and their impact (WS-7b)."
+    "WP5 scenarios (D5.1) tab in the Scenario Builder, readable without a CLD: scenario cards for SSP1-2.6, SSP2-4.5, SSP3-7.0 and SSP5-8.5, and a heat map of where transformation is needed per worldview x scenario (WS-8).",
+    "PESTLE drill-down per heat-map cell with the worldview's and the scenario's English source text, strategies and source notes (WS-8).",
+    "Reproducible build script scripts/build_wp5_scenarios.py with pytest tests, and the data files data/wp5_scenarios_ssp.json and data/wp5_worldview_matrix.json (WS-8).",
+    "PESTLE tag (multi-select) on Response register measures, and a link from a heat-map cell to the project's responses tagged with the elements needing area-level transformation (WS-8)."
   ],
   "fixes": {
     "medium": [
@@ -47,7 +47,7 @@
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save.",
     "Projects with an intervention-designer scenario that re-weights links (links_modified) are stamped min_app_version 1.28.0; 1.27.0 and older would ignore the re-weights and show the scenario as unchanged."
   ],
-  "previous_version": "1.27.0",
+  "previous_version": "1.28.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }

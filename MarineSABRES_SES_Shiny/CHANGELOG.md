@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.29.0] - 2026-10-17
+
+### Added (WP5 scenario x worldview library — spec 2026-10-16 WS-8)
+- "WP5 scenarios (D5.1)" tab in the Scenario Builder, readable without a CLD: scenario cards (SSP1-2.6, SSP2-4.5, SSP3-7.0, SSP5-8.5), a heat map of where transformation is needed per worldview x scenario, and a PESTLE drill-down with the worldview's and the scenario's English source text, strategies and source notes.
+- Reproducible build script `scripts/build_wp5_scenarios.py` with pytest tests, and the data files `data/wp5_scenarios_ssp.json` and `data/wp5_worldview_matrix.json`.
+- PESTLE tag (multi-select) on Response register measures, and a link from a heat-map cell to the project's responses tagged with the elements needing area-level transformation.
+
+### Notes
+- Results are generic for Europe.
+- Two Hierarchy x SSP3 cells differ between the working spreadsheet and the published D5.1 tables; the app follows D5.1.
+- Applying a scenario to the CLD and the worldview self-assessment wait on WP5 partner input (Q5).
+
 ## [1.28.0] - 2026-10-16
 
 ### Added (WP5 intervention designer — spec 2026-10-15 WS-7b)

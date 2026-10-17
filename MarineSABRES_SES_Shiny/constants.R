@@ -832,7 +832,7 @@ RM_REGISTER_COLUMNS <- c(
   "ID", "Name", "Type", "Target", "Description", "Mechanism", "TargetElement",
   "Effectiveness", "Feasibility", "Cost", "Status", "Stakeholders", "Barriers", "DateAdded",
   "Kind", "EbmCode", "GovernanceLevel", "CompetentAuthority", "LegalBasis",
-  "ImplementingStakeholders", "PairedWith",
+  "ImplementingStakeholders", "PairedWith", "PestleTag",
   paste0("Tenet_", c("ecol_effective", "tech_feasible", "econ_efficient",
                      "econ_viable", "socially_desirable", "ethically_defensible", "culturally_inclusive",
                      "legally_permissible", "admin_achievable", "communicable", "politically_expedient"))
@@ -840,7 +840,7 @@ RM_REGISTER_COLUMNS <- c(
 
 # Columns shown in the register table and Word reports (codes translated);
 # tenet / stakeholder-ID / pairing columns stay in data and in the Excel export.
-RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel",
+RM_DISPLAY_COLUMNS <- c("ID", "Name", "Type", "Target", "Kind", "EbmCode", "GovernanceLevel", "PestleTag",
                         "CompetentAuthority", "LegalBasis", "Effectiveness", "Feasibility", "Cost",
                         "Status", "DateAdded")
 
@@ -927,6 +927,9 @@ INTERVENTION_DEPENDENCE_MIN_SUCCESS <- 30L  # fewest successes for a "decisive l
 # A designer scenario with re-weighted links (links_modified) needs an app that
 # applies them; 1.27.0 and older silently drop them, so Apply stamps 1.28.0.
 WP5_DESIGNER_MIN_APP_VERSION <- "1.28.0"
+
+# WP5 WS-8: PESTLE elements (D5.1), in this order everywhere
+PESTLE_CODES <- c("political", "economic", "social", "technological", "legal", "environmental")
 
 # ============================================================================
 # END OF CONSTANTS

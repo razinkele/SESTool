@@ -198,3 +198,26 @@ test_that("stakeholder_picker_update keeps current selection and skips no-op upd
   expect_equal(u3$selected, "SH_1")   # removed stakeholder dropped, kept one retained
   expect_false(stakeholder_picker_update(NULL, current = NULL, previous_choices = u1$choices)$skip)
 })
+
+test_that("PestleTag: added to legacy registers, unknown codes dropped, order kept", {
+  legacy <- data.frame(ID = "R1", Name = "a", Type = "regulatory", stringsAsFactors = FALSE)
+  out <- normalize_response_measures(legacy)
+  expect_true("PestleTag" %in% names(out))
+  expect_equal(out$PestleTag, "")
+  tagged <- data.frame(ID = "R2", Name = "b", PestleTag = "legal;bogus;political", stringsAsFactors = FALSE)
+  expect_equal(normalize_response_measures(tagged)$PestleTag, "political;legal")   # PESTLE order, unknown dropped
+})
+
+test_that("PestleTag survives a JSON save/load round trip and is a register display column", {
+  reg <- normalize_response_measures(data.frame(ID = c("R1", "R2"), Name = c("a", "b"),
+                                                PestleTag = c("political;legal", ""), stringsAsFactors = FALSE))
+  back <- normalize_response_measures(jsonlite::fromJSON(jsonlite::toJSON(reg), simplifyVector = FALSE))
+  expect_equal(back$PestleTag, c("political;legal", ""))
+  expect_true("PestleTag" %in% RM_DISPLAY_COLUMNS)
+})
+
+test_that("PestleTag is shown as translated labels", {
+  df <- data.frame(PestleTag = c("political;legal", ""), stringsAsFactors = FALSE)
+  out <- rm_translate_for_display(df, list(t = function(k) paste0("<", k, ">")))
+  expect_equal(out$PestleTag, c("<modules.wp5_scenarios.pestle.political>, <modules.wp5_scenarios.pestle.legal>", ""))
+})

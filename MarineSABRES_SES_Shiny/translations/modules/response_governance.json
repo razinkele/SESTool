@@ -274,6 +274,28 @@
       "it": "Non valutato",
       "no": "Ikke vurdert",
       "el": "Δεν αξιολογήθηκε"
+    },
+    "modules.response.governance.pestle": {
+      "en": "PESTLE elements addressed",
+      "es": "Elementos PESTLE abordados",
+      "fr": "Éléments PESTLE traités",
+      "de": "Angesprochene PESTLE-Elemente",
+      "lt": "Sprendžiami PESTLE elementai",
+      "pt": "Elementos PESTLE abordados",
+      "it": "Elementi PESTLE affrontati",
+      "no": "PESTLE-elementer som adresseres",
+      "el": "Στοιχεία PESTLE που αντιμετωπίζονται"
+    },
+    "modules.response.governance.pestle_hint": {
+      "en": "Links this response to the WP5 scenario and worldview results (Scenario Builder, WP5 scenarios tab).",
+      "es": "Vincula esta respuesta con los resultados de escenarios y visiones del mundo del WP5 (Constructor de escenarios, pestaña Escenarios del WP5).",
+      "fr": "Relie cette réponse aux résultats des scénarios et visions du monde du WP5 (Constructeur de Scénarios, onglet Scénarios du WP5).",
+      "de": "Verknüpft diese Reaktion mit den WP5-Ergebnissen zu Szenarien und Weltanschauungen (Szenario-Builder, Registerkarte WP5-Szenarien).",
+      "lt": "Susieja šį atsaką su WP5 scenarijų ir pasaulėžiūrų rezultatais (meniu punktas „Scenarijų kūrimas“, skirtukas „WP5 scenarijai“).",
+      "pt": "Associa esta resposta aos resultados de cenários e visões do mundo do WP5 (Construtor de cenários, separador Cenários do WP5).",
+      "it": "Collega questa risposta ai risultati di scenari e visioni del mondo del WP5 (Costruttore di scenari, scheda Scenari del WP5).",
+      "no": "Kobler denne responsen til WP5-resultatene for scenarier og verdensbilder (scenariobygger, fanen WP5-scenarier).",
+      "el": "Συνδέει αυτή την απόκριση με τα αποτελέσματα σεναρίων και κοσμοθεωριών του WP5 (Δημιουργός σεναρίων, καρτέλα Σενάρια WP5)."
     }
   }
 }

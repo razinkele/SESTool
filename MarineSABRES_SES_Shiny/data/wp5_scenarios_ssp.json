@@ -1,0 +1,614 @@
+{
+  "built_by": "scripts/build_wp5_scenarios.py",
+  "pestle": [
+    "political",
+    "economic",
+    "social",
+    "technological",
+    "legal",
+    "environmental"
+  ],
+  "pestle_questions": {
+    "economic": "What are the prevalent economic factors in each scenario (e.g., employment or unemployment rates, raw material costs etc.)?",
+    "environmental": "What are the environmental concerns for the fisheries and tourism industries, including the impact of climate change?",
+    "legal": "Are there legal instruments (treaties, directives, bylaws) that regulate the industries? Are changes anticipated that could determine how the fisheries and tourism industry might develop in the future?",
+    "political": "What is the political situation of the country or region (e.g., trade, fiscal, and taxation policies) and how might these affect the fisheries and tourism industries in each scenario?",
+    "social": "How much importance do culture and societal issues have in each scenario (e.g., changing family demographics, education levels, cultural trends, attitude changes and changes in lifestyles) and how might it affect the fisheries and tourism industries?",
+    "technological": "What technological innovations are likely to occur and affect the development pathway of the tourism industries?"
+  },
+  "scenarios": [
+    {
+      "cells": {
+        "economic": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r5:c2",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c2",
+            "text": "Citizens and industries prepared to pay for restoration (either directly for access or via taxes). Sustainable, green business practices are the norm. Environmental conservation seen as economically beneficial with emphasis on valuation of natural capital and ecosystem services but not for profit (MPAs freely accessible perhaps via government funding)."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c2",
+            "text": "High revenue from ecotourism."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c2",
+            "text": "Stock rebuilding may reduce fishing and profits. Subsidies provided to support alternative employment. Wild fish prices low, cultured fish prices increase. Fisheries shift towards balanced harvesting and/or ecosystem-based management. High enforcement of regulations."
+          }
+        },
+        "environmental": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c2",
+            "text": "Less severe, climate-driven changes and shifts in suitability of habitats for marine species."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c2",
+            "text": "Large-scale habitat restoration and recovery increases ecosystem services (e.g. carbon capture). Recovery is fostered by reductions in pollution (plastics, chemicals) and other habitat stressors. Large-scale (in some cases trans-national) conservation efforts allow rehabilitation of sensitive ecosystems and associated species."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c2",
+            "text": "Increased demand for blue-flag beaches and better standards."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c2",
+            "text": "Long-term increases in fish stock sizes lead to recovery of top predators (marine mammals). Ecolabel certification schemes focus on reducing environmental impact (e.g. 'dolphin safe', low carbon emissions). Fish from sustainable sources worldwide. Fisheries displaced by windfarms and MPAs."
+          }
+        },
+        "legal": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c2",
+            "text": "International commitments to agreed goals (e.g. Paris Climate Agreement) are fully embedded within legal frameworks in each country (including CBD, IPCC, IPBES)."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c2",
+            "text": "Regulations include severe penalties to ensure programmes are respected/effective."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r8:c2",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c2",
+            "text": "Regulations include severe penalties to ensure programmes are respected/effective. EIA required for new fisheries."
+          }
+        },
+        "political": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c2",
+            "text": "A collaborative, international atmosphere exists and governments (e.g. UN, EU) provide strong, consistent leadership."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c2",
+            "text": "Habitat restoration is supported through consistent policies at regional, national and international levels. MPAs planned as a precautionary approach (not only based on cost-effectiveness), their size meets current 2030 targets (e.g. EU >30%, >10% integral reserves). Trans-national marine spatial planning creates climate-ready conservation."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c2",
+            "text": "Heavy taxes on fuel, discourages overseas travel."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c2",
+            "text": "International treaties ensure sustainable fisheries management, including strong, cohesive trans-boundary regulations. High ecosystem considerations such as balanced harvesting, protecting large female fish."
+          }
+        },
+        "social": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c2",
+            "text": "Increased awareness of the importance of well-functioning marine habitats and ecosystems supported by education programmes. Protecting natural capital is a priority."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c2",
+            "text": "Increased demand for restored habitats for recreation and leisure and to meet ethical concerns. Improved MPA effectiveness by local community support. High value and legitimacy of local and indigenous knowledge. Education supports local ownership and engagement with conservation initiatives."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c2",
+            "text": "Less powered activities, more focus on ‘ecotourism’. More UK residents visit coastal resorts."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c2",
+            "text": "Increased desire for culture and consumption at the base of the food web (seaweeds and bivalves). Only sustainable fishing practices are permitted. Lower meat and fish consumption per capita. Equitable and ethical are important. Traceability and quality standards"
+          }
+        },
+        "technological": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r7:c2",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c2",
+            "text": "Increased investment in technology leads to breakthroughs in low-cost, efficient environmental monitoring (e.g. satellite, drones). Biodegradable techniques for effective restoration and long-term monitoring of habitats. Biotechnology (e.g. assisted evolution) increases resilience of restored species. Advanced tools support connectivity planning."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r7:c2",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c2",
+            "text": "Environmentally-friendly fishing gear (low bycatch). Large-scale culture of lower trophic level species (seaweeds, bivalves). Sustainable, low impact fishing gears."
+          }
+        }
+      },
+      "driver_mapping": null,
+      "ebm_conducive": "yes",
+      "expanded_narrative": "The world shifts gradually, but pervasively, toward a more sustainable path, emphasizing more inclusive development that respects perceived environmental boundaries. Increasing evidence of and accounting for the social, cultural, and economic costs of environmental degradation and inequality drive this shift. Management of the global commons slowly improves, facilitated by increasingly effective and persistent cooperation and collaboration of local, national, and international organizations and institutions, the private sector, and civil society. Educational and health investments accelerate the demographic transition, leading to a relatively low population. Beginning with current high-income countries, the emphasis on economic growth shifts toward a broader emphasis on human well-being, even at the expense of somewhat slower economic growth over the longer term. Driven by an increasing commitment to achieving development goals, inequality is reduced both across and within countries. Investment in environmental technology and changes in tax structures lead to improved resource efficiency, reducing overall energy and resource use and improving environmental conditions over the longer term. Increased investment, financial incentives and changing perceptions make renewable energy more attractive. Consumption is oriented toward low material growth and lower resource and energy intensity.\nFrom O’Neill et al 2017\n• People aspire to high levels of welfare and a healthy environment. The best way to achieve this is through international cooperation.\n• People see their personal interests as being connected to a strong and cooperative society.\n• Policies are coordinated at the European Union and international level.\n• Decreasing income inequality.\n• Low resource intensity and fossil fuel dependency.\n• Environmentalism.",
+      "global_summary": "The world shifts gradually, but pervasively, toward a more sustainable path, emphasizing more inclusive development that respects perceived environmental boundaries.\nWarming limited to 2oC.",
+      "id": "ssp1_26",
+      "name": "Sustainability: taking the green road",
+      "rcp": "2.6",
+      "ssp": "SSP1",
+      "warming_cap": "<=2"
+    },
+    {
+      "cells": {
+        "economic": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c3",
+            "text": "Public policies aim to promote economic activities that are small scale and regional. Slowly converging incomes between industrialized and developing countries."
+          },
+          "hrmc": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r5:c3",
+            "text": null
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c3",
+            "text": "Increased visitation by domestic tourists to domestic resorts. Co-operatives and joint ventures encourage development."
+          },
+          "sh": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r5:c3",
+            "text": null
+          }
+        },
+        "environmental": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r9:c3",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r9:c3",
+            "text": null
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c3",
+            "text": "Destinations provide more ‘eco-friendly’ activities. Development in keeping with existing natural landscape."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c3",
+            "text": "Focus on maximum sustainable yield (i.e. without damaging resources). Improved status for many inshore stocks but management of trans-national species very difficult. Some closed areas introduced to protect fish spawning/nursery areas and for conservation benefit. Not worried about downstream impacts of activities."
+          }
+        },
+        "legal": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r8:c3",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r8:c3",
+            "text": null
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r8:c3",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c3",
+            "text": "Regulation via a mosaic of different byelaws/legislation across different countries. Fisheries quota allocation might occur at sub-national level with regional management. Innovative (e.g. individual transferrable quota (ITQ)) schemes tried in some places.\nDiscarding regulations strictly enforced, with reasonable exemptions."
+          }
+        },
+        "political": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r4:c3",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c3",
+            "text": "Conservation bodies, NGOs and recreational fishing groups have a role in regional management authorities."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c3",
+            "text": "Focus on local identity. Unique selling points of destinations heavily drawn upon."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c3",
+            "text": "Self-sufficiency viewed as important. Primary objective is maintaining local sustainability of fisheries. ‘Bottom up’ local/regional governance. Campaigns to eat local seafood rather than imported."
+          }
+        },
+        "social": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r6:c3",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r6:c3",
+            "text": null
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c3",
+            "text": "Increased visitation by domestic tourists to UK resorts. UK residents support seaside towns of yesteryear."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c3",
+            "text": "Equity and ownership are important.\nTraceability standards and minimising food miles important. Improved opportunities for ‘sport fisheries’ as well as food production. Less interest in high-seas fishing."
+          }
+        },
+        "technological": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c3",
+            "text": "An important focus is on using technology and new ideas to make the best use of local and regional resources."
+          },
+          "hrmc": {
+            "gap_note": "ssp_not_in_futuremares",
+            "source_ref": "table2:r7:c3",
+            "text": null
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r7:c3",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c3",
+            "text": "Large number of small/traditional locally-owned vessels. Moderate expansion of small-scale windfarms, which disrupt fisheries somewhat."
+          }
+        }
+      },
+      "driver_mapping": null,
+      "ebm_conducive": "somewhat",
+      "expanded_narrative": "The world follows a path in which social, economic, and technological trends do not shift markedly from historical patterns. Development and income growth proceeds unevenly, with some countries making relatively good progress while others fall short of expectations. Most economies are politically stable. Globally connected markets function imperfectly. Global and national institutions work toward but make slow progress in achieving sustainable development goals, including improved living conditions and access to education, safe water, and health care. Technological development proceeds apace, but without fundamental breakthroughs. Environmental systems experience degradation, although there are some improvements and overall the intensity of resource and energy use declines. Even though fossil fuel dependency decreases slowly, there is no reluctance to use unconventional fossil resources. Global population growth is moderate and levels off in the second half of the century as a consequence of completion of the demographic transition. However, education investments are not high enough to accelerate the transition to low fertility rates in low-income countries and to rapidly slow population growth. This growth, along with income inequality that persists or improves only slowly, continuing societal stratification, and limited social cohesion, maintain challenges to reducing vulnerability to societal and environmental changes and constrain significant advances in sustainable development.\nO’Neill et al, 2017\n• Public policies aim to promote economic activities that are small scale and regional.\n• An important focus is on using technology and new ideas to make the best use of local and regional resources.\n• Global environmental problems receive less attention.\n• Moderate population growth.\n• Slowly converging incomes between industrialized and developing countries.\n• A rich mosaic of local strategies to manage ecosystems and ecosystem services",
+      "global_summary": "Social, economic, and technological trends do not shift markedly from historical patterns.\nWarming limited to 3oC.",
+      "id": "ssp2_45",
+      "name": "Middle of the road",
+      "rcp": "4.5",
+      "ssp": "SSP2",
+      "warming_cap": "<=3"
+    },
+    {
+      "cells": {
+        "economic": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r5:c4",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c4",
+            "text": "Local/regional investment in restoration and conservation shifted to sectors that create jobs/have higher economic relevance. Restoration targeted to high-value harvestable species (shellfish). Less financial support for monitoring and enforcement of conservation. Potential subsidies to protect valuable assets."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r5:c4",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c4",
+            "text": "Depending on national priorities, subsidies may support traditional fisheries; fish price increases due to international trade barriers."
+          }
+        },
+        "environmental": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c4",
+            "text": "Stronger climate-driven changes in the suitability of habitats to support local species increase shifts and add uncertainty to regional management."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c4",
+            "text": "Large areas set aside for food production may pose carrying capacity issues. Smaller, regional conservation efforts with limited scope for planning MPAs based on large-scale connectivity patterns and other conservation actions. Biodiversity declines due to little restoration of habitat-forming species."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r9:c4",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c4",
+            "text": "Food security more important than MPAs."
+          }
+        },
+        "legal": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c4",
+            "text": "International commitments to UN policies are poorly implemented and depend on national interests."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c4",
+            "text": "Arguments and legal disputes between countries about transboundary issues and who is to blame for decline in vulnerable species. Weak conservation legislation."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r8:c4",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c4",
+            "text": "Focus on protectionism (import/trade laws). Individual transferrable quotas (ITQs)."
+          }
+        },
+        "political": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c4",
+            "text": "Lack of agreement between nations leads to inconsistent and smaller-scale (within EEZ) application of policies."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c4",
+            "text": "Restoration strategies differ among countries. Restoration is relatively low on national policy agendas as opposed to meeting energy demands. MPAs used to protect species of national importance / value and they compete for space with energy and food provision. Conservation policy is not high on the political agenda. Lack of coordinated policies for (trans-boundary) species."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c4",
+            "text": "Focus on national identity and local communities. Strong emphasis given to the regeneration of seaside resorts. Role of local authorities and tourist boards are enhanced."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c4",
+            "text": "Strong political tension among nations regarding shared resources, particularly highlight migratory species or those experiencing range shifts. Maintaining national supply important. Frequent ‘cod wars’. Decline in fish imports (import tariffs). Higher fish taxes."
+          }
+        },
+        "social": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r6:c4",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c4",
+            "text": "Restoration is not a priority particularly of habitats (e.g. saltmarshes) that take up valuable farmland. Restoration targeted to iconic species/habitats and those protecting assets (resilience of coastline). MPA effectiveness improved by local community support. High value and legitimacy of local and indigenous knowledge. Education supports local ownership and engagement with conservation initiatives. A mosaic of societal attitudes on conservation. Some countries highly concerned, for others the main focus is on production."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c4",
+            "text": "Increased visitation by domestic tourists to domestic resorts. Growth of traditional activities, promenades and piers."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c4",
+            "text": "Large support of traditional fisheries to sustain cultural heritage and employment at the national level. Focus on maintaining ‘maximum social yield’ (maximising employment). Increased disparity between rich and poor countries. Sport fisheries ‘squeezed out’ due to focus on maintaining production and employment."
+          }
+        },
+        "technological": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r7:c4",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c4",
+            "text": "Concentration on locally-developed technologies and knowledge to restore habitats or species (little learning from elsewhere). Using technology to restore native habitats that have cultural meaning. Little or no technological advancement in marine conservation. Intensive monitoring of nationally important assets."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r7:c4",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c4",
+            "text": "Pace of fishing and aquaculture innovation slows in some countries without international exchange and harvesting sector continues to operate as now. Depending on national priorities, some countries may have a large investment in technology for food security. High investment in innovation to monitor infringements into EEZ (investments in drone and remote sensing technology). Little new technology."
+          }
+        }
+      },
+      "driver_mapping": null,
+      "ebm_conducive": "no",
+      "expanded_narrative": "A resurgent nationalism, concerns about competitiveness and security, and regional conflicts push countries to increasingly focus on domestic or, at most, regional issues. This trend is reinforced by the limited number of comparatively weak global institutions, with uneven coordination and cooperation for addressing environmental and other global concerns. Policies shift over time to become increasingly oriented toward national and regional security issues, including barriers to trade, particularly in the energy resource and agricultural markets. Countries focus on achieving energy and food security goals within their own regions at the expense of broader-based development, and in several regions move toward more authoritarian forms of government with highly regulated economies. Investments in education and technological development decline. Economic development is slow, consumption is material-intensive, and inequalities persist or worsen over time, especially in developing countries. There are pockets of extreme poverty alongside pockets of moderate wealth, with many countries struggling to maintain living standards and provide access to safe water, improved sanitation, and health care for disadvantaged populations. A low international priority for addressing environmental concerns leads to strong environmental degradation in some regions. The combination of impeded development and limited environmental concern results in poor progress toward sustainability. Population growth is low in industrialized and high in developing countries.\nO’Neill et al, 2017\n• Increased national isolation and independence.\n• Long-term economic growth limited by government policies, that limit international competition and protect national industries.\n• Conservation and the environment are not a main priority.\n• High resource intensity and fossil fuel dependency.\n• Low investments in technology development and education.\n• Weak international governance and local institutions.",
+      "global_summary": "Resurgent nationalism, concerns about competitiveness and security, and regional conflicts push countries to increasingly focus on domestic or, at most, regional issues.\nWarming limited to 4oC.",
+      "id": "ssp3_70",
+      "name": "Regional rivalry: a rocky road",
+      "rcp": "7.0",
+      "ssp": "SSP3",
+      "warming_cap": "<=4"
+    },
+    {
+      "cells": {
+        "economic": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r5:c5",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c5",
+            "text": "High cost effectiveness of restoration actions (e.g. for blue carbon). Biodiversity banking possible to support restoration. Private sector may increase investment in restoration. Focus on short-term wealth generation – degradation in long term. Entrance fees to MPAs to support profitable ecotourism and/or exploitation of marketable ecosystem services such as harvesting, blue carbon, etc. *Internally inconsistent? Politically environment not very important rather markets, but economically it has value. Are there values for natural capital but no ‘natural’ business driver?"
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c5",
+            "text": "Low fuel prices, so jet-skiing, power boating etc. increase."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r5:c5",
+            "text": "Huge multinational companies allow fish to be obtained from the cheapest sources worldwide (both for fishing and mariculture) benefiting a few countries. Market-based incentives dominate with no subsidies."
+          }
+        },
+        "environmental": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c5",
+            "text": "Continued warming leads to changes in suitability of waters to support natural habitats and species."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c5",
+            "text": "Changes in suitability of waters to support historical, natural habitat. Increased habitat degradation from short-term profit-driven activities. International trade leads to decline in biodiversity in developing counties. In some areas, well-established populations of invasive species compromise restoration or conservation efforts. Loss/shifts of some keystone species may decrease ecosystem functioning."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c5",
+            "text": "Warmer climate leads to UK resorts becoming more attractive."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r9:c5",
+            "text": "Sequentially depleted fish stocks. Some stocks collapse or shifted due to bio-invasions – new assemblages offer opportunities to be exploited."
+          }
+        },
+        "legal": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c5",
+            "text": "International commitments and agreements on environment/ocean heath objectives are abandoned."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c5",
+            "text": "Conflicts arise in marine spatial planning due to economic vs conservation objectives. Increased international trade conventions, including CITES, with little legal focus on pure conservation or habitat restoration if deemed non-profitable. National legislation for MPA programmes is weak in favour of investment in sectors that create jobs."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r8:c5",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r8:c5",
+            "text": "Few legal restrictions. Promoting management of harvested species to maximum economic yield; GATT style trade agreements may take precedence over conservation and environmental legislation. Open trade for seafood and seafood processing. Profit driven efficiency of harvesting but not based on minimising pollution. Private access rights to fisheries and tradable permits."
+          }
+        },
+        "political": {
+          "general": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c5",
+            "text": "The EU falls apart as a political force, and there is no unified strategy for national environmental policies, with environmental goals less valued than economic growth."
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c5",
+            "text": "Restoration largely abandoned or conducted for production (profit), or if the cheapest way to protect coastal\nassets. Political agendas are driven by global economic interests, omitting conservation and environmental needs."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c5",
+            "text": "Few constraints on international travel. Cruise ship industry and use of marinas continues to expand. Competition between resorts for investment and development. Resorts become more homogeneous."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r4:c5",
+            "text": "Management based on maximum economic yield and not maximum sustainable yield. More competition for resources globally. Europe out-competed by Asia/China. Use of cheap immigrant labour. Low taxes, strong private sector. Decommissioning subsidies reduced."
+          }
+        },
+        "social": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r6:c5",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c5",
+            "text": "Full support for conserving and restoring marine ecosystems that produce market valuable resources or services (e.g. cheap protection of coastal assets). Network of harvesting artificial created habitats - blue farms. Poor ocean and climate literacy. Loss of traditional knowledge and cultural values associated with conservation effectiveness in MPAs."
+          },
+          "lh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c5",
+            "text": "Domestic travellers more inclined to go overseas."
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r6:c5",
+            "text": "Migration and marginalisation of artisanal/traditional fishers and farmers continues to degrade coastal communities dependent on those activities. Loss of traditional knowledge, local identities and cultural values linked to fisheries due to economic rights. Increased reliance on aquaculture for protein security."
+          }
+        },
+        "technological": {
+          "general": {
+            "gap_note": "no_source_text",
+            "source_ref": "table2:r7:c5",
+            "text": null
+          },
+          "hrmc": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c5",
+            "text": "Promotion of bio-engineering in conservation and restoration (i.e. assisted evolution to support MPAs, active restoration, etc.) in habitats considered profitable. Potential use of artificial habitats instead of traditional species. Investment in MPAs with artificial habitats. Low ethical constraints on technological development. Technological advances increase efficiency of monitoring and enforcement and better of MPAs deemed to support economic growth."
+          },
+          "lh": {
+            "gap_note": "no_afmec_lines",
+            "source_ref": "table2:r7:c5",
+            "text": null
+          },
+          "sh": {
+            "gap_note": null,
+            "source_ref": "table2:r7:c5",
+            "text": "Investment in high-tech aquaculture, fish feed rations decrease, increased efficiency/profitability (fish meal replacement) with little investment in offshore (deep water) solutions. Technology and automation important as a means to cutting labour costs (taken from the aquaculture scenario). Only a few high-tech boats. Few technical restrictions."
+          }
+        }
+      },
+      "driver_mapping": null,
+      "ebm_conducive": "no",
+      "expanded_narrative": "Driven by the economic success of industrialized and emerging economies, this world places increasing faith in competitive markets, innovation and participatory societies to produce rapid technological progress and development of human capital as the path to sustainable development. Global markets are increasingly integrated, with interventions focused on maintaining competition and removing institutional barriers to the participation of disadvantaged population groups. There are also strong investments in health, education, and institutions to enhance human and social capital. At the same time, the push for economic and social development is coupled with the exploitation of abundant fossil fuel resources and the adoption of resource and energy intensive lifestyles around the world. All these factors lead to rapid growth of the global economy. There is faith in the ability to effectively manage social and ecological systems, including by geo-engineering if necessary. While local environmental impacts are addressed effectively by technological solutions, there is relatively little effort to avoid potential global environmental impacts due to a perceived tradeoff with progress on economic development. Global population peaks and declines in the 21st century. Though fertility declines rapidly in developing countries, fertility levels in high income countries are relatively high (at or above replacement level) due to optimistic economic outlooks. International mobility is increased by gradually opening up labor markets as income disparities decrease.\nO’Neill et al, 2017\n• People aspire to personal independence, material wealth and greater mobility, all of which have a negative effect on wider societal and environmental goals.\n• Pressure grows to reduce taxes and strip away regulation. More public services are privatized or privately managed.\n• Consumerism.\n• High fossil fuel dependency.\n• Highly engineered infrastructure and ecosystems.",
+      "global_summary": "The world places increasing faith in competitive markets, innovation and participatory societies to produce rapid technological progress.\nWarming exceeds 4oC",
+      "id": "ssp5_85",
+      "name": "Fossil-fuelled development – taking the highway",
+      "rcp": "8.5",
+      "ssp": "SSP5",
+      "warming_cap": ">4"
+    }
+  ],
+  "slice_da_focus": {
+    "hrmc": "tuscany",
+    "lh": "macaronesia",
+    "sh": "arctic"
+  },
+  "slices": [
+    "general",
+    "hrmc",
+    "sh",
+    "lh"
+  ],
+  "source": "D5.1 (2024-02-26), SSP-RCP regionalisation table",
+  "version": "1.0"
+}
