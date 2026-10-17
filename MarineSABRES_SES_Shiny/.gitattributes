@@ -17,3 +17,4 @@ deployment/required_packages.R -export-ignore
 # byte-for-byte rebuild test (scripts/tests) passes on Windows with core.autocrlf=true.
 data/wp5_scenarios_ssp.json text eol=lf
 data/wp5_worldview_matrix.json text eol=lf
+data/wp5_governance_profiles.json text eol=lf
