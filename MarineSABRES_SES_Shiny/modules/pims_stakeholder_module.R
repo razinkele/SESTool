@@ -449,7 +449,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(input$sh_name, input$sh_type)
 
       stakeholder_data$stakeholder_counter <- stakeholder_data$stakeholder_counter + 1
-      new_id <- generate_element_id(PIMS_ID_PREFIX$stakeholder, stakeholder_data$stakeholder_counter)
+      new_id <- next_element_id(PIMS_ID_PREFIX$stakeholder, stakeholder_data$stakeholder_counter)
 
       new_row <- data.frame(
         ID = new_id,
@@ -632,7 +632,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(input$eng_stakeholder, input$eng_method)
 
       stakeholder_data$engagement_counter <- stakeholder_data$engagement_counter + 1
-      new_id <- generate_element_id(PIMS_ID_PREFIX$engagement, stakeholder_data$engagement_counter)
+      new_id <- next_element_id(PIMS_ID_PREFIX$engagement, stakeholder_data$engagement_counter)
 
       sh_name <- stakeholder_data$stakeholders$Name[stakeholder_data$stakeholders$ID == input$eng_stakeholder]
 
@@ -672,7 +672,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(input$comm_audience, input$comm_type)
 
       stakeholder_data$communication_counter <- stakeholder_data$communication_counter + 1
-      new_id <- generate_element_id(PIMS_ID_PREFIX$communication, stakeholder_data$communication_counter)
+      new_id <- next_element_id(PIMS_ID_PREFIX$communication, stakeholder_data$communication_counter)
 
       new_row <- data.frame(
         ID = new_id,

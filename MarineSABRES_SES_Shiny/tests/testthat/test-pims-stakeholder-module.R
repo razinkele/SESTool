@@ -57,3 +57,22 @@ test_that("pims_stakeholder_server event_bus defaults to NULL", {
   expect_true(is.null(default) || identical(as.character(default), "NULL"),
               info = "event_bus must default to NULL for backward compatibility")
 })
+
+test_that("next_element_id returns exactly one id", {
+  expect_equal(next_element_id("SH", 2), "SH002")
+  expect_equal(next_element_id("RM", 12), "RM012")
+})
+
+test_that("adding two stakeholders gives two rows with distinct ids (bug: generate_element_id(prefix, n) returned 1..n)", {
+  real_server <- get("pims_stakeholder_server", envir = .GlobalEnv)
+  pdr <- shiny::reactiveVal(create_empty_project("t"))
+  testServer(real_server, args = list(project_data_reactive = pdr, i18n = make_test_i18n()), {
+    session$flushReact()
+    session$setInputs(sh_name = "Fishers", sh_type = "x", sh_sector = "", sh_contact = "", sh_interests = "", sh_role = "", sh_power = 1, sh_interest = 1, sh_attitude = "", sh_engagement_level = "", add_stakeholder = 1)
+    session$setInputs(sh_name = "Divers", sh_type = "x", sh_sector = "", sh_contact = "", sh_interests = "", sh_role = "", sh_power = 1, sh_interest = 1, sh_attitude = "", sh_engagement_level = "", add_stakeholder = 2)
+    sh <- stakeholder_data$stakeholders
+    expect_equal(nrow(sh), 2L)
+    expect_equal(sh$ID, c("SH001", "SH002"))
+    expect_equal(sh$Name, c("Fishers", "Divers"))
+  })
+})

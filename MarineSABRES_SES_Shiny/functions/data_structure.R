@@ -15,6 +15,11 @@ generate_element_id <- function(prefix, n) {
   paste0(prefix, sprintf("%03d", n))
 }
 
+#' One new element ID for a running counter (e.g. the 2nd stakeholder -> "SH002").
+#' generate_element_id(prefix, n) returns ALL ids 1..n for a single n, so it must
+#' not be used to create one row.
+next_element_id <- function(prefix, n) paste0(prefix, sprintf("%03d", as.integer(n)))
+
 # Stable, monotonic element IDs. Allocated once per element and never reused
 # within a session, so removing/reordering rows does not reassign survivors'
 # IDs — keeping LinkedX refs and ID-keyed matrices valid across edits.

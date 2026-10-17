@@ -527,7 +527,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       req(input$rm_name, input$rm_type)
 
       response_data$counter <- response_data$counter + 1
-      new_id <- generate_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
+      new_id <- next_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
       # WS-3a: build through the register schema so columns always match
       new_row <- normalize_response_measures(data.frame(

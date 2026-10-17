@@ -229,3 +229,14 @@ test_that("the governance section offers the PESTLE multi-select", {
   expect_match(ui, "t-rm_pestle", fixed = TRUE)
   expect_match(ui, 'value="environmental"', fixed = TRUE)
 })
+
+test_that("adding two measures gives two rows with distinct ids", {
+  proj <- create_empty_project("t"); pd <- reactiveVal(proj)
+  testServer(real_response_measures_server, args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$setInputs(rm_name = "A", rm_type = "regulatory", add_response = 1)
+    session$setInputs(rm_name = "B", rm_type = "regulatory", add_response = 2)
+    m <- pd()$data$response_measures$measures
+    expect_equal(nrow(m), 2L)
+    expect_equal(m$ID, c("RM001", "RM002"))
+  })
+})
