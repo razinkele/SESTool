@@ -210,7 +210,7 @@ TICK, CROSS = "ü", "ý"  # Wingdings 0xFC = needed, 0xFD = not needed
 
 
 def clean(s):
-    s = (s or "").replace(" ", " ")
+    s = (s or "").replace("\u00a0", " ")
     s = re.sub(r"[ \t]*\n[ \t]*", "\n", s)
     s = re.sub(r"\n{2,}", "\n", s)
     return re.sub(r"[ \t]+", " ", s).strip()
@@ -419,7 +419,7 @@ if __name__ == "__main__":
 micromamba run -n shiny python scripts/build_wp5_scenarios.py --src "C:/Users/arturas.baziukas/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny/WP5/Task 5.1 Application of Scenarios"
 micromamba run -n shiny python -m pytest scripts/tests -q
 ```
-Expected: "wrote wp5_scenarios_ssp.json and wp5_worldview_matrix.json to …/data"; 7 passed (the source-dependent tests run locally because the default path points at the main checkout; on CI they skip).
+Expected: "wrote wp5_scenarios_ssp.json and wp5_worldview_matrix.json to …/data"; 7 passed (the source-dependent tests run locally because the default path points at the main checkout; CI does not run pytest, and without the sources those tests skip).
 
 - [ ] **Step 5: Amend the spec** (ruling 1 and the source-ref format): in §3.2 change "a leading `*` marks \"worldview more conducive\" and is stripped" to "a leading `*` (present on some, not all, worldview-more-conducive cells) is stripped; `wv_more_conducive` comes from Table 4 only", and change the matrix `source_ref` example to the label form the script writes: `{ "table4": "<worldview>:<pestle>:c<col>", "table5": "<worldview>:c<col>", "appendix1": "<worldview>:<pestle>:c<col>" }`. In §7 replace the clause "Appendix 1 `*` marks agree with Table 4 \"X\"" with "Appendix 1 `*` marks are incomplete (8 cells lack one) and are not used; Table 4's \"X\" is the source".
 
@@ -498,8 +498,6 @@ test_that("a missing or corrupt file gives NULL, not an error", {
 })
 ```
 
-Note `wp5_matched_responses(NULL, …)` must return a zero-row result: implement it as `if (is.null(register)) return(data.frame())` before the other checks (the helper code below handles data frames; add that one line).
-
 - [ ] **Step 2: Run to verify it fails** — filter `'^wp5-scenarios$'`. Expected: FAIL, cannot open `functions/wp5_scenarios.R`.
 
 - [ ] **Step 3: Implement.** In `constants.R` add:
@@ -509,7 +507,7 @@ Note `wp5_matched_responses(NULL, …)` must return a zero-row result: implement
 PESTLE_CODES <- c("political", "economic", "social", "technological", "legal", "environmental")
 ```
 
-Create `functions/wp5_scenarios.R` with this content (verified against the generated JSON while planning), then make two edits: replace the line `WP5_PESTLE <- c(...)` by `WP5_PESTLE <- PESTLE_CODES`, and add `if (is.null(register)) return(data.frame())` as the first line of `wp5_matched_responses()`:
+Create `functions/wp5_scenarios.R` with exactly this content (verified against the generated JSON while planning):
 
 ```r
 # functions/wp5_scenarios.R
@@ -521,7 +519,7 @@ Create `functions/wp5_scenarios.R` with this content (verified against the gener
 
 .wp5_scen_env <- new.env(parent = emptyenv())
 
-WP5_PESTLE <- c("political", "economic", "social", "technological", "legal", "environmental")
+WP5_PESTLE <- PESTLE_CODES   # constants.R (sourced before functions/)
 WP5_SSPS <- c("ssp1_26", "ssp2_45", "ssp3_70", "ssp5_85")
 WP5_WORLDVIEWS <- c("egalitarian", "individualist", "hierarchy")
 
@@ -585,7 +583,8 @@ wp5_area_elements <- function(matrix, worldview, ssp) {
 #' @param register Response register data.frame (may lack PestleTag: legacy)
 #' @return the matching rows, with a list column `matched` (the covered elements)
 wp5_matched_responses <- function(register, elements) {
-  if (is.null(register) || !is.data.frame(register) || nrow(register) == 0 ||
+  if (is.null(register)) return(data.frame())   # NULL[0, ] would error
+  if (!is.data.frame(register) || nrow(register) == 0 ||
       !"PestleTag" %in% names(register) || length(elements) == 0) {
     return(register[0, , drop = FALSE])
   }
@@ -868,7 +867,7 @@ test_that("renders with no project; default cell has area-level elements (review
     expect_true(length(wp5_area_elements(load_wp5_worldview_matrix(), selected()$worldview, selected()$ssp)) > 0)
     expect_error(output$heatmap, NA)
     expect_match(as.character(output$body$html), "modules.wp5_scenarios.strategy.behavioural", fixed = TRUE)
-    expect_match(as.character(output$responses$html), "modules.wp5_scenarios.responses_no_project")
+    expect_match(as.character(output$responses$html), "modules.wp5_scenarios.responses_no_project", fixed = TRUE)
   })
 })
 
@@ -1169,7 +1168,7 @@ and at the start of `scenario_builder_server()`'s `moduleServer` body:
 
 Check: `provenance_badge()` exists (`grep -rn "^provenance_badge <- function" functions`); if its first argument values differ from `"toolbox_extension"`, use the value the Designer uses.
 
-- [ ] **Step 4: Run tests** — `'^wp5-scenario-reference-module$'`, `'^scenario-builder-module$'`, `'^analysis-modules-batch$'`, `'^wp5-scenarios$'`; i18n audit `missing=0 hardcoded=0`.
+- [ ] **Step 4: Run tests** — `'^wp5-scenario-reference-module$'`, `'^scenario-builder-module$'`, `'^analysis-modules-batch$'`, `'^wp5-scenarios$'`, `'^i18n-enforcement$'`; i18n audit `missing=0 hardcoded=0`.
 
 - [ ] **Step 5: Commit** — `feat(wp5): D5.1 scenario x worldview reference tab in the Scenario Builder (WS-8)`.
 
