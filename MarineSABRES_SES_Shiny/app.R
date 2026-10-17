@@ -97,6 +97,7 @@ OPTIONAL_MODULES <- c(
   "modules/ses_models_module.R",         # Load Pre-built SES Models
   "modules/pims_module.R",               # PIMS Project module
   "modules/pims_stakeholder_module.R",   # PIMS Stakeholder module
+  "modules/wp5_readiness_module.R",      # WS-9b D5.4 governance-readiness check
   "modules/analysis_metrics.R",          # Network Metrics Analysis
   "modules/analysis_bot.R",              # BOT (Behaviour Over Time) Analysis
   "modules/analysis_simplify.R",         # Network Simplification Tools
@@ -479,6 +480,7 @@ ui <- bs4DashPage(
       # ==================== PIMS MODULE ====================
       bs4TabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
       bs4TabItem(tabName = "pims_stakeholders", pims_stakeholder_ui("pims_stake", i18n)),
+      bs4TabItem(tabName = "pims_readiness", wp5_readiness_ui("pims_ready", i18n)),
       bs4TabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
       bs4TabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
       bs4TabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
@@ -1019,6 +1021,7 @@ server <- function(input, output, session) {
   # PIMS modules
   pims_project_data <- pims_project_server("pims_proj", project_data, session_i18n)
   pims_stakeholders_data <- pims_stakeholder_server("pims_stake", project_data, session_i18n)
+  pims_readiness_data <- wp5_readiness_server("pims_ready", project_data, session_i18n)
   pims_resources_data <- pims_resources_server("pims_res", project_data, session_i18n)
   pims_data_data <- pims_data_server("pims_dm", project_data, session_i18n)
   pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data, session_i18n)
