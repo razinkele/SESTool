@@ -195,6 +195,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           NERoles = character(),
           SourceId = character()
         ),
+        readiness = list(version = "1.0", respondents = data.frame(RespondentId = character(), EnteredAt = character(), Source = character(), Role = character(), stringsAsFactors = FALSE)),
 
         engagements = data.frame(
           ID = character(),
@@ -1005,6 +1006,17 @@ normalize_json_project_data <- function(data) {
     if (nrow(data$data$pims$stakeholders) > 0 && exists("stamp_min_app_version", mode = "function") &&
         exists("WP5_GOVERNANCE_MIN_APP_VERSION") && !is.null(WP5_GOVERNANCE_MIN_APP_VERSION)) {
       data <- stamp_min_app_version(data, WP5_GOVERNANCE_MIN_APP_VERSION)
+    }
+  }
+
+  # PIMS readiness answers: WS-9b schema on every JSON load path; respondents need 1.31.0
+  if (is.list(data$data) && is.list(data$data$pims) && !is.null(data$data$pims$readiness) &&
+      exists("normalize_readiness", mode = "function")) {
+    bank <- if (exists("load_wp5_readiness_items", mode = "function")) load_wp5_readiness_items() else NULL
+    data$data$pims$readiness <- normalize_readiness(data$data$pims$readiness, bank)
+    if (readiness_has_respondents(data$data$pims$readiness) && exists("stamp_min_app_version", mode = "function") &&
+        exists("WP5_READINESS_MIN_APP_VERSION")) {
+      data <- stamp_min_app_version(data, WP5_READINESS_MIN_APP_VERSION)
     }
   }
 

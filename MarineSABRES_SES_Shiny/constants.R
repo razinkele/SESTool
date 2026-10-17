@@ -957,6 +957,14 @@ PIMS_STAKEHOLDER_TYPE_KEYS <- c(
 WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"
 
 # ============================================================================
+# WP5 GOVERNANCE-READINESS CHECK (spec 2026-10-17 WS-9b, D5.4 questionnaire)
+# ============================================================================
+READINESS_ID_PREFIX <- "R"            # anonymous respondent ids R001..
+READINESS_META_COLUMNS <- c("RespondentId", "EnteredAt", "Source", "Role")
+# data$pims$readiness is new in 1.31.0; stamped whenever a project has a respondent
+WP5_READINESS_MIN_APP_VERSION <- "1.31.0"
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 
