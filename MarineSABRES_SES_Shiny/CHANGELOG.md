@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Adding a second stakeholder, engagement, communication or response measure created duplicate rows (since 1.16.5).
+- Projects that already hold duplicated rows from the old bug are not repaired automatically.
 
 ### Notes
 - Findings are qualitative; power/interest grids are shown only where published (Tuscany, Madeira).

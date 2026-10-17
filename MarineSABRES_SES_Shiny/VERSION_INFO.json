@@ -48,7 +48,7 @@
   "migration_notes": [
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save.",
     "Projects with an intervention-designer scenario that re-weights links (links_modified) are stamped min_app_version 1.28.0; 1.27.0 and older would ignore the re-weights and show the scenario as unchanged.",
-    "Projects that use the new governance fields (D5.4 roles, Policy_Target) need app 1.30.0."
+    "Projects with stakeholders saved by 1.30.0 (or with Policy_Target) need app 1.30.0; older apps cannot add stakeholders to the 14-column register."
   ],
   "previous_version": "1.29.0",
   "build_info": {

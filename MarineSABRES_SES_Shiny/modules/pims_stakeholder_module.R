@@ -431,7 +431,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       pd$data$pims$stakeholder_counter  <- stakeholder_data$stakeholder_counter
       pd$data$pims$engagement_counter   <- stakeholder_data$engagement_counter
       pd$data$pims$communication_counter <- stakeholder_data$communication_counter
-      if (stakeholders_use_governance_fields(stakeholder_data$stakeholders)) {
+      if (stakeholders_need_governance_version(stakeholder_data$stakeholders)) {
         pd <- stamp_min_app_version(pd, WP5_GOVERNANCE_MIN_APP_VERSION)
       }
       project_data_reactive(pd)
@@ -455,6 +455,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$add_stakeholder, {
       req(input$sh_name, input$sh_type)
 
+      stakeholder_data$stakeholder_counter <- safe_counter(stakeholder_data$stakeholder_counter, stakeholder_data$stakeholders$ID, PIMS_ID_PREFIX$stakeholder)
       stakeholder_data$stakeholder_counter <- stakeholder_data$stakeholder_counter + 1
       new_id <- next_element_id(PIMS_ID_PREFIX$stakeholder, stakeholder_data$stakeholder_counter)
 
@@ -540,7 +541,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$seed_da_confirm, {
       prof <- gov_profile(); req(prof)
       subs <- if (length(prof$sub_areas)) (input$seed_sub_areas %||% character(0)) else NULL
-      res <- seed_da_actors(stakeholder_data$stakeholders, prof, subs, i18n, stakeholder_data$stakeholder_counter)
+      res <- seed_da_actors(stakeholder_data$stakeholders, prof, subs, i18n,
+                             safe_counter(stakeholder_data$stakeholder_counter, stakeholder_data$stakeholders$ID, PIMS_ID_PREFIX$stakeholder))
       stakeholder_data$stakeholders <- res$stakeholders
       stakeholder_data$stakeholder_counter <- res$counter
       sync_to_project_data()

@@ -59,3 +59,9 @@ stakeholders_display_view <- function(df, i18n) {
   }, character(1))
   df[, setdiff(names(df), "SourceId"), drop = FALSE]
 }
+
+#' TRUE when a non-empty register is written in the 14-column schema; older apps
+#' rbind() a 12-column row onto it and fail, so it needs WP5_GOVERNANCE_MIN_APP_VERSION
+stakeholders_need_governance_version <- function(df) {
+  nrow(normalize_stakeholders(df)) > 0
+}

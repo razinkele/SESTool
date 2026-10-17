@@ -951,8 +951,9 @@ PIMS_STAKEHOLDER_TYPE_KEYS <- c(
   local_communities = "modules.pims.stakeholder.local_communities",
   indigenous_groups = "modules.pims.stakeholder.indigenous_groups",
   other = "modules.isa.ai_assistant.other")
-# Older apps rbind() a 12-column stakeholder row onto the frame and drop Policy_Target,
-# so a project using either needs this version (WS-0 stamp_min_app_version()).
+# Older apps rbind() a 12-column stakeholder row onto the 14-column register and drop Policy_Target:
+# stamp whenever a project with at least one stakeholder is written or loaded by 1.30 (the register
+# always has the 14-column schema), or any element has a non-empty Policy_Target (WS-0 stamp_min_app_version()).
 WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"
 
 # ============================================================================

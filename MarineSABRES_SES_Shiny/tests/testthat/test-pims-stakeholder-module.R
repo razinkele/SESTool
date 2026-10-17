@@ -148,3 +148,45 @@ test_that("roles and SourceId survive a JSON save/load round trip", {
   expect_equal(back$data$pims$stakeholders$NERoles, sh$NERoles)
   expect_equal(back$data$pims$stakeholders$SourceId, sh$SourceId)
 })
+
+test_that("a non-profile DA site shows the no-DA hint", {
+  pdr <- shiny::reactiveVal(proj_da("Nowhere"))
+  testServer(real_pst_server, args = list(project_data_reactive = pdr, i18n = make_test_i18n()), {
+    session$flushReact()
+    expect_match(as.character(output$seed_da_ui$html), "modules.wp5_governance.seed_no_da", fixed = TRUE)
+  })
+})
+
+test_that("a manual stakeholder without roles stamps the governance version", {
+  pdr <- shiny::reactiveVal(proj_da(NULL))
+  testServer(real_pst_server, args = list(project_data_reactive = pdr, i18n = make_test_i18n()), {
+    session$flushReact()
+    session$setInputs(sh_name = "Plain", sh_type = "x", add_stakeholder = 1)
+    expect_equal(pdr()$min_app_version, WP5_GOVERNANCE_MIN_APP_VERSION)
+  })
+})
+
+test_that("a loaded register without a counter does not reuse stakeholder ids", {
+  p <- proj_da(NULL)
+  p$data$pims$stakeholders <- data.frame(ID = c("SH001", "SH002"), Name = c("a", "b"), Type = "x", stringsAsFactors = FALSE)
+  pdr <- shiny::reactiveVal(p)
+  testServer(real_pst_server, args = list(project_data_reactive = pdr, i18n = make_test_i18n()), {
+    session$flushReact()
+    session$setInputs(sh_name = "C", sh_type = "x", add_stakeholder = 1)
+    expect_equal(stakeholder_data$stakeholders$ID, c("SH001", "SH002", "SH003"))
+  })
+})
+
+test_that("adding two engagements gives two rows with distinct ids", {
+  p <- proj_da(NULL)
+  p$data$pims$stakeholders <- data.frame(ID = "SH001", Name = "a", Type = "x", stringsAsFactors = FALSE)
+  pdr <- shiny::reactiveVal(p)
+  testServer(real_pst_server, args = list(project_data_reactive = pdr, i18n = make_test_i18n()), {
+    session$flushReact()
+    inp <- list(eng_stakeholder = "SH001", eng_method = "Workshop", eng_date = Sys.Date(), eng_objectives = "o",
+                eng_outcomes = "r", eng_status = "Planned", eng_facilitator = "f")
+    do.call(session$setInputs, c(inp, list(add_engagement = 1)))
+    do.call(session$setInputs, c(inp, list(add_engagement = 2)))
+    expect_equal(stakeholder_data$engagements$ID, c("ENG001", "ENG002"))
+  })
+})

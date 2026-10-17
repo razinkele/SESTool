@@ -131,7 +131,7 @@ Recommendations: 4 Arctic, 6 Macaronesia, 4 Tuscany (audit §2.2–2.4).
 
 ## 7. Compatibility
 
-- `WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"` in `constants.R`. On save, `stamp_min_app_version()` when any stakeholder has non-empty `NERoles` or `SourceId`, or any element has non-empty `Policy_Target`. Older apps then warn before loading instead of dropping columns or failing on the next stakeholder add.
+- `WP5_GOVERNANCE_MIN_APP_VERSION <- "1.30.0"` in `constants.R`. Stamp `stamp_min_app_version()` whenever a project with at least one stakeholder is written or loaded by 1.30 (the register always has the 14-column schema), or any element has a non-empty `Policy_Target`. Older apps then warn before loading instead of dropping columns or failing on the next stakeholder add.
 - Legacy projects load with the new columns as `""`.
 
 ## 8. i18n
@@ -147,7 +147,7 @@ About 60–70 keys in 9 languages: tab and panel titles, filter labels, the five
 ## 10. Testing
 
 - pytest: §3.4.
-- R: profile schema and country DB (§3.4); `normalize_stakeholders()` on NULL, legacy and malformed frames; `seed_da_actors()` — twice gives no duplicates, a manual row with the same name is skipped, sub-area filter, grid values for Tuscany/Madeira and none for Arctic, roles valid; stakeholder module `testServer()` — the button is disabled without a DA, seeding writes rows, a save/load JSON round trip keeps `NERoles` and `SourceId`; governance module `testServer()` — filters, no-DA hint, add-to-register row (codes, source note, linked stakeholders after seeding, empty without), second add blocked, missing-data notice (loader stubbed); `Policy_Target` round trip and legacy load; stamp set only when the new fields are used.
+- R: profile schema and country DB (§3.4); `normalize_stakeholders()` on NULL, legacy and malformed frames; `seed_da_actors()` — twice gives no duplicates, a manual row with the same name is skipped, sub-area filter, grid values for Tuscany/Madeira and none for Arctic, roles valid; stakeholder module `testServer()` — the button is disabled without a DA, seeding writes rows, a save/load JSON round trip keeps `NERoles` and `SourceId`; governance module `testServer()` — filters, no-DA hint, add-to-register row (codes, source note, linked stakeholders after seeding, empty without), second add blocked, missing-data notice (loader stubbed); `Policy_Target` round trip and legacy load; stamp set when a stakeholder exists or Policy_Target is used, not for an empty register.
 - Module tests re-bind the real functions from `.GlobalEnv` (helper-stubs shadowing).
 - Release check: six alphabetical testthat chunks, pytest, i18n audit, `deployment/pre-deploy-check.R`.
 

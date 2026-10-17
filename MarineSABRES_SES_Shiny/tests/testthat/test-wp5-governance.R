@@ -118,3 +118,17 @@ test_that("empty project and JSON load carry the new stakeholder columns", {
   expect_equal(names(out$data$pims$stakeholders), PIMS_STAKEHOLDER_COLUMNS)
   expect_equal(out$data$pims$stakeholders$NERoles, "Regulators")
 })
+
+test_that("any stakeholder register row stamps 1.30.0 on load; an empty one does not", {
+  legacy <- data.frame(ID = "SH001", Name = "Fishers", Type = "x", Sector = "", Contact = "", Interests = "",
+                       Role = "", Power = "", Interest = "", Attitude = "", EngagementLevel = "",
+                       DateAdded = "2026-01-01", stringsAsFactors = FALSE)
+  expect_true(stakeholders_need_governance_version(legacy))
+  expect_false(stakeholders_need_governance_version(NULL))
+  pd <- create_empty_project("t")
+  pd$data$pims$stakeholders <- legacy
+  expect_equal(normalize_json_project_data(pd)$min_app_version, WP5_GOVERNANCE_MIN_APP_VERSION)
+  pd0 <- create_empty_project("t")
+  pd0$data$pims$stakeholders <- legacy[0, ]
+  expect_false(identical(normalize_json_project_data(pd0)$min_app_version, WP5_GOVERNANCE_MIN_APP_VERSION))
+})

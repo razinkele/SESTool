@@ -20,6 +20,18 @@ generate_element_id <- function(prefix, n) {
 #' not be used to create one row.
 next_element_id <- function(prefix, n) paste0(prefix, sprintf("%03d", as.integer(n)))
 
+#' Counter safe against loaded projects that lack (or under-count) their counter:
+#' max(counter, largest integer suffix among ids starting with prefix).
+safe_counter <- function(counter, ids, prefix) {
+  c0 <- suppressWarnings(as.numeric(counter))
+  if (length(c0) != 1 || is.na(c0)) c0 <- 0
+  ids <- as.character(ids)
+  ids <- ids[!is.na(ids) & startsWith(ids, prefix)]
+  suf <- suppressWarnings(as.numeric(sub(paste0("^", prefix), "", ids)))
+  suf <- suf[!is.na(suf) & is.finite(suf)]
+  max(c0, suf)
+}
+
 # Stable, monotonic element IDs. Allocated once per element and never reused
 # within a session, so removing/reordering rows does not reassign survivors'
 # IDs — keeping LinkedX refs and ID-keyed matrices valid across edits.
@@ -989,6 +1001,11 @@ normalize_json_project_data <- function(data) {
   if (is.list(data$data) && is.list(data$data$pims) && !is.null(data$data$pims$stakeholders) &&
       exists("normalize_stakeholders", mode = "function")) {
     data$data$pims$stakeholders <- normalize_stakeholders(data$data$pims$stakeholders)
+    # the 14-column register needs 1.30.0 as soon as it has a row
+    if (nrow(data$data$pims$stakeholders) > 0 && exists("stamp_min_app_version", mode = "function") &&
+        exists("WP5_GOVERNANCE_MIN_APP_VERSION") && !is.null(WP5_GOVERNANCE_MIN_APP_VERSION)) {
+      data <- stamp_min_app_version(data, WP5_GOVERNANCE_MIN_APP_VERSION)
+    }
   }
 
   # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here

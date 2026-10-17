@@ -506,6 +506,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     register_api <- list(
       measures = reactive(response_data$measures),
       add = function(fields) {
+        response_data$counter <- safe_counter(response_data$counter, response_data$measures$ID, ELEMENT_ID_PREFIX$measures)
         response_data$counter <- response_data$counter + 1
         new_id <- next_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
         row <- normalize_response_measures(as.data.frame(c(list(ID = new_id), fields), stringsAsFactors = FALSE))
@@ -549,6 +550,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
     observeEvent(input$add_response, {
       req(input$rm_name, input$rm_type)
 
+      response_data$counter <- safe_counter(response_data$counter, response_data$measures$ID, ELEMENT_ID_PREFIX$measures)
       response_data$counter <- response_data$counter + 1
       new_id <- next_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
