@@ -104,6 +104,7 @@ OPTIONAL_MODULES <- c(
   "modules/analysis_decision_lens.R",    # Decision Lens (QSEM factor classification)
   "modules/response_module.R",           # Response measures (includes response_validation_server())
   "modules/valuation_calculator_module.R",  # WP5 WS-5 valuation calculator
+  "modules/wp5_scenario_reference_module.R",   # WS-8 D5.1 reference tab (sub-module of the Scenario Builder)
   "modules/scenario_builder_module.R",   # Scenario Builder
   "modules/impact_assessment_module.R",   # WP5 impact assessment (WS-6b)
   "modules/prepare_report_module.R",     # Report preparation (comprehensive)

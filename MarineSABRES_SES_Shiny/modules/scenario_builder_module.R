@@ -89,11 +89,18 @@ scenario_builder_ui <- function(id, i18n) {
     p(i18n$t("modules.scenario.builder.scenario_builder_description")),
     hr(),
 
-    # Check if CLD exists
-    uiOutput(ns("cld_check_ui")),
-
-    # Main scenario builder interface (shown only if CLD exists)
-    uiOutput(ns("scenario_builder_main"))
+    tabsetPanel(
+      id = ns("sb_tabs"),
+      tabPanel(i18n$t("modules.wp5_scenarios.tab_my_scenarios"),
+        # Check if CLD exists
+        uiOutput(ns("cld_check_ui")),
+        # Main scenario builder interface (shown only if CLD exists)
+        uiOutput(ns("scenario_builder_main"))),
+      tabPanel(i18n$t("modules.wp5_scenarios.tab_reference"),
+        # WS-8: D5.1 reference library, readable without a CLD
+        if (exists("wp5_scenario_reference_ui", mode = "function"))
+          wp5_scenario_reference_ui(ns("wp5_ref"), i18n))
+    )
   )
 }
 
@@ -104,6 +111,10 @@ scenario_builder_ui <- function(id, i18n) {
 scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
+
+    if (exists("wp5_scenario_reference_server", mode = "function")) {
+      wp5_scenario_reference_server("wp5_ref", project_data_reactive, i18n, event_bus = event_bus)
+    }
 
     # Reactive values to store scenarios
     scenarios <- reactiveVal(list())
