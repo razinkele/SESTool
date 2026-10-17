@@ -155,15 +155,15 @@
       "el": "Όλες οι υποπεριοχές"
     },
     "modules.wp5_governance.no_da_hint": {
-      "en": "Choose a demonstration area here, or set the project's demonstration area in PIMS → Project.",
-      "es": "Elija aquí un área de demostración o defina el área de demostración del proyecto en PIMS → Proyecto.",
-      "fr": "Choisissez ici une zone de démonstration, ou définissez celle du projet dans PIMS → Projet.",
-      "de": "Wählen Sie hier ein Demonstrationsgebiet oder legen Sie das Demonstrationsgebiet des Projekts unter PIMS → Projekt fest.",
-      "lt": "Pasirinkite demonstracinę teritoriją čia arba nustatykite projekto demonstracinę teritoriją skiltyje PIMS → Projektas.",
-      "pt": "Escolha aqui uma área de demonstração ou defina a área de demonstração do projeto em PIMS → Projeto.",
-      "it": "Scegli qui un'area dimostrativa oppure imposta l'area dimostrativa del progetto in PIMS → Progetto.",
-      "no": "Velg et demonstrasjonsområde her, eller angi prosjektets demonstrasjonsområde under PIMS → Prosjekt.",
-      "el": "Επιλέξτε εδώ μια περιοχή επίδειξης ή ορίστε την περιοχή επίδειξης του έργου στο PIMS → Έργο."
+      "en": "Choose a demonstration area here, or set the project's demonstration area in PIMS → Project Setup.",
+      "es": "Elija aquí un área de demostración o defina el área de demostración del proyecto en PIMS → Configuración del Proyecto.",
+      "fr": "Choisissez ici une zone de démonstration, ou définissez celle du projet dans PIMS → Configuration du Projet.",
+      "de": "Wählen Sie hier ein Demonstrationsgebiet oder legen Sie das Demonstrationsgebiet des Projekts unter PIMS → Projekteinrichtung fest.",
+      "lt": "Pasirinkite demonstracinę teritoriją čia arba nustatykite projekto demonstracinę teritoriją skiltyje PIMS → Projekto sąranka.",
+      "pt": "Escolha aqui uma área de demonstração ou defina a área de demonstração do projeto em PIMS → Configuração do Projeto.",
+      "it": "Scegli qui un'area dimostrativa oppure imposta l'area dimostrativa del progetto in PIMS → Configurazione Progetto.",
+      "no": "Velg et demonstrasjonsområde her, eller angi prosjektets demonstrasjonsområde under PIMS → Prosjektoppsett.",
+      "el": "Επιλέξτε εδώ μια περιοχή επίδειξης ή ορίστε την περιοχή επίδειξης του έργου στο PIMS → Ρύθμιση Έργου."
     },
     "modules.wp5_governance.cards_title": {
       "en": "What is working well and areas of improvement",
@@ -211,11 +211,11 @@
     },
     "modules.wp5_governance.ebm_code": {
       "en": "EBM instrument",
-      "es": "Instrumento de GBE",
-      "fr": "Instrument de GEE",
+      "es": "Instrumento EBM",
+      "fr": "Instrument EBM",
       "de": "EBM-Instrument",
       "lt": "EBM priemonė",
-      "pt": "Instrumento de GBE",
+      "pt": "Instrumento EBM",
       "it": "Strumento EBM",
       "no": "EBM-virkemiddel",
       "el": "Εργαλείο EBM"
@@ -403,7 +403,7 @@
       "de": "Betroffene",
       "lt": "Paveiktieji",
       "pt": "Afetados",
-      "it": "Soggetti interessati dagli impatti",
+      "it": "Soggetti colpiti",
       "no": "Berørte",
       "el": "Θιγόμενοι"
     },
@@ -474,15 +474,15 @@
       "el": "Προσθέτει τους φορείς της περιοχής επίδειξης του έργου από το D5.4 του WP5."
     },
     "modules.wp5_governance.seed_no_da": {
-      "en": "Set the project's demonstration area in PIMS → Project to load its actor list from D5.4.",
-      "es": "Defina el área de demostración del proyecto en PIMS → Proyecto para cargar su lista de actores del D5.4.",
-      "fr": "Définissez la zone de démonstration du projet dans PIMS → Projet pour charger sa liste d'acteurs du D5.4.",
-      "de": "Legen Sie das Demonstrationsgebiet des Projekts unter PIMS → Projekt fest, um dessen Akteursliste aus dem D5.4 zu laden.",
-      "lt": "Nustatykite projekto demonstracinę teritoriją skiltyje PIMS → Projektas, kad būtų galima įkelti jos veikėjų sąrašą iš D5.4.",
-      "pt": "Defina a área de demonstração do projeto em PIMS → Projeto para carregar a respetiva lista de atores do D5.4.",
-      "it": "Imposta l'area dimostrativa del progetto in PIMS → Progetto per caricarne l'elenco degli attori dal D5.4.",
-      "no": "Angi prosjektets demonstrasjonsområde under PIMS → Prosjekt for å laste inn aktørlisten fra D5.4.",
-      "el": "Ορίστε την περιοχή επίδειξης του έργου στο PIMS → Έργο για να φορτώσετε τη λίστα φορέων της από το D5.4."
+      "en": "Set the project's demonstration area in PIMS → Project Setup to load its actor list from D5.4.",
+      "es": "Defina el área de demostración del proyecto en PIMS → Configuración del Proyecto para cargar su lista de actores del D5.4.",
+      "fr": "Définissez la zone de démonstration du projet dans PIMS → Configuration du Projet pour charger sa liste d'acteurs du D5.4.",
+      "de": "Legen Sie das Demonstrationsgebiet des Projekts unter PIMS → Projekteinrichtung fest, um dessen Akteursliste aus dem D5.4 zu laden.",
+      "lt": "Nustatykite projekto demonstracinę teritoriją skiltyje PIMS → Projekto sąranka, kad būtų galima įkelti jos veikėjų sąrašą iš D5.4.",
+      "pt": "Defina a área de demonstração do projeto em PIMS → Configuração do Projeto para carregar a respetiva lista de atores do D5.4.",
+      "it": "Imposta l'area dimostrativa del progetto in PIMS → Configurazione Progetto per caricarne l'elenco degli attori dal D5.4.",
+      "no": "Angi prosjektets demonstrasjonsområde under PIMS → Prosjektoppsett for å laste inn aktørlisten fra D5.4.",
+      "el": "Ορίστε την περιοχή επίδειξης του έργου στο PIMS → Ρύθμιση Έργου για να φορτώσετε τη λίστα φορέων της από το D5.4."
     },
     "modules.wp5_governance.seed_title": {
       "en": "Load actor list:",
