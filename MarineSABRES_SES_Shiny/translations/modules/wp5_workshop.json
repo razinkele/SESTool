@@ -558,7 +558,7 @@
       "lt": "Ar yra reikalingos ir išbandytos technologijos šiai priemonei įgyvendinti ir ilgą laiką palaikyti?",
       "pt": "A tecnologia necessária está disponível e comprovada para apoiar a execução e a manutenção a longo prazo desta medida?",
       "it": "La tecnologia necessaria è disponibile e collaudata per sostenere l'attuazione e il mantenimento a lungo termine di questa misura?",
-      "no": "Er nødvendig teknologi tilgjengelig og utprøvd for å støtte gjennomføringen og den langsiktige vedlikeholdet av dette tiltaket?",
+      "no": "Er nødvendig teknologi tilgjengelig og utprøvd for å støtte gjennomføringen og det langsiktige vedlikeholdet av dette tiltaket?",
       "el": "Είναι διαθέσιμη και δοκιμασμένη η απαραίτητη τεχνολογία για την υποστήριξη της υλοποίησης και της μακροπρόθεσμης συντήρησης αυτού του μέτρου;"
     },
     "modules.wp5_workshop.question.econ_efficient": {
@@ -1225,11 +1225,11 @@
       "en": "Workshop {id} ({date}, n = {n})",
       "es": "Taller {id} ({date}, n = {n})",
       "fr": "Atelier {id} ({date}, n = {n})",
-      "de": "Workshop {id} ({date}, n = {n})",
+      "de": "Workshop-Ergebnis {id} ({date}, n = {n})",
       "lt": "Seminaras {id} ({date}, n = {n})",
       "pt": "Oficina {id} ({date}, n = {n})",
-      "it": "Workshop {id} ({date}, n = {n})",
-      "no": "Workshop {id} ({date}, n = {n})",
+      "it": "Risultato del workshop {id} ({date}, n = {n})",
+      "no": "Workshopresultat {id} ({date}, n = {n})",
       "el": "Εργαστήριο {id} ({date}, n = {n})"
     },
     "modules.wp5_workshop.tenet_source": {
@@ -1242,6 +1242,28 @@
       "it": "Origine dei valori dei principi",
       "no": "Kilde til prinsippverdiene",
       "el": "Πηγή των τιμών των αρχών"
+    },
+    "modules.wp5_workshop.answer.blank": {
+      "en": "No answer",
+      "es": "Sin respuesta",
+      "fr": "Pas de réponse",
+      "de": "Keine Antwort",
+      "lt": "Neatsakyta",
+      "pt": "Sem resposta",
+      "it": "Nessuna risposta",
+      "no": "Ikke besvart",
+      "el": "Καμία απάντηση"
+    },
+    "modules.wp5_workshop.context_apply": {
+      "en": "Applying workshop results to the register",
+      "es": "Aplicación de los resultados del taller al registro",
+      "fr": "Application des résultats de l'atelier au registre",
+      "de": "Übernahme der Workshop-Ergebnisse in das Register",
+      "lt": "Seminaro rezultatų taikymas registrui",
+      "pt": "Aplicação dos resultados da oficina ao registo",
+      "it": "Applicazione dei risultati del workshop al registro",
+      "no": "Anvendelse av workshopresultater i registeret",
+      "el": "Εφαρμογή των αποτελεσμάτων του εργαστηρίου στο μητρώο"
     }
   }
 }
