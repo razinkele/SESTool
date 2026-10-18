@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.0] - 2026-10-18
+
+### Added (WP5 workshop elicitation — spec 2026-10-18 WS-10)
+- PIMS "Workshop elicitation (D5.2)" page: several workshops per project; anonymous participants enter answers through a form or an xlsx/csv template.
+- Ranking poll on a -5 to +5 or 1-4 scale for importance, feasibility or long-term impact.
+- 11-tenet rating with the D5.2 Annex 4 guiding questions, verified against the deliverable.
+- Workshop results view and xlsx export.
+- Per-measure write-back of the tenet results into the Response register, with Undo and a `TenetSource` note.
+
+### Notes
+- Write-back mapping: median >= 4 gives full, 3 to 4 gives intermediate for ecological effectiveness and minimal otherwise, below 3 gives minimal; at least 3 ratings are required.
+- Poll results are not written to the register.
+- No names or free text are collected.
+- The Response register gains a `TenetSource` column.
+- Projects with workshops need app 1.32.0.
+
 ## [1.31.0] - 2026-10-17
 
 ### Added (WP5 governance-readiness check — spec 2026-10-17 WS-9b)

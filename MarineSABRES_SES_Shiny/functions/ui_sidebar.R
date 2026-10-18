@@ -229,6 +229,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.project_setup", i18n_obj = i18n), tabName = "pims_project"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.stakeholders", i18n_obj = i18n), tabName = "pims_stakeholders"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.governance_readiness", i18n_obj = i18n), tabName = "pims_readiness"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.workshop_elicitation", i18n_obj = i18n), tabName = "pims_workshops"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.resources_risks", i18n_obj = i18n), tabName = "pims_resources"),
         bs4SidebarMenuSubItem(safe_t("modules.isa.data_entry.common.data_management", i18n_obj = i18n), tabName = "pims_data"),
         bs4SidebarMenuSubItem(safe_t("ui.sidebar.evaluation", i18n_obj = i18n), tabName = "pims_evaluation")

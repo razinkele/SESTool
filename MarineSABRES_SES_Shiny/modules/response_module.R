@@ -500,9 +500,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       if (!is.null(rm$counter))    response_data$counter    <- rm$counter
     }, ignoreNULL = FALSE)
 
-    # WS-9a: the governance-context tab adds D5.4 recommendations through the
-    # register (it reloads its state only on project change, so nothing else may
-    # write response_measures directly)
+    # WS-9a/WS-10: the governance-context tab and the PIMS workshop page write the register only through this api (they never write response_measures directly; this module reloads its state only on project change).
     register_api <- list(
       measures = reactive(response_data$measures),
       add = function(fields) {
@@ -513,6 +511,17 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         response_data$measures <- rbind(normalize_response_measures(response_data$measures), row)
         sync_to_project_data()
         new_id
+      },
+      update = function(id, fields) {
+        m <- normalize_response_measures(response_data$measures)
+        i <- match(id, m$ID)
+        if (is.na(i)) return(FALSE)
+        for (cl in intersect(names(fields), setdiff(names(m), "ID"))) {
+          m[[cl]][i] <- if (cl == "Cost") suppressWarnings(as.numeric(fields[[cl]])) else as.character(fields[[cl]] %||% "")
+        }
+        response_data$measures <- normalize_response_measures(m)
+        sync_to_project_data()
+        TRUE
       })
     if (exists("wp5_governance_context_server", mode = "function")) {
       wp5_governance_context_server("gov_ctx", project_data_reactive, i18n, event_bus = event_bus, register = register_api)
@@ -1108,7 +1117,8 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       )
     })
 
-    return(reactive({ response_data }))
+    # WS-10: the register api is returned so app.R can hand it to the PIMS workshop page
+    return(c(register_api, list(data = reactive({ response_data }))))
   })
 }
 

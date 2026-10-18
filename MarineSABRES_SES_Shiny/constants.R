@@ -835,7 +835,8 @@ RM_REGISTER_COLUMNS <- c(
   "ImplementingStakeholders", "PairedWith", "PestleTag",
   paste0("Tenet_", c("ecol_effective", "tech_feasible", "econ_efficient",
                      "econ_viable", "socially_desirable", "ethically_defensible", "culturally_inclusive",
-                     "legally_permissible", "admin_achievable", "communicable", "politically_expedient"))
+                     "legally_permissible", "admin_achievable", "communicable", "politically_expedient")),
+  "TenetSource"
 )
 
 # Columns shown in the register table and Word reports (codes translated);
@@ -963,6 +964,21 @@ READINESS_ID_PREFIX <- "R"            # anonymous respondent ids R001..
 READINESS_META_COLUMNS <- c("RespondentId", "EnteredAt", "Source", "Role")
 # data$pims$readiness is new in 1.31.0; stamped whenever a project has a respondent
 WP5_READINESS_MIN_APP_VERSION <- "1.31.0"
+
+# ============================================================================
+# WP5 WORKSHOP ELICITATION (spec 2026-10-18 WS-10, D5.2 ranking poll + Annex 4 tenets)
+# ============================================================================
+WORKSHOP_ID_PREFIX <- "W"                 # workshops W001..
+WORKSHOP_PARTICIPANT_PREFIX <- "P"        # anonymous participants P001.. (per workshop)
+WORKSHOP_META_COLUMNS <- c("RespondentId", "EnteredAt", "Source")
+WORKSHOP_POLL_CRITERIA <- c("importance", "feasibility", "long_term_impact")
+WORKSHOP_POLL_SCALES <- list(pm5 = as.character(-5:5), four = as.character(1:4))   # ASCII hyphen-minus
+WORKSHOP_TENET_CODES <- c("completely_disagree", "disagree", "neutral", "agree", "completely_agree")  # points 1..5
+WORKSHOP_TENET_ANSWERS <- c(WORKSHOP_TENET_CODES, "dont_know")
+WORKSHOP_MIN_VALID <- 3L                  # fewer valid tenet ratings -> no write-back proposal
+# data$data$pims$workshops and the register's TenetSource are new in 1.32.0; stamped when a
+# project has a workshop or a TenetSource value
+WP5_WORKSHOP_MIN_APP_VERSION <- "1.32.0"
 
 # ============================================================================
 # END OF CONSTANTS
