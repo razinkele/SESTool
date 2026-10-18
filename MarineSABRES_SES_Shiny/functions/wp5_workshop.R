@@ -409,3 +409,12 @@ workshop_export_wb <- function(ws, i18n) {
   openxlsx::addWorksheet(wb, "tenet_summary"); openxlsx::writeData(wb, "tenet_summary", workshop_tenet_summary(ws))
   wb
 }
+
+# Which workshop the selector should show after the list changes: the just-created one (wanted) wins when
+# present, else the current selection if still valid, else the last workshop, "" when there are none.
+workshop_pick_selection <- function(ids, current = NULL, wanted = NULL) {
+  ids <- as.character(ids)
+  if (!is.null(wanted) && length(wanted) == 1L && wanted %in% ids) return(wanted)
+  if (!is.null(current) && length(current) == 1L && current %in% ids) return(current)
+  if (length(ids)) ids[length(ids)] else ""
+}

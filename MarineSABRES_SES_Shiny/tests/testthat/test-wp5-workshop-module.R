@@ -148,3 +148,62 @@ test_that("results render the ranking and heat tables; no register -> apply noti
     expect_match(as.character(output$apply$html), "modules.wp5_workshop.apply_unavailable", fixed = TRUE)
   })
 })
+
+test_that("an import parsed for one workshop cannot be confirmed into another", {
+  p <- proj(); ws <- base_ws(); ws2 <- base_ws(); ws2$id <- "W002"
+  p <- with_ws(p, ws); p$data$pims$workshops <- workshop_set(p$data$pims$workshops, ws2)
+  pd <- shiny::reactiveVal(p)
+  wb <- workshop_template_wb(ws, normalize_response_measures(p$data$response_measures$measures), i18n_echo)
+  row <- stats::setNames(as.list(rep("", length(workshop_answer_columns(ws)))), workshop_answer_columns(ws))
+  row$rank__RM001__importance <- "2"
+  openxlsx::writeData(wb, "answers", as.data.frame(row, stringsAsFactors = FALSE, check.names = FALSE), startRow = 2, colNames = FALSE)
+  f <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, f, overwrite = TRUE)
+  testServer(real_srv, args = list(project_data_reactive = pd, i18n = i18n_echo, register = fake_register(pd)), {
+    session$flushReact()
+    session$setInputs(workshop = "W001", upload = list(datapath = f, name = "x.xlsx"))
+    expect_true(isTRUE(parsed()$ok)); expect_equal(parsed()$ws_id, "W001")
+    session$setInputs(workshop = "W002")
+    expect_null(parsed())                                                          # cleared on switch
+    session$setInputs(import_confirm = 1)
+    items <- pd()$data$pims$workshops$items
+    expect_equal(vapply(items, function(w) nrow(w$respondents), 1L), c(0L, 0L))
+    session$setInputs(workshop = "W001", upload = list(datapath = f, name = "y.xlsx"))
+    session$setInputs(import_confirm = 2)
+    expect_equal(vapply(pd()$data$pims$workshops$items, function(w) nrow(w$respondents), 1L), c(1L, 0L))
+  })
+})
+
+test_that("tenet answers offer a blank choice that saves as empty; New/Duplicate keep working", {
+  p <- proj(); ws <- base_ws()
+  pd <- shiny::reactiveVal(with_ws(p, ws))
+  testServer(real_srv, args = list(project_data_reactive = pd, i18n = i18n_echo, register = fake_register(pd)), {
+    session$flushReact()
+    session$setInputs(workshop = "W001")
+    expect_match(as.character(output$entry$html), "modules.wp5_workshop.answer.blank", fixed = TRUE)
+    session$setInputs(a_rank__RM001__importance = "2", a_tenet__RM001__ecol_effective = "", save_participant = 1)
+    r <- pd()$data$pims$workshops$items[[1]]$respondents
+    expect_equal(c(r$rank__RM001__importance, r$tenet__RM001__ecol_effective), c("2", ""))
+    session$setInputs(new = 1)
+    expect_equal(vapply(pd()$data$pims$workshops$items, `[[`, "", "id"), c("W001", "W002"))
+    expect_null(want_select())                                                     # consumed by the list observer in the same flush
+    session$setInputs(workshop = "W002", duplicate = 1)
+    expect_equal(vapply(pd()$data$pims$workshops$items, `[[`, "", "id"), c("W001", "W002", "W003"))
+  })
+})
+
+test_that("apply for a measure that left the register warns; unchanged-but-present stays silent", {
+  p <- proj(); ws <- base_ws()
+  rows <- do.call(rbind, lapply(1:3, function(i) {
+    r <- stats::setNames(as.list(rep("", length(workshop_answer_columns(ws)))), workshop_answer_columns(ws))
+    r$tenet__RM002__ecol_effective <- "agree"
+    as.data.frame(r, stringsAsFactors = FALSE, check.names = FALSE)
+  }))
+  p$data$response_measures$measures <- p$data$response_measures$measures[1, , drop = FALSE]
+  pd <- shiny::reactiveVal(with_ws(p, workshop_append(ws, rows, "form")))
+  testServer(real_srv, args = list(project_data_reactive = pd, i18n = i18n_echo, register = fake_register(pd)), {
+    session$flushReact()
+    session$setInputs(workshop = "W001")
+    expect_no_error(session$setInputs(apply_measure = "RM002"))                    # gone -> warning path, no write
+    expect_length(pd()$data$pims$workshops$items[[1]]$applied, 0)
+  })
+})

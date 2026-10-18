@@ -12,6 +12,7 @@
 # i18n-ref: modules.wp5_workshop.answer.disagree
 # i18n-ref: modules.wp5_workshop.answer.dont_know
 # i18n-ref: modules.wp5_workshop.answer.neutral
+# i18n-ref: modules.wp5_workshop.answer.blank
 # i18n-ref: modules.wp5_workshop.applied
 # i18n-ref: modules.wp5_workshop.apply_button
 # i18n-ref: modules.wp5_workshop.apply_intro
@@ -181,24 +182,26 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       st <- store(); id <- input$workshop
       if (is.null(st) || is.null(id) || !nzchar(id)) NULL else workshop_get(st, id)
     })
-    select_last <- function(st) {
-      if (length(st$items)) updateSelectInput(session, "workshop", selected = st$items[[length(st$items)]]$id)
-    }
+    want_select <- reactiveVal(NULL)   # id of a just-created workshop; consumed by the list observer
 
     observe({
       st <- store(); req(st)
       ids <- vapply(st$items, `[[`, "", "id")
       labels <- vapply(st$items, function(w) if (nzchar(w$title)) paste(w$id, "-", w$title) else w$id, "")
-      sel <- isolate(input$workshop)
-      if (is.null(sel) || !sel %in% ids) sel <- if (length(ids)) ids[length(ids)] else ""
+      sel <- workshop_pick_selection(ids, isolate(input$workshop), isolate(want_select()))
+      isolate(want_select(NULL))
       updateSelectInput(session, "workshop", choices = c(" " = "", stats::setNames(ids, labels)), selected = sel)
     })
 
     # ---- Workshop list ----
-    observeEvent(input$new, { st <- modify_store(function(st) workshop_create(st)); if (!is.null(st)) select_last(st) })
+    observeEvent(input$new, {
+      st <- modify_store(function(st) workshop_create(st))
+      if (!is.null(st) && length(st$items)) want_select(st$items[[length(st$items)]]$id)
+    })
     observeEvent(input$duplicate, {
       ws <- current(); req(ws)
-      st <- modify_store(function(st) workshop_duplicate(st, ws$id)); if (!is.null(st)) select_last(st)
+      st <- modify_store(function(st) workshop_duplicate(st, ws$id))
+      if (!is.null(st) && length(st$items)) want_select(st$items[[length(st$items)]]$id)
     })
     observeEvent(input$delete, {
       ws <- current(); req(ws)
@@ -275,7 +278,9 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       if (!length(ws$interventions)) return(tagList(consent_box, div(class = "alert alert-light", tr("no_measures"))))
       m <- measures()
       scale_vals <- WORKSHOP_POLL_SCALES[[ws$poll$scale]]
-      tenet_choices <- stats::setNames(WORKSHOP_TENET_ANSWERS, vapply(WORKSHOP_TENET_ANSWERS, function(cd) tr(paste0("answer.", cd)), ""))
+      # UI-only blank choice (saves ""); deliberately not part of WORKSHOP_TENET_ANSWERS or import matching
+      tenet_choices <- c(stats::setNames("", tr("answer.blank")),
+                         stats::setNames(WORKSHOP_TENET_ANSWERS, vapply(WORKSHOP_TENET_ANSWERS, function(cd) tr(paste0("answer.", cd)), "")))
       form <- tagList(lapply(ws$interventions, function(mid) {
         nm <- m$Name[match(mid, m$ID)]
         div(class = "card card-body mb-3",
@@ -286,7 +291,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
                         choices = c(" " = "", stats::setNames(scale_vals, gsub("-", "\u2212", scale_vals, fixed = TRUE))))))),
           if (ws$tenets_on) tagList(h6(tr("tenets_title")), lapply(EBM_TENETS$code, function(t) div(class = "mb-2",
             radioButtons(ns(paste0("a_", workshop_tenet_col(mid, t))), wp5_vocab_label("tenet", t, i18n),
-                         choices = tenet_choices, selected = character(0), inline = TRUE),
+                         choices = tenet_choices, selected = "", inline = TRUE),
             tags$small(class = "text-muted", tr(paste0("question.", t)))))))
       }), p(class = "small text-muted", tr("translation_note")),
       actionButton(ns("save_participant"), tr("save_participant"), icon = icon("save"), class = "btn-primary"))
@@ -309,12 +314,17 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
 
     # ---- Import ----
     parsed <- reactiveVal(NULL)
+    observeEvent(input$workshop, parsed(NULL), ignoreInit = TRUE)   # a preview belongs to the workshop it was parsed for
     output$template <- downloadHandler(
       filename = function() "workshop_template.xlsx",
       content = function(file) openxlsx::saveWorkbook(workshop_template_wb(current(), measures(), i18n), file, overwrite = TRUE))
     observeEvent(input$upload, {
       f <- input$upload; ws <- current(); req(f, ws)
-      parsed(tryCatch(workshop_parse_import(readiness_read_file(f$datapath, f$name), ws), error = function(e) {
+      parsed(tryCatch({
+        pr <- workshop_parse_import(readiness_read_file(f$datapath, f$name), ws)
+        pr$ws_id <- ws$id
+        pr
+      }, error = function(e) {
         debug_log(paste("WP5 workshop: import failed:", e$message), "ERROR")
         showNotification(format_user_error(e, i18n = i18n, context_key = "modules.wp5_workshop.context_import"), type = "error")
         NULL
@@ -332,7 +342,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         if (nrow(pr$rows)) actionButton(ns("import_confirm"), paste(tr("import_add"), nrow(pr$rows)), class = "btn-primary"))
     })
     observeEvent(input$import_confirm, {
-      pr <- parsed(); ws <- current(); req(isTRUE(pr$ok), nrow(pr$rows) > 0, ws)
+      pr <- parsed(); ws <- current(); req(isTRUE(pr$ok), nrow(pr$rows) > 0, ws, identical(pr$ws_id, ws$id))
       if (!isTRUE(ws$consent)) { showNotification(tr("consent_required"), type = "warning"); return() }
       modify_store(function(st) workshop_set(st, workshop_append(workshop_get(st, ws$id), pr$rows, "import")))
       parsed(NULL)
@@ -435,24 +445,40 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
           if (!is.null(last)) tags$button(class = "btn btn-outline-secondary btn-sm ml-2", onclick = send("undo_measure", mid), tr("undo_button")))
       }))
     })
+    # run an apply/undo body; real errors are logged + shown, silent req() conditions pass through
+    guard_apply <- function(expr) {
+      tryCatch(expr,
+        shiny.silent.error = function(e) stop(e),
+        error = function(e) {
+          debug_log(paste("WP5 workshop: apply failed:", e$message), "ERROR")
+          showNotification(format_user_error(e, i18n = i18n, context_key = "modules.wp5_workshop.context_apply"), type = "error")
+        })
+    }
     observeEvent(input$apply_measure, {
       ws <- current(); mid <- input$apply_measure; req(ws, !is.null(register), mid %in% ws$interventions)
-      ch <- workshop_apply_change(ws, mid, measures(), tr("source_template"))
-      if (is.null(ch)) return()
-      if (!isTRUE(register$update(mid, ch$after))) { showNotification(tr("measure_gone"), type = "warning"); return() }
-      # re-read the project AFTER the register write (modify_store starts from project_data_reactive())
-      modify_store(function(st) workshop_set(st, workshop_record_apply(workshop_get(st, ws$id), mid, ch$before, ch$after)))
-      showNotification(paste(tr("applied"), mid), type = "message")
+      guard_apply({
+        ch <- workshop_apply_change(ws, mid, measures(), tr("source_template"))
+        if (is.null(ch)) {
+          if (!mid %in% measures()$ID) showNotification(tr("measure_gone"), type = "warning")
+          return()
+        }
+        if (!isTRUE(register$update(mid, ch$after))) { showNotification(tr("measure_gone"), type = "warning"); return() }
+        # re-read the project AFTER the register write (modify_store starts from project_data_reactive())
+        modify_store(function(st) workshop_set(st, workshop_record_apply(workshop_get(st, ws$id), mid, ch$before, ch$after)))
+        showNotification(paste(tr("applied"), mid), type = "message")
+      })
     })
     observeEvent(input$undo_measure, {
       ws <- current(); mid <- input$undo_measure; req(ws, !is.null(register), mid %in% ws$interventions)
       e <- workshop_last_apply(ws, mid); req(e)
-      chk <- workshop_undo_check(e, measures())
-      if (identical(chk, "gone")) { showNotification(tr("measure_gone"), type = "warning"); return() }
-      if (identical(chk, "changed")) { showNotification(tr("undo_changed"), type = "warning"); return() }
-      if (!isTRUE(register$update(mid, e$before))) { showNotification(tr("measure_gone"), type = "warning"); return() }
-      modify_store(function(st) workshop_set(st, workshop_drop_last_apply(workshop_get(st, ws$id), mid)))
-      showNotification(paste(tr("undone"), mid), type = "message")
+      guard_apply({
+        chk <- workshop_undo_check(e, measures())
+        if (identical(chk, "gone")) { showNotification(tr("measure_gone"), type = "warning"); return() }
+        if (identical(chk, "changed")) { showNotification(tr("undo_changed"), type = "warning"); return() }
+        if (!isTRUE(register$update(mid, e$before))) { showNotification(tr("measure_gone"), type = "warning"); return() }
+        modify_store(function(st) workshop_set(st, workshop_drop_last_apply(workshop_get(st, ws$id), mid)))
+        showNotification(paste(tr("undone"), mid), type = "message")
+      })
     })
 
     invisible(list(store = store))

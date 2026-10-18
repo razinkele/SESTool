@@ -292,3 +292,12 @@ test_that("template -> import round trip; export sheets", {
   ex <- workshop_export_wb(ws, i18n)
   expect_equal(openxlsx::sheets(ex), c("setup", "respondents", "poll_summary", "tenet_summary"))
 })
+
+test_that("workshop_pick_selection: wanted wins, else current if valid, else last, else empty", {
+  expect_equal(workshop_pick_selection(c("W001", "W002"), "W001", "W002"), "W002")
+  expect_equal(workshop_pick_selection(c("W001", "W002"), "W001", NULL), "W001")
+  expect_equal(workshop_pick_selection(c("W001", "W002"), "W009", NULL), "W002")
+  expect_equal(workshop_pick_selection(c("W001", "W002"), NULL, "W009"), "W002")
+  expect_equal(workshop_pick_selection(c("W001", "W002"), "", ""), "W002")
+  expect_equal(workshop_pick_selection(character(0), "W001", "W002"), "")
+})
