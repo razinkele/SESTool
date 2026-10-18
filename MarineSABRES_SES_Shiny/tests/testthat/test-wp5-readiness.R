@@ -234,3 +234,17 @@ test_that("import blanks the ranking of a respondent with repeated ranks, keeps 
   expect_equal(c(p$rows$q35[2], p$rows$q36[2]), c("1", "2"))
   expect_equal(p$blanked, 0L)
 })
+
+test_that("follow-up: workbook headers are translated; the answers sheets keep their import codes", {
+  i18n <- make_test_i18n()
+  k <- function(x) paste0("modules.wp5_readiness.xl.", x)
+  wb <- readiness_template_wb(bank, i18n)
+  expect_equal(names(openxlsx::read.xlsx(wb, "items")), k(c("id", "question", "allowed")))
+  expect_equal(names(openxlsx::read.xlsx(wb, "roles")), k(c("code", "label")))
+  ex <- readiness_export_wb(readiness_append(NULL, fix(rows_of(list(q6 = "agree"))), "form", bank), bank, i18n)
+  expect_true(all(c("Role", "q6") %in% names(openxlsx::read.xlsx(ex, "answers"))))     # import codes kept
+  expect_equal(names(openxlsx::read.xlsx(ex, "indicator")),
+               k(c("dimension", "score", "n_respondents", "n_answers", "n_items", "coverage", "label")))
+  expect_equal(names(openxlsx::read.xlsx(ex, "priorities")), k(c("item", "mean_rank", "n")))
+  expect_equal(names(openxlsx::read.xlsx(ex, "about")), k("note"))
+})

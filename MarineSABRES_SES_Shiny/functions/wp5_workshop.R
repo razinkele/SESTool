@@ -116,6 +116,8 @@ normalize_workshop <- function(ws) {
     bad <- bad + sum(x)
     df[[cl]][x] <- ""
   }
+  src_bad <- nzchar(df$Source) & !df$Source %in% c("form", "import")   # how the row was entered
+  if (any(src_bad)) { bad <- bad + sum(src_bad); df$Source[src_bad] <- "" }
   if (bad > 0) .ws_log(sprintf("blanked %d out-of-range answer(s)", bad))
   cnt <- safe_counter(ws$counter, df$RespondentId, WORKSHOP_PARTICIPANT_PREFIX)
   # duplicate participant ids (hand-edited files): keep every row, renumber the repeats so
@@ -394,31 +396,68 @@ workshop_template_wb <- function(ws, measures, i18n) {
   openxlsx::addWorksheet(wb, "answers")
   openxlsx::writeData(wb, "answers", as.data.frame(stats::setNames(rep(list(character(0)), length(cols)), cols),
                                                    check.names = FALSE))
+  # the "answers" sheet above keeps its code headers: import matches them. Sheets below are for people.
   openxlsx::addWorksheet(wb, "measures")
-  openxlsx::writeData(wb, "measures", data.frame(id = ws$interventions,
-    name = measures$Name[match(ws$interventions, measures$ID)] %||% "", stringsAsFactors = FALSE))
+  openxlsx::writeData(wb, "measures", xl_translate_headers(data.frame(id = ws$interventions,
+    name = measures$Name[match(ws$interventions, measures$ID)] %||% "", stringsAsFactors = FALSE),
+    .ws_xl(c(id = "xl.id", name = "xl.name")), i18n))
+  vals <- WORKSHOP_POLL_SCALES[[ws$poll$scale]]
   openxlsx::addWorksheet(wb, "scales")
-  openxlsx::writeData(wb, "scales", data.frame(
-    scale = c(rep("rank", length(WORKSHOP_POLL_SCALES[[ws$poll$scale]])), rep("tenet", length(WORKSHOP_TENET_ANSWERS))),
-    value = c(WORKSHOP_POLL_SCALES[[ws$poll$scale]], WORKSHOP_TENET_ANSWERS),
-    label = c(WORKSHOP_POLL_SCALES[[ws$poll$scale]],
+  openxlsx::writeData(wb, "scales", xl_translate_headers(data.frame(
+    scale = c(rep(lab("modules.wp5_workshop.xl.scale_rank"), length(vals)),
+              rep(lab("modules.wp5_workshop.xl.scale_tenet"), length(WORKSHOP_TENET_ANSWERS))),
+    value = c(vals, WORKSHOP_TENET_ANSWERS),
+    label = c(vals,
               paste0(c(as.character(1:5), ""), ifelse(seq_along(WORKSHOP_TENET_ANSWERS) <= 5, " = ", ""),
                      vapply(WORKSHOP_TENET_ANSWERS, function(cd) lab(paste0("modules.wp5_workshop.answer.", cd)), ""))),
-    stringsAsFactors = FALSE))
+    stringsAsFactors = FALSE), .ws_xl(c(scale = "xl.scale", value = "xl.value", label = "xl.label")), i18n))
   wb
 }
 
+# i18n-ref: modules.wp5_workshop.xl.id
+# i18n-ref: modules.wp5_workshop.xl.name
+# i18n-ref: modules.wp5_workshop.xl.scale
+# i18n-ref: modules.wp5_workshop.xl.value
+# i18n-ref: modules.wp5_workshop.xl.label
+# i18n-ref: modules.wp5_workshop.xl.field
+# i18n-ref: modules.wp5_workshop.xl.rank
+# i18n-ref: modules.wp5_workshop.xl.n_valid
+# i18n-ref: modules.wp5_workshop.xl.n_dont_know
+# i18n-ref: modules.wp5_workshop.xl.scale_rank
+# i18n-ref: modules.wp5_workshop.xl.scale_tenet
+# column -> modules.wp5_workshop.<key> map for xl_translate_headers()
+.ws_xl <- function(keys) stats::setNames(as.list(paste0("modules.wp5_workshop.", keys)), names(keys))
+
 workshop_export_wb <- function(ws, i18n) {
   ws <- normalize_workshop(ws)
+  lab <- function(key) as.character(i18n$t(key))
   wb <- openxlsx::createWorkbook()
   openxlsx::addWorksheet(wb, "setup")
-  openxlsx::writeData(wb, "setup", data.frame(
-    field = c("id", "title", "date", "note", "measures", "scale", "criteria", "tenets_on"),
-    value = c(ws$id, ws$title, ws$date, ws$note, paste(ws$interventions, collapse = "; "), ws$poll$scale,
-              paste(ws$poll$criteria, collapse = "; "), as.character(ws$tenets_on)), stringsAsFactors = FALSE))
-  openxlsx::addWorksheet(wb, "respondents"); openxlsx::writeData(wb, "respondents", ws$respondents)
-  openxlsx::addWorksheet(wb, "poll_summary"); openxlsx::writeData(wb, "poll_summary", workshop_poll_summary(ws))
-  openxlsx::addWorksheet(wb, "tenet_summary"); openxlsx::writeData(wb, "tenet_summary", workshop_tenet_summary(ws))
+  openxlsx::writeData(wb, "setup", xl_translate_headers(data.frame(
+    field = vapply(c("workshop", "field_title", "field_date", "field_note", "field_measures", "field_scale",
+                     "field_criteria", "field_tenets_on"), function(k) lab(paste0("modules.wp5_workshop.", k)), ""),
+    value = c(ws$id, ws$title, ws$date, ws$note, paste(ws$interventions, collapse = "; "),
+              lab(paste0("modules.wp5_workshop.scale.", ws$poll$scale)),
+              paste(vapply(ws$poll$criteria, function(c) lab(paste0("modules.wp5_workshop.criterion.", c)), ""), collapse = "; "),
+              lab(if (ws$tenets_on) "modules.wp5_workshop.yes" else "modules.wp5_workshop.no")),
+    stringsAsFactors = FALSE, row.names = NULL), .ws_xl(c(field = "xl.field", value = "xl.value")), i18n))
+  # respondents: meta headers translated, answer-code columns kept as they are stored
+  r <- ws$respondents
+  r$Source <- vapply(r$Source, function(x) if (nzchar(x)) lab(paste0("modules.wp5_workshop.source.", x)) else "", "", USE.NAMES = FALSE)
+  openxlsx::addWorksheet(wb, "respondents")
+  openxlsx::writeData(wb, "respondents", xl_translate_headers(r,
+    .ws_xl(c(RespondentId = "col_participant", EnteredAt = "col_date", Source = "col_source")), i18n))
+  ps <- workshop_poll_summary(ws)
+  ps$criterion <- vapply(ps$criterion, function(c) lab(paste0("modules.wp5_workshop.criterion.", c)), "", USE.NAMES = FALSE)
+  openxlsx::addWorksheet(wb, "poll_summary")
+  openxlsx::writeData(wb, "poll_summary", xl_translate_headers(ps, .ws_xl(c(measure = "col_measure",
+    criterion = "col_criterion", n = "col_n", median = "col_median", mean = "col_mean", order = "xl.rank")), i18n))
+  ts <- workshop_tenet_summary(ws)
+  ts$tenet <- wp5_vocab_label("tenet", ts$tenet, i18n)
+  names(ts)[names(ts) %in% paste0("p", 1:5)] <- sub("^p", "", names(ts)[names(ts) %in% paste0("p", 1:5)])   # points 1..5
+  openxlsx::addWorksheet(wb, "tenet_summary")
+  openxlsx::writeData(wb, "tenet_summary", xl_translate_headers(ts, .ws_xl(c(measure = "col_measure",
+    tenet = "col_tenet", n_valid = "xl.n_valid", n_dont_know = "xl.n_dont_know", median = "col_median")), i18n))
   wb
 }
 

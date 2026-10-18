@@ -1286,6 +1286,127 @@
       "it": "No",
       "no": "Nei",
       "el": "Όχι"
+    },
+    "modules.wp5_workshop.xl.id": {
+      "en": "ID",
+      "es": "ID",
+      "fr": "ID",
+      "de": "ID",
+      "lt": "ID",
+      "pt": "ID",
+      "it": "ID",
+      "no": "ID",
+      "el": "ID"
+    },
+    "modules.wp5_workshop.xl.name": {
+      "en": "Name",
+      "es": "Nombre",
+      "fr": "Nom",
+      "de": "Name",
+      "lt": "Pavadinimas",
+      "pt": "Nome",
+      "it": "Nome",
+      "no": "Navn",
+      "el": "Όνομα"
+    },
+    "modules.wp5_workshop.xl.scale": {
+      "en": "Scale",
+      "es": "Escala",
+      "fr": "Échelle",
+      "de": "Skala",
+      "lt": "Skalė",
+      "pt": "Escala",
+      "it": "Scala",
+      "no": "Skala",
+      "el": "Κλίμακα"
+    },
+    "modules.wp5_workshop.xl.value": {
+      "en": "Value",
+      "es": "Valor",
+      "fr": "Valeur",
+      "de": "Wert",
+      "lt": "Reikšmė",
+      "pt": "Valor",
+      "it": "Valore",
+      "no": "Verdi",
+      "el": "Τιμή"
+    },
+    "modules.wp5_workshop.xl.label": {
+      "en": "Label",
+      "es": "Etiqueta",
+      "fr": "Libellé",
+      "de": "Bezeichnung",
+      "lt": "Pavadinimas",
+      "pt": "Rótulo",
+      "it": "Etichetta",
+      "no": "Etikett",
+      "el": "Ετικέτα"
+    },
+    "modules.wp5_workshop.xl.field": {
+      "en": "Field",
+      "es": "Campo",
+      "fr": "Champ",
+      "de": "Feld",
+      "lt": "Laukas",
+      "pt": "Campo",
+      "it": "Campo",
+      "no": "Felt",
+      "el": "Πεδίο"
+    },
+    "modules.wp5_workshop.xl.rank": {
+      "en": "Rank",
+      "es": "Puesto",
+      "fr": "Rang",
+      "de": "Rang",
+      "lt": "Vieta",
+      "pt": "Posição",
+      "it": "Posizione",
+      "no": "Plassering",
+      "el": "Κατάταξη"
+    },
+    "modules.wp5_workshop.xl.n_valid": {
+      "en": "Valid ratings",
+      "es": "Valoraciones válidas",
+      "fr": "Évaluations valides",
+      "de": "Gültige Bewertungen",
+      "lt": "Galiojantys vertinimai",
+      "pt": "Avaliações válidas",
+      "it": "Valutazioni valide",
+      "no": "Gyldige vurderinger",
+      "el": "Έγκυρες αξιολογήσεις"
+    },
+    "modules.wp5_workshop.xl.n_dont_know": {
+      "en": "Don't know",
+      "es": "No sabe",
+      "fr": "Ne sait pas",
+      "de": "Weiß nicht",
+      "lt": "Nežino",
+      "pt": "Não sabe",
+      "it": "Non so",
+      "no": "Vet ikke",
+      "el": "Δεν ξέρω"
+    },
+    "modules.wp5_workshop.xl.scale_rank": {
+      "en": "Ranking",
+      "es": "Clasificación",
+      "fr": "Classement",
+      "de": "Rangfolge",
+      "lt": "Reitingavimas",
+      "pt": "Classificação",
+      "it": "Classifica",
+      "no": "Rangering",
+      "el": "Κατάταξη"
+    },
+    "modules.wp5_workshop.xl.scale_tenet": {
+      "en": "Tenet rating",
+      "es": "Valoración de principios",
+      "fr": "Évaluation des principes",
+      "de": "Bewertung der Grundsätze",
+      "lt": "Principų vertinimas",
+      "pt": "Avaliação dos princípios",
+      "it": "Valutazione dei principi",
+      "no": "Vurdering av prinsipper",
+      "el": "Αξιολόγηση αρχών"
     }
   }
 }

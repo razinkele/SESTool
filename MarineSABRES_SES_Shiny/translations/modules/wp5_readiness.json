@@ -1121,6 +1121,171 @@
       "it": "rispondenti con posizioni ripetute (la loro classifica è stata lasciata vuota):",
       "no": "respondenter med gjentatte rangeringer (rangeringen deres ble stående tom):",
       "el": "ερωτώμενοι με επαναλαμβανόμενες θέσεις κατάταξης (η κατάταξή τους αφέθηκε κενή):"
+    },
+    "modules.wp5_readiness.xl.id": {
+      "en": "ID",
+      "es": "ID",
+      "fr": "ID",
+      "de": "ID",
+      "lt": "ID",
+      "pt": "ID",
+      "it": "ID",
+      "no": "ID",
+      "el": "ID"
+    },
+    "modules.wp5_readiness.xl.question": {
+      "en": "Question",
+      "es": "Pregunta",
+      "fr": "Question",
+      "de": "Frage",
+      "lt": "Klausimas",
+      "pt": "Pergunta",
+      "it": "Domanda",
+      "no": "Spørsmål",
+      "el": "Ερώτηση"
+    },
+    "modules.wp5_readiness.xl.allowed": {
+      "en": "Allowed answers",
+      "es": "Respuestas permitidas",
+      "fr": "Réponses autorisées",
+      "de": "Zulässige Antworten",
+      "lt": "Leidžiami atsakymai",
+      "pt": "Respostas permitidas",
+      "it": "Risposte ammesse",
+      "no": "Tillatte svar",
+      "el": "Επιτρεπτές απαντήσεις"
+    },
+    "modules.wp5_readiness.xl.code": {
+      "en": "Code",
+      "es": "Código",
+      "fr": "Code",
+      "de": "Code",
+      "lt": "Kodas",
+      "pt": "Código",
+      "it": "Codice",
+      "no": "Kode",
+      "el": "Κωδικός"
+    },
+    "modules.wp5_readiness.xl.label": {
+      "en": "Label",
+      "es": "Etiqueta",
+      "fr": "Libellé",
+      "de": "Bezeichnung",
+      "lt": "Pavadinimas",
+      "pt": "Rótulo",
+      "it": "Etichetta",
+      "no": "Etikett",
+      "el": "Ετικέτα"
+    },
+    "modules.wp5_readiness.xl.note": {
+      "en": "Note",
+      "es": "Nota",
+      "fr": "Remarque",
+      "de": "Hinweis",
+      "lt": "Pastaba",
+      "pt": "Nota",
+      "it": "Nota",
+      "no": "Merknad",
+      "el": "Σημείωση"
+    },
+    "modules.wp5_readiness.xl.dimension": {
+      "en": "Dimension",
+      "es": "Dimensión",
+      "fr": "Dimension",
+      "de": "Dimension",
+      "lt": "Dimensija",
+      "pt": "Dimensão",
+      "it": "Dimensione",
+      "no": "Dimensjon",
+      "el": "Διάσταση"
+    },
+    "modules.wp5_readiness.xl.score": {
+      "en": "Indicator",
+      "es": "Indicador",
+      "fr": "Indicateur",
+      "de": "Indikator",
+      "lt": "Rodiklis",
+      "pt": "Indicador",
+      "it": "Indicatore",
+      "no": "Indikator",
+      "el": "Δείκτης"
+    },
+    "modules.wp5_readiness.xl.n_respondents": {
+      "en": "Respondents",
+      "es": "Encuestados",
+      "fr": "Répondants",
+      "de": "Befragte",
+      "lt": "Respondentai",
+      "pt": "Inquiridos",
+      "it": "Rispondenti",
+      "no": "Respondenter",
+      "el": "Ερωτηθέντες"
+    },
+    "modules.wp5_readiness.xl.n_answers": {
+      "en": "Answers",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Antworten",
+      "lt": "Atsakymai",
+      "pt": "Respostas",
+      "it": "Risposte",
+      "no": "Svar",
+      "el": "Απαντήσεις"
+    },
+    "modules.wp5_readiness.xl.n_items": {
+      "en": "Questions",
+      "es": "Preguntas",
+      "fr": "Questions",
+      "de": "Fragen",
+      "lt": "Klausimai",
+      "pt": "Perguntas",
+      "it": "Domande",
+      "no": "Spørsmål",
+      "el": "Ερωτήσεις"
+    },
+    "modules.wp5_readiness.xl.coverage": {
+      "en": "Coverage",
+      "es": "Cobertura",
+      "fr": "Couverture",
+      "de": "Abdeckung",
+      "lt": "Aprėptis",
+      "pt": "Cobertura",
+      "it": "Copertura",
+      "no": "Dekning",
+      "el": "Κάλυψη"
+    },
+    "modules.wp5_readiness.xl.item": {
+      "en": "Question",
+      "es": "Pregunta",
+      "fr": "Question",
+      "de": "Frage",
+      "lt": "Klausimas",
+      "pt": "Pergunta",
+      "it": "Domanda",
+      "no": "Spørsmål",
+      "el": "Ερώτηση"
+    },
+    "modules.wp5_readiness.xl.mean_rank": {
+      "en": "Mean rank",
+      "es": "Rango medio",
+      "fr": "Rang moyen",
+      "de": "Mittlerer Rang",
+      "lt": "Vidutinis rangas",
+      "pt": "Posição média",
+      "it": "Rango medio",
+      "no": "Gjennomsnittlig rangering",
+      "el": "Μέση κατάταξη"
+    },
+    "modules.wp5_readiness.xl.n": {
+      "en": "n",
+      "es": "n",
+      "fr": "n",
+      "de": "n",
+      "lt": "n",
+      "pt": "n",
+      "it": "n",
+      "no": "n",
+      "el": "n"
     }
   }
 }

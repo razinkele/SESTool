@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.2] - 2026-10-18
+
+### Fixed (WS-10 follow-ups, part 2)
+- Workshop and governance-readiness xlsx files (templates and exports): column headers, setup fields, criteria, tenet names and entry sources are in the user's language. The answers sheets keep their code headers so filled templates and exports can still be imported.
+- Response register title corrected in German, Lithuanian, Norwegian and Greek (it read "answer register" or was untranslated); the workshop page uses the same terms.
+- Workshop participants with an unknown entry source (hand-edited files) get an empty source instead of a missing-label code.
+
+### Tests
+- New end-to-end test: the real Response register module and the real workshop page on one project; apply and undo survive later register edits.
+
 ## [1.32.1] - 2026-10-18
 
 ### Fixed (WS-10 follow-ups)

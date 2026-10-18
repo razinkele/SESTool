@@ -255,6 +255,32 @@ readiness_read_file <- function(path, name = path) {
   if (is.null(df)) data.frame() else df
 }
 
+#' Translate the column headers of a sheet people read: columns named in `map` (column -> i18n key)
+#' get the label; every other column keeps its name. Never use it on a sheet that import reads back
+#' (the "answers" sheets), whose headers are codes. Shared by the readiness and workshop workbooks.
+xl_translate_headers <- function(df, map, i18n) {
+  hit <- names(df) %in% names(map)
+  names(df)[hit] <- vapply(names(df)[hit], function(cl) as.character(i18n$t(map[[cl]])), "")
+  df
+}
+
+# i18n-ref: modules.wp5_readiness.xl.id
+# i18n-ref: modules.wp5_readiness.xl.question
+# i18n-ref: modules.wp5_readiness.xl.allowed
+# i18n-ref: modules.wp5_readiness.xl.code
+# i18n-ref: modules.wp5_readiness.xl.label
+# i18n-ref: modules.wp5_readiness.xl.note
+# i18n-ref: modules.wp5_readiness.xl.dimension
+# i18n-ref: modules.wp5_readiness.xl.score
+# i18n-ref: modules.wp5_readiness.xl.n_respondents
+# i18n-ref: modules.wp5_readiness.xl.n_answers
+# i18n-ref: modules.wp5_readiness.xl.n_items
+# i18n-ref: modules.wp5_readiness.xl.coverage
+# i18n-ref: modules.wp5_readiness.xl.item
+# i18n-ref: modules.wp5_readiness.xl.mean_rank
+# i18n-ref: modules.wp5_readiness.xl.n
+.ready_xl <- function(cols) stats::setNames(as.list(paste0("modules.wp5_readiness.xl.", cols)), cols)
+
 #' xlsx template: answers (header only), items (current language), roles
 readiness_template_wb <- function(bank, i18n) {
   ids <- readiness_item_ids(bank)
@@ -268,13 +294,14 @@ readiness_template_wb <- function(bank, i18n) {
   openxlsx::addWorksheet(wb, "answers")
   openxlsx::writeData(wb, "answers", as.data.frame(stats::setNames(rep(list(character(0)), length(ids) + 1), c("role", ids))))
   openxlsx::addWorksheet(wb, "items")
-  openxlsx::writeData(wb, "items", data.frame(
+  openxlsx::writeData(wb, "items", xl_translate_headers(data.frame(
     id = ids, question = vapply(ids, function(id) lab(paste0("modules.wp5_readiness.item.", id)), ""),
-    allowed = vapply(bank$items, allowed, ""), stringsAsFactors = FALSE))
+    allowed = vapply(bank$items, allowed, ""), stringsAsFactors = FALSE), .ready_xl(c("id", "question", "allowed")), i18n))
   roles <- unlist(bank$roles)
   openxlsx::addWorksheet(wb, "roles")
-  openxlsx::writeData(wb, "roles", data.frame(code = roles,
-    label = vapply(roles, function(r) lab(paste0("modules.wp5_readiness.role.", r)), ""), stringsAsFactors = FALSE))
+  openxlsx::writeData(wb, "roles", xl_translate_headers(data.frame(code = roles,
+    label = vapply(roles, function(r) lab(paste0("modules.wp5_readiness.role.", r)), ""), stringsAsFactors = FALSE),
+    .ready_xl(c("code", "label")), i18n))
   wb
 }
 
@@ -285,9 +312,13 @@ readiness_export_wb <- function(readiness, bank, i18n) {
   sc$label <- vapply(sc$dimension, function(d) wp5_vocab_label("npg", d, i18n), "")
   wb <- openxlsx::createWorkbook()
   openxlsx::addWorksheet(wb, "about")
-  openxlsx::writeData(wb, "about", data.frame(note = as.character(i18n$t("modules.wp5_readiness.indicator_label"))))
+  openxlsx::writeData(wb, "about", xl_translate_headers(
+    data.frame(note = as.character(i18n$t("modules.wp5_readiness.indicator_label"))), .ready_xl("note"), i18n))
+  # answers keeps its code headers (Role, q3, ...) so the file can be read back by import
   openxlsx::addWorksheet(wb, "answers"); openxlsx::writeData(wb, "answers", rd$respondents)
-  openxlsx::addWorksheet(wb, "indicator"); openxlsx::writeData(wb, "indicator", sc)
-  openxlsx::addWorksheet(wb, "priorities"); openxlsx::writeData(wb, "priorities", readiness_priority(rd$respondents, bank))
+  openxlsx::addWorksheet(wb, "indicator")
+  openxlsx::writeData(wb, "indicator", xl_translate_headers(sc, .ready_xl(names(sc)), i18n))
+  pr <- readiness_priority(rd$respondents, bank)
+  openxlsx::addWorksheet(wb, "priorities"); openxlsx::writeData(wb, "priorities", xl_translate_headers(pr, .ready_xl(names(pr)), i18n))
   wb
 }

@@ -330,3 +330,36 @@ test_that("follow-up: foreign-column refusal names the file's original headers",
   f <- workshop_parse_import(data.frame(`Rank__RM009__Importance` = "1", stringsAsFactors = FALSE, check.names = FALSE), ws, list())
   expect_equal(f$expected, "Rank__RM009__Importance")
 })
+
+test_that("follow-up: workbook headers and labels translated; the answers sheet keeps import codes", {
+  i18n <- list(t = function(k, ...) k)
+  k <- function(x) paste0("modules.wp5_workshop.", x)
+  ws <- ws_with(interventions = "RM001")
+  ws <- workshop_append(ws, row_of(ws, rank__RM001__importance = "2", tenet__RM001__ecol_effective = "agree"), "form")
+  wb <- workshop_template_wb(ws, reg(), i18n)
+  expect_equal(names(openxlsx::read.xlsx(wb, "measures")), k(c("xl.id", "xl.name")))
+  sc <- openxlsx::read.xlsx(wb, "scales")
+  expect_equal(names(sc), k(c("xl.scale", "xl.value", "xl.label")))
+  expect_setequal(unique(sc[[1]]), k(c("xl.scale_rank", "xl.scale_tenet")))
+  ex <- workshop_export_wb(ws, i18n)
+  st <- openxlsx::read.xlsx(ex, "setup")
+  expect_equal(names(st), k(c("xl.field", "xl.value")))
+  expect_true(all(k(c("workshop", "field_title", "field_scale", "field_tenets_on")) %in% st[[1]]))
+  expect_true(k("scale.pm5") %in% st[[2]])
+  r <- names(openxlsx::read.xlsx(ex, "respondents"))
+  expect_equal(r[1:3], k(c("col_participant", "col_date", "col_source")))
+  expect_true("rank__RM001__importance" %in% r)                                # answer codes kept
+  ps <- openxlsx::read.xlsx(ex, "poll_summary")
+  expect_equal(names(ps), k(c("col_measure", "col_criterion", "col_n", "col_median", "col_mean", "xl.rank")))
+  expect_equal(ps[[2]][1], k("criterion.importance"))
+  ts <- openxlsx::read.xlsx(ex, "tenet_summary")
+  expect_equal(names(ts)[1:5], k(c("col_measure", "col_tenet", "xl.n_valid", "xl.n_dont_know", "col_median")))
+  expect_equal(names(ts)[6:10], as.character(1:5))
+})
+
+test_that("follow-up: unknown participant Source values are cleared", {
+  ws <- normalize_workshop(list(id = "W001", interventions = "RM001",
+    respondents = data.frame(RespondentId = c("P001", "P002", "P003"), Source = c("form", "hacked", "import"),
+                             stringsAsFactors = FALSE)))
+  expect_equal(ws$respondents$Source, c("form", "", "import"))
+})

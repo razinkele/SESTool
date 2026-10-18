@@ -1,5 +1,5 @@
 {
-  "version": "1.32.1",
+  "version": "1.32.2",
   "version_name": "WP5 workshop elicitation (D5.2)",
   "release_date": "2026-10-18",
   "release_type": "patch",
@@ -34,6 +34,9 @@
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
     ],
     "low": [
+      "Workshop and readiness xlsx files: column headers and labels in the user's language; the answers sheets keep their code headers so they can still be imported (1.32.2).",
+      "Response register title corrected in German, Lithuanian, Norwegian and Greek (1.32.2).",
+      "Workshop participants with an unknown entry source show an empty source instead of a missing-label code (1.32.2).",
       "Workshop page: translated yes/no and 'n' labels; no space before colons; the import refusal names the file's own column headers (1.32.1)."
     ]
   },
@@ -58,7 +61,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.32.0",
+  "previous_version": "1.32.1",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
