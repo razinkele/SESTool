@@ -1149,22 +1149,22 @@
       "es": "Registro de Medidas de Respuesta",
       "fr": "Registre des Mesures de Réponse",
       "de": "Register der Reaktionsmaßnahmen",
-      "lt": "Atsako Priemonių Registras",
+      "lt": "Atsako priemonių registras",
       "pt": "Registro de Medidas de Resposta",
       "it": "Registro delle Misure di Risposta",
-      "no": "Response Measures Register",
-      "el": "Απόκριση Μέτρα Εγγραφή"
+      "no": "Register over responstiltak",
+      "el": "Μητρώο μέτρων ανταπόκρισης"
     },
     "modules.response.measures.response_register": {
       "en": "Response Register",
       "es": "Registro de Respuestas",
       "fr": "Registre de Réponses",
-      "de": "Antwortregister",
-      "lt": "Atsakų Registras",
+      "de": "Maßnahmenregister",
+      "lt": "Atsako registras",
       "pt": "Registro de Respostas",
       "it": "Registro di Risposte",
-      "no": "Response Register",
-      "el": "Απόκριση Εγγραφή"
+      "no": "Responsregister",
+      "el": "Μητρώο ανταποκρίσεων"
     },
     "modules.response.measures.responsible_stakeholders": {
       "en": "Responsible Stakeholders:",

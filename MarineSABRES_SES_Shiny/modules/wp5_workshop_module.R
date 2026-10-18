@@ -356,7 +356,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       ws <- current(); req(ws)
       r <- ws$respondents
       data.frame(stats::setNames(list(r$RespondentId, r$EnteredAt,
-                                      vapply(r$Source, function(x) as.character(tr(paste0("source.", x))), "")),
+                                      vapply(r$Source, function(x) if (nzchar(x)) as.character(tr(paste0("source.", x))) else "", "")),
                                  c(tr("col_participant"), tr("col_date"), tr("col_source"))),
                  check.names = FALSE, stringsAsFactors = FALSE)
     })
