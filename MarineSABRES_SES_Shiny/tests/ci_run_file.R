@@ -6,6 +6,16 @@
 # order-dependent failures. A fresh process per file removes that entire class.
 suppressMessages(library(testthat))
 f <- commandArgs(trailingOnly = TRUE)[[1]]
+# Read the zero-pass allowlist (see below) BEFORE running the file, from an
+# absolute path, so nothing the test file or its helpers (global.R) do to the
+# working directory or files can make it look empty. CI on 4b53b7d rejected an
+# allow-listed file (test-ml-model-registry.R) while the same run allowed 8 others.
+allow_path <- normalizePath(Sys.getenv("CI_ALLOW_ZERO_PASS_FILE", "tests/ci_allow_zero_pass.txt"),
+                            mustWork = FALSE)
+allowed <- if (file.exists(allow_path)) {
+  l <- trimws(sub("#.*$", "", readLines(allow_path, warn = FALSE)))
+  l[nzchar(l)]
+} else character(0)
 # test_file's native load_helpers sources tests/testthat/helper-*.R (helper-00 ->
 # global.R, helper-source-grep -> expect_context_key_in_file, etc.). Those helpers
 # must be version-controlled to be present here in CI.
@@ -24,16 +34,13 @@ cat(sprintf("%-52s PASS=%d FAIL=%d SKIP=%d\n", basename(f), npass, nfail, nskip)
 # is only loaded behind an optional dependency. Treat it as a failure unless the
 # file is listed (with a reason) in the allowlist (review 2026-10-07 N44).
 if (nfail == 0 && npass == 0) {
-  allow_path <- Sys.getenv("CI_ALLOW_ZERO_PASS_FILE", "tests/ci_allow_zero_pass.txt")
-  allowed <- if (file.exists(allow_path)) {
-    l <- trimws(sub("#.*$", "", readLines(allow_path, warn = FALSE)))
-    l[nzchar(l)]
-  } else character(0)
   if (basename(f) %in% allowed) {
     cat(sprintf("  (zero passing expectations allowed by %s)\n", allow_path))
   } else {
     cat(sprintf("  ZERO PASSING EXPECTATIONS in %s -- every test skipped or none ran.\n", basename(f)))
     cat("  Fix the skip cause, or add the file to tests/ci_allow_zero_pass.txt with a reason.\n")
+    cat(sprintf("  (allowlist %s: %s, %d entries; wd now %s)\n", allow_path,
+                if (file.exists(allow_path)) "found" else "NOT FOUND", length(allowed), getwd()))
     quit(status = 1L)
   }
 }
