@@ -27,7 +27,9 @@ readiness_item <- function(bank, id) Find(function(it) identical(it$id, id), ban
 readiness_scale_codes <- function(bank, scale) as.character(unlist(bank$scales[[scale]]$codes))
 
 #' Normalise data$pims$readiness: NULL, list(respondents = data.frame) or JSON list rows.
-#' Unknown answer codes become ""; unknown item columns are kept (future item banks).
+#' Unknown answer codes become ""; only meta columns, bank item ids and other `q<number>`
+#' columns (future item banks) are kept - anything else (e.g. Name, Email in a hand-edited
+#' JSON) is dropped so the store stays anonymous.
 normalize_readiness <- function(readiness, bank) {
   resp <- if (is.list(readiness)) readiness$respondents else NULL
   if (is.list(resp) && !is.data.frame(resp)) {
@@ -42,7 +44,11 @@ normalize_readiness <- function(readiness, bank) {
   }
   if (!is.data.frame(resp)) resp <- data.frame()
   ids <- if (is.null(bank)) character(0) else readiness_item_ids(bank)
-  cols <- union(c(READINESS_META_COLUMNS, ids), names(resp))
+  extra <- grepl("^q[0-9]+$", names(resp))
+  dropped <- setdiff(names(resp), c(READINESS_META_COLUMNS, ids, names(resp)[extra]))
+  if (length(dropped) && exists("debug_log", mode = "function"))
+    debug_log(paste("WP5 readiness: dropped non-item columns:", paste(dropped, collapse = ", ")), "WARN")
+  cols <- union(c(READINESS_META_COLUMNS, ids), names(resp)[extra])
   n <- nrow(resp)
   out <- lapply(cols, function(cl) {
     v <- if (cl %in% names(resp)) as.character(resp[[cl]]) else rep("", n)
@@ -56,6 +62,19 @@ normalize_readiness <- function(readiness, bank) {
   }
   cnt <- safe_counter(if (is.list(readiness)) readiness$counter else 0, out$RespondentId, READINESS_ID_PREFIX)
   list(version = "1.0", respondents = out, counter = as.integer(cnt))
+}
+
+#' TRUE per respondent whose non-empty priority ranks (kind "priority") repeat a rank.
+#' `x` is a data.frame (one row per respondent) or a single named row (list).
+readiness_rank_conflict <- function(x, bank) {
+  if (!is.data.frame(x)) x <- as.data.frame(x, stringsAsFactors = FALSE)
+  pid <- Filter(function(i) i %in% names(x), vapply(Filter(function(it) identical(it$kind, "priority"), bank$items),
+                                                    `[[`, "", "id"))
+  vapply(seq_len(nrow(x)), function(i) {
+    v <- trimws(vapply(pid, function(k) as.character(x[[k]][i]), ""))
+    v <- v[!is.na(v) & nzchar(v)]
+    anyDuplicated(v) > 0
+  }, logical(1))
 }
 
 readiness_has_respondents <- function(readiness) {
@@ -211,8 +230,13 @@ readiness_parse_import <- function(df, bank, tr = readiness_translations()) {
                                          "modules.wp5_readiness.answer.", tr))
     } else rep("", nrow(df))
   }
+  # the five priority areas form a ranking: a respondent repeating a rank loses the ranking
+  pri <- vapply(Filter(function(it) identical(it$kind, "priority"), bank$items), `[[`, "", "id")
+  conflict <- if (nrow(out)) readiness_rank_conflict(out, bank) else logical(0)
+  for (id in pri) out[[id]][conflict] <- ""
   keep <- if (nrow(out)) (rowSums(out[, ids, drop = FALSE] != "") > 0) | out$Role != "" else logical(0)
   list(ok = TRUE, rows = out[keep, , drop = FALSE], blanked = as.integer(blanked),
+       rank_conflicts = as.integer(sum(conflict)),
        ignored = setdiff(names(df), c("role", ids)), dropped_empty = as.integer(sum(!keep)))
 }
 

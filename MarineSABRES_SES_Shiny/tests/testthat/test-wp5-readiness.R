@@ -202,3 +202,35 @@ test_that("respondent ids are never reused after a delete; counter survives JSON
   expect_equal(legacy$counter, 4L)
   expect_equal(create_empty_project("t")$data$pims$readiness$counter, 0)
 })
+
+# ---- PR 114 review: privacy and ranking integrity ----------------------------
+
+test_that("normalize drops non-item columns (Name/Email) and the export has no Name column", {
+  rd <- normalize_readiness(list(respondents = list(list(RespondentId = "R001", Name = "Ana", Email = "a@b",
+                                                         q6 = "agree", q99 = "yes"))), bank)
+  r <- rd$respondents
+  expect_false(any(c("Name", "Email") %in% names(r)))
+  expect_equal(c(r$q6, r$q99), c("agree", "yes"))
+  wb <- readiness_export_wb(list(respondents = list(list(RespondentId = "R001", Name = "Ana", q6 = "agree"))),
+                            bank, make_test_i18n())
+  ans <- openxlsx::read.xlsx(wb, "answers")
+  expect_false("Name" %in% names(ans))
+  expect_true("q6" %in% names(ans))
+})
+
+test_that("readiness_rank_conflict: distinct FALSE, repeated TRUE, blanks ignored", {
+  df <- rows_of(list(q35 = "1", q36 = "2", q37 = "3"), list(q35 = "1", q36 = "1"),
+                list(q35 = "2", q36 = "", q37 = "", q38 = "2"), list(q6 = "agree"))
+  expect_equal(readiness_rank_conflict(df, bank), c(FALSE, TRUE, TRUE, FALSE))
+  expect_false(readiness_rank_conflict(list(q35 = "1", q36 = ""), bank))
+  expect_true(readiness_rank_conflict(list(q35 = "4", q39 = "4"), bank))
+})
+
+test_that("import blanks the ranking of a respondent with repeated ranks, keeps other answers", {
+  df <- data.frame(q35 = c("1", "1"), q36 = c("1", "2"), q6 = c("agree", "agree"), stringsAsFactors = FALSE)
+  p <- readiness_parse_import(df, bank, list())
+  expect_equal(p$rank_conflicts, 1L)
+  expect_equal(c(p$rows$q35[1], p$rows$q36[1], p$rows$q6[1]), c("", "", "agree"))
+  expect_equal(c(p$rows$q35[2], p$rows$q36[2]), c("1", "2"))
+  expect_equal(p$blanked, 0L)
+})

@@ -1099,6 +1099,28 @@
       "it": "Rafforzare le capacità delle organizzazioni, anche attraverso un maggiore accesso a risorse finanziarie, attrezzature, personale e infrastrutture",
       "no": "Styrke organisasjonenes kapasitet, blant annet gjennom bedre tilgang til økonomiske ressurser, utstyr, personell og infrastruktur",
       "el": "Ενίσχυση των ικανοτήτων των οργανισμών, μεταξύ άλλων μέσω ευκολότερης πρόσβασης σε οικονομικούς πόρους, εξοπλισμό, προσωπικό και υποδομές"
+    },
+    "modules.wp5_readiness.rank_duplicate": {
+      "en": "Each priority area needs a different rank (1 to 5). Please correct the ranking before saving.",
+      "es": "Cada área prioritaria necesita un puesto distinto (1 a 5). Corrija la clasificación antes de guardar.",
+      "fr": "Chaque domaine prioritaire doit avoir un rang différent (1 à 5). Veuillez corriger le classement avant d'enregistrer.",
+      "de": "Jeder Prioritätsbereich braucht einen anderen Rang (1 bis 5). Bitte korrigieren Sie die Rangfolge vor dem Speichern.",
+      "lt": "Kiekvienai prioritetinei sričiai reikia skirtingos vietos (1–5). Prieš išsaugodami ištaisykite eilę.",
+      "pt": "Cada área prioritária precisa de uma posição diferente (1 a 5). Corrija a classificação antes de guardar.",
+      "it": "Ogni area prioritaria richiede una posizione diversa (da 1 a 5). Correggere la classifica prima di salvare.",
+      "no": "Hvert prioriterte område må ha en ulik rang (1 til 5). Rett opp rangeringen før du lagrer.",
+      "el": "Κάθε τομέας προτεραιότητας χρειάζεται διαφορετική σειρά κατάταξης (1 έως 5). Διορθώστε την κατάταξη πριν από την αποθήκευση."
+    },
+    "modules.wp5_readiness.import_rank_conflicts": {
+      "en": "respondents with repeated ranks (their ranking was left empty):",
+      "es": "participantes con puestos repetidos (su clasificación se dejó vacía):",
+      "fr": "répondants avec des rangs répétés (leur classement a été laissé vide) :",
+      "de": "Befragte mit wiederholten Rängen (ihre Rangfolge blieb leer):",
+      "lt": "respondentai su pasikartojančiomis vietomis (jų eilė palikta tuščia):",
+      "pt": "inquiridos com posições repetidas (a sua classificação foi deixada vazia):",
+      "it": "rispondenti con posizioni ripetute (la loro classifica è stata lasciata vuota):",
+      "no": "respondenter med gjentatte rangeringer (rangeringen deres ble stående tom):",
+      "el": "ερωτώμενοι με επαναλαμβανόμενες θέσεις κατάταξης (η κατάταξή τους αφέθηκε κενή):"
     }
   }
 }

@@ -99,3 +99,14 @@ test_that("a missing item bank shows the notice", {
     expect_match(as.character(output$results$html), "modules.wp5_readiness.unavailable", fixed = TRUE)
   })
 })
+
+test_that("form refuses to save duplicate priority ranks (PR 114 review)", {
+  pd <- shiny::reactiveVal(proj())
+  testServer(real_srv, args = list(project_data_reactive = pd, i18n = i18n_echo), {
+    session$flushReact()
+    session$setInputs(consent = TRUE, ans_q35 = "1", ans_q36 = "1", save = 1)
+    expect_equal(nrow(pd()$data$pims$readiness$respondents), 0L)
+    session$setInputs(consent = TRUE, ans_q35 = "1", ans_q36 = "2", save = 2)
+    expect_equal(nrow(pd()$data$pims$readiness$respondents), 1L)
+  })
+})

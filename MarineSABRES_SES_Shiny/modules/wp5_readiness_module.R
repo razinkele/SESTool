@@ -76,6 +76,8 @@
 # i18n-ref: modules.wp5_readiness.upload
 # i18n-ref: modules.wp5_readiness.import_rows
 # i18n-ref: modules.wp5_readiness.import_blanked
+# i18n-ref: modules.wp5_readiness.import_rank_conflicts
+# i18n-ref: modules.wp5_readiness.rank_duplicate
 # i18n-ref: modules.wp5_readiness.import_ignored
 # i18n-ref: modules.wp5_readiness.import_dropped
 # i18n-ref: modules.wp5_readiness.import_add
@@ -178,6 +180,7 @@ wp5_readiness_server <- function(id, project_data_reactive, i18n, event_bus = NU
       ids <- readiness_item_ids(bank)
       answers <- vapply(ids, function(i) { v <- input[[paste0("ans_", i)]]; if (length(v)) as.character(v[1]) else "" },
                         character(1))
+      if (any(readiness_rank_conflict(as.list(answers), bank))) { showNotification(tr("rank_duplicate"), type = "warning"); return() }
       role <- input$role %||% ""
       if (!any(nzchar(answers)) && !nzchar(role)) { showNotification(tr("nothing_to_save"), type = "warning"); return() }
       row <- as.data.frame(c(list(Role = role), as.list(answers)), stringsAsFactors = FALSE)
@@ -214,6 +217,7 @@ wp5_readiness_server <- function(id, project_data_reactive, i18n, event_bus = NU
       tagList(
         p(tr("import_rows"), " ", nrow(pr$rows), " · ", tr("import_blanked"), " ", pr$blanked, " · ",
           tr("import_ignored"), " ", length(pr$ignored), " · ", tr("import_dropped"), " ", pr$dropped_empty),
+        if (isTRUE(pr$rank_conflicts > 0)) tags$small(class = "d-block", tr("import_rank_conflicts"), " ", pr$rank_conflicts),
         if (length(pr$ignored)) tags$small(class = "text-muted d-block", paste(pr$ignored, collapse = ", ")),
         if (nrow(pr$rows)) actionButton(ns("import_confirm"), paste(tr("import_add"), nrow(pr$rows)), class = "btn-primary"))
     })
