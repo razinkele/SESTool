@@ -253,6 +253,17 @@
       "no": "Styringsberedskap (D5.4)",
       "el": "Ετοιμότητα διακυβέρνησης (D5.4)"
     },
+    "ui.sidebar.workshop_elicitation": {
+      "en": "Workshop elicitation (D5.2)",
+      "es": "Consulta en talleres (D5.2)",
+      "fr": "Recueil d'avis en atelier (D5.2)",
+      "de": "Workshop-Erhebung (D5.2)",
+      "lt": "Seminaro apklausa (D5.2)",
+      "pt": "Recolha de opiniões em oficinas (D5.2)",
+      "it": "Raccolta di pareri nei workshop (D5.2)",
+      "no": "Innhenting i workshop (D5.2)",
+      "el": "Συλλογή απόψεων σε εργαστήρια (D5.2)"
+    },
     "ui.sidebar.pims": {
       "en": "PIMS",
       "es": "PIMS",
