@@ -134,3 +134,29 @@ test_that("JSON load path normalises workshops and stamps 1.32.0", {
   expect_false(identical(normalize_json_project_data(create_empty_project("t"))$min_app_version,
                          WP5_WORKSHOP_MIN_APP_VERSION))
 })
+
+test_that("JSON round trip keeps apply records with different key sets (no phantom blank keys)", {
+  rec <- function(m, before, after) list(measure = m, at = "2026-10-18", before = before, after = after)
+  mk <- function(id, recs) {
+    w <- normalize_workshop(list(id = id, interventions = c("RM001", "RM002")))
+    w$applied <- recs
+    w
+  }
+  r1 <- rec("RM001", list(Tenet_ecol_effective = "", TenetSource = ""),
+                     list(Tenet_ecol_effective = "5", TenetSource = "Workshop W001"))
+  r2 <- rec("RM002", list(Tenet_tech_feasible = "2", Tenet_communicable = "", TenetSource = "old"),
+                     list(Tenet_tech_feasible = "4", Tenet_communicable = "3", TenetSource = "Workshop W002"))
+  st <- normalize_workshops(list(counter = 2L, items = list(mk("W001", list(r1, r2)), mk("W002", list(r2)))))
+  expect_equal(st$items[[1]]$applied, list(r1, r2))                 # direct normalisation keeps them
+  json <- jsonlite::toJSON(list(data = list(pims = list(workshops = st))), pretty = TRUE, auto_unbox = TRUE)
+  back <- normalize_workshops(jsonlite::fromJSON(json, simplifyVector = TRUE)$data$pims$workshops)
+  for (i in 1:2) for (k in seq_along(st$items[[i]]$applied)) {
+    a <- back$items[[i]]$applied[[k]]; o <- st$items[[i]]$applied[[k]]
+    srt <- function(x) x[order(names(x))]          # key order is not significant (data.frame union columns)
+    expect_equal(sort(names(a$before)), sort(names(o$before)))
+    expect_equal(sort(names(a$after)), sort(names(o$after)))
+    expect_equal(srt(a$before), srt(o$before))
+    expect_equal(srt(a$after), srt(o$after))
+  }
+  expect_identical(back$items[[1]]$applied[[1]]$before$Tenet_ecol_effective, "")   # blank before survives
+})

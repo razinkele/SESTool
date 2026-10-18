@@ -69,8 +69,16 @@ workshop_answer_columns <- function(ws) {
       setequal(names(e$before), names(e$after)) && all(names(e$after) %in% allowed)
   }, x)
   if (length(ok) < length(x)) .ws_log(sprintf("dropped %d malformed apply record(s)", length(x) - length(ok)))
-  lapply(ok, function(e) list(measure = .ws_chr1(e$measure), at = .ws_chr1(e$at),
-                              before = lapply(e$before, .ws_chr1), after = lapply(e$after, .ws_chr1)))
+  # A written value is always a string: NULL/NA `after` keys are NA-fill from the JSON data.frame
+  # round trip (records with different key sets), so drop them and their `before` (no phantom blanks).
+  present <- function(v) !is.null(v) && length(v) > 0 && !is.na(unlist(v)[1])
+  res <- lapply(ok, function(e) {
+    keep <- names(e$after)[vapply(e$after, present, logical(1))]
+    list(measure = .ws_chr1(e$measure), at = .ws_chr1(e$at),
+         before = lapply(stats::setNames(e$before[keep], keep), .ws_chr1),
+         after = lapply(stats::setNames(e$after[keep], keep), .ws_chr1))
+  })
+  Filter(function(r) length(r$after) > 0, res)
 }
 
 normalize_workshop <- function(ws) {
