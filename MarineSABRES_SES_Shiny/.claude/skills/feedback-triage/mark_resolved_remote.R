@@ -27,10 +27,17 @@ ok <- tryCatch({
   p$resolution_note <- P$note %||% ""
   if (!is.null(P$fix_ref) && nzchar(P$fix_ref))           p$fix_ref      <- P$fix_ref
   if (!is.null(P$fix_deployed) && nzchar(P$fix_deployed)) p$fix_deployed <- P$fix_deployed
-  L[[idx]] <- jsonlite::toJSON(p, auto_unbox = TRUE)
+  # null = "null": jsonlite's default writes NULL as {}, which made the app's
+  # feedback list fail to load (2026-10-19).
+  L[[idx]] <- jsonlite::toJSON(p, auto_unbox = TRUE, null = "null")
+  info <- file.info(log)
   tmp <- paste0(log, ".tmp.", Sys.getpid())
   on.exit(if (file.exists(tmp)) try(file.remove(tmp), silent = TRUE), add = TRUE)
   writeLines(L, tmp, useBytes = TRUE)
+  # The rename replaces the file, so keep its group and mode: the app (user
+  # shiny) must still be able to append to it afterwards.
+  Sys.chmod(tmp, info$mode, use_umask = FALSE)
+  if (system2("chgrp", c(info$grname, shQuote(tmp))) != 0L) stop("chgrp failed")
   if (!isTRUE(file.rename(tmp, log))) stop("rename failed")
   cat(sprintf("OK matched line %d\n", idx)); TRUE
 }, error = function(e) { cat("ERR", conditionMessage(e), "\n"); FALSE })
