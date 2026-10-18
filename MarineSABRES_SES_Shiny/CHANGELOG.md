@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.1] - 2026-10-18
+
+### Fixed (WS-10 follow-ups)
+- Response register: tenet levels outside the allowed values, and "intermediate" on any tenet other than ecological effectiveness, are cleared on load and logged.
+- Workshop participants with duplicate ids (hand-edited files) are renumbered and kept, so "Delete selected" never removes two participants at once.
+- Workshop apply records survive removing a measure from the workshop's list; Undo still works when the measure is put back.
+- Workshop page: translated Yes/No on a locked set-up and a translated "n" in the heat-table tooltip; no space before colons; an import refused for foreign columns names the file's own headers.
+
 ## [1.32.0] - 2026-10-18
 
 ### Added (WP5 workshop elicitation — spec 2026-10-18 WS-10)
