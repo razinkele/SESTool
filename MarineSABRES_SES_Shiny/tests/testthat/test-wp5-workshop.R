@@ -160,3 +160,90 @@ test_that("JSON round trip keeps apply records with different key sets (no phant
   }
   expect_identical(back$items[[1]]$applied[[1]]$before$Tenet_ecol_effective, "")   # blank before survives
 })
+
+tenet_rows <- function(ws, m, tenet, codes) {        # one participant per code, rating only (m, tenet)
+  do.call(rbind, lapply(codes, function(cd) { r <- row_of(ws); r[[workshop_tenet_col(m, tenet)]] <- cd; r }))
+}
+reg <- function(...) normalize_response_measures(data.frame(ID = c("RM001", "RM002"), Name = c("a", "b"), ...,
+                                                           stringsAsFactors = FALSE))
+
+test_that("poll summary: n, median, mean; sorted by the first criterion's median then mean", {
+  ws <- ws_with()
+  ws <- workshop_append(ws, rbind(row_of(ws, rank__RM001__importance = "1", rank__RM002__importance = "4"),
+                                  row_of(ws, rank__RM001__importance = "2", rank__RM002__importance = "-1"),
+                                  row_of(ws, rank__RM002__importance = "4")), "form")
+  s <- workshop_poll_summary(ws)
+  expect_equal(s$measure, c("RM002", "RM001"))
+  expect_equal(s$n, c(3L, 2L))
+  expect_equal(s$median, c(4, 1.5))
+  expect_equal(s$mean, c(7 / 3, 1.5))
+  ct <- workshop_poll_counts(ws)
+  expect_equal(nrow(ct), 2 * 11)
+  expect_equal(ct$n[ct$measure == "RM002" & ct$value == "4"], 2L)
+  expect_equal(nrow(workshop_poll_summary(ws_with(interventions = character(0)))), 0L)
+})
+
+test_that("tenet summary: even-n median, dont_know excluded from median and n", {
+  ws <- ws_with()
+  ws <- workshop_append(ws, tenet_rows(ws, "RM001", "ecol_effective",
+                                       c("agree", "neutral", "dont_know", "completely_agree", "neutral")), "form")
+  s <- workshop_tenet_summary(ws)
+  e <- s[s$measure == "RM001" & s$tenet == "ecol_effective", ]
+  expect_equal(c(e$n_valid, e$n_dont_know), c(4L, 1L))
+  expect_equal(e$median, 3.5)                               # 3, 3, 4, 5
+  expect_equal(c(e$p3, e$p4, e$p5), c(2L, 1L, 1L))
+  expect_true(is.na(s$median[s$measure == "RM002" & s$tenet == "ecol_effective"]))
+  expect_equal(nrow(s), 2 * 11)
+  expect_equal(nrow(workshop_tenet_summary(ws_with(tenets_on = FALSE))), 0L)
+})
+
+test_that("level mapping at the boundaries (spec §6)", {
+  lv <- function(t, m) workshop_tenet_level(t, m)
+  expect_equal(vapply(c(2.5, 3, 3.5, 4, 5), function(m) lv("ecol_effective", m), ""),
+               c("minimal", "intermediate", "intermediate", "full", "full"))
+  expect_equal(vapply(c(2.5, 3, 3.5, 4), function(m) lv("communicable", m), ""),
+               c("minimal", "minimal", "minimal", "full"))
+  expect_true(is.na(lv("communicable", NA_real_)))
+})
+
+test_that("proposal: n < 3 gives none; not-assessed counts as changed (review focus 4); equal is unchanged", {
+  ws <- ws_with()
+  ws <- workshop_append(ws, rbind(tenet_rows(ws, "RM001", "ecol_effective", c("agree", "agree", "completely_agree")),
+                                  tenet_rows(ws, "RM001", "tech_feasible", c("agree", "agree"))), "form")
+  p <- workshop_writeback_proposal(ws, reg(Tenet_ecol_effective = c("", "full")))
+  e <- p[p$measure == "RM001" & p$tenet == "ecol_effective", ]
+  expect_equal(c(e$current, e$proposed), c("", "full"))
+  expect_true(e$changed)
+  t <- p[p$measure == "RM001" & p$tenet == "tech_feasible", ]
+  expect_true(is.na(t$proposed)); expect_false(t$changed)
+  expect_equal(nrow(p), 2 * 11)
+  same <- workshop_writeback_proposal(ws, reg(Tenet_ecol_effective = c("full", "")))
+  expect_false(same$changed[same$measure == "RM001" & same$tenet == "ecol_effective"])
+  gone <- workshop_writeback_proposal(ws, reg()[2, , drop = FALSE])
+  expect_equal(unique(gone$measure), "RM002")
+})
+
+test_that("apply change, record, undo check, and an apply/undo round trip", {
+  ws <- ws_with()
+  ws <- workshop_append(ws, tenet_rows(ws, "RM001", "ecol_effective", c("agree", "agree", "agree", "agree")), "form")
+  m <- reg()
+  ch <- workshop_apply_change(ws, "RM001", m, "Workshop {id} ({date}, n = {n})")
+  expect_equal(ch$after$Tenet_ecol_effective, "full")
+  expect_equal(ch$after$TenetSource, "Workshop W001 (2026-10-18, n = 4)")
+  expect_equal(ch$before, list(Tenet_ecol_effective = "", TenetSource = ""))
+  expect_null(workshop_apply_change(ws, "RM002", m, "x"))                   # nothing to change
+  expect_equal(workshop_source_text(ws_with(date = ""), 3, "{id} {date} {n}", today = as.Date("2026-01-02")),
+               "W001 2026-01-02 3")
+  ws <- workshop_record_apply(ws, "RM001", ch$before, ch$after, at = "2026-10-18T10:00:00")
+  e <- workshop_last_apply(ws, "RM001")
+  expect_equal(e$after$Tenet_ecol_effective, "full")
+  applied <- m; applied$Tenet_ecol_effective[1] <- "full"; applied$TenetSource[1] <- ch$after$TenetSource
+  expect_equal(workshop_undo_check(e, applied), "ok")
+  expect_equal(workshop_undo_check(e, m), "changed")
+  expect_equal(workshop_undo_check(e, m[2, , drop = FALSE]), "gone")
+  restored <- applied
+  for (cl in names(e$before)) restored[[cl]][1] <- e$before[[cl]]
+  expect_equal(restored, m)                                                  # round trip
+  expect_null(workshop_last_apply(workshop_drop_last_apply(ws, "RM001"), "RM001"))
+  expect_equal(normalize_workshop(ws)$applied, ws$applied)                   # records survive normalisation
+})

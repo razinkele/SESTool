@@ -207,3 +207,127 @@ workshops_need_version <- function(store, measures) {
          else NULL
   has_ws || any(nzchar(as.character(unlist(src))) & !is.na(unlist(src)))
 }
+
+# ---- Summaries (spec §5) -------------------------------------------------------
+
+.ws_bind <- function(rows, empty) if (length(rows)) do.call(rbind, rows) else empty
+
+workshop_poll_summary <- function(ws) {
+  ws <- normalize_workshop(ws); r <- ws$respondents
+  empty <- data.frame(measure = character(), criterion = character(), n = integer(), median = numeric(),
+                      mean = numeric(), order = integer(), stringsAsFactors = FALSE)
+  out <- .ws_bind(unlist(lapply(ws$interventions, function(m) lapply(ws$poll$criteria, function(cr) {
+    v <- as.character(r[[workshop_rank_col(m, cr)]] %||% character(0))
+    x <- suppressWarnings(as.numeric(v[nzchar(v)]))
+    data.frame(measure = m, criterion = cr, n = length(x), median = if (length(x)) stats::median(x) else NA_real_,
+               mean = if (length(x)) mean(x) else NA_real_, order = NA_integer_, stringsAsFactors = FALSE)
+  })), recursive = FALSE), empty)
+  if (!nrow(out)) return(empty)
+  first <- out[out$criterion == ws$poll$criteria[1], ]
+  pos <- match(first$measure, ws$interventions)
+  ranked <- first$measure[order(-ifelse(is.na(first$median), -Inf, first$median),
+                                -ifelse(is.na(first$mean), -Inf, first$mean), pos)]
+  out$order <- match(out$measure, ranked)
+  out <- out[order(out$order, match(out$criterion, ws$poll$criteria)), ]
+  rownames(out) <- NULL
+  out
+}
+
+workshop_poll_counts <- function(ws) {
+  ws <- normalize_workshop(ws); r <- ws$respondents
+  vals <- WORKSHOP_POLL_SCALES[[ws$poll$scale]]
+  .ws_bind(unlist(lapply(ws$interventions, function(m) lapply(ws$poll$criteria, function(cr) {
+    v <- as.character(r[[workshop_rank_col(m, cr)]] %||% character(0))
+    data.frame(measure = m, criterion = cr, value = vals, n = vapply(vals, function(x) sum(v == x), integer(1)),
+               stringsAsFactors = FALSE, row.names = NULL)
+  })), recursive = FALSE),
+  data.frame(measure = character(), criterion = character(), value = character(), n = integer()))
+}
+
+workshop_tenet_summary <- function(ws) {
+  ws <- normalize_workshop(ws); r <- ws$respondents
+  empty <- data.frame(measure = character(), tenet = character(), n_valid = integer(), n_dont_know = integer(),
+                      median = numeric(), p1 = integer(), p2 = integer(), p3 = integer(), p4 = integer(), p5 = integer(),
+                      stringsAsFactors = FALSE)
+  if (!isTRUE(ws$tenets_on)) return(empty)
+  .ws_bind(unlist(lapply(ws$interventions, function(m) lapply(EBM_TENETS$code, function(t) {
+    v <- as.character(r[[workshop_tenet_col(m, t)]] %||% character(0))
+    pts <- match(v, WORKSHOP_TENET_CODES); pts <- pts[!is.na(pts)]
+    cnt <- vapply(1:5, function(k) sum(pts == k), integer(1))
+    data.frame(measure = m, tenet = t, n_valid = length(pts), n_dont_know = sum(v == "dont_know"),
+               median = if (length(pts)) stats::median(pts) else NA_real_,
+               p1 = cnt[1], p2 = cnt[2], p3 = cnt[3], p4 = cnt[4], p5 = cnt[5], stringsAsFactors = FALSE)
+  })), recursive = FALSE), empty)
+}
+
+# ---- Write-back (spec §6) ------------------------------------------------------
+
+workshop_tenet_level <- function(tenet, median) {
+  if (length(median) != 1 || is.na(median)) return(NA_character_)
+  if (median >= 4) "full" else if (median >= 3 && identical(tenet, "ecol_effective")) "intermediate" else "minimal"
+}
+
+workshop_writeback_proposal <- function(ws, measures) {
+  ws <- normalize_workshop(ws); measures <- normalize_response_measures(measures)
+  sm <- workshop_tenet_summary(ws)
+  empty <- data.frame(measure = character(), tenet = character(), current = character(), median = numeric(),
+                      n_valid = integer(), proposed = character(), changed = logical(), stringsAsFactors = FALSE)
+  .ws_bind(unlist(lapply(intersect(ws$interventions, measures$ID), function(m) {
+    i <- match(m, measures$ID)
+    lapply(EBM_TENETS$code, function(t) {
+      s <- sm[sm$measure == m & sm$tenet == t, , drop = FALSE]
+      med <- if (nrow(s)) s$median[1] else NA_real_
+      nv <- if (nrow(s)) s$n_valid[1] else 0L
+      prop <- if (nv >= WORKSHOP_MIN_VALID) workshop_tenet_level(t, med) else NA_character_
+      cur <- measures[[paste0("Tenet_", t)]][i]
+      data.frame(measure = m, tenet = t, current = cur, median = med, n_valid = as.integer(nv), proposed = prop,
+                 changed = !is.na(prop) && !identical(prop, cur), stringsAsFactors = FALSE)
+    })
+  }), recursive = FALSE), empty)
+}
+
+workshop_source_text <- function(ws, n, template, today = Sys.Date()) {
+  date <- if (nzchar(ws$date %||% "")) ws$date else as.character(today)
+  out <- gsub("{id}", ws$id, template, fixed = TRUE)
+  out <- gsub("{date}", date, out, fixed = TRUE)
+  gsub("{n}", as.character(n), out, fixed = TRUE)
+}
+
+#' The fields an Apply would write for one measure (changed tenets + TenetSource), or NULL
+workshop_apply_change <- function(ws, measure, measures, template) {
+  measures <- normalize_response_measures(measures)
+  pr <- workshop_writeback_proposal(ws, measures)
+  pr <- pr[pr$measure == measure & pr$changed, , drop = FALSE]
+  if (!nrow(pr)) return(NULL)
+  i <- match(measure, measures$ID)
+  after <- c(stats::setNames(as.list(pr$proposed), paste0("Tenet_", pr$tenet)),
+             list(TenetSource = workshop_source_text(normalize_workshop(ws), max(pr$n_valid), template)))
+  before <- stats::setNames(lapply(names(after), function(cl) measures[[cl]][i]), names(after))
+  list(after = after, before = before)
+}
+
+workshop_record_apply <- function(ws, measure, before, after, at = format(Sys.time(), "%Y-%m-%dT%H:%M:%S")) {
+  ws <- normalize_workshop(ws)
+  ws$applied[[length(ws$applied) + 1L]] <- list(measure = measure, at = at, before = before, after = after)
+  normalize_workshop(ws)
+}
+
+workshop_last_apply <- function(ws, measure) {
+  hits <- Filter(function(e) identical(e$measure, measure), normalize_workshop(ws)$applied)
+  if (length(hits)) hits[[length(hits)]] else NULL
+}
+
+workshop_drop_last_apply <- function(ws, measure) {
+  ws <- normalize_workshop(ws)
+  idx <- which(vapply(ws$applied, function(e) identical(e$measure, measure), logical(1)))
+  if (length(idx)) ws$applied[[max(idx)]] <- NULL
+  ws
+}
+
+workshop_undo_check <- function(entry, measures) {
+  measures <- normalize_response_measures(measures)
+  i <- match(entry$measure, measures$ID)
+  if (is.na(i)) return("gone")
+  same <- vapply(names(entry$after), function(cl) identical(as.character(measures[[cl]][i]), entry$after[[cl]]), logical(1))
+  if (all(same)) "ok" else "changed"
+}

@@ -260,3 +260,22 @@ test_that("a loaded project without a counter does not reuse measure ids", {
     expect_equal(pd()$data$response_measures$measures$ID, c("RM001", "RM002", "RM003"))
   })
 })
+
+test_that("register api: returned by the server; update merges, re-normalises, FALSE for an unknown id", {
+  proj <- create_empty_project("t"); proj$project_id <- "p1"
+  proj$data$response_measures$measures <- normalize_response_measures(data.frame(
+    ID = c("RM001", "RM002"), Name = c("a", "b"), Type = "regulatory", stringsAsFactors = FALSE))
+  pd <- reactiveVal(proj)
+  testServer(real_response_measures_server, args = list(project_data_reactive = pd, i18n = make_test_i18n()), {
+    session$flushReact()
+    api <- session$getReturned()
+    expect_true(all(c("measures", "add", "update", "data") %in% names(api)))
+    expect_true(api$update("RM002", list(Tenet_ecol_effective = "full", TenetSource = "Workshop W001 (2026-10-18, n = 3)")))
+    m <- pd()$data$response_measures$measures
+    expect_equal(c(m$Tenet_ecol_effective[2], m$TenetSource[2], m$Name[2]),
+                 c("full", "Workshop W001 (2026-10-18, n = 3)", "b"))
+    expect_equal(m$Tenet_ecol_effective[1], "")
+    expect_false(api$update("RM999", list(TenetSource = "x")))
+    expect_equal(api$measures()$TenetSource[2], "Workshop W001 (2026-10-18, n = 3)")
+  })
+})
