@@ -65,7 +65,9 @@ workshop_answer_columns <- function(ws) {
   allowed <- c(paste0("Tenet_", EBM_TENETS$code), "TenetSource")
   x <- Filter(is.list, x %||% list())
   ok <- Filter(function(e) {
-    is.list(e$before) && is.list(e$after) && length(e$after) > 0 && .ws_chr1(e$measure) %in% ivs &&
+    # any valid measure id: a record outlives removing its measure from the workshop, so
+    # Undo still works if the measure is put back (WS-10 follow-up)
+    is.list(e$before) && is.list(e$after) && length(e$after) > 0 && workshop_valid_measure_id(.ws_chr1(e$measure)) &&
       setequal(names(e$before), names(e$after)) && all(names(e$after) %in% allowed)
   }, x)
   if (length(ok) < length(x)) .ws_log(sprintf("dropped %d malformed apply record(s)", length(x) - length(ok)))
@@ -115,7 +117,16 @@ normalize_workshop <- function(ws) {
     df[[cl]][x] <- ""
   }
   if (bad > 0) .ws_log(sprintf("blanked %d out-of-range answer(s)", bad))
-  out$counter <- as.integer(safe_counter(ws$counter, df$RespondentId, WORKSHOP_PARTICIPANT_PREFIX))
+  cnt <- safe_counter(ws$counter, df$RespondentId, WORKSHOP_PARTICIPANT_PREFIX)
+  # duplicate participant ids (hand-edited files): keep every row, renumber the repeats so
+  # "Delete selected" never removes two participants at once (WS-10 follow-up)
+  dup <- which(duplicated(df$RespondentId) | !nzchar(df$RespondentId))
+  if (length(dup)) {
+    df$RespondentId[dup] <- vapply(seq_along(dup), function(i) next_element_id(WORKSHOP_PARTICIPANT_PREFIX, cnt + i), "")
+    cnt <- cnt + length(dup)
+    .ws_log(sprintf("renumbered %d duplicate or missing participant id(s)", length(dup)))
+  }
+  out$counter <- as.integer(cnt)
   out$respondents <- df
   out$applied <- .ws_norm_applied(ws$applied, ivs)
   out
@@ -344,10 +355,11 @@ workshop_parse_import <- function(df, ws, tr = workshop_translations()) {
   ws <- normalize_workshop(ws)
   if (!is.data.frame(df)) df <- data.frame()
   cols <- workshop_answer_columns(ws)
-  keyed <- .ready_key(names(df))
+  original <- names(df)
+  keyed <- .ready_key(original)
   names(df) <- keyed
   if (nrow(df) > 1000) return(list(ok = FALSE, error = "too_many_rows", expected = NULL))
-  foreign <- keyed[grepl("^(rank|tenet)__", keyed) & !keyed %in% tolower(cols)]
+  foreign <- original[grepl("^(rank|tenet)__", keyed) & !keyed %in% tolower(cols)]   # as written in the file
   if (length(foreign)) return(list(ok = FALSE, error = "foreign_columns", expected = foreign))
   if (!any(keyed %in% tolower(cols))) return(list(ok = FALSE, error = "no_answer_columns", expected = cols))
   scale_vals <- WORKSHOP_POLL_SCALES[[ws$poll$scale]]

@@ -207,3 +207,20 @@ test_that("apply for a measure that left the register warns; unchanged-but-prese
     expect_length(pd()$data$pims$workshops$items[[1]]$applied, 0)
   })
 })
+
+test_that("follow-up: locked set-up shows translated yes/no; source line has no space before the colon", {
+  p <- proj(); ws <- base_ws()
+  r <- stats::setNames(as.list(rep("", length(workshop_answer_columns(ws)))), workshop_answer_columns(ws))
+  r$rank__RM001__importance <- "1"
+  p$data$response_measures$measures$TenetSource[1] <- "Workshop W001 (2026-10-18, n = 3)"
+  pd <- shiny::reactiveVal(with_ws(p, workshop_append(ws, as.data.frame(r, stringsAsFactors = FALSE, check.names = FALSE), "form")))
+  testServer(real_srv, args = list(project_data_reactive = pd, i18n = i18n_echo, register = fake_register(pd)), {
+    session$flushReact()
+    session$setInputs(workshop = "W001")
+    setup <- as.character(output$setup$html)
+    expect_match(setup, "modules.wp5_workshop.yes", fixed = TRUE)
+    expect_false(grepl("\u2713", setup, fixed = TRUE))
+    expect_match(as.character(output$apply$html),
+                 "modules.wp5_workshop.tenet_source: Workshop W001 (2026-10-18, n = 3)", fixed = TRUE)
+  })
+})
