@@ -90,7 +90,8 @@ list(
   tenets_on = TRUE,
   consent = FALSE,                             # facilitator confirmation, required before any entry
   counter = <int, highest P-number ever issued in this workshop>,
-  respondents = data.frame(RespondentId, EnteredAt, Source, <answer columns>)
+  respondents = data.frame(RespondentId, EnteredAt, Source, <answer columns>),
+  applied = list(<apply record>, ...)          # §6 Undo
 )
 ```
 
@@ -128,6 +129,14 @@ list(
 - Measures no longer in the register are listed as "(no longer in register)" and skipped.
 - Poll results are never written.
 
+**Undo last apply.** The register has no edit path (`response_module.R` only adds and deletes measures), so each Apply is reversible from the workshop:
+
+- Every Apply appends to the workshop's `applied` list: `list(measure = "RM003", at = "<ISO time>", before = <named list of the written Tenet_* columns + TenetSource, prior values>, after = <same names, values written>)`.
+- Each card shows "Undo last apply" when the workshop's latest `applied` entry for that measure exists. `workshop_undo_check(entry, measures)` returns `ok` only if the register row still holds exactly `after` for those columns; then `register$update(id, before)` restores them and the entry is removed.
+- Otherwise Undo is refused with a translated message ("the register has changed since this apply") and nothing is written; a measure no longer in the register is refused the same way.
+- Undo is one level per measure per workshop (the latest entry); earlier entries are undone in turn after it.
+- `applied` is normalised like the rest of the workshop (entries with unknown measures or malformed `before`/`after` are dropped and logged).
+
 **Register access:** `response_measures_server()` now **returns** its `register_api`, extended with `update(id, fields)` (merges `fields` into the row with that ID, re-normalises, calls `sync_to_project_data()`; returns FALSE when the ID is absent). `app.R` captures the return value and passes it as `register =` to `wp5_workshop_server()`, which is called after `response_measures_server()`. The workshop module never writes `data$response_measures` directly: the response module reloads its state only on project change and would overwrite such a write on its next sync.
 
 ## 7. Module `modules/wp5_workshop_module.R`
@@ -139,7 +148,7 @@ The module's own state is `data$data$pims$workshops`, read from `project_data_re
 1. **Set-up** — workshop picker; New / Rename / Duplicate set-up / Delete (Delete confirms via modal stating the respondent count); title, date, note; selectize of register measures ("ID — Name") in pick order (an empty register shows "add measures in the Response register first"); scale radio; criteria checkboxes; tenet on/off. Locked fields are disabled with an explanation once respondents exist.
 2. **Entry** — consent checkbox per workshop, stored as `consent` (the facilitator confirms once for the group, unlike WS-9b's per-respondent box); server-enforced for both form save and import; per measure: one select per criterion (scale values + blank) and, if on, an 11-row grid (5 points + don't know + blank) with the guiding question as help text; "Save participant and next" appends and resets; an all-blank participant is refused. Template import (xlsx, or csv with comma or semicolon) with columns `rank__…` / `tenet__…` exactly as stored; labels accepted in any of the 9 languages, accent-folded — by reusing (not copying) WS-9b's `readiness_translations(path = <wp5_workshop.json>)`, `readiness_value_map()` and `.ready_key()` from `functions/wp5_readiness.R`, and `readiness_read_file()` for xlsx/csv reading; a template whose columns name measures, criteria or tenets not in the workshop is refused with a message naming them; invalid values are blanked and counted; all-blank rows dropped and counted. Template download prefilled with the workshop's columns. Respondent table with "Delete selected" (confirm modal).
 3. **Results** — poll ranking table; per measure × criterion a small HTML bar row of the distribution (renderUI, as WS-9b's distributions; no new plotting dependency); tenet heat table (median, coloured; `n_dont_know` in a tooltip); xlsx export (sheets: setup, respondents, poll_summary, tenet_summary).
-4. **Apply to register** — one card per measure (§6); disabled with a note when `register` is NULL or the tenet rating is off.
+4. **Apply to register** — one card per measure (§6) with Apply and Undo last apply; disabled with a note when `register` is NULL or the tenet rating is off.
 
 All text via `i18n$t()`; errors via `format_user_error(e, i18n = i18n, context_key = ...)`.
 
@@ -147,14 +156,15 @@ All text via `i18n$t()`; errors via `format_user_error(e, i18n = i18n, context_k
 
 - Malformed project data never blocks loading: normalisation drops/blanks and logs.
 - Import refusals and counts are shown as translated notifications.
-- Apply on a measure removed between render and click: `register$update()` returns FALSE → warning notification, nothing written.
+- Apply or Undo on a measure removed between render and click: `register$update()` returns FALSE → warning notification, nothing written (and no `applied` entry is added or removed).
 - Template and export use English column headers (as WS-9b; parked follow-up).
 
 ## 9. Testing
 
 - **testthat helpers** (`test-wp5-workshop.R`): normalisation (unknown columns, out-of-range values, measures not in `interventions`); id counters never reuse after delete (workshops and participants); poll summary incl. sort; tenet summary incl. even-n median and `dont_know` exclusion; mapping at boundaries (2.5, 3, 3.5, 4) for `ecol_effective` and one other tenet; n < 3 rule; `changed` logic; import parsing (multilingual labels, accent folding, semicolon CSV, foreign columns refused, blank rows dropped); template → import round trip; export sheets; min-version stamp on save and load.
 - **Register API**: `update()` merges fields, re-normalises, returns FALSE for an unknown ID; `TenetSource` survives normalisation.
-- **Module** (`test-wp5-workshop-module.R`): signature contract; `testServer()` behaviour (re-bound from `.GlobalEnv`): consent gate blocks a save; set-up locked after the first respondent; Apply writes only changed tenets + `TenetSource` through a fake `register`; removed measure skipped.
+- **Module** (`test-wp5-workshop-module.R`): signature contract; `testServer()` behaviour (re-bound from `.GlobalEnv`): consent gate blocks a save; set-up locked after the first respondent; Apply writes only changed tenets + `TenetSource` through a fake `register`; removed measure skipped; Undo restores the `before` values and is refused once the register row differs from `after`.
+- **Undo helper**: `workshop_undo_check()` ok / changed-since / measure-gone cases; an Apply → Undo round trip leaves the register identical to before.
 - **pytest** `scripts/tests/test_wp5_tenet_questions.py`: 11 entries in `EBM_TENETS` order; each `text_en` found (key-normalised) in the joined text of printed pp. 219–222; skips without the WP5 folder.
 - i18n audit `missing=0 hardcoded=0`; `test-functions-sourced-in-app.R` covers `functions/wp5_workshop.R`.
 
