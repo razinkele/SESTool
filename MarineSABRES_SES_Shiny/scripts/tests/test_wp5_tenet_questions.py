@@ -18,6 +18,7 @@ TENETS = ["ecol_effective", "tech_feasible", "econ_efficient", "econ_viable", "s
           "communicable", "politically_expedient"]
 needs_src = pytest.mark.skipif(not D52.exists(), reason="D5.2 source not available (WP5/ is not in git)")
 ANNEX4 = (219, 222)   # printed page = PDF page
+MIN_HALF = 20         # each half of a question split over a page break must be substantial
 
 
 def key(s):
@@ -40,7 +41,7 @@ def in_annex(text):
     if any(k in pg for pg in pages):
         return True
     return any(k[:i] in pages[p] and pages[p + 1].startswith(k[i:])
-               for p in range(len(pages) - 1) for i in range(1, len(k)))
+               for p in range(len(pages) - 1) for i in range(MIN_HALF, len(k) - MIN_HALF + 1))
 
 
 def test_eleven_questions_in_tenet_order():
@@ -57,3 +58,12 @@ def test_question_text_is_in_annex4(q):
 @needs_src
 def test_a_made_up_question_is_rejected():
     assert not in_annex("To what extent is this measure loved by everyone?")
+
+
+@needs_src
+def test_page_break_split_rejects_a_stray_or_bogus_tail():
+    real_head = "Does this measure offer good value for money"
+    assert in_annex(real_head + " compared to other alternatives, considering both costs and benefits?")
+    assert not in_annex(real_head + "c")                                   # one stray character
+    assert not in_annex(real_head + " and also delights every single fisher")  # long bogus tail
+    assert not in_annex("Is this measure a bargain for money " + "compared to other alternatives, considering both costs and benefits?")  # bogus head
