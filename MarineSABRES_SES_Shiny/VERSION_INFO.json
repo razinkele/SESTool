@@ -1,7 +1,7 @@
 {
-  "version": "1.32.3",
+  "version": "1.32.4",
   "version_name": "WP5 workshop elicitation (D5.2)",
-  "release_date": "2026-10-18",
+  "release_date": "2026-10-19",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -31,6 +31,7 @@
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
+      "Feedback page showed no feedback once any entry had been marked addressed (an empty field was saved as {} instead of null); the loader now tolerates it and the markers keep null (1.32.4).",
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
     ],
     "low": [
@@ -62,7 +63,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.32.2",
+  "previous_version": "1.32.3",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
