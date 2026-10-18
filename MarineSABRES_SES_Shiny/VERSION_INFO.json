@@ -1,7 +1,7 @@
 {
-  "version": "1.31.0",
-  "version_name": "WP5 governance-readiness check (D5.4)",
-  "release_date": "2026-10-17",
+  "version": "1.32.0",
+  "version_name": "WP5 workshop elicitation (D5.2)",
+  "release_date": "2026-10-18",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,10 +12,11 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "PIMS \"Governance readiness (D5.4)\" page: anonymous respondents enter answers through a form or an xlsx/csv template (WS-9b).",
-    "Per-dimension toolbox readiness indicator, item distributions and the Annex 7 priority ranking (WS-9b).",
-    "Role breakdown from 5 respondents and xlsx export of the readiness results (WS-9b).",
-    "Readiness item bank verified against D5.4 Annexes 5 and 7 (WS-9b)."
+    "PIMS \"Workshop elicitation (D5.2)\" page: several workshops per project, each with a ranking poll on a -5 to +5 or 1-4 scale for importance, feasibility or long-term impact (WS-10).",
+    "11-tenet rating with the D5.2 Annex 4 guiding questions; anonymous participants enter answers through a form or an xlsx/csv template (WS-10).",
+    "Workshop results view and xlsx export (WS-10).",
+    "Per-measure write-back of the tenet results into the Response register with Undo and a TenetSource note (WS-10).",
+    "Tenet guiding questions verified against D5.2 Annex 4 (WS-10)."
   ],
   "fixes": {
     "medium": [
@@ -48,9 +49,10 @@
     "Projects that use a WP5 indicator are stamped min_app_version 1.24.0; 1.23.0 and older would drop the indicator columns on save.",
     "Projects with an intervention-designer scenario that re-weights links (links_modified) are stamped min_app_version 1.28.0; 1.27.0 and older would ignore the re-weights and show the scenario as unchanged.",
     "Projects with stakeholders saved by 1.30.0 (or with Policy_Target) need app 1.30.0; older apps cannot add stakeholders to the 14-column register.",
-    "Projects with readiness answers need app 1.31.0."
+    "Projects with readiness answers need app 1.31.0.",
+    "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.30.0",
+  "previous_version": "1.31.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
