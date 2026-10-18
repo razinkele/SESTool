@@ -1020,6 +1020,17 @@ normalize_json_project_data <- function(data) {
     }
   }
 
+  # PIMS workshops (WS-10): schema on every JSON load path; a workshop or a TenetSource needs 1.32.0
+  if (is.list(data$data) && exists("normalize_workshops", mode = "function")) {
+    if (is.list(data$data$pims) && !is.null(data$data$pims$workshops)) {
+      data$data$pims$workshops <- normalize_workshops(data$data$pims$workshops)
+    }
+    if (workshops_need_version(data$data$pims$workshops, data$data$response_measures$measures) &&
+        exists("stamp_min_app_version", mode = "function") && exists("WP5_WORKSHOP_MIN_APP_VERSION")) {
+      data <- stamp_min_app_version(data, WP5_WORKSHOP_MIN_APP_VERSION)
+    }
+  }
+
   # Legacy scenario location -> data$analysis$scenarios (WP5 WS-0). Done here
   # so EVERY JSON load path gets it: project_io (via
   # normalize_and_reconcile_project), local-storage load and the
