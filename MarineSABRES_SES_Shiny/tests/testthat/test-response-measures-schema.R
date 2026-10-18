@@ -230,4 +230,7 @@ test_that("tenet levels: invalid values and intermediate outside ecol_effective 
   expect_equal(out$Tenet_ecol_effective, c("intermediate", ""))
   expect_equal(out$Tenet_communicable, c("", "full"))
   expect_equal(normalize_response_measures(out), out)                       # idempotent
+  tidy <- normalize_response_measures(data.frame(ID = "RM001", Name = "a", Tenet_tech_feasible = " Full ",
+                                                stringsAsFactors = FALSE))
+  expect_equal(tidy$Tenet_tech_feasible, "full")                            # case/space tidied, not lost
 })

@@ -92,6 +92,8 @@ normalize_response_measures <- function(df) {
   for (cd in EBM_TENETS$code) {
     cl <- paste0("Tenet_", cd)
     ok <- if (cd == "ecol_effective") TENET_LEVELS else setdiff(TENET_LEVELS, "intermediate")
+    tidy <- tolower(trimws(out[[cl]]))                    # a hand-edited "Full " is kept, not lost
+    out[[cl]][tidy %in% ok] <- tidy[tidy %in% ok]
     bad <- nzchar(out[[cl]]) & !out[[cl]] %in% ok
     if (any(bad)) {
       if (exists("debug_log", mode = "function")) {

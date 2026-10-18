@@ -304,12 +304,12 @@ test_that("workshop_pick_selection: wanted wins, else current if valid, else las
 
 test_that("follow-up: duplicate participant ids are renumbered, every row kept", {
   ws <- normalize_workshop(list(id = "W001", interventions = "RM001", counter = 2,
-    respondents = data.frame(RespondentId = c("P001", "P002", "P002"),
-                             rank__RM001__importance = c("1", "2", "3"), stringsAsFactors = FALSE)))
-  expect_equal(ws$respondents$RespondentId, c("P001", "P002", "P003"))
-  expect_equal(ws$respondents$rank__RM001__importance, c("1", "2", "3"))
-  expect_equal(ws$counter, 3L)
-  expect_equal(normalize_workshop(ws)$respondents$RespondentId, c("P001", "P002", "P003"))   # stable
+    respondents = data.frame(RespondentId = c("P001", "P002", "P002", ""),
+                             rank__RM001__importance = c("1", "2", "3", "4"), stringsAsFactors = FALSE)))
+  expect_equal(ws$respondents$RespondentId, c("P001", "P002", "P003", "P004"))   # duplicate and missing id
+  expect_equal(ws$respondents$rank__RM001__importance, c("1", "2", "3", "4"))
+  expect_equal(ws$counter, 4L)
+  expect_equal(normalize_workshop(ws)$respondents$RespondentId, c("P001", "P002", "P003", "P004"))   # stable
 })
 
 test_that("follow-up: apply records survive removing the measure from the workshop; undo works after re-adding", {
