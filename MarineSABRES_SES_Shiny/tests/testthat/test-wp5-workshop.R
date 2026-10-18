@@ -247,3 +247,48 @@ test_that("apply change, record, undo check, and an apply/undo round trip", {
   expect_null(workshop_last_apply(workshop_drop_last_apply(ws, "RM001"), "RM001"))
   expect_equal(normalize_workshop(ws)$applied, ws$applied)                   # records survive normalisation
 })
+
+fake_tr <- list("modules.wp5_workshop.answer.agree" = list(en = "Agree", es = "De acuerdo"),
+                "modules.wp5_workshop.answer.dont_know" = list(en = "Don't know", lt = "Nežinau"))
+
+test_that("import: codes, labels in any language, accents, digits, numeric and typographic-minus ranks (focus 2, 3)", {
+  ws <- ws_with(interventions = "RM003")
+  df <- data.frame(`RANK__RM003__IMPORTANCE` = c(-5, 3, NA, 7), `tenet__RM003__ecol_effective` = c("de acuerdo", "4", "nezinau", "x"),
+                   name = c("Ana", "", "", ""), stringsAsFactors = FALSE, check.names = FALSE)
+  p <- workshop_parse_import(df, ws, fake_tr)
+  expect_true(p$ok)
+  expect_equal(p$rows$rank__RM003__importance, c("-5", "3", ""))   # row 4 (7, "x") becomes blank and is dropped
+  expect_equal(p$rows$tenet__RM003__ecol_effective, c("agree", "agree", "dont_know"))
+  expect_equal(p$blanked, 2L)                         # 7 off scale, "x" unknown
+  expect_equal(p$dropped_empty, 1L)
+  expect_equal(p$ignored, "name")
+  minus <- workshop_parse_import(data.frame(rank__RM003__importance = "\u22123", stringsAsFactors = FALSE), ws, fake_tr)
+  expect_equal(minus$rows$rank__RM003__importance, "-3")
+})
+
+test_that("import: refusals and blank rows", {
+  ws <- ws_with(interventions = "RM003")
+  f <- workshop_parse_import(data.frame(rank__RM009__importance = "1", stringsAsFactors = FALSE), ws, fake_tr)
+  expect_false(f$ok); expect_equal(f$error, "foreign_columns"); expect_equal(f$expected, "rank__rm009__importance")
+  n <- workshop_parse_import(data.frame(name = "a", stringsAsFactors = FALSE), ws, fake_tr)
+  expect_equal(n$error, "no_answer_columns")
+  b <- workshop_parse_import(data.frame(rank__RM003__importance = c("", NA), stringsAsFactors = FALSE), ws, fake_tr)
+  expect_true(b$ok); expect_equal(nrow(b$rows), 0L); expect_equal(b$dropped_empty, 2L)
+})
+
+test_that("template -> import round trip; export sheets", {
+  ws <- ws_with(interventions = "RM001")
+  i18n <- list(t = function(k, ...) k)
+  wb <- workshop_template_wb(ws, reg(), i18n)
+  expect_equal(openxlsx::sheets(wb), c("answers", "measures", "scales"))
+  row <- stats::setNames(as.list(rep("", length(workshop_answer_columns(ws)))), workshop_answer_columns(ws))
+  row$rank__RM001__importance <- "-4"; row$tenet__RM001__ecol_effective <- "completely_agree"
+  openxlsx::writeData(wb, "answers", as.data.frame(row, stringsAsFactors = FALSE, check.names = FALSE),
+                      startRow = 2, colNames = FALSE)
+  f <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, f, overwrite = TRUE)
+  p <- workshop_parse_import(readiness_read_file(f, "x.xlsx"), ws, fake_tr)
+  expect_equal(c(p$rows$rank__RM001__importance, p$rows$tenet__RM001__ecol_effective), c("-4", "completely_agree"))
+  ws <- workshop_append(ws, p$rows, "import")
+  ex <- workshop_export_wb(ws, i18n)
+  expect_equal(openxlsx::sheets(ex), c("setup", "respondents", "poll_summary", "tenet_summary"))
+})

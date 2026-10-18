@@ -331,3 +331,81 @@ workshop_undo_check <- function(entry, measures) {
   same <- vapply(names(entry$after), function(cl) identical(as.character(measures[[cl]][i]), entry$after[[cl]]), logical(1))
   if (all(same)) "ok" else "changed"
 }
+
+# ---- Import / template / export (spec §7) --------------------------------------
+
+workshop_translations <- function() {
+  path <- if (exists("get_project_file", mode = "function")) get_project_file("translations", "modules", "wp5_workshop.json")
+          else file.path("translations", "modules", "wp5_workshop.json")
+  readiness_translations(path)
+}
+
+workshop_parse_import <- function(df, ws, tr = workshop_translations()) {
+  ws <- normalize_workshop(ws)
+  if (!is.data.frame(df)) df <- data.frame()
+  cols <- workshop_answer_columns(ws)
+  keyed <- .ready_key(names(df))
+  names(df) <- keyed
+  if (nrow(df) > 1000) return(list(ok = FALSE, error = "too_many_rows", expected = NULL))
+  foreign <- keyed[grepl("^(rank|tenet)__", keyed) & !keyed %in% tolower(cols)]
+  if (length(foreign)) return(list(ok = FALSE, error = "foreign_columns", expected = foreign))
+  if (!any(keyed %in% tolower(cols))) return(list(ok = FALSE, error = "no_answer_columns", expected = cols))
+  scale_vals <- WORKSHOP_POLL_SCALES[[ws$poll$scale]]
+  tmap <- c(readiness_value_map(WORKSHOP_TENET_ANSWERS, "modules.wp5_workshop.answer.", tr),
+            stats::setNames(WORKSHOP_TENET_CODES, as.character(1:5)))
+  blanked <- 0L
+  out <- as.data.frame(stats::setNames(lapply(cols, function(cl) {
+    k <- tolower(cl)
+    if (!k %in% keyed) return(rep("", nrow(df)))
+    v <- as.character(df[[k]]); v[is.na(v)] <- ""
+    v <- trimws(gsub("\u2212", "-", v, fixed = TRUE))
+    res <- if (startsWith(cl, "rank__")) {
+      num <- suppressWarnings(as.numeric(v))
+      s <- ifelse(is.na(num), "", as.character(num))
+      ifelse(s %in% scale_vals, s, "")
+    } else {
+      r <- unname(tmap[.ready_key(v)]); r[is.na(r)] <- ""; r
+    }
+    blanked <<- blanked + sum(nzchar(v) & !nzchar(res))
+    res
+  }), cols), stringsAsFactors = FALSE, check.names = FALSE)
+  keep <- if (nrow(out) && ncol(out)) rowSums(out != "") > 0 else rep(FALSE, nrow(out))
+  list(ok = TRUE, rows = out[keep, , drop = FALSE], blanked = as.integer(blanked),
+       ignored = setdiff(keyed, tolower(cols)), dropped_empty = as.integer(sum(!keep)))
+}
+
+workshop_template_wb <- function(ws, measures, i18n) {
+  ws <- normalize_workshop(ws); measures <- normalize_response_measures(measures)
+  cols <- workshop_answer_columns(ws)
+  lab <- function(key) as.character(i18n$t(key))
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "answers")
+  openxlsx::writeData(wb, "answers", as.data.frame(stats::setNames(rep(list(character(0)), length(cols)), cols),
+                                                   check.names = FALSE))
+  openxlsx::addWorksheet(wb, "measures")
+  openxlsx::writeData(wb, "measures", data.frame(id = ws$interventions,
+    name = measures$Name[match(ws$interventions, measures$ID)] %||% "", stringsAsFactors = FALSE))
+  openxlsx::addWorksheet(wb, "scales")
+  openxlsx::writeData(wb, "scales", data.frame(
+    scale = c(rep("rank", length(WORKSHOP_POLL_SCALES[[ws$poll$scale]])), rep("tenet", length(WORKSHOP_TENET_ANSWERS))),
+    value = c(WORKSHOP_POLL_SCALES[[ws$poll$scale]], WORKSHOP_TENET_ANSWERS),
+    label = c(WORKSHOP_POLL_SCALES[[ws$poll$scale]],
+              paste0(c(as.character(1:5), ""), ifelse(seq_along(WORKSHOP_TENET_ANSWERS) <= 5, " = ", ""),
+                     vapply(WORKSHOP_TENET_ANSWERS, function(cd) lab(paste0("modules.wp5_workshop.answer.", cd)), ""))),
+    stringsAsFactors = FALSE))
+  wb
+}
+
+workshop_export_wb <- function(ws, i18n) {
+  ws <- normalize_workshop(ws)
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "setup")
+  openxlsx::writeData(wb, "setup", data.frame(
+    field = c("id", "title", "date", "note", "measures", "scale", "criteria", "tenets_on"),
+    value = c(ws$id, ws$title, ws$date, ws$note, paste(ws$interventions, collapse = "; "), ws$poll$scale,
+              paste(ws$poll$criteria, collapse = "; "), as.character(ws$tenets_on)), stringsAsFactors = FALSE))
+  openxlsx::addWorksheet(wb, "respondents"); openxlsx::writeData(wb, "respondents", ws$respondents)
+  openxlsx::addWorksheet(wb, "poll_summary"); openxlsx::writeData(wb, "poll_summary", workshop_poll_summary(ws))
+  openxlsx::addWorksheet(wb, "tenet_summary"); openxlsx::writeData(wb, "tenet_summary", workshop_tenet_summary(ws))
+  wb
+}
