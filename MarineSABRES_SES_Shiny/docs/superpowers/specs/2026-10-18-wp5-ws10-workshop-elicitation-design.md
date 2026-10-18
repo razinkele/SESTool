@@ -75,7 +75,7 @@ Eleven entries, one per `EBM_TENETS$code`, in that order. Texts (from the probe;
 
 ## 4. Storage
 
-`data$pims$workshops` (normalised by `normalize_workshops()` on load and save):
+`data$data$pims$workshops` (next to WS-9b's `data$data$pims$readiness`; normalised by `normalize_workshops()` on every JSON load path and before every module write):
 
 ```
 list(
@@ -85,7 +85,7 @@ list(
 )
 <workshop> = list(
   id = "W001", title = "", date = "YYYY-MM-DD", note = "",
-  interventions = c("M003", "M007"),          # register IDs, facilitator order
+  interventions = c("RM003", "RM007"),        # register IDs (ELEMENT_ID_PREFIX$measures = "RM"), facilitator order
   poll = list(scale = "pm5" | "four", criteria = c("importance", ...)),
   tenets_on = TRUE,
   consent = FALSE,                             # facilitator confirmation, required before any entry
@@ -94,13 +94,15 @@ list(
 )
 ```
 
+- `date`: `YYYY-MM-DD` or "" (anything else is blanked on normalisation); defaults to today on New.
+- Measure IDs are embedded in column names, so only register IDs matching `^[A-Za-z0-9]+$` can be selected; others are listed disabled with a note (all IDs the app itself issues match).
 - `poll$scale`: `pm5` = integers −5…+5; `four` = integers 1–4. Default `pm5`. `poll$criteria` ⊆ `WORKSHOP_POLL_CRITERIA = c("importance", "feasibility", "long_term_impact")`, at least one, default `"importance"`.
 - Answer columns: `rank__<measureId>__<criterion>` (character integer or "") and, when `tenets_on`, `tenet__<measureId>__<tenet>` (scale code, `dont_know` or "").
 - Normalisation keeps only meta columns and answer columns matching `^rank__<id>__(importance|feasibility|long_term_impact)$` / `^tenet__<id>__(<11 tenet codes>)$` whose measure id is in `interventions`; values outside the allowed set are blanked and logged with `debug_log`. Ids use `safe_counter()` + `next_element_id()` (`W` prefix for workshops, `P` for participants) so ids are never reused after deletes.
 - **Locking:** once a workshop has ≥ 1 respondent, `interventions`, `poll` and `tenets_on` cannot change; "Duplicate set-up" copies them into a new, empty workshop.
-- **Version mark:** `WP5_WORKSHOP_MIN_APP_VERSION <- "1.32.0"`; any project with ≥ 1 workshop respondent is stamped via `stamp_min_app_version()` on save and on load (same placement as WS-9b).
+- **Version mark:** `WP5_WORKSHOP_MIN_APP_VERSION <- "1.32.0"`; any project with ≥ 1 workshop respondent is stamped via `stamp_min_app_version()` in two places, exactly as WS-9b: (a) the module's write helper (`modules/wp5_readiness_module.R` `write_readiness()` pattern), and (b) the JSON load normalisation block in `functions/data_structure.R` (next to the readiness block, ~L1012), which also runs `normalize_workshops()`.
 
-**Register addition:** `TenetSource` appended to `RM_REGISTER_COLUMNS` (`constants.R`) and handled by `normalize_response_measures()` (default ""). It stays out of `RM_DISPLAY_COLUMNS`; it is shown read-only in the response governance section under the tenet selects, and is included in the Excel export.
+**Register addition:** `TenetSource` appended to `RM_REGISTER_COLUMNS` (`constants.R`) and handled by `normalize_response_measures()` (default ""). It stays out of `RM_DISPLAY_COLUMNS` (like the `Tenet_*` columns) and the add-measure form; it is shown on the workshop's Apply cards and included in the register Excel export.
 
 ## 5. Summaries (pure, `functions/wp5_workshop.R`)
 
@@ -122,7 +124,7 @@ list(
 
 - `n_valid < 3` → `proposed = NA` ("too few ratings"), never written.
 - `changed = !is.na(proposed) & proposed != current`.
-- "Apply to this measure" writes only changed rows plus `TenetSource` = "Workshop W001 (2026-10-18, n = 12)" (n = max `n_valid` among written rows; built from a translated template with placeholders). Disabled, with "matches register", when no row changed.
+- "Apply to this measure" writes only changed rows plus `TenetSource` = "Workshop W001 (2026-10-18, n = 12)" (date = the workshop's `date`, or the apply date when blank; n = max `n_valid` among written rows; built from a translated template with placeholders, in the facilitator's language at apply time). Disabled, with "matches register", when no row changed.
 - Measures no longer in the register are listed as "(no longer in register)" and skipped.
 - Poll results are never written.
 
@@ -132,9 +134,11 @@ list(
 
 PIMS page `pims_workshops`; signature `wp5_workshop_server(id, project_data_reactive, i18n, event_bus = NULL, register = NULL)`. Four tabs:
 
-1. **Set-up** — workshop picker; New / Rename / Duplicate set-up / Delete (Delete confirms via modal); title, date, note; selectize of register measures ("ID — Name") in pick order; scale radio; criteria checkboxes; tenet on/off. Locked fields are disabled with an explanation once respondents exist.
-2. **Entry** — consent checkbox per workshop (server-enforced); per measure: one select per criterion (scale values + blank) and, if on, an 11-row grid (5 points + don't know + blank) with the guiding question as help text; "Save participant and next" appends and resets; an all-blank participant is refused. Template import (xlsx, or csv with comma or semicolon) with columns `rank__…` / `tenet__…` exactly as stored; labels accepted in any of the 9 languages, accent-folded (WS-9b matcher); a template whose columns name measures, criteria or tenets not in the workshop is refused with a message naming them; invalid values are blanked and counted; all-blank rows dropped and counted. Template download prefilled with the workshop's columns. Respondent table with "Delete selected" (confirm modal).
-3. **Results** — poll ranking table; per measure × criterion a small bar chart of the distribution; tenet heat table (median, coloured; `n_dont_know` in a tooltip); xlsx export (sheets: setup, respondents, poll_summary, tenet_summary).
+The module's own state is `data$data$pims$workshops`, read from `project_data_reactive()` and written through one write helper (normalise → stamp → `project_data_reactive(pd)`), as WS-9b does; no other module writes it. Register measures are read from `register$measures()` when `register` is given, else from `project_data_reactive()$data$response_measures$measures`.
+
+1. **Set-up** — workshop picker; New / Rename / Duplicate set-up / Delete (Delete confirms via modal stating the respondent count); title, date, note; selectize of register measures ("ID — Name") in pick order (an empty register shows "add measures in the Response register first"); scale radio; criteria checkboxes; tenet on/off. Locked fields are disabled with an explanation once respondents exist.
+2. **Entry** — consent checkbox per workshop, stored as `consent` (the facilitator confirms once for the group, unlike WS-9b's per-respondent box); server-enforced for both form save and import; per measure: one select per criterion (scale values + blank) and, if on, an 11-row grid (5 points + don't know + blank) with the guiding question as help text; "Save participant and next" appends and resets; an all-blank participant is refused. Template import (xlsx, or csv with comma or semicolon) with columns `rank__…` / `tenet__…` exactly as stored; labels accepted in any of the 9 languages, accent-folded — by reusing (not copying) WS-9b's `readiness_translations(path = <wp5_workshop.json>)`, `readiness_value_map()` and `.ready_key()` from `functions/wp5_readiness.R`, and `readiness_read_file()` for xlsx/csv reading; a template whose columns name measures, criteria or tenets not in the workshop is refused with a message naming them; invalid values are blanked and counted; all-blank rows dropped and counted. Template download prefilled with the workshop's columns. Respondent table with "Delete selected" (confirm modal).
+3. **Results** — poll ranking table; per measure × criterion a small HTML bar row of the distribution (renderUI, as WS-9b's distributions; no new plotting dependency); tenet heat table (median, coloured; `n_dont_know` in a tooltip); xlsx export (sheets: setup, respondents, poll_summary, tenet_summary).
 4. **Apply to register** — one card per measure (§6); disabled with a note when `register` is NULL or the tenet rating is off.
 
 All text via `i18n$t()`; errors via `format_user_error(e, i18n = i18n, context_key = ...)`.
