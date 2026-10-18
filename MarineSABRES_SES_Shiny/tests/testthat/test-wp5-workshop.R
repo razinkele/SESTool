@@ -269,7 +269,7 @@ test_that("import: codes, labels in any language, accents, digits, numeric and t
 test_that("import: refusals and blank rows", {
   ws <- ws_with(interventions = "RM003")
   f <- workshop_parse_import(data.frame(rank__RM009__importance = "1", stringsAsFactors = FALSE), ws, fake_tr)
-  expect_false(f$ok); expect_equal(f$error, "foreign_columns"); expect_equal(f$expected, "rank__rm009__importance")
+  expect_false(f$ok); expect_equal(f$error, "foreign_columns"); expect_equal(f$expected, "rank__RM009__importance")
   n <- workshop_parse_import(data.frame(name = "a", stringsAsFactors = FALSE), ws, fake_tr)
   expect_equal(n$error, "no_answer_columns")
   b <- workshop_parse_import(data.frame(rank__RM003__importance = c("", NA), stringsAsFactors = FALSE), ws, fake_tr)
@@ -300,4 +300,33 @@ test_that("workshop_pick_selection: wanted wins, else current if valid, else las
   expect_equal(workshop_pick_selection(c("W001", "W002"), NULL, "W009"), "W002")
   expect_equal(workshop_pick_selection(c("W001", "W002"), "", ""), "W002")
   expect_equal(workshop_pick_selection(character(0), "W001", "W002"), "")
+})
+
+test_that("follow-up: duplicate participant ids are renumbered, every row kept", {
+  ws <- normalize_workshop(list(id = "W001", interventions = "RM001", counter = 2,
+    respondents = data.frame(RespondentId = c("P001", "P002", "P002", ""),
+                             rank__RM001__importance = c("1", "2", "3", "4"), stringsAsFactors = FALSE)))
+  expect_equal(ws$respondents$RespondentId, c("P001", "P002", "P003", "P004"))   # duplicate and missing id
+  expect_equal(ws$respondents$rank__RM001__importance, c("1", "2", "3", "4"))
+  expect_equal(ws$counter, 4L)
+  expect_equal(normalize_workshop(ws)$respondents$RespondentId, c("P001", "P002", "P003", "P004"))   # stable
+})
+
+test_that("follow-up: apply records survive removing the measure from the workshop; undo works after re-adding", {
+  ws <- ws_with()
+  ws <- workshop_record_apply(ws, "RM002", list(Tenet_ecol_effective = "", TenetSource = ""),
+                              list(Tenet_ecol_effective = "full", TenetSource = "x"), at = "t")
+  ws2 <- workshop_update_setup(ws, list(interventions = "RM001"))           # no participants -> editable
+  expect_length(ws2$applied, 1)
+  ws3 <- workshop_update_setup(ws2, list(interventions = c("RM001", "RM002")))
+  expect_equal(workshop_last_apply(ws3, "RM002")$after$Tenet_ecol_effective, "full")
+  ws_bad <- ws
+  ws_bad$applied <- list(list(measure = "RM 9", at = "t", before = list(TenetSource = ""), after = list(TenetSource = "x")))
+  expect_length(normalize_workshop(ws_bad)$applied, 0)                      # invalid id still dropped
+})
+
+test_that("follow-up: foreign-column refusal names the file's original headers", {
+  ws <- ws_with(interventions = "RM003")
+  f <- workshop_parse_import(data.frame(`Rank__RM009__Importance` = "1", stringsAsFactors = FALSE, check.names = FALSE), ws, list())
+  expect_equal(f$expected, "Rank__RM009__Importance")
 })

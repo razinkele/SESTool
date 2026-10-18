@@ -221,3 +221,16 @@ test_that("PestleTag is shown as translated labels", {
   out <- rm_translate_for_display(df, list(t = function(k) paste0("<", k, ">")))
   expect_equal(out$PestleTag, c("<modules.wp5_scenarios.pestle.political>, <modules.wp5_scenarios.pestle.legal>", ""))
 })
+
+test_that("tenet levels: invalid values and intermediate outside ecol_effective are blanked (WS-10 follow-up)", {
+  out <- normalize_response_measures(data.frame(
+    ID = c("RM001", "RM002"), Name = c("a", "b"),
+    Tenet_ecol_effective = c("intermediate", "great"),
+    Tenet_communicable   = c("intermediate", "full"), stringsAsFactors = FALSE))
+  expect_equal(out$Tenet_ecol_effective, c("intermediate", ""))
+  expect_equal(out$Tenet_communicable, c("", "full"))
+  expect_equal(normalize_response_measures(out), out)                       # idempotent
+  tidy <- normalize_response_measures(data.frame(ID = "RM001", Name = "a", Tenet_tech_feasible = " Full ",
+                                                stringsAsFactors = FALSE))
+  expect_equal(tidy$Tenet_tech_feasible, "full")                            # case/space tidied, not lost
+})

@@ -87,6 +87,22 @@ normalize_response_measures <- function(df) {
     }
     paste(PESTLE_CODES[PESTLE_CODES %in% t], collapse = ";")
   }, character(1))
+  # Tenet levels (WS-10 follow-up): only TENET_LEVELS codes; "intermediate" exists only
+  # for ecological effectiveness (EBM framework). Anything else is blanked, not guessed.
+  for (cd in EBM_TENETS$code) {
+    cl <- paste0("Tenet_", cd)
+    ok <- if (cd == "ecol_effective") TENET_LEVELS else setdiff(TENET_LEVELS, "intermediate")
+    tidy <- tolower(trimws(out[[cl]]))                    # a hand-edited "Full " is kept, not lost
+    out[[cl]][tidy %in% ok] <- tidy[tidy %in% ok]
+    bad <- nzchar(out[[cl]]) & !out[[cl]] %in% ok
+    if (any(bad)) {
+      if (exists("debug_log", mode = "function")) {
+        debug_log(sprintf("normalize_response_measures: blanked invalid %s value(s): %s", cl,
+                          paste(unique(out[[cl]][bad]), collapse = ", ")), "WARN")
+      }
+      out[[cl]][bad] <- ""
+    }
+  }
   out
 }
 

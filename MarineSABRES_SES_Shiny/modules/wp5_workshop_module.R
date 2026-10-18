@@ -109,6 +109,8 @@
 # i18n-ref: modules.wp5_workshop.template_download
 # i18n-ref: modules.wp5_workshop.template_help
 # i18n-ref: modules.wp5_workshop.tenet_source
+# i18n-ref: modules.wp5_workshop.yes
+# i18n-ref: modules.wp5_workshop.no
 # i18n-ref: modules.wp5_workshop.tenets_title
 # i18n-ref: modules.wp5_workshop.title
 # i18n-ref: modules.wp5_workshop.too_few
@@ -206,7 +208,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
     observeEvent(input$delete, {
       ws <- current(); req(ws)
       showModal(modalDialog(
-        p(tr("delete_confirm_text"), " ", ws$id, " (", tr("n_participants"), ": ", nrow(ws$respondents), ")"),
+        p(paste0(tr("delete_confirm_text"), " ", ws$id, " (", tr("n_participants"), ": ", nrow(ws$respondents), ")")),
         if (length(ws$applied)) p(class = "text-warning", tr("delete_applied_note")),
         footer = tagList(modalButton(tr("cancel")), actionButton(ns("delete_confirm"), tr("delete"), class = "btn-danger"))))
     })
@@ -234,10 +236,10 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         textInput(ns("note"), tr("field_note"), value = ws$note),
         if (locked) tagList(
           div(class = "alert alert-info small", tr("locked_note")),
-          p(strong(tr("field_measures")), ": ", paste(ws$interventions, collapse = ", ")),
-          p(strong(tr("field_scale")), ": ", tr(paste0("scale.", ws$poll$scale))),
-          p(strong(tr("field_criteria")), ": ", paste(vapply(ws$poll$criteria, function(c) tr(paste0("criterion.", c)), ""), collapse = ", ")),
-          p(strong(tr("field_tenets_on")), ": ", if (ws$tenets_on) "\u2713" else "\u2013"))
+          p(strong(paste0(tr("field_measures"), ":")), " ", paste(ws$interventions, collapse = ", ")),
+          p(strong(paste0(tr("field_scale"), ":")), " ", tr(paste0("scale.", ws$poll$scale))),
+          p(strong(paste0(tr("field_criteria"), ":")), " ", paste(vapply(ws$poll$criteria, function(c) tr(paste0("criterion.", c)), ""), collapse = ", ")),
+          p(strong(paste0(tr("field_tenets_on"), ":")), " ", if (ws$tenets_on) tr("yes") else tr("no")))
         else tagList(
           if (!nrow(m)) div(class = "alert alert-warning", tr("register_empty")),
           selectizeInput(ns("interventions"), tr("field_measures"), choices = choices, selected = ws$interventions,
@@ -392,7 +394,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       ts <- workshop_tenet_summary(ws)
       band <- function(med, nv) if (nv < WORKSHOP_MIN_VALID || is.na(med)) "#e9ecef" else if (med >= 4) "#c3e6cb" else if (med >= 3) "#ffeeba" else "#f5c6cb"
       tagList(
-        p(strong(tr("n_participants")), ": ", nrow(ws$respondents)),
+        p(strong(paste0(tr("n_participants"), ":")), " ", nrow(ws$respondents)),
         h5(tr("ranking_title")),
         tags$table(class = "table table-sm small",
           tags$thead(tags$tr(tags$th(tr("col_measure")), tags$th(tr("col_criterion")), tags$th(tr("col_n")),
@@ -409,7 +411,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
               lapply(ws$interventions, function(mid) {
                 s <- ts[ts$measure == mid & ts$tenet == t, ]
                 tags$td(style = paste0("background:", band(s$median, s$n_valid), ";"),
-                        title = paste0("n = ", s$n_valid, "; ", tr("answer.dont_know"), ": ", s$n_dont_know),
+                        title = paste0(tr("col_n"), " = ", s$n_valid, "; ", tr("answer.dont_know"), ": ", s$n_dont_know),
                         if (s$n_valid < WORKSHOP_MIN_VALID) tr("too_few") else format(s$median))
               })))))))
     })
@@ -433,7 +435,7 @@ wp5_workshop_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         last <- workshop_last_apply(ws, mid)
         div(class = "card card-body mb-3",
           h5(mid, " \u2014 ", m$Name[i]),
-          if (nzchar(m$TenetSource[i])) tags$small(class = "text-muted d-block", tr("tenet_source"), ": ", m$TenetSource[i]),
+          if (nzchar(m$TenetSource[i])) tags$small(class = "text-muted d-block", paste0(tr("tenet_source"), ": ", m$TenetSource[i])),
           tags$table(class = "table table-sm small",
             tags$thead(tags$tr(tags$th(tr("col_tenet")), tags$th(tr("col_current")), tags$th(tr("col_workshop")), tags$th(tr("col_proposed")))),
             tags$tbody(lapply(seq_len(nrow(rows)), function(k) tags$tr(class = if (rows$changed[k]) "table-warning",

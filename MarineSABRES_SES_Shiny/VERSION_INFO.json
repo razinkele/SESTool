@@ -1,8 +1,8 @@
 {
-  "version": "1.32.0",
+  "version": "1.32.1",
   "version_name": "WP5 workshop elicitation (D5.2)",
   "release_date": "2026-10-18",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -20,6 +20,9 @@
   ],
   "fixes": {
     "medium": [
+      "Register tenet levels are validated: values outside the allowed levels, and 'intermediate' on any tenet other than ecological effectiveness, are cleared on load (1.32.1).",
+      "Workshop participants with duplicate ids in a hand-edited file are renumbered instead of being deleted together (1.32.1).",
+      "Workshop apply records survive removing a measure from the workshop, so Undo still works after the measure is put back (1.32.1).",
       "Adding a second stakeholder, engagement, communication or response measure created duplicate rows (since 1.16.5).",
       "Scenario Builder impact analysis crashed on scenarios that remove a link.",
       "Added links failed to bind to baseline edges that carry extra columns."
@@ -29,6 +32,9 @@
     ],
     "high": [
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
+    ],
+    "low": [
+      "Workshop page: translated yes/no and 'n' labels; no space before colons; the import refusal names the file's own column headers (1.32.1)."
     ]
   },
   "metrics": {
@@ -52,7 +58,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.31.0",
+  "previous_version": "1.32.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }

@@ -1264,6 +1264,28 @@
       "it": "Applicazione dei risultati del workshop al registro",
       "no": "Anvendelse av workshopresultater i registeret",
       "el": "Εφαρμογή των αποτελεσμάτων του εργαστηρίου στο μητρώο"
+    },
+    "modules.wp5_workshop.yes": {
+      "en": "Yes",
+      "es": "Sí",
+      "fr": "Oui",
+      "de": "Ja",
+      "lt": "Taip",
+      "pt": "Sim",
+      "it": "Sì",
+      "no": "Ja",
+      "el": "Ναι"
+    },
+    "modules.wp5_workshop.no": {
+      "en": "No",
+      "es": "No",
+      "fr": "Non",
+      "de": "Nein",
+      "lt": "Ne",
+      "pt": "Não",
+      "it": "No",
+      "no": "Nei",
+      "el": "Όχι"
     }
   }
 }
