@@ -425,8 +425,10 @@ workshop_template_wb <- function(ws, measures, i18n) {
 # i18n-ref: modules.wp5_workshop.xl.n_dont_know
 # i18n-ref: modules.wp5_workshop.xl.scale_rank
 # i18n-ref: modules.wp5_workshop.xl.scale_tenet
-# column -> modules.wp5_workshop.<key> map for xl_translate_headers()
-.ws_xl <- function(keys) stats::setNames(as.list(paste0("modules.wp5_workshop.", keys)), names(keys))
+# column -> modules.wp5_workshop.<key> map for xl_translate_headers(). That helper (and .ready_key,
+# readiness_value_map, readiness_read_file used by the import) live in functions/wp5_readiness.R,
+# which global.R sources BEFORE this file; tests source both (readiness first).
+.ws_xl <-function(keys) stats::setNames(as.list(paste0("modules.wp5_workshop.", keys)), names(keys))
 
 workshop_export_wb <- function(ws, i18n) {
   ws <- normalize_workshop(ws)
@@ -454,7 +456,10 @@ workshop_export_wb <- function(ws, i18n) {
     criterion = "col_criterion", n = "col_n", median = "col_median", mean = "col_mean", order = "xl.rank")), i18n))
   ts <- workshop_tenet_summary(ws)
   ts$tenet <- wp5_vocab_label("tenet", ts$tenet, i18n)
-  names(ts)[names(ts) %in% paste0("p", 1:5)] <- sub("^p", "", names(ts)[names(ts) %in% paste0("p", 1:5)])   # points 1..5
+  # point counts p1..p5 -> "1 = Completely disagree" ... "5 = Completely agree"
+  pcols <- paste0("p", 1:5)
+  names(ts)[match(pcols, names(ts))] <- paste0(1:5, " = ", vapply(WORKSHOP_TENET_CODES, function(cd)
+    lab(paste0("modules.wp5_workshop.answer.", cd)), "", USE.NAMES = FALSE))
   openxlsx::addWorksheet(wb, "tenet_summary")
   openxlsx::writeData(wb, "tenet_summary", xl_translate_headers(ts, .ws_xl(c(measure = "col_measure",
     tenet = "col_tenet", n_valid = "xl.n_valid", n_dont_know = "xl.n_dont_know", median = "col_median")), i18n))

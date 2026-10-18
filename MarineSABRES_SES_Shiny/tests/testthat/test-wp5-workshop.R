@@ -352,9 +352,9 @@ test_that("follow-up: workbook headers and labels translated; the answers sheet 
   ps <- openxlsx::read.xlsx(ex, "poll_summary")
   expect_equal(names(ps), k(c("col_measure", "col_criterion", "col_n", "col_median", "col_mean", "xl.rank")))
   expect_equal(ps[[2]][1], k("criterion.importance"))
-  ts <- openxlsx::read.xlsx(ex, "tenet_summary")
+  ts <- openxlsx::read.xlsx(ex, "tenet_summary", sep.names = " ")   # keep spaces in headers
   expect_equal(names(ts)[1:5], k(c("col_measure", "col_tenet", "xl.n_valid", "xl.n_dont_know", "col_median")))
-  expect_equal(names(ts)[6:10], as.character(1:5))
+  expect_equal(names(ts)[6:10], paste0(1:5, " = ", k(paste0("answer.", WORKSHOP_TENET_CODES))))   # points with labels
 })
 
 test_that("follow-up: unknown participant Source values are cleared", {
@@ -362,4 +362,15 @@ test_that("follow-up: unknown participant Source values are cleared", {
     respondents = data.frame(RespondentId = c("P001", "P002", "P003"), Source = c("form", "hacked", "import"),
                              stringsAsFactors = FALSE)))
   expect_equal(ws$respondents$Source, c("form", "", "import"))
+})
+
+test_that("follow-up: exporting an empty workshop (no measures, no participants) gives a valid workbook", {
+  i18n <- list(t = function(k, ...) k)
+  ws <- normalize_workshop(list(id = "W001"))
+  ex <- workshop_export_wb(ws, i18n)
+  expect_equal(openxlsx::sheets(ex), c("setup", "respondents", "poll_summary", "tenet_summary"))
+  f <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(ex, f, overwrite = TRUE)
+  expect_equal(nrow(openxlsx::read.xlsx(f, "setup")), 8L)
+  tmpl <- workshop_template_wb(ws, normalize_response_measures(NULL), i18n)
+  expect_equal(openxlsx::sheets(tmpl), c("answers", "measures", "scales"))
 })
