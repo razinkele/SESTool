@@ -98,6 +98,7 @@ OPTIONAL_MODULES <- c(
   "modules/pims_module.R",               # PIMS Project module
   "modules/pims_stakeholder_module.R",   # PIMS Stakeholder module
   "modules/wp5_readiness_module.R",      # WS-9b D5.4 governance-readiness check
+  "modules/wp5_workshop_module.R",      # WS-10 D5.2 workshop elicitation
   "modules/analysis_metrics.R",          # Network Metrics Analysis
   "modules/analysis_bot.R",              # BOT (Behaviour Over Time) Analysis
   "modules/analysis_simplify.R",         # Network Simplification Tools
@@ -481,6 +482,7 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
       bs4TabItem(tabName = "pims_stakeholders", pims_stakeholder_ui("pims_stake", i18n)),
       bs4TabItem(tabName = "pims_readiness", wp5_readiness_ui("pims_ready", i18n)),
+      bs4TabItem(tabName = "pims_workshops", wp5_workshop_ui("pims_ws", i18n)),
       bs4TabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
       bs4TabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
       bs4TabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
@@ -1065,7 +1067,9 @@ server <- function(input, output, session) {
   analysis_intervention_server("analysis_intv", project_data, session_i18n, event_bus = event_bus)
 
   # Response & validation modules
-  response_measures_server("resp_meas", project_data, session_i18n)
+  resp_register <- response_measures_server("resp_meas", project_data, session_i18n)
+  # WS-10: the workshop page writes tenet results through the register api (after the response server)
+  pims_workshops_data <- wp5_workshop_server("pims_ws", project_data, session_i18n, register = resp_register)
   valuation_calculator_server("valuation_calc", project_data, session_i18n)
   scenario_builder_server("scenario_builder", project_data, session_i18n)
   impact_assessment_server("impact_assess", project_data, session_i18n, event_bus = event_bus)
