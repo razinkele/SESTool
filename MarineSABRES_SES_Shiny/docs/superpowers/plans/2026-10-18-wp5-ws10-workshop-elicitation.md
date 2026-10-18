@@ -293,6 +293,8 @@ test_that("answer columns: per measure, rank columns then 11 tenet columns", {
 })
 
 test_that("normalize_workshop: defaults, bad values blanked, unknown columns and bad ids dropped", {
+  expect_equal(normalize_workshop(list(id = "W009", poll = "x", applied = "junk"))$poll,
+               list(scale = "pm5", criteria = "importance"))                    # malformed shapes do not crash
   ws <- normalize_workshop(list(id = "W001", date = "18/10/2026", interventions = c("RM001", "RM 2", "RM001"),
     poll = list(scale = "bogus", criteria = c("x")),
     respondents = data.frame(RespondentId = "P001", Name = "Ana", rank__RM001__importance = "7",
@@ -439,6 +441,7 @@ workshop_answer_columns <- function(ws) {
 
 normalize_workshop <- function(ws) {
   if (!is.list(ws)) ws <- list()
+  if (!is.list(ws$poll)) ws$poll <- list()       # a hand-edited "poll": "x" must not crash `$` below
   date <- .ws_chr1(ws$date)
   if (!grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", date)) date <- ""
   ivs <- unique(as.character(unlist(ws$interventions)))
@@ -1666,7 +1669,7 @@ Wiring:
   pims_workshops_data <- wp5_workshop_server("pims_ws", project_data, session_i18n, register = resp_register)
   ```
 
-- [ ] **Step 4: Run** `'^wp5-workshop-module$'`, `'^wp5-workshop$'`, `'^response-module$'`, `'^modules$'`, `'^i18n-enforcement$'` (one process each) → PASS; audit `missing=0 hardcoded=0` (add any missing `# i18n-ref:` sentinel the audit names). If `showModal()`/`removeModal()` are unsupported by the installed shiny's MockShinySession, keep the modals and make the test drive the confirm input directly (the confirm handlers must not depend on the modal having been shown, only on the pending selection). If a testServer expectation fails only because `updateSelectInput` does not set `input$workshop` in testServer, set `workshop =` explicitly in that test (inputs are not changed by update* calls in testServer).
+- [ ] **Step 4: Run** `'^wp5-workshop-module$'`, `'^wp5-workshop$'`, `'^response-module$'`, `'^modules$'`, `'^i18n-enforcement$'` (one process each) → PASS; audit `missing=0 hardcoded=0` (add any missing `# i18n-ref:` sentinel the audit names). (`showModal()`/`removeModal()` work in testServer: shiny 1.11.1's MockShinySession has `sendModal`, verified 2026-10-18.) If a testServer expectation fails only because `updateSelectInput` does not set `input$workshop` in testServer, set `workshop =` explicitly in that test (inputs are not changed by update* calls in testServer).
 - [ ] **Step 5: Smoke run** — start the app (`Rscript run_app.R`, foreground with a timeout of 90 s, or `shiny::runApp` in a background-free way) only if Chrome/playwright is available to the implementer; otherwise skip and say so in the report. Never leave a background R process running.
 - [ ] **Step 6: Commit** (`modules/wp5_workshop_module.R`, `functions/ui_sidebar.R`, `app.R`, the module test) — `feat(wp5): PIMS workshop elicitation page with tenet write-back and undo (WS-10)`.
 
