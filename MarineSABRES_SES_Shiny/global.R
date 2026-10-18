@@ -713,6 +713,7 @@ source("functions/wp5_scenarios.R", local = FALSE)   # WS-8: D5.1 scenario x wor
 source("functions/stakeholder_schema.R", local = FALSE)   # WS-9a: PIMS stakeholder schema (NERoles, SourceId)
 source("functions/wp5_governance.R", local = FALSE)       # WS-9a: D5.4 governance profiles
 source("functions/wp5_readiness.R", local = FALSE)        # WS-9b: D5.4 governance-readiness check
+source("functions/wp5_workshop.R", local = FALSE)         # WS-10: D5.2 workshop elicitation
 source("functions/indicator_registry.R", local = FALSE)
 source("functions/indicator_snapshot.R", local = FALSE)
 source("functions/impact_reference.R", local = FALSE)

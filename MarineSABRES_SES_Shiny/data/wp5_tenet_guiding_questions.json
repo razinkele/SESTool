@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "source": "D5.2 Final, Annex 4 tenet assessment form",
+  "source_file": "WP5/D5.2/MarineSABRES_D5.2_Final.pdf",
+  "scale": ["completely_disagree", "disagree", "neutral", "agree", "completely_agree"],
+  "questions": [
+    {"tenet": "ecol_effective", "text_en": "To what extent does this measure contribute to achieving environmental targets and safeguarding ecosystem features and functioning?", "source_page": 219},
+    {"tenet": "tech_feasible", "text_en": "Is the necessary technology available and proven to support the implementation and long-term maintenance of this measure?", "source_page": 219},
+    {"tenet": "econ_efficient", "text_en": "Does this measure offer good value for money compared to other alternatives, considering both costs and benefits?", "source_page": 219},
+    {"tenet": "econ_viable", "text_en": "Will this measure improve economic viability, both in the short-term and long-term, considering revenue relative to costs?", "source_page": 220},
+    {"tenet": "socially_desirable", "text_en": "To what extent do you believe stakeholders will support this measure, or might there be resistance?", "source_page": 220},
+    {"tenet": "ethically_defensible", "text_en": "To what extent is this measure ethically sound and morally acceptable?", "source_page": 220},
+    {"tenet": "culturally_inclusive", "text_en": "To what extent does this measure consider and respect local customs and practices?", "source_page": 220},
+    {"tenet": "legally_permissible", "text_en": "To what extent does this measure comply with existing regional, national, and international laws and regulations?", "source_page": 221},
+    {"tenet": "admin_achievable", "text_en": "To what extent are the administrative processes and transaction costs manageable for implementing this measure?", "source_page": 221},
+    {"tenet": "communicable", "text_en": "To what extent can this measure be effectively communicated to the public, and does it align with the current political landscape?", "source_page": 221},
+    {"tenet": "politically_expedient", "text_en": "To what extent does this measure align with the prevailing political climate and have the support of political leaders?", "source_page": 222}
+  ]
+}
