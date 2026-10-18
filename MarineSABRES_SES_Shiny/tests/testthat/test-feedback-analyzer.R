@@ -608,3 +608,48 @@ test_that("load_feedback_logs dedupes the same entry across files and tolerates 
   expect_equal(nrow(empty), 0L)
   expect_true(all(c("line_num", "title", "type", "status", "timestamp") %in% names(empty)))
 })
+
+# ---------------------------------------------------------------------------
+# Live laguna log 2026-10-19: mark_as_resolved() round-tripped
+# "github_url":null into "github_url":{} (jsonlite writes NULL as {}), and
+# load_feedback_log() then failed on the whole file, so the sidebar Feedback
+# list showed "no feedback" for every user.
+# ---------------------------------------------------------------------------
+test_that("load_feedback_log tolerates {} and [] in scalar fields", {
+  skip_if_not(exists("load_feedback_log", mode = "function"),
+              "load_feedback_log not available")
+
+  p <- .write_tmp_ndjson(c(
+    '{"title":"Resolved","type":"bug","timestamp":"2026-05-25T09:22:05Z","github_url":{},"labels":["bug","user-feedback"],"status":"addressed"}',
+    '{"title":"Open","type":"bug","timestamp":"2026-10-13T09:34:42Z","github_url":null,"steps":[]}'
+  ))
+  on.exit(unlink(p), add = TRUE)
+
+  df <- load_feedback_log(p)
+  expect_equal(nrow(df), 2L)
+  expect_equal(df$status, c("addressed", "open"))
+  expect_true(all(is.na(df$github_url)))
+  expect_true(is.na(df$steps[2]))
+})
+
+test_that("mark_as_resolved keeps null fields null, so the log stays loadable", {
+  skip_if_not(exists("mark_as_resolved", mode = "function"),
+              "mark_as_resolved not available")
+
+  p <- .write_tmp_ndjson(c(
+    '{"title":"A","type":"bug","timestamp":"2026-05-25T09:22:05Z","github_url":null}',
+    '{"title":"B","type":"bug","timestamp":"2026-05-25T09:23:05Z","github_url":null}'
+  ))
+  on.exit(unlink(p), add = TRUE)
+
+  expect_true(mark_as_resolved(p, 1L, note = "fixed", now = "2026-10-19T00:00:00Z"))
+  expect_true(mark_as_duplicate(p, 2L, 1L))
+
+  raw <- readLines(p, warn = FALSE)
+  expect_false(any(grepl('"github_url":{}', raw, fixed = TRUE)))
+  expect_true(all(grepl('"github_url":null', raw, fixed = TRUE)))
+
+  df <- load_feedback_log(p)
+  expect_equal(nrow(df), 2L)
+  expect_equal(df$status, c("addressed", "duplicate"))
+})

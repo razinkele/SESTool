@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Feedback list (sidebar "Feedback") showed "no feedback" for everyone once any entry had been marked addressed. Marking an entry rewrote its empty `github_url` as `{}` instead of `null`, and one such line made the whole log fail to load. The loader now tolerates `{}`, `[]` and list values in any field, and marking an entry addressed or duplicate keeps `null` as `null`. The existing live log loads unchanged (21 entries, 13 open).
+
 ## [1.32.3] - 2026-10-18
 
 ### Fixed (WS-10 follow-ups, part 3)

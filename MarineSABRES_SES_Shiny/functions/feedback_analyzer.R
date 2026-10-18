@@ -81,27 +81,35 @@ load_feedback_log <- function(path = "data/user_feedback_log.ndjson") {
       next
     }
 
+    # One string per field: older rewrites stored null as {} (an empty list
+    # after parsing), and a zero-length field made as.data.frame() fail for
+    # the whole file.
+    scalar <- function(v) {
+      v <- unlist(v, use.names = FALSE)
+      if (length(v) == 0L) NA_character_ else as.character(v[[1L]])
+    }
+
     row <- list(
       line_num     = i,
-      type         = as.character(parsed$type         %||% NA_character_),
-      title        = as.character(parsed$title        %||% NA_character_),
-      description  = as.character(parsed$description  %||% NA_character_),
-      steps        = as.character(parsed$steps        %||% NA_character_),
-      timestamp    = as.character(parsed$timestamp    %||% NA_character_),
-      github_url   = as.character(parsed$github_url   %||% NA_character_),
-      duplicate_of = as.character(parsed$duplicate_of %||% NA_character_),
+      type         = scalar(parsed$type),
+      title        = scalar(parsed$title),
+      description  = scalar(parsed$description),
+      steps        = scalar(parsed$steps),
+      timestamp    = scalar(parsed$timestamp),
+      github_url   = scalar(parsed$github_url),
+      duplicate_of = scalar(parsed$duplicate_of),
       status = {
-        s <- parsed$status
-        if (length(s) == 1L && nzchar(as.character(s))) as.character(s)
-        else if (!is.null(parsed$duplicate_of) &&
-                 !as.character(parsed$duplicate_of) %in% c("NA", "")) "duplicate"
+        s   <- scalar(parsed$status)
+        dup <- scalar(parsed$duplicate_of)
+        if (!is.na(s) && nzchar(s)) s
+        else if (!is.na(dup) && !dup %in% c("NA", "")) "duplicate"
         else "open"
       },
-      resolved_at     = as.character(parsed$resolved_at     %||% NA_character_),
-      resolved_by     = as.character(parsed$resolved_by     %||% NA_character_),
-      resolution_note = as.character(parsed$resolution_note %||% NA_character_),
-      fix_ref         = as.character(parsed$fix_ref         %||% NA_character_),
-      fix_deployed    = as.character(parsed$fix_deployed    %||% NA_character_)
+      resolved_at     = scalar(parsed$resolved_at),
+      resolved_by     = scalar(parsed$resolved_by),
+      resolution_note = scalar(parsed$resolution_note),
+      fix_ref         = scalar(parsed$fix_ref),
+      fix_deployed    = scalar(parsed$fix_deployed)
     )
     rows[[length(rows) + 1L]] <- row
   }
@@ -372,7 +380,8 @@ mark_as_duplicate <- function(log_path, line_num, duplicate_of_line) {
 
     parsed$duplicate_of <- as.character(duplicate_of_line)
 
-    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE)
+    # null = "null": jsonlite's default writes NULL as {}, which breaks loading
+    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE, null = "null")
 
     # Atomic write: write to temp file, then rename
     tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
@@ -451,7 +460,8 @@ mark_as_resolved <- function(log_path, line_num,
     if (!is.na(fix_ref))      parsed$fix_ref      <- as.character(fix_ref)
     if (!is.na(fix_deployed)) parsed$fix_deployed <- as.character(fix_deployed)
 
-    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE)
+    # null = "null": jsonlite's default writes NULL as {}, which breaks loading
+    raw_lines[[line_num]] <- jsonlite::toJSON(parsed, auto_unbox = TRUE, null = "null")
 
     tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
     # Clean up the temp file on ANY exit (write error, rename failure; success
