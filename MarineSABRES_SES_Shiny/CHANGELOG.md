@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.3] - 2026-10-18
+
+### Fixed (WS-10 follow-ups, part 3)
+- Workshop export: the tenet summary's point columns read "1 = Completely disagree" … "5 = Completely agree" (in the user's language) instead of bare 1-5.
+- Lithuanian "Label" column header in the workshop and readiness xlsx files ("Etiketė", was the same word as "Name").
+
+### Tests
+- Exporting an empty workshop (no measures, no participants) still gives a valid template and export.
+
 ## [1.32.2] - 2026-10-18
 
 ### Fixed (WS-10 follow-ups, part 2)
