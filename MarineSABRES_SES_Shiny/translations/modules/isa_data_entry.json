@@ -276,15 +276,15 @@
       "el": "Συνδέσεις saved! Navigating to dashboard..."
     },
     "modules.isa.ai_assistant.connections_transferred_to_isa_data_entry": {
-      "en": "connections transferred to ISA Data Entry.",
-      "es": "conexiones transferidas a ISA Data Entry.",
-      "fr": "connexions transférées vers ISA Data Entry.",
-      "de": "Verbindungen werden an ISA Data Entry übertragen.",
-      "lt": "jungtys, perkeltos į ISA Data Entry.",
-      "pt": "conexões transferidas para o ISA Data Entry.",
-      "it": "connessioni trasferite a ISA Data Entry.",
-      "no": "tilkoblinger overført til ISA-dataregistrering.",
-      "el": "Συνδέσεις transferred to ISA Data Entry."
+      "en": "connections saved to the project. Open 'SES Visualization' to see the diagram.",
+      "es": "conexiones guardadas en el proyecto. Abra 'Visualización SES' para ver el diagrama.",
+      "fr": "connexions enregistrées dans le projet. Ouvrez « Visualisation SES » pour voir le diagramme.",
+      "de": "Verbindungen im Projekt gespeichert. Öffnen Sie „SES-Visualisierung“, um das Diagramm zu sehen.",
+      "lt": "jungtys išsaugotos projekte. Atidarykite „SES vizualizacija“, kad pamatytumėte diagramą.",
+      "pt": "conexões salvas no projeto. Abra 'Visualização SES' para ver o diagrama.",
+      "it": "connessioni salvate nel progetto. Apri 'Visualizzazione SES' per vedere il diagramma.",
+      "no": "tilkoblinger lagret i prosjektet. Åpne «SES-visualisering» for å se diagrammet.",
+      "el": "συνδέσεις αποθηκεύτηκαν στο έργο. Ανοίξτε την «Οπτικοποίηση SES» για να δείτε το διάγραμμα."
     },
     "modules.isa.ai_assistant.context_specific_suggestions": {
       "en": "Context-specific suggestions",
@@ -760,15 +760,15 @@
       "el": "Αποθήκευση Progress"
     },
     "modules.isa.ai_assistant.save_to_isa_data_entry": {
-      "en": "Save to ISA Data Entry",
-      "es": "Guardar en entrada de datos ISA",
-      "fr": "Enregistrer dans la saisie de données ISA",
-      "de": "In ISA Data Entry speichern",
-      "lt": "Išsaugoti ISA duomenų įvedime",
-      "pt": "Salvar na entrada de dados ISA",
-      "it": "Salva in immissione dati ISA",
-      "no": "Lagre til ISA-dataregistrering",
-      "el": "Αποθήκευση to ISA Data Entry"
+      "en": "Save to project",
+      "es": "Guardar en el proyecto",
+      "fr": "Enregistrer dans le projet",
+      "de": "Im Projekt speichern",
+      "lt": "Išsaugoti projekte",
+      "pt": "Salvar no projeto",
+      "it": "Salva nel progetto",
+      "no": "Lagre i prosjektet",
+      "el": "Αποθήκευση στο έργο"
     },
     "modules.isa.ai_assistant.save_your_current_progress_to_browser_storage": {
       "en": "Save your current progress to browser storage",
@@ -4564,28 +4564,6 @@
       "it": "Ora iniziamo a costruire il tuo framework DAPSI(W)R(M)!",
       "no": "La oss nå begynne å bygge DAPSI(W)R(M)-rammeverket ditt!",
       "el": "Τώρα ας αρχίσουμε να χτίζουμε το πλαίσιο DAPSI(W)R(M) σας!"
-    },
-    "modules.isa.ai_assistant.work_auto_saved_navigate": {
-      "en": "Your work is already saved automatically. Navigate to 'ISA Data Entry' to see your elements.",
-      "es": "Tu trabajo ya está guardado automáticamente. Navega a 'Entrada de Datos ISA' para ver tus elementos.",
-      "fr": "Votre travail est déjà enregistré automatiquement. Accédez à 'Saisie de données ISA' pour voir vos éléments.",
-      "de": "Ihre Arbeit wird bereits automatisch gespeichert. Navigieren Sie zu 'ISA-Dateneingabe', um Ihre Elemente zu sehen.",
-      "lt": "Jūsų darbas jau automatiškai išsaugotas. Eikite į 'ISA duomenų įvedimas', kad pamatytumėte savo elementus.",
-      "pt": "Seu trabalho já está salvo automaticamente. Navegue para 'Entrada de Dados ISA' para ver seus elementos.",
-      "it": "Il tuo lavoro è già salvato automaticamente. Vai su 'Inserimento Dati ISA' per vedere i tuoi elementi.",
-      "no": "Arbeidet ditt er allerede lagret automatisk. Naviger til 'ISA-dataregistrering' for å se elementene dine.",
-      "el": "Η εργασία σας έχει ήδη αποθηκευτεί αυτόματα. Μεταβείτε στην 'Καταχώρηση Δεδομένων ISA' για να δείτε τα στοιχεία σας."
-    },
-    "modules.isa.ai_assistant.model_saved_navigate": {
-      "en": "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
-      "es": "¡Modelo guardado! Navega a 'Entrada de Datos ISA' para ver tus elementos.",
-      "fr": "Modèle enregistré ! Accédez à 'Saisie de données ISA' pour voir vos éléments.",
-      "de": "Modell gespeichert! Navigieren Sie zu 'ISA-Dateneingabe', um Ihre Elemente zu sehen.",
-      "lt": "Modelis išsaugotas! Eikite į 'ISA duomenų įvedimas', kad pamatytumėte savo elementus.",
-      "pt": "Modelo salvo! Navegue para 'Entrada de Dados ISA' para ver seus elementos.",
-      "it": "Modello salvato! Vai su 'Inserimento Dati ISA' per vedere i tuoi elementi.",
-      "no": "Modell lagret! Naviger til 'ISA-dataregistrering' for å se elementene dine.",
-      "el": "Το μοντέλο αποθηκεύτηκε! Μεταβείτε στην 'Καταχώρηση Δεδομένων ISA' για να δείτε τα στοιχεία σας."
     },
     "modules.isa.data_entry.welfare_impacts_prompt": {
       "en": "List key impacts on human welfare you've observed...",
