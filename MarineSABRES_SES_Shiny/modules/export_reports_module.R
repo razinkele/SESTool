@@ -269,11 +269,18 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
             message = list(url = report_url)
           )
 
-          showNotification(
-            i18n$t("modules.export.reports.report_opened_in_a_new_window"),
-            type = "message",
-            duration = 5
-          )
+          # The opened tab's URL dies with the session, so offer the file too
+          showModal(modalDialog(
+            title = i18n$t("modules.export.reports.report_opened_in_a_new_window"),
+            tags$p(i18n$t("common.messages.html_report_link_temporary")),
+            footer = tagList(
+              downloadButton(session$ns("download_report_file"),
+                             i18n$t("modules.export.reports.download_report"),
+                             class = "btn-success"),
+              modalButton(i18n$t("common.buttons.close"))
+            ),
+            easyClose = TRUE
+          ))
 
         } else if (report_format == "PDF") {
           # For PDF, show informative message about requirements

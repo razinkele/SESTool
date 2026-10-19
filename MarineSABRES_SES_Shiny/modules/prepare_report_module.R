@@ -293,14 +293,21 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           message = list(url = report_url)
         )
 
-        showNotification(
-          i18n$t("modules.prepare.report.report_opened"),
-          type = "message",
-          duration = 5
-        )
-
         # Store temp file path for download
         rv$html_report_path <- temp_file
+
+        # The opened tab's URL dies with the session ("not found" later, user
+        # feedback 2026-06-15), so offer the file itself as well.
+        showModal(modalDialog(
+          title = i18n$t("modules.prepare.report.report_opened"),
+          tags$p(i18n$t("common.messages.html_report_link_temporary")),
+          footer = tagList(
+            downloadButton(session$ns("download_html"), i18n$t("modules.prepare.report.download_report")),
+            modalButton(i18n$t("common.buttons.close"))
+          ),
+          easyClose = TRUE,
+          size = "m"
+        ))
 
       }, error = function(e) {
         showNotification(
@@ -428,14 +435,18 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           cleanup_old_report(rv$word_report_path)
           temp_docx <- tempfile(fileext = ".docx")
 
-          # Generate Word document
-          generate_word_report(
+          # Same content as the HTML and PDF reports (user feedback 2026-10-18
+          # "Word vs html report"): the separate officer builder,
+          # generate_word_report(), had far less content and miscounted loops.
+          opts <- list(include_regional_context = input$include_regional_context)
+          report_md <- generate_report_content(
             data = data,
-            title = input$report_title,
-            author = input$report_author,
-            sections = input$report_sections,
-            output_file = temp_docx
+            report_type = "full",
+            include_viz = TRUE,
+            include_data = FALSE,
+            options = opts
           )
+          render_report_safely(report_md, temp_docx, format = "docx", i18n = i18n)
 
           showModal(modalDialog(
             title = i18n$t("modules.prepare.report.word_success"),
