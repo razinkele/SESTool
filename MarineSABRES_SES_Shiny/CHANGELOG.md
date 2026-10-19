@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- AI assistant: "Save" did nothing once the automatic save had run (on entering connection review), and the preview window's "Save" never saved at all. Approvals, rejections and edits made after that point never reached the project, so the diagram did not change and the dashboard kept the old connection count (user feedback 2026-06-03 "where is isa entry data" and 2026-06-05 "85 vs 90 connections"). Both buttons now save the current state. The button reads "Save to project", and the message after saving points to "SES Visualization" instead of an "ISA Data Entry" page that does not exist.
+- AI assistant: a connection whose direction was swapped created its reverse matrix filled with `0`, which turned every empty cell into "0" and made the dashboard count each one as a connection.
+
 ## [1.32.4] - 2026-10-19
 
 ### Fixed
