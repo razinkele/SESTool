@@ -87,3 +87,19 @@ test_that("Prepare Report sends the ticked sections to the HTML report", {
     expect_identical(seen, c("summary", "leverage"))
   })
 })
+
+# CodeRabbit on #130
+test_that("an empty section list gives only the title and stakeholders, not the full report", {
+  out <- generate_full_content(report_project(), sections = character(0))
+  for (h in setdiff(all_headings, "## Stakeholder Analysis")) expect_false(grepl(h, out, fixed = TRUE), info = h)
+  expect_true(grepl("## Stakeholder Analysis", out, fixed = TRUE))
+})
+
+test_that("strategic recommendations follow the Recommendations checkbox", {
+  without <- generate_full_content(report_project(), sections = "leverage")
+  with    <- generate_full_content(report_project(), sections = c("leverage", "recommendations"))
+  expect_true(grepl("## Leverage Point Analysis", without, fixed = TRUE))
+  expect_false(grepl("### Strategic Recommendations", without, fixed = TRUE))
+  expect_true(grepl("### Strategic Recommendations", with, fixed = TRUE))
+  expect_true(grepl("### Strategic Recommendations", generate_full_content(report_project()), fixed = TRUE))
+})

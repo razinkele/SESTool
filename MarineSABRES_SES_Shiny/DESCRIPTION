@@ -41,6 +41,6 @@ Imports:
     Matrix
 Suggests:
     torch,
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.7),
     shinytest2,
     covr

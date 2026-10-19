@@ -946,8 +946,8 @@ generate_full_content <- function(data, sections = NULL) {
         "   → *Management implication*: Target for interventions to create cascading effects\n\n",
         "**Connectors** (High betweenness, ", nrow(high_between), " nodes): These bridge different system parts", connectors_text,
         "   → *Management implication*: Critical for maintaining system connectivity\n\n",
-        "### Strategic Recommendations\n\n",
-        strategic_recs
+        # recommendations content follows the Recommendations checkbox (CodeRabbit #130)
+        if (include("recommendations")) paste0("### Strategic Recommendations\n\n", strategic_recs)
       )
     } else {
       "## Leverage Point Analysis\n\n⚠️ No leverage point analysis performed yet. Run leverage point detection to identify high-impact intervention points.\n\n"
