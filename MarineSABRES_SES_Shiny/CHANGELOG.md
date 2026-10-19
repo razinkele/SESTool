@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.33.0] - 2026-10-19
+
 ### Fixed (AI assistant templates)
 - A model started from an AI-assistant template (overfishing, pollution, tourism, climate) had no links in the diagram, however many connections were approved. The templates stored their connections under old matrix names (`a_d`, `p_a`, ...) next to empty current ones, and the diagram reads only the current ones. Connections between two element types now always go to the current matrix, and the templates use the current names. Projects saved before this fix are repaired when they are opened: their links are rebuilt from the AI assistant's saved connection list, and a message says how many were restored.
 - AI assistant connection review: "Swap direction" stored the reversed link where the diagram showed it in the original direction or not at all. The reverse of every link type the assistant suggests (e.g. Activity → Driver) is not a valid DAPSIWRM link, so such a swap now leaves the connection out, and the user is told which ones; the correct link can be added in Standard Entry.
