@@ -45,15 +45,15 @@
       "el": "Ο σελιδοδείκτης αποκαταστάθηκε επιτυχώς!"
     },
     "common.messages.progress_restored_after_language_change": {
-      "en": "Your progress has been restored after language change",
-      "es": "Su progreso ha sido restaurado después del cambio de idioma",
-      "fr": "Votre progression a été restaurée après le changement de langue",
-      "de": "Ihr Fortschritt wurde nach der Sprachänderung wiederhergestellt",
-      "lt": "Jūsų progresas buvo atkurtas po kalbos pakeitimo",
-      "pt": "Seu progresso foi restaurado após a mudança de idioma",
-      "it": "I tuoi progressi sono stati ripristinati dopo il cambio di lingua",
-      "no": "Fremgangen din er gjenopprettet etter språkendring",
-      "el": "Η πρόοδός σας αποκαταστάθηκε μετά την αλλαγή γλώσσας"
+      "en": "Your progress has been restored after the page reload",
+      "es": "Su progreso ha sido restaurado después de recargar la página",
+      "fr": "Votre progression a été restaurée après le rechargement de la page",
+      "de": "Ihr Fortschritt wurde nach dem Neuladen der Seite wiederhergestellt",
+      "lt": "Jūsų progresas buvo atkurtas po puslapio perkrovimo",
+      "pt": "Seu progresso foi restaurado após recarregar a página",
+      "it": "I tuoi progressi sono stati ripristinati dopo il ricaricamento della pagina",
+      "no": "Fremgangen din er gjenopprettet etter at siden ble lastet inn på nytt",
+      "el": "Η πρόοδός σας αποκαταστάθηκε μετά την επαναφόρτωση της σελίδας"
     },
     "common.messages.confirm_start_over": {
       "en": "Confirm Start Over",
@@ -1209,6 +1209,17 @@
       "it": "Codice lingua non valido. Selezionare una lingua supportata.",
       "no": "Ugyldig språkkode. Vennligst velg et støttet språk.",
       "el": "Μη έγκυρος κωδικός γλώσσας. Παρακαλώ επιλέξτε μια υποστηριζόμενη γλώσσα."
+    },
+    "common.messages.context_user_level_change_save": {
+      "en": "saving your work before the user level change",
+      "es": "guardando su trabajo antes del cambio de nivel de usuario",
+      "fr": "enregistrement de votre travail avant le changement de niveau d'utilisateur",
+      "de": "Speichern Ihrer Arbeit vor dem Wechsel der Benutzerstufe",
+      "lt": "išsaugomas jūsų darbas prieš naudotojo lygio pakeitimą",
+      "pt": "salvando o seu trabalho antes da mudança de nível de usuário",
+      "it": "salvataggio del tuo lavoro prima del cambio di livello utente",
+      "no": "lagrer arbeidet ditt før endringen av brukernivå",
+      "el": "αποθήκευση της εργασίας σας πριν από την αλλαγή επιπέδου χρήστη"
     },
     "common.messages.context_language_change_save": {
       "en": "saving your work before the language change",

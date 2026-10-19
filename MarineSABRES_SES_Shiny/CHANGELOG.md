@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Changing the user (expertise) level reloads the page, and the reload cleared the whole project (user feedback 2026-06-05 "The reload"). The project is now kept across the reload, as it already was for a language change; if it cannot be stored, the level is not changed and an error is shown. The message after the reload now says "restored after the page reload" instead of "after language change".
+
 ## [1.32.4] - 2026-10-19
 
 ### Fixed

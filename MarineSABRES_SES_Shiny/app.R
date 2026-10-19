@@ -983,8 +983,9 @@ server <- function(input, output, session) {
                                  ses_models_directory, volumes,
                                  project_data = project_data)
 
-  # Setup user level modal
-  setup_user_level_modal_handlers(input, output, session, user_level, session_i18n)
+  # Setup user level modal (project_data: kept across the level-change reload)
+  setup_user_level_modal_handlers(input, output, session, user_level, session_i18n,
+                                  project_data = project_data)
 
   # Setup download manuals modal
   setup_manuals_modal_handlers(input, output, session, session_i18n)
