@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Getting Started (entry points 2–4): ticking several checkboxes made them flicker and some ticks were lost (user feedback 2026-10-13, twice). Each tick re-rendered the whole guided screen; the ticks are now stored only when you leave the step (Back, Continue, Get recommendations). Skip clears the step's ticks, as on entry points 0 and 1.
+
 ## [1.32.4] - 2026-10-19
 
 ### Fixed

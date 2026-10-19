@@ -131,3 +131,43 @@ test_that("entry_point_server has the conventional signature", {
   }
   expect_true(is.null(formals(real_entry_point_server)$event_bus))
 })
+
+# --- user feedback 2026-10-13 "Checkboxes flickering" / "Option buttons
+# flickering": every tick was copied into rv, which re-rendered the whole
+# guided screen; ticks made during a re-render were lost -------------------
+test_that("ticking checkboxes does not touch rv until the user leaves the step", {
+  t1 <- EP4_TOPICS[[1]]$id; t2 <- EP4_TOPICS[[2]]$id
+  a1 <- EP2_ACTIVITY_SECTORS[[1]]$id; r1 <- EP3_RISKS_HAZARDS[[1]]$id
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    rv$current_step <- 2
+    session$setInputs(ep2_activities = a1, ep3_risks = r1)
+    expect_length(rv$ep2_selected, 0)             # no re-render while ticking
+    session$setInputs(ep23_continue = 1)
+    expect_identical(rv$ep2_selected, a1)
+    expect_identical(rv$ep3_selected, r1)
+
+    session$setInputs(ep4_topics = t1)
+    session$setInputs(ep4_topics = c(t1, t2))
+    expect_length(rv$ep4_selected, 0)
+    session$setInputs(ep4_back = 1)                # kept when going back
+    expect_setequal(rv$ep4_selected, c(t1, t2))
+  })
+})
+
+test_that("Get recommendations uses the ticked topics; Skip clears them", {
+  t1 <- EP4_TOPICS[[1]]$id
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    rv$current_step <- 4
+    session$setInputs(ep4_topics = t1, ep4_get_recommendations = 1)
+    expect_identical(rv$ep4_selected, t1)
+    expect_identical(rv$current_screen, "recommendations")
+
+    rv$current_screen <- "guided"
+    session$setInputs(ep4_skip = 1)
+    expect_length(rv$ep4_selected, 0)
+  })
+})
