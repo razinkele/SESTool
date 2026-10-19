@@ -173,41 +173,49 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
       rv$current_step <- 2
     })
 
-    # ========== EP2-3 ACTIONS ==========
-    observe({
+    # Checkbox ticks are copied into rv only when the user leaves the step.
+    # The guided screen's renderUI reads rv$ep*_selected (to restore ticks on
+    # Back), so copying on every tick re-rendered the whole screen: the boxes
+    # flickered and ticks made during a re-render were lost (user feedback
+    # 2026-10-13). Skip clears the step, as on EP0/EP1.
+    commit_ep23 <- function() {
       rv$ep2_selected <- input$ep2_activities %||% c()
-    })
-
-    observe({
       rv$ep3_selected <- input$ep3_risks %||% c()
-    })
+    }
+    commit_ep4 <- function() {
+      rv$ep4_selected <- input$ep4_topics %||% c()
+    }
 
+    # ========== EP2-3 ACTIONS ==========
     observeEvent(input$ep23_back, {
+      commit_ep23()
       rv$current_step <- 1
     })
 
     observeEvent(input$ep23_continue, {
+      commit_ep23()
       rv$current_step <- 4
     })
 
     observeEvent(input$ep23_skip, {
+      rv$ep2_selected <- c()
+      rv$ep3_selected <- c()
       rv$current_step <- 4
     })
 
     # ========== EP4 ACTIONS ==========
-    observe({
-      rv$ep4_selected <- input$ep4_topics %||% c()
-    })
-
     observeEvent(input$ep4_back, {
+      commit_ep4()
       rv$current_step <- 2
     })
 
     observeEvent(input$ep4_get_recommendations, {
+      commit_ep4()
       rv$current_screen <- "recommendations"
     })
 
     observeEvent(input$ep4_skip, {
+      rv$ep4_selected <- c()
       rv$current_screen <- "recommendations"
     })
 
