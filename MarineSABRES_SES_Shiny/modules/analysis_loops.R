@@ -922,7 +922,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       visNetwork(nodes_df, edges_df) %>%
         visEdges(smooth = list(enabled = TRUE, type = "curvedCW")) %>%
         visOptions(highlightNearest = TRUE) %>%
-        visLayout(randomSeed = 123)
+        visLayout(randomSeed = 123) %>%
+        visExport(type = "png", name = "loop", label = i18n$t("common.buttons.download_png"))
     })
 
     # Loop Narrative ----

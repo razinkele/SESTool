@@ -11,6 +11,17 @@
     "el"
   ],
   "translation": {
+    "common.buttons.download_png": {
+      "en": "Download PNG",
+      "es": "Descargar PNG",
+      "fr": "Télécharger PNG",
+      "de": "PNG herunterladen",
+      "lt": "Atsisiųsti PNG",
+      "pt": "Baixar PNG",
+      "it": "Scarica PNG",
+      "no": "Last ned PNG",
+      "el": "Λήψη PNG"
+    },
     "common.buttons.add": {
       "en": "Add",
       "es": "Agregar",

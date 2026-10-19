@@ -27,6 +27,8 @@ analysis_decision_lens_ui <- function(id, i18n) {
           ),
           uiOutput(ns("factors_status")),
           plotOutput(ns("factors_plot"), height = PLOT_HEIGHT_MD),
+          downloadButton(ns("download_factors_png"), i18n$t("common.buttons.download_png"),
+                         class = "btn-sm btn-outline-primary"),
           DT::dataTableOutput(ns("factors_table"))
         ),
 
@@ -130,7 +132,8 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
       } else NULL
     })
 
-    output$factors_plot <- renderPlot({
+    # One plot object for the page and the PNG download
+    factors_plot_obj <- reactive({
       req(rv$factors); req(nrow(rv$factors) > 0)
       df <- rv$factors
       # translated legend values (N46)
@@ -146,8 +149,20 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
              y = i18n$t("modules.analysis.decision_lens.factors_y_axis"),
              color = i18n$t("modules.analysis.decision_lens.col_quadrant"),
              shape = i18n$t("modules.analysis.decision_lens.col_quadrant")) +
+        # room above the top points for their labels (they were clipped)
+        scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+        coord_cartesian(clip = "off") +
         theme_minimal(base_size = 13)
     })
+
+    output$factors_plot <- renderPlot(factors_plot_obj())
+
+    output$download_factors_png <- downloadHandler(
+      filename = function() generate_export_filename("Decision_Lens_Factors", ".png"),
+      content = function(file) {
+        ggplot2::ggsave(file, factors_plot_obj(), width = 9, height = 6, dpi = 150, bg = "white")
+      }
+    )
 
     output$factors_table <- DT::renderDataTable({
       req(rv$factors)

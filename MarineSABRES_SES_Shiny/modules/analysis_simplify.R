@@ -370,7 +370,9 @@ analysis_simplify_ui <- function(id, i18n) {
               br(),
 
               h4(i18n$t("modules.analysis.simplify.impact_summary")),
-              plotOutput(ns("impact_chart"), height = PLOT_HEIGHT_MD)
+              plotOutput(ns("impact_chart"), height = PLOT_HEIGHT_MD),
+              downloadButton(ns("download_impact_png"), i18n$t("common.buttons.download_png"),
+                             class = "btn-sm btn-outline-primary")
             )
           )
         )
@@ -905,7 +907,8 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
         visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
         visLayout(randomSeed = 42) %>%
         visPhysics(stabilization = TRUE, barnesHut = list(gravitationalConstant = -2000, springLength = 200)) %>%
-        visInteraction(navigationButtons = TRUE, hover = TRUE, zoomView = zoom)
+        visInteraction(navigationButtons = TRUE, hover = TRUE, zoomView = zoom) %>%
+        visExport(type = "png", name = "network", label = i18n$t("common.buttons.download_png"))
     }
 
     output$original_network <- renderVisNetwork({
@@ -1046,7 +1049,19 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
         text(0.5, 0.5, i18n$t("modules.analysis.simplify.apply_to_see_chart"), cex = 1.5)
         return()
       }
+      impact_plot_obj()
+    })
 
+    output$download_impact_png <- downloadHandler(
+      filename = function() generate_export_filename("Simplification_Impact", ".png"),
+      content = function(file) {
+        ggplot2::ggsave(file, impact_plot_obj(), width = 9, height = 6, dpi = 150, bg = "white")
+      }
+    )
+
+    # One plot object for the page and the PNG download
+    impact_plot_obj <- reactive({
+      req(isTRUE(rv$has_simplified))
       req(rv$original_nodes, rv$simplified_nodes, rv$original_edges, rv$simplified_edges)
 
       orig_label <- i18n$t("modules.analysis.simplify.stat_original")
@@ -1084,7 +1099,8 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
           plot.title = element_text(face = "bold", size = 16),
           plot.subtitle = element_text(color = "gray40"),
           legend.position = "top"
-        )
+        ) +
+        scale_y_continuous(expand = expansion(mult = c(0, 0.12)))   # room for the bar labels
     })
 
     # ========== EXPORT SIMPLIFIED NETWORK ==========

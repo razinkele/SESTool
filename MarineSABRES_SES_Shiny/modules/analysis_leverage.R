@@ -399,7 +399,8 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
             stabilization = list(iterations = 200),
             solver = "forceAtlas2Based",
             forceAtlas2Based = list(gravitationalConstant = -50, springLength = 100)
-          )
+          ) %>%
+          visExport(type = "png", name = "leverage_network", label = i18n$t("common.buttons.download_png"))
       }, error = function(e) {
         debug_log(paste("Leverage network error:", conditionMessage(e)), "LEVERAGE")
         return(NULL)
