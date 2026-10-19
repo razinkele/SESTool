@@ -39,3 +39,9 @@ test_that("changing the user level still works without project data", {
   expect_true("save_user_level" %in% sent)
   expect_false("saveProjectDataBeforeReload" %in% sent)
 })
+
+test_that("a failed stash leaves the level configuration unchanged (CodeRabbit #124)", {
+  broken <- reactive(stop("cannot serialise"))
+  sent <- run_level_change(broken)
+  expect_false(any(c("save_level_config", "save_beginner_max_elements", "save_user_level") %in% sent))
+})

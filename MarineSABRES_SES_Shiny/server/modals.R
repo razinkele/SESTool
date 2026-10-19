@@ -1171,6 +1171,14 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
 
     debug_log(sprintf("Applying level: %s -> %s (overrides: %d)", user_level(), new_level, length(overrides)), "USER-LEVEL")
 
+    # The reload below cleared the whole project (user feedback 2026-06-05
+    # "The reload"); keep it in sessionStorage as the language change does.
+    # Done first, so a failed save leaves the level configuration unchanged.
+    if (!stash_project_before_reload(session, project_data, i18n,
+                                     context_key = "common.messages.context_user_level_change_save")) {
+      return()
+    }
+
     # Persist overrides to localStorage
     session$sendCustomMessage(
       type = "save_level_config",
@@ -1187,13 +1195,6 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
 
     # Update the in-memory config
     set_active_level_config(new_level, overrides)
-
-    # The reload below cleared the whole project (user feedback 2026-06-05
-    # "The reload"); keep it in sessionStorage as the language change does.
-    if (!stash_project_before_reload(session, project_data, i18n,
-                                     context_key = "common.messages.context_user_level_change_save")) {
-      return()
-    }
 
     # Save to URL and reload via JavaScript. Custom messages reach the browser
     # in order and the stash handler writes sessionStorage synchronously, so
