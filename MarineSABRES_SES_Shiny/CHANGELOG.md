@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- AI assistant country step (Caribbean): Martinique, Guadeloupe and Saint-Martin, as EU members (EU outermost regions, so EU governance elements apply), and Honduras, Nicaragua and Guatemala (user feedback 2026-10-13 "Martinique not in country selection").
+
 ### Fixed
+- Scenario Builder: creating a scenario on a project with connections ended the session ("kicked off the server"; user feedback 2026-10-13). The saved CLD has no edge id or from/to labels, and building the link list failed with "attempt to set an attribute on NULL" (the unlocated production error noted in 1.25.0). Baseline links now get a stable `from->to` id and their labels from the nodes, so links can also be listed, removed and shown as removed. The dialog's Create button read "Create CLD networks and run analysis tools"; it now reads "Create".
+- Changing the user (expertise) level reloads the page, and the reload cleared the whole project (user feedback 2026-06-05 "The reload"). The project is now kept across the reload, as it already was for a language change; if it cannot be stored, the level is not changed and an error is shown. The message after the reload now says "restored after the page reload" instead of "after language change".
 - Getting Started (entry points 2–4): ticking several checkboxes made them flicker and some ticks were lost (user feedback 2026-10-13, twice). Each tick re-rendered the whole guided screen; the ticks are now stored only when you leave the step (Back, Continue, Get recommendations). Skip clears the step's ticks, as on entry points 0 and 1.
+- AI assistant: "Save" did nothing once the automatic save had run (on entering connection review), and the preview window's "Save" never saved at all. Approvals, rejections and edits made after that point never reached the project, so the diagram did not change and the dashboard kept the old connection count (user feedback 2026-06-03 "where is isa entry data" and 2026-06-05 "85 vs 90 connections"). Both buttons now save the current state. The button reads "Save to project", and the message after saving points to "SES Visualization" instead of an "ISA Data Entry" page that does not exist.
+- AI assistant: a connection whose direction was swapped created its reverse matrix filled with `0`, which turned every empty cell into "0" and made the dashboard count each one as a connection.
 
 ## [1.32.4] - 2026-10-19
 
