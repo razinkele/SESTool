@@ -131,7 +131,9 @@ analysis_loops_ui <- function(id, i18n) {
               column(12,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.type_distribution")),
-                  plotOutput(ns("loop_type_plot"), height = PLOT_HEIGHT_SM)
+                  plotOutput(ns("loop_type_plot"), height = PLOT_HEIGHT_SM),
+                  downloadButton(ns("download_loop_type_png"), i18n$t("modules.analysis.loops.download_png"),
+                                 class = "btn-sm btn-outline-primary")
                 )
               )
             )
@@ -186,14 +188,18 @@ analysis_loops_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.strength_analysis")),
-                  plotOutput(ns("loop_strength_plot"), height = PLOT_HEIGHT_SM)
+                  plotOutput(ns("loop_strength_plot"), height = PLOT_HEIGHT_MD),
+                  downloadButton(ns("download_loop_strength_png"), i18n$t("modules.analysis.loops.download_png"),
+                                 class = "btn-sm btn-outline-primary")
                 )
               ),
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.element_participation")),
                   p(i18n$t("modules.analysis.loops.element_participation_desc")),
-                  plotOutput(ns("element_participation_plot"), height = PLOT_HEIGHT_SM)
+                  plotOutput(ns("element_participation_plot"), height = PLOT_HEIGHT_MD),
+                  downloadButton(ns("download_participation_png"), i18n$t("modules.analysis.loops.download_png"),
+                                 class = "btn-sm btn-outline-primary")
                 )
               )
             )
@@ -270,6 +276,80 @@ analysis_loops_ui <- function(id, i18n) {
 #' }
 #'
 #' @export
+# ---- Loop plots: one drawing function each, shared by the page and the PNG
+# downloads. `loops` is loop_data$loops (LoopID, Type, Length, Elements). ----
+LOOP_COLORS <- c(Reinforcing = "#06D6A0", Balancing = "#E63946")
+
+.loops_draw_type <- function(loops, i18n) {
+  type_counts <- table(loops$Type)
+  barplot(type_counts,
+          main = i18n$t("modules.analysis.loops.type_distribution"),
+          col = LOOP_COLORS[names(type_counts)],
+          ylab = i18n$t("modules.analysis.loops.num_loops"),
+          las = 1)
+  legend("topright",
+         legend = c(i18n$t("modules.analysis.loops.legend_reinforcing"), i18n$t("modules.analysis.loops.legend_balancing")),
+         fill = LOOP_COLORS[c("Reinforcing", "Balancing")])
+}
+
+# Number of loops of one type by length (blank before; never had a renderer)
+.loops_draw_length_dist <- function(loops, type, i18n) {
+  lens <- loops$Length[loops$Type == type]
+  if (!length(lens)) {
+    plot.new()
+    text(0.5, 0.5, i18n$t("modules.analysis.loops.no_loops_detected"), col = "grey40")
+    return(invisible(NULL))
+  }
+  op <- par(mar = c(4, 4, 1, 1)); on.exit(par(op))
+  barplot(table(factor(lens, levels = seq(min(lens), max(lens)))),
+          col = LOOP_COLORS[[type]], las = 1,
+          xlab = i18n$t("modules.analysis.loops.length_axis"),
+          ylab = i18n$t("modules.analysis.loops.num_loops"))
+}
+
+# The page's existing loop measure, the dominance score (100 / length, as in
+# the Dominant loops table), per loop. The plot was blank before.
+.loops_draw_strength <- function(loops, i18n) {
+  score <- 100 / loops$Length
+  ord <- order(score, decreasing = TRUE)[seq_len(min(15L, nrow(loops)))]
+  op <- par(mar = c(4.5, 5, 1, 1)); on.exit(par(op))
+  barplot(rev(score[ord]), names.arg = rev(loops$LoopID[ord]), horiz = TRUE, las = 1,
+          col = rev(LOOP_COLORS[loops$Type[ord]]),
+          xlab = i18n$t("modules.analysis.loops.dominance_axis"))
+  legend("bottomright", bty = "n", cex = 0.8,
+         legend = c(i18n$t("modules.analysis.loops.legend_reinforcing"), i18n$t("modules.analysis.loops.legend_balancing")),
+         fill = LOOP_COLORS[c("Reinforcing", "Balancing")])
+}
+
+# Horizontal bars with a left margin sized to the labels: vertical labels in
+# a 300px box were cut off (user feedback 2026-10-13).
+.loops_draw_participation <- function(loops, i18n) {
+  counts <- head(sort(table(unlist(strsplit(loops$Elements, " → "))), decreasing = TRUE), 15)
+  labs <- names(counts)
+  labs <- ifelse(nchar(labs) > 40, paste0(substr(labs, 1, 39), "…"), labs)
+  op <- par(mar = c(4, min(20, max(5, max(nchar(labs)) * 0.45)), 2, 1)); on.exit(par(op))
+  barplot(rev(as.numeric(counts)), names.arg = rev(labs), horiz = TRUE, las = 1,
+          col = "#457B9D", cex.names = 0.8,
+          main = i18n$t("modules.analysis.loops.elements_in_most_loops"),
+          xlab = i18n$t("modules.analysis.loops.num_loops"))
+}
+
+#' Write one loop plot to a PNG file
+#' @param which "type", "strength", "participation", "reinforcing" or "balancing"
+loops_plot_png <- function(which, loops, i18n, file, width = 1000, height = 700, res = 150) {
+  png(file, width = width, height = height, res = res)
+  on.exit(dev.off())
+  switch(which,
+    type          = .loops_draw_type(loops, i18n),
+    strength      = .loops_draw_strength(loops, i18n),
+    participation = .loops_draw_participation(loops, i18n),
+    reinforcing   = .loops_draw_length_dist(loops, "Reinforcing", i18n),
+    balancing     = .loops_draw_length_dist(loops, "Balancing", i18n),
+    stop("unknown loop plot: ", which)
+  )
+  invisible(file)
+}
+
 analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
@@ -720,19 +800,38 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Loop Type Plot ----
     output$loop_type_plot <- safe_renderPlot({
       req(loop_data$loops)
-
-      type_counts <- table(loop_data$loops$Type)
-
-      barplot(type_counts,
-              main = i18n$t("modules.analysis.loops.type_distribution"),
-              col = c("Balancing" = "#E63946", "Reinforcing" = "#06D6A0"),
-              ylab = i18n$t("modules.analysis.loops.num_loops"),
-              las = 1)
-
-      legend("topright",
-             legend = c(i18n$t("modules.analysis.loops.legend_reinforcing"), i18n$t("modules.analysis.loops.legend_balancing")),
-             fill = c("#06D6A0", "#E63946"))
+      .loops_draw_type(loop_data$loops, i18n)
     })
+
+    # Length distribution per type, strength (dominance) per loop ----
+    output$reinforcing_dist <- safe_renderPlot({
+      req(loop_data$loops, nrow(loop_data$loops) > 0)
+      .loops_draw_length_dist(loop_data$loops, "Reinforcing", i18n)
+    })
+
+    output$balancing_dist <- safe_renderPlot({
+      req(loop_data$loops, nrow(loop_data$loops) > 0)
+      .loops_draw_length_dist(loop_data$loops, "Balancing", i18n)
+    })
+
+    output$loop_strength_plot <- safe_renderPlot({
+      req(loop_data$loops, nrow(loop_data$loops) > 0)
+      .loops_draw_strength(loop_data$loops, i18n)
+    })
+
+    # PNG downloads of the loop plots ----
+    loop_png_download <- function(which, name) {
+      downloadHandler(
+        filename = function() generate_export_filename(name, ".png"),
+        content = function(file) {
+          req(loop_data$loops, nrow(loop_data$loops) > 0)
+          loops_plot_png(which, loop_data$loops, i18n, file)
+        }
+      )
+    }
+    output$download_loop_type_png     <- loop_png_download("type", "Loop_Types")
+    output$download_loop_strength_png <- loop_png_download("strength", "Loop_Dominance")
+    output$download_participation_png <- loop_png_download("participation", "Loop_Element_Participation")
 
     # Update loop selection dropdown ----
     observe({
@@ -870,19 +969,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     output$element_participation_plot <- safe_renderPlot({
       # Count how many loops each element appears in (use Elements column from loops df)
       req(loop_data$loops, nrow(loop_data$loops) > 0)
-      element_counts <- table(unlist(strsplit(loop_data$loops$Elements, " \u2192 ")))
-      element_counts <- sort(element_counts, decreasing = TRUE)
-
-      if(length(element_counts) > 15) {
-        element_counts <- element_counts[1:15]
-      }
-
-      barplot(element_counts,
-              main = i18n$t("modules.analysis.loops.elements_in_most_loops"),
-              ylab = i18n$t("modules.analysis.loops.num_loops"),
-              las = 2,
-              col = "#457B9D",
-              cex.names = 0.7)
+      .loops_draw_participation(loop_data$loops, i18n)
     })
 
     # Export Summary ----
