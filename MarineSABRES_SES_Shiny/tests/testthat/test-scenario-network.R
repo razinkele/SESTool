@@ -58,3 +58,37 @@ test_that("scenario_loops still works from its new home", {
                                  polarity = c("+", "+", "-", "+", "+"), stringsAsFactors = FALSE))
   expect_equal(scenario_loops(net)$count, 2L)
 })
+
+# --- feedback 2026-10-13 "Scenario Builder": the saved CLD (create_edges_df)
+# has no edge id and no from/to labels, and the builder crashed on them -------
+saved_cld <- function() {
+  cld <- base_cld()
+  cld$edges$id <- NULL                       # shape written by create_edges_df()
+  cld
+}
+
+test_that("scenario_baseline_edges adds endpoint ids and labels when the CLD has none", {
+  e <- scenario_baseline_edges(saved_cld())
+  expect_equal(e$id, c("D_1->A_1", "A_1->P_1"))
+  expect_equal(e$from_label, c("Demand", "Boating"))
+  expect_equal(e$to_label, c("Boating", "Anchoring"))
+})
+
+test_that("scenario_baseline_edges keeps existing ids and labels", {
+  cld <- base_cld(); cld$edges$from_label <- c("x", "y"); cld$edges$to_label <- c("y", "z")
+  e <- scenario_baseline_edges(cld)
+  expect_equal(e$id, 1:2)
+  expect_equal(e$from_label, c("x", "y"))
+})
+
+test_that("scenario_baseline_edges handles a CLD without edges", {
+  cld <- saved_cld(); cld$edges <- cld$edges[0, , drop = FALSE]
+  expect_equal(nrow(scenario_baseline_edges(cld)), 0L)
+  expect_equal(nrow(scenario_baseline_edges(list(nodes = cld$nodes, edges = NULL))), 0L)
+})
+
+test_that("a link removed by its endpoint id is removed from a CLD without edge ids", {
+  out <- scenario_apply_modifications(saved_cld(), mods(links_removed = "A_1->P_1"))
+  expect_equal(nrow(out$edges), 1L)
+  expect_equal(out$edges$to, "A_1")
+})

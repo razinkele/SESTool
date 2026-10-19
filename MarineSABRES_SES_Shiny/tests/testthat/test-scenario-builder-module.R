@@ -127,3 +127,26 @@ test_that("predict_impacts reports re-weighted links and survives removed links"
     expect_equal(imp$impact_direction[imp$node == "Demand"], "negative")  # touched by the removed link 1
   })
 })
+
+# --- feedback 2026-10-13 "Scenario Builder": creating a scenario on a project
+# with connections ended the session ("attempt to set an attribute on NULL") --
+test_that("activating a scenario on a CLD without edge ids does not crash", {
+  cld <- list(nodes = data.frame(id = c("D_1", "A_1"), label = c("Demand", "Boating"),
+                                 group = c("Drivers", "Activities"), stringsAsFactors = FALSE),
+              edges = data.frame(from = "D_1", to = "A_1", polarity = "+", strength = "medium",
+                                 stringsAsFactors = FALSE))     # create_edges_df() shape: no id
+  sc <- list(id = "s1", name = "s", description = "", created = Sys.time(), modified = Sys.time(),
+             modifications = list(nodes_added = list(), nodes_removed = c(), nodes_modified = list(),
+                                  links_added = list(), links_removed = c(), links_modified = list()),
+             results = NULL)
+  data <- list(data = list(cld = cld, analysis = list(scenarios = list(sc))))
+  testServer(real_scenario_builder_server,
+             args = list(project_data_reactive = shiny::reactiveVal(data), i18n = list(t = function(k, ...) k)), {
+    session$flushReact()
+    active_scenario_id("s1")
+    session$flushReact()
+    # An observer error is not re-thrown here: Shiny closes the session, which
+    # is what the user saw as being "kicked off the server".
+    expect_false(session$isClosed())
+  })
+})

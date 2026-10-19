@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Scenario Builder: creating a scenario on a project with connections ended the session ("kicked off the server"; user feedback 2026-10-13). The saved CLD has no edge id or from/to labels, and building the link list failed with "attempt to set an attribute on NULL" (the unlocated production error noted in 1.25.0). Baseline links now get a stable `from->to` id and their labels from the nodes, so links can also be listed, removed and shown as removed. The dialog's Create button read "Create CLD networks and run analysis tools"; it now reads "Create".
+
 ## [1.32.4] - 2026-10-19
 
 ### Fixed
