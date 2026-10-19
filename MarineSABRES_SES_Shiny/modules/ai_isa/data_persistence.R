@@ -381,6 +381,42 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   return(matrices)
 }
 
+#' Apply "swap direction" choices from connection review
+#'
+#' A swapped connection whose reversed category pair is a forward link the
+#' assistant stores (AI_ISA_FORWARD_MATRIX) gets every field reversed and that
+#' forward matrix. Any other swap is refused: the reverse of every link type
+#' the assistant proposes (D->A, A->P, ...) is not a valid DAPSIWRM transition
+#' (functions/network_analysis.R), and the old code stored it under a reversed
+#' matrix name the diagram reads as the original direction. A refused
+#' connection is removed from the approved set.
+#'
+#' @return list(connections, approved, refused = "from -> to" labels)
+apply_connection_swaps <- function(connections, approved, swapped) {
+  refused <- character(0)
+  flip <- function(c, a, b) { tmp <- c[[a]]; c[a] <- list(c[[b]]); c[b] <- list(tmp); c }
+  for (i in intersect(as.integer(swapped), as.integer(approved))) {
+    if (i < 1 || i > length(connections)) next
+    c0 <- connections[[i]]
+    from_cat <- c0$from_category %||% c0$from_type %||% ""
+    to_cat   <- c0$to_category %||% c0$to_type %||% ""
+    target <- AI_ISA_FORWARD_MATRIX[paste(to_cat, from_cat, sep = "_")]
+    if (is.na(target)) {
+      refused <- c(refused, paste(c0$from_name %||% c0$from %||% "", "→", c0$to_name %||% c0$to %||% ""))
+      approved <- setdiff(approved, i)
+      next
+    }
+    c1 <- c0
+    for (p in list(c("from_index", "to_index"), c("from_name", "to_name"), c("from", "to"),
+                   c("from_type", "to_type"), c("from_category", "to_category"))) {
+      if (!is.null(c1[[p[1]]]) || !is.null(c1[[p[2]]])) c1 <- flip(c1, p[1], p[2])
+    }
+    c1$matrix <- unname(target)
+    connections[[i]] <- c1
+  }
+  list(connections = connections, approved = approved, refused = refused)
+}
+
 # Legacy matrix names the AI-assistant templates used, and their forward matrix
 AI_ISA_LEGACY_TEMPLATE_MATRIX <- c(a_d = "d_a", p_a = "a_p", mpf_p = "p_mpf",
                                    es_mpf = "mpf_es", gb_es = "es_gb")
