@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- AI assistant country step (Caribbean): Martinique, Guadeloupe and Saint-Martin, as EU members (EU outermost regions, so EU governance elements apply), and Honduras, Nicaragua and Guatemala (user feedback 2026-10-13 "Martinique not in country selection").
+
 ## [1.32.4] - 2026-10-19
 
 ### Fixed
