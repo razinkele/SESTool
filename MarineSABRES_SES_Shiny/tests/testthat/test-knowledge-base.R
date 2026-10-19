@@ -732,6 +732,30 @@ test_that("get_countries_for_sea('baltic') returns 5+ country records", {
   expect_gte(length(result), 5L)
 })
 
+# User feedback 2026-10-13: "When selecting the Caribbean Sea as research
+# region, there is no option to choose Martinique." The French Caribbean
+# territories are EU outermost regions, so they carry the EU governance group.
+test_that("Caribbean countries include the French outermost regions as EU members", {
+  skip_if_not(file.exists(GOV_PATH), "country_governance_db.json not found")
+  .ensure_gov_functions()
+  skip_if_not(exists("get_countries_for_sea", mode = "function"),
+              "get_countries_for_sea not available")
+  carib <- get_countries_for_sea("caribbean")
+  for (code in c("MQ", "GP", "MF")) {
+    expect_true(code %in% names(carib), info = paste(code, "missing from the Caribbean list"))
+    expect_true(isTRUE(carib[[code]]$eu_member), info = paste(code, "must be an EU member"))
+    expect_identical(carib[[code]]$governance_group, "eu")
+  }
+  expect_true(all(c("HN", "NI", "GT") %in% names(carib)))
+})
+
+test_that("every country listed for a sea has a record", {
+  skip_if_not(file.exists(GOV_PATH), "country_governance_db.json not found")
+  db <- jsonlite::fromJSON(GOV_PATH, simplifyVector = FALSE)
+  listed <- unique(unlist(db$countries_by_sea))
+  expect_length(setdiff(listed, names(db$countries)), 0L)
+})
+
 test_that("Each country record has: code, name_en, regional_conventions", {
   skip_if_not(file.exists(GOV_PATH), "country_governance_db.json not found")
   .ensure_gov_functions()

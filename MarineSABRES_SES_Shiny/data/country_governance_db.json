@@ -81,7 +81,13 @@
       "KN",
       "DM",
       "PR",
-      "VI"
+      "VI",
+      "MQ",
+      "GP",
+      "MF",
+      "HN",
+      "NI",
+      "GT"
     ],
     "arctic": [
       "NO",
@@ -866,6 +872,66 @@
       "name_en": "US Virgin Islands",
       "eu_member": false,
       "income_level": "high",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "MQ": {
+      "code": "MQ",
+      "name_en": "Martinique (FR)",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "GP": {
+      "code": "GP",
+      "name_en": "Guadeloupe (FR)",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "MF": {
+      "code": "MF",
+      "name_en": "Saint-Martin (FR)",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "HN": {
+      "code": "HN",
+      "name_en": "Honduras",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "NI": {
+      "code": "NI",
+      "name_en": "Nicaragua",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "GT": {
+      "code": "GT",
+      "name_en": "Guatemala",
+      "eu_member": false,
+      "income_level": "upper_middle",
       "governance_group": "latin_american",
       "regional_conventions": [
         "cartagena"
