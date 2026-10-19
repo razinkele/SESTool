@@ -2487,7 +2487,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # ========== ACTION HANDLERS ==========
     # Preview, save, start over, and element link handlers extracted to modules/ai_isa/action_handlers.R
     setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus,
-                          question_flow = QUESTION_FLOW)
+                          question_flow = QUESTION_FLOW,
+                          save_model = function() .do_manual_save())
 
     # ========== TEMPLATE HANDLERS ==========
     # Template loading handlers extracted to modules/ai_isa/template_handlers.R
@@ -2570,20 +2571,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Handle manual save to ISA
     # NOTE: Element-to-ISA conversion delegated to save_to_project_format()
     # in modules/ai_isa/data_persistence.R
-    observeEvent(input$save_to_isa, {
-      debug_log("[AI ISA] Manual save to ISA clicked\n")
-
-      # Check if auto-save already saved
-      if (isTRUE(rv$auto_saved_step_10)) {
-        showNotification(
-          i18n$t("modules.isa.ai_assistant.work_auto_saved_navigate"),
-          type = "message",
-          duration = 5
-        )
-        debug_log("[AI ISA] Auto-save already completed, no manual save needed\n")
-        return()
-      }
-
+    # Always saves the current state. rv$auto_saved_step_10 only stops the
+    # step-11 auto-save from re-firing; it used to block this save too, so
+    # approvals and edits made after the auto-save were silently dropped.
+    .do_manual_save <- function() {
       tryCatch({
         current_data <- project_data_reactive()
         debug_log("[AI ISA] Retrieved project data for manual save\n")
@@ -2645,6 +2636,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           duration = 10
         )
       })
+    }
+
+    observeEvent(input$save_to_isa, {
+      debug_log("[AI ISA] Manual save to ISA clicked\n")
+      .do_manual_save()
     })
 
   })
