@@ -180,3 +180,40 @@ test_that("generating the HTML report offers a download and explains the link", 
     expect_true(file.exists(rv$html_report_path))
   })
 })
+
+# ============================================================================
+# User feedback 2026-10-18 "Word vs html report": the Word report was built by
+# a separate officer builder with far less content (and it always reported
+# "Detected 2 feedback loops"). It now renders the same content as HTML/PDF.
+# ============================================================================
+
+test_that("the Word report renders the same content as the HTML report", {
+  skip_if_not(requireNamespace("officer", quietly = TRUE) && requireNamespace("flextable", quietly = TRUE),
+              "officer/flextable not installed")
+  ready <- reactiveVal(list(data = list(
+    analysis = list(loops = list(list(1))),
+    cld = list(nodes = data.frame(leverage_score = 0.5))
+  )))
+  calls <- list(); modal <- NULL
+  stubs <- list(
+    generate_report_content = function(data, report_type, ...) { calls$type <<- report_type; "# Report" },
+    render_report_safely = function(md, file, format = "html", ...) {
+      calls$format <<- format; calls$md <<- md; writeLines("docx", file)
+    },
+    generate_word_report = function(...) { calls$old_builder <<- TRUE; invisible(NULL) }
+  )
+  saved <- mget(names(stubs), envir = globalenv(), ifnotfound = list(NULL))
+  for (n in names(stubs)) assign(n, stubs[[n]], envir = globalenv())
+  withr::defer(for (n in names(saved)) {
+    if (is.null(saved[[n]])) rm(list = n, envir = globalenv()) else assign(n, saved[[n]], envir = globalenv())
+  })
+  local_mocked_bindings(showModal = function(ui, ...) modal <<- ui, .package = "shiny")
+  testServer(prepare_report_server, args = list(project_data_reactive = ready, i18n = i18n), {
+    session$setInputs(generate_word = 1)
+    expect_null(calls$old_builder)
+    expect_identical(calls$type, "full")
+    expect_identical(calls$format, "docx")
+    expect_identical(calls$md, "# Report")
+    expect_match(paste(as.character(modal), collapse = ""), session$ns("download_word"), fixed = TRUE)
+  })
+})

@@ -435,14 +435,18 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           cleanup_old_report(rv$word_report_path)
           temp_docx <- tempfile(fileext = ".docx")
 
-          # Generate Word document
-          generate_word_report(
+          # Same content as the HTML and PDF reports (user feedback 2026-10-18
+          # "Word vs html report"): the separate officer builder,
+          # generate_word_report(), had far less content and miscounted loops.
+          opts <- list(include_regional_context = input$include_regional_context)
+          report_md <- generate_report_content(
             data = data,
-            title = input$report_title,
-            author = input$report_author,
-            sections = input$report_sections,
-            output_file = temp_docx
+            report_type = "full",
+            include_viz = TRUE,
+            include_data = FALSE,
+            options = opts
           )
+          render_report_safely(report_md, temp_docx, format = "docx", i18n = i18n)
 
           showModal(modalDialog(
             title = i18n$t("modules.prepare.report.word_success"),
