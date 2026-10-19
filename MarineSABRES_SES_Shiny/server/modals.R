@@ -2,6 +2,46 @@
 # Modal dialog handlers for the MarineSABRES SES Toolbox
 # Extracted from app.R for better maintainability
 
+#' Stash the project in sessionStorage before a full page reload
+#'
+#' Language and user-level changes both reload the page. The stashed JSON is
+#' restored on the next shiny:connected (www/custom.js ->
+#' restore_project_data_from_lang_change, server/language_handling.R).
+#'
+#' @param project_data reactiveVal holding the project, or NULL (nothing to keep)
+#' @param context_key i18n key naming the action, for the error message
+#' @return TRUE when the reload may go ahead; FALSE when saving failed. The
+#'   caller must then NOT reload: the error toast needs time to show, and a
+#'   reload would destroy the unsaved work.
+stash_project_before_reload <- function(session, project_data, i18n, context_key) {
+  if (is.null(project_data)) return(TRUE)
+  save_error <- NULL
+  save_success <- tryCatch({
+    data <- project_data()
+    if (!is.null(data)) {
+      data_json <- jsonlite::toJSON(with_matrix_dimnames_sidecar(data), auto_unbox = TRUE, null = "null", na = "null")
+      session$sendCustomMessage(
+        type = "saveProjectDataBeforeReload",
+        message = list(data = as.character(data_json))
+      )
+      debug_log("Project data saved before reload", "RELOAD")
+    }
+    TRUE
+  }, error = function(e) {
+    debug_log(paste("Could not save project data before reload:", e$message), "RELOAD")
+    save_error <<- e
+    FALSE
+  })
+  if (!isTRUE(save_success)) {
+    showNotification(
+      format_user_error(save_error %||% simpleError("project data save failed"),
+                        i18n = i18n, context_key = context_key),
+      type = "error", duration = NULL, session = session
+    )
+  }
+  isTRUE(save_success)
+}
+
 # ============================================================================
 # LANGUAGE MODAL (Simplified)
 # ============================================================================
@@ -118,39 +158,9 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 
     # IMPORTANT: Save project data to sessionStorage before reload to preserve user's work
     # This ensures SES creation progress is not lost during language changes
-    if (!is.null(project_data)) {
-      save_error <- NULL
-      save_success <- tryCatch({
-        data <- project_data()
-        if (!is.null(data)) {
-          # Convert to JSON and send to JavaScript for sessionStorage
-          data_json <- jsonlite::toJSON(with_matrix_dimnames_sidecar(data), auto_unbox = TRUE, null = "null", na = "null")
-          session$sendCustomMessage(
-            type = "saveProjectDataBeforeReload",
-            message = list(data = as.character(data_json))
-          )
-          debug_log("Project data saved before language change reload", "LANGUAGE")
-        }
-        TRUE
-      }, error = function(e) {
-        debug_log(paste("Could not save project data before reload:", e$message), "LANGUAGE")
-        save_error <<- e
-        FALSE
-      })
-
-      # ABORT the reload if the save failed. MODAL_ANIMATION_DELAY_MS (100ms) is
-      # too short for the error toast to render before location.reload() fires,
-      # so reloading would both destroy the user's unsaved work AND the toast.
-      # Early-return keeps the notification on screen and the work intact.
-      if (!isTRUE(save_success)) {
-        showNotification(
-          format_user_error(save_error %||% simpleError("project data save failed"),
-                            i18n = i18n,
-                            context_key = "common.messages.context_language_change_save"),
-          type = "error", duration = NULL, session = session
-        )
-        return()
-      }
+    if (!stash_project_before_reload(session, project_data, i18n,
+                                     context_key = "common.messages.context_language_change_save")) {
+      return()
     }
 
     # Save language to localStorage and reload with URL parameter
@@ -995,7 +1005,8 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
 #' @param session Shiny session object
 #' @param user_level reactiveVal for user experience level
 #' @param i18n shiny.i18n translator object
-setup_user_level_modal_handlers <- function(input, output, session, user_level, i18n) {
+setup_user_level_modal_handlers <- function(input, output, session, user_level, i18n,
+                                            project_data = NULL) {
 
   # ------ JavaScript for localStorage persistence of level config ------
   # Register custom message handlers once (idempotent on client)
@@ -1160,6 +1171,14 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
 
     debug_log(sprintf("Applying level: %s -> %s (overrides: %d)", user_level(), new_level, length(overrides)), "USER-LEVEL")
 
+    # The reload below cleared the whole project (user feedback 2026-06-05
+    # "The reload"); keep it in sessionStorage as the language change does.
+    # Done first, so a failed save leaves the level configuration unchanged.
+    if (!stash_project_before_reload(session, project_data, i18n,
+                                     context_key = "common.messages.context_user_level_change_save")) {
+      return()
+    }
+
     # Persist overrides to localStorage
     session$sendCustomMessage(
       type = "save_level_config",
@@ -1177,7 +1196,9 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
     # Update the in-memory config
     set_active_level_config(new_level, overrides)
 
-    # Save to URL and reload via JavaScript (same as before)
+    # Save to URL and reload via JavaScript. Custom messages reach the browser
+    # in order and the stash handler writes sessionStorage synchronously, so
+    # the project is stored before this message navigates away.
     session$sendCustomMessage(
       type = "save_user_level",
       message = list(level = new_level)
