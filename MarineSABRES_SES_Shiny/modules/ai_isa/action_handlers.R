@@ -21,7 +21,8 @@
 #'   "Start over" confirmation failed with "object 'QUESTION_FLOW' not found"
 #'   (seen in production logs 2026-10-13).
 setup_action_handlers <- function(input, session, rv, i18n, project_data_reactive,
-                                   event_bus = NULL, question_flow = NULL) {
+                                   event_bus = NULL, question_flow = NULL,
+                                   save_model = NULL) {
 
   # Handle preview model
   observeEvent(input$preview_model, {
@@ -112,13 +113,10 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
   })
 
   # Handle save from preview modal
+  # (it only showed "Model saved!" before and never saved anything)
   observeEvent(input$save_from_preview, {
     removeModal()
-    showNotification(
-      i18n$t("modules.isa.ai_assistant.model_saved_navigate"),
-      type = "message",
-      duration = 5
-    )
+    if (is.function(save_model)) save_model()
   })
 
   # Handle start over

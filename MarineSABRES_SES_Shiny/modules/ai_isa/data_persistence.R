@@ -339,7 +339,9 @@ build_adjacency_matrices <- function(elements, suggested_connections,
         forward_name <- paste0(parts[2], "_", parts[1])
         forward_mat <- matrices[[forward_name]]
         if (!is.null(forward_mat)) {
-          matrices[[mat_name]] <- matrix(0, nrow = ncol(forward_mat), ncol = nrow(forward_mat),
+          # "" like the forward matrices: a numeric 0 became "0" in every cell
+          # once a value was written, and each "0" counted as a connection
+          matrices[[mat_name]] <- matrix("", nrow = ncol(forward_mat), ncol = nrow(forward_mat),
                                           dimnames = list(colnames(forward_mat), rownames(forward_mat)))
           mat <- matrices[[mat_name]]
         }
