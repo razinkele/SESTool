@@ -20,13 +20,41 @@
   if (length(hit)) hit[1] else node_id
 }
 
+# Edges with an id column; a missing id becomes "from->to"
+.scenario_with_edge_ids <- function(edges) {
+  if (!is.null(edges) && nrow(edges) && !"id" %in% names(edges)) {
+    edges$id <- make.unique(paste0(edges$from, "->", edges$to))
+  }
+  edges
+}
+
+#' Baseline edges with an id and from/to labels on every row.
+#' The saved CLD (create_edges_df) carries neither; the Scenario Builder needs
+#' both to list and remove links. A missing id becomes "from->to", which stays
+#' stable when the CLD editor renumbers its own edge ids. Existing values are kept.
+#' @return data frame of edges (zero rows when the CLD has none)
+scenario_baseline_edges <- function(cld) {
+  edges <- cld$edges
+  if (is.null(edges) || !nrow(edges)) {
+    return(data.frame(id = character(0), from = character(0), to = character(0),
+                      from_label = character(0), to_label = character(0),
+                      stringsAsFactors = FALSE))
+  }
+  edges <- .scenario_with_edge_ids(edges)
+  labels <- function(ids) vapply(as.character(ids), .scenario_label, "", nodes = cld$nodes,
+                                 USE.NAMES = FALSE)
+  if (!"from_label" %in% names(edges)) edges$from_label <- labels(edges$from)
+  if (!"to_label" %in% names(edges)) edges$to_label <- labels(edges$to)
+  edges
+}
+
 #' Apply a scenario's modifications to a baseline CLD.
 #' links_modified entries are matched by from/to node ids, never by edge id:
 #' the CLD editor renumbers edge ids (spec 2026-10-15 5.2).
 #' @return list(nodes, edges)
 scenario_apply_modifications <- function(baseline_cld, modifications) {
   nodes <- baseline_cld$nodes
-  edges <- baseline_cld$edges
+  edges <- .scenario_with_edge_ids(baseline_cld$edges)
   if (length(modifications$nodes_removed) > 0) {
     nodes <- nodes[!nodes$id %in% modifications$nodes_removed, , drop = FALSE]
     edges <- edges[!edges$from %in% modifications$nodes_removed &
@@ -40,7 +68,7 @@ scenario_apply_modifications <- function(baseline_cld, modifications) {
     }))
     nodes <- .scenario_bind_rows(nodes, new_nodes)
   }
-  if (length(modifications$links_removed) > 0 && "id" %in% names(edges)) {
+  if (length(modifications$links_removed) > 0 && !is.null(edges) && nrow(edges)) {
     edges <- edges[!as.character(edges$id) %in% as.character(modifications$links_removed), , drop = FALSE]
   }
   for (l in modifications$links_modified) {

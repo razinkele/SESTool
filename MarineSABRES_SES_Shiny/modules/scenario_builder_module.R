@@ -456,7 +456,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
       if (!is.null(active_scenario)) {
         # Get links not already removed
         removed_links <- active_scenario$modifications$links_removed
-        available_links <- data$data$cld$edges
+        available_links <- scenario_baseline_edges(data$data$cld)
 
         if (length(removed_links) > 0) {
           available_links <- available_links[!available_links$id %in% removed_links, ]
@@ -745,8 +745,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
           })
         },
         if (length(removed_links) > 0) {
+          baseline_edges <- scenario_baseline_edges(data$data$cld)
           lapply(removed_links, function(link_id) {
-            edge <- data$data$cld$edges[data$data$cld$edges$id == link_id, ]
+            edge <- baseline_edges[as.character(baseline_edges$id) == as.character(link_id), ]
             if (nrow(edge) > 0) {
               span(class = "modification-badge link-removed",
                   icon("times"), " ", edge$from_label, " → ", edge$to_label)
@@ -1311,7 +1312,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
         }, logical(1))
 
         removed_ids <- as.character(removed_links)
-        removed_edges <- baseline$edges[as.character(baseline$edges$id) %in% removed_ids, , drop = FALSE]
+        baseline_edges <- scenario_baseline_edges(baseline)
+        removed_edges <- baseline_edges[as.character(baseline_edges$id) %in% removed_ids, , drop = FALSE]
         connected_links_removed <- removed_edges$from == node_id | removed_edges$to == node_id
         modified <- Filter(function(l) l$from == node_id || l$to == node_id, modifications$links_modified)
 

@@ -56,15 +56,15 @@
       "el": "Ακύρωση"
     },
     "modules.scenario.builder.create": {
-      "en": "Create CLD networks and run analysis tools",
-      "es": "Cree redes CLD y ejecute herramientas de análisis",
-      "fr": "Créez des réseaux CLD et exécutez des outils d'analyse",
-      "de": "Erstellen Sie CLD-Netzwerke und führen Sie Analysewerkzeuge aus",
-      "lt": "Sukurkite CLD tinklus ir paleiskite analizės priemones",
-      "pt": "Crie redes CLD e execute ferramentas de análise",
-      "it": "Crea reti CLD ed esegui strumenti di analisi",
-      "no": "Opprett CLD-nettverk og kjør analyseverktøy",
-      "el": "Δημιουργία CLD networks and run analysis tools"
+      "en": "Create",
+      "es": "Crear",
+      "fr": "Créer",
+      "de": "Erstellen",
+      "lt": "Sukurti",
+      "pt": "Criar",
+      "it": "Crea",
+      "no": "Opprett",
+      "el": "Δημιουργία"
     },
     "modules.scenario.builder.scenario_add_modify_links": {
       "en": "Add/Modify Links",
