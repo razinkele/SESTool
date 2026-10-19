@@ -381,6 +381,94 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   return(matrices)
 }
 
+#' Apply "swap direction" choices from connection review
+#'
+#' A swapped connection whose reversed category pair is a forward link the
+#' assistant stores (AI_ISA_FORWARD_MATRIX) gets every field reversed and that
+#' forward matrix. Any other swap is refused: the reverse of every link type
+#' the assistant proposes (D->A, A->P, ...) is not a valid DAPSIWRM transition
+#' (functions/network_analysis.R), and the old code stored it under a reversed
+#' matrix name the diagram reads as the original direction. A refused
+#' connection is removed from the approved set.
+#'
+#' @return list(connections, approved, refused = "from -> to" labels)
+apply_connection_swaps <- function(connections, approved, swapped) {
+  refused <- character(0)
+  flip <- function(c, a, b) { tmp <- c[[a]]; c[a] <- list(c[[b]]); c[b] <- list(tmp); c }
+  for (i in intersect(as.integer(swapped), as.integer(approved))) {
+    if (i < 1 || i > length(connections)) next
+    c0 <- connections[[i]]
+    from_cat <- c0$from_category %||% c0$from_type %||% ""
+    to_cat   <- c0$to_category %||% c0$to_type %||% ""
+    target <- AI_ISA_FORWARD_MATRIX[paste(to_cat, from_cat, sep = "_")]
+    if (is.na(target)) {
+      refused <- c(refused, paste(c0$from_name %||% c0$from %||% "", "→", c0$to_name %||% c0$to %||% ""))
+      approved <- setdiff(approved, i)
+      next
+    }
+    c1 <- c0
+    for (p in list(c("from_index", "to_index"), c("from_name", "to_name"), c("from", "to"),
+                   c("from_type", "to_type"), c("from_category", "to_category"))) {
+      if (!is.null(c1[[p[1]]]) || !is.null(c1[[p[2]]])) c1 <- flip(c1, p[1], p[2])
+    }
+    c1$matrix <- unname(target)
+    connections[[i]] <- c1
+  }
+  list(connections = connections, approved = approved, refused = refused)
+}
+
+# Legacy matrix names the AI-assistant templates used, and their forward matrix
+AI_ISA_LEGACY_TEMPLATE_MATRIX <- c(a_d = "d_a", p_a = "a_p", mpf_p = "p_mpf",
+                                   es_mpf = "mpf_es", gb_es = "es_gb")
+
+#' Repair a project saved from an AI-assistant template before PR #129
+#'
+#' Such projects hold their connections in legacy-named matrices next to empty
+#' forward matrices (the diagram reads only the forward ones), and the legacy
+#' matrices were mis-shaped. The forward matrices are rebuilt from the saved
+#' connection list (isa_data$connections), which is exact.
+#'
+#' Acts only when a legacy template matrix has data, its forward matrix is
+#' empty or missing, and a connection list was saved; anything else is
+#' returned unchanged.
+#'
+#' @param isa project$data$isa_data
+#' @return isa, repaired; attribute "repaired_matrices" names the rebuilt
+#'   forward matrices
+repair_template_connection_matrices <- function(isa) {
+  mats <- isa$adjacency_matrices
+  conns <- isa$connections
+  approved <- suppressWarnings(as.integer(unlist(conns$approved)))
+  if (!is.list(mats) || !length(conns$suggested) || !length(approved)) return(isa)
+
+  filled <- function(m) is.matrix(m) && any(!is.na(m) & m != "" & m != "0")
+  legacy <- names(AI_ISA_LEGACY_TEMPLATE_MATRIX)
+  hit <- legacy[vapply(legacy, function(l) {
+    filled(mats[[l]]) && !filled(mats[[AI_ISA_LEGACY_TEMPLATE_MATRIX[[l]]]])
+  }, logical(1))]
+  if (!length(hit)) return(isa)
+
+  # Elements in the assistant's shape; index i is row i of the saved frame
+  ai_to_isa <- c(drivers = "drivers", activities = "activities", pressures = "pressures",
+                 states = "marine_processes", impacts = "ecosystem_services",
+                 welfare = "goods_benefits", responses = "responses")
+  elements <- lapply(ai_to_isa, function(k) {
+    df <- isa[[k]]
+    if (is.data.frame(df) && nrow(df) && "name" %in% names(df)) lapply(df$name, function(n) list(name = n)) else list()
+  })
+  rebuilt <- build_adjacency_matrices(elements, conns$suggested, approved[!is.na(approved)])
+
+  forward <- unname(AI_ISA_LEGACY_TEMPLATE_MATRIX[hit])
+  for (i in seq_along(hit)) {
+    if (!is.null(rebuilt[[forward[i]]])) mats[[forward[i]]] <- rebuilt[[forward[i]]]
+    mats[[hit[i]]] <- NULL
+  }
+  isa$adjacency_matrices <- mats
+  debug_log(sprintf("Rebuilt template matrices %s from saved connections", paste(forward, collapse = ", ")), "AI ISA")
+  attr(isa, "repaired_matrices") <- forward
+  isa
+}
+
 #' Save AI ISA Data to Project Format
 #'
 #' Converts AI ISA session data to project ISA format and saves it

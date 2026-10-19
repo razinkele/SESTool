@@ -977,23 +977,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
              timestamp = Sys.time())
       ))
 
-      # Apply swapped directions before saving
-      swapped_indices <- conn_review_status()$swapped
-      for (swap_idx in swapped_indices) {
-        if (swap_idx %in% rv$approved_connections && swap_idx <= length(rv$suggested_connections)) {
-          conn <- rv$suggested_connections[[swap_idx]]
-          rv$suggested_connections[[swap_idx]]$from_index <- conn$to_index
-          rv$suggested_connections[[swap_idx]]$to_index <- conn$from_index
-          rv$suggested_connections[[swap_idx]]$from_name <- conn$to_name
-          rv$suggested_connections[[swap_idx]]$to_name <- conn$from_name
-          rv$suggested_connections[[swap_idx]]$from_type <- conn$to_type
-          rv$suggested_connections[[swap_idx]]$to_type <- conn$from_type
-          # Reverse the matrix name (e.g., "d_a" -> "a_d")
-          parts <- strsplit(conn$matrix, "_")[[1]]
-          if (length(parts) == 2) {
-            rv$suggested_connections[[swap_idx]]$matrix <- paste0(parts[2], "_", parts[1])
-          }
-        }
+      # Apply swapped directions before saving; swaps whose reverse is not a
+      # DAPSIWRM link are refused and those connections left out
+      swaps <- apply_connection_swaps(rv$suggested_connections, rv$approved_connections,
+                                      conn_review_status()$swapped)
+      rv$suggested_connections <- swaps$connections
+      rv$approved_connections <- swaps$approved
+      if (length(swaps$refused) > 0) {
+        showNotification(
+          paste(sprintf(i18n$t("modules.isa.ai_assistant.swap_refused"), length(swaps$refused)),
+                paste(swaps$refused, collapse = "; ")),
+          type = "warning", duration = 15
+        )
       }
 
       debug_log("[AI ISA CONNECTIONS] Saving with save_to_project_format()\n")
@@ -1013,7 +1008,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$current_step <- 12
 
       showNotification(
-        paste0(approved_count, " ", i18n$t("modules.isa.ai_assistant.connections_saved_navigating_to_dashboard")),
+        paste0(length(rv$approved_connections), " ",   # after refused swaps
+               i18n$t("modules.isa.ai_assistant.connections_saved_navigating_to_dashboard")),
         type = "message", duration = 3
       )
 

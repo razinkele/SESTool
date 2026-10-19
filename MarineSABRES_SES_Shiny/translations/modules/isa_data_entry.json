@@ -759,6 +759,17 @@
       "no": "Lagre fremdrift",
       "el": "Αποθήκευση Progress"
     },
+    "modules.isa.ai_assistant.swap_refused": {
+      "en": "%d swapped connection(s) left out: the reversed direction is not a valid DAPSIWRM link. Add the correct link in Standard Entry if needed:",
+      "es": "%d conexión(es) invertida(s) omitida(s): la dirección inversa no es un enlace DAPSIWRM válido. Añada el enlace correcto en Entrada estándar si es necesario:",
+      "fr": "%d connexion(s) inversée(s) écartée(s) : le sens inverse n'est pas un lien DAPSIWRM valide. Ajoutez le bon lien dans la saisie standard si nécessaire :",
+      "de": "%d umgekehrte Verbindung(en) ausgelassen: Die umgekehrte Richtung ist keine gültige DAPSIWRM-Verbindung. Fügen Sie die richtige Verbindung bei Bedarf in der Standardeingabe hinzu:",
+      "lt": "Praleista apverstų jungčių: %d – atvirkštinė kryptis nėra galiojanti DAPSIWRM jungtis. Jei reikia, pridėkite teisingą jungtį standartiniame įvedime:",
+      "pt": "%d conexão(ões) invertida(s) omitida(s): a direção inversa não é uma ligação DAPSIWRM válida. Adicione a ligação correta na Entrada padrão, se necessário:",
+      "it": "%d connessione/i invertita/e esclusa/e: la direzione inversa non è un collegamento DAPSIWRM valido. Aggiungi il collegamento corretto nell'inserimento standard se necessario:",
+      "no": "%d snudde tilkobling(er) utelatt: den motsatte retningen er ikke en gyldig DAPSIWRM-kobling. Legg til riktig kobling i standardregistrering om nødvendig:",
+      "el": "%d αντεστραμμένη(-ες) σύνδεση(-εις) παραλείφθηκε(-αν): η αντίστροφη κατεύθυνση δεν είναι έγκυρη σύνδεση DAPSIWRM. Προσθέστε τη σωστή σύνδεση στην τυπική καταχώριση αν χρειάζεται:"
+    },
     "modules.isa.ai_assistant.save_to_isa_data_entry": {
       "en": "Save to project",
       "es": "Guardar en el proyecto",

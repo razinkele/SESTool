@@ -989,7 +989,27 @@ normalize_json_project_data <- function(data) {
     # Rebuild matrices (nested lists / dimname-less) after a JSON round trip
     isa <- restore_isa_matrices(isa)
 
+    # Projects saved from an AI-assistant template before PR #129 had no
+    # links in the diagram; rebuild them from the saved connection list.
+    # (The repair lives with the assistant, sourced at app start.)
+    repaired_links <- 0L
+    if (exists("repair_template_connection_matrices", mode = "function")) {
+      isa <- tryCatch({
+        fixed <- repair_template_connection_matrices(isa)
+        if (length(attr(fixed, "repaired_matrices"))) {
+          repaired_links <- sum(vapply(fixed$adjacency_matrices[attr(fixed, "repaired_matrices")],
+                                       function(m) sum(!is.na(m) & m != ""), numeric(1)))
+          attr(fixed, "repaired_matrices") <- NULL
+        }
+        fixed
+      }, error = function(e) {
+        debug_log(paste("Template matrix repair skipped:", e$message), "LOAD")
+        isa
+      })
+    }
+
     data$data$isa_data <- isa
+    if (repaired_links > 0) attr(data, "repaired_template_links") <- as.integer(repaired_links)
   }
 
   # Response register: codes + full schema on every JSON load path (WP5 WS-3a)

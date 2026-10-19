@@ -124,6 +124,16 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
         return()
       }
 
+      # normalize_json_project_data() rebuilt links an older AI-assistant
+      # template save had lost (PR #129 follow-up); tell the user once
+      n_restored <- attr(loaded_data, "repaired_template_links")
+      if (!is.null(n_restored) && n_restored > 0) {
+        showNotification(
+          sprintf(i18n$t("common.messages.template_links_restored"), n_restored),
+          type = "message", duration = 10
+        )
+      }
+
       # Validate project structure
       validation_errors <- validate_project_structure(loaded_data)
       if (length(validation_errors) > 0) {
