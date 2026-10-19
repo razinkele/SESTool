@@ -1232,6 +1232,17 @@
       "no": "Lenken til rapporten fungerer bare mens denne økten er åpen, og rapporten endres ikke når du redigerer prosjektet. Last den ned for å beholde en kopi; generer den på nytt for å ta med senere endringer.",
       "el": "Ο σύνδεσμος της αναφοράς λειτουργεί μόνο όσο αυτή η συνεδρία είναι ανοιχτή, και η αναφορά δεν αλλάζει όταν επεξεργάζεστε το έργο. Κατεβάστε την για να κρατήσετε αντίγραφο· δημιουργήστε την ξανά για να συμπεριλάβετε μεταγενέστερες αλλαγές."
     },
+    "common.messages.template_links_restored": {
+      "en": "%d links restored in the diagram from the AI assistant's saved connections (an earlier bug had left them out).",
+      "es": "Se restauraron %d enlaces en el diagrama a partir de las conexiones guardadas del asistente de IA (un error anterior los había omitido).",
+      "fr": "%d liens restaurés dans le diagramme à partir des connexions enregistrées de l'assistant IA (un bogue antérieur les avait omis).",
+      "de": "%d Verbindungen im Diagramm aus den gespeicherten Verbindungen des KI-Assistenten wiederhergestellt (ein früherer Fehler hatte sie ausgelassen).",
+      "lt": "Diagramoje atkurta %d jungčių iš DI asistento išsaugotų jungčių (ankstesnė klaida jas buvo praleidusi).",
+      "pt": "%d ligações restauradas no diagrama a partir das conexões salvas do assistente de IA (um erro anterior as tinha omitido).",
+      "it": "%d collegamenti ripristinati nel diagramma dalle connessioni salvate dell'assistente IA (un errore precedente li aveva omessi).",
+      "no": "%d koblinger gjenopprettet i diagrammet fra AI-assistentens lagrede tilkoblinger (en tidligere feil hadde utelatt dem).",
+      "el": "Αποκαταστάθηκαν %d συνδέσεις στο διάγραμμα από τις αποθηκευμένες συνδέσεις του βοηθού ΤΝ (ένα προηγούμενο σφάλμα τις είχε παραλείψει)."
+    },
     "common.messages.context_language_change_save": {
       "en": "saving your work before the language change",
       "es": "guardando su trabajo antes del cambio de idioma",
