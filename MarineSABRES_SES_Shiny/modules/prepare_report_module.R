@@ -293,14 +293,21 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           message = list(url = report_url)
         )
 
-        showNotification(
-          i18n$t("modules.prepare.report.report_opened"),
-          type = "message",
-          duration = 5
-        )
-
         # Store temp file path for download
         rv$html_report_path <- temp_file
+
+        # The opened tab's URL dies with the session ("not found" later, user
+        # feedback 2026-06-15), so offer the file itself as well.
+        showModal(modalDialog(
+          title = i18n$t("modules.prepare.report.report_opened"),
+          tags$p(i18n$t("common.messages.html_report_link_temporary")),
+          footer = tagList(
+            downloadButton(session$ns("download_html"), i18n$t("modules.prepare.report.download_report")),
+            modalButton(i18n$t("common.buttons.close"))
+          ),
+          easyClose = TRUE,
+          size = "m"
+        ))
 
       }, error = function(e) {
         showNotification(

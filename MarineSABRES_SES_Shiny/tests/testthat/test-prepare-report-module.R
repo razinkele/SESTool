@@ -146,3 +146,37 @@ test_that("generate_ppt_report has correct parameters", {
   expect_true("sections" %in% params)
   expect_true("output_file" %in% params)
 })
+
+# ============================================================================
+# User feedback 2026-06-15 "HTML report": the opened report's link stops
+# working ("not found") once the session ends, and there was no way to keep
+# the HTML: output$download_html existed but no button used it.
+# ============================================================================
+
+test_that("generating the HTML report offers a download and explains the link", {
+  ready <- reactiveVal(list(data = list(
+    analysis = list(loops = list(list(1))),
+    cld = list(nodes = data.frame(leverage_score = 0.5))
+  )))
+  modal <- NULL
+  # The module resolves these from .GlobalEnv (sourced, not a package), so
+  # swap them there and restore them afterwards.
+  stubs <- list(
+    generate_report_content = function(...) "# Report",
+    render_report_safely = function(md, file, ...) writeLines("<html></html>", file),
+    register_session_report = function(session, path) "session/report.html"
+  )
+  saved <- mget(names(stubs), envir = globalenv(), ifnotfound = list(NULL))
+  for (n in names(stubs)) assign(n, stubs[[n]], envir = globalenv())
+  withr::defer(for (n in names(saved)) {
+    if (is.null(saved[[n]])) rm(list = n, envir = globalenv()) else assign(n, saved[[n]], envir = globalenv())
+  })
+  local_mocked_bindings(showModal = function(ui, ...) modal <<- ui, .package = "shiny")
+  testServer(prepare_report_server, args = list(project_data_reactive = ready, i18n = i18n), {
+    session$setInputs(generate_html = 1)
+    html <- paste(as.character(modal), collapse = "")
+    expect_match(html, session$ns("download_html"), fixed = TRUE)
+    expect_match(html, "common.messages.html_report_link_temporary", fixed = TRUE)
+    expect_true(file.exists(rv$html_report_path))
+  })
+})

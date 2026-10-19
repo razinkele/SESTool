@@ -1221,6 +1221,17 @@
       "no": "lagrer arbeidet ditt før endringen av brukernivå",
       "el": "αποθήκευση της εργασίας σας πριν από την αλλαγή επιπέδου χρήστη"
     },
+    "common.messages.html_report_link_temporary": {
+      "en": "The report's link only works while this session is open, and the report does not change when you edit the project. Download it to keep a copy; generate it again to include later changes.",
+      "es": "El enlace del informe solo funciona mientras esta sesión esté abierta, y el informe no cambia al editar el proyecto. Descárguelo para conservar una copia; vuelva a generarlo para incluir cambios posteriores.",
+      "fr": "Le lien du rapport ne fonctionne que tant que cette session est ouverte, et le rapport ne change pas lorsque vous modifiez le projet. Téléchargez-le pour en garder une copie ; générez-le à nouveau pour inclure les modifications ultérieures.",
+      "de": "Der Link zum Bericht funktioniert nur, solange diese Sitzung geöffnet ist, und der Bericht ändert sich nicht, wenn Sie das Projekt bearbeiten. Laden Sie ihn herunter, um eine Kopie zu behalten; erstellen Sie ihn erneut, um spätere Änderungen aufzunehmen.",
+      "lt": "Ataskaitos nuoroda veikia tik kol ši sesija atidaryta, o ataskaita nesikeičia, kai redaguojate projektą. Atsisiųskite ją, kad išsaugotumėte kopiją; sugeneruokite iš naujo, kad įtrauktumėte vėlesnius pakeitimus.",
+      "pt": "O link do relatório só funciona enquanto esta sessão estiver aberta, e o relatório não muda quando você edita o projeto. Baixe-o para guardar uma cópia; gere-o novamente para incluir alterações posteriores.",
+      "it": "Il link al report funziona solo finché questa sessione è aperta, e il report non cambia quando modifichi il progetto. Scaricalo per conservarne una copia; generalo di nuovo per includere le modifiche successive.",
+      "no": "Lenken til rapporten fungerer bare mens denne økten er åpen, og rapporten endres ikke når du redigerer prosjektet. Last den ned for å beholde en kopi; generer den på nytt for å ta med senere endringer.",
+      "el": "Ο σύνδεσμος της αναφοράς λειτουργεί μόνο όσο αυτή η συνεδρία είναι ανοιχτή, και η αναφορά δεν αλλάζει όταν επεξεργάζεστε το έργο. Κατεβάστε την για να κρατήσετε αντίγραφο· δημιουργήστε την ξανά για να συμπεριλάβετε μεταγενέστερες αλλαγές."
+    },
     "common.messages.context_language_change_save": {
       "en": "saving your work before the language change",
       "es": "guardando su trabajo antes del cambio de idioma",
