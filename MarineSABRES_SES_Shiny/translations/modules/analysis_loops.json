@@ -484,6 +484,39 @@
       "no": "Lengste løkke",
       "el": "Μακρύτερος βρόχος"
     },
+    "modules.analysis.loops.length_axis": {
+      "en": "Loop length (number of elements)",
+      "es": "Longitud del bucle (número de elementos)",
+      "fr": "Longueur de la boucle (nombre d'éléments)",
+      "de": "Schleifenlänge (Anzahl der Elemente)",
+      "lt": "Kilpos ilgis (elementų skaičius)",
+      "pt": "Comprimento do loop (número de elementos)",
+      "it": "Lunghezza del loop (numero di elementi)",
+      "no": "Løkkelengde (antall elementer)",
+      "el": "Μήκος βρόχου (αριθμός στοιχείων)"
+    },
+    "modules.analysis.loops.dominance_axis": {
+      "en": "Dominance score (100 / loop length)",
+      "es": "Puntuación de dominancia (100 / longitud del bucle)",
+      "fr": "Score de dominance (100 / longueur de la boucle)",
+      "de": "Dominanzwert (100 / Schleifenlänge)",
+      "lt": "Dominavimo balas (100 / kilpos ilgis)",
+      "pt": "Pontuação de dominância (100 / comprimento do loop)",
+      "it": "Punteggio di dominanza (100 / lunghezza del loop)",
+      "no": "Dominanspoeng (100 / løkkelengde)",
+      "el": "Βαθμός κυριαρχίας (100 / μήκος βρόχου)"
+    },
+    "modules.analysis.loops.download_png": {
+      "en": "Download PNG",
+      "es": "Descargar PNG",
+      "fr": "Télécharger PNG",
+      "de": "PNG herunterladen",
+      "lt": "Atsisiųsti PNG",
+      "pt": "Baixar PNG",
+      "it": "Scarica PNG",
+      "no": "Last ned PNG",
+      "el": "Λήψη PNG"
+    },
     "modules.analysis.loops.num_loops": {
       "en": "Number of Loops",
       "es": "Número de bucles",
