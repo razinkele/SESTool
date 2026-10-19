@@ -187,8 +187,8 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
   } else if (report_type_safe == "presentation") {
     content <- generate_presentation_content(data)
   } else {
-    # Default to full report
-    content <- generate_full_content(data)
+    # Default to full report; options$sections = Prepare Report checkboxes
+    content <- generate_full_content(data, sections = options$sections)
   }
 
   # ========== FOOTER ==========
@@ -749,7 +749,12 @@ generate_presentation_content <- function(data) {
 #'
 #' @param data Project data object
 #' @return Character string with complete analysis content
-generate_full_content <- function(data) {
+#' @param sections Prepare Report section ids to include ("summary", "isa",
+#'   "cld", "metrics", "loops", "leverage", "recommendations"). NULL keeps the
+#'   long-standing full report (all sections except isa and cld). Stakeholder
+#'   analysis has no checkbox and is always included.
+generate_full_content <- function(data, sections = NULL) {
+  include <- function(id) is.null(sections) || id %in% sections
 
   # ========== SYSTEM OVERVIEW ==========
   n_nodes <- if (!is.null(data$data$cld$nodes) && is.data.frame(data$data$cld$nodes)) {
@@ -779,8 +784,8 @@ generate_full_content <- function(data) {
     "0"
   }
 
+  title_section <- "# Complete SES Analysis Report\n\n"
   overview_section <- paste0(
-    "# Complete SES Analysis Report\n\n",
     "## Executive Summary\n\n",
     "This report presents a comprehensive analysis of the social-ecological system, including:\n\n",
     "- **Network Structure**: ", as.character(n_nodes), " system elements with ", as.character(n_edges), " causal connections\n",
@@ -1019,13 +1024,59 @@ generate_full_content <- function(data) {
   # ========== COMBINE ALL SECTIONS ==========
 
   content <- paste0(
-    overview_section,
-    loops_section,
-    leverage_section,
-    network_section,
+    title_section,
+    if (include("summary")) overview_section,
+    if (!is.null(sections) && "isa" %in% sections) report_isa_elements_section(data),
+    if (!is.null(sections) && "cld" %in% sections) report_cld_section(data),
+    if (include("loops")) loops_section,
+    if (include("leverage")) leverage_section,
+    if (include("metrics")) network_section,
     stakeholder_section,
-    recommendations_section
+    if (include("recommendations")) recommendations_section
   )
 
   return(content)
+}
+
+# Markdown-safe single line (element names are user text)
+.report_md_text <- function(x) {
+  x <- gsub("[\r\n]+", " ", as.character(x))
+  gsub("([\\\\`*_\\[\\]<>|#])", "\\\\\\1", x)
+}
+
+#' DAPSI(W)R(M) elements per category ("isa" section of the full report)
+report_isa_elements_section <- function(data) {
+  isa <- safe_get_nested(data, "data", "isa_data", default = list())
+  cats <- c(drivers = "Drivers", activities = "Activities", pressures = "Pressures",
+            marine_processes = "Marine Processes & Functions", ecosystem_services = "Ecosystem Services",
+            goods_benefits = "Goods & Benefits", responses = "Responses")
+  parts <- vapply(names(cats), function(k) {
+    df <- isa[[k]]
+    if (!is.data.frame(df) || !nrow(df) || !"name" %in% names(df)) return("")
+    paste0("### ", cats[[k]], " (", nrow(df), ")\n\n",
+           paste0("- ", .report_md_text(df$name), collapse = "\n"), "\n\n")
+  }, "")
+  body <- paste(parts, collapse = "")
+  paste0("## DAPSI(W)R(M) Elements\n\n",
+         if (nzchar(body)) body else "No elements have been entered yet.\n\n")
+}
+
+#' Element and link counts of the causal loop diagram ("cld" section)
+report_cld_section <- function(data) {
+  nodes <- data$data$cld$nodes
+  edges <- data$data$cld$edges
+  if (!is.data.frame(nodes) || !nrow(nodes)) {
+    return("## Causal Loop Diagram\n\nNo causal loop diagram has been built yet.\n\n")
+  }
+  by_type <- if ("group" %in% names(nodes)) table(nodes$group) else table(rep("Elements", nrow(nodes)))
+  n_edges <- if (is.data.frame(edges)) nrow(edges) else 0L
+  pol <- if (is.data.frame(edges) && "polarity" %in% names(edges)) edges$polarity else character(0)
+  paste0(
+    "## Causal Loop Diagram\n\n",
+    "The diagram has **", nrow(nodes), " elements** and **", n_edges, " links** (",
+    sum(pol == "+", na.rm = TRUE), " reinforcing (+), ", sum(pol == "-", na.rm = TRUE), " opposing (-)).\n\n",
+    "| Element type | Elements |\n|---|---|\n",
+    paste0("| ", .report_md_text(names(by_type)), " | ", as.integer(by_type), " |", collapse = "\n"),
+    "\n\n"
+  )
 }

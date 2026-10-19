@@ -267,7 +267,8 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         debug_log("Using generate_report_content() from functions/report_generation.R", "REPORT")
 
         # Use the fixed report generation function from functions/report_generation.R
-        opts <- list(include_regional_context = input$include_regional_context)
+        opts <- list(include_regional_context = input$include_regional_context,
+                     sections = input$report_sections)
         report_md <- generate_report_content(
           data = data,
           report_type = "full",  # Use full report type
@@ -369,7 +370,8 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         }
 
         # Generate markdown content
-        opts <- list(include_regional_context = input$include_regional_context)
+        opts <- list(include_regional_context = input$include_regional_context,
+                     sections = input$report_sections)
         report_md <- generate_report_content(
           data = data,
           report_type = "full",
@@ -438,7 +440,8 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
           # Same content as the HTML and PDF reports (user feedback 2026-10-18
           # "Word vs html report"): the separate officer builder,
           # generate_word_report(), had far less content and miscounted loops.
-          opts <- list(include_regional_context = input$include_regional_context)
+          opts <- list(include_regional_context = input$include_regional_context,
+                     sections = input$report_sections)
           report_md <- generate_report_content(
             data = data,
             report_type = "full",
