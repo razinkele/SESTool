@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed (AI assistant templates)
+- A model started from an AI-assistant template (overfishing, pollution, tourism, climate) had no links in the diagram, however many connections were approved. The templates stored their connections under old matrix names (`a_d`, `p_a`, ...) next to empty current ones, and the diagram reads only the current ones. Connections between two element types now always go to the current matrix, and the templates use the current names. Projects saved before this fix still hold the old matrices; repairing them on load is a separate step.
+
 ### Added
 - AI assistant country step (Caribbean): Martinique, Guadeloupe and Saint-Martin, as EU members (EU outermost regions, so EU governance elements apply), and Honduras, Nicaragua and Guatemala (user feedback 2026-10-13 "Martinique not in country selection").
 

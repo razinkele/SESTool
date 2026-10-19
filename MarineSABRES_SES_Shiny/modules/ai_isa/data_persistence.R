@@ -143,6 +143,15 @@ convert_responses_to_isa <- function(elements) {
 # ADJACENCY MATRIX BUILDING
 # ============================================================================
 
+# Forward matrix for each "<from category>_<to category>" pair of AI-assistant
+# element categories (the matrices build_adjacency_matrices() creates)
+AI_ISA_FORWARD_MATRIX <- c(
+  drivers_activities = "d_a", activities_pressures = "a_p", pressures_states = "p_mpf",
+  states_impacts = "mpf_es", impacts_welfare = "es_gb", welfare_drivers = "gb_d",
+  welfare_responses = "gb_r", responses_drivers = "r_d", responses_activities = "r_a",
+  responses_pressures = "r_p"
+)
+
 #' Build Adjacency Matrices from Approved Connections
 #'
 #' Creates DAPSI(W)R(M) adjacency matrices from AI-generated connections
@@ -329,8 +338,19 @@ build_adjacency_matrices <- function(elements, suggested_connections,
       paste0(conn$polarity, conn$strength, ":", confidence)
     }
 
-    # Determine which matrix and fill it (with bounds check)
+    # Determine which matrix and fill it (with bounds check). A forward pair of
+    # categories always goes to its forward matrix: the templates label their
+    # D->A, A->P, ... connections with legacy names (a_d, p_a, ...), which
+    # landed in matrices create_edges_df() ignores next to the forward ones,
+    # so template projects had no links in the diagram (2026-10-19).
     mat_name <- conn$matrix
+    pair_key <- paste(conn$from_category %||% conn$from_type %||% "",
+                      conn$to_category %||% conn$to_type %||% "", sep = "_")
+    forward_name <- AI_ISA_FORWARD_MATRIX[pair_key]
+    if (!is.na(forward_name) && !identical(mat_name, unname(forward_name))) {
+      debug_log(sprintf("Connection matrix '%s' stored as '%s' (%s)", mat_name %||% "", forward_name, pair_key), "AI ISA")
+      mat_name <- unname(forward_name)
+    }
     mat <- matrices[[mat_name]]
     if (is.null(mat) && !is.null(mat_name) && nzchar(mat_name)) {
       # Reverse-direction matrix from a swapped connection — initialize it
