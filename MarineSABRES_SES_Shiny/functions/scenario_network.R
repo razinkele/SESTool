@@ -68,7 +68,7 @@ scenario_apply_modifications <- function(baseline_cld, modifications) {
     }))
     nodes <- .scenario_bind_rows(nodes, new_nodes)
   }
-  if (length(modifications$links_removed) > 0) {
+  if (length(modifications$links_removed) > 0 && !is.null(edges) && nrow(edges)) {
     edges <- edges[!as.character(edges$id) %in% as.character(modifications$links_removed), , drop = FALSE]
   }
   for (l in modifications$links_modified) {

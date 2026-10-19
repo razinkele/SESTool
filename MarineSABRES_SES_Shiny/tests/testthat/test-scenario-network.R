@@ -92,3 +92,9 @@ test_that("a link removed by its endpoint id is removed from a CLD without edge 
   expect_equal(nrow(out$edges), 1L)
   expect_equal(out$edges$to, "A_1")
 })
+
+test_that("removed links on a CLD without edges do not error (CodeRabbit #122)", {
+  cld <- saved_cld(); cld$edges <- NULL
+  out <- scenario_apply_modifications(cld, mods(links_removed = "A_1->P_1"))
+  expect_equal(NROW(out$edges), 0L)
+})
