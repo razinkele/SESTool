@@ -171,3 +171,38 @@ test_that("Get recommendations uses the ticked topics; Skip clears them", {
     expect_length(rv$ep4_selected, 0)
   })
 })
+
+# --- user feedback 2026-10-13 "Language error": the option labels were looked
+# up with their English text as the key, so they stayed English everywhere ----
+ep_options_json <- function() {
+  p <- file.path(dirname(dirname(getwd())), "translations", "modules", "entry_point_options.json")
+  if (!file.exists(p)) p <- testthat::test_path("../../translations/modules/entry_point_options.json")
+  jsonlite::fromJSON(p, simplifyVector = FALSE)$translation
+}
+
+test_that("every displayed entry-point option has a translation in all 9 languages", {
+  tr <- ep_options_json()
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+  need <- c(
+    unlist(lapply(EP0_MANAGER_ROLES, function(x) c(paste0("ep0.", x$id, ".label"), paste0("ep0.", x$id, ".description"),
+                                                   paste0("ep0.", x$id, ".task", seq_along(x$typical_tasks))))),
+    unlist(lapply(EP1_BASIC_NEEDS, function(x) paste0("ep1.", x$id, c(".label", ".description")))),
+    paste0("ep2.", vapply(EP2_ACTIVITY_SECTORS, `[[`, "", "id"), ".label"),
+    paste0("ep3.", vapply(EP3_RISKS_HAZARDS, `[[`, "", "id"), ".label"),
+    paste0("ep4.", vapply(EP4_TOPICS, `[[`, "", "id"), ".label"))
+  keys <- paste0("modules.entry_point.", need)
+  expect_length(setdiff(keys, names(tr)), 0)
+  for (k in intersect(keys, names(tr))) {
+    expect_setequal(names(tr[[k]]), langs)
+    expect_true(all(nzchar(unlist(tr[[k]]))), info = k)
+  }
+})
+
+test_that("ep_option_text returns the translation, and English when a key is missing", {
+  tr <- ep_options_json()
+  fr <- list(t = function(k, ...) tr[[k]]$fr %||% k)
+  item <- EP2_ACTIVITY_SECTORS[[which(vapply(EP2_ACTIVITY_SECTORS, `[[`, "", "id") == "tourism_leisure")]]
+  expect_identical(ep_option_text("ep2", item, "label", fr), "Tourisme et loisirs")
+  unknown <- list(id = "not_a_real_option", label = "Plain English")
+  expect_identical(ep_option_text("ep2", unknown, "label", fr), "Plain English")
+})
