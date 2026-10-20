@@ -246,21 +246,23 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     data_initialized <- reactiveVal(FALSE)
 
     # Navigation state ----
-    # Define tab structure for navigation
+    # Define tab structure for navigation. Each entry is the tab's i18n key and
+    # also its tabPanel `value`, so navigation never depends on the translated
+    # title (English names here used to break Back/Next in other languages).
     tab_names <- c(
-      "Exercise 0: Complexity",
-      "Exercise 1: Goods & Benefits",
-      "Exercise 2a: Ecosystem Services",
-      "Exercise 2b: Marine Processes",
-      "Exercise 3: Pressures",
-      "Exercise 4: Activities",
-      "Exercise 5: Drivers",
-      "Exercise 6: Closing Loop",
-      "Responses & Measures",
-      "Exercises 7-9: CLD",
-      "Exercises 10-12: Analysis",
-      "BOT Graphs",
-      "Data Management"
+      "modules.isa.data_entry.ex0.exercise_0_complexity",
+      "modules.isa.data_entry.ex1.exercise_1_goods_benefits",
+      "modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services",
+      "modules.isa.data_entry.ex2b.exercise_2b_marine_processes",
+      "modules.isa.data_entry.ex3.exercise_3_pressures",
+      "modules.isa.data_entry.ex4.exercise_4_activities",
+      "modules.isa.data_entry.ex1.exercise_5_drivers",
+      "modules.isa.data_entry.ex6.exercise_6_closing_loop",
+      "modules.isa.data_entry.responses.tab_title",
+      "modules.isa.data_entry.common.exercises_7_9_cld",
+      "modules.isa.data_entry.common.exercises_10_12_analysis",
+      "modules.isa.data_entry.common.bot_graphs",
+      "modules.isa.data_entry.common.data_management"
     )
 
     # Track current exercise (1-indexed, 1 = Exercise 0)
@@ -660,43 +662,43 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Render tab panel UI with translated titles ----
     output$isa_tabs_ui <- renderUI({
       tabsetPanel(id = ns("isa_tabs"),
-        tabPanel(i18n$t("modules.isa.data_entry.ex0.exercise_0_complexity"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex0.exercise_0_complexity"), value = "modules.isa.data_entry.ex0.exercise_0_complexity",
           uiOutput(ns("exercise_0_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex1.exercise_1_goods_benefits"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex1.exercise_1_goods_benefits"), value = "modules.isa.data_entry.ex1.exercise_1_goods_benefits",
           uiOutput(ns("exercise_1_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services"), value = "modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services",
           uiOutput(ns("exercise_2a_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_marine_processes"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_marine_processes"), value = "modules.isa.data_entry.ex2b.exercise_2b_marine_processes",
           uiOutput(ns("exercise_2b_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex3.exercise_3_pressures"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex3.exercise_3_pressures"), value = "modules.isa.data_entry.ex3.exercise_3_pressures",
           uiOutput(ns("exercise_3_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex4.exercise_4_activities"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex4.exercise_4_activities"), value = "modules.isa.data_entry.ex4.exercise_4_activities",
           uiOutput(ns("exercise_4_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex1.exercise_5_drivers"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex1.exercise_5_drivers"), value = "modules.isa.data_entry.ex1.exercise_5_drivers",
           uiOutput(ns("exercise_5_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.ex6.exercise_6_closing_loop"),
+        tabPanel(i18n$t("modules.isa.data_entry.ex6.exercise_6_closing_loop"), value = "modules.isa.data_entry.ex6.exercise_6_closing_loop",
           uiOutput(ns("exercise_6_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.responses.tab_title"),
+        tabPanel(i18n$t("modules.isa.data_entry.responses.tab_title"), value = "modules.isa.data_entry.responses.tab_title",
           uiOutput(ns("responses_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.common.exercises_7_9_cld"),
+        tabPanel(i18n$t("modules.isa.data_entry.common.exercises_7_9_cld"), value = "modules.isa.data_entry.common.exercises_7_9_cld",
           uiOutput(ns("exercise_789_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.common.exercises_10_12_analysis"),
+        tabPanel(i18n$t("modules.isa.data_entry.common.exercises_10_12_analysis"), value = "modules.isa.data_entry.common.exercises_10_12_analysis",
           uiOutput(ns("exercise_101112_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.common.bot_graphs"),
+        tabPanel(i18n$t("modules.isa.data_entry.common.bot_graphs"), value = "modules.isa.data_entry.common.bot_graphs",
           uiOutput(ns("bot_graphs_content"))
         ),
-        tabPanel(i18n$t("modules.isa.data_entry.common.data_management"),
+        tabPanel(i18n$t("modules.isa.data_entry.common.data_management"), value = "modules.isa.data_entry.common.data_management",
           uiOutput(ns("data_management_content"))
         )
       )
@@ -739,7 +741,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         show_next = current < total,
         back_enabled = current > 1,
         next_enabled = current < total,
-        next_label = if (current == total - 1) "Finish" else "Next",
+        next_label = if (current == total - 1) "common.buttons.finish" else "common.buttons.next",
         i18n = i18n
       )
     })
@@ -756,7 +758,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         updateTabsetPanel(
           session = session,
           inputId = "isa_tabs",
-          selected = i18n$t(tab_names[new_index])
+          selected = tab_names[new_index]
         )
       }
     })
@@ -773,7 +775,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         updateTabsetPanel(
           session = session,
           inputId = "isa_tabs",
-          selected = i18n$t(tab_names[new_index])
+          selected = tab_names[new_index]
         )
       }
     })
@@ -782,9 +784,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     observe({
       tab <- input$isa_tabs
       if (!is.null(tab)) {
-        # Find which tab is selected based on translated name
-        translated_names <- sapply(tab_names, function(name) i18n$t(name))
-        index <- which(translated_names == tab)
+        index <- which(tab_names == tab)
 
         if (length(index) > 0) {
           current_exercise(index[1])
@@ -1122,10 +1122,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
             h5(i18n$t("modules.isa.data_entry.common.kumu_export_options")),
             p(i18n$t("modules.isa.prepare_dat_for_import_into_kumu_visualization_sof")),
             checkboxGroupInput(ns("export_options"), i18n$t("modules.isa.data_entry.common.include_in_export"),
-                              choices = c("Elements (nodes)" = "elements",
-                                        "Connections (edges)" = "connections",
-                                        "Element attributes" = "attributes",
-                                        "Loop identifiers" = "loops"),
+                              choices = setNames(c("elements", "connections", "attributes", "loops"),
+                                  c(i18n$t("common.choices.export_elements"),
+                                    i18n$t("common.choices.export_connections"),
+                                    i18n$t("common.choices.export_attributes"),
+                                    i18n$t("common.choices.export_loops"))),
                               selected = c("elements", "connections")),
             br(),
             downloadButton(ns("download_kumu"), i18n$t("modules.isa.data_entry.common.download_kumu_csv_files"), class = "btn-info"),
@@ -1192,10 +1193,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                          placeholder = i18n$t("modules.isa.record_stakeholder_feedback_validation_workshop_re"),
                          rows = 6),
             checkboxGroupInput(ns("validation_status"), i18n$t("modules.isa.data_entry.common.validation_completed"),
-                              choices = c("Internal team review" = "internal",
-                                        "Stakeholder workshop" = "stakeholder",
-                                        "Expert peer review" = "expert",
-                                        "Final approval" = "final"))
+                              choices = setNames(c("internal", "stakeholder", "expert", "final"),
+                                  c(i18n$t("common.choices.validation_internal"),
+                                    i18n$t("common.choices.validation_stakeholder"),
+                                    i18n$t("common.choices.validation_expert"),
+                                    i18n$t("common.choices.validation_final"))))
           )
         ),
 
@@ -1218,12 +1220,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         fluidRow(
           column(4,
             selectInput(ns("bot_element_type"), i18n$t("common.labels.element_type"),
-                       choices = c("Goods & Benefits" = "gb",
-                                 "Ecosystem Services" = "es",
-                                 "Marine Processes" = "mpf",
-                                 "Pressures" = "p",
-                                 "Activities" = "a",
-                                 "Drivers" = "d")),
+                       choices = setNames(c("gb", "es", "mpf", "p", "a", "d"),
+                       c(i18n$t("Goods & Benefits"),
+                         i18n$t("Ecosystem Services"),
+                         i18n$t("modules.isa.data_entry.common.marine_processes"),
+                         i18n$t("modules.isa.data_entry.common.pressures_label"),
+                         i18n$t("modules.isa.data_entry.common.activities_label"),
+                         i18n$t("Drivers")))),
             uiOutput(ns("bot_element_select")),
             br(),
             h6(i18n$t("modules.isa.data_entry.common.add_time_series_data")),
@@ -1736,11 +1739,12 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           ),
           column(2,
             selectInput(ns("loop_effect"), i18n$t("modules.isa.data_entry.common.effect"),
-                       choices = c("Positive" = "+", "Negative" = "-"))
+                       choices = setNames(c("+", "-"), c(i18n$t("common.choices.effect_positive"), i18n$t("common.choices.effect_negative"))))
           ),
           column(2,
             selectInput(ns("loop_strength"), i18n$t("modules.isa.data_entry.common.strength"),
-                       choices = c("Weak" = "weak", "Medium" = "medium", "Strong" = "strong"))
+                       choices = setNames(c("weak", "medium", "strong"),
+                                         c(i18n$t("common.labels.weak"), i18n$t("common.labels.medium"), i18n$t("common.labels.strong"))))
           ),
           column(1,
             br(),

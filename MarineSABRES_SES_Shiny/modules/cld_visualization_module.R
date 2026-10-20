@@ -350,34 +350,31 @@ cld_viz_ui <- function(id, i18n) {
         selectInput(
           ns("edit_edge_polarity"),
           i18n$t("modules.cld.visualization.polarity"),
-          choices = c(
-            "Reinforcing (+)" = "+",
-            "Opposing (-)" = "-"
-          ),
+          choices = setNames(c("+", "-"),
+            c(i18n$t("common.choices.polarity_reinforcing"),
+              i18n$t("common.choices.polarity_opposing"))),
           selected = "+",
           width = "100%"
         ),
         selectInput(
           ns("edit_edge_strength"),
           i18n$t("modules.cld.visualization.strength"),
-          choices = c(
-            "Weak" = "weak",
-            "Medium" = "medium",
-            "Strong" = "strong"
-          ),
+          choices = setNames(c("weak", "medium", "strong"),
+            c(i18n$t("common.labels.weak"),
+              i18n$t("common.labels.medium"),
+              i18n$t("common.labels.strong"))),
           selected = "medium",
           width = "100%"
         ),
         selectInput(
           ns("edit_edge_confidence"),
           i18n$t("modules.cld.visualization.confidence"),
-          choices = c(
-            "Very Low (1/5)" = 1,
-            "Low (2/5)" = 2,
-            "Medium (3/5)" = 3,
-            "High (4/5)" = 4,
-            "Very High (5/5)" = 5
-          ),
+          choices = setNames(1:5,
+            c(i18n$t("common.choices.confidence_1"),
+              i18n$t("common.choices.confidence_2"),
+              i18n$t("common.choices.confidence_3"),
+              i18n$t("common.choices.confidence_4"),
+              i18n$t("common.choices.confidence_5"))),
           selected = 3,
           width = "100%"
         ),
@@ -412,10 +409,9 @@ cld_viz_ui <- function(id, i18n) {
         selectInput(
           ns("layout_type"),
           NULL,
-          choices = c(
-            "Hierarchical (DAPSI)" = "hierarchical",
-            "Physics-based (Manual)" = "physics"
-          ),
+          choices = setNames(c("hierarchical", "physics"),
+            c(i18n$t("common.choices.layout_hierarchical"),
+              i18n$t("common.choices.layout_physics"))),
           selected = "hierarchical"
         ),
 
@@ -425,7 +421,11 @@ cld_viz_ui <- function(id, i18n) {
           selectInput(
             ns("hierarchy_direction"),
             i18n$t("modules.cld.visualization.direction"),
-            choices = c("Down-Up" = "DU", "Up-Down" = "UD", "Left-Right" = "LR", "Right-Left" = "RL"),
+            choices = setNames(c("DU", "UD", "LR", "RL"),
+            c(i18n$t("common.choices.direction_du"),
+              i18n$t("common.choices.direction_ud"),
+              i18n$t("common.choices.direction_lr"),
+              i18n$t("common.choices.direction_rl"))),
             selected = "DU"
           ),
           sliderInput(
@@ -486,7 +486,7 @@ cld_viz_ui <- function(id, i18n) {
           selectInput(
             inputId = ns("selected_loop"),
             label = i18n$t("modules.cld.visualization.highlight_loop"),
-            choices = c("None" = "none"), selected = "none", width = "100%"
+            choices = setNames("none", i18n$t("common.choices.none")), selected = "none", width = "100%"
           ),
           htmlOutput(ns("loop_tooltip"))
         )
@@ -1571,7 +1571,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
 
         if (nrow(loop_info) > 0) {
           # Create choices: Loop 1, Loop 2, etc.
-          choices <- c("None" = "none", setNames(1:nrow(loop_info), paste("Loop", 1:nrow(loop_info))))
+          choices <- c(setNames("none", i18n$t("common.choices.none")),
+                       setNames(1:nrow(loop_info), sprintf(i18n$t("common.choices.loop_n"), 1:nrow(loop_info))))
           updateSelectInput(session, "selected_loop", choices = choices)
 
           debug_log(paste("Updated loop selector with", nrow(loop_info), "loops"), "CLD VIZ")

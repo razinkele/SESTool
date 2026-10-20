@@ -193,7 +193,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       }
 
       updateSelectInput(session, "bot_element",
-                       choices = c("Select element..." = "", all_elements))
+                       choices = c(setNames("", i18n$t("modules.analysis.bot.select_element_placeholder")), all_elements))
     })
 
     # Manual data point addition
