@@ -244,35 +244,35 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
 
         if (length(rv$ep0_selected) > 0) {
           role_labels <- sapply(rv$ep0_selected, function(id) {
-            i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == id)]]$label)
+            ep_option_label("ep0", EP0_MANAGER_ROLES, id, i18n)
           })
           pathway_summary <- c(pathway_summary, paste("Role:", paste(role_labels, collapse = ", ")))
         }
 
         if (length(rv$ep1_selected) > 0) {
           need_labels <- sapply(rv$ep1_selected, function(id) {
-            i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == id)]]$label)
+            ep_option_label("ep1", EP1_BASIC_NEEDS, id, i18n)
           })
           pathway_summary <- c(pathway_summary, paste("Need:", paste(need_labels, collapse = ", ")))
         }
 
         if (length(rv$ep2_selected) > 0) {
           activity_labels <- sapply(rv$ep2_selected, function(id) {
-            i18n$t(EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label)
+            ep_option_label("ep2", EP2_ACTIVITY_SECTORS, id, i18n)
           })
           pathway_summary <- c(pathway_summary, paste("Activities:", paste(activity_labels, collapse = ", ")))
         }
 
         if (length(rv$ep3_selected) > 0) {
           risk_labels <- sapply(rv$ep3_selected, function(id) {
-            i18n$t(EP3_RISKS_HAZARDS[[which(sapply(EP3_RISKS_HAZARDS, function(x) x$id) == id)]]$label)
+            ep_option_label("ep3", EP3_RISKS_HAZARDS, id, i18n)
           })
           pathway_summary <- c(pathway_summary, paste("Risks:", paste(risk_labels, collapse = ", ")))
         }
 
         if (length(rv$ep4_selected) > 0) {
           topic_labels <- sapply(rv$ep4_selected, function(id) {
-            i18n$t(EP4_TOPICS[[which(sapply(EP4_TOPICS, function(x) x$id) == id)]]$label)
+            ep_option_label("ep4", EP4_TOPICS, id, i18n)
           })
           pathway_summary <- c(pathway_summary, paste("Topics:", paste(topic_labels, collapse = ", ")))
         }
@@ -451,6 +451,135 @@ render_welcome_screen <- function(ns, i18n) {
   )
 }
 
+# Translated text of an entry-point option. config/entry_points.R holds the
+# English; translations are keyed by step and option id,
+# modules.entry_point.<ep>.<id>.<label|description|taskN>
+# (translations/modules/entry_point_options.json). The English config text
+# was used as the key before, so every option stayed English in all other
+# languages (user feedback 2026-10-13 "Language error").
+ep_option_text <- function(ep, item, field, i18n, fallback = item[[field]]) {
+  key <- paste("modules.entry_point", ep, item$id, field, sep = ".")
+  txt <- i18n$t(key)
+  if (is.null(txt) || !nzchar(txt) || identical(txt, key)) fallback %||% "" else txt
+}
+
+ep_option_label <- function(ep, options, id, i18n) {
+  item <- options[[which(vapply(options, function(x) x$id, "") == id)]]
+  ep_option_text(ep, item, "label", i18n)
+}
+
+# Keys looked up dynamically by ep_option_text(), listed for the i18n audit:
+# i18n-ref: modules.entry_point.ep0.policy_creator.label
+# i18n-ref: modules.entry_point.ep0.policy_creator.description
+# i18n-ref: modules.entry_point.ep0.policy_creator.task1
+# i18n-ref: modules.entry_point.ep0.policy_creator.task2
+# i18n-ref: modules.entry_point.ep0.policy_creator.task3
+# i18n-ref: modules.entry_point.ep0.policy_implementer.label
+# i18n-ref: modules.entry_point.ep0.policy_implementer.description
+# i18n-ref: modules.entry_point.ep0.policy_implementer.task1
+# i18n-ref: modules.entry_point.ep0.policy_implementer.task2
+# i18n-ref: modules.entry_point.ep0.policy_implementer.task3
+# i18n-ref: modules.entry_point.ep0.policy_advisor.label
+# i18n-ref: modules.entry_point.ep0.policy_advisor.description
+# i18n-ref: modules.entry_point.ep0.policy_advisor.task1
+# i18n-ref: modules.entry_point.ep0.policy_advisor.task2
+# i18n-ref: modules.entry_point.ep0.policy_advisor.task3
+# i18n-ref: modules.entry_point.ep0.activity_manager.label
+# i18n-ref: modules.entry_point.ep0.activity_manager.description
+# i18n-ref: modules.entry_point.ep0.activity_manager.task1
+# i18n-ref: modules.entry_point.ep0.activity_manager.task2
+# i18n-ref: modules.entry_point.ep0.activity_manager.task3
+# i18n-ref: modules.entry_point.ep0.activity_advisor.label
+# i18n-ref: modules.entry_point.ep0.activity_advisor.description
+# i18n-ref: modules.entry_point.ep0.activity_advisor.task1
+# i18n-ref: modules.entry_point.ep0.activity_advisor.task2
+# i18n-ref: modules.entry_point.ep0.activity_advisor.task3
+# i18n-ref: modules.entry_point.ep0.engo_worker.label
+# i18n-ref: modules.entry_point.ep0.engo_worker.description
+# i18n-ref: modules.entry_point.ep0.engo_worker.task1
+# i18n-ref: modules.entry_point.ep0.engo_worker.task2
+# i18n-ref: modules.entry_point.ep0.engo_worker.task3
+# i18n-ref: modules.entry_point.ep0.fisher.label
+# i18n-ref: modules.entry_point.ep0.fisher.description
+# i18n-ref: modules.entry_point.ep0.fisher.task1
+# i18n-ref: modules.entry_point.ep0.fisher.task2
+# i18n-ref: modules.entry_point.ep0.fisher.task3
+# i18n-ref: modules.entry_point.ep0.other_industry.label
+# i18n-ref: modules.entry_point.ep0.other_industry.description
+# i18n-ref: modules.entry_point.ep0.other_industry.task1
+# i18n-ref: modules.entry_point.ep0.other_industry.task2
+# i18n-ref: modules.entry_point.ep0.other_industry.task3
+# i18n-ref: modules.entry_point.ep0.sme.label
+# i18n-ref: modules.entry_point.ep0.sme.description
+# i18n-ref: modules.entry_point.ep0.sme.task1
+# i18n-ref: modules.entry_point.ep0.sme.task2
+# i18n-ref: modules.entry_point.ep0.sme.task3
+# i18n-ref: modules.entry_point.ep0.educator_researcher.label
+# i18n-ref: modules.entry_point.ep0.educator_researcher.description
+# i18n-ref: modules.entry_point.ep0.educator_researcher.task1
+# i18n-ref: modules.entry_point.ep0.educator_researcher.task2
+# i18n-ref: modules.entry_point.ep0.educator_researcher.task3
+# i18n-ref: modules.entry_point.ep1.welfare.label
+# i18n-ref: modules.entry_point.ep1.welfare.description
+# i18n-ref: modules.entry_point.ep1.resource_provision.label
+# i18n-ref: modules.entry_point.ep1.resource_provision.description
+# i18n-ref: modules.entry_point.ep1.employment.label
+# i18n-ref: modules.entry_point.ep1.employment.description
+# i18n-ref: modules.entry_point.ep1.enjoyment.label
+# i18n-ref: modules.entry_point.ep1.enjoyment.description
+# i18n-ref: modules.entry_point.ep2.physical_restructuring.label
+# i18n-ref: modules.entry_point.ep2.nonliving_extraction.label
+# i18n-ref: modules.entry_point.ep2.energy_production.label
+# i18n-ref: modules.entry_point.ep2.living_extraction.label
+# i18n-ref: modules.entry_point.ep2.cultivation.label
+# i18n-ref: modules.entry_point.ep2.transport.label
+# i18n-ref: modules.entry_point.ep2.urban_industrial.label
+# i18n-ref: modules.entry_point.ep2.tourism_leisure.label
+# i18n-ref: modules.entry_point.ep2.security_defense.label
+# i18n-ref: modules.entry_point.ep2.education_research.label
+# i18n-ref: modules.entry_point.ep2.conservation_restoration.label
+# i18n-ref: modules.entry_point.ep2.mixed_use.label
+# i18n-ref: modules.entry_point.ep3.hydro_flood.label
+# i18n-ref: modules.entry_point.ep3.physio_natural_chronic.label
+# i18n-ref: modules.entry_point.ep3.physio_human_chronic.label
+# i18n-ref: modules.entry_point.ep3.physio_acute.label
+# i18n-ref: modules.entry_point.ep3.climate_acute.label
+# i18n-ref: modules.entry_point.ep3.climate_chronic.label
+# i18n-ref: modules.entry_point.ep3.tectonic_acute.label
+# i18n-ref: modules.entry_point.ep3.tectonic_chronic.label
+# i18n-ref: modules.entry_point.ep3.bio_micro.label
+# i18n-ref: modules.entry_point.ep3.bio_macro.label
+# i18n-ref: modules.entry_point.ep3.tech_introduced.label
+# i18n-ref: modules.entry_point.ep3.tech_extractive.label
+# i18n-ref: modules.entry_point.ep3.chem_acute.label
+# i18n-ref: modules.entry_point.ep3.chem_chronic.label
+# i18n-ref: modules.entry_point.ep3.geopolitical_acute.label
+# i18n-ref: modules.entry_point.ep3.geopolitical_chronic.label
+# i18n-ref: modules.entry_point.ep3.social_inequality.label
+# i18n-ref: modules.entry_point.ep3.food_insecurity.label
+# i18n-ref: modules.entry_point.ep3.health_wellbeing.label
+# i18n-ref: modules.entry_point.ep3.cultural_heritage.label
+# i18n-ref: modules.entry_point.ep4.basic_concepts.label
+# i18n-ref: modules.entry_point.ep4.ecosystem_structure.label
+# i18n-ref: modules.entry_point.ep4.ecosystem_services.label
+# i18n-ref: modules.entry_point.ep4.biodiversity.label
+# i18n-ref: modules.entry_point.ep4.nis.label
+# i18n-ref: modules.entry_point.ep4.climate.label
+# i18n-ref: modules.entry_point.ep4.anthropogenic_effects.label
+# i18n-ref: modules.entry_point.ep4.recovery.label
+# i18n-ref: modules.entry_point.ep4.fisheries_econ.label
+# i18n-ref: modules.entry_point.ep4.resource_econ.label
+# i18n-ref: modules.entry_point.ep4.goods_benefits.label
+# i18n-ref: modules.entry_point.ep4.governance.label
+# i18n-ref: modules.entry_point.ep4.policy_derivation.label
+# i18n-ref: modules.entry_point.ep4.policy_implementation.label
+# i18n-ref: modules.entry_point.ep4.conservation.label
+# i18n-ref: modules.entry_point.ep4.planning.label
+# i18n-ref: modules.entry_point.ep4.societal.label
+# i18n-ref: modules.entry_point.ep4.citizenship.label
+# i18n-ref: modules.entry_point.ep4.skills_data.label
+# i18n-ref: modules.entry_point.ep4.methods.label
+
 render_guided_screen <- function(ns, rv, input, i18n) {
   tagList(
     # Progress tracker
@@ -510,12 +639,16 @@ render_ep0 <- function(ns, rv, i18n) {
           onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})", ns("ep0_role_click"), role$id),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = if(!is.null(role$typical_tasks)) paste(i18n$t("modules.entry_point.typical_tasks"), role$typical_tasks) else i18n$t(role$description),
+          title = if (!is.null(role$typical_tasks)) {
+            tasks <- vapply(seq_along(role$typical_tasks), function(i)
+              ep_option_text("ep0", role, paste0("task", i), i18n, fallback = role$typical_tasks[[i]]), "")
+            paste(i18n$t("modules.entry_point.typical_tasks"), paste(tasks, collapse = ", "))
+          } else ep_option_text("ep0", role, "description", i18n),
           fluidRow(
             column(2, icon(role$icon, class = "fa-3x", style = "color: #3498db;")),
             column(10,
-              h4(i18n$t(role$label)),
-              p(i18n$t(role$description))
+              h4(ep_option_text("ep0", role, "label", i18n)),
+              p(ep_option_text("ep0", role, "description", i18n))
             )
           )
         )
@@ -558,9 +691,10 @@ render_ep1 <- function(ns, rv, i18n) {
           style = sprintf("border-left: 5px solid %s;", sanitize_color(need$color)),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = paste0(i18n$t(need$label), ": ", i18n$t(need$description)),
-          h4(i18n$t(need$label)),
-          p(i18n$t(need$description))
+          title = paste0(ep_option_text("ep1", need, "label", i18n), ": ",
+                         ep_option_text("ep1", need, "description", i18n)),
+          h4(ep_option_text("ep1", need, "label", i18n)),
+          p(ep_option_text("ep1", need, "description", i18n))
         )
       }),
 
@@ -598,7 +732,7 @@ render_ep23 <- function(ns, rv, i18n) {
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("modules.entry_point.select_all_that_apply_multiple_selection_allowed")),
       checkboxGroupInput(ns("ep2_activities"), NULL,
         choices = setNames(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id),
-                          sapply(EP2_ACTIVITY_SECTORS, function(x) i18n$t(x$label))),
+                          sapply(EP2_ACTIVITY_SECTORS, function(x) ep_option_text("ep2", x, "label", i18n))),
         selected = rv$ep2_selected)
     ),
     column(6,
@@ -614,7 +748,7 @@ render_ep23 <- function(ns, rv, i18n) {
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("modules.entry_point.select_all_that_apply_multiple_selection_allowed")),
       checkboxGroupInput(ns("ep3_risks"), NULL,
         choices = setNames(sapply(EP3_RISKS_HAZARDS, function(x) x$id),
-                          sapply(EP3_RISKS_HAZARDS, function(x) i18n$t(x$label))),
+                          sapply(EP3_RISKS_HAZARDS, function(x) ep_option_text("ep3", x, "label", i18n))),
         selected = rv$ep3_selected)
     ),
     column(12,
@@ -654,7 +788,7 @@ render_ep4 <- function(ns, rv, i18n) {
 
       checkboxGroupInput(ns("ep4_topics"), NULL,
         choices = setNames(sapply(EP4_TOPICS, function(x) x$id),
-                          sapply(EP4_TOPICS, function(x) i18n$t(x$label))),
+                          sapply(EP4_TOPICS, function(x) ep_option_text("ep4", x, "label", i18n))),
         selected = rv$ep4_selected),
 
       br(),
@@ -701,19 +835,19 @@ render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i
         tags$ul(
           if (length(rv$ep0_selected) > 0) tags$li(strong(i18n$t("modules.entry_point.role"), " "),
             paste(sapply(rv$ep0_selected, function(id)
-              i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == id)]]$label)), collapse = ", ")),
+              ep_option_label("ep0", EP0_MANAGER_ROLES, id, i18n)), collapse = ", ")),
           if (length(rv$ep1_selected) > 0) tags$li(strong(i18n$t("modules.entry_point.need"), " "),
             paste(sapply(rv$ep1_selected, function(id)
-              i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == id)]]$label)), collapse = ", ")),
+              ep_option_label("ep1", EP1_BASIC_NEEDS, id, i18n)), collapse = ", ")),
           if (length(rv$ep2_selected) > 0) tags$li(strong(i18n$t("modules.response.measures.activities"), " "),
             paste(sapply(rv$ep2_selected, function(id)
-              i18n$t(EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label)), collapse = ", ")),
+              ep_option_label("ep2", EP2_ACTIVITY_SECTORS, id, i18n)), collapse = ", ")),
           if (length(rv$ep3_selected) > 0) tags$li(strong(i18n$t("modules.entry_point.risks"), " "),
             paste(sapply(rv$ep3_selected, function(id)
-              i18n$t(EP3_RISKS_HAZARDS[[which(sapply(EP3_RISKS_HAZARDS, function(x) x$id) == id)]]$label)), collapse = ", ")),
+              ep_option_label("ep3", EP3_RISKS_HAZARDS, id, i18n)), collapse = ", ")),
           if (length(rv$ep4_selected) > 0) tags$li(strong(i18n$t("modules.entry_point.topics"), " "),
             paste(sapply(rv$ep4_selected, function(id)
-              i18n$t(EP4_TOPICS[[which(sapply(EP4_TOPICS, function(x) x$id) == id)]]$label)), collapse = ", "))
+              ep_option_label("ep4", EP4_TOPICS, id, i18n)), collapse = ", "))
         )
       ),
 

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Getting Started: the answer options (roles and their typical tasks, basic needs, activity sectors, risks, knowledge topics) stayed in English in every other language, although the headings were translated (user feedback 2026-10-13 "Language error", French and Italian). They are now translated in all 9 languages; the role tooltip also shows its tasks as one line.
+
 ## [1.33.0] - 2026-10-19
 
 ### Fixed (AI assistant templates)
