@@ -9,7 +9,7 @@ VERBS <- c("Laden", "Speichern", "Wiederherstellen", "Ablehnen", "Beginnen", "Ho
            "Exportieren", "Erhalten", "Starten", "Erstellen", "Einbeziehen", "Suchen",
            "Markieren", "Anfangen", "Ändern", "Anwenden", "Aktivieren", "Bestätigen",
            "Zurücksetzen", "Vorbereiten", "Gefunden", "Abgeschlossen", "Erfüllt",
-           "Verfügbar", "Unterstützt")
+           "Verfügbar", "Unterstützt", "Vollständig", "Empfohlen", "Installieren")
 NOMINALISERS <- c("zum", "beim", "vom", "das", "lokales", "automatisches", "Automatisches", "für")
 
 tr_root <- function() {
