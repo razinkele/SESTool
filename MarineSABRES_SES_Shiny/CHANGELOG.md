@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Getting Started: the answer options (roles and their typical tasks, basic needs, activity sectors, risks, knowledge topics) stayed in English in every other language, although the headings were translated (user feedback 2026-10-13 "Language error", French and Italian). They are now translated in all 9 languages; the role tooltip also shows its tasks as one line.
+- Export Data: the component checkboxes showed raw ids (`metadata`, `pims`, ...), none was ticked by default, and the downloaded file contained no components whatever was ticked, because the labels and values were swapped. Labels are now the translated names and the export includes the ticked components.
+- Standard Entry (ISA): the Back/Next buttons did nothing in languages other than English, because they looked tabs up by their English title. Tabs now have fixed ids; the breadcrumb and the Next/Finish button are translated too.
+- Dropdown and checkbox options that were written in English in the code are now translated (user feedback 2026-10-13 "German translation incomplete"): Kumu export options, validation steps, behaviour-over-time element types, loop effect and strength, CLD connection polarity, strength, confidence, layout and direction, the loop selector, network-metric choices, report types, and the AI assistant's step title. Options on pages built when the app starts (CLD, network metrics, Export) still show in English until the page itself is built per language.
 
 ## [1.33.0] - 2026-10-19
 

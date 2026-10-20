@@ -231,9 +231,10 @@ setup_ui_renderers <- function(input, output, session, rv, i18n, QUESTION_FLOW) 
   output$step_title <- renderUI({
     if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
       step_info <- QUESTION_FLOW[[rv$current_step + 1]]
-      HTML(paste0("<h4>Step ", rv$current_step + 1, " of ", length(QUESTION_FLOW), ": ", htmltools::htmlEscape(step_info$title), "</h4>"))
+      h4(paste0(sprintf(i18n$t("common.misc.step_d_of_d"), rv$current_step + 1, length(QUESTION_FLOW)),
+                ": ", step_info$title))
     } else {
-      HTML("<h4>Complete! Review your model</h4>")
+      h4(i18n$t("common.choices.ai_flow_complete"))
     }
   })
 }

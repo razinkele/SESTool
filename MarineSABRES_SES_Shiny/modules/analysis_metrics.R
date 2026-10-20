@@ -266,13 +266,13 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
                   column(6,
                     selectInput(ns("viz_metric"),
                                i18n$t("modules.analysis.network.select_metric"),
-                               choices = c(
-                                 "Degree Centrality" = "Degree",
-                                 "Betweenness Centrality" = "Betweenness",
-                                 "Closeness Centrality" = "Closeness",
-                                 "Eigenvector Centrality" = "Eigenvector",
-                                 "PageRank" = "PageRank"
-                               ),
+                               choices = setNames(
+                                 c("Degree", "Betweenness", "Closeness", "Eigenvector", "PageRank"),
+                                 c(i18n$t("modules.analysis.common.degree_centrality"),
+                                   i18n$t("modules.analysis.common.betweenness_centrality"),
+                                   i18n$t("modules.analysis.common.closeness_centrality"),
+                                   i18n$t("modules.analysis.common.eigenvector_centrality"),
+                                   i18n$t("modules.analysis.common.pagerank"))),
                                selected = "Degree")
                   ),
                   column(6,

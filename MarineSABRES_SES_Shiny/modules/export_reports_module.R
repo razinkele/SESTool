@@ -37,14 +37,16 @@ export_reports_ui <- function(id, i18n) {
         checkboxGroupInput(
           ns("export_data_components"),
           i18n$t("modules.export.reports.select_components"),
-          choices = c(
-            "metadata" = i18n$t("modules.export.reports.project_metadata"),
-            "pims" = i18n$t("modules.export.reports.pims_data"),
-            "isa_data" = i18n$t("modules.export.reports.isa_data"),
-            "cld" = i18n$t("modules.export.reports.cld_data"),
-            "analysis" = i18n$t("modules.export.reports.analysis_results"),
-            "responses" = i18n$t("ui.sidebar.response_measures")
-          ),
+          # Names are the shown labels, values the component ids the download
+          # handlers test (`"metadata" %in% components`).
+          choices = setNames(
+            c("metadata", "pims", "isa_data", "cld", "analysis", "responses"),
+            c(i18n$t("modules.export.reports.project_metadata"),
+              i18n$t("modules.export.reports.pims_data"),
+              i18n$t("modules.export.reports.isa_data"),
+              i18n$t("modules.export.reports.cld_data"),
+              i18n$t("modules.export.reports.analysis_results"),
+              i18n$t("ui.sidebar.response_measures"))),
           selected = c("metadata", "isa_data", "cld")
         ),
 
@@ -96,12 +98,11 @@ export_reports_ui <- function(id, i18n) {
         selectInput(
           ns("report_type"),
           i18n$t("common.labels.report_type"),
-          choices = c(
-            "Executive Summary" = "executive",
-            "Technical Report" = "technical",
-            "Stakeholder Presentation" = "presentation",
-            "Full Project Report" = "full"
-          )
+          choices = setNames(c("executive", "technical", "presentation", "full"),
+            c(i18n$t("common.choices.report_executive"),
+              i18n$t("common.choices.report_technical"),
+              i18n$t("common.choices.report_presentation"),
+              i18n$t("common.choices.report_full")))
         ),
 
         selectInput(
