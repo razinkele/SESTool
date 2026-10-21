@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Connection review (AI assistant, templates, import): approving or rejecting a connection rebuilt every category tab and card list, so the list jumped back to the top, the page moved, and a tab clicked during the rebuild could switch back (user feedback 2026-10-21 "Bug when approving connections"). Approving now only updates the card, the counts and the tab badge, and scrolls within the list to the next card. Tooltips on these pages raised a JavaScript error on every update (Bootstrap 4 has no `Tooltip.getInstance`); fixed.
+
 ## [1.34.0] - 2026-10-21
 
 ### Fixed

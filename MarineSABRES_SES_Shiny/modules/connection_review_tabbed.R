@@ -352,9 +352,15 @@ connection_review_tabbed_ui <- function(id, i18n) {
       $(document).ready(function() {
         // Initialize tooltips on page load using Bootstrap native API
         // IMPORTANT: $.fn.tooltip is jQuery UI's, not Bootstrap's — use native class
+        // Bootstrap 4 (bs4Dash) has no Tooltip.getInstance; it keeps the
+        // instance in jQuery data. Check both.
+        function hasTooltip(el) {
+          return $(el).data('bs.tooltip') ||
+            (bootstrap.Tooltip.getInstance && bootstrap.Tooltip.getInstance(el));
+        }
         function initBootstrapTooltips() {
           document.querySelectorAll('[data-toggle=\"tooltip\"]').forEach(function(el) {
-            if (!bootstrap.Tooltip.getInstance(el)) {
+            if (!hasTooltip(el)) {
               new bootstrap.Tooltip(el, {
                 container: 'body',
                 trigger: 'hover click focus'
@@ -376,9 +382,7 @@ connection_review_tabbed_ui <- function(id, i18n) {
         // Use both BS4 ($.data) and BS5 (getInstance) checks for compatibility.
         $(document).on('mouseenter', '[data-toggle=\"tooltip\"]', function() {
           var el = this;
-          var hasTooltip = $(el).data('bs.tooltip') ||
-            (bootstrap.Tooltip.getInstance && bootstrap.Tooltip.getInstance(el));
-          if (!hasTooltip) {
+          if (!hasTooltip(el)) {
             new bootstrap.Tooltip(el, {
               container: 'body',
               trigger: 'hover focus'
@@ -449,7 +453,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         }
       }, error = function(e) NULL)
 
-      # Use retry loop to wait for DOM rebuild after renderUI re-render
+      # Scroll inside the card list only (scrollIntoView also moved the page).
+      # Retry while a just-rendered fallback (next-category button) appears.
       shinyjs::runjs(sprintf(
         "(function() {
           var targetId = '%s';
@@ -461,22 +466,40 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             var el = document.getElementById(targetId);
             if (!el && fallbackId) { el = document.getElementById(fallbackId); }
             if (el) {
-              el.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var box = el.closest('.conn-batch-content');
+              if (box) {
+                var top = el.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 10;
+                box.scrollTo({top: top, behavior: 'smooth'});
+              } else {
+                el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+              }
             } else if (attempts < maxAttempts) {
               setTimeout(tryScroll, 100);
             }
           }
-          setTimeout(tryScroll, 150);
+          setTimeout(tryScroll, 50);
         })();",
         target_id,
         fallback_id %||% ""
       ))
     })
 
+    # The review is rebuilt only when the set of connections changes (which
+    # elements are linked). Parents write each approval's amendments back into
+    # their list (on_amend), and rebuilding on those reset the tabs and the
+    # scroll position after every click (feedback 2026-10-21).
+    review_conns <- reactiveVal(NULL)
+    observe({
+      conns <- connections_reactive()
+      if (!identical(connection_structure(conns), connection_structure(isolate(review_conns())))) {
+        review_conns(conns)
+      }
+    })
+
     # Categorize connections into batches
     batched_connections <- reactive({
-      req(connections_reactive())
-      conns <- connections_reactive()
+      req(review_conns())
+      conns <- review_conns()
 
       debug_log(sprintf("Received %d connections", length(conns)), "CONN-REVIEW-TABBED")
 
@@ -566,41 +589,18 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         return(NULL)
       }
 
-      # Create a tab for each non-empty batch
+      # Create a tab for each non-empty batch. The tab bar does not read the
+      # approval state: the badge and the counts are their own outputs
+      # (tab_badge_*, batch_stats_*), so approving does not rebuild the tabs.
       tabs <- lapply(names(batch_lists), function(batch_id) {
         batch <- batch_lists[[batch_id]]
-        conn_count <- length(batch$connections)
 
-        # Count approved/rejected in this batch
-        batch_approved <- sum(batch$indices %in% rv$approved)
-        batch_rejected <- sum(batch$indices %in% rv$rejected)
-        batch_pending <- conn_count - batch_approved - batch_rejected
-
-        # Calculate approval percentage
-        approval_pct <- if (conn_count > 0) round(batch_approved / conn_count * 100) else 0
-
-        # Determine badge color based on approval percentage
-        badge_color <- if (approval_pct == 100) {
-          "#28a745"  # Green - all approved
-        } else if (approval_pct >= 50) {
-          "#ffc107"  # Yellow/Orange - partial approval
-        } else if (approval_pct > 0) {
-          "#fd7e14"  # Orange - some approved
-        } else {
-          "#6c757d"  # Gray - none approved
-        }
-
-        # Create tab label with colored badge showing approval status
         tab_label <- tags$span(
           icon(batch$info$icon),
           " ",
           get_batch_label(batch$info, i18n),
           " ",
-          tags$span(
-            class = "tab-badge",
-            style = sprintf("background-color: %s; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.85em; margin-left: 5px;", badge_color),
-            sprintf("%d/%d", batch_approved, conn_count)
-          )
+          uiOutput(ns(paste0("tab_badge_", batch_id)), inline = TRUE)
         )
 
         tabPanel(
@@ -618,24 +618,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           # Batch-specific statistics and actions
           div(class = "batch-stats-box",
             div(style = "display: flex; justify-content: space-between; align-items: center;",
-              div(
-                span(class = "stat-item",
-                  span(class = "stat-value", conn_count),
-                  span(class = "stat-label", i18n$t("ui.dashboard.connections"))
-                ),
-                span(class = "stat-item",
-                  span(class = "stat-value", batch_approved),
-                  span(class = "stat-label", i18n$t("common.misc.approved"), style = "color: #d4edda;")
-                ),
-                span(class = "stat-item",
-                  span(class = "stat-value", batch_rejected),
-                  span(class = "stat-label", i18n$t("common.misc.rejected"), style = "color: #f8d7da;")
-                ),
-                span(class = "stat-item",
-                  span(class = "stat-value", batch_pending),
-                  span(class = "stat-label", i18n$t("modules.response.measures.pending"))
-                )
-              ),
+              uiOutput(ns(paste0("batch_stats_", batch_id))),
               div(style = "text-align: right;",
                 actionButton(ns(paste0("approve_all_", batch_id)),
                             i18n$t("modules.isa.ai_assistant.approve_all"),
@@ -661,8 +644,10 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         )
       })
 
-      # Preserve the currently selected tab when re-rendering
-      selected_tab <- if (!is.null(rv$active_tab)) rv$active_tab else names(batch_lists)[1]
+      # Preserve the currently selected tab when re-rendering (isolated: a tab
+      # click must not rebuild the tab bar)
+      active <- isolate(rv$active_tab)
+      selected_tab <- if (!is.null(active) && active %in% names(batch_lists)) active else names(batch_lists)[1]
 
       tagList(
         div(style = "margin-bottom: 10px; padding: 8px 12px; background: #f8f9fa; border-radius: 4px;",
@@ -709,6 +694,54 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           debug_log(sprintf("Creating batch output: %s (session %d)", output_name, current_session), "CONN-REVIEW-TABBED")
 
+          # Badge on the tab: approved / total, coloured by progress
+          output[[paste0("tab_badge_", local_batch_id)]] <- renderUI({
+            indices <- batch_lists[[local_batch_id]]$indices
+            conn_count <- length(indices)
+            batch_approved <- sum(indices %in% rv$approved)
+            approval_pct <- if (conn_count > 0) round(batch_approved / conn_count * 100) else 0
+            badge_color <- if (approval_pct == 100) {
+              "#28a745"  # Green - all approved
+            } else if (approval_pct >= 50) {
+              "#ffc107"  # Yellow/Orange - partial approval
+            } else if (approval_pct > 0) {
+              "#fd7e14"  # Orange - some approved
+            } else {
+              "#6c757d"  # Gray - none approved
+            }
+            tags$span(
+              class = "tab-badge",
+              style = sprintf("background-color: %s; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.85em; margin-left: 5px;", badge_color),
+              sprintf("%d/%d", batch_approved, conn_count)
+            )
+          })
+
+          # Counts above the cards
+          output[[paste0("batch_stats_", local_batch_id)]] <- renderUI({
+            indices <- batch_lists[[local_batch_id]]$indices
+            conn_count <- length(indices)
+            batch_approved <- sum(indices %in% rv$approved)
+            batch_rejected <- sum(indices %in% rv$rejected)
+            div(
+              span(class = "stat-item",
+                span(class = "stat-value", conn_count),
+                span(class = "stat-label", i18n$t("ui.dashboard.connections"))
+              ),
+              span(class = "stat-item",
+                span(class = "stat-value", batch_approved),
+                span(class = "stat-label", i18n$t("common.misc.approved"), style = "color: #d4edda;")
+              ),
+              span(class = "stat-item",
+                span(class = "stat-value", batch_rejected),
+                span(class = "stat-label", i18n$t("common.misc.rejected"), style = "color: #f8d7da;")
+              ),
+              span(class = "stat-item",
+                span(class = "stat-value", conn_count - batch_approved - batch_rejected),
+                span(class = "stat-label", i18n$t("modules.response.measures.pending"))
+              )
+            )
+          })
+
           output[[output_name]] <- renderUI({
             show_delay <- rv$show_delay
             batch <- batch_lists[[local_batch_id]]
@@ -721,13 +754,16 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
                         div(i18n$t("common.misc.no_connections_in_this_category"))))
             }
 
-            # Create cards for each connection
-            connection_cards <- lapply(seq_along(conns), function(i) {
+            # Create cards for each connection. The approval state is read
+            # isolated: approve/reject only switch the card's class
+            # (set_card_status), so the list -- and its scroll position --
+            # stays put.
+            connection_cards <- isolate(lapply(seq_along(conns), function(i) {
               conn <- conns[[i]]
               conn_idx <- indices[i]  # Original index in full list
 
               render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i, show_delay = show_delay)
-            })
+            }))
 
             do.call(tagList, connection_cards)
           })
@@ -787,6 +823,16 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     obs_env$conn  <- list()
     destroy_all <- function(lst) { for (o in lst) try(o$destroy(), silent = TRUE); list() }
 
+    # Show a card's approved/rejected state in place, without re-rendering
+    # the card list. Cards not in the page yet read rv when they render.
+    set_card_status <- function(indices, status) {
+      for (idx in indices) {
+        card_id <- paste0("conn_card_", idx)
+        shinyjs::removeClass(id = card_id, class = "conn-card-approved conn-card-rejected")
+        shinyjs::addClass(id = card_id, class = paste0("conn-card-", status))
+      }
+    }
+
     # Set up observers for batch-level approve/reject all buttons
     observe({
       batched <- batched_connections()
@@ -804,6 +850,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             rv$approved <- union(rv$approved, batch$indices)
             # Remove any from rejected list
             rv$rejected <- setdiff(rv$rejected, batch$indices)
+            set_card_status(batch$indices, "approved")
 
             if (!is.null(on_approve)) {
               lapply(batch$indices, function(idx) on_approve(idx, batch$connections[[which(batch$indices == idx)]]))
@@ -824,6 +871,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             rv$rejected <- union(rv$rejected, batch$indices)
             # Remove any from approved list
             rv$approved <- setdiff(rv$approved, batch$indices)
+            set_card_status(batch$indices, "rejected")
 
             if (!is.null(on_reject)) {
               lapply(batch$indices, function(idx) on_reject(idx, batch$connections[[which(batch$indices == idx)]]))
@@ -865,8 +913,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
     # Destroy and recreate all observers when connections actually change
     observe({
-      req(connections_reactive())
-      conns <- connections_reactive()
+      req(review_conns())
+      conns <- review_conns()
 
       # GUARD: Don't process if connections are empty - prevents infinite loop
       if (length(conns) == 0) {
@@ -1032,6 +1080,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # Mark as approved
             rv$approved <- union(rv$approved, local_idx)
             rv$rejected <- setdiff(rv$rejected, local_idx)
+            set_card_status(local_idx, "approved")
 
             # Call approve callback if provided
             if (!is.null(on_approve)) {
@@ -1046,6 +1095,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(input[[paste0("reject_", local_idx)]], {
             rv$rejected <- union(rv$rejected, local_idx)
             rv$approved <- setdiff(rv$approved, local_idx)
+            set_card_status(local_idx, "rejected")
 
             if (!is.null(on_reject)) {
               on_reject(local_idx, conn)
@@ -1092,6 +1142,20 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         batches = batched_connections()$batches
       )
     }))
+  })
+}
+
+# ============================================================================
+# HELPER FUNCTION: CONNECTION STRUCTURE
+# ============================================================================
+
+# Which elements each connection links -- not its polarity, strength or other
+# amendable values. The review rebuilds only when this changes.
+connection_structure <- function(conns) {
+  lapply(conns %||% list(), function(c) {
+    vapply(c("from_type", "to_type", "from_name", "to_name", "from_id", "to_id",
+             "from_index", "to_index"),
+           function(f) paste(c[[f]] %||% "", collapse = "|"), character(1))
   })
 }
 
