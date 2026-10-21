@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.34.0] - 2026-10-21
+
 ### Fixed
 - Getting Started: the answer options (roles and their typical tasks, basic needs, activity sectors, risks, knowledge topics) stayed in English in every other language, although the headings were translated (user feedback 2026-10-13 "Language error", French and Italian). They are now translated in all 9 languages; the role tooltip also shows its tasks as one line.
 - Export Data: the component checkboxes showed raw ids (`metadata`, `pims`, ...), none was ticked by default, and the downloaded file contained no components whatever was ticked, because the labels and values were swapped. Labels are now the translated names and the export includes the ticked components.
