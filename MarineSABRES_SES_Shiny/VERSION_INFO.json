@@ -1,7 +1,7 @@
 {
-  "version": "1.33.0",
-  "version_name": "User feedback fixes (October 2026)",
-  "release_date": "2026-10-19",
+  "version": "1.34.0",
+  "version_name": "Translation fixes (October 2026)",
+  "release_date": "2026-10-21",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,13 +12,13 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "Prepare Report: HTML, PDF and Word follow the 'Include sections' checkboxes, with new element-list and diagram-summary sections; Word has the same content as HTML.",
-    "After generating an HTML report, a dialog offers it as a download and explains that the link only works during the session.",
-    "PNG downloads for the loop, decision lens and simplification plots, and a PNG export button on the network views.",
-    "AI assistant country step: Martinique, Guadeloupe and Saint-Martin (EU outermost regions, EU members), Honduras, Nicaragua and Guatemala."
+    "Getting Started answer options (roles, tasks, basic needs, activity sectors, risks, knowledge topics) are translated in all 9 languages.",
+    "Dropdown and checkbox options that were written in English in the code are translated (Kumu export, validation steps, BOT element types, loop effect and strength, CLD polarity, strength, confidence, layout and direction, network metrics, report types, AI assistant step title).",
+    "German: 79 buttons and labels lowercase the verb ('Daten exportieren', 'Projekt speichern')."
   ],
   "fixes": {
     "medium": [
+      "Standard Entry (ISA): Back/Next did nothing in languages other than English (1.34.0).",
       "Getting Started checkboxes flickered and lost ticks (1.33.0).",
       "Loop analysis: the strength and distribution plots were always blank; long element names were cut off (1.33.0).",
       "AI assistant: a swapped connection whose reverse is not a DAPSIWRM link is now left out with a message, instead of being stored in the wrong direction (1.33.0).",
@@ -33,6 +33,7 @@
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
+      "Export Data: the downloaded file contained none of the ticked components (labels and values were swapped); checkboxes now show translated names and the export includes them (1.34.0).",
       "AI-assistant template models had no links in the diagram (connections saved under legacy matrix names); fixed, and older template projects are repaired when opened (1.33.0).",
       "AI assistant: Save did nothing after the automatic save, so later approvals and edits never reached the project (1.33.0).",
       "Scenario Builder: creating a scenario on a project with links ended the session (1.33.0).",
@@ -69,7 +70,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.32.4",
+  "previous_version": "1.33.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
