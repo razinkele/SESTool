@@ -352,16 +352,18 @@ connection_review_tabbed_ui <- function(id, i18n) {
       $(document).ready(function() {
         // Initialize tooltips on page load using Bootstrap native API
         // IMPORTANT: $.fn.tooltip is jQuery UI's, not Bootstrap's — use native class
-        // Bootstrap 4 (bs4Dash) has no Tooltip.getInstance; it keeps the
-        // instance in jQuery data. Check both.
+        // Bootstrap 4 (bs4Dash) has no Tooltip.getInstance, and its
+        // constructor does not register the instance anywhere, so remember it
+        // on the element (as template_ses_module.R does); jQuery data covers
+        // tooltips other pages created through the plugin.
         function hasTooltip(el) {
-          return $(el).data('bs.tooltip') ||
+          return el._bsTooltip || $(el).data('bs.tooltip') ||
             (bootstrap.Tooltip.getInstance && bootstrap.Tooltip.getInstance(el));
         }
         function initBootstrapTooltips() {
           document.querySelectorAll('[data-toggle=\"tooltip\"]').forEach(function(el) {
             if (!hasTooltip(el)) {
-              new bootstrap.Tooltip(el, {
+              el._bsTooltip = new bootstrap.Tooltip(el, {
                 container: 'body',
                 trigger: 'hover click focus'
               });
@@ -379,11 +381,10 @@ connection_review_tabbed_ui <- function(id, i18n) {
         // Event delegation for dynamically added tooltips
         // Note: Do NOT call .show() manually — let trigger:'hover' handle it
         // to avoid racing with Bootstrap's internal event binding.
-        // Use both BS4 ($.data) and BS5 (getInstance) checks for compatibility.
         $(document).on('mouseenter', '[data-toggle=\"tooltip\"]', function() {
           var el = this;
           if (!hasTooltip(el)) {
-            new bootstrap.Tooltip(el, {
+            el._bsTooltip = new bootstrap.Tooltip(el, {
               container: 'body',
               trigger: 'hover focus'
             });
