@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.34.1] - 2026-10-22
+
 ### Fixed
 - Connection review (AI assistant, templates, import): approving or rejecting a connection rebuilt every category tab and card list, so the list jumped back to the top, the page moved, and a tab clicked during the rebuild could switch back (user feedback 2026-10-21 "Bug when approving connections"). Approving now only updates the card, the counts and the tab badge, and scrolls within the list to the next card. Tooltips on these pages raised a JavaScript error on every update (Bootstrap 4 has no `Tooltip.getInstance`); fixed.
 - PIMS project setup: the demonstration-area selector offered only the three DAs (user feedback 2026-10-21 "Only three DA's"). It now lists every case study grouped under its DA: Tuscan Archipelago; Iceland, Greenland and Faroe Islands (Arctic Northeast Atlantic); Azores, Madeira and Canary Islands (Macaronesia). The DA itself stays selectable, so saved projects keep their value, and WP5 governance profiles map each case study to its DA.

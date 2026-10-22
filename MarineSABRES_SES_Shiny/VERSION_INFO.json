@@ -1,8 +1,8 @@
 {
-  "version": "1.34.0",
-  "version_name": "Translation fixes (October 2026)",
-  "release_date": "2026-10-21",
-  "release_type": "minor",
+  "version": "1.34.1",
+  "version_name": "Connection review and case studies (October 2026)",
+  "release_date": "2026-10-22",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -12,6 +12,7 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "PIMS project setup lists every case study grouped under its demonstration area: Tuscan Archipelago; Iceland, Greenland, Faroe Islands (Arctic Northeast Atlantic); Azores, Madeira, Canary Islands (Macaronesia) (1.34.1).",
     "Getting Started answer options (roles, tasks, basic needs, activity sectors, risks, knowledge topics) are translated in all 9 languages.",
     "Dropdown and checkbox options that were written in English in the code are translated (Kumu export, validation steps, BOT element types, loop effect and strength, CLD polarity, strength, confidence, layout and direction, network metrics, report types, AI assistant step title).",
     "German: 79 buttons and labels lowercase the verb ('Daten exportieren', 'Projekt speichern')."
@@ -33,6 +34,7 @@
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
+      "Connection review (AI assistant, templates, import): approving a connection rebuilt every tab and card list, so the review jumped between sections; approving now updates only that card, the counts and the tab badge (1.34.1).",
       "Export Data: the downloaded file contained none of the ticked components (labels and values were swapped); checkboxes now show translated names and the export includes them (1.34.0).",
       "AI-assistant template models had no links in the diagram (connections saved under legacy matrix names); fixed, and older template projects are repaired when opened (1.33.0).",
       "AI assistant: Save did nothing after the automatic save, so later approvals and edits never reached the project (1.33.0).",
@@ -42,6 +44,7 @@
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
     ],
     "low": [
+      "Tooltips on the connection review raised a JavaScript error on every update (Bootstrap 4 has no Tooltip.getInstance) (1.34.1).",
       "Workshop export: tenet point columns read '1 = Completely disagree' ... '5 = Completely agree'; Lithuanian 'Label' header corrected (1.32.3).",
       "Workshop and readiness xlsx files: column headers and labels in the user's language; the answers sheets keep their code headers so they can still be imported (1.32.2).",
       "Response register title corrected in German, Lithuanian, Norwegian and Greek (1.32.2).",
@@ -70,7 +73,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.33.0",
+  "previous_version": "1.34.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
