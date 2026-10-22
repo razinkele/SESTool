@@ -885,9 +885,13 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         div(
           style = "max-width: 600px; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; margin-bottom: 15px;",
           h5(icon("link"), " ", i18n$t("modules.ses.creation.connection_review"), style = "margin: 0; font-weight: bold;"),
+          # isolate(): on_amend writes every approval back into
+          # rv$template_connections; reading it reactively here rebuilt the
+          # whole review on each approve. The section still re-renders when the
+          # template or the review mode changes.
           p(style = "margin: 5px 0 0 0; font-size: 12px;",
             sprintf(i18n$t("modules.ses.creation.d_connections_from_s_template"),
-                    length(rv$template_connections),
+                    length(isolate(rv$template_connections)),
                     i18n$t(template$name_key)))
         ),
 

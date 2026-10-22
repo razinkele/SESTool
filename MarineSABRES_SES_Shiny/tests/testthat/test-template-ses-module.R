@@ -118,3 +118,30 @@ test_that("template_cards renders a card per available template", {
     expect_gt(n_cards, 0)
   })
 })
+
+test_that("approving a connection does not re-render the template's review section", {
+  # User feedback 2026-10-21 "Bug when approving connections": on_amend writes
+  # each approval back into rv$template_connections; the section must not
+  # rebuild the review (tabs and cards) because of it.
+  real_ui <- get("connection_review_tabbed_ui", envir = .GlobalEnv)
+  builds <- 0L
+  assign("connection_review_tabbed_ui", function(...) { builds <<- builds + 1L; real_ui(...) },
+         envir = .GlobalEnv)
+  on.exit(assign("connection_review_tabbed_ui", real_ui, envir = .GlobalEnv), add = TRUE)
+
+  testServer(template_ses_server,
+             args = list(project_data_reactive = reactiveVal(init_session_data()),
+                         i18n = i18n), {
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(review_connections = 1)
+    expect_match(.render_chr(output$connection_review_section), "template_conn_review", fixed = TRUE)
+    expect_equal(builds, 1L)
+    session$setInputs(`template_conn_review-strength_1` = 5,
+                      `template_conn_review-confidence_1` = 3,
+                      `template_conn_review-polarity_switch_1` = TRUE)
+    session$setInputs(`template_conn_review-approve_1` = 1)
+    expect_equal(rv$template_connections[[1]]$strength, "very strong")   # amendment reached the parent
+    .render_chr(output$connection_review_section)
+    expect_equal(builds, 1L)
+  })
+})
