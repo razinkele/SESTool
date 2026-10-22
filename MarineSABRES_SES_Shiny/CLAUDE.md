@@ -183,6 +183,7 @@ ELEMENT_COLORS     # Kumu-style colors per type
 ELEMENT_SHAPES     # visNetwork shapes
 EDGE_COLORS        # Reinforcing (+) / Opposing (-)
 DA_SITES           # 3 demonstration areas
+DA_CASE_STUDIES    # 7 case studies grouped by DA (PIMS selector; DA_SITE_CHOICES = all accepted values)
 STAKEHOLDER_TYPES  # 6 types (Newton & Elliott, 2016)
 ```
 

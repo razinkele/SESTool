@@ -23,7 +23,7 @@ pims_project_ui <- function(id, i18n) {
           textInput(ns("project_name"), i18n$t("modules.pims.project_name"),
                    placeholder = i18n$t("modules.pims.project_name_placeholder")),
           selectInput(ns("da_site"), i18n$t("modules.pims.demonstration_area"),
-                     choices = c("", DA_SITES)),
+                     choices = c(list(""), DA_SITE_GROUPED_CHOICES)),
           textAreaInput(ns("focal_issue"), i18n$t("modules.pims.focal_issue"),
                        placeholder = i18n$t("modules.pims.focal_issue_placeholder"), rows = 4),
           textAreaInput(ns("definition_statement"), i18n$t("modules.pims.definition_statement"),
