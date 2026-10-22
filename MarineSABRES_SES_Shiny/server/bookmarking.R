@@ -11,13 +11,13 @@
 #'
 #' @param values state$values from onRestore()
 #' @param levels allowed user levels
-#' @param da_sites allowed demonstration areas (the PIMS select's choices)
+#' @param da_sites allowed demonstration areas and case studies (the PIMS select's choices)
 #' @param max_focal maximum focal-issue length in characters
 #' @return named list with any of user_level, autosave_enabled, active_tab,
 #'   metadata_da_site, metadata_focal_issue
 sanitize_bookmark_values <- function(values,
                                      levels = c("beginner", "intermediate", "expert"),
-                                     da_sites = if (exists("DA_SITES")) DA_SITES else character(0),
+                                     da_sites = if (exists("DA_SITE_CHOICES")) DA_SITE_CHOICES else character(0),
                                      max_focal = 1000L) {
   out <- list()
   if (!is.list(values)) return(out)
