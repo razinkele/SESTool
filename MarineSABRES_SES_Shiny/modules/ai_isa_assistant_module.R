@@ -1624,8 +1624,12 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               tags$script(HTML("
   setTimeout(function() {
     document.querySelectorAll('.source-badge[data-toggle=\"tooltip\"]').forEach(function(el) {
-      if (!bootstrap.Tooltip.getInstance(el)) {
-        new bootstrap.Tooltip(el, {
+      // Bootstrap 4 has no Tooltip.getInstance and its constructor registers
+      // nothing, so remember the instance on the element
+      var has = el._bsTooltip || $(el).data('bs.tooltip') ||
+        (bootstrap.Tooltip.getInstance && bootstrap.Tooltip.getInstance(el));
+      if (!has) {
+        el._bsTooltip = new bootstrap.Tooltip(el, {
           container: 'body',
           trigger: 'hover click focus'
         });
