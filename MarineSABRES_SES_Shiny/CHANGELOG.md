@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.34.2] - 2026-10-23
+
 ### Fixed
 - Template page (Review connections): approving a connection still rebuilt the whole review in 1.34.1, so the tabs and cards were replaced and the approved card lost its green state. The header above the review re-read the connection list, which every approval updates (user feedback 2026-10-21 "Bug when approving connections", found in the 1.34.1 live check).
 
