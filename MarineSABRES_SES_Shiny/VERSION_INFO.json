@@ -1,7 +1,7 @@
 {
-  "version": "1.34.1",
-  "version_name": "Connection review and case studies (October 2026)",
-  "release_date": "2026-10-22",
+  "version": "1.34.2",
+  "version_name": "Template connection review fix (October 2026)",
+  "release_date": "2026-10-23",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -34,6 +34,7 @@
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
+      "Template page: approving a connection still rebuilt the whole review in 1.34.1 (the header re-read the connection list each approval updates); the tabs and cards now stay in place (1.34.2).",
       "Connection review (AI assistant, templates, import): approving a connection rebuilt every tab and card list, so the review jumped between sections; approving now updates only that card, the counts and the tab badge (1.34.1).",
       "Export Data: the downloaded file contained none of the ticked components (labels and values were swapped); checkboxes now show translated names and the export includes them (1.34.0).",
       "AI-assistant template models had no links in the diagram (connections saved under legacy matrix names); fixed, and older template projects are repaired when opened (1.33.0).",
@@ -73,7 +74,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.34.0",
+  "previous_version": "1.34.1",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
