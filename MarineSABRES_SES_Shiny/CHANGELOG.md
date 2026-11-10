@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Language switch: every fixed heading, help text and form on the pages (dashboard, PIMS, AI assistant, analysis, export, report, WP5 pages, ...) stayed in English after choosing another language; only the sidebar, Getting Started and pop-ups changed (user feedback 2026-10-13 "German translation incomplete"). The page layout was built once, in English, when the app started. It is now built in the chosen language (the `?language=` the switch reloads with) the first time that language is requested, and kept in memory. Bookmark links that carry saved inputs get their own build, so one visitor's values never reach another.
+
+### Changed
+- Faster page loads: each module's UI re-sent the whole translation table to the page builder and threw the result away. Removing those calls cuts building a page layout from about 11 s to 3 s (about 17 s to 9 s for the first page after the app starts). Contributor rule changed accordingly: module UI functions must not call `shiny.i18n::usei18n()`; `app.R` includes it once (CLAUDE.md, CONTRIBUTING.md, enforced by `test-i18n-enforcement.R`).
+
 ## [1.34.2] - 2026-10-23
 
 ### Fixed

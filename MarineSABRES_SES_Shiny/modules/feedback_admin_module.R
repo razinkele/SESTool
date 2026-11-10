@@ -3,7 +3,6 @@
 # Only loaded/rendered when ADMIN_MODE is TRUE (set in global.R)
 
 feedback_admin_ui <- function(id, i18n, admin = TRUE) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   fluidPage(

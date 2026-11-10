@@ -59,20 +59,18 @@ install.packages(c(
 
 1. **NO HARDCODED STRINGS**: Never use hardcoded English (or any language) strings in user-facing code
 2. **ALWAYS USE i18n$t()**: Wrap ALL user-visible text with the translation function
-3. **USE usei18n()**: Every module UI function must call `shiny.i18n::usei18n(i18n)` to enable reactive translations
+3. **NO usei18n() IN MODULES**: `app.R` calls `shiny.i18n::usei18n()` once; module UI functions must not
 4. **MAINTAIN CONSISTENCY**: Follow established patterns throughout the codebase
 
 ### Required i18n Patterns
 
 #### 1. Module UI Functions
 
-**REQUIRED**: Add the defensive `usei18n()` wrapper at the start of every module UI function.
-This handles both raw `i18n` objects and the `$translator` sub-object gracefully:
+Do **not** call `shiny.i18n::usei18n()` in module UI functions: `app.R`'s `build_app_ui()` includes it once, and the page layout is built per language (`?language=`, see `make_per_language_ui()` in `server/language_handling.R`). The old per-module call re-serialised the translation table on every module and made a page build ~6x slower; `test-i18n-enforcement.R` fails if one comes back.
 
 ```r
-# ✅ CORRECT - defensive form (used by all modules)
+# ✅ CORRECT
 myModuleUI <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   tagList(
@@ -81,7 +79,7 @@ myModuleUI <- function(id, i18n) {
   )
 }
 
-# ❌ WRONG - Missing usei18n()
+# ❌ WRONG - hardcoded strings
 myModuleUI <- function(id, i18n) {
   ns <- NS(id)
   tagList(
@@ -294,7 +292,7 @@ textInput(ns("email_field"), i18n$t("Email Address:"))
 
 2. **Check for hardcoded strings**:
    The enforcement tests will automatically detect:
-   - Missing `usei18n(i18n)` calls
+   - `usei18n()` calls in module files (only `app.R` may call it)
    - Hardcoded strings in `showNotification()`
    - Non-internationalized UI elements
    - Missing translation keys
@@ -465,7 +463,7 @@ Brief description of changes
 
 ## i18n Checklist
 - [ ] All user-facing text uses i18n$t()
-- [ ] usei18n(i18n) added to new UI functions
+- [ ] No usei18n() call in new module UI functions
 - [ ] Translation keys added to appropriate files
 - [ ] All 9 languages have entries
 - [ ] i18n enforcement tests pass
@@ -507,10 +505,11 @@ showNotification(i18n$t("Data saved successfully"))
 
 ---
 
-### ❌ Mistake 2: Missing usei18n()
+### ❌ Mistake 2: Calling usei18n() in a module UI
 ```r
-# WRONG - UI won't update when language changes
+# WRONG - slows every page build; app.R already includes usei18n() once
 myModuleUI <- function(id, i18n) {
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   tagList(h4(i18n$t("Title")))
 }
@@ -519,7 +518,6 @@ myModuleUI <- function(id, i18n) {
 ### ✅ Correct:
 ```r
 myModuleUI <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   tagList(h4(i18n$t("Title")))
 }
@@ -609,9 +607,6 @@ Located in `scripts/`:
 ### Essential i18n Commands
 
 ```r
-# In module UI (defensive form)
-tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
-
 # Wrapping text
 i18n$t("Text to translate")
 

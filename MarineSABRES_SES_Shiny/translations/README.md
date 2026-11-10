@@ -307,7 +307,8 @@ Before committing changes:
 **Problem**: Changing language doesn't update visible text
 
 **Solution**:
-- Ensure `shiny.i18n::usei18n(i18n)` is called in the module UI
+- Static UI text is built per language from the `?language=` URL parameter (`make_per_language_ui()` in `server/language_handling.R`); a language switch reloads the page with it
+- Do not add `shiny.i18n::usei18n()` to module UIs — `app.R` includes it once
 - Check that `observeEvent(input$language_selector, ...)` is in server function
 - Use `shiny.i18n::update_lang()` in the observer
 

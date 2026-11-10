@@ -5,7 +5,6 @@
 # functions/impact_assessment_view.R.
 
 impact_assessment_ui <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   tagList(
     fluidRow(column(12,

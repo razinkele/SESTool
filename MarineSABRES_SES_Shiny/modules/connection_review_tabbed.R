@@ -217,7 +217,6 @@ categorize_connection <- function(conn, batches) {
 
 connection_review_tabbed_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   debug_log(sprintf("UI function called with id: %s", id), "CONN-REVIEW-TABBED")
 
   tagList(

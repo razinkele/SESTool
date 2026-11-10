@@ -43,8 +43,6 @@
 #'
 #' @export
 template_example_ui <- function(id, i18n) {
-  # REQUIRED: Enable reactive translations
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   # UI implementation

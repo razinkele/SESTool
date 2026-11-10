@@ -10,7 +10,6 @@
 
 pims_project_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     create_module_header(ns, "modules.pims.project.title", "modules.pims.project.subtitle", "pims_project_help", i18n),
@@ -160,7 +159,6 @@ pims_project_server <- function(id, project_data_reactive, i18n, event_bus = NUL
 
 pims_resources_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     create_module_header(ns, "modules.pims.resources.title", "modules.pims.resources.subtitle", "pims_resources_help", i18n),
@@ -192,7 +190,6 @@ pims_resources_server <- function(id, project_data_reactive, i18n, event_bus = N
 
 pims_data_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     create_module_header(ns, "modules.pims.data.title", "modules.pims.data.subtitle", "pims_data_help", i18n),
@@ -215,7 +212,6 @@ pims_data_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
 
 pims_evaluation_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     create_module_header(ns, "modules.pims.evaluation.title", "modules.pims.evaluation.subtitle", "pims_evaluation_help", i18n),

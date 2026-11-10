@@ -6,7 +6,6 @@
 
 analysis_simplify_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     uiOutput(ns("module_header")),

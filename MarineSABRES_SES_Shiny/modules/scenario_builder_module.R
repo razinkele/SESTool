@@ -7,7 +7,6 @@
 # ============================================================================
 
 scenario_builder_ui <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   ns <- NS(id)
 
   fluidPage(

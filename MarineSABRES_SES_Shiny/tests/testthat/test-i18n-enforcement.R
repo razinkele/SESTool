@@ -41,56 +41,33 @@ get_translation_files <- function() {
 }
 
 # ==============================================================================
-# TEST 1: Module UI Functions Have usei18n()
+# TEST 1: usei18n() is called once, in app.R — never in module UI functions
 # ==============================================================================
+# app.R's build_app_ui() includes shiny.i18n::usei18n() once per page. The
+# per-module calls that used to open every *_ui() discarded their result and
+# re-serialised the whole translation table each time (~10 s of a ~12 s page
+# build), so they were removed and must not come back.
 
-test_that("All module UI functions with i18n parameter have usei18n() calls", {
-  critical_modules <- c(
-    "isa_data_entry_module.R",
-    "ai_isa_assistant_module.R",
-    "response_module.R",
-    "scenario_builder_module.R",
-    "export_reports_module.R",
-    "connection_review_tabbed.R",
-    "cld_visualization_module.R",
-    "auto_save_module.R"
+test_that("usei18n() is called in app.R and in no module file", {
+  strip_comments <- function(lines) sub("#.*$", "", lines)
+
+  app_code <- strip_comments(read_file_cached("../../app.R"))
+  expect_true(any(grepl("usei18n[[:space:]]*[(]", app_code)),
+              info = "app.R must include shiny.i18n::usei18n() in the page layout")
+
+  module_files <- c(
+    list.files("../../modules", pattern = "[.]R$", full.names = TRUE, recursive = TRUE),
+    list.files("../../functions", pattern = "[.]R$", full.names = TRUE),
+    list.files("../../server", pattern = "[.]R$", full.names = TRUE)
   )
-
-  # Check if app.R has usei18n
-  app_has_usei18n <- FALSE
-  if (file.exists("../../app.R")) {
-    app_content <- paste(read_file_cached("../../app.R"), collapse = "\n")
-    app_has_usei18n <- grepl("usei18n[[:space:]]*\\(", app_content)
-  }
-
-  missing_usei18n <- character()
-
-  for (module in critical_modules) {
-    module_path <- file.path("../../modules", module)
-
-    if (!file.exists(module_path)) next
-
-    content_str <- paste(read_file_cached(module_path), collapse = "\n")
-
-    # Check if module has UI functions with i18n parameter
-    has_i18n_param <- grepl("function\\([^)]*i18n[^)]*\\)", content_str)
-
-    if (has_i18n_param) {
-      has_usei18n <- grepl("shiny.i18n::usei18n(i18n)", content_str, fixed = TRUE) ||
-                     grepl("usei18n(i18n)", content_str, fixed = TRUE) ||
-                     grepl("REMOVED:[[:space:]]*usei18n", content_str) ||
-                     app_has_usei18n
-
-      if (!has_usei18n) {
-        missing_usei18n <- c(missing_usei18n, module)
-      }
+  offenders <- character()
+  for (f in module_files) {
+    if (any(grepl("usei18n[[:space:]]*[(]", strip_comments(read_file_cached(f))))) {
+      offenders <- c(offenders, basename(f))
     }
   }
-
-  expect_equal(
-    length(missing_usei18n), 0,
-    info = paste("Modules missing usei18n():", paste(missing_usei18n, collapse = ", "))
-  )
+  expect_equal(offenders, character(),
+               info = paste("Remove the per-module usei18n() call from:", paste(offenders, collapse = ", ")))
 })
 
 # ==============================================================================
