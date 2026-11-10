@@ -47,7 +47,7 @@ This is a modular `bs4Dash` + `shiny.i18n` application for building and analyzin
 
 ## Key conventions
 
-- Every module UI should follow `module_name_ui <- function(id, i18n)` and start with `shiny.i18n::usei18n(i18n)`. All user-facing strings must go through `i18n$t(...)`, including notifications, modal text, and dynamic message fragments.
+- Every module UI should follow `module_name_ui <- function(id, i18n)` and must NOT call `shiny.i18n::usei18n()` (`app.R` includes it once; the page layout is built per language from `?language=`). All user-facing strings must go through `i18n$t(...)`, including notifications, modal text, and dynamic message fragments.
 - Translation files are modular: use `translations/common/`, `translations/modules/`, and `translations/ui/`. When adding a new key, add it for all 9 supported languages (`en`, `es`, `fr`, `de`, `lt`, `pt`, `it`, `no`, `el`). Do not edit `translations/_merged_translations.json` directly.
 - Module server functions use snake_case names with `_server` suffix, and the common signature is `function(id, project_data_reactive, i18n, event_bus = NULL, ...)`. Analysis modules are expected to accept `event_bus = NULL` and remain testable when the bus is absent.
 - Treat `project_data` as the single source of truth. Mutation normally follows copy-modify-set semantics:

@@ -9,7 +9,6 @@
 
 response_measures_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     fluidRow(
@@ -1142,7 +1141,6 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
 response_validation_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   fluidPage(
     h2(i18n$t("modules.response.measures.model_validation")),
     p(i18n$t("modules.response.track_validation_activities_and_model_confidence_a")),

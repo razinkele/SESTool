@@ -83,7 +83,6 @@ ses_model_path_is_in_scanned_set <- function(candidate, scanned) {
 
 ses_models_ui <- function(id, i18n) {
   ns <- NS(id)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     # Custom CSS

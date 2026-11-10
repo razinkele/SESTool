@@ -108,7 +108,6 @@
 # i18n-ref: modules.wp5_readiness.export
 
 wp5_readiness_ui <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   tr <- function(k) i18n$t(paste0("modules.wp5_readiness.", k))
   bank <- load_wp5_readiness_items()

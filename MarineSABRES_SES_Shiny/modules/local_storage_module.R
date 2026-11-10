@@ -4,7 +4,6 @@
 
 # UI Component - Local Storage Controls
 local_storage_ui <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   ns <- NS(id)
 
   # Build JavaScript using paste0 to avoid sprintf 8192 character limit
