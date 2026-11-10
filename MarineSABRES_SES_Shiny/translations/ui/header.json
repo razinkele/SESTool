@@ -274,6 +274,28 @@
       "it": "Toolbox SES MarineSABRES",
       "no": "MarineSABRES SES-verktøykasse",
       "el": "Εργαλειοθήκη MarineSABRES SES"
+    },
+    "ui.header.skip_to_main_content": {
+      "en": "Skip to main content",
+      "es": "Saltar al contenido principal",
+      "fr": "Aller au contenu principal",
+      "de": "Zum Hauptinhalt springen",
+      "lt": "Pereiti prie pagrindinio turinio",
+      "pt": "Saltar para o conteúdo principal",
+      "it": "Vai al contenuto principale",
+      "no": "Hopp til hovedinnhold",
+      "el": "Μετάβαση στο κύριο περιεχόμενο"
+    },
+    "ui.header.main_content_label": {
+      "en": "Main content",
+      "es": "Contenido principal",
+      "fr": "Contenu principal",
+      "de": "Hauptinhalt",
+      "lt": "Pagrindinis turinys",
+      "pt": "Conteúdo principal",
+      "it": "Contenuto principale",
+      "no": "Hovedinnhold",
+      "el": "Κύριο περιεχόμενο"
     }
   }
 }

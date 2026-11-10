@@ -300,7 +300,7 @@ textInput(ns("email_field"), i18n$t("Email Address:"))
 3. **Verify in multiple languages**:
    - Test your feature in at least 2 languages
    - Use the language selector in the app
-   - Confirm reactive translations work (UI updates without page reload)
+   - Confirm the translated UI after the switch (the page reloads with `?language=<code>` and the layout is rebuilt in that language)
 
 ---
 

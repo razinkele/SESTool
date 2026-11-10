@@ -126,3 +126,11 @@ test_that("app.R serves the UI through make_per_language_ui", {
   expect_match(app, "make_per_language_ui\\(")
   expect_false(grepl("\nui <- bs4DashPage\\(", app))
 })
+
+test_that("the skip link and main-content label are translated (CodeRabbit, PR #143)", {
+  app <- paste(readLines(file.path(if (basename(getwd()) == "testthat") dirname(dirname(getwd())) else getwd(), "app.R"), warn = FALSE), collapse = "\n")
+  expect_false(grepl('"Skip to main content"', app, fixed = TRUE))
+  expect_false(grepl('`aria-label` = "Main content"', app, fixed = TRUE))
+  expect_match(app, 'i18n$t("ui.header.skip_to_main_content")', fixed = TRUE)
+  expect_match(app, 'i18n$t("ui.header.main_content_label")', fixed = TRUE)
+})

@@ -342,7 +342,7 @@ bs4DashPage(
     tags$a(
       href = "#main-content",
       class = "skip-link",
-      "Skip to main content"
+      i18n$t("ui.header.skip_to_main_content")
     ),
 
     # ARIA live region for dynamic status announcements to screen readers
@@ -378,7 +378,7 @@ bs4DashPage(
     workflow_stepper_ui("workflow_stepper"),
 
     # Main content landmark for skip-link target and screen readers
-    tags$div(id = "main-content", role = "main", `aria-label` = "Main content"),
+    tags$div(id = "main-content", role = "main", `aria-label` = i18n$t("ui.header.main_content_label")),
 
     bs4TabItems(
 
