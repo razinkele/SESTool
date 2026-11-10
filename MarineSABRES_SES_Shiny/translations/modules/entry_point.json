@@ -1858,6 +1858,17 @@
       "it": "Abilità:",
       "no": "Ferdighet:",
       "el": "Δεξιότητα:"
+    },
+    "modules.entry_point.go_to_step": {
+      "en": "Go to this step",
+      "es": "Ir a este paso",
+      "fr": "Aller à cette étape",
+      "de": "Zu diesem Schritt wechseln",
+      "lt": "Pereiti į šį žingsnį",
+      "pt": "Ir para este passo",
+      "it": "Vai a questo passaggio",
+      "no": "Gå til dette trinnet",
+      "el": "Μετάβαση σε αυτό το βήμα"
     }
   }
 }

@@ -86,6 +86,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     rv <- reactiveValues(
       current_screen = "welcome",  # welcome, guided, recommendations
       current_step = 0,            # 0=EP0, 1=EP1, 2=EP2-3, 4=EP4
+      max_step = 0,                # furthest step reached (progress-strip jumps)
       ep0_selected = c(),          # Changed to vector for multi-select
       ep1_selected = c(),          # Changed to vector for multi-select
       ep2_selected = c(),
@@ -218,10 +219,31 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
       rv$current_screen <- "recommendations"
     })
 
+    # ========== PROGRESS-STRIP JUMPS ==========
+    # User feedback 2026-11-10 "Interactive buttons": a click on a step in
+    # "Your Progress" goes back (or forward again) to any step already reached,
+    # keeping every answer. Ticks on the step being left are saved first, as
+    # its Back button does.
+    observeEvent(rv$current_step, {
+      rv$max_step <- max(isolate(rv$max_step), rv$current_step)
+    })
+
+    observeEvent(input$ep_jump, {
+      step <- suppressWarnings(as.numeric(input$ep_jump))
+      if (length(step) != 1 || is.na(step) || !(step %in% EP_PROGRESS_STEPS) ||
+          step > max(rv$max_step, rv$current_step) || step == rv$current_step) {
+        return()
+      }
+      if (rv$current_step == 2) commit_ep23()
+      if (rv$current_step == 4) commit_ep4()
+      rv$current_step <- step
+    })
+
     # ========== START OVER ==========
     observeEvent(input$start_over, {
       rv$current_screen <- "welcome"
       rv$current_step <- 0
+      rv$max_step <- 0
       rv$ep0_selected <- c()
       rv$ep1_selected <- c()
       rv$ep2_selected <- c()
@@ -579,6 +601,30 @@ ep_option_label <- function(ep, options, id, i18n) {
 # i18n-ref: modules.entry_point.ep4.skills_data.label
 # i18n-ref: modules.entry_point.ep4.methods.label
 
+# Guided-flow step ids, in order (EP2 and EP3 share step 2).
+EP_PROGRESS_STEPS <- c(0, 1, 2, 4)
+
+# One step of the "Your Progress" strip. A step already reached (and not the
+# current one) is a link back to it: click or Enter/Space sets input$ep_jump.
+ep_progress_step <- function(ns, rv, step, label, i18n) {
+  current <- rv$current_step
+  reached <- max(rv$max_step %||% 0, current)
+  state <- if (step == current) "active" else if (step <= reached) "completed" else ""
+  cls <- trimws(paste("ep-step", state))
+  if (step == current || step > reached) {
+    return(span(class = cls, label))
+  }
+  js <- sprintf("Shiny.setInputValue('%s', %d, {priority: 'event'})", ns("ep_jump"), as.integer(step))
+  span(
+    class = paste(cls, "ep-step-link"),
+    role = "button", tabindex = "0",
+    title = i18n$t("modules.entry_point.go_to_step"),
+    onclick = js,
+    onkeydown = sprintf("if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); %s; }", js),
+    label
+  )
+}
+
 render_guided_screen <- function(ns, rv, input, i18n) {
   tagList(
     # Progress tracker
@@ -589,13 +635,13 @@ render_guided_screen <- function(ns, rv, input, i18n) {
           h5(i18n$t("modules.entry_point.your_progress")),
           span(class = "ep-step completed", icon("check"), " ", i18n$t("modules.entry_point.welcome")),
           span("→"),
-          span(class = if(rv$current_step > 0) "ep-step completed" else "ep-step active", i18n$t("modules.entry_point.ep0_role")),
+          ep_progress_step(ns, rv, 0, i18n$t("modules.entry_point.ep0_role"), i18n),
           span("→"),
-          span(class = if(rv$current_step > 1) "ep-step completed" else if(rv$current_step == 1) "ep-step active" else "ep-step", i18n$t("modules.entry_point.ep1_need")),
+          ep_progress_step(ns, rv, 1, i18n$t("modules.entry_point.ep1_need"), i18n),
           span("→"),
-          span(class = if(rv$current_step > 2) "ep-step completed" else if(rv$current_step == 2) "ep-step active" else "ep-step", i18n$t("modules.entry_point.ep2_3_context")),
+          ep_progress_step(ns, rv, 2, i18n$t("modules.entry_point.ep2_3_context"), i18n),
           span("→"),
-          span(class = if(rv$current_step >= 4) "ep-step active" else "ep-step", i18n$t("modules.entry_point.ep4_topic")),
+          ep_progress_step(ns, rv, 4, i18n$t("modules.entry_point.ep4_topic"), i18n),
           span("→"),
           span(class = if(rv$current_screen == "recommendations") "ep-step completed" else "ep-step", icon("star"), " ", i18n$t("modules.entry_point.tools"))
         )
