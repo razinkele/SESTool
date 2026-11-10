@@ -1,103 +1,49 @@
 ---
 name: deploy
-description: Deploy the SES Toolbox to laguna.ku.lt — runs pre-deploy checks, SCPs changed files, and verifies the deployment is live
-disable-model-invocation: true
+description: Deploy the MarineSABRES app to production (laguna.ku.lt) with checks before and live verification after, using deployment/deploy-and-verify.sh. Use when the user says "deploy", asks to ship/release to laguna, or after a release PR is merged and the user agrees to deploy. Never deploy without the user's explicit go-ahead in the current conversation.
 ---
 
-# Deploy to Production
+# Deploy to laguna (checked + verified)
 
-Deploy the MarineSABRES SES Toolbox to the Shiny Server at laguna.ku.lt.
+**Standing rule (user, 2026-11-10): ask first.** Claude runs the deploy itself, but only after
+the user has explicitly said to deploy *in the current conversation*. A merged or green
+release is not permission. If unsure, ask: "1.x.y is merged, tagged and green — deploy now?"
 
-## Arguments
+## 1. Check (read-only, any time)
+From the app directory (`MarineSABRES_SES_Shiny/`), run exactly:
 
-- `--full` — Deploy all app files (default: only changed files since last commit)
-- `--data-only` — Deploy only data/ directory (KB files, templates)
-- `--skip-checks` — Skip pre-deploy validation (use with caution)
-- `--dry-run` — Show what would be deployed without actually deploying
+    bash deployment/deploy-and-verify.sh --check
 
-## Workflow
+It refuses (exit 1) unless: on `main`, in sync with `origin/main`, `VERSION` has a pushed
+`v<VERSION>` tag on HEAD (or HEAD differs from the tag only in deployment/, .claude/,
+.github/, tests/, docs/), CI `R Tests` and `i18n validation` passed on HEAD, laguna reachable.
+Uncommitted edits only warn (the deploy ships the committed tree via `git archive`).
+If it fails, report the [FAIL] line; fix the cause (release, wait for CI, pull) — never bypass.
 
-### 1. Pre-deploy validation (unless --skip-checks)
+## 2. Deploy (only after the user's go-ahead)
 
-Run the pre-deploy check:
+    bash deployment/deploy-and-verify.sh
 
-```bash
-Rscript deployment/pre-deploy-check.R
-```
+Runs the checks again, then `deploy-remote.ps1 -Force` (stdin closed), then verifies:
+HTTP 200 on https://laguna.ku.lt/marinesabres/, laguna `VERSION` matches, a worker log newer
+than the deploy start reports the same `Application version`, and no `Error in` /
+`Execution halted` lines in it. Takes ~2–4 min — run it in the background and wait for the
+notification. Exit codes: 0 deployed+verified · 1 check failed (nothing deployed) ·
+2 deploy-remote.ps1 failed · 3 deployed but live verification failed (report the lines,
+check `/var/log/shiny-server/marinesabres-shiny-*.log`; do not redeploy blindly).
 
-If it fails, stop and report. Do NOT proceed with deployment.
+`--verify` re-runs only the live checks (read-only).
 
-Also check for uncommitted changes:
+## 3. After a verified deploy
+- Browser-check what the release changed on the live site (the 1.34.2 lesson: tests miss
+  host wrappers), e.g. `?language=de` for i18n releases.
+- Feedback entries fixed by this release: re-run the feedback-triage marker with the same
+  match_title/match_timestamp/status/fix_ref plus `"fix_deployed": "<VERSION>"` (re-pull the
+  log first for a fresh `expect_total_lines`). See `.claude/skills/feedback-triage/SKILL.md`.
+- Update the project memory (deployed version, main commit).
 
-```bash
-git status --short
-```
-
-Warn if uncommitted changes exist — they won't be deployed.
-
-### 2. Determine files to deploy
-
-**If `--full`**: Deploy the entire app:
-```
-app.R global.R constants.R DESCRIPTION
-modules/*.R functions/*.R server/*.R
-data/*.json data/*.R
-translations/**/*.json
-```
-
-**If `--data-only`**: Deploy only:
-```
-data/*.json data/*.R
-```
-
-**Default** (changed files): Use git to find what changed:
-```bash
-git diff --name-only HEAD~1 -- . | grep -v '^\.'
-```
-
-Filter to deployable files only (R, JSON, CSV — not tests, scripts, docs, screenshots).
-
-### 3. Deploy via SCP
-
-The server target is: `razinka@laguna.ku.lt:/srv/shiny-server/marinesabres/`
-
-For each file, preserve the directory structure:
-
-```bash
-scp <local-path> razinka@laguna.ku.lt:/srv/shiny-server/marinesabres/<relative-path>
-```
-
-Report each file as it's deployed.
-
-### 4. Verify deployment
-
-Check the server is responding:
-
-```bash
-ssh razinka@laguna.ku.lt "ls -la /srv/shiny-server/marinesabres/app.R && curl -s -o /dev/null -w '%{http_code}' http://localhost:3838/marinesabres/"
-```
-
-Report:
-- File timestamps on server
-- HTTP status code
-- Any errors
-
-### 5. Summary
-
-```
-## Deployment Summary
-
-- Files deployed: N
-- Target: razinka@laguna.ku.lt:/srv/shiny-server/marinesabres/
-- Pre-deploy check: PASS/FAIL
-- Server status: HTTP XXX
-- Uncommitted changes: YES/NO
-```
-
-## Rules
-
-- Always confirm the file list with the user before deploying (unless --dry-run)
-- Never deploy .claude/, .git/, tests/, scripts/, docs/, *.png, *.md files
-- Never deploy .RData, .Rhistory, or credential files
-- If SCP fails for any file, report the error and continue with remaining files
-- If SSH is unavailable, report the connection error and stop
+## Permissions (one-time, set by the user — Claude cannot grant itself these)
+`.claude/settings.local.json` needs `Bash(bash deployment/deploy-and-verify.sh)`,
+`… --check` and `… --verify` in `permissions.allow`, plus an `autoMode.allow` entry
+(with `"$defaults"`) stating the ask-first rule. Without them the auto-mode classifier
+blocks the production deploy; then hand the command to the user to run with `!`.
