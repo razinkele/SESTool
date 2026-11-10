@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.1] - 2026-11-10
+
 ### Added
 - Getting Started: the steps in the "Your Progress" strip are now clickable once reached (user suggestion 2026-11-10 "Interactive buttons"). Clicking Role, Need, Context or Topic goes straight to that step with every answer kept; ticks on the step being left are saved, as with Back. Steps not reached yet stay inactive. Works with the keyboard (Tab, then Enter or Space).
 
