@@ -1,8 +1,8 @@
 {
-  "version": "1.35.0",
-  "version_name": "Pages in every language (November 2026)",
+  "version": "1.35.1",
+  "version_name": "Pages in every language, clickable progress (November 2026)",
   "release_date": "2026-11-10",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -13,6 +13,7 @@
   "security_updates": false,
   "features": [
     "Every page's fixed headings, help texts and forms now appear in the chosen language: the page layout is built per language (from ?language=) on first use and kept in memory, instead of once in English at start-up (1.35.0).",
+    "Getting Started: the steps in 'Your Progress' are clickable once reached and go straight to that step with every answer kept (1.35.1).",
     "PIMS project setup lists every case study grouped under its demonstration area: Tuscan Archipelago; Iceland, Greenland, Faroe Islands (Arctic Northeast Atlantic); Azores, Madeira, Canary Islands (Macaronesia) (1.34.1).",
     "Getting Started answer options (roles, tasks, basic needs, activity sectors, risks, knowledge topics) are translated in all 9 languages.",
     "Dropdown and checkbox options that were written in English in the code are translated (Kumu export, validation steps, BOT element types, loop effect and strength, CLD polarity, strength, confidence, layout and direction, network metrics, report types, AI assistant step title).",
@@ -77,7 +78,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.34.2",
+  "previous_version": "1.35.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
