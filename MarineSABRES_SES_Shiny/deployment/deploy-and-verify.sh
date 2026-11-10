@@ -81,18 +81,24 @@ preflight() {
   if [[ "$tag_sha" == "$SHA" ]]; then
     ok "HEAD is tagged v$VERSION (pushed)"
   else
-    # Commits after the tag are allowed only if they change nothing that ships
-    # (tooling, tests, docs); otherwise laguna would run unreleased code under
-    # the old version number.
-    local app_rel shipped
+    # Commits after the tag are allowed only if they change nothing that ships.
+    # "Ships" = what deploy-remote.ps1's `git archive` includes, i.e. files
+    # not marked export-ignore in .gitattributes (deployment/, .claude/,
+    # tests/, .gitattributes, ...). Otherwise laguna would run unreleased code
+    # under the old version number.
+    local app_rel changed shipped
     app_rel="${APP_DIR#"$REPO"/}"
-    shipped="$(git -C "$REPO" diff --name-only "$tag_sha" "$SHA" -- "$app_rel" \
-      | grep -v -E "^$app_rel/(deployment|\.claude|\.github|tests|docs)/" || true)"
+    changed="$(git -C "$REPO" diff --name-only "$tag_sha" "$SHA" -- "$app_rel")"
+    shipped=""
+    if [[ -n "$changed" ]]; then
+      shipped="$(printf '%s\n' "$changed" | git -C "$REPO" check-attr --stdin export-ignore \
+        | grep -v ': export-ignore: set$' | sed 's/: export-ignore: .*$//' || true)"
+    fi
     [[ -z "$shipped" ]] || {
       echo "$shipped" | sed 's/^/         /'
       die "main has unreleased app changes since v$VERSION (above) — release them first"
     }
-    ok "HEAD is v$VERSION plus commits that change only tooling/tests/docs"
+    ok "HEAD is v$VERSION plus commits that change only files the deploy leaves out"
   fi
 
   local wf res
