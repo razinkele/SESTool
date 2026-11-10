@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.0] - 2026-11-10
+
 ### Fixed
 - Language switch: every fixed heading, help text and form on the pages (dashboard, PIMS, AI assistant, analysis, export, report, WP5 pages, ...) stayed in English after choosing another language; only the sidebar, Getting Started and pop-ups changed (user feedback 2026-10-13 "German translation incomplete"). The page layout was built once, in English, when the app started. It is now built in the chosen language (the `?language=` the switch reloads with) the first time that language is requested, and kept in memory. The layout is always built outside Shiny's bookmark-restore step, as before, so a bookmark link cannot replay button clicks or leak one visitor's values into the shared layout; bookmarks keep restoring their saved state through the server.
 
