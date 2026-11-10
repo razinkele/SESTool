@@ -44,3 +44,16 @@
   color: white;
   border-color: #27ae60;
 }
+
+/* "Your Progress": steps already reached jump back to that step
+   (user feedback 2026-11-10 "Interactive buttons") */
+.ep-step-link {
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.ep-step-link:hover,
+.ep-step-link:focus {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.45);
+  transform: translateY(-1px);
+  outline: none;
+}

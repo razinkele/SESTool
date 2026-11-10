@@ -206,3 +206,83 @@ test_that("ep_option_text returns the translation, and English when a key is mis
   unknown <- list(id = "not_a_real_option", label = "Plain English")
   expect_identical(ep_option_text("ep2", unknown, "label", fr), "Plain English")
 })
+
+# --- user feedback 2026-11-10 "Interactive buttons": the "Your Progress"
+# steps jump back to a step already reached, keeping every answer -----------
+test_that("a progress-step click jumps back to a reached step and keeps answers", {
+  a1 <- EP2_ACTIVITY_SECTORS[[1]]$id; t1 <- EP4_TOPICS[[1]]$id
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1)
+    session$setInputs(ep0_role_click = "researcher", ep0_continue = 1)
+    session$setInputs(ep1_need_click = "fisheries", ep1_continue = 1)
+    session$setInputs(ep2_activities = a1, ep23_continue = 1)
+    expect_equal(rv$current_step, 4)
+    session$setInputs(ep4_topics = t1)
+
+    session$setInputs(ep_jump = 0)                  # back to Role from Topic
+    expect_equal(rv$current_step, 0)
+    expect_identical(rv$ep0_selected, "researcher")
+    expect_identical(rv$ep1_selected, "fisheries")
+    expect_identical(rv$ep2_selected, a1)
+    expect_identical(rv$ep4_selected, t1)           # ticks saved on leaving EP4
+
+    session$setInputs(ep_jump = 4)                  # forward again to a reached step
+    expect_equal(rv$current_step, 4)
+  })
+})
+
+test_that("leaving the context step by a jump saves its ticks", {
+  a1 <- EP2_ACTIVITY_SECTORS[[1]]$id; r1 <- EP3_RISKS_HAZARDS[[1]]$id
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1, ep0_skip = 1, ep1_skip = 1)
+    expect_equal(rv$current_step, 2)
+    session$setInputs(ep2_activities = a1, ep3_risks = r1)
+    session$setInputs(ep_jump = 1)
+    expect_equal(rv$current_step, 1)
+    expect_identical(rv$ep2_selected, a1)
+    expect_identical(rv$ep3_selected, r1)
+  })
+})
+
+test_that("steps not reached yet, and unknown values, cannot be jumped to", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1, ep0_skip = 1)
+    expect_equal(rv$current_step, 1)
+    session$setInputs(ep_jump = 4)
+    expect_equal(rv$current_step, 1)
+    session$setInputs(ep_jump = 2)
+    expect_equal(rv$current_step, 1)
+    session$setInputs(ep_jump = 3)                  # not a step id
+    expect_equal(rv$current_step, 1)
+    session$setInputs(ep_jump = "x")
+    expect_equal(rv$current_step, 1)
+    session$setInputs(ep_jump = 0)
+    expect_equal(rv$current_step, 0)
+  })
+})
+
+test_that("Start over forgets how far the user got", {
+  testServer(real_entry_point_server,
+             args = list(project_data_reactive = reactive(list()), i18n = i18n), {
+    session$setInputs(start_guided = 1, ep0_skip = 1, ep1_skip = 1)
+    session$setInputs(start_over = 1)
+    session$setInputs(start_guided = 2)
+    session$setInputs(ep_jump = 2)
+    expect_equal(rv$current_step, 0)
+  })
+})
+
+test_that("reached steps render as clickable links; later steps do not", {
+  rv <- list(current_screen = "guided", current_step = 1, max_step = 1,
+             ep0_selected = c(), ep1_selected = c(), ep2_selected = c(),
+             ep3_selected = c(), ep4_selected = c())
+  html <- as.character(render_guided_screen(shiny::NS("ep"), rv, list(), i18n))
+  links <- regmatches(html, gregexpr('<span[^>]*ep-step-link[^>]*>', html))[[1]]
+  expect_length(links, 1)                           # EP0 only (EP1 is current)
+  expect_match(links[1], "ep-ep_jump", fixed = TRUE)
+  expect_match(links[1], 'tabindex="0"', fixed = TRUE)
+  expect_match(links[1], 'role="button"', fixed = TRUE)
+})
