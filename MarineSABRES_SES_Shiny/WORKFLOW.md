@@ -131,9 +131,8 @@ Rscript -e "testthat::test_file('tests/testthat/test-pims-module.R')"
 Full reference: [CLAUDE.md](CLAUDE.md) § Module Conventions.
 
 ```r
-# UI function — usei18n FIRST, then ns
+# UI function — no usei18n() here (app.R includes it once)
 my_module_ui <- function(id, i18n) {
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   # ...
 }

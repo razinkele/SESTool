@@ -37,8 +37,6 @@ This document defines the standard conventions for Shiny modules in the MarineSA
 #' @return A Shiny UI element
 #' @export
 module_name_ui <- function(id, i18n) {
-  # REQUIRED: Enable reactive translations (defensive form)
-  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   # UI implementation
@@ -51,7 +49,7 @@ module_name_ui <- function(id, i18n) {
 ```
 
 ### Key Requirements
-1. **Always use the defensive `usei18n()` wrapper** as the first line: `tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)`
+1. **Do not call `shiny.i18n::usei18n()`** in module UIs: `app.R` includes it once and builds the page layout per language (`make_per_language_ui()`)
 2. **Create namespace** with `ns <- NS(id)`
 3. **Use `i18n$t()`** for all user-facing text
 4. **Use `ns()`** for all input/output IDs

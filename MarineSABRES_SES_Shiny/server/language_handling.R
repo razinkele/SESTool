@@ -251,13 +251,28 @@ make_per_language_ui <- function(build_fn, translator, available, default = "en"
     old_lang <- translator$get_translation_language()
     on.exit(translator$set_translation_language(old_lang), add = TRUE)
     translator$set_translation_language(lang)
-    build_fn()
+    if (neutral_restore) {
+      # Shiny calls ui(request) inside the request's bookmark restore context;
+      # build outside it so bookmarked values (e.g. actionButton click counts,
+      # which would re-fire observeEvent handlers) never reach the static
+      # inputs, as with the old static ui. Bookmarks still restore through the
+      # server's onRestore (server/bookmarking.R).
+      shiny_ns$withRestoreContext(shiny_ns$RestoreContext$new(), build_fn())
+    } else {
+      build_fn()
+    }
   }
+
+  # shiny's own uiHttpHandler uses these (unexported) helpers; if a future
+  # shiny drops them, bookmark requests fall back to an uncached build.
+  shiny_ns <- asNamespace("shiny")
+  neutral_restore <- exists("withRestoreContext", envir = shiny_ns, inherits = FALSE) &&
+    exists("RestoreContext", envir = shiny_ns, inherits = FALSE)
 
   ui <- function(request) {
     qs <- request$QUERY_STRING
     lang <- resolve_ui_language(qs, available, default)
-    if (has_bookmark_restore(qs)) {
+    if (!neutral_restore && has_bookmark_restore(qs)) {
       debug_log(sprintf("Building uncached UI for bookmark restore (%s)", lang), "LANGUAGE")
       return(build_in(lang))
     }

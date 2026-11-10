@@ -28,7 +28,7 @@ Create a new Shiny module following all MarineSABRES SES Toolbox conventions.
 Use the template from `modules/_module_template.R` as the base. Fill in:
 
 - Module header comment block with name, file path, purpose, exports
-- UI function with `shiny.i18n::usei18n(i18n$translator %||% i18n)` and `ns <- NS(id)`
+- UI function starting with `ns <- NS(id)` (no `shiny.i18n::usei18n()` call — `app.R` includes it once; `test-i18n-enforcement.R` fails on a module call)
 - Server function with `moduleServer`, `rv <- reactiveValues()`, and section separators
 - For `analysis` type: include the stale data observer pattern:
 

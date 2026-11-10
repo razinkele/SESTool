@@ -81,15 +81,32 @@ test_that("a failed build restores the translator and is not cached", {
   expect_equal(ui(fake_request("?language=de")), "de")
 })
 
-test_that("bookmark-restore requests get a fresh build that is never cached", {
+# Shiny calls ui(request) inside the request's restore context, so with a
+# function ui, bookmarked values (incl. actionButton click counts, which would
+# re-fire observeEvent handlers) would flow into the static inputs. The static
+# app never did that; the layout must be built outside any bookmark context.
+# shiny:::RestoreContext / withRestoreContext are what uiHttpHandler uses.
+in_bookmark_context <- function(query, expr) {
+  shiny:::withRestoreContext(shiny:::RestoreContext$new(query), expr)
+}
+
+test_that("bookmarked input values never flow into the static layout", {
+  tr <- fake_translator("en")
+  ui <- make_per_language_ui(function() shiny::restoreInput("btn", 0), tr, langs)
+  q <- "_inputs_&language=de&btn=3"
+  expect_equal(in_bookmark_context(q, ui(fake_request(paste0("?", q)))), 0)
+  # Guard that the fixture really is a bookmark context:
+  expect_equal(in_bookmark_context(q, shiny::restoreInput("btn", 0)), 3)
+})
+
+test_that("bookmark links share the cached layout of their language", {
   tr <- fake_translator("en")
   calls <- 0
-  ui <- make_per_language_ui(function() { calls <<- calls + 1; paste0("v", calls) }, tr, langs)
-  expect_equal(ui(fake_request("?_inputs_&language=de&x=1")), "v1")
-  expect_false(exists("de", envir = attr(ui, "cache"), inherits = FALSE))
-  # A plain German request afterwards must not receive the bookmark build.
-  expect_equal(ui(fake_request("?language=de")), "v2")
-  expect_equal(ui(fake_request("?language=de")), "v2")
+  ui <- make_per_language_ui(function() { calls <<- calls + 1; shiny::restoreInput("x", "default") }, tr, langs)
+  q <- "_inputs_&language=de&x=%22from_bookmark%22"
+  expect_equal(in_bookmark_context(q, ui(fake_request(paste0("?", q)))), "default")
+  expect_equal(ui(fake_request("?language=de")), "default")
+  expect_equal(calls, 1)
 })
 
 test_that("a German build does not change the language another session sees", {
