@@ -1,8 +1,8 @@
 {
-  "version": "1.34.2",
-  "version_name": "Template connection review fix (October 2026)",
-  "release_date": "2026-10-23",
-  "release_type": "patch",
+  "version": "1.35.0",
+  "version_name": "Pages in every language (November 2026)",
+  "release_date": "2026-11-10",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -12,6 +12,7 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "Every page's fixed headings, help texts and forms now appear in the chosen language: the page layout is built per language (from ?language=) on first use and kept in memory, instead of once in English at start-up (1.35.0).",
     "PIMS project setup lists every case study grouped under its demonstration area: Tuscan Archipelago; Iceland, Greenland, Faroe Islands (Arctic Northeast Atlantic); Azores, Madeira, Canary Islands (Macaronesia) (1.34.1).",
     "Getting Started answer options (roles, tasks, basic needs, activity sectors, risks, knowledge topics) are translated in all 9 languages.",
     "Dropdown and checkbox options that were written in English in the code are translated (Kumu export, validation steps, BOT element types, loop effect and strength, CLD polarity, strength, confidence, layout and direction, network metrics, report types, AI assistant step title).",
@@ -31,6 +32,7 @@
       "Added links failed to bind to baseline edges that carry extra columns."
     ],
     "performance": [
+      "Page layout build went from about 11 s to 3 s (first page after start-up 17 s to 9 s) by removing the per-module usei18n() calls (1.35.0).",
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
@@ -45,6 +47,7 @@
       "Auto-save backups wrote empty fields without null, so recovery could drop a whole element category; the loader now binds rows by key union, so older backups recover too (WS-4)."
     ],
     "low": [
+      "The keyboard skip link and the main-content screen-reader label are translated (1.35.0).",
       "Tooltips on the connection review raised a JavaScript error on every update (Bootstrap 4 has no Tooltip.getInstance) (1.34.1).",
       "Workshop export: tenet point columns read '1 = Completely disagree' ... '5 = Completely agree'; Lithuanian 'Label' header corrected (1.32.3).",
       "Workshop and readiness xlsx files: column headers and labels in the user's language; the answers sheets keep their code headers so they can still be imported (1.32.2).",
@@ -74,7 +77,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.34.1",
+  "previous_version": "1.34.2",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
