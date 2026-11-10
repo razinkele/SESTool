@@ -200,7 +200,12 @@ debug_log(sprintf("Module loading complete: %d critical, %d optional loaded, %d 
 # rather than aliases (dashboardPage, dashboardSidebar) for clarity and to avoid
 # confusion with legacy shinydashboard package. Both are valid in bs4Dash 2.0+.
 
-ui <- bs4DashPage(
+# build_app_ui() is called once per language (see make_per_language_ui() in
+# server/language_handling.R), with the shared translator switched to that
+# language, so every i18n$t() below resolves in the visitor's language.
+# (Body left at its original indentation to keep history readable.)
+build_app_ui <- function() {
+bs4DashPage(
   # Page title (displayed in browser tab)
   title = i18n$t("ui.header.page_title"),
 
@@ -582,6 +587,12 @@ ui <- bs4DashPage(
   help = NULL,  # Disable bs4Dash's built-in help toggle (we use custom tooltip implementation)
   dark = NULL
 )
+}
+
+# Shiny calls ui(request) per page load: the layout is built in the language
+# given by ?language= (custom.js reloads with it on a language switch and on a
+# saved-language restore), on first use, and cached per language.
+ui <- make_per_language_ui(build_app_ui, i18n$translator, names(AVAILABLE_LANGUAGES))
 
 # ============================================================================
 # SERVER
@@ -711,8 +722,9 @@ server <- function(input, output, session) {
   # ========== SESSION-LOCAL I18N TRANSLATOR ==========
   # ARCHITECTURE NOTE: The app uses a dual i18n system by design:
   #
-  # 1. Global i18n (global.R) - Used for static UI rendering at app startup
-  #    - Loaded once, shared read-only translator
+  # 1. Global i18n (global.R) - Used for static UI rendering (build_app_ui(),
+  #    once per language via make_per_language_ui())
+  #    - Loaded once, shared translator
   #    - Used in UI functions: xxx_ui(id, i18n)
   #
   # 2. Session-local session_i18n (here) - Used for runtime translations
