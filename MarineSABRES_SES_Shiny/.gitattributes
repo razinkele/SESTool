@@ -20,3 +20,4 @@ data/wp5_worldview_matrix.json text eol=lf
 data/wp5_governance_profiles.json text eol=lf
 data/wp5_readiness_items.json text eol=lf
 data/wp5_tenet_guiding_questions.json text eol=lf
+deployment/deploy-and-verify.sh text eol=lf
