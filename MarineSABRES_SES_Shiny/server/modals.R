@@ -152,8 +152,8 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
       message = list(text = loading_messages[[new_lang]])
     )
 
-    # Update the translator language
-    shiny.i18n::update_lang(new_lang, session)
+    # Update the translator language (the page then reloads with
+    # ?language=new_lang, which rebuilds the layout in that language)
     i18n$set_translation_language(new_lang)
 
     # IMPORTANT: Save project data to sessionStorage before reload to preserve user's work

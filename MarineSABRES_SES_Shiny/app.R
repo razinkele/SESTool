@@ -850,9 +850,6 @@ server <- function(input, output, session) {
         }
         debug_log(sprintf("Session language set. Current: %s", session_i18n$get_translation_language()), "LANGUAGE")
 
-        # Use shiny.i18n's built-in update mechanism for elements with data-i18n attributes
-        shiny.i18n::update_lang(query$language, session)
-
         # Capture translations NOW (before async call) to ensure they're strings
         # Use session_i18n for session-specific translations
         header_translations <- list(
