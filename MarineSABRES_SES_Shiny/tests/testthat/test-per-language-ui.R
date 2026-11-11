@@ -134,3 +134,23 @@ test_that("the skip link and main-content label are translated (CodeRabbit, PR #
   expect_match(app, 'i18n$t("ui.header.skip_to_main_content")', fixed = TRUE)
   expect_match(app, 'i18n$t("ui.header.main_content_label")', fixed = TRUE)
 })
+
+# shiny.i18n 0.3.0's input binding subscribes with $(el).on('change', callback),
+# so Shiny receives the jQuery event object as the "priority" argument; newer
+# Shiny (>= 1.13 on laguna) rejects it: "Unexpected input value mode:
+# '[object Object]'" in the console on every ?language= load. update_lang()
+# had no effect here anyway: the page has no shiny.i18n `.i18n` elements, no
+# code reads session$userData$shiny.i18n$lang, and the language switch reloads
+# the page so the layout is rebuilt in the new language (make_per_language_ui).
+test_that("the app never calls shiny.i18n::update_lang() (console error, no effect)", {
+  root <- if (basename(getwd()) == "testthat") dirname(dirname(getwd())) else getwd()
+  files <- c(file.path(root, "app.R"),
+             list.files(file.path(root, c("server", "modules", "functions")),
+                        pattern = "[.]R$", full.names = TRUE, recursive = TRUE))
+  hits <- character()
+  for (f in files) {
+    code <- sub("#.*$", "", readLines(f, warn = FALSE))
+    if (any(grepl("update_lang[[:space:]]*[(]", code))) hits <- c(hits, basename(f))
+  }
+  expect_equal(hits, character(), info = paste("update_lang() still called in:", paste(hits, collapse = ", ")))
+})

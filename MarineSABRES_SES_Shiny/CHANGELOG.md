@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Browser console: every page opened in a language other than the default logged "Unexpected input value mode: '[object Object]'" (seen since at least April 2026). It came from `shiny.i18n::update_lang()`: the package's language input passes a jQuery event where newer Shiny expects a priority value. The call had no effect in this app (no element used it, and a language switch reloads the page in the new language), so it was removed from the page start and from the language dialog.
+
 ## [1.35.1] - 2026-11-10
 
 ### Added
