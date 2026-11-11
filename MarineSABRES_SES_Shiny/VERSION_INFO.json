@@ -1,7 +1,7 @@
 {
-  "version": "1.35.2",
-  "version_name": "Pages in every language, clickable progress, fairer AI suggestions (November 2026)",
-  "release_date": "2026-11-11",
+  "version": "1.35.3",
+  "version_name": "Pages in every language, clickable progress, fairer AI suggestions, terms explained (November 2026)",
+  "release_date": "2026-11-12",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,6 +12,9 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "Dashboard: a collapsible glossary explains CLD, ISA, PIMS, DAPSI(W)R(M) and leverage point in all 9 languages (1.35.3).",
+    "Leverage page: 'About Leverage Points' explains in-degree and out-degree (1.35.3).",
+    "Connection review: after 'Approve all' the page scrolls to the next step instead of leaving the user to scroll past every card (1.35.3).",
     "Every page's fixed headings, help texts and forms now appear in the chosen language: the page layout is built per language (from ?language=) on first use and kept in memory, instead of once in English at start-up (1.35.0).",
     "Getting Started: the steps in 'Your Progress' are clickable once reached and go straight to that step with every answer kept (1.35.1).",
     "PIMS project setup lists every case study grouped under its demonstration area: Tuscan Archipelago; Iceland, Greenland, Faroe Islands (Arctic Northeast Atlantic); Azores, Madeira, Canary Islands (Macaronesia) (1.34.1).",
@@ -21,6 +24,8 @@
   ],
   "fixes": {
     "medium": [
+      "Loop analysis: the dominance score is described as the app computes it (100 divided by the number of elements in the loop), not as centrality-based; Loop Strength Analysis explains its chart (1.35.3).",
+      "Knowledge base and AI suggestions: climate change, hypoxia and coastal erosion are Pressures, policies are Responses, monitoring is an Activity, and discharge pressures name what is discharged, following a marine-science expert's rulings (first part) (1.35.3).",
       "AI assistant: step 3 asks which topics or sectors the study is about; the chosen topics no longer add fixed (mostly fishing, mostly negative) suggestion lists; activities are no longer suggested as Drivers; knowledge-base labels are kept when similar labels are merged (1.35.2).",
       "Leverage page: the 'Response Measures' next step opens Response Measures; next-step cards for pages not in the user's menu are hidden (1.35.2).",
       "Connection review on the template and import pages no longer tells the user to click a 'Finish & Continue' button that only the AI assistant has (1.35.2).",
@@ -82,7 +87,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.35.1",
+  "previous_version": "1.35.2",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
