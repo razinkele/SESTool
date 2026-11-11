@@ -4555,15 +4555,15 @@
       "el": "Τα οικοσυστήματα %s έχουν μοναδικά χαρακτηριστικά που θα λάβω υπόψη στις προτάσεις μου."
     },
     "modules.isa.ai_assistant.focus_on_issue": {
-      "en": "Understood. I'll focus suggestions on %s.",
-      "es": "Entendido. Centraré las sugerencias en %s.",
-      "fr": "Compris. Je concentrerai les suggestions sur %s.",
-      "de": "Verstanden. Ich werde die Vorschläge auf %s konzentrieren.",
-      "lt": "Supratau. Pasiūlymus sutelksiu į %s.",
-      "pt": "Entendido. Focarei as sugestões em %s.",
-      "it": "Capito. Concentrerò i suggerimenti su %s.",
-      "no": "Forstått. Jeg vil fokusere forslagene på %s.",
-      "el": "Κατανοητό. Θα επικεντρώσω τις προτάσεις στο %s."
+      "en": "Noted. Your study focuses on: %s.",
+      "es": "Anotado. Su estudio se centra en: %s.",
+      "fr": "Noté. Votre étude porte sur : %s.",
+      "de": "Notiert. Ihre Studie konzentriert sich auf: %s.",
+      "lt": "Pažymėta. Jūsų tyrimas skirtas: %s.",
+      "pt": "Anotado. O seu estudo centra-se em: %s.",
+      "it": "Annotato. Il tuo studio si concentra su: %s.",
+      "no": "Notert. Studien din handler om: %s.",
+      "el": "Σημειώθηκε. Η μελέτη σας εστιάζει σε: %s."
     },
     "modules.isa.ai_assistant.start_building_framework": {
       "en": "Now let's start building your DAPSI(W)R(M) framework!",

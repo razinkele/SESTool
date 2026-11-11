@@ -659,7 +659,7 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
       fjord = c("Aquaculture expansion", "Tourism demand", "Hydropower influence",
                 "Shipping access", "Freshwater runoff management"),
       offshore = switch(sea_group,
-        northern = c("Wind energy demand", "Oil and gas extraction", "Shipping routes",
+        northern = c("Wind energy demand", "Oil and gas extraction",
                      "Sand and gravel extraction", "Cable and pipeline corridors"),
         warm = c("Deep-sea mining interest", "Shipping lanes", "Tuna fisheries demand",
                  "Oil exploration", "Telecommunications cables"),

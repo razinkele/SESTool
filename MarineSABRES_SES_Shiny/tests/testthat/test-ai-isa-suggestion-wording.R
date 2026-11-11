@@ -66,3 +66,27 @@ test_that("deduplication never drops a knowledge-base label for a generic one", 
   # without protected labels the old rule stands (label with fewer words kept)
   expect_identical(deduplicate_suggestions(c("Trawl fishing", "Trawling")), "Trawling")
 })
+
+test_that("the fallback lists (knowledge base has nothing for the context) suggest no sectors as Drivers", {
+  sectors <- c("Shipping routes", "Maritime transport", "Resource extraction", "Beach tourism")
+  for (sea in c("baltic", "north_sea", "irish_sea")) {
+    s <- get_habitat_specific_suggestions("drivers", sea, "Offshore waters")
+    expect_true(length(s) > 0, info = sea)
+    expect_false(any(s %in% sectors), info = paste(sea, paste(intersect(s, sectors), collapse = ", ")))
+  }
+})
+
+test_that("the custom-topic reply no longer promises focused suggestions", {
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  fp <- file.path(root, "translations", "modules", "isa_data_entry.json")
+  skip_if_not(file.exists(fp), "isa_data_entry.json not found")
+  tr <- jsonlite::fromJSON(fp, simplifyVector = FALSE)$translation
+  entry <- tr[["modules.isa.ai_assistant.focus_on_issue"]]
+  expect_false(is.null(entry))
+  expect_identical(entry$en, "Noted. Your study focuses on: %s.")
+  for (lang in c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")) {
+    expect_equal(lengths(regmatches(entry[[lang]], gregexpr("%s", entry[[lang]], fixed = TRUE))), 1,
+                 info = lang)
+  }
+})
