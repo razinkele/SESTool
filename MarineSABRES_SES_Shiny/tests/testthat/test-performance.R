@@ -291,6 +291,12 @@ test_that("DataFrame binding is efficient", {
     )
   })
 
+  # Warm up: the first bind_rows() call in a fresh process pays one-off
+  # dispatch/setup cost (~10 ms on CI), which made the first-timed "single"
+  # bind look slower than the whole loop (CI 2026-11-11, PR #149).
+  invisible(dplyr::bind_rows(df_list[[1]], df_list[[2]]))
+  invisible(do.call(dplyr::bind_rows, df_list))
+
   # Single bind_rows (efficient)
   timing_single <- measure_time({
     result <- do.call(dplyr::bind_rows, df_list)
