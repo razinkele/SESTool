@@ -187,6 +187,7 @@ analysis_loops_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.strength_analysis")),
+                  p(class = "text-muted small", i18n$t("modules.analysis.loops.strength_analysis_desc")),
                   plotOutput(ns("loop_strength_plot"), height = PLOT_HEIGHT_MD),
                   downloadButton(ns("download_loop_strength_png"), i18n$t("modules.analysis.loops.download_png"),
                                  class = "btn-sm btn-outline-primary")

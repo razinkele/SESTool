@@ -38,7 +38,9 @@ analysis_leverage_ui <- function(id, i18n) {
             tags$ul(
               tags$li(strong(i18n$t("modules.analysis.leverage.betweenness_label")), " ", i18n$t("modules.analysis.leverage.betweenness_desc")),
               tags$li(strong(i18n$t("modules.analysis.leverage.eigenvector_label")), " ", i18n$t("modules.analysis.leverage.eigenvector_desc")),
-              tags$li(strong(i18n$t("modules.analysis.leverage.pagerank_label")), " ", i18n$t("modules.analysis.leverage.pagerank_desc"))
+              tags$li(strong(i18n$t("modules.analysis.leverage.pagerank_label")), " ", i18n$t("modules.analysis.leverage.pagerank_desc")),
+              tags$li(strong(i18n$t("modules.analysis.leverage.in_degree_label")), " ", i18n$t("modules.analysis.leverage.in_degree_desc")),
+              tags$li(strong(i18n$t("modules.analysis.leverage.out_degree_label")), " ", i18n$t("modules.analysis.leverage.out_degree_desc"))
             )
           )
         )

@@ -99,6 +99,50 @@
       "no": "Samlet viktighet i nettverket",
       "el": "Συνολική σημασία στο δίκτυο"
     },
+    "modules.analysis.leverage.in_degree_label": {
+      "en": "In-degree:",
+      "es": "Grado de entrada:",
+      "fr": "Degré entrant :",
+      "de": "Eingangsgrad:",
+      "lt": "Įeinantis laipsnis:",
+      "pt": "Grau de entrada:",
+      "it": "Grado in entrata:",
+      "no": "Inngrad:",
+      "el": "Βαθμός εισόδου:"
+    },
+    "modules.analysis.leverage.in_degree_desc": {
+      "en": "Number of links pointing into the element: how many other elements directly influence it",
+      "es": "Número de enlaces que llegan al elemento: cuántos otros elementos lo influyen directamente",
+      "fr": "Nombre de liens qui arrivent à l'élément : combien d'autres éléments l'influencent directement",
+      "de": "Anzahl der Verbindungen, die zum Element führen: wie viele andere Elemente es direkt beeinflussen",
+      "lt": "Į elementą ateinančių ryšių skaičius: kiek kitų elementų jį tiesiogiai veikia",
+      "pt": "Número de ligações que chegam ao elemento: quantos outros elementos o influenciam diretamente",
+      "it": "Numero di collegamenti che arrivano all'elemento: quanti altri elementi lo influenzano direttamente",
+      "no": "Antall koblinger som går inn til elementet: hvor mange andre elementer som påvirker det direkte",
+      "el": "Αριθμός συνδέσεων που καταλήγουν στο στοιχείο: πόσα άλλα στοιχεία το επηρεάζουν άμεσα"
+    },
+    "modules.analysis.leverage.out_degree_label": {
+      "en": "Out-degree:",
+      "es": "Grado de salida:",
+      "fr": "Degré sortant :",
+      "de": "Ausgangsgrad:",
+      "lt": "Išeinantis laipsnis:",
+      "pt": "Grau de saída:",
+      "it": "Grado in uscita:",
+      "no": "Utgrad:",
+      "el": "Βαθμός εξόδου:"
+    },
+    "modules.analysis.leverage.out_degree_desc": {
+      "en": "Number of links leaving the element: how many other elements it directly influences",
+      "es": "Número de enlaces que salen del elemento: cuántos otros elementos influye directamente",
+      "fr": "Nombre de liens qui partent de l'élément : combien d'autres éléments il influence directement",
+      "de": "Anzahl der Verbindungen, die vom Element ausgehen: wie viele andere Elemente es direkt beeinflusst",
+      "lt": "Iš elemento išeinančių ryšių skaičius: kiek kitų elementų jis tiesiogiai veikia",
+      "pt": "Número de ligações que saem do elemento: quantos outros elementos ele influencia diretamente",
+      "it": "Numero di collegamenti che partono dall'elemento: quanti altri elementi influenza direttamente",
+      "no": "Antall koblinger som går ut fra elementet: hvor mange andre elementer det påvirker direkte",
+      "el": "Αριθμός συνδέσεων που ξεκινούν από το στοιχείο: πόσα άλλα στοιχεία επηρεάζει άμεσα"
+    },
     "modules.analysis.leverage.network_info": {
       "en": "Node sizes reflect composite leverage scores. Larger nodes = higher leverage.",
       "es": "Los tamaños de los nodos reflejan las puntuaciones compuestas de apalancamiento. Nodos más grandes = mayor apalancamiento.",

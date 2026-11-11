@@ -210,15 +210,26 @@
       "el": "Μετρικές κυριαρχίας"
     },
     "modules.analysis.loops.dominance_desc": {
-      "en": "Loops are ranked by length, centrality, and element importance.",
-      "es": "Los bucles se clasifican por longitud, centralidad e importancia de los elementos.",
-      "fr": "Les boucles sont classées par longueur, centralité et importance des éléments.",
-      "de": "Schleifen werden nach Länge, Zentralität und Elementwichtigkeit eingestuft.",
-      "lt": "Kilpos rikiuojamos pagal ilgį, centrališkumą ir elementų svarbą.",
-      "pt": "Os loops são classificados por comprimento, centralidade e importância dos elementos.",
-      "it": "I loop sono classificati per lunghezza, centralità e importanza degli elementi.",
-      "no": "Løkker rangeres etter lengde, sentralitet og elementviktighet.",
-      "el": "Οι βρόχοι κατατάσσονται κατά μήκος, κεντρικότητα και σημασία στοιχείων."
+      "en": "Loops are ranked by their dominance score: 100 divided by the number of elements in the loop. Shorter loops score higher (4 elements = 25, 10 elements = 10). The score only ranks loops within this model; there is no good or bad value.",
+      "es": "Los bucles se clasifican por su puntuación de dominancia: 100 dividido por el número de elementos del bucle. Los bucles más cortos puntúan más alto (4 elementos = 25, 10 elementos = 10). La puntuación solo ordena los bucles de este modelo; no hay un valor bueno o malo.",
+      "fr": "Les boucles sont classées selon leur score de dominance : 100 divisé par le nombre d'éléments de la boucle. Les boucles plus courtes obtiennent un score plus élevé (4 éléments = 25, 10 éléments = 10). Le score sert uniquement à classer les boucles de ce modèle ; il n'y a pas de bonne ou de mauvaise valeur.",
+      "de": "Schleifen werden nach ihrem Dominanzwert geordnet: 100 geteilt durch die Anzahl der Elemente in der Schleife. Kürzere Schleifen erhalten höhere Werte (4 Elemente = 25, 10 Elemente = 10). Der Wert ordnet nur die Schleifen dieses Modells; es gibt keinen guten oder schlechten Wert.",
+      "lt": "Kilpos rikiuojamos pagal dominavimo balą: 100 padalyta iš kilpos elementų skaičiaus. Trumpesnės kilpos gauna didesnį balą (4 elementai = 25, 10 elementų = 10). Balas tik rikiuoja šio modelio kilpas; gerų ar blogų reikšmių nėra.",
+      "pt": "Os loops são classificados pela sua pontuação de dominância: 100 dividido pelo número de elementos do loop. Loops mais curtos têm pontuação mais alta (4 elementos = 25, 10 elementos = 10). A pontuação apenas ordena os loops deste modelo; não há um valor bom ou mau.",
+      "it": "I loop sono ordinati in base al punteggio di dominanza: 100 diviso per il numero di elementi del loop. I loop più corti hanno un punteggio più alto (4 elementi = 25, 10 elementi = 10). Il punteggio serve solo a ordinare i loop di questo modello; non esiste un valore buono o cattivo.",
+      "no": "Løkker rangeres etter dominanspoeng: 100 delt på antall elementer i løkken. Kortere løkker får høyere poeng (4 elementer = 25, 10 elementer = 10). Poengene rangerer bare løkkene i denne modellen; det finnes ingen god eller dårlig verdi.",
+      "el": "Οι βρόχοι κατατάσσονται με βάση τον βαθμό κυριαρχίας τους: 100 διαιρούμενο με τον αριθμό των στοιχείων του βρόχου. Οι μικρότεροι βρόχοι έχουν υψηλότερο βαθμό (4 στοιχεία = 25, 10 στοιχεία = 10). Ο βαθμός απλώς κατατάσσει τους βρόχους αυτού του μοντέλου· δεν υπάρχει καλή ή κακή τιμή."
+    },
+    "modules.analysis.loops.strength_analysis_desc": {
+      "en": "Bars show each loop's dominance score (the 15 highest); shorter loops have longer bars.",
+      "es": "Las barras muestran la puntuación de dominancia de cada bucle (las 15 más altas); los bucles más cortos tienen barras más largas.",
+      "fr": "Les barres indiquent le score de dominance de chaque boucle (les 15 plus élevés) ; les boucles plus courtes ont des barres plus longues.",
+      "de": "Die Balken zeigen den Dominanzwert jeder Schleife (die 15 höchsten); kürzere Schleifen haben längere Balken.",
+      "lt": "Stulpeliai rodo kiekvienos kilpos dominavimo balą (15 didžiausių); trumpesnių kilpų stulpeliai ilgesni.",
+      "pt": "As barras mostram a pontuação de dominância de cada loop (as 15 mais altas); loops mais curtos têm barras mais longas.",
+      "it": "Le barre mostrano il punteggio di dominanza di ogni loop (i 15 più alti); i loop più corti hanno barre più lunghe.",
+      "no": "Stolpene viser dominanspoengene for hver løkke (de 15 høyeste); kortere løkker har lengre stolper.",
+      "el": "Οι ράβδοι δείχνουν τον βαθμό κυριαρχίας κάθε βρόχου (οι 15 υψηλότεροι)· οι μικρότεροι βρόχοι έχουν μεγαλύτερες ράβδους."
     },
     "modules.analysis.loops.strength_analysis": {
       "en": "Loop Strength Analysis",
