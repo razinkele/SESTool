@@ -254,12 +254,23 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
 
 **D → P (Exogenic Unmanaged Pressures)**
 
-Climate change and other exogenic drivers can create pressures directly without a locally identifiable activity intermediary. Reference: Elliott 2011 "Exogenic unmanaged pressures."
+Some pressures arise outside the system and cannot be managed locally (Elliott 2011, "exogenic unmanaged pressures"). Climate change is the main case. Since the 2026-11-11 expert ruling (see Classification Rulings below), climate change is itself classified as a **Pressure**, so its effects are modelled as P → P or P → C/S. Example: "Climate change and ocean warming" → "Ocean warming and marine heatwaves" (P → P).
 
-- Valid use: "Climate change" → "Ocean warming" (the driver produces the pressure without a locally identifiable activity)
-- Valid use: "Climate change" → "Coastal flooding" (-) (the driver produces the pressure; note this is D→P, NOT the formerly mis-labelled D→GB "Rule 15" shortcut — the welfare impact is downstream via the full cascade)
+The validator still accepts D → P, so user models that list climate change as a Driver keep working.
+
+- Accepted: "Climate change" (entered as a Driver) → "Ocean warming"
 - Invalid use: "Population growth" → "Coastal urbanization" (urbanization is an Activity, not a Pressure)
-- 3 of the 4 D→P connections in the KB are valid ExUP cases (all climate-driven); the fourth was fixed via element reclassification in the KB cleanup.
+- The main KB has no D → P connections: its three climate drivers were reclassified as pressures on 2026-11-11.
+
+### Classification Rulings (marine-science expert, 2026-11-11)
+
+These settle the category questions raised by user feedback on the AI-assisted suggestions (PR #149).
+
+1. **Climate change is a Pressure.** It is exogenous and cannot be managed locally; management mitigates its impacts. A human *need* that it creates (e.g. "Climate change adaptation needs") can still be a Driver.
+2. **"X discharge":** the act of discharging is an **Activity**; the substance X put into the system is the **Pressure**. Example: "Deballasting" (A) → "Number of invasive species" (P) (+).
+3. **Hypoxia, algal blooms and coastal erosion are Pressures.** They act on State components: "Coastal erosion" → "Area of coastal land" (-); "Hypoxia" → "Species abundance" (-); "Algal blooms" → "Seagrass area" (-).
+4. **Policies are Responses (Measures), not Drivers.** In modelling, existing responses are included first; new ones are then tested as what-if scenarios.
+5. **Research and monitoring are Activities**, not Measures.
 
 ## Connection Matrices
 

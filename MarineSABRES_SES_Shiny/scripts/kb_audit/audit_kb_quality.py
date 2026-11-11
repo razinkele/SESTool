@@ -145,10 +145,12 @@ def audit_kb(kb_path: str) -> dict:
                 key = rationale.strip()[:200]
                 all_rationales[key].append(entry)
 
-        # Flag 7: Research/monitoring elements typed as activities
-        activities_list = context_data.get("activities", [])
-        if isinstance(activities_list, list):
-            for elem in activities_list:
+        # Flag 7: Research/monitoring elements typed as responses.
+        # Expert ruling 2026-11-11: research and monitoring are Activities, not
+        # Measures, so the ones still listed as responses need review.
+        responses_list = context_data.get("responses", [])
+        if isinstance(responses_list, list):
+            for elem in responses_list:
                 name = elem.get("name", "") if isinstance(elem, dict) else str(elem)
                 if not name:
                     continue
@@ -213,7 +215,7 @@ def write_markdown(report: dict, output_path: str):
         f"| Duplicate rationale groups | {s['duplicate_rationale_groups']} |",
         f"| Single-reference connections | {s['single_reference_count']} |",
         f"| Non-framework transitions | {s['non_framework_transition_count']} |",
-        f"| Research elements (needs review) | {s['research_element_count']} |",
+        f"| Research/monitoring typed as responses (should be activities) | {s['research_element_count']} |",
         f"",
     ]
 
@@ -281,7 +283,7 @@ def main():
         print(f"  Duplicate rationale: {s['duplicate_rationale_groups']}")
         print(f"  Single-reference: {s['single_reference_count']}")
         print(f"  Non-framework: {s['non_framework_transition_count']}")
-        print(f"  Research elements: {s['research_element_count']}")
+        print(f"  Research/monitoring typed as responses: {s['research_element_count']}")
         print(f"  Reports: {json_out}, {md_out}")
         print()
 
