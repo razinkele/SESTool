@@ -48,6 +48,10 @@ test_that("main KB places the ruled elements in the expert's categories", {
 })
 
 test_that("every KB connection still has valid endpoints and a valid DAPSIWRM transition", {
+  # the validator is the real one (not a stub): it rejects transitions the moves could create
+  expect_false(is_valid_dapsirwrm_transition("activities", "states"))
+  expect_false(is_valid_dapsirwrm_transition("states", "pressures"))
+  expect_true(is_valid_dapsirwrm_transition("pressures", "pressures"))
   for (ctx in names(kb)) {
     typed <- unlist(lapply(CATS, function(cat) setNames(rep(cat, length(names_in(ctx, cat))), names_in(ctx, cat))))
     for (e in kb[[ctx]]$connections) {

@@ -266,7 +266,7 @@ The validator still accepts D → P, so user models that list climate change as 
 
 These settle the category questions raised by user feedback on the AI-assisted suggestions (PR #149).
 
-1. **Climate change is a Pressure.** It is exogenous and cannot be managed locally; management mitigates its impacts. A human *need* that it creates (e.g. "Climate change adaptation needs") can still be a Driver.
+1. **Climate change is a Pressure.** It is exogenous and cannot be managed locally; management mitigates its impacts. (Not covered by the ruling, and pending confirmation: the KB still lists human needs it creates, such as "Climate change adaptation needs", as Drivers.)
 2. **"X discharge":** the act of discharging is an **Activity**; the substance X put into the system is the **Pressure**. Example: "Deballasting" (A) → "Number of invasive species" (P) (+).
 3. **Hypoxia, algal blooms and coastal erosion are Pressures.** They act on State components: "Coastal erosion" → "Area of coastal land" (-); "Hypoxia" → "Species abundance" (-); "Algal blooms" → "Seagrass area" (-).
 4. **Policies are Responses (Measures), not Drivers.** In modelling, existing responses are included first; new ones are then tested as what-if scenarios.

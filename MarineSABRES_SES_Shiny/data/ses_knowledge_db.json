@@ -6624,7 +6624,7 @@
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Thermal discharge from power stations",
+          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Heated water (thermal pollution) from power stations",
           "references": [
             "OSPAR (2017) \"Intermediate Assessment\"",
             "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
