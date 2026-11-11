@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.2] - 2026-11-11
+
 ### Fixed
+- Analysis next steps: the Leverage page's "Response Measures" card did nothing when clicked (user feedback 2026-11-11 "Response measures"). It pointed at Standard Entry instead of Response Measures, and for beginners neither page is in the sidebar, so the app had nothing to switch to; the Loops page's "Network Metrics" card was dead for beginners the same way. The card now opens Response Measures, and next-step cards for pages that are not in the user's sidebar are hidden.
+- Connection review (templates, import): at the end it said "click 'Finish & Continue' below", but only the AI assistant has that button (user feedback 2026-11-11 "No button"). It now says "Use the button below to save your model and continue." in all 9 languages.
 - AI-assisted SES building: biased and misplaced suggestions (user feedback 2026-10-13 "Ai - assisted SES building problem with some wording", workshop participant).
   - Step 3 asked for the "main issues" and offered activities such as Shipping or Tourism as issues. It now asks which topics or sectors the study is about, in all 9 languages. The reply no longer claims to focus the suggestions.
   - Choosing a fishing topic added fixed, mostly negative lists to later steps (Trawling, Purse seining, Livelihood loss, Fisher income loss…), whatever the habitat. Shipping, energy and mining topics added nothing. These lists are removed, so the chosen topics no longer change the suggestions.

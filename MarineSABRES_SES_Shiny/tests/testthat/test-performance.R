@@ -278,7 +278,10 @@ test_that("Vectorized string operations are efficient", {
 # ==============================================================================
 
 test_that("DataFrame binding is efficient", {
-  n_dfs <- 10
+  # 200 pieces: enough that the loop's quadratic copying dominates (~30x
+  # slower locally). With 10 pieces both took ~1 ms, so a single ~10 ms
+  # pause decided the result and CI failed 3 times on 2026-11-11.
+  n_dfs <- 200
   n_rows <- 100
 
   # Create test dataframes
@@ -291,23 +294,22 @@ test_that("DataFrame binding is efficient", {
     )
   })
 
-  # Warm up: the first bind_rows() call in a fresh process pays one-off
-  # dispatch/setup cost (~10 ms on CI), which made the first-timed "single"
-  # bind look slower than the whole loop (CI 2026-11-11, PR #149).
-  invisible(dplyr::bind_rows(df_list[[1]], df_list[[2]]))
-  invisible(do.call(dplyr::bind_rows, df_list))
+  # Fastest of 3 runs, so a one-off pause (GC, first call) cannot decide it.
+  best_of <- function(f, n = 3) {
+    times <- vapply(seq_len(n), function(k) measure_time(f())$elapsed, numeric(1))
+    list(elapsed = min(times))
+  }
 
-  # Single bind_rows (efficient)
-  timing_single <- measure_time({
-    result <- do.call(dplyr::bind_rows, df_list)
-  })
+  # Single bind_rows on the list (efficient)
+  timing_single <- best_of(function() dplyr::bind_rows(df_list))
 
   # Repeated bind_rows in loop (inefficient)
-  timing_loop <- measure_time({
+  timing_loop <- best_of(function() {
     result <- df_list[[1]]
     for (i in 2:length(df_list)) {
       result <- dplyr::bind_rows(result, df_list[[i]])
     }
+    result
   })
 
   # Single bind should be faster

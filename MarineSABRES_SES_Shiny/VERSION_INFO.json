@@ -1,7 +1,7 @@
 {
-  "version": "1.35.1",
-  "version_name": "Pages in every language, clickable progress (November 2026)",
-  "release_date": "2026-11-10",
+  "version": "1.35.2",
+  "version_name": "Pages in every language, clickable progress, fairer AI suggestions (November 2026)",
+  "release_date": "2026-11-11",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -21,6 +21,10 @@
   ],
   "fixes": {
     "medium": [
+      "AI assistant: step 3 asks which topics or sectors the study is about; the chosen topics no longer add fixed (mostly fishing, mostly negative) suggestion lists; activities are no longer suggested as Drivers; knowledge-base labels are kept when similar labels are merged (1.35.2).",
+      "Leverage page: the 'Response Measures' next step opens Response Measures; next-step cards for pages not in the user's menu are hidden (1.35.2).",
+      "Connection review on the template and import pages no longer tells the user to click a 'Finish & Continue' button that only the AI assistant has (1.35.2).",
+      "Browser console error 'Unexpected input value mode' on every non-default-language page removed (1.35.2).",
       "Standard Entry (ISA): Back/Next did nothing in languages other than English (1.34.0).",
       "Getting Started checkboxes flickered and lost ticks (1.33.0).",
       "Loop analysis: the strength and distribution plots were always blank; long element names were cut off (1.33.0).",
@@ -78,7 +82,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.35.0",
+  "previous_version": "1.35.1",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
