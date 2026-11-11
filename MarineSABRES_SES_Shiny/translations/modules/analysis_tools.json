@@ -1387,15 +1387,15 @@
       "el": " Δείτε τους επισημασμένους βρόχους στο πλαίσιο ολόκληρου του δικτύου σας"
     },
     "modules.analysis.measures_how_significant_the_loop_is_based_on_the_": {
-      "en": " Measures how significant the loop is based on the centrality of its elements.",
-      "es": "Mide cuán significativo es el bucle basado en la centralidad de sus elementos.",
-      "fr": "Mesure l'importance de la boucle en fonction de la centralité de ses éléments.",
-      "de": "Misst, wie bedeutend die Schleife basierend auf der Zentralität ihrer Elemente ist.",
-      "lt": "Matuoja, kiek reikšmingas yra ciklas, remiantis jo elementų centralizacija.",
-      "pt": "Mede quão significativo é o loop com base na centralidade de seus elementos.",
-      "it": "Misura quanto è significativo il loop in base alla centralità dei suoi elementi.",
-      "no": " Måler hvor betydelig sløyfen er basert på sentraliteten til elementene.",
-      "el": "Μέτρα  how significant the loop is based on the centrality of its elements."
+      "en": " 100 divided by the number of elements in the loop, so shorter loops score higher (4 elements = 25, 10 elements = 10). Use it to rank loops within one model; it has no fixed good or bad value.",
+      "es": " 100 dividido por el número de elementos del bucle, por lo que los bucles más cortos puntúan más alto (4 elementos = 25, 10 elementos = 10). Sirve para ordenar los bucles de un mismo modelo; no tiene un valor bueno o malo fijo.",
+      "fr": " 100 divisé par le nombre d'éléments de la boucle : les boucles plus courtes obtiennent un score plus élevé (4 éléments = 25, 10 éléments = 10). Il sert à classer les boucles d'un même modèle ; il n'a pas de bonne ou de mauvaise valeur fixe.",
+      "de": " 100 geteilt durch die Anzahl der Elemente in der Schleife; kürzere Schleifen erhalten höhere Werte (4 Elemente = 25, 10 Elemente = 10). Er dient zum Ordnen der Schleifen eines Modells; es gibt keinen festen guten oder schlechten Wert.",
+      "lt": " 100 padalyta iš kilpos elementų skaičiaus, todėl trumpesnės kilpos gauna didesnį balą (4 elementai = 25, 10 elementų = 10). Naudojamas vieno modelio kilpoms rikiuoti; fiksuotos geros ar blogos reikšmės nėra.",
+      "pt": " 100 dividido pelo número de elementos do loop, por isso loops mais curtos têm pontuação mais alta (4 elementos = 25, 10 elementos = 10). Serve para ordenar os loops de um mesmo modelo; não tem um valor bom ou mau fixo.",
+      "it": " 100 diviso per il numero di elementi del loop, quindi i loop più corti hanno un punteggio più alto (4 elementi = 25, 10 elementi = 10). Serve a ordinare i loop di uno stesso modello; non ha un valore buono o cattivo fisso.",
+      "no": " 100 delt på antall elementer i løkken, så kortere løkker får høyere poeng (4 elementer = 25, 10 elementer = 10). Brukes til å rangere løkkene i én modell; det finnes ingen fast god eller dårlig verdi.",
+      "el": " 100 διαιρούμενο με τον αριθμό των στοιχείων του βρόχου, άρα οι μικρότεροι βρόχοι έχουν υψηλότερο βαθμό (4 στοιχεία = 25, 10 στοιχεία = 10). Χρησιμεύει για την κατάταξη των βρόχων ενός μοντέλου· δεν υπάρχει σταθερή καλή ή κακή τιμή."
     },
     "modules.analysis.network.large_network_detected": {
       "en": "Large network detected:",

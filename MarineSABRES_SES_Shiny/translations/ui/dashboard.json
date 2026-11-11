@@ -374,6 +374,127 @@
       "no": "Prosjekthistorikk",
       "el": "Ιστορικό Έργου"
     },
+    "ui.dashboard.glossary_title": {
+      "en": "Terms used in this tool (CLD, ISA, PIMS…)",
+      "es": "Términos usados en esta herramienta (CLD, ISA, PIMS…)",
+      "fr": "Termes utilisés dans cet outil (CLD, ISA, PIMS…)",
+      "de": "Begriffe in diesem Werkzeug (CLD, ISA, PIMS…)",
+      "lt": "Šiame įrankyje vartojami terminai (CLD, ISA, PIMS…)",
+      "pt": "Termos usados nesta ferramenta (CLD, ISA, PIMS…)",
+      "it": "Termini usati in questo strumento (CLD, ISA, PIMS…)",
+      "no": "Begreper brukt i dette verktøyet (CLD, ISA, PIMS…)",
+      "el": "Όροι που χρησιμοποιούνται σε αυτό το εργαλείο (CLD, ISA, PIMS…)"
+    },
+    "ui.dashboard.glossary_cld_term": {
+      "en": "CLD – Causal Loop Diagram",
+      "es": "CLD (DBC) – Diagrama de bucles causales",
+      "fr": "CLD (DBC) – Diagramme de boucles causales",
+      "de": "CLD (ULS) – Kausalschleifendiagramm",
+      "lt": "CLD (PKD) – Priežastinių kilpų diagrama",
+      "pt": "CLD (DLC) – Diagrama de ciclos causais",
+      "it": "CLD (DCC) – Diagramma dei cicli causali",
+      "no": "CLD – Årsakssløyfediagram",
+      "el": "CLD – Διάγραμμα αιτιωδών βρόχων"
+    },
+    "ui.dashboard.glossary_cld_def": {
+      "en": "A network diagram of the system: elements are linked by arrows marked + (an increase in one pushes the other up) or − (an increase in one pushes the other down). Closed chains of arrows are feedback loops.",
+      "es": "Un diagrama en red del sistema: los elementos se unen con flechas marcadas + (un aumento en uno empuja al otro hacia arriba) o − (un aumento en uno empuja al otro hacia abajo). Las cadenas cerradas de flechas son bucles de retroalimentación.",
+      "fr": "Un diagramme en réseau du système : les éléments sont reliés par des flèches marquées + (une hausse de l'un pousse l'autre à la hausse) ou − (une hausse de l'un pousse l'autre à la baisse). Les chaînes fermées de flèches sont des boucles de rétroaction.",
+      "de": "Ein Netzwerkdiagramm des Systems: Elemente sind durch Pfeile mit + (ein Anstieg des einen treibt das andere nach oben) oder − (ein Anstieg des einen drückt das andere nach unten) verbunden. Geschlossene Pfeilketten sind Rückkopplungsschleifen.",
+      "lt": "Sistemos tinklo diagrama: elementai sujungti rodyklėmis su + (vieno padidėjimas didina kitą) arba − (vieno padidėjimas mažina kitą). Uždaros rodyklių grandinės yra grįžtamojo ryšio kilpos.",
+      "pt": "Um diagrama em rede do sistema: os elementos ligam-se por setas marcadas + (um aumento num empurra o outro para cima) ou − (um aumento num empurra o outro para baixo). Cadeias fechadas de setas são ciclos de retroalimentação.",
+      "it": "Un diagramma a rete del sistema: gli elementi sono collegati da frecce marcate + (un aumento dell'uno spinge l'altro verso l'alto) o − (un aumento dell'uno spinge l'altro verso il basso). Le catene chiuse di frecce sono cicli di retroazione.",
+      "no": "Et nettverksdiagram av systemet: elementene er koblet med piler merket + (en økning i det ene presser det andre opp) eller − (en økning i det ene presser det andre ned). Lukkede kjeder av piler er tilbakekoblingssløyfer.",
+      "el": "Ένα διάγραμμα δικτύου του συστήματος: τα στοιχεία συνδέονται με βέλη με + (η αύξηση του ενός ωθεί το άλλο προς τα πάνω) ή − (η αύξηση του ενός ωθεί το άλλο προς τα κάτω). Οι κλειστές αλυσίδες βελών είναι βρόχοι ανάδρασης."
+    },
+    "ui.dashboard.glossary_isa_term": {
+      "en": "ISA – Integrated Systems Analysis",
+      "es": "ISA – Análisis Integrado de Sistemas",
+      "fr": "ISA – Analyse intégrée des systèmes",
+      "de": "ISA – Integrierte Systemanalyse",
+      "lt": "ISA – Integruota sistemų analizė",
+      "pt": "ISA – Análise Integrada de Sistemas",
+      "it": "ISA – Analisi integrata dei sistemi",
+      "no": "ISA – Integrert systemanalyse",
+      "el": "ISA – Ολοκληρωμένη Ανάλυση Συστημάτων"
+    },
+    "ui.dashboard.glossary_isa_def": {
+      "en": "The structured description of your social-ecological system: its elements in each DAPSI(W)R(M) category and the links between them. The CLD is drawn from it.",
+      "es": "La descripción estructurada de su sistema socioecológico: sus elementos en cada categoría DAPSI(W)R(M) y los enlaces entre ellos. El CLD se dibuja a partir de ella.",
+      "fr": "La description structurée de votre système socio-écologique : ses éléments dans chaque catégorie DAPSI(W)R(M) et les liens entre eux. Le CLD en est tiré.",
+      "de": "Die strukturierte Beschreibung Ihres sozial-ökologischen Systems: seine Elemente in jeder DAPSI(W)R(M)-Kategorie und die Verbindungen zwischen ihnen. Daraus wird das CLD gezeichnet.",
+      "lt": "Struktūrizuotas jūsų socialinės-ekologinės sistemos aprašas: jos elementai kiekvienoje DAPSI(W)R(M) kategorijoje ir ryšiai tarp jų. Iš jo braižoma CLD.",
+      "pt": "A descrição estruturada do seu sistema socioecológico: os seus elementos em cada categoria DAPSI(W)R(M) e as ligações entre eles. O CLD é desenhado a partir dela.",
+      "it": "La descrizione strutturata del tuo sistema socio-ecologico: i suoi elementi in ogni categoria DAPSI(W)R(M) e i collegamenti tra di essi. Il CLD viene disegnato a partire da essa.",
+      "no": "Den strukturerte beskrivelsen av det sosial-økologiske systemet ditt: elementene i hver DAPSI(W)R(M)-kategori og koblingene mellom dem. CLD-en tegnes ut fra den.",
+      "el": "Η δομημένη περιγραφή του κοινωνικο-οικολογικού σας συστήματος: τα στοιχεία του σε κάθε κατηγορία DAPSI(W)R(M) και οι συνδέσεις μεταξύ τους. Το CLD σχεδιάζεται από αυτήν."
+    },
+    "ui.dashboard.glossary_pims_term": {
+      "en": "PIMS – Project Information Management",
+      "es": "PIMS – Gestión de la información del proyecto",
+      "fr": "PIMS – Gestion des informations du projet",
+      "de": "PIMS – Projektinformationsmanagement",
+      "lt": "PIMS – Projekto informacijos valdymas",
+      "pt": "PIMS – Gestão da informação do projeto",
+      "it": "PIMS – Gestione delle informazioni di progetto",
+      "no": "PIMS – Prosjektinformasjonsstyring",
+      "el": "PIMS – Διαχείριση Πληροφοριών Έργου"
+    },
+    "ui.dashboard.glossary_pims_def": {
+      "en": "The project setup pages: goals, demonstration area, stakeholders, governance readiness, workshops, resources and evaluation.",
+      "es": "Las páginas de configuración del proyecto: objetivos, área de demostración, partes interesadas, preparación de la gobernanza, talleres, recursos y evaluación.",
+      "fr": "Les pages de configuration du projet : objectifs, zone de démonstration, parties prenantes, préparation de la gouvernance, ateliers, ressources et évaluation.",
+      "de": "Die Seiten zur Projekteinrichtung: Ziele, Demonstrationsgebiet, Interessengruppen, Governance-Bereitschaft, Workshops, Ressourcen und Evaluierung.",
+      "lt": "Projekto sąrankos puslapiai: tikslai, demonstracinė teritorija, suinteresuotosios šalys, valdysenos pasirengimas, seminarai, ištekliai ir vertinimas.",
+      "pt": "As páginas de configuração do projeto: objetivos, área de demonstração, partes interessadas, preparação da governação, workshops, recursos e avaliação.",
+      "it": "Le pagine di configurazione del progetto: obiettivi, area dimostrativa, portatori di interesse, preparazione della governance, workshop, risorse e valutazione.",
+      "no": "Sidene for prosjektoppsett: mål, demonstrasjonsområde, interessenter, styringsberedskap, arbeidsmøter, ressurser og evaluering.",
+      "el": "Οι σελίδες ρύθμισης του έργου: στόχοι, περιοχή επίδειξης, ενδιαφερόμενα μέρη, ετοιμότητα διακυβέρνησης, εργαστήρια, πόροι και αξιολόγηση."
+    },
+    "ui.dashboard.glossary_dapsiwrm_term": {
+      "en": "DAPSI(W)R(M)",
+      "es": "DAPSI(W)R(M)",
+      "fr": "DAPSI(W)R(M)",
+      "de": "DAPSI(W)R(M)",
+      "lt": "DAPSI(W)R(M)",
+      "pt": "DAPSI(W)R(M)",
+      "it": "DAPSI(W)R(M)",
+      "no": "DAPSI(W)R(M)",
+      "el": "DAPSI(W)R(M)"
+    },
+    "ui.dashboard.glossary_dapsiwrm_def": {
+      "en": "The framework used to organise the system: Drivers → Activities → Pressures → State changes → Impacts on (human) Welfare → Responses (as Measures).",
+      "es": "El marco usado para organizar el sistema: Impulsores → Actividades → Presiones → Cambios de estado → Impactos en el bienestar (humano) → Respuestas (como medidas).",
+      "fr": "Le cadre utilisé pour organiser le système : Facteurs → Activités → Pressions → Changements d'état → Impacts sur le bien-être (humain) → Réponses (sous forme de mesures).",
+      "de": "Der Rahmen, nach dem das System gegliedert wird: Treiber → Aktivitäten → Belastungen → Zustandsänderungen → Auswirkungen auf das (menschliche) Wohlergehen → Reaktionen (als Maßnahmen).",
+      "lt": "Sistemai sutvarkyti naudojama sistema: Varomosios jėgos → Veikla → Poveikis aplinkai → Būklės pokyčiai → Poveikis (žmonių) gerovei → Atsakas (kaip priemonės).",
+      "pt": "O quadro usado para organizar o sistema: Forças motrizes → Atividades → Pressões → Alterações de estado → Impactos no bem-estar (humano) → Respostas (como medidas).",
+      "it": "Il quadro usato per organizzare il sistema: Determinanti → Attività → Pressioni → Cambiamenti di stato → Impatti sul benessere (umano) → Risposte (come misure).",
+      "no": "Rammeverket som brukes til å ordne systemet: Drivkrefter → Aktiviteter → Påvirkninger → Tilstandsendringer → Virkninger på (menneskelig) velferd → Responser (som tiltak).",
+      "el": "Το πλαίσιο που οργανώνει το σύστημα: Κινητήριες δυνάμεις → Δραστηριότητες → Πιέσεις → Μεταβολές κατάστασης → Επιπτώσεις στην (ανθρώπινη) ευημερία → Αποκρίσεις (ως μέτρα)."
+    },
+    "ui.dashboard.glossary_leverage_term": {
+      "en": "Leverage point",
+      "es": "Punto de apalancamiento",
+      "fr": "Point de levier",
+      "de": "Hebelpunkt",
+      "lt": "Sverto taškas",
+      "pt": "Ponto de alavancagem",
+      "it": "Punto di leva",
+      "no": "Påvirkningspunkt",
+      "el": "Σημείο μόχλευσης"
+    },
+    "ui.dashboard.glossary_leverage_def": {
+      "en": "An element whose position in the network (its links and centrality) makes it a candidate place to intervene. The ranking is structural, not a prediction of how far a change will spread (see Leverage Point Analysis).",
+      "es": "Un elemento cuya posición en la red (sus enlaces y su centralidad) lo convierte en un posible punto de intervención. La clasificación es estructural, no una predicción de hasta dónde se propagará un cambio (véase el Análisis de puntos de apalancamiento).",
+      "fr": "Un élément dont la position dans le réseau (ses liens et sa centralité) en fait un point d'intervention possible. Le classement est structurel et ne prédit pas jusqu'où un changement se propagera (voir l'Analyse des points de levier).",
+      "de": "Ein Element, dessen Position im Netzwerk (seine Verbindungen und Zentralität) es zu einem möglichen Ansatzpunkt für Eingriffe macht. Die Rangfolge ist strukturell und keine Vorhersage, wie weit sich eine Veränderung ausbreitet (siehe Hebelpunktanalyse).",
+      "lt": "Elementas, kurio padėtis tinkle (ryšiai ir centriškumas) daro jį galima įsikišimo vieta. Reitingas yra struktūrinis, o ne prognozė, kaip toli pasklis pokytis (žr. Sverto taškų analizę).",
+      "pt": "Um elemento cuja posição na rede (as suas ligações e centralidade) o torna um possível ponto de intervenção. A classificação é estrutural, não uma previsão de até onde uma mudança se propagará (ver Análise de pontos de alavancagem).",
+      "it": "Un elemento la cui posizione nella rete (collegamenti e centralità) lo rende un possibile punto di intervento. La classifica è strutturale, non una previsione di quanto lontano si diffonderà un cambiamento (vedi Analisi dei punti di leva).",
+      "no": "Et element som posisjonen i nettverket (koblinger og sentralitet) gjør til et mulig sted å gripe inn. Rangeringen er strukturell, ikke en spådom om hvor langt en endring vil spre seg (se Analyse av påvirkningspunkter).",
+      "el": "Ένα στοιχείο που η θέση του στο δίκτυο (συνδέσεις και κεντρικότητα) το καθιστά πιθανό σημείο παρέμβασης. Η κατάταξη είναι δομική, όχι πρόβλεψη του πόσο μακριά θα διαδοθεί μια αλλαγή (βλ. Ανάλυση σημείων μόχλευσης)."
+    },
     "ui.dashboard.leverage_analysis_complete": {
       "en": "Leverage analysis complete",
       "es": "Análisis de apalancamiento completo",

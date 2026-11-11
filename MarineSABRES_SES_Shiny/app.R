@@ -474,6 +474,38 @@ bs4DashPage(
             # Timeline output (uses Shiny's built-in loading indicator)
             uiOutput("dashboard_timeline")
           )
+        ),
+
+        # Glossary of the abbreviations used across the tool (feedback
+        # 2026-11-11 "Legend, terminology": unclear for beginners)
+        fluidRow(
+          bs4Card(
+            id = "glossary_card",
+            title = tagList(icon("book"), " ", i18n$t("ui.dashboard.glossary_title")),
+            status = "info",
+            width = UI_BOX_WIDTH_FULL,
+            collapsible = TRUE,
+            collapsed = TRUE,
+            tags$dl(
+              class = "mb-0",
+              # i18n-ref: ui.dashboard.glossary_cld_term
+              # i18n-ref: ui.dashboard.glossary_cld_def
+              # i18n-ref: ui.dashboard.glossary_isa_term
+              # i18n-ref: ui.dashboard.glossary_isa_def
+              # i18n-ref: ui.dashboard.glossary_pims_term
+              # i18n-ref: ui.dashboard.glossary_pims_def
+              # i18n-ref: ui.dashboard.glossary_dapsiwrm_term
+              # i18n-ref: ui.dashboard.glossary_dapsiwrm_def
+              # i18n-ref: ui.dashboard.glossary_leverage_term
+              # i18n-ref: ui.dashboard.glossary_leverage_def
+              lapply(c("cld", "isa", "pims", "dapsiwrm", "leverage"), function(term) {
+                tagList(
+                  tags$dt(i18n$t(paste0("ui.dashboard.glossary_", term, "_term"))),
+                  tags$dd(class = "mb-2", i18n$t(paste0("ui.dashboard.glossary_", term, "_def")))
+                )
+              })
+            )
+          )
         )
       ),
 

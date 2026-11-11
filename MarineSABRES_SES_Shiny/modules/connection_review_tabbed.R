@@ -422,6 +422,30 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       rv$show_delay <- isTRUE(input$show_delay_toggle)
     })
 
+    # After "Approve all": wait until the batch's next-category output has
+    # rendered (button or completion message), scroll the card list to its
+    # end and bring that output into view on the page.
+    scroll_to_batch_end <- function(batch_id) {
+      shinyjs::runjs(sprintf(
+        "(function() {
+          var id = '%s', attempts = 0;
+          function go() {
+            attempts++;
+            var el = document.getElementById(id);
+            if (el && el.textContent.trim().length > 0) {
+              var box = el.closest('.conn-batch-content');
+              if (box) { box.scrollTo({top: box.scrollHeight, behavior: 'smooth'}); }
+              setTimeout(function() { el.scrollIntoView({behavior: 'smooth', block: 'nearest'}); }, 300);
+            } else if (attempts < 30) {
+              setTimeout(go, 100);
+            }
+          }
+          setTimeout(go, 50);
+        })();",
+        ns(paste0("next_category_btn_", batch_id))
+      ))
+    }
+
     # Observer: scroll to target card AFTER UI has re-rendered
     # If target card doesn't exist (last in batch), scroll to next-category button
     observe({
@@ -863,6 +887,11 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               type = "message",
               duration = 3
             )
+
+            # Bring the next step (next-category button, or the completion
+            # message on the last category) into view: users had to scroll
+            # down past every card by hand (feedback 2026-11-11).
+            scroll_to_batch_end(local_batch_id)
           })
 
           # Reject All button for this batch

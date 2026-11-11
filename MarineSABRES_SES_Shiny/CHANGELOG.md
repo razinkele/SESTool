@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Loop analysis: the dominance score was described as "based on the centrality of its elements" and loops as "ranked by length, centrality, and element importance", but the score is 100 divided by the number of elements in the loop (user suggestion 2026-11-11 "Not intuitive"). The page and its help now say so, with examples (4 elements = 25, 10 elements = 10), and that the score only ranks loops within one model. "Loop Strength Analysis" now explains its chart.
+
+### Added
+- Dashboard: a "Terms used in this tool" box explains CLD, ISA, PIMS, DAPSI(W)R(M) and leverage point (user suggestion 2026-11-11 "Legend, terminology").
+- Leverage analysis: "About Leverage Points" explains in-degree and out-degree (user suggestion 2026-11-11 "About leverage points").
+- Connection review: after "Approve all", the page scrolls to the next-category button, or on the last category to the completion message, instead of leaving the user to scroll past every card (user suggestion 2026-11-11 "Automatic scroll-down").
+
 ## [1.35.2] - 2026-11-11
 
 ### Fixed
