@@ -38,9 +38,6 @@ VALID_TRANSITIONS = {
 
 # Part F: Research element detection
 RESEARCH_PATTERN = re.compile(r"\b(research|monitoring|surveys)\b", re.IGNORECASE)
-PHYSICAL_IMPACT_PATTERN = re.compile(
-    r"\b(sediment|sampling|drilling|dredging|coring)\b", re.IGNORECASE
-)
 
 
 def audit_kb(kb_path: str) -> dict:
@@ -156,9 +153,6 @@ def audit_kb(kb_path: str) -> dict:
                     continue
                 # Must match research/monitoring/surveys
                 if not RESEARCH_PATTERN.search(name):
-                    continue
-                # Skip if element also indicates physical impact
-                if PHYSICAL_IMPACT_PATTERN.search(name):
                     continue
                 flags["research_elements"].append({
                     "context": context_name,

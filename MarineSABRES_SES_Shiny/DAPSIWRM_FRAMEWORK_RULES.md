@@ -226,8 +226,10 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
       D→GB connection was inconsistent with `DAPSIWRM_ADJACENCY_RULES` and has been removed
       from `is_valid_dapsirwrm_transition()` in `functions/network_analysis.R`.
     - The example previously cited here ("Climate change" → "Coastal flooding impacts")
-      is actually a D → P (Exogenic Unmanaged Pressure) case, not a D → GB case. It has
-      been moved under the **D → P (ExUP)** exception in "Documented Exceptions" below.
+      is not a D → GB case. Under the 2026-11-11 expert ruling, climate change is itself a
+      Pressure (an exogenic unmanaged pressure), so the link is modelled as P → P or P → C/S;
+      see "Documented Exceptions" and "Classification Rulings" below. The validator still
+      accepts D → P for user models that enter climate change as a Driver.
     - Any existing connections of this type in a project will be flagged as framework-invalid
       by the loop validator, and cycles containing them will be treated as non-canonical.
 
