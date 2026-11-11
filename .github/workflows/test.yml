@@ -35,6 +35,9 @@ jobs:
           echo "http://archive.ubuntu.com/ubuntu/" | sudo tee /etc/apt/apt-mirrors.txt
           sudo find /etc/apt -name '*.list' -o -name '*.sources' | xargs -r sudo sed -i 's#http://azure\.archive\.ubuntu\.com#http://archive.ubuntu.com#g'
           grep -rh "azure" /etc/apt/sources.list /etc/apt/sources.list.d/ /etc/apt/apt-mirrors.txt 2>/dev/null || echo "no azure mirror left in apt config"
+          # The image's package index can name versions the archive has since
+          # replaced (404 on libdistro-info-perl/lintian); setup-r does not refresh it.
+          sudo apt-get update
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
