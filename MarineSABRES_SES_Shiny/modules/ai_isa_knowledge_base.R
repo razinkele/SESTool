@@ -229,8 +229,12 @@ get_regional_seas_knowledge_base <- function(i18n) {
 #' Removes semantically similar suggestions to avoid showing "trawl fishing" and "trawling" together
 #'
 #' @param suggestions Character vector of suggestions
+#' @param protected Labels that must survive (knowledge-base labels): a
+#'   near-duplicate pair with one protected label keeps the protected one, and
+#'   two protected labels are both kept. Without it the shorter label wins,
+#'   which used to replace specific KB labels by generic hardcoded ones.
 #' @return Deduplicated character vector
-deduplicate_suggestions <- function(suggestions) {
+deduplicate_suggestions <- function(suggestions, protected = character(0)) {
   if (length(suggestions) <= 1) return(suggestions)
 
   # Convert to lowercase for comparison
@@ -267,8 +271,18 @@ deduplicate_suggestions <- function(suggestions) {
         overlap_ratio <- length(common_words) / min(length(current_core), length(other_core))
 
         if (overlap_ratio >= 0.8) {
-          # Keep the one with fewer words (simpler)
-          if (length(current_words) <= length(other_words)) {
+          i_prot <- suggestions[i] %in% protected
+          j_prot <- suggestions[j] %in% protected
+          if (i_prot && j_prot) next          # two curated labels: keep both
+          if (i_prot != j_prot) {             # keep the curated (KB) label
+            if (i_prot) {
+              keep[j] <- FALSE
+            } else {
+              keep[i] <- FALSE
+              break
+            }
+          # Otherwise keep the one with fewer words (simpler)
+          } else if (length(current_words) <= length(other_words)) {
             keep[j] <- FALSE
           } else {
             keep[i] <- FALSE
@@ -284,15 +298,18 @@ deduplicate_suggestions <- function(suggestions) {
 
 #' Get Context-Aware Suggestions for DAPSI(W)R(M) Elements
 #'
-#' Returns intelligent suggestions based on regional sea, ecosystem type,
-#' and main issue context. When the JSON knowledge database provides 3+
+#' Returns suggestions based on regional sea and ecosystem type. The chosen
+#' focus topics (`main_issue`) deliberately do not change them: the former
+#' topic-triggered lists existed only for fishing, nutrients, litter, tourism
+#' and climate (none for shipping, energy, mining) and were mostly negative,
+#' which biased the suggestions (user feedback 2026-10-13). When the JSON knowledge database provides 3+
 #' suggestions for a category, generic universal suggestions are suppressed
 #' to avoid polluting context-specific results.
 #'
 #' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses)
 #' @param regional_sea Selected regional sea key
 #' @param ecosystem_type Selected ecosystem type
-#' @param main_issue Main environmental issue
+#' @param main_issue Focus topics chosen in step 3 (kept for callers; unused)
 #' @param return_sources If TRUE, return a list with suggestions and source attribution (for UI badges)
 #' @return Character vector of context-aware suggestions, or list with $suggestions and $sources if return_sources=TRUE
 get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue, countries = NULL, return_sources = FALSE) {
@@ -329,17 +346,9 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
                                  "Energy needs", "Coastal protection", "Cultural heritage",
                                  "Employment", "Trade and commerce")
     }
-
-    # Add region-specific drivers
-    if (!is.null(regional_sea)) {
-      if (regional_sea %in% c("baltic", "north_sea")) {
-        suggestions$regional <- c("Maritime transport", "Resource extraction", "Renewable energy")
-      } else if (regional_sea %in% c("mediterranean", "caribbean", "pacific")) {
-        suggestions$regional <- c("Beach tourism", "Diving and snorkeling", "Heritage tourism")
-      } else if (regional_sea == "arctic") {
-        suggestions$regional <- c("Indigenous subsistence", "Resource exploration", "Shipping routes")
-      }
-    }
+    # No region-specific drivers: the former lists ("Maritime transport",
+    # "Beach tourism", "Shipping routes", ...) were activities/sectors, so
+    # every session showed activities as Drivers (user feedback 2026-10-13).
   }
 
   else if (category == "activities") {
@@ -354,25 +363,13 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
         suggestions$regional <- c("Wind farm development", "Dredging", "Oil and gas extraction",
                                   "Trawl fishing", "Marine aggregate extraction")
       } else if (regional_sea %in% c("mediterranean", "caribbean")) {
+        # ("Marine debris disposal" removed: litter is a pressure, not an activity)
         suggestions$regional <- c("Beach recreation", "Yacht tourism", "Scuba diving",
-                                  "Coastal construction", "Marine debris disposal")
+                                  "Coastal construction")
       } else if (regional_sea == "arctic") {
         suggestions$regional <- c("Ice navigation", "Arctic oil exploration", "Cold-water fishing")
       } else if (regional_sea %in% c("pacific", "indian")) {
         suggestions$regional <- c("Reef fishing", "Mangrove clearing", "Port expansion")
-      }
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Trawling", "Long-line fishing", "Purse seining", "Fish farming")
-      } else if (any(grepl("eutroph|nutrient", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Agriculture runoff", "Sewage discharge", "Aquaculture waste")
-      } else if (any(grepl("pollution|litter", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Plastic disposal", "Wastewater discharge", "Ship emissions")
-      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Beach development", "Hotel construction", "Cruise tourism")
       }
     }
   }
@@ -394,17 +391,6 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
         suggestions$regional <- c("Coastal erosion", "Beach trampling", "Anchor damage")
       } else if (regional_sea == "arctic") {
         suggestions$regional <- c("Oil spill risk", "Ice habitat loss", "Black carbon deposition")
-      }
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Nitrogen loading", "Phosphorus loading", "Organic enrichment", "Algal blooms")
-      } else if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Stock depletion", "Bycatch", "Trawl damage", "Discarding")
-      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Ocean warming", "Ocean acidification", "Sea level rise")
       }
     }
   }
@@ -460,17 +446,6 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
         suggestions$ecosystem <- c("Fishery productivity loss", "Water quality impacts", "Flood risk increase")
       }
     }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Livelihood loss", "Food security threats", "Economic decline")
-      } else if (any(grepl("eutroph|nutrient", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Recreation value loss", "Drinking water contamination", "Shellfish harvest closures")
-      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Aesthetic value loss", "Revenue decline", "Employment loss")
-      }
-    }
   }
 
   else if (category == "welfare") {
@@ -478,17 +453,6 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     if (!kb_sufficient) {
       suggestions$universal <- c("Income loss", "Food insecurity", "Health impacts", "Cultural identity loss",
                                  "Displacement", "Recreational opportunities loss")
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Fisher income loss", "Protein source loss", "Traditional livelihoods decline")
-      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Tourism employment loss", "Local business decline", "Community well-being impacts")
-      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Displacement risk", "Property loss", "Livelihood disruption")
-      }
     }
   }
 
@@ -509,17 +473,6 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
         suggestions$regional <- c("Trawling restrictions", "Wind farm planning", "Oil spill preparedness")
       } else if (regional_sea == "arctic") {
         suggestions$regional <- c("Shipping regulations", "Ice habitat protection", "Indigenous co-management")
-      }
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Catch limits", "Fishing gear restrictions", "Stock recovery zones", "Aquaculture alternatives")
-      } else if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Agricultural best practices", "Wastewater treatment", "Buffer zones")
-      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Carbon reduction", "Climate adaptation planning", "Coastal defense")
       }
     }
   }
@@ -589,7 +542,8 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
                               suggestions$governance, suggestions$socioeconomic))
 
   # Apply semantic deduplication to remove similar terms
-  deduplicated <- deduplicate_suggestions(all_suggestions)
+  deduplicated <- deduplicate_suggestions(all_suggestions,
+                                          protected = suggestions$knowledge_db %||% character(0))
 
   # Build source attribution map for UI badges (P3)
   if (return_sources) {
