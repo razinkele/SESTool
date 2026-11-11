@@ -387,25 +387,25 @@
     },
     "ui.dashboard.glossary_cld_term": {
       "en": "CLD – Causal Loop Diagram",
-      "es": "CLD – Diagrama de bucles causales",
-      "fr": "CLD – Diagramme de boucles causales",
-      "de": "CLD – Kausalschleifendiagramm",
-      "lt": "CLD – Priežastinių kilpų diagrama",
-      "pt": "CLD – Diagrama de ciclos causais",
-      "it": "CLD – Diagramma dei cicli causali",
+      "es": "CLD (DBC) – Diagrama de bucles causales",
+      "fr": "CLD (DBC) – Diagramme de boucles causales",
+      "de": "CLD (ULS) – Kausalschleifendiagramm",
+      "lt": "CLD (PKD) – Priežastinių kilpų diagrama",
+      "pt": "CLD (DLC) – Diagrama de ciclos causais",
+      "it": "CLD (DCC) – Diagramma dei cicli causali",
       "no": "CLD – Årsakssløyfediagram",
       "el": "CLD – Διάγραμμα αιτιωδών βρόχων"
     },
     "ui.dashboard.glossary_cld_def": {
-      "en": "A network diagram of the system: elements are linked by arrows marked + (both change in the same direction) or − (they change in opposite directions). Closed chains of arrows are feedback loops.",
-      "es": "Un diagrama en red del sistema: los elementos se unen con flechas marcadas + (ambos cambian en el mismo sentido) o − (cambian en sentidos opuestos). Las cadenas cerradas de flechas son bucles de retroalimentación.",
-      "fr": "Un diagramme en réseau du système : les éléments sont reliés par des flèches marquées + (ils évoluent dans le même sens) ou − (ils évoluent en sens inverse). Les chaînes fermées de flèches sont des boucles de rétroaction.",
-      "de": "Ein Netzwerkdiagramm des Systems: Elemente sind durch Pfeile mit + (beide ändern sich in dieselbe Richtung) oder − (sie ändern sich gegenläufig) verbunden. Geschlossene Pfeilketten sind Rückkopplungsschleifen.",
-      "lt": "Sistemos tinklo diagrama: elementai sujungti rodyklėmis su + (abu kinta ta pačia kryptimi) arba − (kinta priešingomis kryptimis). Uždaros rodyklių grandinės yra grįžtamojo ryšio kilpos.",
-      "pt": "Um diagrama em rede do sistema: os elementos ligam-se por setas marcadas + (ambos mudam no mesmo sentido) ou − (mudam em sentidos opostos). Cadeias fechadas de setas são ciclos de retroalimentação.",
-      "it": "Un diagramma a rete del sistema: gli elementi sono collegati da frecce marcate + (cambiano nella stessa direzione) o − (cambiano in direzioni opposte). Le catene chiuse di frecce sono cicli di retroazione.",
-      "no": "Et nettverksdiagram av systemet: elementene er koblet med piler merket + (begge endres i samme retning) eller − (de endres i motsatt retning). Lukkede kjeder av piler er tilbakekoblingssløyfer.",
-      "el": "Ένα διάγραμμα δικτύου του συστήματος: τα στοιχεία συνδέονται με βέλη με + (μεταβάλλονται προς την ίδια κατεύθυνση) ή − (μεταβάλλονται αντίθετα). Οι κλειστές αλυσίδες βελών είναι βρόχοι ανάδρασης."
+      "en": "A network diagram of the system: elements are linked by arrows marked + (an increase in one pushes the other up) or − (an increase in one pushes the other down). Closed chains of arrows are feedback loops.",
+      "es": "Un diagrama en red del sistema: los elementos se unen con flechas marcadas + (un aumento en uno empuja al otro hacia arriba) o − (un aumento en uno empuja al otro hacia abajo). Las cadenas cerradas de flechas son bucles de retroalimentación.",
+      "fr": "Un diagramme en réseau du système : les éléments sont reliés par des flèches marquées + (une hausse de l'un pousse l'autre à la hausse) ou − (une hausse de l'un pousse l'autre à la baisse). Les chaînes fermées de flèches sont des boucles de rétroaction.",
+      "de": "Ein Netzwerkdiagramm des Systems: Elemente sind durch Pfeile mit + (ein Anstieg des einen treibt das andere nach oben) oder − (ein Anstieg des einen drückt das andere nach unten) verbunden. Geschlossene Pfeilketten sind Rückkopplungsschleifen.",
+      "lt": "Sistemos tinklo diagrama: elementai sujungti rodyklėmis su + (vieno padidėjimas didina kitą) arba − (vieno padidėjimas mažina kitą). Uždaros rodyklių grandinės yra grįžtamojo ryšio kilpos.",
+      "pt": "Um diagrama em rede do sistema: os elementos ligam-se por setas marcadas + (um aumento num empurra o outro para cima) ou − (um aumento num empurra o outro para baixo). Cadeias fechadas de setas são ciclos de retroalimentação.",
+      "it": "Un diagramma a rete del sistema: gli elementi sono collegati da frecce marcate + (un aumento dell'uno spinge l'altro verso l'alto) o − (un aumento dell'uno spinge l'altro verso il basso). Le catene chiuse di frecce sono cicli di retroazione.",
+      "no": "Et nettverksdiagram av systemet: elementene er koblet med piler merket + (en økning i det ene presser det andre opp) eller − (en økning i det ene presser det andre ned). Lukkede kjeder av piler er tilbakekoblingssløyfer.",
+      "el": "Ένα διάγραμμα δικτύου του συστήματος: τα στοιχεία συνδέονται με βέλη με + (η αύξηση του ενός ωθεί το άλλο προς τα πάνω) ή − (η αύξηση του ενός ωθεί το άλλο προς τα κάτω). Οι κλειστές αλυσίδες βελών είναι βρόχοι ανάδρασης."
     },
     "ui.dashboard.glossary_isa_term": {
       "en": "ISA – Integrated Systems Analysis",
@@ -485,15 +485,15 @@
       "el": "Σημείο μόχλευσης"
     },
     "ui.dashboard.glossary_leverage_def": {
-      "en": "An element where a change is likely to spread widely through the system, found from its position in the network (see Leverage Point Analysis).",
-      "es": "Un elemento en el que un cambio probablemente se propague ampliamente por el sistema, identificado por su posición en la red (véase el Análisis de puntos de apalancamiento).",
-      "fr": "Un élément où un changement a de fortes chances de se propager largement dans le système, repéré d'après sa position dans le réseau (voir l'Analyse des points de levier).",
-      "de": "Ein Element, bei dem sich eine Veränderung wahrscheinlich weit im System ausbreitet, erkannt an seiner Position im Netzwerk (siehe Hebelpunktanalyse).",
-      "lt": "Elementas, kurio pokytis greičiausiai plačiai pasklis sistemoje, nustatomas pagal jo padėtį tinkle (žr. Sverto taškų analizę).",
-      "pt": "Um elemento onde uma mudança tende a espalhar-se amplamente pelo sistema, identificado pela sua posição na rede (ver Análise de pontos de alavancagem).",
-      "it": "Un elemento in cui un cambiamento tende a diffondersi ampiamente nel sistema, individuato dalla sua posizione nella rete (vedi Analisi dei punti di leva).",
-      "no": "Et element der en endring sannsynligvis sprer seg vidt i systemet, funnet ut fra plasseringen i nettverket (se Analyse av påvirkningspunkter).",
-      "el": "Ένα στοιχείο όπου μια αλλαγή πιθανότατα θα διαδοθεί ευρέως στο σύστημα, που εντοπίζεται από τη θέση του στο δίκτυο (βλ. Ανάλυση σημείων μόχλευσης)."
+      "en": "An element whose position in the network (its links and centrality) makes it a candidate place to intervene. The ranking is structural, not a prediction of how far a change will spread (see Leverage Point Analysis).",
+      "es": "Un elemento cuya posición en la red (sus enlaces y su centralidad) lo convierte en un posible punto de intervención. La clasificación es estructural, no una predicción de hasta dónde se propagará un cambio (véase el Análisis de puntos de apalancamiento).",
+      "fr": "Un élément dont la position dans le réseau (ses liens et sa centralité) en fait un point d'intervention possible. Le classement est structurel et ne prédit pas jusqu'où un changement se propagera (voir l'Analyse des points de levier).",
+      "de": "Ein Element, dessen Position im Netzwerk (seine Verbindungen und Zentralität) es zu einem möglichen Ansatzpunkt für Eingriffe macht. Die Rangfolge ist strukturell und keine Vorhersage, wie weit sich eine Veränderung ausbreitet (siehe Hebelpunktanalyse).",
+      "lt": "Elementas, kurio padėtis tinkle (ryšiai ir centriškumas) daro jį galima įsikišimo vieta. Reitingas yra struktūrinis, o ne prognozė, kaip toli pasklis pokytis (žr. Sverto taškų analizę).",
+      "pt": "Um elemento cuja posição na rede (as suas ligações e centralidade) o torna um possível ponto de intervenção. A classificação é estrutural, não uma previsão de até onde uma mudança se propagará (ver Análise de pontos de alavancagem).",
+      "it": "Un elemento la cui posizione nella rete (collegamenti e centralità) lo rende un possibile punto di intervento. La classifica è strutturale, non una previsione di quanto lontano si diffonderà un cambiamento (vedi Analisi dei punti di leva).",
+      "no": "Et element som posisjonen i nettverket (koblinger og sentralitet) gjør til et mulig sted å gripe inn. Rangeringen er strukturell, ikke en spådom om hvor langt en endring vil spre seg (se Analyse av påvirkningspunkter).",
+      "el": "Ένα στοιχείο που η θέση του στο δίκτυο (συνδέσεις και κεντρικότητα) το καθιστά πιθανό σημείο παρέμβασης. Η κατάταξη είναι δομική, όχι πρόβλεψη του πόσο μακριά θα διαδοθεί μια αλλαγή (βλ. Ανάλυση σημείων μόχλευσης)."
     },
     "ui.dashboard.leverage_analysis_complete": {
       "en": "Leverage analysis complete",

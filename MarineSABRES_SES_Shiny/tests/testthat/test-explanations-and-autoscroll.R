@@ -143,3 +143,19 @@ test_that("'Reject all' does not jump the page", {
     expect_false(any(grepl("next_category_btn_", js, fixed = TRUE)))
   })
 })
+
+test_that("the glossary matches the Dashboard's CLD abbreviation and avoids overclaims (review #153)", {
+  dash_tr <- tr_file("ui/dashboard.json")
+  shown <- dash_tr[["ui.dashboard.cld_generated"]]
+  term <- dash_tr[["ui.dashboard.glossary_cld_term"]]
+  for (l in LANGS) {
+    abbr <- strsplit(shown[[l]], " ", fixed = TRUE)[[1]][1]
+    expect_true(grepl(abbr, term[[l]], fixed = TRUE), info = paste(l, abbr))
+  }
+  # polarity is a push on the other element, not "both change together"
+  expect_false(grepl("same direction", dash_tr[["ui.dashboard.glossary_cld_def"]]$en, fixed = TRUE))
+  # leverage points are structural candidates, not a spread forecast
+  lev <- dash_tr[["ui.dashboard.glossary_leverage_def"]]$en
+  expect_false(grepl("likely to spread", lev, fixed = TRUE))
+  expect_match(lev, "candidate", fixed = TRUE)
+})
