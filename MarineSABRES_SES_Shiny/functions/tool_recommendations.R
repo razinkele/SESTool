@@ -42,7 +42,7 @@ get_next_steps <- function(current_module) {
       ),
       list(
         label_key       = "modules.tool_recommendations.leverage.responses_label",
-        tab_id          = "create_ses_standard",
+        tab_id          = "response_measures",
         icon            = "shield-alt",
         description_key = "modules.tool_recommendations.leverage.responses_desc"
       ),
@@ -88,6 +88,17 @@ get_next_steps <- function(current_module) {
   recommendations[[current_module]] %||% list()
 }
 
+#' Tabs the current user can open, for build_next_steps_ui(available_tabs=)
+#'
+#' @param user_level_reactive Reactive returning the user level, or NULL.
+#' @param i18n Translator.
+#' @return Character vector of tab names, or NULL (= no filtering) when the
+#'   level is unknown or the sidebar cannot be built.
+next_step_available_tabs <- function(user_level_reactive, i18n) {
+  if (is.null(user_level_reactive)) return(NULL)
+  tryCatch(sidebar_tab_ids(user_level_reactive(), i18n), error = function(e) NULL)
+}
+
 #' Build the Next Steps UI panel
 #'
 #' Constructs a tagList containing actionLinks for each recommendation.
@@ -96,12 +107,20 @@ get_next_steps <- function(current_module) {
 #' @param current_module Character string. Module name passed to get_next_steps().
 #' @param ns Namespace function (session$ns) from the calling module.
 #' @param i18n i18n object with a $t() method.
+#' @param available_tabs Optional character vector of tab names the user can
+#'   open (see sidebar_tab_ids()). Recommendations for other tabs are left out:
+#'   clicking them did nothing (feedback 2026-11-11). NULL shows all.
 #' @return A Shiny tags object, or NULL if no recommendations exist.
-build_next_steps_ui <- function(current_module, ns, i18n) {
+build_next_steps_ui <- function(current_module, ns, i18n, available_tabs = NULL) {
   recs <- get_next_steps(current_module)
-  if (length(recs) == 0) return(NULL)
+  # Keep the original positions: the server observes next_step_<i> by index.
+  keep <- seq_along(recs)
+  if (!is.null(available_tabs)) {
+    keep <- keep[vapply(recs, function(r) r$tab_id %in% available_tabs, logical(1))]
+  }
+  if (length(keep) == 0) return(NULL)
 
-  rec_buttons <- lapply(seq_along(recs), function(i) {
+  rec_buttons <- lapply(keep, function(i) {
     rec <- recs[[i]]
     tags$div(
       class = "next-step-item",

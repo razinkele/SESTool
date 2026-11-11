@@ -51,7 +51,8 @@ analysis_decision_lens_ui <- function(id, i18n) {
   )
 }
 
-analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
+                                          user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     rv <- reactiveValues(factors = NULL, loop_info = NULL, archetypes = NULL)
@@ -213,7 +214,8 @@ analysis_decision_lens_server <- function(id, project_data_reactive, i18n, event
 
     output$next_steps_ui <- renderUI({
       req(!is.null(rv$factors))
-      build_next_steps_ui("analysis_decision_lens", ns, i18n)
+      build_next_steps_ui("analysis_decision_lens", ns, i18n,
+                          available_tabs = next_step_available_tabs(user_level_reactive, i18n))
     })
 
     local({

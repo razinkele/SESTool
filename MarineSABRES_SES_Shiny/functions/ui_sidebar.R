@@ -166,6 +166,22 @@ should_show_menu_item <- function(item_name, user_level) {
 # SIDEBAR MENU GENERATION
 # ============================================================================
 
+#' Tab names present in a user level's sidebar
+#'
+#' bs4Dash's updateTabItems() can only switch to a tab that has a sidebar
+#' entry; a navigation request for any other tab is silently ignored. Callers
+#' use this to hide links to pages the user's level does not show. Derived from
+#' the rendered menu, so it follows generate_sidebar_menu() exactly.
+#'
+#' @param user_level User experience level
+#' @param i18n Translator (labels are irrelevant here)
+#' @return Character vector of tabName values
+sidebar_tab_ids <- function(user_level, i18n) {
+  html <- as.character(generate_sidebar_menu(user_level, i18n))
+  ids <- regmatches(html, gregexpr('data-value="[^"]+"', html))[[1]]
+  unique(sub('^data-value="([^"]+)"$', "\\1", ids))
+}
+
 #' Generate sidebar menu (dynamic, responds to language changes and user level)
 #'
 #' @param user_level User experience level ("beginner", "intermediate", "expert")
