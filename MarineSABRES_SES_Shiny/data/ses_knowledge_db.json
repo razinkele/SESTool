@@ -1581,6 +1581,10 @@
         {
           "name": "Military munition dumping legacy",
           "relevance": 0.5
+        },
+        {
+          "name": "Deep-water hypoxia (dead zones)",
+          "relevance": 0.95
         }
       ],
       "states": [
@@ -1603,10 +1607,6 @@
         {
           "name": "Benthic macrofauna in deep basins",
           "relevance": 0.75
-        },
-        {
-          "name": "Deep-water hypoxia (dead zones)",
-          "relevance": 0.95
         }
       ],
       "impacts": [
@@ -1755,7 +1755,7 @@
         },
         {
           "from": "Deep-water hypoxia (dead zones)",
-          "from_type": "states",
+          "from_type": "pressures",
           "to": "Benthic macrofauna in deep basins",
           "to_type": "states",
           "polarity": "-",
@@ -1772,7 +1772,7 @@
         },
         {
           "from": "Deep-water hypoxia (dead zones)",
-          "from_type": "states",
+          "from_type": "pressures",
           "to": "Eastern Baltic cod stock biomass",
           "to_type": "states",
           "polarity": "-",
@@ -1910,7 +1910,7 @@
           "from": "Seabed disturbance from bottom trawling",
           "from_type": "pressures",
           "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "states",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -1961,7 +1961,7 @@
           "from": "Overfishing of Eastern Baltic cod",
           "from_type": "pressures",
           "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "states",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "weak",
           "confidence": 2,
@@ -3094,6 +3094,10 @@
         {
           "name": "Recreational boating in lagoon channels",
           "relevance": 0.6
+        },
+        {
+          "name": "Shellfish sanitary monitoring programmes",
+          "relevance": 0.9
         }
       ],
       "pressures": [
@@ -3184,10 +3188,6 @@
         {
           "name": "Lagoon water exchange improvement (inlet management)",
           "relevance": 0.85
-        },
-        {
-          "name": "Shellfish sanitary monitoring programmes",
-          "relevance": 0.9
         },
         {
           "name": "Nutrient input reduction from agricultural best practice",
@@ -3358,7 +3358,7 @@
         },
         {
           "from": "Shellfish sanitary monitoring programmes",
-          "from_type": "responses",
+          "from_type": "activities",
           "to": "Pathogen loading affecting shellfish safety",
           "to_type": "pressures",
           "polarity": "-",
@@ -3819,7 +3819,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Hypersaline discharge from desalination",
+          "name": "Hypersaline brine from desalination",
           "relevance": 0.65
         },
         {
@@ -4438,7 +4438,7 @@
         {
           "from": "Desalination brine discharge",
           "from_type": "activities",
-          "to": "Hypersaline discharge from desalination",
+          "to": "Hypersaline brine from desalination",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
@@ -4468,7 +4468,7 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Hypersaline discharge from desalination",
+          "from": "Hypersaline brine from desalination",
           "from_type": "pressures",
           "to": "Posidonia oceanica meadow extent and density",
           "to_type": "states",
@@ -5305,10 +5305,6 @@
       "description": "North Sea offshore waters. Highly industrialised shelf sea with oil/gas platforms, major wind farm arrays, sandeel fisheries, aggregate extraction, and busy shipping lanes.",
       "drivers": [
         {
-          "name": "Offshore wind energy policy targets (EU, UK)",
-          "relevance": 0.95
-        },
-        {
           "name": "Oil and gas production demand (declining)",
           "relevance": 0.8
         },
@@ -5455,12 +5451,16 @@
         {
           "name": "Platform decommissioning regulations",
           "relevance": 0.75
+        },
+        {
+          "name": "Offshore wind energy policy targets (EU, UK)",
+          "relevance": 0.95
         }
       ],
       "connections": [
         {
           "from": "Offshore wind energy policy targets (EU, UK)",
-          "from_type": "drivers",
+          "from_type": "responses",
           "to": "Offshore wind farm construction (monopile, jacket)",
           "to_type": "activities",
           "polarity": "+",
@@ -5938,7 +5938,7 @@
           "from": "Energy security and carbon reduction benefits",
           "from_type": "welfare",
           "to": "Offshore wind energy policy targets (EU, UK)",
-          "to_type": "drivers",
+          "to_type": "responses",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -5955,7 +5955,7 @@
           "from": "Decommissioning cost burden (oil sector)",
           "from_type": "welfare",
           "to": "Offshore wind energy policy targets (EU, UK)",
-          "to_type": "drivers",
+          "to_type": "responses",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -5972,7 +5972,7 @@
           "from": "Renewable energy generation capacity",
           "from_type": "welfare",
           "to": "Offshore wind energy policy targets (EU, UK)",
-          "to_type": "drivers",
+          "to_type": "responses",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -5989,7 +5989,7 @@
           "from": "Shipping and trade route services",
           "from_type": "welfare",
           "to": "Offshore wind energy policy targets (EU, UK)",
-          "to_type": "drivers",
+          "to_type": "responses",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -6141,7 +6141,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Thermal discharge from power stations",
+          "name": "Heated water (thermal pollution) from power stations",
           "relevance": 0.7
         },
         {
@@ -6617,14 +6617,14 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Thermal discharge from power stations",
+          "from": "Heated water (thermal pollution) from power stations",
           "from_type": "pressures",
           "to": "European eel recruitment and passage",
           "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Thermal discharge from power stations",
+          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Heated water (thermal pollution) from power stations",
           "references": [
             "OSPAR (2017) \"Intermediate Assessment\"",
             "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
@@ -9910,6 +9910,10 @@
         {
           "name": "Danube-origin nutrient and pollutant loading",
           "relevance": 0.95
+        },
+        {
+          "name": "Hypoxia and hydrogen sulphide in deep waters",
+          "relevance": 0.9
         }
       ],
       "states": [
@@ -9936,10 +9940,6 @@
         {
           "name": "Invasive comb jelly (Mnemiopsis leidyi)",
           "relevance": 0.85
-        },
-        {
-          "name": "Hypoxia and hydrogen sulphide in deep waters",
-          "relevance": 0.9
         }
       ],
       "impacts": [
@@ -10107,7 +10107,7 @@
           "from": "Danube-origin nutrient and pollutant loading",
           "from_type": "pressures",
           "to": "Hypoxia and hydrogen sulphide in deep waters",
-          "to_type": "states",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -10122,7 +10122,7 @@
         },
         {
           "from": "Hypoxia and hydrogen sulphide in deep waters",
-          "from_type": "states",
+          "from_type": "pressures",
           "to": "Anchovy and sprat stock biomass",
           "to_type": "states",
           "polarity": "-",
@@ -10294,7 +10294,7 @@
           "from": "Eutrophication from Danube nutrient inputs",
           "from_type": "pressures",
           "to": "Hypoxia and hydrogen sulphide in deep waters",
-          "to_type": "states",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -10674,7 +10674,7 @@
           "relevance": 0.85
         },
         {
-          "name": "Agricultural and urban watershed runoff",
+          "name": "Nutrients and contaminants from agricultural and urban runoff",
           "relevance": 0.85
         }
       ],
@@ -10806,7 +10806,7 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Agricultural and urban watershed runoff",
+          "from": "Nutrients and contaminants from agricultural and urban runoff",
           "from_type": "pressures",
           "to": "Nutrient enrichment from agricultural sources",
           "to_type": "pressures",
@@ -12163,7 +12163,7 @@
           "relevance": 0.75
         },
         {
-          "name": "Cruise ship discharge (grey water, air emissions)",
+          "name": "Grey water and air pollutants from cruise ships",
           "relevance": 0.7
         },
         {
@@ -12737,7 +12737,7 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Cruise ship discharge (grey water, air emissions)",
+          "from": "Grey water and air pollutants from cruise ships",
           "from_type": "pressures",
           "to": "Deep-water renewal frequency and oxygen levels",
           "to_type": "states",
@@ -13654,7 +13654,7 @@
       ],
       "pressures": [
         {
-          "name": "Boat sewage and grey water discharge in sheltered bays",
+          "name": "Boat sewage and grey water in sheltered bays",
           "relevance": 0.85
         },
         {
@@ -13940,7 +13940,7 @@
         {
           "from": "Boat sewage pump-out station network expansion",
           "from_type": "responses",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
@@ -14110,7 +14110,7 @@
         {
           "from": "Passenger ferry traffic (Stockholm-Helsinki, inter-island)",
           "from_type": "activities",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
@@ -14127,7 +14127,7 @@
         {
           "from": "Shoreline modification and jetty construction",
           "from_type": "activities",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
@@ -14144,7 +14144,7 @@
         {
           "from": "Leisure fishing (trolling, angling) for pike and sea trout",
           "from_type": "activities",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
@@ -14280,7 +14280,7 @@
         {
           "from": "Archipelago zoning for nature protection vs recreation",
           "from_type": "responses",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
@@ -14297,7 +14297,7 @@
         {
           "from": "Speed limits and wake restrictions in sensitive channels",
           "from_type": "responses",
-          "to": "Boat sewage and grey water discharge in sheltered bays",
+          "to": "Boat sewage and grey water in sheltered bays",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "weak",
@@ -15197,7 +15197,7 @@
           "relevance": 0.85
         },
         {
-          "name": "Seawater intake and brine discharge from desalination",
+          "name": "Seawater intake and hypersaline brine from desalination",
           "relevance": 0.75
         },
         {
@@ -15381,7 +15381,7 @@
         {
           "from": "Seawater desalination for freshwater supply",
           "from_type": "activities",
-          "to": "Seawater intake and brine discharge from desalination",
+          "to": "Seawater intake and hypersaline brine from desalination",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
@@ -21673,6 +21673,10 @@
         {
           "name": "Marine thermal stress from ocean warming",
           "relevance": 0.8
+        },
+        {
+          "name": "Coastal erosion and sediment deficit",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -21695,10 +21699,6 @@
         {
           "name": "Coastal water clarity and photic zone depth",
           "relevance": 0.75
-        },
-        {
-          "name": "Coastal erosion and sediment deficit",
-          "relevance": 0.85
         }
       ],
       "impacts": [
@@ -22068,7 +22068,7 @@
         },
         {
           "from": "Coastal erosion and sediment deficit",
-          "from_type": "states",
+          "from_type": "pressures",
           "to": "Sandy beach morphodynamics and sediment budget",
           "to_type": "states",
           "polarity": "-",
@@ -23075,14 +23075,6 @@
           "relevance": 0.95
         },
         {
-          "name": "EU Common Fisheries Policy requirements",
-          "relevance": 0.85
-        },
-        {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.9
-        },
-        {
           "name": "Population growth on island communities",
           "relevance": 0.8
         },
@@ -23160,12 +23152,16 @@
           "relevance": 0.75
         },
         {
-          "name": "Brine discharge from desalination",
+          "name": "Hypersaline brine from desalination",
           "relevance": 0.65
         },
         {
           "name": "Underwater noise from vessel traffic",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.9
         }
       ],
       "states": [
@@ -23274,6 +23270,10 @@
         {
           "name": "EU Biodiversity Strategy 2030 targets",
           "relevance": 0.7
+        },
+        {
+          "name": "EU Common Fisheries Policy requirements",
+          "relevance": 0.85
         }
       ],
       "connections": [
@@ -23313,7 +23313,7 @@
         },
         {
           "from": "EU Common Fisheries Policy requirements",
-          "from_type": "drivers",
+          "from_type": "responses",
           "to": "Artisanal demersal fishing",
           "to_type": "activities",
           "polarity": "+",
@@ -23330,7 +23330,7 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Ocean warming and marine heatwaves",
           "to_type": "pressures",
           "polarity": "+",
@@ -23450,7 +23450,7 @@
         {
           "from": "Desalination plant operation",
           "from_type": "activities",
-          "to": "Brine discharge from desalination",
+          "to": "Hypersaline brine from desalination",
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
@@ -24071,16 +24071,8 @@
           "relevance": 0.8
         },
         {
-          "name": "EU deep-sea access regulations",
-          "relevance": 0.8
-        },
-        {
           "name": "Renewable energy and mineral exploration targets",
           "relevance": 0.7
-        },
-        {
-          "name": "Climate change and deep-ocean warming",
-          "relevance": 0.75
         },
         {
           "name": "Submarine cable infrastructure demand",
@@ -24141,6 +24133,10 @@
         {
           "name": "Ocean acidification effects on deep corals",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change and deep-ocean warming",
+          "relevance": 0.75
         }
       ],
       "states": [
@@ -24292,8 +24288,8 @@
           "reversibility": "reversible"
         },
         {
-          "from": "EU deep-sea access regulations",
-          "from_type": "drivers",
+          "from": "EU deep-sea access regulation (bottom trawl ban)",
+          "from_type": "responses",
           "to": "Deep-water bottom trawling on seamount flanks",
           "to_type": "activities",
           "polarity": "-",
@@ -24310,7 +24306,7 @@
         },
         {
           "from": "Climate change and deep-ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Deep-ocean warming and deoxygenation",
           "to_type": "pressures",
           "polarity": "+",
@@ -24932,14 +24928,6 @@
           "relevance": 0.9
         },
         {
-          "name": "Climate change and shifting ocean currents",
-          "relevance": 0.85
-        },
-        {
-          "name": "EU Common Fisheries Policy for pelagic stocks",
-          "relevance": 0.8
-        },
-        {
           "name": "Offshore renewable energy development targets",
           "relevance": 0.7
         },
@@ -25010,6 +24998,10 @@
         {
           "name": "Shark finning and targeted shark mortality",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change and shifting ocean currents",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -25114,6 +25106,10 @@
         {
           "name": "Cetacean critical habitat identification programmes",
           "relevance": 0.7
+        },
+        {
+          "name": "EU Common Fisheries Policy for pelagic stocks",
+          "relevance": 0.8
         }
       ],
       "connections": [
@@ -25153,7 +25149,7 @@
         },
         {
           "from": "Climate change and shifting ocean currents",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Ocean warming and current regime shifts",
           "to_type": "pressures",
           "polarity": "+",
@@ -25697,7 +25693,7 @@
         },
         {
           "from": "EU Common Fisheries Policy for pelagic stocks",
-          "from_type": "drivers",
+          "from_type": "responses",
           "to": "Industrial tuna purse-seine and pole-and-line fishing",
           "to_type": "activities",
           "polarity": "+",

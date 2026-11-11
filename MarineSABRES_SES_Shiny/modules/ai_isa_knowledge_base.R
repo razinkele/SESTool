@@ -354,7 +354,8 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   else if (category == "activities") {
     # Universal activities - only add as padding when KB has fewer than 3 items
     if (!kb_sufficient) {
-      suggestions$universal <- c("Commercial fishing", "Aquaculture", "Shipping", "Coastal development")
+      suggestions$universal <- c("Commercial fishing", "Aquaculture", "Shipping", "Coastal development",
+                                 "Environmental monitoring")
     }
 
     # Region-specific
@@ -405,7 +406,7 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     # Region-specific
     if (!is.null(regional_sea)) {
       if (regional_sea == "baltic") {
-        suggestions$regional <- c("Hypoxic zones expansion", "Cod stock collapse", "Seagrass decline")
+        suggestions$regional <- c("Benthic fauna decline", "Cod stock collapse", "Seagrass decline")
       } else if (regional_sea %in% c("mediterranean", "caribbean", "pacific", "indian")) {
         suggestions$regional <- c("Coral bleaching", "Seagrass loss", "Reef degradation")
       } else if (regional_sea == "arctic") {
@@ -460,7 +461,7 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     # Universal responses - only add as padding when KB has fewer than 3 items
     if (!kb_sufficient) {
       suggestions$universal <- c("Marine Protected Areas", "Fishing regulations", "Pollution controls",
-                                 "Monitoring programs", "Ecosystem restoration", "Stakeholder engagement")
+                                 "Ecosystem restoration", "Stakeholder engagement")
     }
 
     # Region-specific
@@ -651,7 +652,7 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
                  "Salt production", "Flood buffer need"),
         c("Fishery demand", "Tourism development", "Flood protection")),
       tidal_flat = c("Coastal development pressure", "Bait collection demand",
-                     "Bird watching tourism", "Coastal squeeze from sea level rise"),
+                     "Bird watching tourism"),
       rocky_shore = c("Recreational harvesting", "Scientific research interest",
                       "Coastal access demand", "Kelp harvesting"),
       sandy_beach = c("Beach tourism demand", "Coastal protection need",
@@ -664,10 +665,10 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
         warm = c("Deep-sea mining interest", "Shipping lanes", "Tuna fisheries demand",
                  "Oil exploration", "Telecommunications cables"),
         arctic = c("Arctic shipping routes", "Hydrocarbon exploration",
-                   "Strategic mineral extraction", "Scientific exploration"),
+                   "Strategic mineral extraction"),
         c("Energy demand", "Shipping", "Deep-sea resource extraction")),
       sea_ice = c("Arctic shipping route opening", "Resource exploration demand",
-                  "Indigenous subsistence needs", "Scientific research", "Climate monitoring"),
+                  "Indigenous subsistence needs"),
       delta = c("Agricultural expansion", "Urban development", "Flood protection",
                 "Sediment management", "Freshwater demand"),
       archipelago = c("Island tourism demand", "Ferry transport need",
@@ -685,11 +686,11 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
                    "Timber harvesting", "Coastal construction", "Ecotourism"),
       seagrass = c("Bottom trawling over seagrass", "Boat anchoring in meadows",
                    "Dredging near seagrass", "Nutrient discharge into seagrass areas",
-                   "Seagrass restoration planting"),
+                   "Seagrass restoration planting", "Water quality monitoring"),
       estuary = switch(sea_group,
         northern = c("Port dredging", "Industrial discharge", "Commercial trawling",
                      "Recreational boating", "Coastal flood defense construction",
-                     "Mussel and oyster harvesting"),
+                     "Mussel and oyster harvesting", "Shellfish water quality monitoring"),
         warm = c("Shellfish aquaculture", "Urban wastewater discharge",
                  "Tourist boat traffic", "Artisanal fishing", "Salt harvesting"),
         c("Dredging", "Industrial discharge", "Fishing", "Aquaculture")),
@@ -717,10 +718,10 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
         warm = c("Purse seine fishing", "Longline fishing", "Oil exploration",
                  "Deep-water trawling", "Shipping traffic"),
         arctic = c("Ice-class shipping", "Seismic surveys", "Exploratory drilling",
-                   "Long-range fishing"),
+                   "Long-range fishing", "Scientific exploration"),
         c("Commercial fishing", "Shipping", "Energy extraction")),
       sea_ice = c("Icebreaker shipping", "Under-ice research", "Polar tourism",
-                  "Seal hunting", "Indigenous marine harvesting"),
+                  "Seal hunting", "Indigenous marine harvesting", "Climate monitoring"),
       delta = c("Upstream dam operations", "Agricultural irrigation", "Dredging for navigation",
                 "Urban expansion on deltaic land", "Aquaculture in delta channels"),
       character()
@@ -739,10 +740,10 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
                    "Physical damage from mooring", "Propeller scarring",
                    "Sediment disturbance from dredging"),
       estuary = switch(sea_group,
-        northern = c("Nutrient enrichment from agriculture", "Industrial chemical discharge",
+        northern = c("Nutrient enrichment from agriculture", "Industrial chemical contaminants",
                      "Habitat loss from port expansion", "Altered salinity from water management",
                      "Noise from shipping and construction", "Microplastic accumulation"),
-        warm = c("Freshwater diversion", "Urban sewage discharge", "Pesticide runoff",
+        warm = c("Freshwater diversion", "Urban sewage (nutrients, pathogens)", "Pesticides in runoff",
                  "Thermal pollution", "Invasive species introduction"),
         black_sea = c("Eutrophication from Danube inputs", "Hydrogen sulfide zones",
                       "Invasive jellyfish (Mnemiopsis)", "Overfishing of anchovy and sprat"),
@@ -866,12 +867,10 @@ get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_t
                    "Community mangrove management", "Blue carbon REDD+ projects",
                    "Mangrove protected area designation"),
       seagrass = c("Seagrass protection zones", "Mooring management areas",
-                   "Nutrient reduction programs", "Seagrass transplanting initiatives",
-                   "Water quality monitoring"),
+                   "Nutrient reduction programs", "Seagrass transplanting initiatives"),
       estuary = switch(sea_group,
         northern = c("Nutrient Action Plans (HELCOM/OSPAR)", "Fish passage restoration",
-                     "Industrial discharge permits", "Managed realignment",
-                     "Shellfish water quality monitoring"),
+                     "Industrial discharge permits", "Managed realignment"),
         warm = c("Wastewater treatment upgrades", "River basin management plans",
                  "Estuary habitat restoration", "Fishery co-management"),
         c("Water Framework Directive measures", "Habitat restoration", "Pollution control")),
