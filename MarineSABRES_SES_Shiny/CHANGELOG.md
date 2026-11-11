@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- AI-assisted SES building: biased and misplaced suggestions (user feedback 2026-10-13 "Ai - assisted SES building problem with some wording", workshop participant).
+  - Step 3 asked for the "main issues" and offered activities such as Shipping or Tourism as issues. It now asks which topics or sectors the study is about, in all 9 languages. The reply no longer claims to focus the suggestions.
+  - Choosing a fishing topic added fixed, mostly negative lists to later steps (Trawling, Purse seining, Livelihood loss, Fisher income loss…), whatever the habitat. Shipping, energy and mining topics added nothing. These lists are removed, so the chosen topics no longer change the suggestions.
+  - Every session showed activities as Drivers ("Maritime transport", "Beach tourism", "Shipping routes"…), and "Marine debris disposal" as an Activity. Both are removed.
+  - Similar labels were merged by keeping the shorter one, which replaced specific knowledge-base labels with generic ones. Knowledge-base labels are now always kept.
+  - Knowledge-base label wording ("Overfishing of X" pressures and similar) is left for review by a domain expert.
 - Browser console: every page opened in a language other than the default logged "Unexpected input value mode: '[object Object]'" (seen since at least April 2026). It came from `shiny.i18n::update_lang()`: the package's language input passes a jQuery event where newer Shiny expects a priority value. The call had no effect in this app (no element used it, and a language switch reloads the page in the new language), so it was removed from the page start and from the language dialog.
 
 ## [1.35.1] - 2026-11-10

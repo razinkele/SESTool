@@ -540,15 +540,15 @@
       "el": "Φόρτωση αποθηκευμένου"
     },
     "modules.isa.ai_assistant.main_issue_identification": {
-      "en": "Main Issue Identification",
-      "es": "Identificación del problema principal",
-      "fr": "Identification du problème principal",
-      "de": "Identifizierung des Hauptproblems",
-      "lt": "Pagrindinės problemos identifikavimas",
-      "pt": "Identificação do problema principal",
-      "it": "Identificazione del problema principale",
-      "no": "Identifisering av hovedproblem",
-      "el": "Προσδιορισμός κύριου ζητήματος"
+      "en": "Focus Topics",
+      "es": "Temas de interés",
+      "fr": "Thèmes d'intérêt",
+      "de": "Themenschwerpunkte",
+      "lt": "Dėmesio temos",
+      "pt": "Temas de interesse",
+      "it": "Temi di interesse",
+      "no": "Fokusområder",
+      "el": "Θέματα εστίασης"
     },
     "modules.isa.ai_assistant.marine_pollution_plastics": {
       "en": "Marine Pollution & Plastics",
@@ -3774,15 +3774,15 @@
       "el": "Συνηθισμένοι τύποι οικοσυστημάτων σε"
     },
     "modules.isa.ai_assistant.common_issues_in_your_region": {
-      "en": "Common Issues in Your Region",
-      "es": "Problemas habituales en su región",
-      "fr": "Problèmes courants dans votre région",
-      "de": "Häufige Probleme in Ihrer Region",
-      "lt": "Dažnos problemos jūsų regione",
-      "pt": "Problemas comuns na sua região",
-      "it": "Problemi comuni nella tua regione",
-      "no": "Vanlige problemer i din region",
-      "el": "Συνηθισμένα ζητήματα στην περιοχή σας"
+      "en": "Common Topics in Your Region",
+      "es": "Temas habituales en su región",
+      "fr": "Thèmes courants dans votre région",
+      "de": "Häufige Themen in Ihrer Region",
+      "lt": "Dažnos temos jūsų regione",
+      "pt": "Temas comuns na sua região",
+      "it": "Temi comuni nella tua regione",
+      "no": "Vanlige temaer i din region",
+      "el": "Συνηθισμένα θέματα στην περιοχή σας"
     },
     "modules.isa.ai_assistant.connection_types": {
       "en": "Connection Types",
@@ -3829,15 +3829,15 @@
       "el": "Επιπτώσεις - Επιδράσεις στις υπηρεσίες"
     },
     "modules.isa.ai_assistant.main_issue": {
-      "en": "Main Issue:",
-      "es": "Problema principal:",
-      "fr": "Problème principal :",
-      "de": "Hauptproblem:",
-      "lt": "Pagrindinė problema:",
-      "pt": "Problema principal:",
-      "it": "Problema principale:",
-      "no": "Hovedproblem:",
-      "el": "Κύριο ζήτημα:"
+      "en": "Focus topics:",
+      "es": "Temas de interés:",
+      "fr": "Thèmes d'intérêt :",
+      "de": "Themenschwerpunkte:",
+      "lt": "Dėmesio temos:",
+      "pt": "Temas de interesse:",
+      "it": "Temi di interesse:",
+      "no": "Fokusområder:",
+      "el": "Θέματα εστίασης:"
     },
     "modules.isa.ai_assistant.perfect": {
       "en": "Perfect!",
@@ -4137,15 +4137,15 @@
       "el": "Θα προσαρμόσω τις προτάσεις διακυβέρνησης και κοινωνικοοικονομικές με βάση τις επιλεγμένες χώρες σας."
     },
     "modules.isa.ai_assistant.question_main_issues": {
-      "en": "What are the main environmental or management issues you're addressing? (Select all that apply)",
-      "es": "¿Cuáles son los principales problemas ambientales o de gestión que está abordando? (Seleccione todos los que correspondan)",
-      "fr": "Quels sont les principaux problèmes environnementaux ou de gestion que vous abordez ? (Sélectionnez tout ce qui s'applique)",
-      "de": "Welche Haupt-Umwelt- oder Managementprobleme behandeln Sie? (Wählen Sie alle zutreffenden aus)",
-      "lt": "Kokie pagrindiniai aplinkos ar valdymo klausimai sprendžiami? (Pasirinkite visus tinkamus)",
-      "pt": "Quais são os principais problemas ambientais ou de gestão que você está abordando? (Selecione todos os aplicáveis)",
-      "it": "Quali sono i principali problemi ambientali o gestionali che stai affrontando? (Seleziona tutti quelli applicabili)",
-      "no": "Hva er de viktigste miljø- eller forvaltningsproblemene du tar opp? (Velg alle som gjelder)",
-      "el": "Ποια είναι τα κύρια περιβαλλοντικά ζητήματα ή ζητήματα διαχείρισης που αντιμετωπίζετε; (Επιλέξτε όλα τα σχετικά)"
+      "en": "Which topics or sectors is your study about? (Select all that apply)",
+      "es": "¿Sobre qué temas o sectores trata su estudio? (Seleccione todos los que correspondan)",
+      "fr": "Sur quels thèmes ou secteurs porte votre étude ? (Sélectionnez tout ce qui s'applique)",
+      "de": "Um welche Themen oder Sektoren geht es in Ihrer Studie? (Wählen Sie alle zutreffenden aus)",
+      "lt": "Kokias temas ar sektorius apima jūsų tyrimas? (Pasirinkite visus tinkamus)",
+      "pt": "Sobre que temas ou setores é o seu estudo? (Selecione todos os aplicáveis)",
+      "it": "Quali temi o settori riguarda il tuo studio? (Seleziona tutti quelli applicabili)",
+      "no": "Hvilke temaer eller sektorer handler studien din om? (Velg alle som gjelder)",
+      "el": "Ποια θέματα ή τομείς αφορά η μελέτη σας; (Επιλέξτε όλα τα σχετικά)"
     },
     "modules.isa.ai_assistant.question_drivers": {
       "en": "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?",
@@ -4247,15 +4247,15 @@
       "el": "Τώρα let's start building your DAPSI(W)R(M) framework!"
     },
     "modules.isa.ai_assistant.great_focus_on_issues": {
-      "en": "Great! I'll focus suggestions on these issues:",
-      "es": "¡Genial! Centraré las sugerencias en estos temas:",
-      "fr": "Excellent ! Je concentrerai les suggestions sur ces problèmes :",
-      "de": "Großartig! Ich werde die Vorschläge auf diese Themen konzentrieren:",
-      "lt": "Puiku! Sutelksiu pasiūlymus į šias problemas:",
-      "pt": "Ótimo! Focarei as sugestões nesses problemas:",
-      "it": "Ottimo! Concentrerò i suggerimenti su questi problemi:",
-      "no": "Flott! Jeg vil fokusere forslagene på disse problemene:",
-      "el": "Τέλεια! Θα εστιάσω τις προτάσεις στα ακόλουθα ζητήματα:"
+      "en": "Noted. Your study focuses on:",
+      "es": "Anotado. Su estudio se centra en:",
+      "fr": "Noté. Votre étude porte sur :",
+      "de": "Notiert. Ihre Studie konzentriert sich auf:",
+      "lt": "Pažymėta. Jūsų tyrimas skirtas:",
+      "pt": "Anotado. O seu estudo centra-se em:",
+      "it": "Annotato. Il tuo studio si concentra su:",
+      "no": "Notert. Studien din handler om:",
+      "el": "Σημειώθηκε. Η μελέτη σας εστιάζει σε:"
     },
     "modules.isa.data_entry.title": {
       "en": "ISA Data Entry",
@@ -4555,15 +4555,15 @@
       "el": "Τα οικοσυστήματα %s έχουν μοναδικά χαρακτηριστικά που θα λάβω υπόψη στις προτάσεις μου."
     },
     "modules.isa.ai_assistant.focus_on_issue": {
-      "en": "Understood. I'll focus suggestions on %s.",
-      "es": "Entendido. Centraré las sugerencias en %s.",
-      "fr": "Compris. Je concentrerai les suggestions sur %s.",
-      "de": "Verstanden. Ich werde die Vorschläge auf %s konzentrieren.",
-      "lt": "Supratau. Pasiūlymus sutelksiu į %s.",
-      "pt": "Entendido. Focarei as sugestões em %s.",
-      "it": "Capito. Concentrerò i suggerimenti su %s.",
-      "no": "Forstått. Jeg vil fokusere forslagene på %s.",
-      "el": "Κατανοητό. Θα επικεντρώσω τις προτάσεις στο %s."
+      "en": "Noted. Your study focuses on: %s.",
+      "es": "Anotado. Su estudio se centra en: %s.",
+      "fr": "Noté. Votre étude porte sur : %s.",
+      "de": "Notiert. Ihre Studie konzentriert sich auf: %s.",
+      "lt": "Pažymėta. Jūsų tyrimas skirtas: %s.",
+      "pt": "Anotado. O seu estudo centra-se em: %s.",
+      "it": "Annotato. Il tuo studio si concentra su: %s.",
+      "no": "Notert. Studien din handler om: %s.",
+      "el": "Σημειώθηκε. Η μελέτη σας εστιάζει σε: %s."
     },
     "modules.isa.ai_assistant.start_building_framework": {
       "en": "Now let's start building your DAPSI(W)R(M) framework!",
