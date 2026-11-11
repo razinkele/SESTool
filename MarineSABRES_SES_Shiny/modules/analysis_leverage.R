@@ -107,7 +107,8 @@ analysis_leverage_ui <- function(id, i18n) {
 #' @param id Module ID
 #' @param project_data_reactive Reactive project data
 #' @return Server logic
-analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
+                                     user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values
@@ -564,7 +565,8 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
     # === NEXT STEPS PANEL ===
     output$next_steps_ui <- renderUI({
       req(!is.null(rv$leverage_results))
-      build_next_steps_ui("analysis_leverage", session$ns, i18n)
+      build_next_steps_ui("analysis_leverage", session$ns, i18n,
+                          available_tabs = next_step_available_tabs(user_level_reactive, i18n))
     })
 
     # Cross-tool navigation observers

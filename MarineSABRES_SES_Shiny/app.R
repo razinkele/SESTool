@@ -1065,9 +1065,12 @@ server <- function(input, output, session) {
 
   # Analysis modules
   analysis_metrics_server("analysis_met", project_data, session_i18n, event_bus = event_bus)
-  analysis_loops_server("analysis_loop", project_data, session_i18n, event_bus = event_bus)
-  analysis_leverage_server("analysis_lev", project_data, session_i18n, event_bus = event_bus)
-  analysis_decision_lens_server("analysis_dl", project_data, session_i18n, event_bus = event_bus)
+  analysis_loops_server("analysis_loop", project_data, session_i18n, event_bus = event_bus,
+                        user_level_reactive = user_level)
+  analysis_leverage_server("analysis_lev", project_data, session_i18n, event_bus = event_bus,
+                           user_level_reactive = user_level)
+  analysis_decision_lens_server("analysis_dl", project_data, session_i18n, event_bus = event_bus,
+                                user_level_reactive = user_level)
   analysis_bot_server("analysis_b", project_data, session_i18n, event_bus = event_bus)
   analysis_simplify_server("analysis_simp", project_data, session_i18n, event_bus = event_bus)
 

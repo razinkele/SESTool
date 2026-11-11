@@ -672,15 +672,15 @@
       "el": "Όλες οι κατηγορίες συνδέσεων έχουν αξιολογηθεί!"
     },
     "common.misc.you_can_now_finish_and_continue": {
-      "en": "You can now click 'Finish & Continue' below to save your model.",
-      "es": "Ahora puede hacer clic en 'Finalizar y continuar' a continuación para guardar su modelo.",
-      "fr": "Vous pouvez maintenant cliquer sur 'Terminer et continuer' ci-dessous pour enregistrer votre modèle.",
-      "de": "Sie können jetzt unten auf 'Fertig und Fortfahren' klicken, um Ihr Modell zu speichern.",
-      "lt": "Dabar galite spustelėti 'Baigti ir tęsti' žemiau, kad išsaugotumėte savo modelį.",
-      "pt": "Agora você pode clicar em 'Finalizar e continuar' abaixo para salvar seu modelo.",
-      "it": "Ora puoi cliccare 'Termina e continua' sotto per salvare il tuo modello.",
-      "no": "Du kan nå klikke 'Fullfør og fortsett' nedenfor for å lagre modellen din.",
-      "el": "Μπορείτε τώρα να κάνετε κλικ στο 'Ολοκλήρωση και συνέχεια' παρακάτω για να αποθηκεύσετε το μοντέλο σας."
+      "en": "Use the button below to save your model and continue.",
+      "es": "Use el botón de abajo para guardar su modelo y continuar.",
+      "fr": "Utilisez le bouton ci-dessous pour enregistrer votre modèle et continuer.",
+      "de": "Verwenden Sie die Schaltfläche unten, um Ihr Modell zu speichern und fortzufahren.",
+      "lt": "Naudokite žemiau esantį mygtuką, kad išsaugotumėte modelį ir tęstumėte.",
+      "pt": "Use o botão abaixo para guardar o seu modelo e continuar.",
+      "it": "Usa il pulsante qui sotto per salvare il tuo modello e continuare.",
+      "no": "Bruk knappen nedenfor for å lagre modellen og fortsette.",
+      "el": "Χρησιμοποιήστε το κουμπί παρακάτω για να αποθηκεύσετε το μοντέλο σας και να συνεχίσετε."
     },
     "common.misc.review_connections_to_continue": {
       "en": "Please review and approve some connections before continuing.",

@@ -349,7 +349,8 @@ loops_plot_png <- function(which, loops, i18n, file, width = 1000, height = 700,
   invisible(file)
 }
 
-analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
+analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
+                                  user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -1180,7 +1181,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     # === NEXT STEPS PANEL ===
     output$next_steps_ui <- renderUI({
       req(loop_data$detection_complete)
-      build_next_steps_ui("analysis_loops", ns, i18n)
+      build_next_steps_ui("analysis_loops", ns, i18n,
+                          available_tabs = next_step_available_tabs(user_level_reactive, i18n))
     })
 
     # Cross-tool navigation observers
