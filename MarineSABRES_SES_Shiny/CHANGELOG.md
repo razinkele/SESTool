@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.4] - 2026-11-12
+
 ### Fixed
 - Knowledge base: second part of the expert's category rulings, following their fuller answers of 2026-11-12, which are recorded in DAPSIWRM_FRAMEWORK_RULES.md.
   - A "Water Framework Directive compliance pressure" Driver that duplicated the WFD Response was removed; a directive belongs to the management framework.

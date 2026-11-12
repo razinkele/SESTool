@@ -1,5 +1,5 @@
 {
-  "version": "1.35.3",
+  "version": "1.35.4",
   "version_name": "Pages in every language, clickable progress, fairer AI suggestions, terms explained (November 2026)",
   "release_date": "2026-11-12",
   "release_type": "patch",
@@ -26,6 +26,7 @@
     "medium": [
       "Loop analysis: the dominance score is described as the app computes it (100 divided by the number of elements in the loop), not as centrality-based; Loop Strength Analysis explains its chart (1.35.3).",
       "Knowledge base and AI suggestions: climate change, hypoxia and coastal erosion are Pressures, policies are Responses, monitoring is an Activity, and discharge pressures name what is discharged, following a marine-science expert's rulings (first part) (1.35.3).",
+      "Knowledge base: following the expert's fuller answers, a Water Framework Directive driver that duplicated the WFD response was removed, the invasive-species programme is a removal measure (monitoring is not a measure), and a reversed 'cod overfishing causes hypoxia' link was removed (1.35.4).",
       "AI assistant: step 3 asks which topics or sectors the study is about; the chosen topics no longer add fixed (mostly fishing, mostly negative) suggestion lists; activities are no longer suggested as Drivers; knowledge-base labels are kept when similar labels are merged (1.35.2).",
       "Leverage page: the 'Response Measures' next step opens Response Measures; next-step cards for pages not in the user's menu are hidden (1.35.2).",
       "Connection review on the template and import pages no longer tells the user to click a 'Finish & Continue' button that only the AI assistant has (1.35.2).",
@@ -87,7 +88,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.35.2",
+  "previous_version": "1.35.3",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
