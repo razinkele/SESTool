@@ -1958,23 +1958,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Overfishing of Eastern Baltic cod",
-          "from_type": "pressures",
-          "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "The primary causal direction is hypoxia affecting cod, not overfishing causing hypoxia. While trophic cascade effects are possible, the link from cod stock reduction to deep-water oxygen conditions is very indirect. ICES assessments emphasize hypoxia as driver of cod decline. Strength and confidence reduced.",
-          "references": [
-            "Casini et al. 2008",
-            "Osterblom et al. 2007",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Eastern Baltic cod stock biomass",
           "from_type": "states",
           "to": "Central Baltic herring recruitment",
@@ -6091,10 +6074,6 @@
         {
           "name": "Industrial and petrochemical water demand",
           "relevance": 0.75
-        },
-        {
-          "name": "Water Framework Directive compliance pressure",
-          "relevance": 0.85
         }
       ],
       "activities": [
@@ -6540,23 +6519,6 @@
           "strength": "medium",
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Industrial and petrochemical water demand",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Water Framework Directive compliance pressure",
-          "from_type": "drivers",
-          "to": "Capital and maintenance dredging for shipping",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Water Framework Directive compliance pressure",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "OSPAR (2017) \"Intermediate Assessment\"",
@@ -8336,23 +8298,6 @@
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Bailey et al. 2020 One Earth"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Arctic oil and gas seismic exploration",
-          "from_type": "activities",
-          "to": "Accelerating sea ice extent and thickness loss",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Seismic exploration does not directly cause sea ice loss. The link through eventual fossil fuel extraction and GHG emissions is very indirect at the exploration stage.",
-          "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\"",
-            "Stroeve et al. 2012 Geophysical Research Letters"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12837,23 +12782,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Arctic cruise tourism growth",
-          "from_type": "drivers",
-          "to": "Kelp harvesting (Laminaria hyperborea)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Cruise tourism does not directly drive kelp harvesting. These are independent economic activities with no demonstrated causal link.",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -17220,23 +17148,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Coral bleaching from ocean warming",
-          "from_type": "pressures",
-          "to": "Ocean acidification reducing coral calcification",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Coral bleaching and ocean acidification are parallel consequences of rising CO2 and ocean warming, not causally linked (bleaching does not cause acidification). They co-occur but are driven by the same root cause. Causal link is spurious.",
-          "references": [
-            "Eyre et al. 2018",
-            "Silverman et al. 2009",
-            "Hughes et al. 2017 Nature"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Atoll reef crest structural integrity",
           "from_type": "states",
           "to": "Freshwater lens volume and salinity",
@@ -17538,23 +17449,6 @@
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Diaz and Rosenberg 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Copra production and coconut palm cultivation",
-          "from_type": "activities",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Copra production on atolls contributes negligible GHG emissions relative to global climate forcing. Connection is spurious.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29",
-            "Poloczanska et al. 2013 Nature Climate Change"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -19186,23 +19080,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife",
-          "from_type": "pressures",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Invasive predators on islands do not drive global climate change and ocean warming. These are independent processes. Connection is spurious.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "McClanahan et al. (2007) \"Effects of climate and seawater temperature variation on coral bleaching\"",
-            "Obura et al. 2017 Marine Pollution Bulletin"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -19963,23 +19840,6 @@
             "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
             "HELCOM (2018) \"State of the Baltic Sea\"",
             "HELCOM 2018 State of the Baltic Sea"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Grey seal haul-out colony sizes",
-          "from_type": "states",
-          "to": "Coastal erosion of limestone and glacial till shores",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Grey seal haul-out activity causes minimal, localized surface disturbance that is negligible compared to wave action and sea-level rise as drivers of coastal erosion. Strength and confidence reduced.",
-          "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
-            "HELCOM 2021 Baltic Sea Action Plan"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -20826,23 +20686,6 @@
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Arctic Council AMAP contaminant monitoring programme",
-          "from_type": "responses",
-          "to": "Arctic shipping route access (Northern Sea Route)",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Environmental monitoring does not directly promote shipping route access. The connection is very indirect (monitoring informs policy which may regulate shipping). Strength and confidence lowered.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -23248,7 +23091,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Invasive species monitoring and removal programmes",
+          "name": "Invasive species removal programmes",
           "relevance": 0.75
         },
         {
@@ -23805,14 +23648,14 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Invasive species monitoring and removal programmes",
+          "from": "Invasive species removal programmes",
           "from_type": "responses",
           "to": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Monitoring and early detection programmes in the Canary Islands and Azores aim to control invasive macroalgae and fish species before establishment, though eradication success remains limited for established populations.",
+          "rationale": "Removal and control programmes for invasive macroalgae in the Canary Islands and Azores reduce the spread of species such as Caulerpa and Asparagopsis; monitoring and early detection tell managers where removal is needed.",
           "references": [
             "Wirtz et al. (2013) The invasive species of Macaronesia",
             "Tuya et al. (2014) Biogeography of the Macaronesian region",

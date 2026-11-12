@@ -47,6 +47,34 @@ test_that("main KB places the ruled elements in the expert's categories", {
                info = paste(grep("discharge", all_names("pressures"), value = TRUE), collapse = "; "))
 })
 
+test_that("fuller answers 2026-11-12: a directive is a Response; removal, not monitoring, is the Measure", {
+  expect_false("Water Framework Directive compliance pressure" %in% names_in("north_sea_estuary", "drivers"))
+  expect_true("Water Framework Directive improvement measures" %in% names_in("north_sea_estuary", "responses"))
+  expect_false(any(grepl("monitoring", names_in("macaronesia_island", "responses"), ignore.case = TRUE)))
+  expect_true("Invasive species removal programmes" %in% names_in("macaronesia_island", "responses"))
+})
+
+test_that("links whose own rationale rejects the relationship are gone", {
+  bad <- list(
+    c("pacific_island_atoll", "Copra production and coconut palm cultivation", "Climate change and ocean warming"),
+    c("indian_ocean_island", "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife", "Climate change and ocean warming"),
+    c("baltic_offshore", "Overfishing of Eastern Baltic cod", "Deep-water hypoxia (dead zones)"),
+    c("baltic_island", "Grey seal haul-out colony sizes", "Coastal erosion of limestone and glacial till shores"),
+    c("arctic_island", "Arctic Council AMAP contaminant monitoring programme", "Arctic shipping route access (Northern Sea Route)"),
+    c("arctic_sea_ice", "Arctic oil and gas seismic exploration", "Accelerating sea ice extent and thickness loss"),
+    c("arctic_fjord", "Arctic cruise tourism growth", "Kelp harvesting (Laminaria hyperborea)"),
+    c("pacific_island_atoll", "Coral bleaching from ocean warming", "Ocean acidification reducing coral calcification"))
+  for (b in bad) {
+    cs <- kb[[b[1]]]$connections
+    hit <- vapply(cs, function(e) identical(e$from, b[2]) && identical(e$to, b[3]), logical(1))
+    expect_false(any(hit), info = paste(b, collapse = " | "))
+    # removing it left neither element without links
+    for (n in b[2:3]) {
+      expect_true(any(vapply(cs, function(e) n %in% c(e$from, e$to), logical(1))), info = paste(b[1], n))
+    }
+  }
+})
+
 test_that("every KB connection still has valid endpoints and a valid DAPSIWRM transition", {
   # the validator is the real one (not a stub): it rejects transitions the moves could create
   expect_false(is_valid_dapsirwrm_transition("activities", "states"))
