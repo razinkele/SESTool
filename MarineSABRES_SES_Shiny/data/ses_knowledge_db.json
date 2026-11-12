@@ -1958,23 +1958,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Overfishing of Eastern Baltic cod",
-          "from_type": "pressures",
-          "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "The primary causal direction is hypoxia affecting cod, not overfishing causing hypoxia. While trophic cascade effects are possible, the link from cod stock reduction to deep-water oxygen conditions is very indirect. ICES assessments emphasize hypoxia as driver of cod decline. Strength and confidence reduced.",
-          "references": [
-            "Casini et al. 2008",
-            "Osterblom et al. 2007",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Eastern Baltic cod stock biomass",
           "from_type": "states",
           "to": "Central Baltic herring recruitment",
@@ -6091,10 +6074,6 @@
         {
           "name": "Industrial and petrochemical water demand",
           "relevance": 0.75
-        },
-        {
-          "name": "Water Framework Directive compliance pressure",
-          "relevance": 0.85
         }
       ],
       "activities": [
@@ -6540,23 +6519,6 @@
           "strength": "medium",
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Industrial and petrochemical water demand",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Water Framework Directive compliance pressure",
-          "from_type": "drivers",
-          "to": "Capital and maintenance dredging for shipping",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Water Framework Directive compliance pressure",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "OSPAR (2017) \"Intermediate Assessment\"",
@@ -23248,7 +23210,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Invasive species monitoring and removal programmes",
+          "name": "Invasive species removal programmes",
           "relevance": 0.75
         },
         {
@@ -23805,14 +23767,14 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Invasive species monitoring and removal programmes",
+          "from": "Invasive species removal programmes",
           "from_type": "responses",
           "to": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Monitoring and early detection programmes in the Canary Islands and Azores aim to control invasive macroalgae and fish species before establishment, though eradication success remains limited for established populations.",
+          "rationale": "Removal and control programmes for invasive macroalgae in the Canary Islands and Azores reduce the spread of species such as Caulerpa and Asparagopsis; monitoring and early detection tell managers where removal is needed. Eradication success remains limited for established populations.",
           "references": [
             "Wirtz et al. (2013) The invasive species of Macaronesia",
             "Tuya et al. (2014) Biogeography of the Macaronesian region",

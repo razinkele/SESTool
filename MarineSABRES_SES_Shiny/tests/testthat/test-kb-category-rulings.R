@@ -47,6 +47,29 @@ test_that("main KB places the ruled elements in the expert's categories", {
                info = paste(grep("discharge", all_names("pressures"), value = TRUE), collapse = "; "))
 })
 
+test_that("fuller answers 2026-11-12: a directive is a Response; removal, not monitoring, is the Measure", {
+  expect_false("Water Framework Directive compliance pressure" %in% names_in("north_sea_estuary", "drivers"))
+  expect_true("Water Framework Directive improvement measures" %in% names_in("north_sea_estuary", "responses"))
+  expect_false(any(grepl("monitoring", names_in("macaronesia_island", "responses"), ignore.case = TRUE)))
+  expect_true("Invasive species removal programmes" %in% names_in("macaronesia_island", "responses"))
+})
+
+test_that("the reversed cod-overfishing -> hypoxia link is removed without stranding either element", {
+  # Its own rationale: "the primary causal direction is hypoxia affecting cod". Other links
+  # that their rationale rejects are kept for now: removing them would split their context's
+  # network into disconnected pieces (they await replacement links).
+  bad <- list(c("baltic_offshore", "Overfishing of Eastern Baltic cod", "Deep-water hypoxia (dead zones)"))
+  for (b in bad) {
+    cs <- kb[[b[1]]]$connections
+    hit <- vapply(cs, function(e) identical(e$from, b[2]) && identical(e$to, b[3]), logical(1))
+    expect_false(any(hit), info = paste(b, collapse = " | "))
+    # removing it left neither element without links
+    for (n in b[2:3]) {
+      expect_true(any(vapply(cs, function(e) n %in% c(e$from, e$to), logical(1))), info = paste(b[1], n))
+    }
+  }
+})
+
 test_that("every KB connection still has valid endpoints and a valid DAPSIWRM transition", {
   # the validator is the real one (not a stub): it rejects transitions the moves could create
   expect_false(is_valid_dapsirwrm_transition("activities", "states"))
