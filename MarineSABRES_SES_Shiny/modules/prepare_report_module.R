@@ -682,7 +682,7 @@ generate_word_report <- function(data, title, author, sections, output_file) {
     n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
     n_nodes <- safe_nrow(data$data$cld$nodes)
     n_edges <- safe_nrow(data$data$cld$edges)
-    n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
+    n_loops <- .report_loop_count(data$data$analysis$loops)
 
     doc <- officer::body_add_par(doc, paste("Total Elements:", n_elements), style = "Normal")
     doc <- officer::body_add_par(doc, paste("CLD Nodes:", n_nodes), style = "Normal")
@@ -936,6 +936,20 @@ report_leverage_png <- function(nodes, file, top_n = 10, width = 1600, height = 
   TRUE
 }
 
+# Number of detected loops. The loops module stores list(loop_info = <one row
+# per loop>, all_loops = ...), so length() of that list counts its parts.
+.report_loop_count <- function(loops) {
+  info <- if (is.list(loops)) loops$loop_info else NULL
+  if (is.data.frame(info)) nrow(info) else 0L
+}
+
+# Report graph failures skip the slide; log them to stderr so the Shiny Server
+# log keeps them (debug_log is silent unless DEBUG_MODE is on).
+.report_graph_failed <- function(what, e) {
+  message("[REPORT] PPT ", what, " failed: ", conditionMessage(e))
+  FALSE
+}
+
 # A minimal i18n object returning the English text of keys in one translation
 # file (falls back to the key). For report graphs drawn by module plot helpers.
 .report_english_i18n <- function(rel_path) {
@@ -1012,7 +1026,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     project_name <- if (!is.null(data$data$metadata$project_name)) as.character(data$data$metadata$project_name)[1] else "Unnamed Project"
     n_nodes <- safe_nrow(data$data$cld$nodes)
     n_edges <- safe_nrow(data$data$cld$edges)
-    n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
+    n_loops <- .report_loop_count(data$data$analysis$loops)
 
     summary_text <- paste(
       paste("Project:", project_name),
@@ -1061,10 +1075,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
   if ("cld" %in% sections) {
     f <- new_png()
     drawn <- tryCatch(report_network_png(safe_df(data$data$cld$nodes), safe_df(data$data$cld$edges), f),
-                      error = function(e) {
-                        debug_log(paste("PPT network diagram failed:", e$message), "REPORT")
-                        FALSE
-                      })
+                      error = function(e) .report_graph_failed("network diagram", e))
     if (isTRUE(drawn)) ppt <- .ppt_add_image_slide(ppt, "Network Diagram", f, aspect = 2000 / 1250)
   }
 
@@ -1073,7 +1084,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
   # parts, so it always said "Total Loops: 2".
   if ("loops" %in% sections && !is.null(data$data$analysis$loops)) {
     loop_info <- safe_df(data$data$analysis$loops$loop_info)
-    if (!is.null(loop_info) && nrow(loop_info) > 0 && "Type" %in% names(loop_info)) {
+    if (!is.null(loop_info) && "Type" %in% names(loop_info)) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
       ppt <- officer::ph_with(ppt, value = "Feedback Loop Analysis", location = officer::ph_location_type(type = "title"))
 
@@ -1087,7 +1098,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
       ppt <- officer::ph_with(ppt, value = as.character(loops_text), location = officer::ph_location_type(type = "body"))
 
       # Loop charts, drawn by the Loop Analysis module's own plot helper
-      if (exists("loops_plot_png", mode = "function") && all(c("LoopID", "Length", "Elements") %in% names(loop_info))) {
+      if (nrow(loop_info) > 0 && exists("loops_plot_png", mode = "function") && all(c("LoopID", "Length", "Elements") %in% names(loop_info))) {
         # The PowerPoint report is in English (like its slide titles), so the
         # chart labels come from the loops module's English translations.
         plain_i18n <- .report_english_i18n("modules/analysis_loops.json")
@@ -1096,10 +1107,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
                            c("participation", "Element Participation in Loops"))) {
           f <- new_png()
           ok <- tryCatch({ loops_plot_png(chart[1], loop_info, plain_i18n, f); TRUE },
-                         error = function(e) {
-                           debug_log(paste("PPT loop chart", chart[1], "failed:", e$message), "REPORT")
-                           FALSE
-                         })
+                         error = function(e) .report_graph_failed(paste("loop chart", chart[1]), e))
           if (ok) ppt <- .ppt_add_image_slide(ppt, chart[2], f, aspect = 1000 / 700)
         }
       }
@@ -1128,10 +1136,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
 
         f <- new_png()
         drawn <- tryCatch(report_leverage_png(nodes, f),
-                          error = function(e) {
-                            debug_log(paste("PPT leverage chart failed:", e$message), "REPORT")
-                            FALSE
-                          })
+                          error = function(e) .report_graph_failed("leverage chart", e))
         if (isTRUE(drawn)) ppt <- .ppt_add_image_slide(ppt, "Top Leverage Points (chart)", f, aspect = 1600 / 1000)
       }
     }

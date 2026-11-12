@@ -78,11 +78,33 @@ test_that("the PowerPoint report carries the network, loop and leverage graphs",
   out <- tempfile(fileext = ".pptx")
   generate_ppt_report(report_data(), "T", "A", c("cld", "loops", "leverage"), out)
   imgs <- pptx_images(out)
-  # network + loop strength + loop types + leverage
-  expect_gte(nrow(imgs), 4)
+  # network + three loop charts + leverage
+  expect_equal(nrow(imgs), 5)
   txt <- pptx_text(out)
-  expect_match(txt, "Network Diagram", fixed = TRUE)
-  expect_match(txt, "Loop Strength", fixed = TRUE)
+  for (title in c("Network Diagram", "Loop Strength (Dominance)", "Loop Types",
+                  "Element Participation in Loops", "Top Leverage Points (chart)")) {
+    expect_match(txt, title, fixed = TRUE)
+  }
+})
+
+test_that("the executive summaries count the detected loops too", {
+  out <- tempfile(fileext = ".pptx")
+  generate_ppt_report(report_data(), "T", "A", c("summary", "loops"), out)
+  expect_match(pptx_text(out), "Feedback Loops: 3", fixed = TRUE)
+  expect_equal(.report_loop_count(report_data()$data$analysis$loops), 3L)
+  expect_equal(.report_loop_count(NULL), 0L)
+  expect_equal(.report_loop_count(list(loop_info = data.frame(), all_loops = list())), 0L)
+})
+
+test_that("zero detected loops still gets the loop slide, without charts", {
+  d <- report_data()
+  d$data$analysis$loops <- list(loop_info = data.frame(LoopID = character(0), Type = character(0),
+                                                       Length = integer(0), Elements = character(0)),
+                                all_loops = list())
+  out <- tempfile(fileext = ".pptx")
+  generate_ppt_report(d, "T", "A", c("loops"), out)
+  expect_match(pptx_text(out), "Total Loops: 0", fixed = TRUE)
+  expect_equal(nrow(pptx_images(out)), 0)
 })
 
 test_that("the loop slide counts the detected loops, not the stored list's two parts", {

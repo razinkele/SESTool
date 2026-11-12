@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PowerPoint report: graphs. The "CLD Visualization" section, which the PowerPoint report ignored, now adds a network diagram (one row per DAPSI(W)R(M) group, coloured as in the CLD, links coloured by polarity). The loops section adds the Loop Strength, Loop Types and Element Participation charts, and the leverage section adds a top-10 leverage score chart (user suggestion 2026-11-12 "Graphs in the powerpoint report").
 
 ### Fixed
-- PowerPoint report: the loop slide always said "Total Loops: 2" with 0 reinforcing and 0 balancing (it counted the two parts of the stored loop result); it now counts the detected loops.
+- PowerPoint report: the loop slide always said "Total Loops: 2" with 0 reinforcing and 0 balancing (it counted the two parts of the stored loop result); it now counts the detected loops. The executive summaries of the Word and PowerPoint reports had the same miscount ("Feedback Loops: 2"); they now count the detected loops too, and a project with zero detected loops gets its loop slide again.
 
 ## [1.35.5] - 2026-11-12
 
