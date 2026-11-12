@@ -682,7 +682,7 @@ generate_word_report <- function(data, title, author, sections, output_file) {
     n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
     n_nodes <- safe_nrow(data$data$cld$nodes)
     n_edges <- safe_nrow(data$data$cld$edges)
-    n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
+    n_loops <- .report_loop_count(data$data$analysis$loops)
 
     doc <- officer::body_add_par(doc, paste("Total Elements:", n_elements), style = "Normal")
     doc <- officer::body_add_par(doc, paste("CLD Nodes:", n_nodes), style = "Normal")
@@ -818,6 +818,163 @@ generate_word_report <- function(data, title, author, sections, output_file) {
   print(doc, target = output_file)
 }
 
+# =============================================================================
+# Report graphs (PowerPoint) — user feedback 2026-11-12, L30: the report should
+# carry the graphs of the analyses and the main network.
+# =============================================================================
+
+#' Draw the CLD as a static layered diagram (PNG) for the PowerPoint report
+#'
+#' Nodes sit in rows by their DAPSI(W)R(M) `level` (as in the CLD view), coloured
+#' by `group` from ELEMENT_COLORS; edges are coloured by polarity.
+#' @param nodes CLD nodes data frame (id, label/name_raw, group, level, color)
+#' @param edges CLD edges data frame (from, to, polarity)
+#' @param file  PNG path
+#' @return TRUE if a diagram was written, FALSE if there is nothing to draw
+report_network_png <- function(nodes, edges, file, width = 2000, height = 1250, res = 150) {
+  if (is.null(nodes) || !is.data.frame(nodes) || nrow(nodes) == 0 || !"id" %in% names(nodes)) {
+    return(FALSE)
+  }
+  nodes <- nodes[!duplicated(nodes$id), , drop = FALSE]
+  if (is.null(edges) || !is.data.frame(edges) || !all(c("from", "to") %in% names(edges))) {
+    edges <- data.frame(from = character(0), to = character(0))
+  }
+  edges <- edges[edges$from %in% nodes$id & edges$to %in% nodes$id, , drop = FALSE]
+  g <- igraph::graph_from_data_frame(edges[, c("from", "to"), drop = FALSE],
+                                     directed = TRUE, vertices = data.frame(name = nodes$id))
+
+  grp <- if ("group" %in% names(nodes)) as.character(nodes$group) else rep(NA_character_, nrow(nodes))
+  pal <- unlist(ELEMENT_COLORS)
+
+  # Layered layout: one row per DAPSI(W)R(M) group, top to bottom in causal
+  # order (Responses and Measures get their own rows; in the CLD they share
+  # the Pressures level, which overlapped their labels). Unknown groups fall
+  # back to the node's `level`, then to a last row.
+  row_order <- c("Drivers", "Activities", "Pressures", "Marine Processes & Functioning",
+                 "Ecosystem Services", "Goods & Benefits", "Responses", "Measures")
+  row <- match(grp, row_order)
+  if (anyNA(row)) {
+    lvl <- if ("level" %in% names(nodes)) suppressWarnings(as.numeric(nodes$level)) else rep(NA, nrow(nodes))
+    row[is.na(row)] <- ifelse(is.na(lvl[is.na(row)]), length(row_order) + 1, 6 - lvl[is.na(row)])
+  }
+  rows <- sort(unique(row))
+  y_of <- if (length(rows) == 1) c(0) else seq(1, -1, length.out = length(rows))
+  xy <- matrix(0, nrow(nodes), 2)
+  per_row <- integer(nrow(nodes))
+  label_side <- numeric(nrow(nodes))
+  for (k in seq_along(rows)) {
+    idx <- which(row == rows[k])
+    xy[idx, 1] <- if (length(idx) == 1) 0 else seq(-1, 1, length.out = length(idx))
+    xy[idx, 2] <- y_of[k]
+    per_row[idx] <- length(idx)
+    # alternate labels below/above the node so neighbours in a busy row don't collide
+    label_side[idx] <- ifelse(seq_along(idx) %% 2 == 1, pi / 2, -pi / 2)
+  }
+  fill <- unname(pal[grp])
+  if ("color" %in% names(nodes)) {
+    own <- as.character(nodes$color)
+    use_own <- is.na(fill) & !is.na(own) & nzchar(own)
+    fill[use_own] <- own[use_own]
+  }
+  fill[is.na(fill)] <- "#cccccc"
+
+  lab <- if ("name_raw" %in% names(nodes)) as.character(nodes$name_raw)
+         else if ("label" %in% names(nodes)) gsub("\n", " ", as.character(nodes$label))
+         else as.character(nodes$id)
+  # Shorter labels in crowded rows: alternating sides give each label about
+  # two node gaps of width.
+  max_chars <- pmax(12L, pmin(30L, as.integer(120 / pmax(per_row, 1))))
+  lab <- ifelse(nchar(lab) > max_chars, paste0(substr(lab, 1, max_chars - 1), "…"), lab)
+
+  pol <- if ("polarity" %in% names(edges)) as.character(edges$polarity) else rep("+", nrow(edges))
+  ecol <- ifelse(!is.na(pol) & pol == "-", EDGE_COLORS$opposing, EDGE_COLORS$reinforcing)
+
+  n <- nrow(nodes)
+  png(file, width = width, height = height, res = res)
+  on.exit(dev.off())
+  op <- par(mar = c(0, 0, 0, 0), family = "sans"); on.exit(par(op), add = TRUE, after = FALSE)
+  # rescale = FALSE with fixed limits: the strip below y = -1.15 is kept for the legend
+  # asp = 0: fill the wide image instead of igraph's square default
+  plot(g, layout = xy, rescale = FALSE, asp = 0, xlim = c(-1.12, 1.12), ylim = c(-1.38, 1.1),
+       vertex.color = fill, vertex.frame.color = "#555555",
+       vertex.size = if (n > 60) 3 else if (n > 30) 4 else 5.5,
+       vertex.label = lab, vertex.label.family = "sans",
+       vertex.label.cex = if (n > 60) 0.5 else if (n > 30) 0.6 else 0.7,
+       vertex.label.color = "#1a1a1a", vertex.label.dist = 1.2, vertex.label.degree = label_side,
+       edge.color = ecol, edge.arrow.size = 0.3, edge.width = 1.1, edge.curved = 0.15)
+  present <- intersect(names(pal), grp)
+  if (length(present) > 0) {
+    legend(x = -1.12, y = -1.2, legend = present, pt.bg = pal[present], pch = 21, pt.cex = 1.3,
+           bty = "n", cex = 0.7, ncol = min(4L, length(present)), xpd = TRUE)
+  }
+  legend(x = 0.98, y = -1.2, legend = c("+", "-"), lwd = 2, bty = "n", cex = 0.7, xpd = TRUE,
+         col = c(EDGE_COLORS$reinforcing, EDGE_COLORS$opposing))
+  TRUE
+}
+
+#' Bar chart of the top leverage points (PNG) for the PowerPoint report
+#' @param nodes CLD nodes with `leverage_score` (from Leverage Analysis)
+#' @return TRUE if written, FALSE when no node has a positive score
+report_leverage_png <- function(nodes, file, top_n = 10, width = 1600, height = 1000, res = 150) {
+  if (is.null(nodes) || !is.data.frame(nodes) || !"leverage_score" %in% names(nodes)) return(FALSE)
+  sc <- suppressWarnings(as.numeric(nodes$leverage_score))
+  keep <- !is.na(sc) & sc > 0
+  if (!any(keep)) return(FALSE)
+  lab <- if ("name_raw" %in% names(nodes)) as.character(nodes$name_raw)
+         else gsub("\n", " ", as.character(nodes$label %||% nodes$id))
+  df <- data.frame(label = lab[keep], score = sc[keep], stringsAsFactors = FALSE)
+  df <- head(df[order(-df$score), , drop = FALSE], top_n)
+  df$label <- ifelse(nchar(df$label) > 40, paste0(substr(df$label, 1, 39), "…"), df$label)
+  png(file, width = width, height = height, res = res)
+  on.exit(dev.off())
+  op <- par(mar = c(4, min(22, max(6, max(nchar(df$label)) * 0.5)), 1, 1)); on.exit(par(op), add = TRUE, after = FALSE)
+  vals <- rev(df$score)
+  top <- max(pretty(c(0, vals)))
+  mids <- barplot(vals, names.arg = rev(df$label), horiz = TRUE, las = 1, col = "#457B9D",
+                  cex.names = 0.8, xlim = c(0, top), xlab = "Leverage score")
+  text(vals, mids, labels = format(round(vals, 2), nsmall = 2), pos = 4, cex = 0.7, xpd = TRUE)
+  TRUE
+}
+
+# Number of detected loops. The loops module stores list(loop_info = <one row
+# per loop>, all_loops = ...), so length() of that list counts its parts.
+.report_loop_count <- function(loops) {
+  info <- if (is.list(loops)) loops$loop_info else NULL
+  if (is.data.frame(info)) nrow(info) else 0L
+}
+
+# Report graph failures skip the slide; log them to stderr so the Shiny Server
+# log keeps them (debug_log is silent unless DEBUG_MODE is on).
+.report_graph_failed <- function(what, e) {
+  message("[REPORT] PPT ", what, " failed: ", conditionMessage(e))
+  FALSE
+}
+
+# A minimal i18n object returning the English text of keys in one translation
+# file (falls back to the key). For report graphs drawn by module plot helpers.
+.report_english_i18n <- function(rel_path) {
+  root <- if (exists("PROJECT_ROOT")) PROJECT_ROOT else "."
+  tr <- tryCatch(
+    jsonlite::fromJSON(file.path(root, "translations", rel_path), simplifyVector = FALSE)$translation,
+    error = function(e) list())
+  list(t = function(key, ...) {
+    v <- tr[[key]]$en
+    if (is.null(v) || !nzchar(v)) key else v
+  })
+}
+
+# Add one picture slide (title + image filling the content area) to `ppt`.
+# `aspect` = width / height of the PNG (the helpers above know it). The default
+# officer template is a 10 x 7.5 in slide.
+.ppt_add_image_slide <- function(ppt, title, png_file, aspect) {
+  ppt <- officer::add_slide(ppt, layout = "Title Only", master = "Office Theme")
+  ppt <- officer::ph_with(ppt, value = title, location = officer::ph_location_type(type = "title"))
+  max_w <- 9; max_h <- 5.6
+  w <- min(max_w, max_h * aspect); h <- w / aspect
+  officer::ph_with(ppt, value = officer::external_img(png_file, width = w, height = h),
+                   location = officer::ph_location(left = (10 - w) / 2, top = 1.6, width = w, height = h))
+}
+
 #' Generate PowerPoint Report
 #'
 #' Creates a comprehensive PowerPoint presentation from project data
@@ -869,7 +1026,7 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     project_name <- if (!is.null(data$data$metadata$project_name)) as.character(data$data$metadata$project_name)[1] else "Unnamed Project"
     n_nodes <- safe_nrow(data$data$cld$nodes)
     n_edges <- safe_nrow(data$data$cld$edges)
-    n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
+    n_loops <- .report_loop_count(data$data$analysis$loops)
 
     summary_text <- paste(
       paste("Project:", project_name),
@@ -905,24 +1062,55 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$responses, "ISA Framework: Responses")
   }
 
-  # Feedback Loops
+  # Graph PNGs are written to temp files that must outlive print(ppt).
+  graph_files <- character(0)
+  on.exit(unlink(graph_files), add = TRUE)
+  new_png <- function() {
+    f <- tempfile(fileext = ".png")
+    graph_files <<- c(graph_files, f)
+    f
+  }
+
+  # Network diagram (the "cld" section; it was ignored before L30)
+  if ("cld" %in% sections) {
+    f <- new_png()
+    drawn <- tryCatch(report_network_png(safe_df(data$data$cld$nodes), safe_df(data$data$cld$edges), f),
+                      error = function(e) .report_graph_failed("network diagram", e))
+    if (isTRUE(drawn)) ppt <- .ppt_add_image_slide(ppt, "Network Diagram", f, aspect = 2000 / 1250)
+  }
+
+  # Feedback Loops. The loops module stores list(loop_info = <data frame, one
+  # row per loop>, all_loops = ...); the slide used to count that list's two
+  # parts, so it always said "Total Loops: 2".
   if ("loops" %in% sections && !is.null(data$data$analysis$loops)) {
-    loops <- data$data$analysis$loops
-    if (length(loops) > 0) {
+    loop_info <- safe_df(data$data$analysis$loops$loop_info)
+    if (!is.null(loop_info) && "Type" %in% names(loop_info)) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
       ppt <- officer::ph_with(ppt, value = "Feedback Loop Analysis", location = officer::ph_location_type(type = "title"))
 
-      n_reinforcing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "reinforcing"))), error = function(e) 0)
-      n_balancing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "balancing"))), error = function(e) 0)
-
       loops_text <- paste(
-        paste("Total Loops:", length(loops)),
-        paste("Reinforcing:", n_reinforcing, "(amplifying)"),
-        paste("Balancing:", n_balancing, "(stabilizing)"),
+        paste("Total Loops:", nrow(loop_info)),
+        paste("Reinforcing:", sum(loop_info$Type == "Reinforcing"), "(amplifying)"),
+        paste("Balancing:", sum(loop_info$Type == "Balancing"), "(stabilizing)"),
         sep = "\n"
       )
 
       ppt <- officer::ph_with(ppt, value = as.character(loops_text), location = officer::ph_location_type(type = "body"))
+
+      # Loop charts, drawn by the Loop Analysis module's own plot helper
+      if (nrow(loop_info) > 0 && exists("loops_plot_png", mode = "function") && all(c("LoopID", "Length", "Elements") %in% names(loop_info))) {
+        # The PowerPoint report is in English (like its slide titles), so the
+        # chart labels come from the loops module's English translations.
+        plain_i18n <- .report_english_i18n("modules/analysis_loops.json")
+        for (chart in list(c("strength", "Loop Strength (Dominance)"),
+                           c("type", "Loop Types"),
+                           c("participation", "Element Participation in Loops"))) {
+          f <- new_png()
+          ok <- tryCatch({ loops_plot_png(chart[1], loop_info, plain_i18n, f); TRUE },
+                         error = function(e) .report_graph_failed(paste("loop chart", chart[1]), e))
+          if (ok) ppt <- .ppt_add_image_slide(ppt, chart[2], f, aspect = 1000 / 700)
+        }
+      }
     }
   }
 
@@ -945,6 +1133,11 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
         )
 
         ppt <- officer::ph_with(ppt, value = as.character(leverage_text), location = officer::ph_location_type(type = "body"))
+
+        f <- new_png()
+        drawn <- tryCatch(report_leverage_png(nodes, f),
+                          error = function(e) .report_graph_failed("leverage chart", e))
+        if (isTRUE(drawn)) ppt <- .ppt_add_image_slide(ppt, "Top Leverage Points (chart)", f, aspect = 1600 / 1000)
       }
     }
   }
