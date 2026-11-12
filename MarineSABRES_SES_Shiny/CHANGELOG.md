@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.5] - 2026-11-12
+
 ### Fixed
 - Card headers: titles in the blue card headers (Dashboard boxes, FAQ, analysis cards) were dark blue on blue; they now take the header's white text (user suggestion 2026-11-12 "Colours of the headlines").
 - Loop analysis, Loop Strength chart: the axis stopped at the tick below the longest bar, so the top bars ran past it; it now ends on the first tick above. The legend moved above the chart instead of covering the bottom bar, each bar shows its score, and the Y axis is labelled. The Element Participation chart gets the same axis fix, and the dominance table shows scores to one decimal (33.3, not 33.33333) (user report 2026-11-12 "Table of Loop Strength Analysis").

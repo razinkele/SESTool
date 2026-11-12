@@ -505,6 +505,6 @@ This framework integrates:
 
 ---
 
-**Document Version**: 1.0
-**Date**: 2025-11-22
+**Document Version**: 1.1
+**Date**: 2026-11-12 (first version 2025-11-22; rule 15 removed 2026-06-05; expert classification rulings added 2026-11-11 and 2026-11-12)
 **Based on**: DAPSIWRM.png diagram analysis and MarineSABRES codebase structure
