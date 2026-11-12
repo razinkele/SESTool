@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Knowledge base: second part of the expert's category rulings, following their fuller answers of 2026-11-12, which are recorded in DAPSIWRM_FRAMEWORK_RULES.md.
   - A "Water Framework Directive compliance pressure" Driver that duplicated the WFD Response was removed; a directive belongs to the management framework.
   - "Invasive species monitoring and removal programmes" became "Invasive species removal programmes", because monitoring is not a measure.
-  - 8 links whose own rationale said the relationship does not exist were removed, for example "Copra production → climate change", "Overfishing of cod → deep-water hypoxia" and "Coral bleaching → ocean acidification". Each element involved still has other links.
-  - 1176 connections, all valid DAPSI(W)R(M) transitions.
+  - The link "Overfishing of Eastern Baltic cod → deep-water hypoxia" was removed; its own rationale says the causal direction is the reverse.
+  - 1183 connections, all valid DAPSI(W)R(M) transitions.
 
 ## [1.35.3] - 2026-11-12
 

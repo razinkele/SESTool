@@ -54,16 +54,11 @@ test_that("fuller answers 2026-11-12: a directive is a Response; removal, not mo
   expect_true("Invasive species removal programmes" %in% names_in("macaronesia_island", "responses"))
 })
 
-test_that("links whose own rationale rejects the relationship are gone", {
-  bad <- list(
-    c("pacific_island_atoll", "Copra production and coconut palm cultivation", "Climate change and ocean warming"),
-    c("indian_ocean_island", "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife", "Climate change and ocean warming"),
-    c("baltic_offshore", "Overfishing of Eastern Baltic cod", "Deep-water hypoxia (dead zones)"),
-    c("baltic_island", "Grey seal haul-out colony sizes", "Coastal erosion of limestone and glacial till shores"),
-    c("arctic_island", "Arctic Council AMAP contaminant monitoring programme", "Arctic shipping route access (Northern Sea Route)"),
-    c("arctic_sea_ice", "Arctic oil and gas seismic exploration", "Accelerating sea ice extent and thickness loss"),
-    c("arctic_fjord", "Arctic cruise tourism growth", "Kelp harvesting (Laminaria hyperborea)"),
-    c("pacific_island_atoll", "Coral bleaching from ocean warming", "Ocean acidification reducing coral calcification"))
+test_that("the reversed cod-overfishing -> hypoxia link is removed without stranding either element", {
+  # Its own rationale: "the primary causal direction is hypoxia affecting cod". Other links
+  # that their rationale rejects are kept for now: removing them would split their context's
+  # network into disconnected pieces (they await replacement links).
+  bad <- list(c("baltic_offshore", "Overfishing of Eastern Baltic cod", "Deep-water hypoxia (dead zones)"))
   for (b in bad) {
     cs <- kb[[b[1]]]$connections
     hit <- vapply(cs, function(e) identical(e$from, b[2]) && identical(e$to, b[3]), logical(1))

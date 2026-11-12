@@ -280,11 +280,11 @@ These settle the category questions raised by user feedback on the AI-assisted s
 2. The ship discharging ballast water is the Activity; the material entering the sea is the Pressure. The expert notes that this shows how DAPSI(W)R(M) categories can blur.
 3. Hypoxia, algal blooms and coastal erosion are Pressures, and **an Activity is needed to create them**. The expert is also considering whether pressures should be marked exogenic or endogenic, and activities as inside or outside the management area.
 4. The whole management framework (the "pyramid" and its footprint) makes up the Responses. **A Driver can be an overall vision or strategy** (stage A of the integrated assessment framework).
-5. Monitoring is not a management measure: it **indicates which measures are needed or whether they have worked**. Research informs every DAPSI(W)R(M) element in the same way (paper in revision in *Marine Pollution Bulletin*).
+5. Monitoring is not a management measure: it **indicates which measures are needed or whether they have worked**. Research informs every DAPSI(W)R(M) element in the same way (the expert's paper in revision in MPB).
 
 Applied so far:
 - A Water Framework Directive "compliance pressure" Driver that duplicated the WFD Response was removed. Its only link was an auto-generated chain completion.
-- "Invasive species monitoring and removal programmes" became the Response "Invasive species removal programmes".
+- "Invasive species monitoring and removal programmes" became the Response "Invasive species removal programmes". The monitoring part will be added as an Activity once the expert says how monitoring is linked.
 
 Pending the expert:
 - how a monitoring Activity should be linked, since monitoring informs Responses rather than changing State;
