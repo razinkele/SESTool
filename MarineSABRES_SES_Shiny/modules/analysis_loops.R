@@ -222,7 +222,7 @@ analysis_loops_ui <- function(id, i18n) {
                     ),
                     column(4,
                       downloadButton(ns("download_loop_report"),
-                                    i18n$t("modules.analysis.loops.download_pdf"),
+                                    i18n$t("modules.analysis.loops.download_report_word"),
                                     class = "btn-info btn-block")
                     ),
                     column(4,
@@ -309,14 +309,40 @@ LOOP_COLORS <- c(Reinforcing = "#06D6A0", Balancing = "#E63946")
 
 # The page's existing loop measure, the dominance score (100 / length, as in
 # the Dominant loops table), per loop. The plot was blank before.
+# Upper x-axis limit for the horizontal bar charts: the first pretty() tick at
+# or above the longest bar. barplot()'s default xlim stops at the data maximum,
+# so the axis ended at the tick below it and the longest bars ran past it
+# (user feedback 2026-11-12, L28).
+.loops_axis_max <- function(values) {
+  max(pretty(c(0, values)))
+}
+
+# Loops ranked by dominance score (100 / loop length), score shown to one
+# decimal (the table showed 33.33333; user feedback 2026-11-12, L28).
+.loops_dominance_table <- function(loops) {
+  loops$DominanceScore <- 100 / loops$Length
+  loops <- loops[order(-loops$DominanceScore), ]
+  loops$DominanceScore <- round(loops$DominanceScore, 1)
+  loops$Rank <- seq_len(nrow(loops))
+  loops[, c("Rank", "LoopID", "Type", "Length", "DominanceScore", "Elements")]
+}
+
 .loops_draw_strength <- function(loops, i18n) {
   score <- 100 / loops$Length
   ord <- order(score, decreasing = TRUE)[seq_len(min(15L, nrow(loops)))]
-  op <- par(mar = c(4.5, 5, 1, 1)); on.exit(par(op))
-  barplot(rev(score[ord]), names.arg = rev(loops$LoopID[ord]), horiz = TRUE, las = 1,
-          col = rev(LOOP_COLORS[loops$Type[ord]]),
-          xlab = i18n$t("modules.analysis.loops.dominance_axis"))
-  legend("bottomright", bty = "n", cex = 0.8,
+  vals <- rev(score[ord])
+  # Top margin holds the legend, so it no longer covers the bottom bar.
+  op <- par(mar = c(4.5, 5, 3, 1)); on.exit(par(op))
+  mids <- barplot(vals, names.arg = rev(loops$LoopID[ord]), horiz = TRUE, las = 1,
+                  col = rev(LOOP_COLORS[loops$Type[ord]]),
+                  xlim = c(0, .loops_axis_max(vals)),
+                  xlab = i18n$t("modules.analysis.loops.dominance_axis"),
+                  ylab = i18n$t("modules.analysis.loops.prop_loop_id"))
+  # Score at the end of each bar, inside it, so the value is readable without
+  # tracing it to the axis.
+  text(vals, mids, labels = format(round(vals, 1), nsmall = 1), pos = 2,
+       cex = 0.75, col = "#1a1a1a", xpd = TRUE)  # dark: white is unreadable on the light-teal bars
+  legend("top", inset = c(0, -0.12), horiz = TRUE, xpd = TRUE, bty = "n", cex = 0.8,
          legend = c(i18n$t("modules.analysis.loops.legend_reinforcing"), i18n$t("modules.analysis.loops.legend_balancing")),
          fill = LOOP_COLORS[c("Reinforcing", "Balancing")])
 }
@@ -330,6 +356,7 @@ LOOP_COLORS <- c(Reinforcing = "#06D6A0", Balancing = "#E63946")
   op <- par(mar = c(4, min(20, max(5, max(nchar(labs)) * 0.45)), 2, 1)); on.exit(par(op))
   barplot(rev(as.numeric(counts)), names.arg = rev(labs), horiz = TRUE, las = 1,
           col = "#457B9D", cex.names = 0.8,
+          xlim = c(0, .loops_axis_max(as.numeric(counts))),
           main = i18n$t("modules.analysis.loops.elements_in_most_loops"),
           xlab = i18n$t("modules.analysis.loops.num_loops"))
 }
@@ -956,13 +983,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     output$dominant_loops_table <- safe_renderDT({
       req(loop_data$loops)
 
-      # Calculate dominance score (simple version)
-      loops <- loop_data$loops
-      loops$DominanceScore <- 100 / loops$Length
-      loops <- loops[order(-loops$DominanceScore), ]
-      loops$Rank <- 1:nrow(loops)
-
-      datatable(loops[, c("Rank", "LoopID", "Type", "Length", "DominanceScore", "Elements")],
+      datatable(.loops_dominance_table(loop_data$loops),
                options = list(pageLength = 10, scrollX = TRUE),
                rownames = FALSE)
     })

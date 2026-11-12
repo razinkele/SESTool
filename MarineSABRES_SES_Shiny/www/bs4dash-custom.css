@@ -508,6 +508,16 @@ body.sidebar-mini.sidebar-collapse .main-sidebar .brand-link .brand-image {
   letter-spacing: -0.01em;
 }
 
+/* Titles in the header take the header's text colour. The global h1-h6 rule
+   (color: var(--ocean-deep)) otherwise beat the inherited white, leaving dark
+   blue titles on the blue gradient (user feedback 2026-11-12, L27). `inherit`,
+   not #fff, so the warning header keeps its dark text. */
+.card-header .card-title,
+.card-header h1, .card-header h2, .card-header h3,
+.card-header h4, .card-header h5, .card-header h6 {
+  color: inherit;
+}
+
 .card .card-header.bg-primary {
   background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
 }

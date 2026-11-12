@@ -297,16 +297,16 @@
       "no": "Last ned løkker (Excel)",
       "el": "Λήψη βρόχων (Excel)"
     },
-    "modules.analysis.loops.download_pdf": {
-      "en": "Download Loop Report (PDF)",
-      "es": "Descargar informe de bucles (PDF)",
-      "fr": "Télécharger le rapport de boucles (PDF)",
-      "de": "Schleifenbericht herunterladen (PDF)",
-      "lt": "Atsisiųsti kilpų ataskaitą (PDF)",
-      "pt": "Baixar relatório de loops (PDF)",
-      "it": "Scarica rapporto dei loop (PDF)",
-      "no": "Last ned løkkerapport (PDF)",
-      "el": "Λήψη αναφοράς βρόχων (PDF)"
+    "modules.analysis.loops.download_report_word": {
+      "en": "Download Loop Report (Word)",
+      "es": "Descargar informe de bucles (Word)",
+      "fr": "Télécharger le rapport de boucles (Word)",
+      "de": "Schleifenbericht herunterladen (Word)",
+      "lt": "Atsisiųsti kilpų ataskaitą (Word)",
+      "pt": "Baixar relatório de loops (Word)",
+      "it": "Scarica rapporto dei loop (Word)",
+      "no": "Last ned løkkerapport (Word)",
+      "el": "Λήψη αναφοράς βρόχων (Word)"
     },
     "modules.analysis.loops.download_zip": {
       "en": "Download Loop Diagrams (ZIP)",
