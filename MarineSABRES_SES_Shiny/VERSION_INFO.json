@@ -1,7 +1,7 @@
 {
-  "version": "1.35.5",
+  "version": "1.35.6",
   "version_name": "Pages in every language, clickable progress, fairer AI suggestions, terms explained (November 2026)",
-  "release_date": "2026-11-12",
+  "release_date": "2026-11-13",
   "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -12,6 +12,7 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "PowerPoint report: graphs. The CLD section adds a network diagram, the loops section the Loop Strength, Loop Types and Element Participation charts, and the leverage section a top-10 leverage chart (1.35.6).",
     "Dashboard: a collapsible glossary explains CLD, ISA, PIMS, DAPSI(W)R(M) and leverage point in all 9 languages (1.35.3).",
     "Leverage page: 'About Leverage Points' explains in-degree and out-degree (1.35.3).",
     "Connection review: after 'Approve all' the page scrolls to the next step instead of leaving the user to scroll past every card (1.35.3).",
@@ -24,6 +25,7 @@
   ],
   "fixes": {
     "medium": [
+      "Reports: the PowerPoint loop slide and the Word and PowerPoint executive summaries always counted 2 feedback loops; they now count the detected loops (1.35.6).",
       "Card headers: titles in the blue card headers were dark blue on blue; they now take the header's white text (1.35.5).",
       "Loop Strength chart: the axis stopped below the longest bars so they ran past it; the legend no longer covers the bottom bar, bars show their score, and the dominance table is rounded to one decimal (1.35.5).",
       "Loop analysis: the dominance score is described as the app computes it (100 divided by the number of elements in the loop), not as centrality-based; Loop Strength Analysis explains its chart (1.35.3).",
@@ -91,7 +93,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.35.4",
+  "previous_version": "1.35.5",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
