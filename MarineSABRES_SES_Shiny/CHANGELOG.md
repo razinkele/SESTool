@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.6] - 2026-11-13
+
 ### Added
 - PowerPoint report: graphs. The "CLD Visualization" section, which the PowerPoint report ignored, now adds a network diagram (one row per DAPSI(W)R(M) group, coloured as in the CLD, links coloured by polarity). The loops section adds the Loop Strength, Loop Types and Element Participation charts, and the leverage section adds a top-10 leverage score chart (user suggestion 2026-11-12 "Graphs in the powerpoint report").
 
