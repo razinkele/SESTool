@@ -101,9 +101,14 @@ test_that("direct import goes ahead when every row has a sign", {
 # GlobalEnv binding shadows shiny's for the duration of the test.
 pi_capture_toasts <- function(env = parent.frame()) {
   toasts <- new.env(); toasts$msgs <- character()
+  had <- exists("showNotification", envir = .GlobalEnv, inherits = FALSE)
+  old <- if (had) get("showNotification", envir = .GlobalEnv) else NULL
   assign("showNotification", function(ui, ...) toasts$msgs <- c(toasts$msgs, as.character(ui)),
          envir = .GlobalEnv)
-  withr::defer(rm("showNotification", envir = .GlobalEnv), envir = env)
+  withr::defer({
+    if (had) assign("showNotification", old, envir = .GlobalEnv)
+    else rm("showNotification", envir = .GlobalEnv)
+  }, envir = env)
   toasts
 }
 
@@ -178,5 +183,38 @@ test_that("a second file reviewed after cancel does not inherit the first file's
       cells <- unlist(lapply(pdr()$data$isa_data$adjacency_matrices, function(m) m[m != ""]))
       expect_length(cells, 1)                        # only file B's signed row
       expect_equal(substr(unname(cells), 1, 1), "-")
+  })
+})
+
+# Final review M2: an aborted finalize must not apply the swap, so a second
+# finalize applies it once (not twice, which silently reversed it)
+test_that("a second finalize applies a direction swap once", {
+  real_convert <- get("convert_excel_to_isa", envir = .GlobalEnv)
+  seen <- list()
+  had <- exists("convert_excel_to_isa", envir = .GlobalEnv, inherits = FALSE)
+  assign("convert_excel_to_isa", function(elements, connections) {
+    seen[[length(seen) + 1L]] <<- connections
+    real_convert(elements, connections)
+  }, envir = .GlobalEnv)
+  withr::defer(assign("convert_excel_to_isa", real_convert, envir = .GlobalEnv))
+  pdr <- reactiveVal(init_session_data())
+  testServer(import_data_server,
+    args = list(project_data_reactive = pdr, i18n = pi_i18n, parent_session = NULL, event_bus = NULL), {
+      pi_load(rv)
+      rv$connections_data$Label <- c("", "")       # nothing signed yet
+      session$setInputs(review_btn = 1)
+      session$flushReact()
+      session$setInputs(`conn_review-swap_direction_1` = 1)
+      session$setInputs(finalize_import_btn = 1)   # aborts: no signed row
+      session$flushReact()
+      expect_equal(rv$connections_data$From[1], "Demand")   # the file rows are untouched
+      gen <- review_status()$generation
+      do.call(session$setInputs, stats::setNames(list("+", "+"),
+        paste0("conn_review-polarity_pick_", gen, "_", 1:2)))
+      session$setInputs(finalize_import_btn = 2)
+      session$flushReact()
+      last <- seen[[length(seen)]]
+      expect_equal(last$From[1], "Fishing")         # swapped exactly once
+      expect_equal(last$To[1], "Demand")
   })
 })

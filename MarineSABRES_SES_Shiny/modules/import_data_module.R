@@ -494,6 +494,11 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         rejected <- status$rejected
         swapped_indices <- status$swapped
 
+        # Work on a copy of the file rows: a finalize that imports nothing
+        # leaves the review open, and applying the swaps to rv itself made
+        # the next finalize swap those rows back (final review M2).
+        conns <- rv$connections_data
+
         # Apply swapped directions BEFORE rejection filtering to preserve
         # index alignment. Swap indices correspond to positions in
         # rv$parsed_connections, which align 1:1 with rv$connections_data rows
@@ -501,10 +506,10 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         # that filters or reorders rows will break this invariant.
         if (length(swapped_indices) > 0) {
           for (swap_idx in swapped_indices) {
-            if (swap_idx <= nrow(rv$connections_data)) {
-              old_from <- rv$connections_data[swap_idx, "From"]
-              rv$connections_data[swap_idx, "From"] <- rv$connections_data[swap_idx, "To"]
-              rv$connections_data[swap_idx, "To"] <- old_from
+            if (swap_idx <= nrow(conns)) {
+              old_from <- conns[swap_idx, "From"]
+              conns[swap_idx, "From"] <- conns[swap_idx, "To"]
+              conns[swap_idx, "To"] <- old_from
             }
           }
           debug_log(sprintf("Applied %d connection direction swaps from review",
@@ -513,28 +518,28 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         # Write signs picked in the review back into Label (positions align 1:1
         # with the file rows, as for swaps above)
-        if (!"Label" %in% names(rv$connections_data)) {
-          rv$connections_data$Label <- NA_character_
+        if (!"Label" %in% names(conns)) {
+          conns$Label <- NA_character_
         }
-        rv$connections_data$Label <- as.character(rv$connections_data$Label)
+        conns$Label <- as.character(conns$Label)
         for (key in names(rv$review_signs)) {
           i <- suppressWarnings(as.integer(key))
           sign <- rv$review_signs[[key]]
-          if (!is.na(i) && i <= nrow(rv$connections_data)) {
-            rv$connections_data$Label[i] <- sign
+          if (!is.na(i) && i <= nrow(conns)) {
+            conns$Label[i] <- sign
           }
         }
 
         # Filter connections based on review
         if (length(rejected) > 0) {
           # Create filtered connections dataframe
-          connections_to_import <- rv$connections_data[-rejected, ]
+          connections_to_import <- conns[-rejected, ]
         } else {
-          connections_to_import <- rv$connections_data
+          connections_to_import <- conns
         }
 
         debug_log(sprintf("Importing %d of %d connections (rejected: %d)",
-                    nrow(connections_to_import), nrow(rv$connections_data), length(rejected)), "IMPORT")
+                    nrow(connections_to_import), nrow(conns), length(rejected)), "IMPORT")
 
         # Verify shared function is available
         if (!exists("convert_excel_to_isa", mode = "function")) {
