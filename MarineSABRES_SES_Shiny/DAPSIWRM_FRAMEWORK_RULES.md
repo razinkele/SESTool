@@ -604,8 +604,7 @@ Wellbeing category, and Measures are stored as Responses.
 
 ### Connection Matrices
 
-The framework uses adjacency matrices (`DAPSIWRM_MATRIX_KEY_TYPES` in
-`functions/dapsiwrm_connection_rules.R`):
+The framework uses these adjacency matrices (keyed source_target, e.g. `d_a`):
 
 - Forward: **d_a**, **a_p**, **p_mpf**, **mpf_es** (STATE CHANGE), **es_gb**
 - Feedback: **gb_d**

@@ -54,8 +54,15 @@ test_that("a template connection without a sign is a load error, not a silent '+
   j$connections[[1]]$polarity <- NULL
   writeLines(jsonlite::toJSON(j, auto_unbox = TRUE), tmp)
   msgs <- character(0)
+  # Swap the global logger and restore the real one afterwards, so later test
+  # files in the same process still have log_warning.
+  had_lw <- exists("log_warning", envir = .GlobalEnv, inherits = FALSE)
+  old_lw <- if (had_lw) get("log_warning", envir = .GlobalEnv) else NULL
   assign("log_warning", function(ctx, msg, ...) msgs <<- c(msgs, msg), envir = .GlobalEnv)
-  on.exit(rm("log_warning", envir = .GlobalEnv), add = TRUE)
+  on.exit({
+    if (had_lw) assign("log_warning", old_lw, envir = .GlobalEnv)
+    else rm("log_warning", envir = .GlobalEnv)
+  }, add = TRUE)
   res <- load_template_from_json(tmp, use_cache = FALSE)
   expect_null(res)
   expect_true(any(grepl("sign", msgs)))
