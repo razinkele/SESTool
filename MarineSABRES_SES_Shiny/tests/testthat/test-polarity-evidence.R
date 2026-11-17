@@ -36,5 +36,6 @@ test_that("picker renders unset with prompt, and a from: line only with evidence
   html2 <- as.character(polarity_picker_input("p", i18n, selected = "-", evidence_source = "Smith 2020"))
   expect_match(html2, "Smith 2020", fixed = TRUE)
   expect_match(html2, "common.polarity.from_source", fixed = TRUE)
-  expect_false(grepl("common.polarity.choose_sign", html2, fixed = TRUE))
+  # the prompt is always rendered; the stylesheet hides it while a sign is active
+  expect_match(html2, "polarity-picker-prompt", fixed = TRUE)
 })

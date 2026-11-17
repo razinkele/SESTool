@@ -415,7 +415,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       scroll_to = NULL,  # Target connection card ID to scroll to after re-render
       show_delay = FALSE,  # Whether to show delay inputs on connection cards
       last_action_time = NULL,
-      sign_cleared = c()  # Indices whose evidenced sign a direction swap cleared
+      sign_cleared = c(),  # Indices whose evidenced sign a direction swap cleared
+      user_signed = c()    # Indices whose sign the user picked (never evidence)
     )
 
     # The sign a card currently carries: cleared by a swap -> NA; else the
@@ -426,12 +427,13 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       if (!is.null(amended$polarity) && !is.na(amended$polarity)) return(amended$polarity)
       read_polarity_pick(conn$polarity)
     }
-    # Evidenced = the connection's own sign with a citation, not amended or cleared.
+    # Evidenced = the connection's own sign with a citation that the user has
+    # not chosen themselves (approving it untouched does not make it a user choice).
     sign_is_evidenced <- function(idx, conn = review_conns()[[idx]]) {
       src <- conn$polarity_source
       own <- read_polarity_pick(conn$polarity)
-      !is.na(own) && length(src) == 1L && !is.na(src) && nzchar(trimws(src)) &&
-        identical(current_sign(idx, conn), own)
+      !(idx %in% rv$user_signed) && !(idx %in% rv$sign_cleared) &&
+        !is.na(own) && length(src) == 1L && !is.na(src) && nzchar(trimws(src))
     }
     # Strength/confidence/delay of a card as last amended, else the connection's.
     amend_values <- function(idx, conn) {
@@ -444,6 +446,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     # Record a sign the user chose, hide the "from:" line and tell the parent.
     commit_user_sign <- function(idx, conn, sign) {
       rv$sign_cleared <- setdiff(rv$sign_cleared, idx)
+      rv$user_signed <- union(rv$user_signed, idx)
       a <- rv$amended_data[[as.character(idx)]] %||% list()
       a$polarity <- sign
       rv$amended_data[[as.character(idx)]] <- a
@@ -1207,11 +1210,27 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # clear it. A sign the user chose survives the swap.
             if (sign_is_evidenced(local_idx, conn)) {
               rv$sign_cleared <- union(rv$sign_cleared, local_idx)
+              a <- rv$amended_data[[as.character(local_idx)]]
+              if (!is.null(a)) {
+                a$polarity <- NULL
+                rv$amended_data[[as.character(local_idx)]] <- a
+              }
+              # An approved card must not stay approved with the old-direction
+              # sign: return it to pending.
+              if (local_idx %in% rv$approved) {
+                rv$approved <- setdiff(rv$approved, local_idx)
+                set_card_status(local_idx, "pending")
+              }
               pick_id <- ns(paste0("polarity_pick_", local_idx))
               shinyjs::hide(id = paste0("polarity_pick_", local_idx, "_source"))
               shinyjs::runjs(sprintf(
-                "(function(){var e=$('#%s');e.find('input').prop('checked',false);e.find('label').removeClass('active');Shiny.setInputValue('%s',null,{priority:'event'});})();",
+                "(function(){var e=$('#%s');e.find('input').prop('checked',false);e.find('.btn').removeClass('active');Shiny.setInputValue('%s',null,{priority:'event'});})();",
                 pick_id, pick_id))
+              # Tell the parent the sign is gone (it also drops the approval)
+              if (!is.null(on_amend)) {
+                v <- amend_values(local_idx, conn)
+                on_amend(local_idx, NA_character_, v$strength, v$confidence, v$delay, v$delay_years)
+              }
             }
 
             # Toggle swapped state for this connection
@@ -1278,7 +1297,8 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
   amended <- rv$amended_data[[as.character(conn_idx)]]
   # The sign: the user's choice if any, else the connection's own (may be NA = unset)
   user_chose <- !is.null(amended$polarity) && !is.na(amended$polarity)
-  current_polarity <- if (user_chose) amended$polarity else read_polarity_pick(conn$polarity)
+  sign_cleared <- conn_idx %in% rv$sign_cleared   # a swap cleared an evidenced sign
+  current_polarity <- if (sign_cleared) NA_character_ else if (user_chose) amended$polarity else read_polarity_pick(conn$polarity)
   current_strength <- if (!is.null(amended$strength) && !is.na(amended$strength)) amended$strength else (conn$strength %|||% "medium")
   current_confidence <- if (!is.null(amended$confidence) && !is.na(amended$confidence)) amended$confidence else (conn$confidence %|||% 3)
 
@@ -1313,7 +1333,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         polarity_picker_input(
           ns(paste0("polarity_pick_", conn_idx)), i18n,
           selected = current_polarity,
-          evidence_source = if (user_chose) NA_character_ else conn$polarity_source
+          evidence_source = if (user_chose || sign_cleared) NA_character_ else conn$polarity_source
         )
       )
     ),

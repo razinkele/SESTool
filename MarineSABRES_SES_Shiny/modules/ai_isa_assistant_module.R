@@ -908,6 +908,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       on_amend = function(index, polarity, strength, confidence, delay = NA_character_, delay_years = NA_real_) {
         # Update the connection with amended values
         if (index <= length(rv$suggested_connections)) {
+          # A cleared sign (swapped evidenced connection) also withdraws the approval
+          if (is.na(polarity)) rv$approved_connections <- setdiff(rv$approved_connections, index)
           rv$suggested_connections[[index]]$polarity <- polarity
           rv$suggested_connections[[index]]$strength <- strength
           rv$suggested_connections[[index]]$confidence <- confidence
@@ -923,16 +925,20 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$approve_all_connections, {
       # Only connections that carry a sign can be approved; a sign picked in a
       # card reached suggested_connections through on_amend.
-      has_sign <- vapply(rv$suggested_connections, function(c)
-        !is.na(read_polarity_pick(c$polarity)), logical(1))
-      rv$approved_connections <- which(has_sign)
+      signed <- connections_with_sign(rv$suggested_connections)
+      n_skipped <- length(rv$suggested_connections) - length(signed)
+      rv$approved_connections <- signed
       debug_log(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
                  length(rv$approved_connections)))
-      if (any(has_sign)) {
-        showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
+      if (length(signed) > 0) {
+        if (n_skipped == 0) {
+          showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
+        } else {
+          showNotification(sprintf("%s: %d", i18n$t("common.misc.approved"), length(signed)), type = "message")
+        }
       }
-      if (any(!has_sign)) {
-        showNotification(sprintf(i18n$t("common.polarity.needs_sign_count"), sum(!has_sign)),
+      if (n_skipped > 0) {
+        showNotification(sprintf(i18n$t("common.polarity.needs_sign_count"), n_skipped),
                          type = "warning", duration = 5)
       }
     })

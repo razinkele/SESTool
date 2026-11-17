@@ -71,13 +71,13 @@ test_that("swap clears an evidenced sign but keeps a user-chosen one", {
     expect_true(is.na(current_sign(1L)))
     session$setInputs(polarity_pick_1 = "+")
     expect_equal(current_sign(1L), "+")
-    Sys.sleep(0.6)   # the swap handler debounces for 500 ms
+    rv$last_action_time <- NULL   # the swap handler debounces for 500 ms
     session$setInputs(swap_direction_1 = 2)
     expect_equal(current_sign(1L), "+")
   })
 })
 
-test_that("swap keeps a template/unevidenced sign untouched only when amended", {
+test_that("swap keeps a sign that has no citation", {
   # a sign without a source is not evidence, so it is kept by the swap
   conns <- shiny::reactiveVal(list(pol_conn("+", NA_character_)))
   testServer(connection_review_tabbed_server,
@@ -86,6 +86,76 @@ test_that("swap keeps a template/unevidenced sign untouched only when amended", 
     session$setInputs(swap_direction_1 = 1)
     expect_equal(current_sign(1L), "+")
   })
+})
+
+test_that("a user-chosen sign equal to the evidenced one survives the swap (flip back)", {
+  conns <- shiny::reactiveVal(list(pol_conn("-", "S")))
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n), {
+    session$flushReact()
+    session$setInputs(polarity_pick_1 = "+")
+    session$setInputs(polarity_pick_1 = "-")
+    expect_equal(current_sign(1L), "-")
+    session$setInputs(swap_direction_1 = 1)
+    expect_equal(current_sign(1L), "-")
+  })
+})
+
+test_that("approving an evidenced card untouched does not make it a user choice; swap un-approves it", {
+  conns <- shiny::reactiveVal(list(pol_conn("-", "S")))
+  amended <- list()
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n,
+                         on_amend = function(index, polarity, ...) amended[[length(amended) + 1L]] <<- polarity), {
+    session$flushReact()
+    session$setInputs(approve_1 = 1)
+    expect_true(1 %in% rv$approved)
+    rv$last_action_time <- NULL
+    session$setInputs(swap_direction_1 = 1)
+    expect_true(is.na(current_sign(1L)))
+    expect_false(1 %in% rv$approved)
+    expect_null(rv$amended_data[["1"]]$polarity)
+    expect_true(is.na(amended[[length(amended)]]))   # the parent was told the sign is gone
+    session$setInputs(approve_1 = 2)                  # and it cannot be approved unsigned
+    expect_false(1 %in% rv$approved)
+  })
+})
+
+test_that("a re-render after a swap-clear keeps the sign unset", {
+  conns <- shiny::reactiveVal(list(pol_conn("-", "Smith 2020")))
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n), {
+    session$flushReact()
+    session$setInputs(batch_tabs = "drivers_activities")
+    session$setInputs(swap_direction_1 = 1)
+    session$setInputs(show_delay_toggle = TRUE)
+    session$flushReact()
+    html <- paste(as.character(output$batch_connections_drivers_activities$html), collapse = "")
+    expect_match(html, "polarity_pick_1", fixed = TRUE)   # the card did re-render
+    expect_false(grepl("Smith 2020", html, fixed = TRUE))
+    expect_true(is.na(current_sign(1L)))
+    expect_false(1 %in% rv$user_signed)
+  })
+})
+
+test_that("approve_blocked and needs_sign_count notifications fire with the right count", {
+  seen <- character()
+  assign("showNotification", function(ui, ...) { seen <<- c(seen, ui); invisible(NULL) }, envir = .GlobalEnv)
+  on.exit(rm("showNotification", envir = .GlobalEnv), add = TRUE)
+  conns <- shiny::reactiveVal(pol_signs(c(NA, "+", NA)))
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n), {
+    session$flushReact()
+    session$setInputs(approve_1 = 1)
+    expect_true("common.polarity.approve_blocked" %in% seen)
+    session$setInputs(approve_all_drivers_activities = 1)
+    expect_true("2 need a sign" %in% seen)
+  })
+})
+
+test_that("connections_with_sign lists only signed connections", {
+  expect_equal(connections_with_sign(pol_signs(c(NA, "+", "-", NA))), c(2L, 3L))
+  expect_length(connections_with_sign(pol_signs(c(NA, NA))), 0)
 })
 
 test_that("flipping an evidenced sign is what gets approved", {
@@ -114,7 +184,7 @@ test_that("an evidenced sign can be approved untouched", {
 })
 
 test_that("the card renders the picker, with the from: line only for an evidenced sign", {
-  rv <- shiny::reactiveValues(approved = c(), rejected = c(), amended_data = list())
+  rv <- shiny::reactiveValues(approved = c(), rejected = c(), amended_data = list(), sign_cleared = c())
   ns <- function(x) paste0("m-", x)
   html_ev <- as.character(shiny::isolate(render_connection_card(pol_conn("-", "Smith 2020"), 1, ns, pol_i18n, rv)))
   expect_match(html_ev, "m-polarity_pick_1", fixed = TRUE)
@@ -125,6 +195,11 @@ test_that("the card renders the picker, with the from: line only for an evidence
   shiny::isolate(rv$amended_data[["1"]] <- list(polarity = "+"))
   html_am <- as.character(shiny::isolate(render_connection_card(pol_conn("-", "Smith 2020"), 1, ns, pol_i18n, rv)))
   expect_false(grepl("Smith 2020", html_am, fixed = TRUE))
+  shiny::isolate({ rv$amended_data[["1"]] <- NULL; rv$sign_cleared <- 1L })
+  html_cl <- as.character(shiny::isolate(render_connection_card(pol_conn("-", "Smith 2020"), 1, ns, pol_i18n, rv)))
+  expect_false(grepl("Smith 2020", html_cl, fixed = TRUE))
+  expect_false(grepl("active", html_cl, fixed = TRUE))   # no button selected after a clear
+  expect_match(html_cl, "common.polarity.choose_sign", fixed = TRUE)
 })
 
 test_that("the picker prompt carries the class the stylesheet hides once a sign is chosen", {

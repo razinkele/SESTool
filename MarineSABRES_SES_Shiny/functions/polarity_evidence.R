@@ -19,6 +19,11 @@ evidenced_polarity <- function(from_name, from_type, to_name, to_type) {
   list(polarity = kb$polarity, source = src)
 }
 
+#' Indices of connections that carry a sign (the only ones that can be approved)
+connections_with_sign <- function(conns) {
+  which(vapply(conns, function(cn) !is.na(read_polarity_pick(cn$polarity)), logical(1)))
+}
+
 #' Map a picker input value to a sign ("+", "-" or NA_character_)
 read_polarity_pick <- function(x) {
   if (is.null(x) || length(x) != 1L || is.na(x)) return(NA_character_)
@@ -47,10 +52,9 @@ polarity_picker_input <- function(inputId, i18n, selected = NA_character_,
       status = "outline-primary",
       size = "sm"
     ),
-    if (is.na(sel)) {
-      tags$div(class = "polarity-picker-prompt text-warning small",
-               i18n$t("common.polarity.choose_sign"))
-    },
+    # Always rendered; the stylesheet hides it while a sign button is active
+    tags$div(class = "polarity-picker-prompt text-warning small",
+             i18n$t("common.polarity.choose_sign")),
     if (has_src) {
       tags$div(id = paste0(inputId, "_source"),
                class = "polarity-picker-source text-muted small",
