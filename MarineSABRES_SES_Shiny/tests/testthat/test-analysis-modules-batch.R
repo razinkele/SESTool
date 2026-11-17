@@ -106,7 +106,9 @@ test_that("N30: connection-review observers are destroyed before being regenerat
   expect_true(grepl("obs_env$batch <- destroy_all(obs_env$batch)", src, fixed = TRUE))
   expect_true(grepl("obs_env$conn <- destroy_all(obs_env$conn)", src, fixed = TRUE))
   n_tracked <- sum(vapply(c("obs_env$batch[[length", "obs_env$conn[[length"), function(s) lengths(regmatches(src, gregexpr(s, src, fixed = TRUE))), integer(1)))
-  expect_equal(n_tracked, 6L)
+  # 3 per batch (approve all, reject all, next) + 4 per card (sign pick,
+  # approve, reject, swap); the sign-pick observer arrived with v1.36.0
+  expect_equal(n_tracked, 7L)
 })
 
 test_that("N35/N36: decision lens resets loops first and drops 1- and 2-node cycles", {
