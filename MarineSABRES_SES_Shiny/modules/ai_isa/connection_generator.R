@@ -741,7 +741,10 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL, 
             polarity_source = if (kb_signed) paste(kb_refs, collapse = "; ") else NA_character_,
             strength = kb_conn$strength %||% "medium",
             confidence = kb_conn$confidence %||% 4,
-            rationale = kb_conn$rationale %||% paste(from_name, "affects", to_name),
+            # A KB rationale can name a direction ("reduces"): only a signed
+            # connection keeps it; an unsigned one gets the neutral verb (R5)
+            rationale = if (kb_signed && !is.null(kb_conn$rationale)) kb_conn$rationale else
+              paste(from_name, if (!is.null(i18n)) i18n$t("common.polarity.affects") else "affects", to_name),
             matrix = mat_name,
             scoring_method = "knowledge_db"
           )

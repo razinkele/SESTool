@@ -15,7 +15,7 @@
 #' @return List of suggested elements with connection metadata
 #' @export
 suggest_connected_elements <- function(node_id, node_data, existing_network,
-                                      context, max_suggestions = 5) {
+                                      context, max_suggestions = 5, i18n = NULL) {
 
   debug_log(paste0("Generating suggestions for node: ", node_data$name,
           " (", node_data$type, ")"), "NETWORK BUILDER")
@@ -127,7 +127,8 @@ suggest_connected_elements <- function(node_id, node_data, existing_network,
           node_data$type,
           target_type,
           polarity,
-          strength
+          strength,
+          i18n = i18n
         )
       )
     }
@@ -142,7 +143,7 @@ suggest_connected_elements <- function(node_id, node_data, existing_network,
 
   # 3a. Analyze network topology and add strategic suggestions
   topology_suggestions <- analyze_network_topology_for_suggestions(
-    node_id, node_data, existing_network, allowed_targets, context
+    node_id, node_data, existing_network, allowed_targets, context, i18n = i18n
   )
   suggestions <- c(suggestions, topology_suggestions)
   debug_log(paste0("Added ", length(topology_suggestions), " topology-based suggestions"), "NETWORK BUILDER")
@@ -223,7 +224,7 @@ graphical_polarity_evidence <- function(from_name, from_type, to_name, to_type) 
 #' @param strength Connection strength
 #' @return Character string with reasoning
 generate_suggestion_reasoning <- function(from_name, to_name, from_type,
-                                         to_type, polarity, strength) {
+                                         to_type, polarity, strength, i18n = NULL) {
 
   strength_word <- if (identical(strength, "strong")) "strongly" else "moderately"
 
@@ -231,7 +232,8 @@ generate_suggestion_reasoning <- function(from_name, to_name, from_type,
   # ("Pressures negatively affect ...", "Responses ... mitigate ...") would
   # hint at a typical sign, which evidenced polarity forbids.
   if (!isTRUE(polarity %in% c("+", "-"))) {
-    return(paste0(from_type, " ", strength_word, " affects ", to_type, "."))
+    affects <- if (!is.null(i18n)) i18n$t("common.polarity.affects") else "affects"
+    return(paste0(from_type, " ", strength_word, " ", affects, " ", to_type, "."))
   }
 
   # Get connection description
@@ -836,7 +838,8 @@ prioritize_suggestions_by_source <- function(suggestions, source_name, source_ty
 #' @return List of strategic suggestions
 analyze_network_topology_for_suggestions <- function(node_id, node_data,
                                                      existing_network,
-                                                     allowed_targets, context) {
+                                                     allowed_targets, context,
+                                                     i18n = NULL) {
   suggestions <- list()
 
   if (nrow(existing_network) == 0) {
@@ -909,7 +912,9 @@ analyze_network_topology_for_suggestions <- function(node_id, node_data,
         connection_confidence = 0.85,
         # loop_type ("balancing"/"reinforcing") follows from the closing edge's
         # sign, so it is shown only once that sign is evidenced (kept as data)
-        reasoning = if (is.na(evidence$polarity)) "Closes a feedback loop"
+        reasoning = if (is.na(evidence$polarity)) {
+                      if (!is.null(i18n)) i18n$t("common.polarity.closes_loop") else "Closes a feedback loop"
+                    }
                     else paste0("Creates ", loop_opp$loop_type, " feedback loop"),
         loop_type = loop_opp$loop_type,
         strategy_tag = "FEEDBACK_LOOP"

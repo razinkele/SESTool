@@ -1524,7 +1524,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
             ),
             existing_network = rv$network_nodes,
             context = rv$context,
-            max_suggestions = MAX_SUGGESTIONS_PER_EXPANSION
+            max_suggestions = MAX_SUGGESTIONS_PER_EXPANSION,
+            i18n = i18n
           )
         } else {
           # Fall back to rule-based suggestions
@@ -1537,7 +1538,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
             ),
             existing_network = rv$network_nodes,
             context = rv$context,
-            max_suggestions = MAX_SUGGESTIONS_PER_EXPANSION
+            max_suggestions = MAX_SUGGESTIONS_PER_EXPANSION,
+            i18n = i18n
           )
         }
       }, error = function(e) {

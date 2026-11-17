@@ -379,3 +379,30 @@ test_that("infer_connection_polarity and get_rule_default_polarity are gone", {
   expect_false(exists("infer_connection_polarity"))
   expect_false(exists("get_rule_default_polarity"))
 })
+
+test_that("unsigned ghost reasoning goes through the translator (final review M1)", {
+  stub_kb(NULL)
+  tr <- list(t = function(key, ...) paste0("T:", key))
+  txt <- generate_suggestion_reasoning("a", "b", "Drivers", "Activities", NA_character_, "strong", i18n = tr)
+  expect_match(txt, "T:common.polarity.affects", fixed = TRUE)
+  expect_false(grepl(" affects ", txt, fixed = TRUE))
+  net <- data.frame(id = c("R_1", "D_1", "A_2"), name = c("Fishing quota", "Food demand", "Shipping"),
+                    type = c("Responses", "Drivers", "Activities"), stringsAsFactors = FALSE)
+  topo <- analyze_network_topology_for_suggestions(
+    "R_1", list(name = "Gear rules", type = "Responses"), net, get_allowed_targets("Responses"), ctx,
+    i18n = tr)
+  loops <- Filter(function(s) identical(s$strategy_tag, "FEEDBACK_LOOP"), topo)
+  expect_gt(length(loops), 0)
+  expect_true(all(vapply(loops, function(s) s$reasoning, "") == "T:common.polarity.closes_loop"))
+  # suggest_connected_elements hands the translator on
+  sugg <- suggest_connected_elements("R_1", list(name = "Gear rules", type = "Responses"), net, ctx,
+                                     i18n = tr)
+  unsigned <- Filter(function(s) is.na(s$connection_polarity) && is.null(s$strategy_tag), sugg)
+  if (length(unsigned) > 0) {
+    expect_true(all(grepl("T:common.polarity.affects", vapply(unsigned, function(s) s$reasoning, ""), fixed = TRUE)))
+  }
+  loops2 <- Filter(function(s) identical(s$strategy_tag, "FEEDBACK_LOOP"), sugg)
+  if (length(loops2) > 0) {
+    expect_true(all(vapply(loops2, function(s) s$reasoning, "") == "T:common.polarity.closes_loop"))
+  }
+})

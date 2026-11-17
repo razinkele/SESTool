@@ -149,3 +149,24 @@ test_that("neutral rationale verb and unset tooltip use the translator when give
   sys.source(file.path(root, "functions", "visnetwork_helpers.R"), envir = real)
   expect_match(real$create_ghost_node_data(sg, 1, i18n = tr)$title, "T:common.polarity.unset", fixed = TRUE)
 })
+
+test_that("KB seeding: an unsigned seeded connection gets the translated neutral rationale (M1, M6)", {
+  kbc <- function(from, to, refs) list(from = from, from_type = "drivers", to = to,
+                                       to_type = "activities", polarity = "-",
+                                       strength = "strong", confidence = 5,
+                                       rationale = "Demand reduces drainage", references = refs)
+  stub_kb(NULL)
+  stub_global("ses_knowledge_db_available", function() TRUE)
+  stub_global("get_context_connections", function(regional_sea, habitat) list(
+    kbc("Farm demand", "Drainage", list("HELCOM 2018")),   # exact + sourced: keeps its rationale
+    kbc("Fish demand", "Landings", list())                 # no references: unsigned
+  ))
+  els <- list(drivers = list(list(name = "Farm demand"), list(name = "Fish demand")),
+              activities = list(list(name = "Drainage"), list(name = "Landings")))
+  tr <- list(t = function(key, ...) paste0("T:", key))
+  res <- generate_connections(els, "baltic", "Coastal lagoon", i18n = tr)
+  seeded <- Filter(function(c) identical(c$scoring_method, "knowledge_db"), res)
+  by_from <- setNames(seeded, vapply(seeded, function(c) c$from_name, ""))
+  expect_identical(by_from[["Farm demand"]]$rationale, "Demand reduces drainage")
+  expect_identical(by_from[["Fish demand"]]$rationale, "Fish demand T:common.polarity.affects Landings")
+})

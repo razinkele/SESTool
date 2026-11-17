@@ -27,7 +27,7 @@ if (!exists("ml_model_available")) {
 #' @return List of ranked suggestions
 #' @export
 suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
-                                          context, max_suggestions = 5) {
+                                          context, max_suggestions = 5, i18n = NULL) {
 
   # Get base suggestions from existing system
   if (exists("suggest_connected_elements")) {
@@ -36,7 +36,8 @@ suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
       node_data = node_data,
       existing_network = existing_network,
       context = context,
-      max_suggestions = max_suggestions * 2  # Get more, then ML filter
+      max_suggestions = max_suggestions * 2,  # Get more, then ML filter
+      i18n = i18n
     )
   } else {
     debug_log("Base suggestion function not found", "ML_ENHANCER")
