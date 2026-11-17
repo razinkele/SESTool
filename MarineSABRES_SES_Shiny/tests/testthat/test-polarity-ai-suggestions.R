@@ -92,3 +92,60 @@ test_that("ghost edge colouring handles an unset sign", {
   expect_equal(create_ghost_edge_data(mk("-"), 1)$color,
                adjustcolor(EDGE_COLORS$opposing, alpha.f = GHOST_EDGE_OPACITY))
 })
+
+# ---- KB seeding branch of generate_connections() ---------------------------
+stub_global <- function(name, value, env = parent.frame()) {
+  had <- exists(name, envir = globalenv(), inherits = FALSE)
+  orig <- if (had) get(name, envir = globalenv())
+  assign(name, value, envir = globalenv())
+  withr::defer({
+    if (had) assign(name, orig, envir = globalenv())
+    else rm(list = name, envir = globalenv())
+  }, envir = env)
+}
+
+test_that("KB seeding signs only exact, referenced matches", {
+  kbc <- function(from, to, refs) list(from = from, from_type = "drivers", to = to,
+                                       to_type = "activities", polarity = "-",
+                                       strength = "strong", confidence = 5,
+                                       rationale = "r", references = refs)
+  stub_kb(NULL)
+  stub_global("ses_knowledge_db_available", function() TRUE)
+  stub_global("get_context_connections", function(regional_sea, habitat) list(
+    kbc("Farm demand", "Drainage", list("HELCOM 2018", "Halpern 2008")),   # exact + sourced
+    kbc("Tourism", "Beach visits", list("HELCOM 2018")),                   # partial name
+    kbc("Fish demand", "Landings", list())                                 # no references
+  ))
+  els <- list(
+    drivers = list(list(name = "Farm demand"), list(name = "Tourism growth"), list(name = "Fish demand")),
+    activities = list(list(name = "Drainage"), list(name = "Beach visits"), list(name = "Landings"))
+  )
+  res <- generate_connections(els, "baltic", "Coastal lagoon")
+  seeded <- Filter(function(c) identical(c$scoring_method, "knowledge_db"), res)
+  by_from <- setNames(seeded, vapply(seeded, function(c) c$from_name, ""))
+  expect_setequal(names(by_from), c("Farm demand", "Tourism growth", "Fish demand"))
+  expect_identical(by_from[["Farm demand"]]$polarity, "-")
+  expect_identical(by_from[["Farm demand"]]$polarity_source, "HELCOM 2018; Halpern 2008")
+  expect_identical(by_from[["Tourism growth"]]$polarity, NA_character_)
+  expect_identical(by_from[["Tourism growth"]]$polarity_source, NA_character_)
+  expect_identical(by_from[["Fish demand"]]$polarity, NA_character_)
+  expect_identical(by_from[["Fish demand"]]$polarity_source, NA_character_)
+})
+
+test_that("neutral rationale verb and unset tooltip use the translator when given", {
+  stub_kb(NULL)
+  tr <- list(t = function(key, ...) paste0("T:", key))
+  e <- two()
+  s <- generate_smart_connections(e$from, e$to, "activities", "pressures", "a_p",
+                                  max_count = 5, min_relevance = 0, i18n = tr)[[1]]
+  expect_identical(s$rationale, "Trawling T:common.polarity.affects Seabed damage")
+  sg <- list(connection_polarity = NA_character_, connection_strength = "medium",
+             connection_confidence = 3, from_node = "a", name = "n", type = "Pressures",
+             reasoning = "r")
+  expect_match(create_ghost_edge_data(sg, 1, i18n = tr)$title, "T:common.polarity.unset", fixed = TRUE)
+  # helper-stubs.R replaces create_ghost_node_data globally; load the real one privately
+  real <- new.env(parent = globalenv())
+  td <- getwd(); root <- if (basename(td) == "testthat") dirname(dirname(td)) else td
+  sys.source(file.path(root, "functions", "visnetwork_helpers.R"), envir = real)
+  expect_match(real$create_ghost_node_data(sg, 1, i18n = tr)$title, "T:common.polarity.unset", fixed = TRUE)
+})

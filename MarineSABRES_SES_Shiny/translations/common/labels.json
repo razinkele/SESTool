@@ -648,6 +648,28 @@
       "it": "%d connessioni nel file non hanno segno. Usa Revisione per sceglierle.",
       "no": "%d forbindelser i filen har ikke fortegn. Bruk Gjennomgang for å velge dem.",
       "el": "%d συνδέσεις στο αρχείο δεν έχουν πρόσημο. Χρησιμοποιήστε την Αναθεώρηση για να τις επιλέξετε."
+    },
+    "common.polarity.affects": {
+      "en": "affects",
+      "es": "afecta a",
+      "fr": "affecte",
+      "de": "beeinflusst",
+      "lt": "veikia",
+      "pt": "afeta",
+      "it": "influenza",
+      "no": "påvirker",
+      "el": "επηρεάζει"
+    },
+    "common.polarity.unset": {
+      "en": "unset",
+      "es": "sin definir",
+      "fr": "non défini",
+      "de": "nicht gesetzt",
+      "lt": "nenustatyta",
+      "pt": "não definido",
+      "it": "non impostato",
+      "no": "ikke satt",
+      "el": "μη ορισμένο"
     }
   }
 }

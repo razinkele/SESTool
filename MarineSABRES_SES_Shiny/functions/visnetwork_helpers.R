@@ -1140,6 +1140,11 @@ apply_graphical_ses_styling <- function(visnet) {
 }
 
 
+# Label for a connection whose sign is not set (tooltips)
+.unset_sign_label <- function(i18n = NULL) {
+  if (!is.null(i18n)) i18n$t("common.polarity.unset") else "unset"
+}
+
 #' Create Ghost Node Data
 #'
 #' Creates a ghost node (preview/suggestion) with semi-transparent styling
@@ -1147,8 +1152,9 @@ apply_graphical_ses_styling <- function(visnet) {
 #' @param suggestion Suggestion object from suggest_connected_elements
 #' @param index Ghost node index
 #' @return Single-row dataframe with ghost node data
+#' @param i18n Optional translator for tooltip text
 #' @export
-create_ghost_node_data <- function(suggestion, index) {
+create_ghost_node_data <- function(suggestion, index, i18n = NULL) {
 
   ghost_id <- paste0("GHOST_", index)
 
@@ -1165,7 +1171,7 @@ create_ghost_node_data <- function(suggestion, index) {
   tooltip <- paste0(
     "<b>", esc(suggestion$name), "</b><br>",
     "Type: ", esc(suggestion$type), "<br>",
-    "Connection: ", esc(if (is.na(suggestion$connection_polarity)) "unset"
+    "Connection: ", esc(if (is.na(suggestion$connection_polarity)) .unset_sign_label(i18n)
                         else suggestion$connection_polarity), " (",
     esc(suggestion$connection_strength), ")<br>",
     "<i>", esc(suggestion$reasoning), "</i><br>",
@@ -1206,7 +1212,7 @@ create_ghost_node_data <- function(suggestion, index) {
 #' @param ghost_index Index of ghost node
 #' @return Single-row dataframe with ghost edge data
 #' @export
-create_ghost_edge_data <- function(suggestion, ghost_index) {
+create_ghost_edge_data <- function(suggestion, ghost_index, i18n = NULL) {
 
   ghost_id <- paste0("GHOST_", ghost_index)
 
@@ -1234,7 +1240,7 @@ create_ghost_edge_data <- function(suggestion, ghost_index) {
   # Create tooltip
   tooltip <- paste0(
     "Polarity: ", htmltools::htmlEscape(
-      if (is.na(suggestion$connection_polarity)) "unset" else suggestion$connection_polarity), "<br>",
+      if (is.na(suggestion$connection_polarity)) .unset_sign_label(i18n) else suggestion$connection_polarity), "<br>",
     "Strength: ", htmltools::htmlEscape(suggestion$connection_strength), "<br>",
     "Confidence: ", htmltools::htmlEscape(suggestion$connection_confidence), "/5"
   )

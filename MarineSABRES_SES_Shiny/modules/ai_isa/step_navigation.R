@@ -89,7 +89,7 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
 
             # Generate connections (from connection_generator.R)
             debug_log("[AI ISA] About to call generate_connections()...\n")
-            all_connections <- generate_connections(rv$elements)
+            all_connections <- generate_connections(rv$elements, i18n = i18n)
             debug_log(sprintf("[AI ISA] generate_connections() returned %d connections\n", length(all_connections)))
 
             # Limit to 200 connections for tabbed display (distributed across tabs)

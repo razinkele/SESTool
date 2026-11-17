@@ -1429,8 +1429,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       clear_ghost_nodes()
 
       for (i in seq_along(suggestions)) {
-        ghost_node <- create_ghost_node_data(suggestions[[i]], i)
-        ghost_edge <- create_ghost_edge_data(suggestions[[i]], i)
+        ghost_node <- create_ghost_node_data(suggestions[[i]], i, i18n = i18n)
+        ghost_edge <- create_ghost_edge_data(suggestions[[i]], i, i18n = i18n)
 
         rv$ghost_nodes <- rbind(rv$ghost_nodes, ghost_node)
         rv$ghost_edges <- rbind(rv$ghost_edges, ghost_edge)

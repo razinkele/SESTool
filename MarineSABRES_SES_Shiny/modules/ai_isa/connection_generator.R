@@ -8,7 +8,7 @@
 #   1. Knowledge base lookup (curated marine SES connections)
 #   2. ML model predictions (trained neural network, when available)
 #   3. TF-IDF weighted keyword matching with synonym expansion
-#   4. Negation-aware polarity detection
+#   4. Evidence-only polarity (a sign is set only from an exact, cited KB match)
 #
 # Author: Refactored from ai_isa_assistant_module.R
 # Date: 2026-01-04 (ML integration: 2026-03-14)
@@ -221,6 +221,7 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 #' @param matrix_name Character string identifying the connection matrix
 #' @param max_count Integer maximum number of connections to return
 #' @param min_relevance Numeric minimum relevance threshold (0-1)
+#' @param i18n Optional translator, used for the neutral rationale verb
 #'
 #' @return List of connection objects, sorted by relevance (highest first)
 #'
@@ -249,7 +250,7 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 #' }
 #'
 #' @export
-generate_smart_connections <- function(from_elements, to_elements, from_type, to_type, matrix_name, max_count, min_relevance) {
+generate_smart_connections <- function(from_elements, to_elements, from_type, to_type, matrix_name, max_count, min_relevance, i18n = NULL) {
   candidates <- list()
 
   # Keywords indicating negative states/losses - used to filter double-negative connections
@@ -331,7 +332,8 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
 
         # Choose appropriate verb based on connection type
         verb <- if (is.na(polarity)) {
-          "affects"  # neutral: no sign is claimed without evidence
+          # neutral: no sign is claimed without evidence
+          if (!is.null(i18n)) i18n$t("common.polarity.affects") else "affects"
         } else if (from_type == "drivers") {
           "drives"
         } else if (from_type == "activities") {
@@ -578,7 +580,7 @@ convert_matrices_to_connections <- function(matrices, elements) {
 #' }
 #'
 #' @export
-generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) {
+generate_connections <- function(elements, regional_sea = NULL, habitat = NULL, i18n = NULL) {
   connections <- list()
   MAX_PER_TYPE <- 15  # Reduced limit for better quality (10 types x 15 = max 150 total)
   MIN_RELEVANCE <- 0.3  # Lower threshold to ensure core DAPSIWR connections are generated
@@ -756,42 +758,42 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
 
   # D -> A (Drivers -> Activities): Smart connection generation
   if (length(elements$drivers) > 0 && length(elements$activities) > 0) {
-    new_conns <- generate_smart_connections(elements$drivers, elements$activities, "drivers", "activities", "d_a", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$drivers, elements$activities, "drivers", "activities", "d_a", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_da <- length(new_conns)
   }
 
   # A -> P (Activities -> Pressures): Smart connection generation
   if (length(elements$activities) > 0 && length(elements$pressures) > 0) {
-    new_conns <- generate_smart_connections(elements$activities, elements$pressures, "activities", "pressures", "a_p", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$activities, elements$pressures, "activities", "pressures", "a_p", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_ap <- length(new_conns)
   }
 
   # P -> S (Pressures -> States): Smart connection generation
   if (length(elements$pressures) > 0 && length(elements$states) > 0) {
-    new_conns <- generate_smart_connections(elements$pressures, elements$states, "pressures", "states", "p_mpf", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$pressures, elements$states, "pressures", "states", "p_mpf", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_ps <- length(new_conns)
   }
 
   # S -> I (States -> Impacts): Smart connection generation
   if (length(elements$states) > 0 && length(elements$impacts) > 0) {
-    new_conns <- generate_smart_connections(elements$states, elements$impacts, "states", "impacts", "mpf_es", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$states, elements$impacts, "states", "impacts", "mpf_es", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_si <- length(new_conns)
   }
 
   # I -> W (Impacts -> Welfare): Smart connection generation
   if (length(elements$impacts) > 0 && length(elements$welfare) > 0) {
-    new_conns <- generate_smart_connections(elements$impacts, elements$welfare, "impacts", "welfare", "es_gb", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$impacts, elements$welfare, "impacts", "welfare", "es_gb", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_iw <- length(new_conns)
   }
 
   # R -> P (Responses -> Pressures): Smart connection generation
   if (length(elements$responses) > 0 && length(elements$pressures) > 0) {
-    new_conns <- generate_smart_connections(elements$responses, elements$pressures, "responses", "pressures", "r_p", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$responses, elements$pressures, "responses", "pressures", "r_p", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_rp <- length(new_conns)
   }
@@ -802,28 +804,28 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
 
   # W -> D (Welfare -> Drivers): Smart feedback loop generation
   if (length(elements$welfare) > 0 && length(elements$drivers) > 0) {
-    new_conns <- generate_smart_connections(elements$welfare, elements$drivers, "welfare", "drivers", "gb_d", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$welfare, elements$drivers, "welfare", "drivers", "gb_d", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_wd <- length(new_conns)
   }
 
   # W -> R (Welfare -> Responses): Smart feedback loop generation
   if (length(elements$welfare) > 0 && length(elements$responses) > 0) {
-    new_conns <- generate_smart_connections(elements$welfare, elements$responses, "welfare", "responses", "gb_r", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$welfare, elements$responses, "welfare", "responses", "gb_r", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_wr <- length(new_conns)
   }
 
   # R -> D (Responses -> Drivers): Smart feedback loop generation
   if (length(elements$responses) > 0 && length(elements$drivers) > 0) {
-    new_conns <- generate_smart_connections(elements$responses, elements$drivers, "responses", "drivers", "r_d", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$responses, elements$drivers, "responses", "drivers", "r_d", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_rd <- length(new_conns)
   }
 
   # R -> A (Responses -> Activities): Smart feedback loop generation
   if (length(elements$responses) > 0 && length(elements$activities) > 0) {
-    new_conns <- generate_smart_connections(elements$responses, elements$activities, "responses", "activities", "r_a", MAX_PER_TYPE, MIN_RELEVANCE)
+    new_conns <- generate_smart_connections(elements$responses, elements$activities, "responses", "activities", "r_a", MAX_PER_TYPE, MIN_RELEVANCE, i18n = i18n)
     connections <- c(connections, new_conns)
     count_ra <- length(new_conns)
   }
