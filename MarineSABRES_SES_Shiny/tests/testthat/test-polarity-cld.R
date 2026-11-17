@@ -79,8 +79,15 @@ test_that("create_new_edge_data requires and applies a sign", {
 
 test_that("the manipulation JS gives a drawn edge a known id and reports it", {
   js <- generate_manipulation_enable_js("cldv", function(x) paste0("ns-", x))
-  expect_match(js, "edgeData.id = ", fixed = TRUE)
-  expect_match(js, "id: edgeData.id", fixed = TRUE)
+  # scope to the addEdge handler (editEdge also sends "id: edgeData.id")
+  add_edge <- regmatches(js, regexpr("(?s)addEdge:.*?editNode:", js, perl = TRUE))
+  expect_length(add_edge, 1)
+  expect_match(add_edge, "edgeData.id = ", fixed = TRUE)
+  expect_match(add_edge, "id: edgeData.id", fixed = TRUE)
+  expect_match(add_edge, "ns-edge_added", fixed = TRUE)
+  # the id is set before vis-network draws the edge
+  expect_lt(regexpr("edgeData.id = ", add_edge, fixed = TRUE),
+            regexpr("callback(edgeData)", add_edge, fixed = TRUE))
 })
 
 test_that("a drawn edge is added only after its sign is confirmed", {
