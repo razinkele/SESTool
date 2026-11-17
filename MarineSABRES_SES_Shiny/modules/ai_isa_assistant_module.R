@@ -921,10 +921,20 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Approve all connections
     observeEvent(input$approve_all_connections, {
-      rv$approved_connections <- seq_along(rv$suggested_connections)
+      # Only connections that carry a sign can be approved; a sign picked in a
+      # card reached suggested_connections through on_amend.
+      has_sign <- vapply(rv$suggested_connections, function(c)
+        !is.na(read_polarity_pick(c$polarity)), logical(1))
+      rv$approved_connections <- which(has_sign)
       debug_log(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
                  length(rv$approved_connections)))
-      showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
+      if (any(has_sign)) {
+        showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
+      }
+      if (any(!has_sign)) {
+        showNotification(sprintf(i18n$t("common.polarity.needs_sign_count"), sum(!has_sign)),
+                         type = "warning", duration = 5)
+      }
     })
 
     # Finish connection review

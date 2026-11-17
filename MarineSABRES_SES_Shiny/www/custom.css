@@ -1372,3 +1372,6 @@ textarea:focus-visible {
 .ia-dir-decrease.ia-fill-1 { background-color: #fdecea; } .ia-dir-decrease.ia-fill-2 { background-color: #f5b7b1; } .ia-dir-decrease.ia-fill-3 { background-color: #ec7063; }
 .ia-conf-low { background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0 6px, transparent 6px 12px); }
 td.ia-ref { outline: 2px dashed #6c757d; outline-offset: -3px; }
+
+/* Evidenced polarity: the "Choose a sign" prompt goes away once a sign is active */
+.polarity-picker:has(.active) .polarity-picker-prompt { display: none; }

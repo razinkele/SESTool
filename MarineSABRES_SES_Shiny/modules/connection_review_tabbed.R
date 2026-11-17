@@ -414,8 +414,45 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       active_tab = NULL,  # Track the currently active tab to prevent unwanted navigation
       scroll_to = NULL,  # Target connection card ID to scroll to after re-render
       show_delay = FALSE,  # Whether to show delay inputs on connection cards
-      last_action_time = NULL
+      last_action_time = NULL,
+      sign_cleared = c()  # Indices whose evidenced sign a direction swap cleared
     )
+
+    # The sign a card currently carries: cleared by a swap -> NA; else the
+    # user's choice (amended); else the connection's own sign (may be NA).
+    current_sign <- function(idx, conn = review_conns()[[idx]]) {
+      if (idx %in% rv$sign_cleared) return(NA_character_)
+      amended <- rv$amended_data[[as.character(idx)]]
+      if (!is.null(amended$polarity) && !is.na(amended$polarity)) return(amended$polarity)
+      read_polarity_pick(conn$polarity)
+    }
+    # Evidenced = the connection's own sign with a citation, not amended or cleared.
+    sign_is_evidenced <- function(idx, conn = review_conns()[[idx]]) {
+      src <- conn$polarity_source
+      own <- read_polarity_pick(conn$polarity)
+      !is.na(own) && length(src) == 1L && !is.na(src) && nzchar(trimws(src)) &&
+        identical(current_sign(idx, conn), own)
+    }
+    # Strength/confidence/delay of a card as last amended, else the connection's.
+    amend_values <- function(idx, conn) {
+      a <- rv$amended_data[[as.character(idx)]]
+      list(strength = a$strength %||% conn$strength %||% "medium",
+           confidence = a$confidence %||% conn$confidence %||% 3,
+           delay = a$delay %||% conn$delay %||% NA_character_,
+           delay_years = a$delay_years %||% conn$delay_years %||% NA_real_)
+    }
+    # Record a sign the user chose, hide the "from:" line and tell the parent.
+    commit_user_sign <- function(idx, conn, sign) {
+      rv$sign_cleared <- setdiff(rv$sign_cleared, idx)
+      a <- rv$amended_data[[as.character(idx)]] %||% list()
+      a$polarity <- sign
+      rv$amended_data[[as.character(idx)]] <- a
+      shinyjs::hide(id = paste0("polarity_pick_", idx, "_source"))
+      if (!is.null(on_amend)) {
+        v <- amend_values(idx, conn)
+        on_amend(idx, sign, v$strength, v$confidence, v$delay, v$delay_years)
+      }
+    }
 
     # Delay toggle observer
     observeEvent(input$show_delay_toggle, {
@@ -870,23 +907,48 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # Approve All button for this batch
           obs_env$batch[[length(obs_env$batch) + 1L]] <- observeEvent(input[[paste0("approve_all_", local_batch_id)]], {
-            # Approve all connections in this batch
-            rv$approved <- union(rv$approved, batch$indices)
+            # Approve the connections that carry a sign; a card whose picker
+            # was touched uses the live pick, others their current sign.
+            signs <- vapply(seq_along(batch$indices), function(k) {
+              idx <- batch$indices[k]
+              pick <- read_polarity_pick(input[[paste0("polarity_pick_", idx)]])
+              if (!is.na(pick)) pick else current_sign(idx, batch$connections[[k]])
+            }, character(1))
+            signed <- !is.na(signs)
+            n_skipped <- sum(!signed)
+
+            for (k in which(signed)) {
+              idx <- batch$indices[k]
+              if (!identical(signs[k], current_sign(idx, batch$connections[[k]]))) {
+                commit_user_sign(idx, batch$connections[[k]], signs[k])
+              }
+            }
+            ok_idx <- batch$indices[signed]
+            rv$approved <- union(rv$approved, ok_idx)
             # Remove any from rejected list
-            rv$rejected <- setdiff(rv$rejected, batch$indices)
-            set_card_status(batch$indices, "approved")
+            rv$rejected <- setdiff(rv$rejected, ok_idx)
+            set_card_status(ok_idx, "approved")
 
             if (!is.null(on_approve)) {
-              lapply(batch$indices, function(idx) on_approve(idx, batch$connections[[which(batch$indices == idx)]]))
+              lapply(which(signed), function(k) on_approve(batch$indices[k], batch$connections[[k]]))
             }
 
-            showNotification(
-              sprintf(i18n$t("common.misc.all_d_connections_in_s_approved"),
-                     length(batch$indices),
-                     get_batch_label(batch$info, i18n)),
-              type = "message",
-              duration = 3
-            )
+            if (length(ok_idx) > 0) {
+              showNotification(
+                sprintf(i18n$t("common.misc.all_d_connections_in_s_approved"),
+                       length(ok_idx),
+                       get_batch_label(batch$info, i18n)),
+                type = "message",
+                duration = 3
+              )
+            }
+            if (n_skipped > 0) {
+              showNotification(
+                sprintf(i18n$t("common.polarity.needs_sign_count"), n_skipped),
+                type = "warning",
+                duration = 5
+              )
+            }
 
             # Bring the next step (next-category button, or the completion
             # message on the last category) into view: users had to scroll
@@ -959,7 +1021,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           from_index = c$from_index %|||% 0,
           to_type = c$to_type %|||% "",
           to_index = c$to_index %|||% 0,
-          polarity = c$polarity %|||% "+",
+          polarity = c$polarity %||% NA_character_,
+          polarity_source = c$polarity_source %||% NA_character_,
           strength = c$strength %|||% "medium"
         )
       }))
@@ -1019,37 +1082,32 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             conf_labels[conf_value]
           })
 
-          # Polarity text output (reactive to switch)
+          # Polarity text output (reactive to the chosen sign)
           output[[paste0("polarity_text_", local_idx)]] <- renderUI({
-            # Get current polarity from amended data or switch input
-            amended <- rv$amended_data[[as.character(local_idx)]]
-            if (!is.null(amended$polarity)) {
-              polarity <- amended$polarity
-            } else {
-              switch_value <- input[[paste0("polarity_switch_", local_idx)]]
-              polarity <- if (is.null(switch_value) || switch_value) "+" else "-"
+            polarity <- current_sign(local_idx, conn)
+            if (is.na(polarity)) {
+              return(span(class = "text-muted", i18n$t("common.polarity.unset")))
             }
-
-            # Determine arrow class and symbol
-            is_positive <- polarity == "+"
-            arrow_class <- if (is_positive) "conn-arrow-positive" else "conn-arrow-negative"
-
+            arrow_class <- if (polarity == "+") "conn-arrow-positive" else "conn-arrow-negative"
             span(class = arrow_class, polarity)
           })
 
-          # Rationale text output (reactive to switch)
+          # Rationale text output (reactive to the chosen sign)
           output[[paste0("rationale_", local_idx)]] <- renderText({
-            # Get current polarity from amended data or switch input
-            amended <- rv$amended_data[[as.character(local_idx)]]
-            if (!is.null(amended$polarity)) {
-              current_polarity <- amended$polarity
-            } else {
-              switch_value <- input[[paste0("polarity_switch_", local_idx)]]
-              current_polarity <- if (is.null(switch_value) || switch_value) "+" else "-"
-            }
-
-            if (current_polarity == "+") "drives/increases" else "affects/reduces"
+            polarity <- current_sign(local_idx, conn)
+            if (is.na(polarity)) {
+              i18n$t("common.polarity.affects")
+            } else if (polarity == "+") "drives/increases" else "affects/reduces"
           })
+
+          # A sign picked by the user is stored as an amendment
+          obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(
+            input[[paste0("polarity_pick_", local_idx)]], {
+              pick <- read_polarity_pick(input[[paste0("polarity_pick_", local_idx)]])
+              if (!is.na(pick) && !identical(pick, current_sign(local_idx, conn))) {
+                commit_user_sign(local_idx, conn, pick)
+              }
+            }, ignoreInit = TRUE, ignoreNULL = FALSE)
 
           # From name output (reactive to swap direction)
           output[[paste0("from_name_", local_idx)]] <- renderUI({
@@ -1070,14 +1128,18 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # Read current slider values
             strength_value <- input[[paste0("strength_", local_idx)]]
             conf_value <- input[[paste0("confidence_", local_idx)]]
-            polarity_value <- input[[paste0("polarity_switch_", local_idx)]]
 
             # Convert strength slider value to label
             strength_labels <- c("very weak", "weak", "medium", "strong", "very strong")
             strength_label <- strength_labels[strength_value]
 
-            # Convert polarity switch (TRUE/FALSE) to +/-
-            polarity <- if (is.null(polarity_value) || polarity_value) "+" else "-"
+            # The sign: the live pick, else the card's current sign. No sign, no approval.
+            polarity <- read_polarity_pick(input[[paste0("polarity_pick_", local_idx)]])
+            if (is.na(polarity)) polarity <- current_sign(local_idx, conn)
+            if (is.na(polarity)) {
+              showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
+              return()
+            }
 
             # Read delay values
             delay_cat <- input[[paste0("delay_cat_", local_idx)]]
@@ -1141,6 +1203,17 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (!is.null(rv$last_action_time) && (now - rv$last_action_time) < 0.5) return()
             rv$last_action_time <- now
 
+            # A sign that came from evidence describes the old direction:
+            # clear it. A sign the user chose survives the swap.
+            if (sign_is_evidenced(local_idx, conn)) {
+              rv$sign_cleared <- union(rv$sign_cleared, local_idx)
+              pick_id <- ns(paste0("polarity_pick_", local_idx))
+              shinyjs::hide(id = paste0("polarity_pick_", local_idx, "_source"))
+              shinyjs::runjs(sprintf(
+                "(function(){var e=$('#%s');e.find('input').prop('checked',false);e.find('label').removeClass('active');Shiny.setInputValue('%s',null,{priority:'event'});})();",
+                pick_id, pick_id))
+            }
+
             # Toggle swapped state for this connection
             if (local_idx %in% rv$swapped) {
               rv$swapped <- setdiff(rv$swapped, local_idx)
@@ -1203,16 +1276,15 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
 
   # Get amended values if they exist, otherwise use connection defaults
   amended <- rv$amended_data[[as.character(conn_idx)]]
-  current_polarity <- if (!is.null(amended$polarity) && !is.na(amended$polarity)) amended$polarity else (conn$polarity %|||% "+")
+  # The sign: the user's choice if any, else the connection's own (may be NA = unset)
+  user_chose <- !is.null(amended$polarity) && !is.na(amended$polarity)
+  current_polarity <- if (user_chose) amended$polarity else read_polarity_pick(conn$polarity)
   current_strength <- if (!is.null(amended$strength) && !is.na(amended$strength)) amended$strength else (conn$strength %|||% "medium")
   current_confidence <- if (!is.null(amended$confidence) && !is.na(amended$confidence)) amended$confidence else (conn$confidence %|||% 3)
 
   # Convert strength to slider value (1-5)
   strength_map <- c("very weak" = 1, "weak" = 2, "medium" = 3, "strong" = 4, "very strong" = 5)
   strength_value <- strength_map[current_strength] %|||% 3
-
-  # Polarity switch initial value
-  polarity_initial <- isTRUE(current_polarity == "+")
 
   div(class = status_class, id = ns(paste0("conn_card_", conn_idx)),
     # Connection header with polarity display and switch
@@ -1236,18 +1308,12 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         # To element
         span(style = "font-weight: 500;", uiOutput(ns(paste0("to_name_", conn_idx)), inline = TRUE))
       ),
-      # Polarity switch in header
+      # Sign picker in header
       div(style = "margin-left: 15px;",
-        switchInput(
-          inputId = ns(paste0("polarity_switch_", conn_idx)),
-          label = NULL,
-          value = polarity_initial,
-          onLabel = "+",
-          offLabel = "-",
-          onStatus = "success",
-          offStatus = "danger",
-          size = "mini",
-          width = "50px"
+        polarity_picker_input(
+          ns(paste0("polarity_pick_", conn_idx)), i18n,
+          selected = current_polarity,
+          evidence_source = if (user_chose) NA_character_ else conn$polarity_source
         )
       )
     ),

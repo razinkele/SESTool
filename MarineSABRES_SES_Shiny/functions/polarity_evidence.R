@@ -52,7 +52,8 @@ polarity_picker_input <- function(inputId, i18n, selected = NA_character_,
                i18n$t("common.polarity.choose_sign"))
     },
     if (has_src) {
-      tags$div(class = "polarity-picker-source text-muted small",
+      tags$div(id = paste0(inputId, "_source"),
+               class = "polarity-picker-source text-muted small",
                paste(i18n$t("common.polarity.from_source"), evidence_source))
     }
   )
