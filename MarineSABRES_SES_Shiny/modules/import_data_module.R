@@ -390,7 +390,14 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
             br(),
             sprintf(i18n$t("modules.import.data.found_elements_connections"),
                     nrow(rv$elements_data),
-                    nrow(rv$connections_data))
+                    nrow(rv$connections_data)),
+            # rows without a sign must be signed in the review (manual check)
+            local({
+              n_unsigned <- if ("Label" %in% names(rv$connections_data)) {
+                sum(is.na(import_label_polarity(rv$connections_data$Label)))
+              } else nrow(rv$connections_data)
+              if (n_unsigned > 0) tagList(br(), sprintf(i18n$t("common.polarity.direct_import_blocked"), n_unsigned))
+            })
           ),
           br(),
           div(align = "center",

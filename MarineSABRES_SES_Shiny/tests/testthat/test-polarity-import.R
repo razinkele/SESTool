@@ -218,3 +218,19 @@ test_that("a second finalize applies a direction swap once", {
       expect_equal(last$To[1], "Demand")
   })
 })
+
+# Manual check: the validation panel said "Data validated successfully" and
+# nothing about the unsigned rows that block Direct import
+test_that("the validation panel counts the rows without a sign", {
+  pdr <- reactiveVal(init_session_data())
+  testServer(import_data_server,
+    args = list(project_data_reactive = pdr, i18n = pi_i18n, parent_session = NULL, event_bus = NULL), {
+      pi_load(rv)                                   # one unsigned row
+      html <- paste(as.character(output$import_status$html), collapse = "")
+      expect_match(html, "1 connections in the file have no sign.", fixed = TRUE)
+      rv$connections_data$Label <- c("+", "-")
+      session$flushReact()
+      html2 <- paste(as.character(output$import_status$html), collapse = "")
+      expect_false(grepl("have no sign", html2, fixed = TRUE))
+  })
+})
