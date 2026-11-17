@@ -641,10 +641,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         debug_log(paste("Cached signature:", substr(rv$isa_hash %||% "NULL", 1, 16)), "CLD VIZ")
 
         # Only reload if signature changed
-        if (is.null(rv$isa_hash) || rv$isa_hash != full_signature) {
+        if (!identical(rv$isa_hash, full_signature)) {
           debug_log("Signature changed - reloading CLD data", "CLD VIZ")
 
-          if (!is.null(project_data$data$cld$nodes) &&
+          # (an autosave-recovered CLD can carry its nodes as a plain list:
+          # nrow() is NULL then, and the old !is.null() test made `if` fail)
+          if (is.data.frame(project_data$data$cld$nodes) &&
               nrow(project_data$data$cld$nodes) > 0) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
             debug_log("Using existing CLD nodes with analysis results", "CLD VIZ")

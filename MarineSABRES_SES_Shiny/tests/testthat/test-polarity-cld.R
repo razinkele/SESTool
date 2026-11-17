@@ -383,3 +383,16 @@ test_that("confirming a drawn edge and saving an edited edge both re-enable mani
     expect_true(any(grepl("reEnableManipulation_", js$js[-seq_len(n1)], fixed = TRUE)))
   })
 })
+
+test_that("recovered CLD nodes that are not a data frame do not break the load observer", {
+  pd0 <- make_cld_project()
+  # an autosave-recovered project can carry the CLD nodes as a plain list
+  pd0$data$cld$nodes <- lapply(seq_len(nrow(pd0$data$cld$nodes)),
+                               function(i) as.list(pd0$data$cld$nodes[i, ]))
+  pd <- reactiveVal(pd0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    expect_true(is.data.frame(rv$nodes))
+    expect_gt(nrow(rv$nodes), 0)
+  })
+})
