@@ -59,7 +59,7 @@ test_that("an aligned project records no finding", {
 test_that("the warning is wired after apply_saved_isa and uses a translated count message", {
   s <- paste(readLines(file.path(getwd(), "../..", "modules/isa_data_entry_module.R"), warn = FALSE),
              collapse = "\n")
-  expect_true(grepl("apply_saved_isa(project$data$isa_data)\n        data_initialized(TRUE)\n        warn_if_matrices_misaligned()",
+  expect_true(grepl("apply_saved_isa(project$data$isa_data, from_load = TRUE)\n        data_initialized(TRUE)\n        warn_if_matrices_misaligned()",
                     s, fixed = TRUE))
   expect_true(grepl("changed <- !identical(findings, alignment_state$last)", s, fixed = TRUE))
   tr <- jsonlite::fromJSON(file.path(getwd(), "../..", "translations/modules/isa_data_entry.json"),

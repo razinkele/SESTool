@@ -16,7 +16,7 @@ set_panel_inputs <- function(session, rid, ...) {
   do.call(session$setInputs, vals)
 }
 
-test_that("adding + saving a response builds r_d (-) and gb_r (+) and persists", {
+test_that("adding + saving a response asks for the new links' signs, builds r_d / gb_r with them and persists", {
   pd <- reactiveVal(list(data = list(isa_data = list())))
   testServer(isa_data_entry_server,
              args = list(project_data_reactive = pd, i18n = list(t = function(x, ...) x)), {

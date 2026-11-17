@@ -145,17 +145,55 @@ test_that("sign_choice_server confirms only when every row is signed", {
   })
 })
 
-test_that("Standard Entry: second save with no new ticks opens no dialog; cancel unticks", {
-  calls <- list()
-  fake <- function(id, i18n) {
+# --- Standard Entry behaviour tests ------------------------------------------
+# Stubs bound in .GlobalEnv (where the module's free names resolve) for the
+# duration of the calling test:
+#  - stub_sign_opener(): a fake sign_choice_server recording open() calls
+#  - stub_select_updates(): records updateSelectInput(selected = ...) calls
+#  - stub_notifications(): records showNotification() texts
+stub_global <- function(name, value, env = parent.frame()) {
+  had <- exists(name, envir = .GlobalEnv, inherits = FALSE)
+  old <- if (had) get(name, envir = .GlobalEnv) else NULL
+  assign(name, value, envir = .GlobalEnv)
+  withr::defer(if (had) assign(name, old, envir = .GlobalEnv) else rm(list = name, envir = .GlobalEnv),
+               envir = env)
+}
+stub_sign_opener <- function(env = parent.frame()) {
+  rec <- new.env(); rec$calls <- list()
+  stub_global("sign_choice_server", function(id, i18n) {
     list(open = function(links, labels, on_done) {
-      calls[[length(calls) + 1]] <<- list(links = links, labels = labels, on_done = on_done)
+      rec$calls[[length(rec$calls) + 1]] <- list(links = links, labels = labels, on_done = on_done)
     }, pending = function() NULL)
-  }
-  real <- get("sign_choice_server", envir = .GlobalEnv)
-  assign("sign_choice_server", fake, envir = .GlobalEnv)
-  on.exit(assign("sign_choice_server", real, envir = .GlobalEnv), add = TRUE)
+  }, env)
+  rec
+}
+stub_select_updates <- function(env = parent.frame()) {
+  rec <- new.env(); rec$sent <- list()
+  real <- shiny::updateSelectInput
+  stub_global("updateSelectInput", function(session, inputId, label = NULL, choices = NULL, selected = NULL) {
+    rec$sent[[length(rec$sent) + 1]] <- list(id = inputId, selected = selected)
+    real(session, inputId, label = label, choices = choices, selected = selected)
+  }, env)
+  rec
+}
+stub_notifications <- function(env = parent.frame()) {
+  rec <- new.env(); rec$texts <- character(0)
+  real <- shiny::showNotification
+  stub_global("showNotification", function(ui, ...) {
+    rec$texts <- c(rec$texts, paste(as.character(ui), collapse = " "))
+    real(ui, ...)
+  }, env)
+  rec
+}
+last_update_for <- function(rec, id) {
+  hits <- Filter(function(s) identical(s$id, id), rec$sent)
+  if (length(hits) == 0) return(NULL)
+  hits[[length(hits)]]$selected
+}
 
+test_that("Standard Entry: second save with no new ticks opens no dialog; cancel unticks", {
+  op <- stub_sign_opener()
+  upd <- stub_select_updates()
   pd <- reactiveVal(list(data = list(isa_data = list())))
   testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
     session$setInputs(adj_matrix_select = "d_a")   # first flush: load observer runs once
@@ -163,22 +201,111 @@ test_that("Standard Entry: second save with no new ticks opens no dialog; cancel
                                       stringsAsFactors = FALSE)
     session$setInputs(add_d = 1)
     did <- isa_data$d_panel_ids[[1]]
+    sel_id <- paste0("d_linkeda_", did)
     do.call(session$setInputs, setNames(list("Demand", "A002: Tourism"),
-                                        paste0(c("d_name_", "d_linkeda_"), did)))
+                                        c(paste0("d_name_", did), sel_id)))
     session$setInputs(save_ex5 = 1)
-    expect_length(calls, 1)
-    expect_equal(nrow(calls[[1]]$links), 1)
-    expect_equal(calls[[1]]$links$tgt_id, "A002")
-    expect_equal(calls[[1]]$links$matrix_key, "d_a")
-    expect_equal(unname(calls[[1]]$labels["A002"]), "Tourism")
+    expect_length(op$calls, 1)
+    expect_equal(nrow(op$calls[[1]]$links), 1)
+    expect_equal(op$calls[[1]]$links$tgt_id, "A002")
+    expect_equal(op$calls[[1]]$links$matrix_key, "d_a")
+    expect_equal(unname(op$calls[[1]]$labels["A002"]), "Tourism")
     expect_equal(isa_data$adjacency_matrices$d_a[did, "A002"], "")
-    calls[[1]]$on_done(NULL)
+    op$calls[[1]]$on_done(NULL)
     expect_false("A002" %in% parse_linked(isa_data$drivers$LinkedA[1]))
     expect_false("A002" %in% parse_linked(pd()$data$isa_data$drivers$LinkedA[1]))
-    # the live select was unticked too; mirror it (testServer does not echo updates)
-    do.call(session$setInputs, setNames(list(""), paste0("d_linkeda_", did)))
+    # the module told the live select to drop the tick; feed that update back
+    # (testServer does not echo updateSelectInput into input)
+    sent <- last_update_for(upd, sel_id)
+    expect_equal(sent, "")
+    do.call(session$setInputs, setNames(list(sent), sel_id))
     session$setInputs(save_ex5 = 2)
-    expect_length(calls, 1)
+    expect_length(op$calls, 1)
+  })
+})
+
+test_that("Standard Entry: cancelling several links of one element unticks them all in one select update", {
+  op <- stub_sign_opener()
+  upd <- stub_select_updates()
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$activities <- data.frame(ID = c("A001", "A002", "A003", "A004"),
+                                      Name = c("F", "T", "S", "K"), stringsAsFactors = FALSE)
+    session$setInputs(add_d = 1)
+    did <- isa_data$d_panel_ids[[1]]
+    sel_id <- paste0("d_linkeda_", did)
+    # A004 already has a signed cell (kept); A001-A003 are new
+    isa_data$adjacency_matrices <- list(d_a = matrix(c("", "", "", "+strong:4"), 1, 4,
+                                        dimnames = list(did, c("A001", "A002", "A003", "A004"))))
+    do.call(session$setInputs, setNames(list("Demand", c("A001: F", "A002: T", "A003: S", "A004: K")),
+                                        c(paste0("d_name_", did), sel_id)))
+    session$setInputs(save_ex5 = 1)
+    expect_equal(nrow(op$calls[[1]]$links), 3)
+    op$calls[[1]]$on_done(NULL)
+    expect_equal(isa_data$drivers$LinkedA[1], "A004")
+    upd_for_sel <- Filter(function(s) identical(s$id, sel_id), upd$sent)
+    expect_length(upd_for_sel, 1)                 # ONE update for the select
+    expect_equal(upd_for_sel[[1]]$selected, "A004: K")
+    expect_false(any(grepl("^A00[123]", upd_for_sel[[1]]$selected)))
+  })
+})
+
+test_that("Standard Entry: a sign dialog replaced by another modal does not stop later saves asking", {
+  op <- stub_sign_opener()
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$activities <- data.frame(ID = c("A001", "A002"), Name = c("F", "T"), stringsAsFactors = FALSE)
+    session$setInputs(add_d = 1)
+    did <- isa_data$d_panel_ids[[1]]
+    do.call(session$setInputs, setNames(list("Demand", "A001: F"),
+                                        paste0(c("d_name_", "d_linkeda_"), did)))
+    session$setInputs(save_ex5 = 1)
+    expect_length(op$calls, 1)
+    # ... the dialog is replaced by another modal: its on_done never runs.
+    # A later save that adds a new link asks again, and still includes the
+    # unanswered one.
+    do.call(session$setInputs, setNames(list(c("A001: F", "A002: T")), paste0("d_linkeda_", did)))
+    session$setInputs(save_ex5 = 2)
+    expect_length(op$calls, 2)
+    expect_setequal(op$calls[[2]]$links$tgt_id, c("A001", "A002"))
+    op$calls[[2]]$on_done(c(setNames("+", paste0(did, "|A001")), setNames("-", paste0(did, "|A002"))))
+    expect_equal(isa_data$adjacency_matrices$d_a[did, "A001"], "+medium:3")
+    expect_equal(isa_data$adjacency_matrices$d_a[did, "A002"], "-medium:3")
+  })
+})
+
+test_that("Standard Entry: the load observer does not re-ask a link set already pending", {
+  op <- stub_sign_opener()
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    saved <- linked_only_saved()
+    apply_saved_isa(saved, from_load = TRUE)
+    apply_saved_isa(saved, from_load = TRUE)      # observer re-run on another project write
+    expect_length(op$calls, 1)
+    expect_equal(nrow(op$calls[[1]]$links), 2)
+  })
+})
+
+test_that("Standard Entry: the saved toast waits for the sign dialog", {
+  note <- stub_notifications()
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$activities <- data.frame(ID = "A001", Name = "Fishing", stringsAsFactors = FALSE)
+    session$setInputs(add_d = 1)
+    did <- isa_data$d_panel_ids[[1]]
+    do.call(session$setInputs, setNames(list("Demand", "A001: Fishing"),
+                                        paste0(c("d_name_", "d_linkeda_"), did)))
+    session$setInputs(save_ex5 = 1)
+    saved_toast <- function() any(grepl("exercise_5_saved", note$texts, fixed = TRUE))
+    expect_false(saved_toast())
+    expect_null(pd()$data$isa_data$drivers)          # nothing committed yet
+    answer_sign_dialog(session, sign_choice$pending(), setNames("-", paste0(did, "|A001")))
+    expect_true(saved_toast())
+    expect_equal(pd()$data$isa_data$adjacency_matrices$d_a[did, "A001"], "-medium:3")
   })
 })
 
@@ -206,11 +333,86 @@ test_that("Standard Entry: confirming the dialog writes the chosen sign and sync
   })
 })
 
-test_that("loop builder effect starts unset", {
-  src <- readLines(test_path("../../modules/isa_data_entry_module.R"), warn = FALSE)
-  at <- grep('selectInput(ns("loop_effect")', src, fixed = TRUE)
-  expect_length(at, 1)
-  expect_true(grepl('setNames(c("", "+", "-")', src[at + 1], fixed = TRUE))
-  # and the add-loop handler refuses an unset effect
-  expect_true(any(grepl('req(input$loop_effect %in% c("+", "-"))', src, fixed = TRUE)))
+# A LinkedX-only Standard Entry workbook for the in-page Import button
+linked_only_workbook <- function() {
+  skip_if_not_installed("openxlsx")
+  source_for_test("functions/isa_export_helpers.R")
+  isa <- list(
+    goods_benefits = data.frame(ID = "GB001", Name = "Food", Type = "", Description = "",
+                                Stakeholder = "", Importance = "", Trend = "", stringsAsFactors = FALSE),
+    ecosystem_services = data.frame(ID = "ES001", Name = "Fish", Type = "", Description = "",
+                                    LinkedGB = "GB001: Food", Mechanism = "", Confidence = "High",
+                                    stringsAsFactors = FALSE),
+    marine_processes = data.frame(ID = character(), Name = character()),
+    pressures = data.frame(ID = character(), Name = character()),
+    activities = data.frame(ID = character(), Name = character()),
+    drivers = data.frame(ID = character(), Name = character()))
+  wb <- openxlsx::createWorkbook(); write_isa_element_sheets(wb, isa, include_adjacency = FALSE)
+  f <- tempfile(fileext = ".xlsx"); openxlsx::saveWorkbook(wb, f, overwrite = TRUE)
+  f
+}
+
+for (answer in c("confirm", "cancel")) local({
+  answer <- answer
+  test_that(paste("in-page import waits for the sign dialog before its result toast:", answer), {
+    f <- linked_only_workbook()
+    note <- stub_notifications()
+    testServer(isa_data_entry_server,
+               args = list(project_data_reactive = reactiveVal(init_session_data()),
+                           i18n = se_i18n, parent_session = NULL), {
+      session$setInputs(import_file = data.frame(name = "x.xlsx", size = 1, type = "",
+                                                 datapath = f, stringsAsFactors = FALSE))
+      session$setInputs(import_data = 1)
+      session$flushReact()
+      has <- function(key) any(grepl(key, note$texts, fixed = TRUE))
+      p <- sign_choice$pending()
+      expect_equal(p$keys, "ES001|GB001")
+      expect_false(has("import_success"))
+      expect_false(has("import_no_connections"))
+      if (answer == "confirm") {
+        answer_sign_dialog(session, p, c("ES001|GB001" = "+"))
+        expect_true(has("import_success"))
+        expect_false(has("import_no_connections"))
+        expect_equal(isa_data$adjacency_matrices$es_gb["ES001", "GB001"], "+medium:5")
+      } else {
+        answer_sign_dialog(session, p, NULL)
+        expect_true(has("import_no_connections"))   # nothing left: edgeless guard
+        expect_false(has("import_success"))
+        expect_equal(isa_data$ecosystem_services$LinkedGB[1], "")
+      }
+    })
+  })
+})
+
+test_that("loop builder: an unset effect adds no loop; a chosen one does", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$drivers <- data.frame(ID = "D001", Name = "Demand", stringsAsFactors = FALSE)
+    isa_data$goods_benefits <- data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE)
+    n0 <- NROW(isa_data$loop_connections)
+    session$setInputs(loop_driver = "D001", loop_gb = "GB001", loop_effect = "",
+                      loop_strength = "medium", loop_confidence = 3)
+    session$setInputs(add_loop = 1)
+    expect_equal(NROW(isa_data$loop_connections), n0)
+    session$setInputs(loop_effect = "-")
+    session$setInputs(add_loop = 2)
+    expect_equal(NROW(isa_data$loop_connections), n0 + 1)
+    expect_equal(as.character(isa_data$loop_connections$Effect[n0 + 1]), "-")
+  })
+})
+
+test_that("a user-edited cell without a sign is blanked and reported, never kept unsigned", {
+  ex <- matrix(c("strong:4", "medium:2"), 1, dimnames = list("D1", c("A1", "A2")))
+  ue <- matrix(TRUE, 1, 2, dimnames = dimnames(ex))
+  df <- data.frame(ID = "D1", LinkedA = "A1", Confidence = "3")   # A2 edited but not ticked
+  r <- rebuild_matrix_from_linked(df, "LinkedA", "D1", c("A1", "A2"),
+                                  existing_matrix = ex, user_edited_matrix = ue)
+  expect_equal(unname(r$matrix["D1", ]), c("", ""))
+  expect_setequal(r$unsigned_links$tgt_id, c("A1", "A2"))
+  expect_equal(r$unsigned_links$suffix[r$unsigned_links$tgt_id == "A1"], "strong:4")  # keeps its own suffix
+  r2 <- rebuild_matrix_from_linked(df, "LinkedA", "D1", c("A1", "A2"),
+                                   existing_matrix = ex, user_edited_matrix = ue,
+                                   chosen_signs = c("D1|A1" = "-"))
+  expect_equal(r2$matrix["D1", "A1"], "-strong:4")
 })

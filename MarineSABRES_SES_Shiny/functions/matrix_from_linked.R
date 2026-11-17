@@ -205,6 +205,23 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
         out[src_id, tgt_id] <- ""
       }
     }
+    # A user-edited cell is kept as is — unless it carries no sign (legacy
+    # data such as "medium:3"): saved data never holds a missing sign, so it
+    # takes a chosen sign or is blanked and reported like any unsigned link,
+    # keeping its own strength/confidence as the suffix.
+    for (tgt_id in target_ids) {
+      if (!out_edited[src_id, tgt_id]) next
+      prev <- out[src_id, tgt_id]
+      if (is.na(prev) || !nzchar(prev) || substr(prev, 1, 1) %in% c("+", "-")) next
+      pick <- chosen_sign_for(chosen_signs, src_id, tgt_id)
+      if (!is.na(pick)) {
+        out[src_id, tgt_id] <- paste0(pick, prev)
+      } else {
+        out[src_id, tgt_id] <- ""
+        uns_src <- c(uns_src, src_id); uns_tgt <- c(uns_tgt, tgt_id)
+        uns_suffix <- c(uns_suffix, prev)
+      }
+    }
   }
 
   list(

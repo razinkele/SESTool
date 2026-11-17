@@ -188,7 +188,8 @@ test_that("import replaces prior project state (no stale matrices/elements)", {
       answer_sign_dialog(session, sign_choice$pending(), c("ES001|GB001" = "+"))
 
       rv <- session$getReturned()()
-      # B's fallback es_gb ("+Medium:Low") REPLACED A's faithful "+High:High"
+      # B's es_gb, recovered from LinkedGB and signed "+" in the dialog above
+      # (strength/confidence defaulted to medium/Low = 1), REPLACED A's faithful "+High:High"
       expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+medium:1")
       # A's driver is fully gone (element df cleared, not just the panel tracker)
       expect_equal(nrow(rv$drivers), 0)

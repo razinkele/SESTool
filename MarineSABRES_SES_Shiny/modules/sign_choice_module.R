@@ -13,7 +13,8 @@
 #'
 #' @param id module id
 #' @param i18n translator
-#' @return list(open = function(links, labels, on_done), pending = function())
+#' @return list(open = function(links, labels, on_done), pending = function(),
+#'   dismiss = function())
 #'   `open()` shows the dialog for an unsigned-link record (data.frame with
 #'   src_id, tgt_id, transposed; see rebuild_matrix_from_linked()). `labels`
 #'   maps element ids to names for display. `on_done(signs)` receives a named
@@ -106,6 +107,17 @@ sign_choice_server <- function(id, i18n) {
       list(input_ids = ids, keys = isolate(state$keys))
     }
 
-    list(open = open, pending = pending)
+    # Drop a pending dialog without answering it (e.g. the state it was asked
+    # for was reset): its on_done is never called.
+    dismiss <- function() {
+      if (is.null(isolate(state$input_ids))) return(invisible(FALSE))
+      on_done_cb <<- NULL
+      state$input_ids <- NULL
+      state$keys <- NULL
+      removeModal()
+      invisible(TRUE)
+    }
+
+    list(open = open, pending = pending, dismiss = dismiss)
   })
 }
