@@ -300,18 +300,26 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
                 setNames(as.character(d$Name), as.character(d$ID))
             })))
             sign_choice$open(links, labels, function(signs) {
-              el <- recov$elements; am <- recov$adjacency_matrices
-              if (is.null(signs)) {
-                for (k in seq_len(nrow(links))) {
-                  spec <- SIGN_LINK_SPECS[[links$matrix_key[k]]]
-                  if (is.null(spec)) next
-                  el[[spec$src]] <- untick_linked(el[[spec$src]], links$src_id[k], spec$col,
-                                                  links$tgt_id[k], target_df = el[[spec$tgt]])
+              # runs from the dialog's observer, outside the upload tryCatch
+              tryCatch({
+                el <- recov$elements; am <- recov$adjacency_matrices
+                if (is.null(signs)) {
+                  for (k in seq_len(nrow(links))) {
+                    spec <- SIGN_LINK_SPECS[[links$matrix_key[k]]]
+                    if (is.null(spec)) next
+                    el[[spec$src]] <- untick_linked(el[[spec$src]], links$src_id[k], spec$col,
+                                                    links$tgt_id[k], target_df = el[[spec$tgt]])
+                  }
+                } else {
+                  am <- apply_chosen_signs(am, links, signs)
                 }
-              } else {
-                am <- apply_chosen_signs(am, links, signs)
-              }
-              finish_se_import(el, am)
+                finish_se_import(el, am)
+              }, error = function(e) {
+                debug_log(paste("Import after sign choice failed:", e$message), "ERROR")
+                showNotification(
+                  format_user_error(e, i18n = i18n, context_key = "common.messages.context_importing_file"),
+                  type = "error", duration = 10)
+              })
             })
             return(NULL)
           }

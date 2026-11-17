@@ -198,6 +198,11 @@ test_that("Standard Entry: confirming the dialog writes the chosen sign and sync
     session$setInputs(`sign_choice-confirm` = 1)
     expect_equal(isa_data$adjacency_matrices$d_a[did, "A001"], "-medium:3")
     expect_equal(pd()$data$isa_data$adjacency_matrices$d_a[did, "A001"], "-medium:3")
+    expect_null(sign_choice$pending())
+    # a second save with the same ticks asks nothing and keeps the chosen sign
+    session$setInputs(save_ex5 = 2)
+    expect_null(sign_choice$pending())
+    expect_equal(isa_data$adjacency_matrices$d_a[did, "A001"], "-medium:3")
   })
 })
 
