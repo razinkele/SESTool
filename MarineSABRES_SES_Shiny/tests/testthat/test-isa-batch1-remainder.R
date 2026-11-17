@@ -199,15 +199,22 @@ test_that("N50: recover_isa_data rebuilds r_d / r_a / r_p / gb_r from Linked* wh
     adjacency_matrices = list(), user_edited_matrices = list())
   rec <- recover_isa_data(saved, new_stable_id_store())
   am <- rec$adjacency_matrices
+  # LinkedX carries no sign (evidenced polarity): matrices come back with the
+  # links reported unsigned; the chosen signs are written afterwards.
+  ul <- rec$unsigned_links
+  expect_setequal(ul$matrix_key, c("r_d", "r_a", "gb_r"))
+  expect_true(ul$transposed[ul$matrix_key == "gb_r"])
+  expect_equal(am$r_d["R001", "D001"], "")
+  am <- apply_chosen_signs(am, ul, c("R001|D001" = "-", "R001|A001" = "-", "R001|GB001" = "+"))
   expect_true(is.matrix(am$r_d)); expect_true(nzchar(am$r_d["R001", "D001"]))
   expect_true(is.matrix(am$r_a)); expect_true(nzchar(am$r_a["R001", "A001"]))
   expect_null(am$r_p)                                   # no LinkedP -> nothing to rebuild
   expect_true(is.matrix(am$gb_r))
   expect_equal(dimnames(am$gb_r), list("GB001", "R001"))  # stored GB x R
   expect_true(nzchar(am$gb_r["GB001", "R001"]))
-  expect_true(startsWith(am$r_d["R001", "D001"], "-"))    # R -> target is negative by default
+  expect_true(startsWith(am$r_d["R001", "D001"], "-"))    # the chosen signs, in place
   expect_true(startsWith(am$gb_r["GB001", "R001"], "+"))
-  expect_true(isTRUE(rec$fell_back))
+  expect_false(isTRUE(rec$fell_back))
 })
 
 test_that("N50: a faithful saved r_d matrix is kept (not overwritten by the fallback)", {

@@ -737,6 +737,7 @@ source("modules/graphical_ses_ai_classifier.R", local = TRUE)
 source("modules/graphical_ses_network_builder.R", local = TRUE)
 source("modules/graphical_ses_creator_module.R", local = TRUE)
 source("modules/connection_review_tabbed.R", local = FALSE)  # FALSE = global scope (used by multiple modules)
+source("modules/sign_choice_module.R", local = FALSE)  # "choose signs" dialog (Standard Entry + import)
 source("modules/workflow_stepper_module.R", local = TRUE)
 
 # ============================================================================

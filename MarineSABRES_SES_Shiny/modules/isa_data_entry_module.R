@@ -310,18 +310,89 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       project_data_reactive(pd)
     }
 
+    # "Choose the sign for new connections" dialog (evidenced polarity). Links
+    # declared in LinkedX without a sign are never written with an invented
+    # one: saves and loads collect them and ask here.
+    sign_choice <- sign_choice_server("sign_choice", i18n)
+    # Plain flag, not reactive: the project-load observer re-runs on every
+    # project write, so it must not reopen a dialog that is still pending.
+    sign_dialog_pending <- FALSE
+
+    # id -> Name across every element category, for the dialog rows
+    element_labels <- function() {
+      keys <- c("goods_benefits", "ecosystem_services", "marine_processes",
+                "pressures", "activities", "drivers", "responses")
+      out <- character(0)
+      for (k in keys) {
+        df <- isa_data[[k]]
+        if (is.data.frame(df) && nrow(df) > 0 && all(c("ID", "Name") %in% names(df))) {
+          out <- c(out, setNames(as.character(df$Name), as.character(df$ID)))
+        }
+      }
+      out
+    }
+
+    # Cancel: leave the links out and remove their ticks, both in isa_data and
+    # in the live LinkedX selects, so the form matches the saved data.
+    untick_unsigned <- function(links) {
+      for (k in seq_len(nrow(links))) {
+        spec <- SIGN_LINK_SPECS[[links$matrix_key[k]]]
+        if (is.null(spec)) next
+        src <- links$src_id[k]; tgt <- links$tgt_id[k]
+        isa_data[[spec$src]] <- untick_linked(isa_data[[spec$src]], src, spec$col, tgt,
+                                              target_df = isa_data[[spec$tgt]])
+        input_id <- paste0(spec$prefix, "_", spec$field, "_", src)
+        cur <- input[[input_id]]
+        if (!is.null(cur)) {
+          vals <- unlist(lapply(as.character(cur), parse_linked), use.names = FALSE)
+          rest <- vals[trimws(sub(":.*$", "", vals)) != tgt]
+          updateSelectInput(session, input_id, selected = if (length(rest) > 0) rest else "")
+        }
+      }
+    }
+
+    # Ask for the signs of `links`; Confirm writes them, Cancel unticks them.
+    # Either way `after_done()` runs, then the module syncs to project data.
+    # Returns FALSE (asking nothing) when there is nothing to ask or a dialog
+    # is already open.
+    ask_signs <- function(links, after_done = NULL) {
+      if (!is.data.frame(links) || nrow(links) == 0 || sign_dialog_pending) {
+        return(invisible(FALSE))
+      }
+      sign_dialog_pending <<- TRUE
+      sign_choice$open(links, element_labels(), function(signs) {
+        sign_dialog_pending <<- FALSE
+        if (is.null(signs)) {
+          untick_unsigned(links)
+        } else {
+          isa_data$adjacency_matrices <- apply_chosen_signs(isa_data$adjacency_matrices,
+                                                            links, signs)
+        }
+        if (is.function(after_done)) after_done()
+        sync_to_project_data()
+      })
+      invisible(TRUE)
+    }
+
+    # End of a save: sync now, or — when the save declared links without a
+    # sign — once the user has answered the dialog (syncing first would let
+    # the project-load observer re-detect the same links).
+    finish_save <- function(links) {
+      if (!isTRUE(ask_signs(links))) sync_to_project_data()
+    }
+
     # Rebuild one source->target connection matrix from an element's LinkedX
     # column, preserving user-edited cells and surfacing stale/dropped edges.
     # Completes the N:M wiring for es_gb / mpf_es / p_mpf / a_p / d_a (gb_d keeps
     # its own closing-loop builder). Fixes the "no diagram" symptom (#4) where
-    # only gb_d was ever built.
+    # only gb_d was ever built. Returns the unsigned-link record (new links with
+    # no sign yet; empty on error) for finish_save().
     rebuild_transition <- function(element_df, linked_col, target_ids, matrix_key) {
       tryCatch({
         rebuilt <- rebuild_matrix_from_linked(
           element_df = element_df, linked_col = linked_col,
           source_ids = element_df$ID, target_ids = target_ids,
           element_confidence_col = "Confidence",
-          default_polarity   = default_polarity_for_matrix(matrix_key),
           existing_matrix    = isa_data$adjacency_matrices[[matrix_key]],
           user_edited_matrix = isa_data$user_edited_matrices[[matrix_key]])
         isa_data$adjacency_matrices[[matrix_key]]   <- rebuilt$matrix
@@ -336,11 +407,13 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                            length(rebuilt$dropped_user_edits)),
                            type = "warning", duration = 8, session = session)
         }
+        tag_unsigned_links(rebuilt$unsigned_links, matrix_key)
       }, error = function(e) {
         debug_log(paste(matrix_key, "rebuild failed:", e$message), "ERROR")
         showNotification(format_user_error(e, i18n = i18n,
                          context_key = "common.messages.context_matrix_rebuild"),
                          type = "error", session = session)
+        new_unsigned_links()
       })
     }
 
@@ -413,24 +486,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       # recover_isa_data reconciles response rows but does NOT populate Linked*
       # columns — those edges live only in the Matrix_* sheets. Without this, a
       # re-save of the Responses tab would rebuild matrices from empty Linked*
-      # and wipe the imported edges. Work on a LOCAL copy and reassign once to
-      # avoid per-cell assignment into a reactiveValues slot.
-      r <- isa_data$responses
-      if (is.data.frame(r) && nrow(r) > 0) {
-        am <- isa_data$adjacency_matrices
-        r$LinkedGB <- ""; r$LinkedD <- ""; r$LinkedA <- ""; r$LinkedP <- ""
-        r$LinkedMPF <- ""; r$LinkedR <- ""
-        for (i in seq_len(nrow(r))) {
-          rid <- as.character(r$ID[i])
-          r$LinkedGB[i] <- rederive_linked_from_matrix(am$gb_r, rid, "col")
-          r$LinkedD[i]  <- rederive_linked_from_matrix(am$r_d,  rid, "row")
-          r$LinkedA[i]  <- rederive_linked_from_matrix(am$r_a,  rid, "row")
-          r$LinkedP[i]  <- rederive_linked_from_matrix(am$r_p,  rid, "row")
-          r$LinkedMPF[i] <- rederive_linked_from_matrix(am$r_mpf, rid, "row")
-          r$LinkedR[i]   <- rederive_linked_from_matrix(am$r_r,   rid, "row")
-        }
-        isa_data$responses <- r
-      }
+      # and wipe the imported edges.
+      rederive_response_links()
       any_repaired      <- rec$repaired
       any_rows_in       <- rec$any_rows_in
       any_panel_ids_out <- rec$any_panel_ids_out
@@ -444,7 +501,33 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         showNotification(i18n$t("modules.isa.data_entry.common.no_elements_loaded"),
                          type = "warning", duration = 10, session = session)
       }
-      invisible(list(fell_back = fell_back))
+      # Links that exist only in LinkedX columns have no sign in the file:
+      # ask for them (Confirm writes the signs, Cancel unticks them), then
+      # re-derive the responses' Linked* from the signed matrices and sync.
+      asked <- ask_signs(rec$unsigned_links, after_done = rederive_response_links)
+      invisible(list(fell_back = fell_back, signs_pending = isTRUE(asked)))
+    }
+
+    # Responses' Linked* columns re-derived from the R-arm matrices. Works on a
+    # LOCAL copy and reassigns once to avoid per-cell assignment into a
+    # reactiveValues slot.
+    rederive_response_links <- function() {
+      r <- isa_data$responses
+      if (!is.data.frame(r) || nrow(r) == 0) return(invisible(NULL))
+      am <- isa_data$adjacency_matrices
+      r$LinkedGB <- ""; r$LinkedD <- ""; r$LinkedA <- ""; r$LinkedP <- ""
+      r$LinkedMPF <- ""; r$LinkedR <- ""
+      for (i in seq_len(nrow(r))) {
+        rid <- as.character(r$ID[i])
+        r$LinkedGB[i] <- rederive_linked_from_matrix(am$gb_r, rid, "col")
+        r$LinkedD[i]  <- rederive_linked_from_matrix(am$r_d,  rid, "row")
+        r$LinkedA[i]  <- rederive_linked_from_matrix(am$r_a,  rid, "row")
+        r$LinkedP[i]  <- rederive_linked_from_matrix(am$r_p,  rid, "row")
+        r$LinkedMPF[i] <- rederive_linked_from_matrix(am$r_mpf, rid, "row")
+        r$LinkedR[i]   <- rederive_linked_from_matrix(am$r_r,   rid, "row")
+      }
+      isa_data$responses <- r
+      invisible(NULL)
     }
 
     # Load saved ISA data when a project becomes active.
@@ -1464,9 +1547,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       isa_data$ecosystem_services <- es_df
-      rebuild_transition(isa_data$ecosystem_services, "LinkedGB",
-                         isa_data$goods_benefits$ID, "es_gb")
-      sync_to_project_data()
+      finish_save(rebuild_transition(isa_data$ecosystem_services, "LinkedGB",
+                         isa_data$goods_benefits$ID, "es_gb"))
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(es_df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
       debug_log(paste("Exercise 2a saved with", nrow(es_df), "entries"), "INFO")
@@ -1506,9 +1588,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                             c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial"),
                             linked_col = "LinkedES", matrix_key = "mpf_es")
       isa_data$marine_processes <- mpf_df
-      rebuild_transition(isa_data$marine_processes, "LinkedES",
-                         isa_data$ecosystem_services$ID, "mpf_es")
-      sync_to_project_data()
+      finish_save(rebuild_transition(isa_data$marine_processes, "LinkedES",
+                         isa_data$ecosystem_services$ID, "mpf_es"))
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
 
@@ -1546,9 +1627,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                           c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal"),
                           linked_col = "LinkedMPF", matrix_key = "p_mpf")
       isa_data$pressures <- p_df
-      rebuild_transition(isa_data$pressures, "LinkedMPF",
-                         isa_data$marine_processes$ID, "p_mpf")
-      sync_to_project_data()
+      finish_save(rebuild_transition(isa_data$pressures, "LinkedMPF",
+                         isa_data$marine_processes$ID, "p_mpf"))
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
 
@@ -1586,9 +1666,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                           c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency"),
                           linked_col = "LinkedP", matrix_key = "a_p")
       isa_data$activities <- a_df
-      rebuild_transition(isa_data$activities, "LinkedP",
-                         isa_data$pressures$ID, "a_p")
-      sync_to_project_data()
+      finish_save(rebuild_transition(isa_data$activities, "LinkedP",
+                         isa_data$pressures$ID, "a_p"))
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
 
@@ -1626,9 +1705,8 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                           c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability"),
                           linked_col = "LinkedA", matrix_key = "d_a")
       isa_data$drivers <- d_df
-      rebuild_transition(isa_data$drivers, "LinkedA",
-                         isa_data$activities$ID, "d_a")
-      sync_to_project_data()
+      finish_save(rebuild_transition(isa_data$drivers, "LinkedA",
+                         isa_data$activities$ID, "d_a"))
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })
 
@@ -1695,7 +1773,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           isa_data$user_edited_matrices[[k]] <- NULL
         }
       }
-      sync_to_project_data()
+      finish_save(if (nrow(r_df) > 0) built$unsigned_links else NULL)
       # R -> R choices are built when a panel is added, so responses saved after
       # it were not offered. Refresh every live panel's list (minus itself),
       # keeping the current selection (review 2026-10-07 N62).
@@ -1737,7 +1815,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           ),
           column(2,
             selectInput(ns("loop_effect"), i18n$t("modules.isa.data_entry.common.effect"),
-                       choices = setNames(c("+", "-"), c(i18n$t("common.choices.effect_positive"), i18n$t("common.choices.effect_negative"))))
+                       choices = setNames(c("", "+", "-"), c(i18n$t("common.polarity.choose_sign"), i18n$t("common.choices.effect_positive"), i18n$t("common.choices.effect_negative"))))
           ),
           column(2,
             selectInput(ns("loop_strength"), i18n$t("modules.isa.data_entry.common.strength"),
@@ -1780,6 +1858,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Add loop connection ----
     observeEvent(input$add_loop, {
       req(input$loop_driver, input$loop_gb, input$loop_effect, input$loop_strength, input$loop_confidence)
+      req(input$loop_effect %in% c("+", "-"))   # the effect starts unset: no invented sign
 
       new_connection <- data.frame(
         DriverID = input$loop_driver,
@@ -2039,7 +2118,9 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
                          type = "warning", duration = 10, session = session)
       }
 
-      if (n_edges == 0L) {
+      # links still waiting for a sign are not counted yet; do not call the
+      # import edgeless while the sign dialog is open
+      if (n_edges == 0L && !isTRUE(res$signs_pending)) {
         showNotification(i18n$t("modules.isa.data_entry.common.import_no_connections"),
                          type = "warning", duration = 10, session = session)
         return(invisible(NULL))  # do not auto-navigate to an edgeless diagram

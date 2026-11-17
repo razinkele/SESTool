@@ -45,6 +45,14 @@ test_that("Import Data menu loads a Standard Entry export (legacy pathology) wit
         name = "ISA_Export.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
       session$flushReact()
 
+      # LinkedX-only links have no sign in the file: nothing is imported until
+      # the "choose signs" dialog is answered (evidenced polarity)
+      p <- sign_choice$pending()
+      expect_false(is.null(p))
+      expect_null(pdr()$data$isa_data$marine_processes)
+      answer_sign_dialog(session, p, setNames(rep("+", length(p$keys)), p$keys))
+      session$flushReact()
+
       pd <- pdr()
       isa_loaded <- pd$data$isa_data
       # duplicate MPF id reconciled to two unique elements

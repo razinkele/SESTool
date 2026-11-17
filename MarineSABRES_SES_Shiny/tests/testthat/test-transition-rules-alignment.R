@@ -1,7 +1,8 @@
 # tests/testthat/test-transition-rules-alignment.R
 # Review 2026-10-07:
-#   N26 - P -> MPF seeds "-" everywhere (polarity from DAPSIWRM_ADJACENCY_RULES),
-#         and existing cells never have their polarity rewritten.
+#   N26 - existing cells never have their polarity rewritten. (Evidenced
+#         polarity, 2026-11-17: new cells are no longer seeded from the rule
+#         table at all — they stay unsigned until the user picks a sign.)
 #   N61 - DAPSIWRM_ADJACENCY_RULES, is_valid_dapsirwrm_transition() and
 #         DAPSIWRM_FRAMEWORK_RULES.md accept the same transitions.
 #   N62 - the Responses form edits R -> MPF (Rule 12) and R -> R (Rule 14).
@@ -20,24 +21,9 @@ rule_p_mpf <- function() {
   DAPSIWRM_ADJACENCY_RULES$Pressures$target_polarities[["Marine Processes & Functioning"]]
 }
 
-test_that("N26: the rule table says P -> MPF is '-' and the matrix lookup agrees", {
+test_that("N26: the rule table still records P -> MPF as '-', but nothing seeds from it", {
   expect_equal(rule_p_mpf(), "-")
-  expect_equal(default_polarity_for_matrix("p_mpf"), rule_p_mpf())
-})
-
-test_that("N26: every Standard Entry matrix key seeds the rule-table default", {
-  expected <- c(d_a = "+", a_p = "+", p_mpf = "-", mpf_es = "+", es_gb = "+",
-                gb_d = "+", gb_r = "+", r_d = "-", r_a = "-", r_p = "-",
-                r_mpf = "+", r_r = "+")
-  got <- vapply(names(expected), default_polarity_for_matrix, character(1))
-  expect_equal(got, expected)
-  # and each one is read from the table, not hard-coded
-  for (k in names(DAPSIWRM_MATRIX_KEY_TYPES)) {
-    ty <- DAPSIWRM_MATRIX_KEY_TYPES[[k]]
-    expect_equal(default_polarity_for_matrix(k),
-                 unname(DAPSIWRM_ADJACENCY_RULES[[ty[1]]]$target_polarities[[ty[2]]]),
-                 info = k)
-  }
+  expect_false(exists("default_polarity_for_matrix"))
 })
 
 p_mpf_saved <- function(adjacency_matrices = list()) {
@@ -50,12 +36,14 @@ p_mpf_saved <- function(adjacency_matrices = list()) {
   )
 }
 
-test_that("N26: recover_isa_data seeds an unsigned P -> MPF link with the rule default", {
+test_that("recover_isa_data leaves an unsigned P -> MPF link unsigned and reports it", {
   rec <- recover_isa_data(p_mpf_saved())
   m <- rec$adjacency_matrices$p_mpf
   expect_true(is.matrix(m))
-  expect_equal(substr(m["P001", "MPF001"], 1, 1), rule_p_mpf())
-  expect_equal(substr(m["P001", "MPF002"], 1, 1), rule_p_mpf())
+  expect_equal(m["P001", "MPF001"], "")
+  expect_equal(m["P001", "MPF002"], "")
+  expect_setequal(rec$unsigned_links$tgt_id, c("MPF001", "MPF002"))
+  expect_true(all(rec$unsigned_links$matrix_key == "p_mpf"))
 })
 
 test_that("N26: recover_isa_data keeps an existing explicit '+' P -> MPF cell", {
@@ -64,16 +52,16 @@ test_that("N26: recover_isa_data keeps an existing explicit '+' P -> MPF cell", 
   expect_equal(rec$adjacency_matrices$p_mpf["P001", "MPF001"], "+strong:4")
 })
 
-test_that("N26: the Standard Entry rebuild seeds new P -> MPF cells '-' but never flips an existing '+'", {
+test_that("N26: the Standard Entry rebuild never flips an existing '+' and leaves a new cell unsigned", {
   el <- data.frame(ID = "P001", LinkedMPF = "MPF001|MPF002", stringsAsFactors = FALSE)
   # an old save: the '+' edge exists, user_edited flags absent (all FALSE)
   existing <- matrix(c("+medium:3", ""), 1, 2, dimnames = list("P001", c("MPF001", "MPF002")))
   res <- rebuild_matrix_from_linked(
     el, "LinkedMPF", "P001", c("MPF001", "MPF002"),
-    existing_matrix = existing, user_edited_matrix = NULL,
-    default_polarity = default_polarity_for_matrix("p_mpf"))
+    existing_matrix = existing, user_edited_matrix = NULL)
   expect_equal(res$matrix["P001", "MPF001"], "+medium:3")   # preserved sign
-  expect_equal(res$matrix["P001", "MPF002"], "-medium:3")   # new cell: rule default
+  expect_equal(res$matrix["P001", "MPF002"], "")            # new cell: no invented sign
+  expect_equal(res$unsigned_links$tgt_id, "MPF002")
 })
 
 # ---------------------------------------------------------------------------
@@ -145,10 +133,10 @@ test_that("N61: infer_connection_polarity uses per-target defaults for extension
                                          "Pressures", "Pressures"), "+")
   expect_equal(infer_connection_polarity("MPA", "Monitoring programme",
                                          "Responses", "Responses"), "+")
-  # R -> MPF: the graphical builder and Standard Entry seed the same sign
+  # R -> MPF per-target default (infer_connection_polarity goes in Task 7)
   expect_equal(infer_connection_polarity("Marine protected area", "Fish stocks",
                                          "Responses", "Marine Processes & Functioning"),
-               default_polarity_for_matrix("r_mpf"))
+               DAPSIWRM_ADJACENCY_RULES$Responses$target_polarities[["Marine Processes & Functioning"]])
 })
 
 # ---------------------------------------------------------------------------
@@ -188,14 +176,25 @@ test_that("N62: isa_fields_r offers linkedmpf and linkedr as advanced multi-sele
   expect_true(grepl("m-r_linkedr_R001", html, fixed = TRUE))
 })
 
+# Responses-arm matrices with every new link signed as the user would in the
+# "choose signs" dialog (evidenced polarity: build_response_matrices() leaves
+# new links unsigned).
+built_signed <- function(isa, sign = "+") {
+  out <- build_response_matrices(isa)
+  ul <- out$unsigned_links
+  out$adjacency_matrices <- apply_chosen_signs(
+    out$adjacency_matrices, ul, setNames(rep(sign, nrow(ul)), paste0(ul$src_id, "|", ul$tgt_id)))
+  out
+}
+
 test_that("N62: R -> MPF and R -> R round-trip form -> matrix -> form without loss", {
-  out <- build_response_matrices(resp_isa())
+  out <- built_signed(resp_isa())
   am <- out$adjacency_matrices
   expect_equal(dimnames(am$r_mpf), list(c("R001", "R002"), c("MPF001", "MPF002")))
   expect_equal(dimnames(am$r_r), list(c("R001", "R002"), c("R001", "R002")))
-  expect_equal(am$r_mpf["R001", "MPF002"], paste0(default_polarity_for_matrix("r_mpf"), "medium:3"))
+  expect_equal(am$r_mpf["R001", "MPF002"], "+medium:3")
   expect_equal(am$r_mpf["R001", "MPF001"], "")
-  expect_equal(am$r_r["R001", "R002"], paste0(default_polarity_for_matrix("r_r"), "medium:3"))
+  expect_equal(am$r_r["R001", "R002"], "+medium:3")
   expect_equal(sum(nzchar(am$r_r)), 1L)
   # matrix -> form (the load path re-derives Linked* from the matrices)
   expect_equal(rederive_linked_from_matrix(am$r_mpf, "R001", "row"), "MPF002")
@@ -205,7 +204,7 @@ test_that("N62: R -> MPF and R -> R round-trip form -> matrix -> form without lo
 
 test_that("N62: removing an R -> MPF / R -> R link clears the matrix cell", {
   isa <- resp_isa()
-  first <- build_response_matrices(isa)
+  first <- built_signed(isa)
   isa$adjacency_matrices   <- first$adjacency_matrices
   isa$user_edited_matrices <- first$user_edited_matrices
   isa$responses$LinkedMPF <- c("", "")
@@ -230,16 +229,19 @@ test_that("N62: recover_isa_data rebuilds r_mpf / r_r from LinkedMPF / LinkedR (
   saved$responses$LinkedMPF <- c("MPF002: Seagrass", "")
   saved$responses$LinkedR   <- c("R002: Monitoring", "")
   rec <- recover_isa_data(saved)
-  expect_equal(rec$adjacency_matrices$r_mpf["R001", "MPF002"],
-               paste0(default_polarity_for_matrix("r_mpf"), "medium:3"))
-  expect_equal(rec$adjacency_matrices$r_r["R001", "R002"],
-               paste0(default_polarity_for_matrix("r_r"), "medium:3"))
+  ul <- rec$unsigned_links
+  expect_true(all(c("r_mpf", "r_r") %in% ul$matrix_key))
+  expect_equal(rec$adjacency_matrices$r_mpf["R001", "MPF002"], "")   # unsigned until chosen
+  am <- apply_chosen_signs(rec$adjacency_matrices, ul,
+                           c("R001|MPF002" = "-", "R001|R002" = "+"))
+  expect_equal(am$r_mpf["R001", "MPF002"], "-medium:3")
+  expect_equal(am$r_r["R001", "R002"], "+medium:3")
 })
 
 test_that("N62: r_mpf / r_r survive the Standard Entry Excel export + import", {
   skip_if_not_installed("openxlsx")
   isa <- resp_isa()
-  built <- build_response_matrices(isa)
+  built <- built_signed(isa)
   isa$adjacency_matrices <- built$adjacency_matrices
   f <- tempfile(fileext = ".xlsx"); on.exit(unlink(f))
   wb <- openxlsx::createWorkbook()
@@ -253,7 +255,7 @@ test_that("N62: r_mpf / r_r survive the Standard Entry Excel export + import", {
 
 test_that("N62: JSON project round trip restores r_mpf / r_r (incl. sidecar-less files)", {
   isa <- resp_isa()
-  built <- build_response_matrices(isa)
+  built <- built_signed(isa)
   pd <- create_empty_project("T")
   for (k in c("goods_benefits", "drivers", "marine_processes", "responses")) pd$data$isa_data[[k]] <- isa[[k]]
   pd$data$isa_data$adjacency_matrices <- built$adjacency_matrices[c("r_mpf", "r_r")]

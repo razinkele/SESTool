@@ -845,3 +845,24 @@ if (!exists("validate_project_data")) {
 
 # load_all_templates and load_template_from_json are loaded by setup.R via template_loader.R.
 # No stubs needed as those have dedicated handling.
+
+# answer_sign_dialog(): answer the "choose signs" dialog (modules/sign_choice_module.R)
+# from inside testServer() of a module that instantiated
+# sign_choice_server("sign_choice", ...). `pending` is that module's
+# sign_choice$pending(); `signs` is a named chr vector "<src>|<tgt>" -> "+"/"-"
+# (one sign for every pending link to Confirm), or NULL to Cancel.
+.sign_dialog_clicks <- new.env()
+answer_sign_dialog <- function(session, pending, signs = NULL) {
+  stopifnot(!is.null(pending))
+  n <- (if (is.null(.sign_dialog_clicks$n)) 0 else .sign_dialog_clicks$n) + 1
+  .sign_dialog_clicks$n <- n
+  if (is.null(signs)) {
+    session$setInputs(`sign_choice-cancel` = n)
+    return(invisible(NULL))
+  }
+  vals <- setNames(as.list(unname(signs[pending$keys])),
+                   paste0("sign_choice-", pending$input_ids))
+  do.call(session$setInputs, vals)
+  session$setInputs(`sign_choice-confirm` = n)
+  invisible(NULL)
+}

@@ -74,11 +74,16 @@ assert_matrices_aligned <- function(adj, edited) {
 #' semantically-unrelated column (e.g. Activities' Frequency would produce
 #' '+Medium:Continuous' which downstream consumers misinterpret).
 #'
-#' Callers pass `default_polarity = default_polarity_for_matrix(<key>)`
-#' (dapsiwrm_connection_rules.R) so new cells follow the rule table; it is
-#' applied to NEW cells only — existing cells keep their polarity.
+#' Signs are evidence-only (evidenced polarity): a NEW declared cell is written
+#' only when `chosen_signs` holds a sign for it; otherwise it stays empty and
+#' is reported in `unsigned_links` so the caller can ask the user. An existing
+#' signed cell keeps its sign (old saves carry all-FALSE user_edited flags).
 #'
-#' @return list(matrix, user_edited, stale_linked_ids, dropped_user_edits).
+#' @param chosen_signs named chr vector, names "<src_id>|<tgt_id>", values
+#'   "+"/"-".
+#' @return list(matrix, user_edited, stale_linked_ids, dropped_user_edits,
+#'   unsigned_links). `unsigned_links`: data.frame (see new_unsigned_links())
+#'   with matrix_key NA — the caller fills it in.
 #'   `stale_linked_ids`: character vector of IDs that were in LinkedX but
 #'     not in target_ids — caller surfaces in a notification.
 #'   `dropped_user_edits`: character vector of "<src>:<tgt>" cell coords
@@ -89,7 +94,7 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
                                        element_confidence_col = "Confidence",
                                        existing_matrix = NULL,
                                        user_edited_matrix = NULL,
-                                       default_polarity = "+",
+                                       chosen_signs = character(0),
                                        default_strength = "medium",
                                        default_confidence = "3") {
   if (!is.null(existing_matrix) && !is.null(user_edited_matrix)) {
@@ -103,6 +108,7 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
                        dimnames = list(source_ids, target_ids))
   stale <- character(0)
   dropped <- character(0)
+  uns_src <- character(0); uns_tgt <- character(0); uns_suffix <- character(0)
 
   # Project existing values into the new dims (handles size changes).
   # Track cells we DROPPED (user-edited cell whose row/col is gone).
@@ -163,7 +169,7 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
     } else {
       default_confidence
     }
-    cell_default <- paste0(default_polarity, default_strength, ":", confidence)
+    suffix <- paste0(default_strength, ":", confidence)
 
     declared <- intersect(linked_ids, target_ids)
     bad <- setdiff(linked_ids, target_ids)
@@ -171,16 +177,23 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
 
     for (tgt_id in declared) {
       if (!out_edited[src_id, tgt_id]) {
-        # Only a NEW cell takes default_polarity. An edge that already exists
-        # (saved project, template, import) keeps its sign even when not
-        # flagged user_edited — old saves carry all-FALSE flags, and a change
-        # of the rule-table default must never flip their polarity (N26).
+        # An edge that already exists (saved project, template, import) keeps
+        # its sign even when not flagged user_edited — old saves carry
+        # all-FALSE flags (N26). A NEW cell takes only a chosen sign; without
+        # one it stays empty and is reported unsigned.
         prev <- out[src_id, tgt_id]
         prev_pol <- if (!is.na(prev) && nzchar(prev)) substr(prev, 1, 1) else ""
-        out[src_id, tgt_id] <- if (prev_pol %in% c("+", "-")) {
-          paste0(prev_pol, default_strength, ":", confidence)
+        if (prev_pol %in% c("+", "-")) {
+          out[src_id, tgt_id] <- paste0(prev_pol, suffix)
         } else {
-          cell_default
+          pick <- chosen_sign_for(chosen_signs, src_id, tgt_id)
+          if (!is.na(pick)) {
+            out[src_id, tgt_id] <- paste0(pick, suffix)
+          } else {
+            out[src_id, tgt_id] <- ""
+            uns_src <- c(uns_src, src_id); uns_tgt <- c(uns_tgt, tgt_id)
+            uns_suffix <- c(uns_suffix, suffix)
+          }
         }
       }
     }
@@ -198,8 +211,128 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
     matrix = out,
     user_edited = out_edited,
     stale_linked_ids = stale,
-    dropped_user_edits = dropped
+    dropped_user_edits = dropped,
+    unsigned_links = new_unsigned_links(uns_src, uns_tgt, linked_col, uns_suffix)
   )
+}
+
+# ---------------------------------------------------------------------------
+# Unsigned links (evidenced polarity): links declared in LinkedX that have no
+# sign yet. The caller asks the user (sign_choice_server) and then writes the
+# chosen signs with apply_chosen_signs() or removes the ticks with
+# untick_linked().
+# ---------------------------------------------------------------------------
+
+#' Matrix key -> where its links live: source element key + LinkedX column
+#' (the column owner is the rebuild source), target element key, the Standard
+#' Entry panel prefix/field of the LinkedX select, and whether the matrix is
+#' stored transposed (gb_r is stored GB x R but declared on the responses).
+SIGN_LINK_SPECS <- list(
+  es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits",     prefix = "es",  field = "linkedgb"),
+  mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services", prefix = "mpf", field = "linkedes"),
+  p_mpf  = list(src = "pressures",          col = "LinkedMPF", tgt = "marine_processes",   prefix = "p",   field = "linkedmpf"),
+  a_p    = list(src = "activities",         col = "LinkedP",   tgt = "pressures",          prefix = "a",   field = "linkedp"),
+  d_a    = list(src = "drivers",            col = "LinkedA",   tgt = "activities",         prefix = "d",   field = "linkeda"),
+  r_d    = list(src = "responses",          col = "LinkedD",   tgt = "drivers",            prefix = "r",   field = "linkedd"),
+  r_a    = list(src = "responses",          col = "LinkedA",   tgt = "activities",         prefix = "r",   field = "linkeda"),
+  r_p    = list(src = "responses",          col = "LinkedP",   tgt = "pressures",          prefix = "r",   field = "linkedp"),
+  r_mpf  = list(src = "responses",          col = "LinkedMPF", tgt = "marine_processes",   prefix = "r",   field = "linkedmpf"),
+  r_r    = list(src = "responses",          col = "LinkedR",   tgt = "responses",          prefix = "r",   field = "linkedr"),
+  gb_r   = list(src = "responses",          col = "LinkedGB",  tgt = "goods_benefits",     prefix = "r",   field = "linkedgb",
+                transposed = TRUE)
+)
+
+#' Build an unsigned-link record (one row per link)
+#' @return data.frame(matrix_key, src_id, tgt_id, linked_col, suffix,
+#'   transposed). src_id owns the LinkedX column (rebuild orientation);
+#'   transposed is TRUE when the matrix is stored tgt x src (gb_r).
+new_unsigned_links <- function(src_id = character(0), tgt_id = character(0),
+                               linked_col = character(0), suffix = character(0),
+                               matrix_key = NA_character_, transposed = FALSE) {
+  n <- length(src_id)
+  if (n == 0) {
+    return(data.frame(matrix_key = character(0), src_id = character(0),
+                      tgt_id = character(0), linked_col = character(0),
+                      suffix = character(0), transposed = logical(0),
+                      stringsAsFactors = FALSE))
+  }
+  data.frame(matrix_key = rep(as.character(matrix_key), length.out = n),
+             src_id = as.character(src_id), tgt_id = as.character(tgt_id),
+             linked_col = rep(as.character(linked_col), length.out = n),
+             suffix = as.character(suffix),
+             transposed = rep(as.logical(transposed), length.out = n),
+             stringsAsFactors = FALSE)
+}
+
+#' Stamp a matrix key (and orientation) on an unsigned-link record
+tag_unsigned_links <- function(links, matrix_key, transposed = FALSE) {
+  if (!is.data.frame(links) || nrow(links) == 0) return(new_unsigned_links())
+  links$matrix_key <- matrix_key
+  links$transposed <- transposed
+  links
+}
+
+# Chosen sign for one pair, or NA when none / not "+"/"-".
+chosen_sign_for <- function(chosen_signs, src_id, tgt_id) {
+  if (length(chosen_signs) == 0 || is.null(names(chosen_signs))) return(NA_character_)
+  key <- paste0(src_id, "|", tgt_id)
+  if (!(key %in% names(chosen_signs))) return(NA_character_)
+  v <- as.character(chosen_signs[[key]])
+  if (length(v) == 1 && !is.na(v) && v %in% c("+", "-")) v else NA_character_
+}
+
+#' Write chosen signs for unsigned links into the adjacency matrices
+#'
+#' @param adjacency_matrices named list of character matrices
+#' @param links unsigned-link record with matrix_key filled in
+#' @param signs named chr vector "<src_id>|<tgt_id>" -> "+"/"-"
+#' @return adjacency_matrices with paste0(sign, suffix) written at
+#'   [src_id, tgt_id] (or [tgt_id, src_id] when transposed). Links without a
+#'   sign, or whose matrix/row/column is missing, are skipped.
+apply_chosen_signs <- function(adjacency_matrices, links, signs) {
+  if (!is.data.frame(links) || nrow(links) == 0) return(adjacency_matrices)
+  for (k in seq_len(nrow(links))) {
+    s <- chosen_sign_for(signs, links$src_id[k], links$tgt_id[k])
+    if (is.na(s)) next
+    mk <- links$matrix_key[k]
+    m <- adjacency_matrices[[mk]]
+    if (!is.matrix(m)) next
+    r <- links$src_id[k]; cc <- links$tgt_id[k]
+    if (isTRUE(links$transposed[k])) { r <- links$tgt_id[k]; cc <- links$src_id[k] }
+    if (!(r %in% rownames(m)) || !(cc %in% colnames(m))) next
+    m[r, cc] <- paste0(s, links$suffix[k])
+    adjacency_matrices[[mk]] <- m
+  }
+  adjacency_matrices
+}
+
+#' Remove one target from an element row's LinkedX value
+#'
+#' Segments may be bare ids or label form ("A001: Fishing"). A segment is
+#' removed when its bare id equals `tgt_id`, or — when `target_df` is given —
+#' when it resolves to `tgt_id` by name-then-id (the recovery resolution).
+#' The LinkedX and ID columns are matched case-insensitively (normalised
+#' projects carry lowercase element columns).
+#' @return element_df with that row's LinkedX value updated.
+untick_linked <- function(element_df, src_id, linked_col, tgt_id, target_df = NULL) {
+  if (!is.data.frame(element_df) || nrow(element_df) == 0) return(element_df)
+  pick_col <- function(nm) {
+    if (nm %in% names(element_df)) nm else names(element_df)[match(tolower(nm), tolower(names(element_df)))]
+  }
+  col <- pick_col(linked_col); id_col <- pick_col("ID")
+  if (is.na(col) || is.na(id_col)) return(element_df)
+  for (i in which(as.character(element_df[[id_col]]) == src_id)) {
+    segs <- parse_linked(element_df[[col]][i])
+    if (length(segs) == 0) next
+    keep <- vapply(segs, function(seg) {
+      if (identical(trimws(sub(":.*$", "", seg)), tgt_id)) return(FALSE)
+      if (is.data.frame(target_df) &&
+          identical(resolve_linked_to_target_ids(seg, target_df), tgt_id)) return(FALSE)
+      TRUE
+    }, logical(1), USE.NAMES = FALSE)
+    element_df[[col]][i] <- serialize_linked(segs[keep])
+  }
+  element_df
 }
 
 # ---------------------------------------------------------------------------
@@ -284,16 +417,19 @@ rederive_linked_from_matrix <- function(mat, element_id, orientation = c("row", 
 }
 
 #' Rebuild a source x target adjacency matrix from a label-form LinkedX column,
-#' resolving each link by NAME-then-ID. Cells default to
-#' "<polarity><strength>:<confidence>" (confidence taken from the source row's
-#' Confidence column when present, else the default). Edges are written at the
+#' resolving each link by NAME-then-ID. A link is written as
+#' "<sign><strength>:<confidence>" only when `chosen_signs` holds its sign
+#' (confidence taken from the source row's Confidence column when present,
+#' else the default); the rest stay empty and are listed in
+#' attr(, "unsigned_links") (matrix_key NA, filled by the caller). Edges are written at the
 #' resolved (reconciled) target ID, so duplicate-ID corruption in the source
 #' file does not misplace them.
 #'
-#' @return a character matrix (rows = source_df$ID, cols = target_df$ID).
+#' @return a character matrix (rows = source_df$ID, cols = target_df$ID) with
+#'   attr(, "unsigned_links").
 rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
                                            element_confidence_col = "Confidence",
-                                           default_polarity = "+",
+                                           chosen_signs = character(0),
                                            default_strength = "medium",
                                            default_confidence = "3") {
   src_ids <- as.character(source_df$ID)
@@ -301,7 +437,9 @@ rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
   out <- matrix("", nrow = length(src_ids), ncol = length(tgt_ids),
                 dimnames = list(src_ids, tgt_ids))
   has_conf <- element_confidence_col %in% names(source_df)
+  attr(out, "unsigned_links") <- new_unsigned_links()
   if (!(linked_col %in% names(source_df))) return(out)
+  uns_src <- character(0); uns_tgt <- character(0); uns_suffix <- character(0)
 
   for (i in seq_len(nrow(source_df))) {
     sid <- as.character(source_df$ID[i])
@@ -310,11 +448,18 @@ rebuild_forward_matrix_by_name <- function(source_df, linked_col, target_df,
       v <- source_df[[element_confidence_col]][i]
       normalize_confidence_level(v, default_confidence)
     } else default_confidence
-    cell <- paste0(default_polarity, default_strength, ":", confidence)
+    suffix <- paste0(default_strength, ":", confidence)
     for (tid in resolve_linked_to_target_ids(source_df[[linked_col]][i], target_df)) {
-      out[sid, tid] <- cell
+      pick <- chosen_sign_for(chosen_signs, sid, tid)
+      if (!is.na(pick)) {
+        out[sid, tid] <- paste0(pick, suffix)
+      } else if (!nzchar(out[sid, tid]) &&
+                 !any(uns_src == sid & uns_tgt == tid)) {
+        uns_src <- c(uns_src, sid); uns_tgt <- c(uns_tgt, tid); uns_suffix <- c(uns_suffix, suffix)
+      }
     }
   }
+  attr(out, "unsigned_links") <- new_unsigned_links(uns_src, uns_tgt, linked_col, uns_suffix)
   out
 }
 

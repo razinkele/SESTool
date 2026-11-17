@@ -30,7 +30,8 @@ test_that("stale_linked_ids fires only for targets outside target_ids", {
   el <- data.frame(ID = "MPF001", LinkedES = "ES001|ES999", Confidence = "Medium",
                    stringsAsFactors = FALSE)
   res <- rebuild_matrix_from_linked(el, "LinkedES",
-          source_ids = "MPF001", target_ids = "ES001")
+          source_ids = "MPF001", target_ids = "ES001",
+          chosen_signs = c("MPF001|ES001" = "+"))
   expect_equal(res$stale_linked_ids, "ES999")
   expect_true(nzchar(res$matrix["MPF001", "ES001"]))  # valid edge still written
 })
@@ -121,7 +122,8 @@ test_that("one element with N multi-selected links yields N edges in one matrix 
   el <- data.frame(ID = "P001", LinkedMPF = linked, Confidence = "Medium",
                    stringsAsFactors = FALSE)
   res <- rebuild_matrix_from_linked(el, "LinkedMPF",
-           source_ids = "P001", target_ids = c("MPF001", "MPF002", "MPF003"))
+           source_ids = "P001", target_ids = c("MPF001", "MPF002", "MPF003"),
+           chosen_signs = c("P001|MPF001" = "+", "P001|MPF002" = "-", "P001|MPF003" = "+"))
   expect_equal(sum(nzchar(res$matrix["P001", ])), 3L)
   expect_equal(nrow(res$matrix), 1L)  # still ONE node, not three duplicates
 })

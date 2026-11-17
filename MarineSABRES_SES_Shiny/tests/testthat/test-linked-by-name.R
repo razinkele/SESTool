@@ -40,7 +40,9 @@ test_that("rebuild_forward_matrix_by_name builds an ID-keyed matrix from label-f
                     Confidence = c("High", NA), stringsAsFactors = FALSE)
   tgt <- data.frame(ID = c("MPF005", "MPF019"), Name = c("Fish biomass", "Biodiversity richness"),
                     stringsAsFactors = FALSE)
-  m <- rebuild_forward_matrix_by_name(src, "LinkedMPF", tgt)
+  # signs come only from the caller's chosen map (evidenced polarity)
+  m <- rebuild_forward_matrix_by_name(src, "LinkedMPF", tgt,
+                                      chosen_signs = c("P001|MPF019" = "+", "P002|MPF005" = "+"))
 
   expect_equal(dim(m), c(2, 2))
   expect_equal(rownames(m), c("P001", "P002"))

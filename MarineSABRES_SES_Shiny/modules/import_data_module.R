@@ -136,6 +136,10 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       review_signs = list()  # idx (chr) -> sign chosen in review, NA when cleared
     )
 
+    # "Choose the sign for new connections" dialog for Standard Entry workbooks
+    # whose links live only in LinkedX columns (no sign in the file).
+    sign_choice <- sign_choice_server("sign_choice", i18n)
+
     # === REACTIVE MODULE HEADER ===
     create_reactive_header(
       output = output,
@@ -265,25 +269,53 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         if (.is_se_export) {
           saved <- read_standard_entry_workbook(file_path)   # may signal se_import_not_recognized -> outer catch
           recov <- recover_isa_data(saved)
-          isa_for_import <- recov$elements
-          isa_for_import$adjacency_matrices <- recov$adjacency_matrices
           n_el <- sum(vapply(recov$elements,
                              function(d) if (is.data.frame(d)) nrow(d) else 0L, integer(1)))
-          n_ed <- sum(vapply(recov$adjacency_matrices,
-                             function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L, integer(1)))
           if (n_el == 0L) {
             showNotification(i18n$t("modules.isa.data_entry.common.import_not_recognized"),
                              type = "error", duration = 8)
             return(NULL)
           }
-          perform_import(isa_for_import, n_el, n_ed)   # sets project_data + CLD, navigates
-          if (isTRUE(recov$fell_back)) {
-            showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
-                             type = "warning", duration = 10)
+          finish_se_import <- function(elements, adjacency_matrices) {
+            isa_for_import <- elements
+            isa_for_import$adjacency_matrices <- adjacency_matrices
+            n_ed <- sum(vapply(adjacency_matrices,
+                               function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L, integer(1)))
+            perform_import(isa_for_import, n_el, n_ed)   # sets project_data + CLD, navigates
+            if (isTRUE(recov$fell_back)) {
+              showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
+                               type = "warning", duration = 10)
+            }
+            if (!is.null(parent_session)) {
+              updateTabItems(parent_session, "sidebar_menu", "cld_viz")
+            }
           }
-          if (!is.null(parent_session)) {
-            updateTabItems(parent_session, "sidebar_menu", "cld_viz")
+          links <- recov$unsigned_links
+          if (is.data.frame(links) && nrow(links) > 0) {
+            # LinkedX-only links have no sign in the file: ask first, import
+            # once answered (Confirm writes the signs, Cancel leaves the links
+            # out and unticks them from the elements).
+            labels <- do.call(c, unname(lapply(recov$elements, function(d) {
+              if (is.data.frame(d) && all(c("ID", "Name") %in% names(d)))
+                setNames(as.character(d$Name), as.character(d$ID))
+            })))
+            sign_choice$open(links, labels, function(signs) {
+              el <- recov$elements; am <- recov$adjacency_matrices
+              if (is.null(signs)) {
+                for (k in seq_len(nrow(links))) {
+                  spec <- SIGN_LINK_SPECS[[links$matrix_key[k]]]
+                  if (is.null(spec)) next
+                  el[[spec$src]] <- untick_linked(el[[spec$src]], links$src_id[k], spec$col,
+                                                  links$tgt_id[k], target_df = el[[spec$tgt]])
+                }
+              } else {
+                am <- apply_chosen_signs(am, links, signs)
+              }
+              finish_se_import(el, am)
+            })
+            return(NULL)
           }
+          finish_se_import(recov$elements, recov$adjacency_matrices)
           return(NULL)
         }
 

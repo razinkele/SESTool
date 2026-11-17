@@ -112,7 +112,10 @@ read_standard_entry_workbook <- function(path) {
 # (matrix_from_linked.R).
 #
 # @return list(elements, panel_ids, adjacency_matrices, user_edited_matrices,
-#   repaired, any_rows_in, any_panel_ids_out, fell_back)
+#   repaired, any_rows_in, any_panel_ids_out, fell_back, unsigned_links)
+#   `unsigned_links`: links recovered from LinkedX columns, which carry no
+#   sign; their (empty) matrices are returned so the caller can write the
+#   signs the user chooses with apply_chosen_signs(), or untick them.
 recover_isa_data <- function(saved_isa, id_store = NULL) {
   if (is.null(id_store)) id_store <- new_stable_id_store()
 
@@ -191,9 +194,10 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
   linked_map$gb_r  <- list(src = "responses", col = "LinkedGB",  tgt = "goods_benefits",
                            strength = "medium", confidence = "3",
                            transpose = TRUE)
-  # Every new cell's polarity comes from the rule table (review 2026-10-07 N26:
-  # p_mpf seeds "-" per Rule 3, R -> D/A/P "-", the rest "+").
-  for (mk in names(linked_map)) linked_map[[mk]]$polarity <- default_polarity_for_matrix(mk)
+  # LinkedX columns carry no sign (evidenced polarity): recovered links are
+  # left unsigned and reported in `unsigned_links`; the caller asks the user
+  # for their signs (sign_choice_server) before they become matrix cells.
+  unsigned <- list()
   # JSON / normalised projects carry lowercase element columns (linkedgb,
   # name): resolve the canonical names case-insensitively (review N4).
   canon <- function(df, cols) {
@@ -218,17 +222,24 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
       mat <- rebuild_forward_matrix_by_name(
         source_df = src_df, linked_col = m$col, target_df = tgt_df,
         element_confidence_col = "Confidence",
-        default_polarity   = m$polarity   %||% "+",
         default_strength   = m$strength   %||% "medium",
         default_confidence = m$confidence %||% "3")
+      ul <- tag_unsigned_links(attr(mat, "unsigned_links"), mk,
+                               transposed = isTRUE(m$transpose))
+      attr(mat, "unsigned_links") <- NULL
       if (isTRUE(m$transpose)) mat <- t(mat)
-      if (any(nzchar(mat))) {
+      if (any(nzchar(mat)) || nrow(ul) > 0) {
+        # keep the (possibly still empty) matrix so chosen signs have a target
         am[[mk]] <- mat
         ue[[mk]] <- matrix(FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
-        fell_back <- TRUE
+        if (any(nzchar(mat))) fell_back <- TRUE
       }
+      if (nrow(ul) > 0) unsigned[[mk]] <- ul
     }
   }
+  unsigned_links <- if (length(unsigned) > 0) {
+    do.call(rbind, c(unname(unsigned), list(make.row.names = FALSE)))
+  } else new_unsigned_links()
 
   list(
     elements = elements,
@@ -239,6 +250,7 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     deduped_rows = deduped_rows,
     any_rows_in = any_rows_in,
     any_panel_ids_out = any_panel_ids_out,
-    fell_back = fell_back
+    fell_back = fell_back,
+    unsigned_links = unsigned_links
   )
 }

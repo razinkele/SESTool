@@ -79,6 +79,9 @@ test_that("saving ES linked to a GB builds the es_gb matrix with the edge (fixes
     session$setInputs(es_name_ES001 = "Fisheries", es_type_ES001 = "Provisioning",
                       es_linkedgb_ES001 = "GB001: Food", es_confidence_ES001 = "High")
     session$setInputs(save_ex2a = 1)
+    # the new link has no sign yet: the save asks for it (evidenced polarity)
+    expect_equal(sign_choice$pending()$keys, "ES001|GB001")
+    answer_sign_dialog(session, sign_choice$pending(), c("ES001|GB001" = "+"))
 
     # LinkedGB must be normalized to the bare id, and es_gb must hold the edge.
     expect_equal(isa()$ecosystem_services$LinkedGB[1], "GB001")

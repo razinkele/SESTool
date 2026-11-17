@@ -80,7 +80,14 @@ test_that("N4: recover_isa_data's Linked* fallback works on lowercased (normalis
   expect_true("linkeda" %in% names(isa$drivers))       # columns are lowercase after normalise
   rec <- recover_isa_data(isa, new_stable_id_store())
   expect_true(is.matrix(rec$adjacency_matrices$d_a))
-  expect_true(nzchar(rec$adjacency_matrices$d_a["D001", "A001"]))
+  # recovered LinkedX links are unsigned until the user picks (evidenced polarity)
+  ul <- rec$unsigned_links
+  expect_true("D001|A001" %in% paste0(ul$src_id, "|", ul$tgt_id))
+  am <- apply_chosen_signs(rec$adjacency_matrices, ul, c("D001|A001" = "+"))
+  expect_true(nzchar(am$d_a["D001", "A001"]))
+  # and a cancel can untick them on the lowercase column
+  dr <- untick_linked(isa$drivers, "D001", "LinkedA", "A001", target_df = isa$activities)
+  expect_false("A001" %in% sub(":.*$", "", parse_linked(dr$linkeda[dr$id == "D001" | dr$ID == "D001"][1])))
 })
 
 test_that(".json_to_matrix handles empty and ragged input", {

@@ -36,10 +36,17 @@ test_that("recover_isa_data reconciles dup IDs, rebuilds forward edges by name, 
   expect_true(rec$repaired)
   expect_setequal(rec$panel_ids$mpf_panel_ids, as.character(rec$elements$marine_processes$ID))
 
-  # faithful gb_d preserved; empty es_gb rebuilt from label-form LinkedGB
+  # faithful gb_d preserved; empty es_gb recovered from label-form LinkedGB.
+  # LinkedX carries no sign (evidenced polarity): recovered links come back
+  # unsigned with empty cells; the caller writes the signs the user chooses.
   expect_equal(rec$adjacency_matrices$gb_d["GB001", "D001"], "+Strong:3")
+  expect_equal(rec$adjacency_matrices$es_gb["ES001", "GB001"], "")
+  expect_false(rec$fell_back)
+  ul <- rec$unsigned_links
+  expect_true(all(c("es_gb", "mpf_es", "p_mpf") %in% ul$matrix_key))
+  signs <- setNames(rep("+", nrow(ul)), paste0(ul$src_id, "|", ul$tgt_id))
+  rec$adjacency_matrices <- apply_chosen_signs(rec$adjacency_matrices, ul, signs)
   expect_true(nzchar(rec$adjacency_matrices$es_gb["ES001", "GB001"]))
-  expect_true(rec$fell_back)
 
   # p_mpf rebuilt resolving BY NAME -> "Biodiversity richness", not stale MPF005="Fish biomass"
   mp <- rec$elements$marine_processes

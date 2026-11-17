@@ -18,8 +18,8 @@
 #'   is_valid_dapsirwrm_transition()) but are not offered as suggestions.
 #' - `target_polarities`: default polarity per target type (canonical and
 #'   extension). `default_polarity` is the per-source fallback.
-#' Use get_rule_default_polarity() / default_polarity_for_matrix() rather than
-#' reading `default_polarity` directly (review 2026-10-07 N26 / N61).
+#' The sign fields no longer seed matrix cells (evidenced polarity); the table
+#' decides which transitions are valid.
 #'
 #' @format List of allowed connections with polarity and examples
 #' @export
@@ -369,7 +369,8 @@ get_allowed_targets <- function(source_type, include_extensions = FALSE) {
 
 #' Default polarity for a DAPSIWRM transition, from the rule table
 #'
-#' Single source of truth for seeding new matrix cells (review 2026-10-07 N26).
+#' Used only by infer_connection_polarity() (graphical creator); it no longer
+#' seeds Standard Entry matrix cells (evidenced polarity). Removed in Task 7.
 #'
 #' @param from_type Source DAPSIWRM type (table name, e.g. "Pressures")
 #' @param to_type Target DAPSIWRM type
@@ -390,38 +391,6 @@ get_rule_default_polarity <- function(from_type, to_type, fallback = "+") {
     return(rule$default_polarity)
   }
   fallback
-}
-
-#' Standard Entry matrix key -> c(source type, target type) in table names
-DAPSIWRM_MATRIX_KEY_TYPES <- list(
-  d_a    = c("Drivers", "Activities"),
-  a_p    = c("Activities", "Pressures"),
-  p_mpf  = c("Pressures", "Marine Processes & Functioning"),
-  mpf_es = c("Marine Processes & Functioning", "Ecosystem Services"),
-  es_gb  = c("Ecosystem Services", "Goods & Benefits"),
-  gb_d   = c("Goods & Benefits", "Drivers"),
-  gb_r   = c("Goods & Benefits", "Responses"),
-  r_d    = c("Responses", "Drivers"),
-  r_a    = c("Responses", "Activities"),
-  r_p    = c("Responses", "Pressures"),
-  r_mpf  = c("Responses", "Marine Processes & Functioning"),
-  r_r    = c("Responses", "Responses")
-)
-
-#' Default polarity used to seed a NEW cell of a Standard Entry matrix
-#'
-#' Looks the transition up in DAPSIWRM_ADJACENCY_RULES so every seeding path
-#' (Standard Entry save, Responses save, Excel/project recovery) agrees with
-#' the framework rules — e.g. p_mpf seeds "-" (Rule 3), not a hard-coded "+".
-#'
-#' @param matrix_key e.g. "p_mpf", "r_d", "gb_r"
-#' @param fallback used for unknown keys
-#' @return "+" or "-"
-#' @export
-default_polarity_for_matrix <- function(matrix_key, fallback = "+") {
-  types <- DAPSIWRM_MATRIX_KEY_TYPES[[matrix_key]]
-  if (is.null(types)) return(fallback)
-  get_rule_default_polarity(types[1], types[2], fallback = fallback)
 }
 
 

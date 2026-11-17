@@ -42,7 +42,10 @@ test_that("N24: every load door hands the module canonical column case", {
   expect_true(all(c("ID", "Name", "LinkedGB") %in% names(rec$elements$ecosystem_services)))
   # and the by-name forward rebuild now runs on this (load) door too
   expect_true(is.matrix(rec$adjacency_matrices$es_gb))
-  expect_true(nzchar(rec$adjacency_matrices$es_gb["ES001", "GB001"]))
+  # the link is found but unsigned until the user picks (evidenced polarity)
+  expect_equal(paste0(rec$unsigned_links$src_id, "|", rec$unsigned_links$tgt_id), "ES001|GB001")
+  am <- apply_chosen_signs(rec$adjacency_matrices, rec$unsigned_links, c("ES001|GB001" = "+"))
+  expect_true(nzchar(am$es_gb["ES001", "GB001"]))
 })
 
 # ---------------------------------------------------------------------------
@@ -57,16 +60,21 @@ test_that("N25: confidence labels map to the integer cell grammar", {
   expect_equal(normalize_confidence_level("weird", "2"), "2")
 })
 
-test_that("N25: forward rebuilds write '+medium:<int>' cells that parse with the user's confidence", {
+test_that("N25: forward rebuilds write '<sign>medium:<int>' cells that parse with the user's confidence", {
   es <- data.frame(ID = "ES001", Name = "Fish", LinkedGB = "GB001", Confidence = "High", stringsAsFactors = FALSE)
-  m <- rebuild_matrix_from_linked(es, "LinkedGB", "ES001", "GB001")$matrix
+  m <- rebuild_matrix_from_linked(es, "LinkedGB", "ES001", "GB001",
+                                  chosen_signs = c("ES001|GB001" = "+"))$matrix
   expect_equal(m["ES001", "GB001"], "+medium:5")
   conn <- parse_connection_value(m["ES001", "GB001"])
   expect_equal(conn$confidence, 5L)
-  mb <- rebuild_forward_matrix_by_name(es, "LinkedGB", data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE))
-  expect_equal(mb["ES001", "GB001"], "+medium:5")
+  mb <- rebuild_forward_matrix_by_name(es, "LinkedGB", data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE),
+                                       chosen_signs = c("ES001|GB001" = "-"))
+  expect_equal(mb["ES001", "GB001"], "-medium:5")
   d <- data.frame(ID = "D001", Name = "Demand", LinkedA = "A001", stringsAsFactors = FALSE)
-  expect_equal(rebuild_matrix_from_linked(d, "LinkedA", "D001", "A001")$matrix["D001", "A001"], "+medium:3")
+  expect_equal(rebuild_matrix_from_linked(d, "LinkedA", "D001", "A001",
+                                          chosen_signs = c("D001|A001" = "+"))$matrix["D001", "A001"], "+medium:3")
+  # the unsigned suffix carries the same grammar for apply_chosen_signs()
+  expect_equal(rebuild_matrix_from_linked(d, "LinkedA", "D001", "A001")$unsigned_links$suffix, "medium:3")
 })
 
 # ---------------------------------------------------------------------------

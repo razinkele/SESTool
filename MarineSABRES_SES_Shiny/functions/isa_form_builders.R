@@ -687,15 +687,19 @@ RESPONSE_OUT_LINKS <- list(
 #' Build the Responses-arm adjacency matrices from the responses element
 #' rows' Linked* columns. Pure: no Shiny/reactives. Mirrors the forward-chain
 #' rebuild but (a) builds every R-arm matrix (r_d / r_a / r_p / r_mpf / r_r /
-#' gb_r), (b) seeds lowercase/integer cells whose polarity comes from the rule
-#' table (default_polarity_for_matrix), (c) transposes gb_r to GB x R on store
-#' and on read so user edits survive re-save.
+#' gb_r), (b) writes lowercase/integer cells, keeping existing signs and
+#' leaving new links unsigned (evidenced polarity: no rule-table seeding),
+#' (c) transposes gb_r to GB x R on store and on read so user edits survive
+#' re-save.
 #' See docs/superpowers/specs/2026-06-06-responses-entry-design.md.
 #'
 #' @param isa list/reactiveValues with $responses (cols ID, LinkedGB/D/A/P/MPF/R),
 #'   $goods_benefits, $drivers, $activities, $pressures, $marine_processes,
 #'   $adjacency_matrices, $user_edited_matrices.
-#' @return list(adjacency_matrices, user_edited_matrices) updated copies.
+#' @return list(adjacency_matrices, user_edited_matrices, unsigned_links)
+#'   updated copies. `unsigned_links` (see new_unsigned_links()) carries
+#'   matrix_key; gb_r rows have transposed = TRUE. The caller asks for their
+#'   signs and writes them with apply_chosen_signs().
 #' @note Errors propagate to the caller by design (the Shiny save observer is
 #'   the error boundary); we do not tryCatch here. stale_linked_ids /
 #'   dropped_user_edits from rebuild_matrix_from_linked are not surfaced here —
@@ -703,14 +707,16 @@ RESPONSE_OUT_LINKS <- list(
 build_response_matrices <- function(isa) {
   am <- if (is.null(isa$adjacency_matrices)) list() else isa$adjacency_matrices
   ue <- if (is.null(isa$user_edited_matrices)) list() else isa$user_edited_matrices
+  unsigned <- list()
   resp <- isa$responses
   # Need a data frame with rows AND an ID column to source edges from.
   if (!is.data.frame(resp) || nrow(resp) == 0 || !("ID" %in% names(resp))) {
-    return(list(adjacency_matrices = am, user_edited_matrices = ue))
+    return(list(adjacency_matrices = am, user_edited_matrices = ue,
+                unsigned_links = new_unsigned_links()))
   }
   rid <- as.character(resp$ID)
 
-  # Outgoing R -> target: r_d, r_a, r_p (rule default "-"), r_mpf, r_r ("+")
+  # Outgoing R -> target: r_d, r_a, r_p, r_mpf, r_r
   for (key in names(RESPONSE_OUT_LINKS)) {
     s <- RESPONSE_OUT_LINKS[[key]]
     tgt <- isa[[s$tgt]]
@@ -720,31 +726,33 @@ build_response_matrices <- function(isa) {
       element_df = resp, linked_col = s$col,
       source_ids = rid, target_ids = tgt_ids,
       # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
-      default_polarity = default_polarity_for_matrix(key),
       default_strength = "medium", default_confidence = "3",
       existing_matrix    = am[[key]],
       user_edited_matrix = ue[[key]])
     am[[key]] <- res$matrix
     ue[[key]] <- res$user_edited
+    unsigned[[key]] <- tag_unsigned_links(res$unsigned_links, key)
   }
 
-  # Incoming GB -> R (positive). Built R x GB, then transposed to GB x R for
-  # storage; existing/user_edited transposed on the way IN so projection aligns.
+  # Incoming GB -> R. Built R x GB, then transposed to GB x R for storage;
+  # existing/user_edited transposed on the way IN so projection aligns.
   gb_ids <- if (is.data.frame(isa$goods_benefits)) as.character(isa$goods_benefits$ID) else character()
   if (length(gb_ids) > 0 && "LinkedGB" %in% names(resp)) {
     res <- rebuild_matrix_from_linked(
       element_df = resp, linked_col = "LinkedGB",
       source_ids = rid, target_ids = gb_ids,
       # lowercase strength + integer confidence: required to key DYNAMICS_WEIGHT_MAP
-      default_polarity = default_polarity_for_matrix("gb_r"),
       default_strength = "medium", default_confidence = "3",
       existing_matrix    = if (!is.null(am$gb_r)) t(am$gb_r) else NULL,
       user_edited_matrix = if (!is.null(ue$gb_r)) t(ue$gb_r) else NULL)
     am$gb_r <- t(res$matrix)
     ue$gb_r <- t(res$user_edited)
+    unsigned$gb_r <- tag_unsigned_links(res$unsigned_links, "gb_r", transposed = TRUE)
   }
 
-  list(adjacency_matrices = am, user_edited_matrices = ue)
+  ul <- if (length(unsigned) > 0) do.call(rbind, c(unname(unsigned), list(make.row.names = FALSE))) else NULL
+  if (is.null(ul) || nrow(ul) == 0) ul <- new_unsigned_links()
+  list(adjacency_matrices = am, user_edited_matrices = ue, unsigned_links = ul)
 }
 
 #' Field definitions for the Responses/Measures entry form. Display order:

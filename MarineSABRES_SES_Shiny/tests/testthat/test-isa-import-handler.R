@@ -59,6 +59,10 @@ test_that("apply_saved_isa rebuilds forward matrices from Linked* when none supp
   testServer(isa_data_entry_server,
     args = list(project_data_reactive = reactiveVal(proj), i18n = fake_i18n), {
       session$flushReact()
+      # LinkedGB carries no sign: the load asks for it (evidenced polarity)
+      expect_equal(session$getReturned()()$adjacency_matrices$es_gb["ES001", "GB001"], "")
+      expect_equal(sign_choice$pending()$keys, "ES001|GB001")
+      answer_sign_dialog(session, sign_choice$pending(), c("ES001|GB001" = "+"))
       rv <- session$getReturned()()
       expect_equal(rv$adjacency_matrices$es_gb["ES001", "GB001"], "+medium:5")
   })
@@ -181,6 +185,7 @@ test_that("import replaces prior project state (no stale matrices/elements)", {
       session$flushReact()
       session$setInputs(import_confirm = 1)  # confirm replace
       session$flushReact()
+      answer_sign_dialog(session, sign_choice$pending(), c("ES001|GB001" = "+"))
 
       rv <- session$getReturned()()
       # B's fallback es_gb ("+Medium:Low") REPLACED A's faithful "+High:High"
@@ -257,6 +262,10 @@ test_that("legacy import gate: empty forward matrices + label-form LinkedX + dup
         name = "legacy.xlsx", size = 1, type = "", datapath = tmp, stringsAsFactors = FALSE))
       session$setInputs(import_data = 1)
       session$flushReact()
+      # the LinkedX-only links are asked for (evidenced polarity); sign them all
+      p <- sign_choice$pending()
+      expect_gte(length(p$keys), 3L)
+      answer_sign_dialog(session, p, setNames(rep("+", length(p$keys)), p$keys))
       rv <- session$getReturned()()
 
       # All elements loaded; the duplicate MPF id is reconciled to two unique ids.

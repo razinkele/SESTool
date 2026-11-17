@@ -28,6 +28,11 @@ test_that("adding + saving a response builds r_d (-) and gb_r (+) and persists",
     rid <- isa_data$r_panel_ids[[1]]
     set_panel_inputs(session, rid, name = "MSP", linkedgb = "GB002", linkedd = "D001")
     session$setInputs(save_responses = 1)
+    # new links carry no sign: the save asks for them (evidenced polarity)
+    expect_setequal(sign_choice$pending()$keys, c(paste0(rid, "|D001"), paste0(rid, "|GB002")))
+    answer_sign_dialog(session, sign_choice$pending(),
+                       setNames(c("-", "+"), c(paste0(rid, "|D001"), paste0(rid, "|GB002"))))
+    expect_null(sign_choice$pending())
 
     expect_equal(nrow(isa_data$responses), 1L)
     expect_true(grepl("^R[0-9]{3}$", isa_data$responses$ID[1]))
@@ -85,7 +90,8 @@ test_that("create_edges_df emits R->D and GB->R edges from a built responses mod
                                     stringsAsFactors = FALSE)
   )
   built <- build_response_matrices(isa)
-  isa$adjacency_matrices <- built$adjacency_matrices
+  isa$adjacency_matrices <- apply_chosen_signs(built$adjacency_matrices, built$unsigned_links,
+                                               c("R001|D001" = "-", "R001|GB002" = "+"))
   edges <- create_edges_df(isa, isa$adjacency_matrices)   # two args (verified signature)
   expect_true(any(grepl("^R_", edges$from)  & grepl("^D_", edges$to)))   # r_d edge
   expect_true(any(grepl("^GB_", edges$from) & grepl("^R_", edges$to)))   # gb_r edge
@@ -143,11 +149,14 @@ test_that("N62: the Responses form saves R->MPF and R->R links and reloads them"
     set_panel_inputs(session, r1, name = "MPA", linkedgb = "GB001",
                      linkedmpf = "MPF002: Seagrass", linkedr = paste0(r2, ": Monitoring"))
     session$setInputs(save_responses = 1)
+    answer_sign_dialog(session, sign_choice$pending(),
+                       setNames(c("+", "-", "+"),
+                                paste0(r1, "|", c("MPF002", r2, "GB001"))))
 
     am <- isa_data$adjacency_matrices
-    expect_equal(am$r_mpf[r1, "MPF002"], paste0(default_polarity_for_matrix("r_mpf"), "medium:3"))
+    expect_equal(am$r_mpf[r1, "MPF002"], "+medium:3")
     expect_equal(am$r_mpf[r1, "MPF001"], "")
-    expect_equal(am$r_r[r1, r2], paste0(default_polarity_for_matrix("r_r"), "medium:3"))
+    expect_equal(am$r_r[r1, r2], "-medium:3")
     expect_equal(sum(nzchar(am$r_r)), 1L)
     expect_equal(pd()$data$isa_data$adjacency_matrices$r_r[r1, r2], am$r_r[r1, r2])
 

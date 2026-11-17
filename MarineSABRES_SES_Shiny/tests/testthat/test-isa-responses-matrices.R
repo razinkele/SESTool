@@ -18,9 +18,18 @@ make_resp_isa <- function() {
   )
 }
 
+# New links come back unsigned (evidenced polarity); the save handler writes the
+# signs the user chooses with apply_chosen_signs().
+build_signed <- function(isa, signs = c("R001|D001" = "-", "R001|GB002" = "+")) {
+  out <- build_response_matrices(isa)
+  out$adjacency_matrices <- apply_chosen_signs(out$adjacency_matrices, out$unsigned_links, signs)
+  out
+}
+
 test_that("r_d is R x target with -medium:3 at the linked cell", {
   isa <- make_resp_isa()
-  out <- build_response_matrices(isa)
+  expect_equal(build_response_matrices(isa)$adjacency_matrices$r_d["R001", "D001"], "")
+  out <- build_signed(isa)
   m <- out$adjacency_matrices$r_d
   expect_equal(dim(m), c(1L, 1L))
   expect_equal(rownames(m), "R001"); expect_equal(colnames(m), "D001")
@@ -29,7 +38,7 @@ test_that("r_d is R x target with -medium:3 at the linked cell", {
 
 test_that("gb_r is GB x R (transposed) with +medium:3 at [GB002,R001], not [GB001,R001]", {
   isa <- make_resp_isa()
-  out <- build_response_matrices(isa)
+  out <- build_signed(isa)
   g <- out$adjacency_matrices$gb_r
   expect_equal(dim(g), c(2L, 1L))            # GB x R, not R x GB
   expect_equal(rownames(g), c("GB001","GB002"))
