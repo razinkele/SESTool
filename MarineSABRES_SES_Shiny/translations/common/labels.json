@@ -692,6 +692,39 @@
       "it": "non impostato",
       "no": "ikke satt",
       "el": "μη ορισμένο"
+    },
+    "common.polarity.model_left_out_unsigned": {
+      "en": "%d connections in this model have no sign and were left out. To sign them, open the model file in Import Data and choose the signs in the review.",
+      "es": "%d conexiones de este modelo no tienen signo y se dejaron fuera. Para asignarles un signo, abra el archivo del modelo en Importar Datos y elija los signos en la revisión.",
+      "fr": "%d connexions de ce modèle n'ont pas de signe et ont été laissées de côté. Pour leur donner un signe, ouvrez le fichier du modèle dans Importer des Données et choisissez les signes lors de la révision.",
+      "de": "%d Verbindungen in diesem Modell haben kein Vorzeichen und wurden ausgelassen. Um sie zu setzen, öffnen Sie die Modelldatei unter Daten importieren und wählen Sie die Vorzeichen in der Prüfung.",
+      "lt": "%d šio modelio ryšių neturi ženklo ir buvo praleisti. Norėdami juos pažymėti, atidarykite modelio failą skiltyje Importuoti duomenis ir peržiūroje pasirinkite ženklus.",
+      "pt": "%d conexões deste modelo não têm sinal e foram deixadas de fora. Para lhes atribuir um sinal, abra o arquivo do modelo em Importar Dados e escolha os sinais na revisão.",
+      "it": "%d connessioni di questo modello non hanno segno e sono state escluse. Per assegnarlo, apri il file del modello in Importa Dati e scegli i segni nella revisione.",
+      "no": "%d forbindelser i denne modellen har ikke fortegn og ble utelatt. For å gi dem fortegn, åpne modellfilen i Importer data og velg fortegnene i gjennomgangen.",
+      "el": "%d συνδέσεις αυτού του μοντέλου δεν έχουν πρόσημο και παραλείφθηκαν. Για να τους δώσετε πρόσημο, ανοίξτε το αρχείο του μοντέλου στην Εισαγωγή Δεδομένων και επιλέξτε τα πρόσημα στην αναθεώρηση."
+    },
+    "common.polarity.model_not_loaded_unsigned": {
+      "en": "This model was not loaded: none of its %d connections has a sign. Open the model file in Import Data and choose the signs in the review.",
+      "es": "Este modelo no se cargó: ninguna de sus %d conexiones tiene signo. Abra el archivo del modelo en Importar Datos y elija los signos en la revisión.",
+      "fr": "Ce modèle n'a pas été chargé : aucune de ses %d connexions n'a de signe. Ouvrez le fichier du modèle dans Importer des Données et choisissez les signes lors de la révision.",
+      "de": "Dieses Modell wurde nicht geladen: Keine seiner %d Verbindungen hat ein Vorzeichen. Öffnen Sie die Modelldatei unter Daten importieren und wählen Sie die Vorzeichen in der Prüfung.",
+      "lt": "Šis modelis neįkeltas: nė vienas iš jo %d ryšių neturi ženklo. Atidarykite modelio failą skiltyje Importuoti duomenis ir peržiūroje pasirinkite ženklus.",
+      "pt": "Este modelo não foi carregado: nenhuma das suas %d conexões tem sinal. Abra o arquivo do modelo em Importar Dados e escolha os sinais na revisão.",
+      "it": "Questo modello non è stato caricato: nessuna delle sue %d connessioni ha un segno. Apri il file del modello in Importa Dati e scegli i segni nella revisione.",
+      "no": "Denne modellen ble ikke lastet: ingen av de %d forbindelsene har fortegn. Åpne modellfilen i Importer data og velg fortegnene i gjennomgangen.",
+      "el": "Αυτό το μοντέλο δεν φορτώθηκε: καμία από τις %d συνδέσεις του δεν έχει πρόσημο. Ανοίξτε το αρχείο του μοντέλου στην Εισαγωγή Δεδομένων και επιλέξτε τα πρόσημα στην αναθεώρηση."
+    },
+    "common.polarity.closes_loop": {
+      "en": "Closes a feedback loop",
+      "es": "Cierra un bucle de retroalimentación",
+      "fr": "Ferme une boucle de rétroaction",
+      "de": "Schließt eine Rückkopplungsschleife",
+      "lt": "Uždaro grįžtamojo ryšio kilpą",
+      "pt": "Fecha um ciclo de retroalimentação",
+      "it": "Chiude un ciclo di retroazione",
+      "no": "Lukker en tilbakekoblingssløyfe",
+      "el": "Κλείνει έναν βρόχο ανάδρασης"
     }
   }
 }

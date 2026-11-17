@@ -674,29 +674,8 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
           return()
         }
 
-        isa_data <- convert_excel_to_isa(model_data$elements, model_data$connections)
-        # Connections without a "+"/"-" in the file are never written: log and leave out
-        if (!is.null(isa_data$unsigned) && nrow(isa_data$unsigned) > 0) {
-          debug_log(sprintf("%d unsigned connections left out of model %s: %s",
-                            nrow(isa_data$unsigned), model_data$file_name,
-                            paste(paste(isa_data$unsigned$From, "->", isa_data$unsigned$To), collapse = "; ")),
-                    "SES_MODELS")
-        }
-        isa_data$unsigned <- NULL
-        debug_log("ISA conversion complete", "SES_MODELS")
-
-        # Perform import (similar to import_data_module.R)
-        debug_log("Performing import", "SES_MODELS")
-        perform_ses_model_import(
-          isa_data,
-          model_data$elements,
-          model_data$connections,
-          model_data$file_name,
-          project_data_reactive,
-          event_bus,
-          parent_session,
-          i18n
-        )
+        # Convert, leave out unsigned rows (reported) and import
+        import_ses_model_data(model_data, project_data_reactive, event_bus, parent_session, i18n)
 
         rv$loading <- FALSE
         debug_log("Model load complete", "SES_MODELS")
@@ -736,6 +715,53 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
 # HELPER FUNCTIONS
 # ============================================================================
 
+#' Convert a loaded SES model and import it
+#'
+#' Connections without a "+"/"-" in the file are never written (evidenced
+#' polarity, ruling R8): they are left out, and the user is told how many and
+#' pointed to Import Data, where they can be signed in the review. A model
+#' whose every connection is unsigned is not loaded and the project is left
+#' untouched.
+#'
+#' @param model_data Result of load_ses_model_file() (elements, connections, file_name)
+#' @return Invisibly, the number of connections written (0 when not loaded)
+import_ses_model_data <- function(model_data, project_data_reactive, event_bus,
+                                  parent_session, i18n) {
+  isa_data <- convert_excel_to_isa(model_data$elements, model_data$connections)
+  n_unsigned <- if (is.null(isa_data$unsigned)) 0L else nrow(isa_data$unsigned)
+  isa_data$unsigned <- NULL   # report only; never stored in project data
+  n_written <- sum(vapply(isa_data$adjacency_matrices %||% list(),
+                          function(m) sum(!is.na(m) & m != ""), numeric(1)))
+  if (n_unsigned > 0) {
+    debug_log(sprintf("%d unsigned connections left out of model %s",
+                      n_unsigned, model_data$file_name), "SES_MODELS")
+    if (n_written == 0) {
+      showNotification(
+        sprintf(i18n$t("common.polarity.model_not_loaded_unsigned"), n_unsigned),
+        type = "error", duration = 15
+      )
+      return(invisible(0L))
+    }
+    showNotification(
+      sprintf(i18n$t("common.polarity.model_left_out_unsigned"), n_unsigned),
+      type = "warning", duration = 15
+    )
+  }
+  debug_log("ISA conversion complete", "SES_MODELS")
+  perform_ses_model_import(
+    isa_data,
+    model_data$elements,
+    model_data$connections,
+    model_data$file_name,
+    project_data_reactive,
+    event_bus,
+    parent_session,
+    i18n,
+    num_connections = n_written
+  )
+  invisible(n_written)
+}
+
 #' Perform SES model import
 #'
 #' Imports the converted ISA data into the project
@@ -748,12 +774,13 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
 #' @param event_bus Event bus for reactive pipeline
 #' @param parent_session Parent Shiny session for navigation
 #' @param i18n Translation object
+#' @param num_connections Connections actually written (unsigned rows are left out)
 perform_ses_model_import <- function(isa_data, elements, connections,
                                       file_name, project_data_reactive,
-                                      event_bus, parent_session, i18n) {
+                                      event_bus, parent_session, i18n,
+                                      num_connections = nrow(connections)) {
 
   num_elements <- nrow(elements)
-  num_connections <- nrow(connections)
 
   debug_log(paste("Importing model:", file_name), "SES_MODELS")
   debug_log(paste("Elements:", num_elements, ", Connections:", num_connections), "SES_MODELS")
