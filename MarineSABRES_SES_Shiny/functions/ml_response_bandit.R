@@ -39,7 +39,9 @@ BANDIT_CONFIG <- list(
   context_dim = 32L,
   arms = c("high", "medium", "low"),
   alpha = 1.0,                # exploration parameter
-  store_path = "data/ml_response_bandit_state.rds"
+  # tests point this at tempdir() (helper-0-bandit-store.R) so a run never
+  # writes state into the source tree
+  store_path = getOption("marinesabres.bandit_store_path", "data/ml_response_bandit_state.rds")
 )
 
 #' Initialize a fresh LinUCB bandit state

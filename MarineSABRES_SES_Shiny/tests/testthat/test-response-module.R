@@ -279,3 +279,12 @@ test_that("register api: returned by the server; update merges, re-normalises, F
     expect_equal(api$measures()$TenetSource[2], "Workshop W001 (2026-10-18, n = 3)")
   })
 })
+
+test_that("adding a measure keeps the bandit state out of the source tree", {
+  # save_response_bandit() resolves its default path from the working
+  # directory; under testthat that was tests/testthat/data/ (stray file).
+  rm_add(list(rm_name = "Gear ban", rm_type = "regulatory", rm_target = "pressures",
+              rm_status = "planned", rm_description = "", rm_mechanism = "", rm_target_element = "",
+              rm_effectiveness = "HIGH", rm_feasibility = "HIGH", rm_cost = 2))
+  expect_false(file.exists(file.path(getwd(), "data", "ml_response_bandit_state.rds")))
+})
