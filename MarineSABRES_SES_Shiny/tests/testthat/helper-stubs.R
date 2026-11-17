@@ -610,7 +610,7 @@ if (!.real_get_allowed_targets_exists) {
       list(
         name = paste("Suggested", target_type, "element"),
         type = target_type,
-        connection_polarity = "+",
+        connection_polarity = NA_character_,   # no evidence: the user picks the sign
         from_node = node_id,
         reasoning = "Stub suggestion"
       )
@@ -619,17 +619,6 @@ if (!.real_get_allowed_targets_exists) {
     existing_names <- if (is.data.frame(existing_network)) existing_network$name else character(0)
     suggestions <- Filter(function(s) !s$name %in% existing_names, suggestions)
     suggestions[seq_len(min(length(suggestions), max_suggestions))]
-  }
-}
-
-if (!.real_get_allowed_targets_exists) {
-  infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
-    from_lower <- tolower(from_name)
-    to_lower <- tolower(to_name)
-    if (grepl("quota|protect|mitigat|reduc", from_lower) || grepl("depletion|loss|degrad", to_lower)) {
-      return("-")
-    }
-    "+"
   }
 }
 

@@ -1250,6 +1250,11 @@ create_ghost_edge_data <- function(suggestion, ghost_index, i18n = NULL) {
     from = suggestion$from_node,
     to = ghost_id,
     polarity = suggestion$connection_polarity,
+    # citation behind an evidenced sign (always present so ghost rows rbind)
+    polarity_source = {
+      src <- suggestion$connection_polarity_source
+      if (length(src) == 1L && !is.na(src)) as.character(src) else NA_character_
+    },
     strength = suggestion$connection_strength,
     confidence = suggestion$connection_confidence,
     color = ghost_edge_color,

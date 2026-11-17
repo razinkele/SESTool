@@ -63,6 +63,7 @@ test_that("N6: non-canonical transitions are reported, not silently mis-filed", 
   cv <- canvas()
   isa <- convert_graphical_to_isa(cv$nodes, cv$edges, list())
   expect_equal(isa$metadata$edges_not_exported, 1L)               # D -> P has no ISA matrix
+  expect_equal(isa$metadata$edges_unsigned, 0L)                   # every canvas edge here is signed
   expect_false(any(nzchar(isa$adjacency_matrices$a_p["A001", setdiff(colnames(isa$adjacency_matrices$a_p), "P001")])))
 })
 

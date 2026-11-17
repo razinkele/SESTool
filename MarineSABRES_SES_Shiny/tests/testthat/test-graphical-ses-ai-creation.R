@@ -345,36 +345,20 @@ test_that("suggest_connected_elements handles empty network", {
   expect_type(suggestions, "list")
 })
 
-test_that("Connection polarity inference works correctly", {
-  # Positive polarity cases (implementation returns "+" or "-")
-  polarity1 <- infer_connection_polarity(
-    "Tourism demand",
-    "Beach tourism",
-    "Drivers",
-    "Activities"
+test_that("Connection polarity comes only from evidence", {
+  # Evidenced polarity: infer_connection_polarity() (rule defaults + keyword
+  # guesses) is gone; a suggestion's sign is an exact, sourced KB match or NA.
+  expect_false(exists("infer_connection_polarity"))
+  stub_kb(NULL)
+  suggestions <- suggest_connected_elements(
+    node_id = "D_1",
+    node_data = list(name = "Tourism demand", type = "Drivers"),
+    existing_network = data.frame(id = "D_1", name = "Tourism demand", type = "Drivers"),
+    context = list(regional_sea = "Mediterranean", main_issue = "Tourism pressure"),
+    max_suggestions = 3
   )
-  expect_true(polarity1 %in% c("+", "positive"))
-
-  # Negative polarity cases
-  polarity2 <- infer_connection_polarity(
-    "Commercial fishing",
-    "Fish stock depletion",
-    "Activities",
-    "State Changes"
-  )
-  expect_true(polarity2 %in% c("+", "-", "positive", "negative"))
-
-  # Test with Response->Driver (mitigation)
-  polarity3 <- tryCatch({
-    infer_connection_polarity(
-      "Fishing quotas",
-      "Overfishing pressure",
-      "Responses",
-      "Drivers"
-    )
-  }, error = function(e) "-")
-
-  expect_true(polarity3 %in% c("+", "-", "positive", "negative"))
+  expect_gt(length(suggestions), 0)
+  for (s in suggestions) expect_identical(s$connection_polarity, NA_character_)
 })
 
 # ==============================================================================

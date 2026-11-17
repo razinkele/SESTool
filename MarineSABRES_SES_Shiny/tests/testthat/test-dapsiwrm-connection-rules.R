@@ -119,79 +119,32 @@ test_that("get_allowed_targets returns empty for unknown type", {
 })
 
 # ==============================================================================
-# Test: infer_connection_polarity
+# Test: the rule table's recorded signs (documentation only)
 # ==============================================================================
+# infer_connection_polarity() / get_rule_default_polarity() were removed
+# (evidenced polarity): the table no longer fills in any connection's sign. It
+# still records the framework document's typical sign per transition.
 
-test_that("infer_connection_polarity returns + for Drivers to Activities", {
-  pol <- infer_connection_polarity(
-    "Food security need", "Commercial fishing",
-    "Drivers", "Activities"
-  )
-  expect_equal(pol, "+")
+test_that("the rule table records the framework's typical signs", {
+  tp <- function(from, to) DAPSIWRM_ADJACENCY_RULES[[from]]$target_polarities[[to]]
+  expect_equal(tp("Drivers", "Activities"), "+")
+  expect_equal(tp("Activities", "Pressures"), "+")
+  expect_equal(tp("Pressures", "Marine Processes & Functioning"), "-")
+  expect_equal(tp("Responses", "Activities"), "-")
+  expect_equal(tp("Responses", "Marine Processes & Functioning"), "+")
 })
 
-test_that("infer_connection_polarity returns + for Activities to Pressures (default)", {
-  pol <- infer_connection_polarity(
-    "Trawl fishing", "Seabed disturbance",
-    "Activities", "Pressures"
-  )
-  expect_equal(pol, "+")
+test_that("recorded signs are among each rule's allowed polarities", {
+  for (type_name in names(DAPSIWRM_ADJACENCY_RULES)) {
+    rule <- DAPSIWRM_ADJACENCY_RULES[[type_name]]
+    expect_true(all(rule$target_polarities %in% rule$allowed_polarities),
+                info = type_name)
+  }
 })
 
-test_that("infer_connection_polarity returns - for treatment Activities", {
-  pol <- infer_connection_polarity(
-    "Wastewater treatment", "Nutrient pollution",
-    "Activities", "Pressures"
-  )
-  expect_equal(pol, "-")
-})
-
-test_that("infer_connection_polarity returns - for reduction Activities", {
-  pol <- infer_connection_polarity(
-    "Emission reduction", "Air pollution",
-    "Activities", "Pressures"
-  )
-  expect_equal(pol, "-")
-})
-
-test_that("infer_connection_polarity handles Pressures to State (decline)", {
-  pol <- infer_connection_polarity(
-    "Overfishing", "Fish population decline",
-    "Pressures", "Marine Processes & Functioning"
-  )
-  expect_equal(pol, "+")  # Pressure increases decline
-})
-
-test_that("infer_connection_polarity handles Pressures to State (quality)", {
-  pol <- infer_connection_polarity(
-    "Pollution", "Water quality",
-    "Pressures", "Marine Processes & Functioning"
-  )
-  expect_equal(pol, "-")  # Pressure decreases quality
-})
-
-test_that("infer_connection_polarity returns - for Responses to Activities", {
-  pol <- infer_connection_polarity(
-    "Fishing quota", "Commercial fishing",
-    "Responses", "Activities"
-  )
-  expect_equal(pol, "-")
-})
-
-test_that("infer_connection_polarity returns + for restoration Responses", {
-  pol <- infer_connection_polarity(
-    "Habitat restoration", "Seagrass habitat",
-    "Responses", "Marine Processes & Functioning"
-  )
-  expect_equal(pol, "+")
-})
-
-test_that("infer_connection_polarity defaults to + for unknown types", {
-  pol <- infer_connection_polarity(
-    "Something", "Something else",
-    "Unknown", "Activities"
-  )
-  expect_equal(pol, "+")
+test_that("no rule-table sign inference is left", {
+  expect_false(exists("infer_connection_polarity"))
+  expect_false(exists("get_rule_default_polarity"))
 })
 
 # ==============================================================================

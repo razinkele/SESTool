@@ -402,6 +402,18 @@ graphical_ses_creator_ui <- function(id, i18n) {
 }
 
 
+#' Input id of the sign picker for one ghost suggestion
+#'
+#' Ghost ids restart at GHOST_1 on every expansion, so the id also carries the
+#' expansion counter; a sign picked for an earlier suggestion never applies to
+#' a later one.
+#' @param batch expansion counter (rv$ghost_batch)
+#' @param ghost_id ghost node id, e.g. "GHOST_1"
+graphical_ghost_sign_id <- function(batch, ghost_id) {
+  paste0("ghost_sign_", batch, "_", ghost_id)
+}
+
+
 #' Graphical SES Creator Server
 #'
 #' Server logic for the graphical SES creator module
@@ -468,6 +480,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       network_edges = data.frame(),
       ghost_nodes = data.frame(),
       ghost_edges = data.frame(),
+      ghost_batch = 0,  # expansion counter, part of each ghost's sign-picker id
 
       # UI state
       selected_node_id = NULL,
@@ -957,13 +970,20 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
       # Check if ghost node
       if (startsWith(clicked_id, "GHOST_")) {
-        # Accept ghost node
+        # Accept ghost node (waits for a sign when the connection has none)
         accept_ghost_node(clicked_id)
       } else {
         # Select permanent node
         rv$selected_node_id <- clicked_id
         clear_ghost_nodes()  # Clear any existing ghosts
       }
+    })
+
+    # Suggestion-panel card click: accept that ghost (same rules as a canvas click)
+    observeEvent(input$accept_ghost, {
+      ghost_id <- as.character(input$accept_ghost)
+      req(length(ghost_id) == 1L, startsWith(ghost_id, "GHOST_"))
+      accept_ghost_node(ghost_id)
     })
 
     # v1.16.0: collaborative-filter "add this suggestion" observer.
@@ -1053,21 +1073,37 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         return()
       }
 
+      # Evidenced polarity: the sign is the user's pick in the suggestion panel,
+      # else the evidenced sign the ghost edge carries. With neither, nothing is
+      # added; the picker in the suggestion panel asks for it.
+      ghost_edge <- rv$ghost_edges[rv$ghost_edges$to == ghost_id, ]
+      has_edge <- nrow(ghost_edge) > 0
+      evidenced_sign <- if (has_edge) read_polarity_pick(ghost_edge$polarity[1]) else NA_character_
+      picked_sign <- read_polarity_pick(input[[graphical_ghost_sign_id(rv$ghost_batch, ghost_id)]])
+      sign <- if (!is.na(picked_sign)) picked_sign else evidenced_sign
+      if (has_edge && is.na(sign)) {
+        showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
+        debug_log(paste("Ghost node waits for a sign:", ghost_id), "GRAPHICAL SES")
+        return()
+      }
+
       # Log user feedback on connection (if ML was used)
       if (exists("ML_AVAILABLE") && ML_AVAILABLE && exists("log_connection_feedback")) {
         # Find the source node
-        ghost_edge <- rv$ghost_edges[rv$ghost_edges$to == ghost_id, ]
-        if (nrow(ghost_edge) > 0) {
+        if (has_edge) {
           source_node <- rv$network_nodes[rv$network_nodes$id == ghost_edge$from[1], ]
 
           if (nrow(source_node) > 0) {
-            # Create ML prediction object (reconstruct from ghost node data)
+            # Create ML prediction object (reconstruct from ghost node data).
+            # The suggested sign is the evidenced one or NA, never an invented "+".
             ml_prediction <- list(
               existence_probability = 1.0,  # User accepted, so exists
               strength = ghost_edge$strength %||% "medium",
               confidence = ghost_edge$confidence %||% 3,
-              polarity = ghost_edge$polarity %||% "+"
+              polarity = evidenced_sign
             )
+            user_properties <- ml_prediction
+            user_properties$polarity <- sign
 
             tryCatch({
               log_connection_feedback(
@@ -1075,7 +1111,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 target_element = list(name = ghost_node$name, type = ghost_node$type),
                 ml_prediction = ml_prediction,
                 user_action = "accepted",
-                user_properties = ml_prediction,
+                user_properties = user_properties,
                 context = rv$context,
                 session_id = session$token
               )
@@ -1102,13 +1138,24 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       rv$network_nodes <- rbind(rv$network_nodes, permanent_node)
 
       # Add edge
-      ghost_edge <- rv$ghost_edges[rv$ghost_edges$to == ghost_id, ]
-      if (nrow(ghost_edge) > 0) {
-        permanent_edge <- ghost_edge
+      if (has_edge) {
+        permanent_edge <- ghost_edge[1, , drop = FALSE]
         permanent_edge$to <- new_node_id
         permanent_edge$id <- paste0("EDGE_", nrow(rv$network_edges) + 1)
         permanent_edge$is_ghost <- FALSE
         permanent_edge$dashes <- FALSE
+        if (!identical(sign, evidenced_sign)) {
+          # The user chose the sign: the citation no longer applies, and the
+          # edge's colour and tooltip follow the chosen sign
+          permanent_edge$polarity <- sign
+          permanent_edge$polarity_source <- NA_character_
+          styled <- create_ghost_edge_data(list(
+            from_node = permanent_edge$from, connection_polarity = sign,
+            connection_strength = permanent_edge$strength,
+            connection_confidence = permanent_edge$confidence), 0, i18n = i18n)
+          permanent_edge$color <- styled$color
+          permanent_edge$title <- styled$title
+        }
 
         rv$network_edges <- rbind(rv$network_edges, permanent_edge)
       }
@@ -1183,7 +1230,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
               existence_probability = ghost_node$ml_score %||% 0.5,
               strength = ghost_edge$strength %||% "medium",
               confidence = ghost_edge$confidence %||% 3,
-              polarity = ghost_edge$polarity %||% "+"
+              # evidenced sign or NA; never an invented "+"
+              polarity = read_polarity_pick(ghost_edge$polarity[1])
             )
 
             tryCatch({
@@ -1333,15 +1381,27 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
               div(style = "max-height: 400px; overflow-y: auto;",
                 lapply(1:nrow(rv$ghost_nodes), function(i) {
                   ghost <- rv$ghost_nodes[i, ]
+                  g_edge <- rv$ghost_edges[rv$ghost_edges$to == ghost$id, , drop = FALSE]
+                  g_sign <- if (nrow(g_edge) > 0) read_polarity_pick(g_edge$polarity[1]) else NA_character_
+                  g_src <- if (nrow(g_edge) > 0 && "polarity_source" %in% names(g_edge))
+                    g_edge$polarity_source[1] else NA_character_
                   div(class = "ghost-suggestion",
                     div(
                       onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'});",
-                                       ns("node_clicked"), ghost$id),
+                                       ns("accept_ghost"), ghost$id),
                       div(class = "suggestion-name", ghost$name),
                       div(class = "suggestion-type", icon("tag"), " ", ghost$type),
                       div(class = "suggestion-connection",
                         icon("arrow-right"), " ", i18n$t("modules.graphical_ses_creator.click_to_add"))
                     ),
+                    # Sign picker: a sibling of the clickable area so its
+                    # buttons do not accept the ghost. Unset unless evidenced;
+                    # an evidenced sign shows its citation.
+                    if (nrow(g_edge) > 0) {
+                      polarity_picker_input(ns(graphical_ghost_sign_id(rv$ghost_batch, ghost$id)),
+                                            i18n, selected = g_sign,
+                                            evidence_source = if (is.na(g_sign)) NA_character_ else g_src)
+                    },
                     div(class = "suggestion-feedback",
                       ses_ml_feedback_buttons(ns, prediction_id = ghost$id, i18n = i18n)
                     )
@@ -1427,6 +1487,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
       # Create ghost nodes
       clear_ghost_nodes()
+      rv$ghost_batch <- rv$ghost_batch + 1  # fresh sign-picker ids for this expansion
 
       for (i in seq_along(suggestions)) {
         ghost_node <- create_ghost_node_data(suggestions[[i]], i, i18n = i18n)

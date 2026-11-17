@@ -18,7 +18,9 @@
 #'   is_valid_dapsirwrm_transition()) but are not offered as suggestions.
 #' - `target_polarities`: default polarity per target type (canonical and
 #'   extension). `default_polarity` is the per-source fallback.
-#' The sign fields no longer seed matrix cells (evidenced polarity); the table
+#' The sign fields record the framework document's typical signs only. Nothing
+#' reads them to fill in a connection's sign (evidenced polarity: no matrix
+#' cell, graphical ghost edge or suggestion is seeded from them); the table
 #' decides which transitions are valid.
 #'
 #' @format List of allowed connections with polarity and examples
@@ -366,101 +368,6 @@ get_allowed_targets <- function(source_type, include_extensions = FALSE) {
 #' @param rule one DAPSIWRM_ADJACENCY_RULES entry
 #' @return character vector
 .rule_all_targets <- function(rule) unique(c(rule$targets, rule$extension_targets))
-
-#' Default polarity for a DAPSIWRM transition, from the rule table
-#'
-#' Used only by infer_connection_polarity() (graphical creator); it no longer
-#' seeds Standard Entry matrix cells (evidenced polarity). Removed in Task 7.
-#'
-#' @param from_type Source DAPSIWRM type (table name, e.g. "Pressures")
-#' @param to_type Target DAPSIWRM type
-#' @param fallback returned when the transition is not in the table
-#' @return "+" or "-"
-#' @export
-get_rule_default_polarity <- function(from_type, to_type, fallback = "+") {
-  if (!exists("DAPSIWRM_ADJACENCY_RULES") || is.null(from_type) ||
-      !from_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
-    return(fallback)
-  }
-  rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
-  tp <- rule$target_polarities
-  if (!is.null(to_type) && !is.null(tp) && to_type %in% names(tp)) {
-    return(unname(tp[[to_type]]))
-  }
-  if (!is.null(to_type) && to_type %in% .rule_all_targets(rule)) {
-    return(rule$default_polarity)
-  }
-  fallback
-}
-
-
-#' Infer Connection Polarity
-#'
-#' Determines the most likely polarity (+/-) for a connection between two elements
-#'
-#' @param from_name Source element name
-#' @param to_name Target element name
-#' @param from_type Source DAPSIWRM type
-#' @param to_type Target DAPSIWRM type
-#' @return Character: "+" or "-"
-#' @export
-infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
-
-  # Get rule for this connection
-  if (!from_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
-    return("+")  # Default positive
-  }
-
-  rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
-
-  # Check if target type is allowed
-  if (!to_type %in% .rule_all_targets(rule)) {
-    log_warning("DAPSIWRM", paste("Connection", from_type, "->", to_type, "not in standard DAPSIWRM framework"))
-    return("+")
-  }
-
-  # Use the per-target default polarity from the rule table
-  default_pol <- get_rule_default_polarity(from_type, to_type)
-
-  # Check for negative keywords that might reverse polarity
-  from_lower <- tolower(from_name)
-  to_lower <- tolower(to_name)
-
-  # Special cases for Activities → Pressures
-  if (from_type == "Activities" && to_type == "Pressures") {
-    # If activity is about treatment/reduction, polarity is negative
-    if (grepl("treatment|reduction|control|mitigation|restoration", from_lower)) {
-      return("-")
-    }
-    return("+")  # Most activities create pressures
-  }
-
-  # Special cases for Pressures → State
-  if (from_type == "Pressures" && to_type == "Marine Processes & Functioning") {
-    # Check if "to" is negative (decline, loss) or positive (quality, health)
-    if (grepl("decline|loss|depletion|degradation|mortality", to_lower)) {
-      return("+")  # Pressure increases decline
-    } else if (grepl("quality|health|abundance|biodiversity|resilience", to_lower)) {
-      return("-")  # Pressure decreases quality
-    }
-    return("-")  # Default: pressures harm state
-  }
-
-  # Special cases for Responses
-  if (from_type == "Responses") {
-    # Check target type
-    if (to_type %in% c("Drivers", "Activities", "Pressures")) {
-      return("-")  # Responses typically reduce these
-    } else if (to_type == "Marine Processes & Functioning") {
-      # Rule 12: restoration AND protection raise state ("Marine protected
-      # areas" -> "Increase fish stocks" (+)). Use the rule-table default so
-      # the graphical builder and Standard Entry seed the same sign (N61).
-      return(default_pol)
-    }
-  }
-
-  return(default_pol)
-}
 
 
 #' Infer Connection Strength

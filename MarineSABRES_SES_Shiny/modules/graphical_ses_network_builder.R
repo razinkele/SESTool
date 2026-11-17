@@ -95,13 +95,11 @@ suggest_connected_elements <- function(node_id, node_data, existing_network,
     top_suggestions <- head(prioritized_suggestions, n_per_type)
 
     for (suggestion_name in top_suggestions) {
-      # Determine connection properties
-      polarity <- infer_connection_polarity(
-        node_data$name,
-        suggestion_name,
-        node_data$type,
-        target_type
-      )
+      # Determine connection properties. The sign comes only from evidence
+      # (an exact, sourced KB match); otherwise it stays NA and the user picks it.
+      evidence <- graphical_polarity_evidence(node_data$name, node_data$type,
+                                              suggestion_name, target_type)
+      polarity <- evidence$polarity
 
       strength <- infer_connection_strength(
         node_data$name,
@@ -120,6 +118,7 @@ suggest_connected_elements <- function(node_id, node_data, existing_network,
         type = target_type,
         from_node = node_id,
         connection_polarity = polarity,
+        connection_polarity_source = evidence$source,
         connection_strength = strength,
         connection_confidence = confidence,
         reasoning = generate_suggestion_reasoning(
@@ -194,6 +193,24 @@ dapsiwrm_type_to_category <- function(dapsiwrm_type) {
 }
 
 
+#' Evidenced sign for a graphical connection
+#'
+#' Wraps evidenced_polarity() with the canvas -> knowledge-base type mapping
+#' (the KB keys connections by category: "activities", "states", ...). Only an
+#' exact, sourced KB match counts; rule-table defaults, keyword guesses and
+#' loop-opportunity guesses never supply a sign.
+#'
+#' @return list(polarity = "+"|"-"|NA_character_, source = citation|NA_character_)
+graphical_polarity_evidence <- function(from_name, from_type, to_name, to_type) {
+  kb_type <- function(t) {
+    k <- unname(dapsiwrm_type_to_category(t))
+    if (length(k) != 1L || is.na(k)) tolower(t) else k
+  }
+  evidenced_polarity(from_name = from_name, from_type = kb_type(from_type),
+                     to_name = to_name, to_type = kb_type(to_type))
+}
+
+
 #' Generate Suggestion Reasoning
 #'
 #' Creates human-readable explanation for why an element was suggested
@@ -212,7 +229,9 @@ generate_suggestion_reasoning <- function(from_name, to_name, from_type,
   conn_desc <- get_connection_description(from_type, to_type)
 
   # Build reasoning
-  polarity_word <- if (polarity == "+") "increases" else "decreases"
+  # an unset sign (NA) gets a neutral verb
+  polarity_word <- if (!isTRUE(polarity %in% c("+", "-"))) "affects"
+                   else if (polarity == "+") "increases" else "decreases"
   strength_word <- if (strength == "strong") "strongly" else "moderately"
 
   reasoning <- paste0(
@@ -282,6 +301,7 @@ convert_graphical_to_isa <- function(nodes, edges, context) {
   pairs <- graphical_isa_matrix_pairs()
   am <- list(); ue <- list()
   dropped <- 0L
+  unsigned <- 0L
   if (nrow(edges) > 0 && all(c("from", "to") %in% names(edges))) {
     for (i in seq_len(nrow(edges))) {
       f <- as.character(edges$from[i]); t <- as.character(edges$to[i])
@@ -292,16 +312,24 @@ convert_graphical_to_isa <- function(nodes, edges, context) {
       mk <- pairs$key[pairs$src == fk & pairs$tgt == tk]
       if (length(mk) == 0) { dropped <- dropped + 1L; next }   # non-canonical transition
       mk <- mk[1]
+      cell <- graphical_edge_cell(edges, i)
+      if (is.na(cell)) {
+        # Never write a missing sign (evidenced polarity): skip the edge
+        unsigned <- unsigned + 1L
+        debug_log(sprintf("Edge %s -> %s has no sign; not exported", f, t), "ISA EXPORT")
+        next
+      }
       if (is.null(am[[mk]])) {
         r <- isa_data[[fk]]$ID; c <- isa_data[[tk]]$ID
         am[[mk]] <- matrix("", length(r), length(c), dimnames = list(r, c))
         ue[[mk]] <- matrix(FALSE, length(r), length(c), dimnames = list(r, c))
       }
-      am[[mk]][fe, te] <- graphical_edge_cell(edges, i)
+      am[[mk]][fe, te] <- cell
       ue[[mk]][fe, te] <- TRUE
     }
   }
   if (dropped > 0) debug_log(sprintf("%d edge(s) outside the canonical DAPSIWRM matrices not exported", dropped), "ISA EXPORT")
+  if (unsigned > 0) debug_log(sprintf("%d unsigned edge(s) not exported", unsigned), "ISA EXPORT")
 
   # matrices are stored GB x R for gb_r; everything else SOURCE x TARGET
   # ---- Linked* columns, so a later ISA save does not clear the edges --------
@@ -346,6 +374,7 @@ convert_graphical_to_isa <- function(nodes, edges, context) {
     node_count = nrow(nodes),
     edge_count = nrow(edges),
     edges_not_exported = dropped,
+    edges_unsigned = unsigned,
     nodes_not_exported = unmapped
   )
   debug_log("Export complete", "ISA EXPORT")
@@ -404,11 +433,18 @@ graphical_isa_matrix_pairs <- function() {
 }
 
 #' Matrix cell for one canvas edge: '<+|-><strong|medium|weak>:<1-5>'
+#'
+#' Returns NA_character_ when the edge has no recognisable sign (no "+" is
+#' invented); the ISA export skips such edges.
 #' @param edges edge data.frame; @param i row index
 graphical_edge_cell <- function(edges, i) {
   g <- function(col) if (col %in% names(edges)) as.character(edges[[col]][i]) else NA_character_
   pol <- tolower(trimws(g("polarity")))
-  pol <- if (!is.na(pol) && pol %in% c("-", "negative", "opposing", "minus")) "-" else "+"
+  pol <- if (is.na(pol)) NA_character_
+         else if (pol %in% c("-", "negative", "opposing", "minus")) "-"
+         else if (pol %in% c("+", "positive", "reinforcing", "plus")) "+"
+         else NA_character_
+  if (is.na(pol)) return(NA_character_)
   st <- tolower(trimws(g("strength")))
   st <- if (is.na(st)) "medium" else switch(st, "strong" = , "high" = "strong", "weak" = , "low" = "weak", "medium")
   conf <- suppressWarnings(as.integer(g("confidence")))
@@ -827,13 +863,14 @@ analyze_network_topology_for_suggestions <- function(node_id, node_data,
       top_completeness <- head(completeness_suggestions, 2)
 
       for (sug_name in top_completeness) {
+        evidence <- graphical_polarity_evidence(node_data$name, node_data$type,
+                                                sug_name, missing_type)
         suggestions[[length(suggestions) + 1]] <- list(
           name = sug_name,
           type = missing_type,
           from_node = node_id,
-          connection_polarity = infer_connection_polarity(
-            node_data$name, sug_name, node_data$type, missing_type
-          ),
+          connection_polarity = evidence$polarity,
+          connection_polarity_source = evidence$source,
           connection_strength = "medium",
           connection_confidence = 0.75,
           reasoning = paste0("Completes network structure (adds missing ",
@@ -852,11 +889,16 @@ analyze_network_topology_for_suggestions <- function(node_id, node_data,
     )
 
     for (loop_opp in loop_opportunities) {
+      # The loop guess never supplies a sign (loop_type is for display only);
+      # only KB evidence for this pair can.
+      evidence <- graphical_polarity_evidence(node_data$name, node_data$type,
+                                              loop_opp$target_name, loop_opp$target_type)
       suggestions[[length(suggestions) + 1]] <- list(
         name = loop_opp$target_name,
         type = loop_opp$target_type,
         from_node = node_id,
-        connection_polarity = loop_opp$polarity,
+        connection_polarity = evidence$polarity,
+        connection_polarity_source = evidence$source,
         connection_strength = "strong",
         connection_confidence = 0.85,
         reasoning = paste0("Creates ", loop_opp$loop_type, " feedback loop"),
@@ -918,8 +960,8 @@ identify_loop_opportunities <- function(node_data, existing_network, allowed_tar
         opportunities[[length(opportunities) + 1]] <- list(
           target_name = target$name,
           target_type = target$type,
-          polarity = if (loop_type == "balancing") "-" else "+",
-          loop_type = loop_type
+          polarity = NA_character_,  # a loop guess is not evidence
+          loop_type = loop_type      # display only
         )
       }
     }
@@ -998,13 +1040,14 @@ analyze_causal_chains_for_suggestions <- function(node_id, node_data,
 
       # Take top 2 chain-completion suggestions
       for (sug_name in head(combined, 2)) {
+        evidence <- graphical_polarity_evidence(node_data$name, node_data$type,
+                                                sug_name, immediate_next)
         suggestions[[length(suggestions) + 1]] <- list(
           name = sug_name,
           type = immediate_next,
           from_node = node_id,
-          connection_polarity = infer_connection_polarity(
-            node_data$name, sug_name, node_data$type, immediate_next
-          ),
+          connection_polarity = evidence$polarity,
+          connection_polarity_source = evidence$source,
           connection_strength = "strong",
           connection_confidence = 0.80,
           reasoning = paste0("Completes causal chain (", node_data$type,
@@ -1041,13 +1084,14 @@ analyze_causal_chains_for_suggestions <- function(node_id, node_data,
           )
 
           for (sug_name in head(bridge_suggestions, 1)) {
+            evidence <- graphical_polarity_evidence(node_data$name, node_data$type,
+                                                    sug_name, bridge_type)
             suggestions[[length(suggestions) + 1]] <- list(
               name = sug_name,
               type = bridge_type,
               from_node = node_id,
-              connection_polarity = infer_connection_polarity(
-                node_data$name, sug_name, node_data$type, bridge_type
-              ),
+              connection_polarity = evidence$polarity,
+              connection_polarity_source = evidence$source,
               connection_strength = "medium",
               connection_confidence = 0.70,
               reasoning = paste0("Bridges gap to existing ", existing_future[1], " elements"),

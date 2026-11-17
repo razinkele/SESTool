@@ -128,15 +128,14 @@ test_that("N61: extension transitions validate in strict mode but are not sugges
   expect_equal(get_allowed_targets("Pressures"), "Marine Processes & Functioning")
 })
 
-test_that("N61: infer_connection_polarity uses per-target defaults for extensions", {
-  expect_equal(infer_connection_polarity("Nutrient enrichment", "Cyanobacteria bloom",
-                                         "Pressures", "Pressures"), "+")
-  expect_equal(infer_connection_polarity("MPA", "Monitoring programme",
-                                         "Responses", "Responses"), "+")
-  # R -> MPF per-target default (infer_connection_polarity goes in Task 7)
-  expect_equal(infer_connection_polarity("Marine protected area", "Fish stocks",
-                                         "Responses", "Marine Processes & Functioning"),
-               DAPSIWRM_ADJACENCY_RULES$Responses$target_polarities[["Marine Processes & Functioning"]])
+test_that("N61: the rule table records per-target signs for extensions", {
+  # infer_connection_polarity() was removed (evidenced polarity); the table
+  # itself still records the doc's sign for each extension transition.
+  tp <- function(f, t) DAPSIWRM_ADJACENCY_RULES[[f]]$target_polarities[[t]]
+  expect_equal(tp("Pressures", "Pressures"), "+")
+  expect_equal(tp("Responses", "Responses"), "+")
+  expect_equal(tp("Responses", "Marine Processes & Functioning"), "+")   # Rule 12
+  expect_false(exists("infer_connection_polarity"))
 })
 
 # ---------------------------------------------------------------------------
