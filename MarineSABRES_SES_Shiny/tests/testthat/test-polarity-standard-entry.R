@@ -446,3 +446,35 @@ test_that("a legacy unsigned marker in a user-edited cell is not kept as the suf
                                    chosen_signs = c("D1|A1" = "+"))
   expect_equal(r2$matrix["D1", "A1"], "+medium:3")
 })
+
+test_that("loop builder: Add with the effect unset says why (final review M4)", {
+  toasts <- stub_notifications()
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$drivers <- data.frame(ID = "D001", Name = "Demand", stringsAsFactors = FALSE)
+    isa_data$goods_benefits <- data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE)
+    session$setInputs(loop_driver = "D001", loop_gb = "GB001", loop_effect = "",
+                      loop_strength = "medium", loop_confidence = 3)
+    session$setInputs(add_loop = 1)
+    expect_true(any(grepl("approve_blocked", toasts$texts, fixed = TRUE)))
+  })
+})
+
+test_that("Exercise 6 save writes no gb_d cell for a loop connection without a sign (final review M3)", {
+  pd <- reactiveVal(list(data = list(isa_data = list())))
+  testServer(isa_data_entry_server, args = list(project_data_reactive = pd, i18n = se_i18n), {
+    session$setInputs(adj_matrix_select = "d_a")
+    isa_data$drivers <- data.frame(ID = c("D001", "D002"), Name = c("Demand", "Jobs"), stringsAsFactors = FALSE)
+    isa_data$goods_benefits <- data.frame(ID = "GB001", Name = "Food", stringsAsFactors = FALSE)
+    # a legacy project / workbook Loop sheet with one empty Effect
+    isa_data$loop_connections <- data.frame(
+      DriverID = c("D001", "D002"), GBID = c("GB001", "GB001"), Effect = c("", "-"),
+      Strength = c("medium", "strong"), Confidence = c(3, 4), Mechanism = c("", ""),
+      stringsAsFactors = FALSE)
+    session$setInputs(save_ex6 = 1)
+    m <- isa_data$adjacency_matrices$gb_d
+    expect_equal(m["GB001", "D001"], "")
+    expect_equal(m["GB001", "D002"], "-strong:4")
+  })
+})

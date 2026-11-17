@@ -183,3 +183,25 @@ test_that("a sign picked while reviewing one template is not applied to another"
     expect_equal(substr(cell, 1, 1), b1$polarity)   # the template's own sign, not A's pick
   })
 })
+
+# Final review M3: template finalize skips (and logs) a connection without a sign
+test_that("template finalize writes no cell for a connection without a sign", {
+  pdr <- reactiveVal(init_session_data())
+  testServer(template_ses_server,
+             args = list(project_data_reactive = pdr, i18n = i18n), {
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(review_connections = 1)
+    n <- length(rv$template_connections)
+    c1 <- rv$template_connections[[1]]
+    rv$template_connections[[1]]$polarity <- NA_character_
+    session$setInputs(finalize_template = 1)
+    mats <- pdr()$data$isa_data$adjacency_matrices
+    cells <- unlist(lapply(mats, function(m) m[m != ""]))
+    expect_false(any(startsWith(cells, "NA")))
+    expect_true(all(substr(cells, 1, 1) %in% c("+", "-")))
+    for (m in mats) {
+      if (c1$from_id %in% rownames(m) && c1$to_id %in% colnames(m)) expect_equal(m[c1$from_id, c1$to_id], "")
+    }
+    expect_equal(pdr()$data$metadata$connections_count, length(cells))
+  })
+})

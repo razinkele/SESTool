@@ -1898,8 +1898,12 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Add loop connection ----
     observeEvent(input$add_loop, {
-      req(input$loop_driver, input$loop_gb, input$loop_effect, input$loop_strength, input$loop_confidence)
-      req(input$loop_effect %in% c("+", "-"))   # the effect starts unset: no invented sign
+      req(input$loop_driver, input$loop_gb, input$loop_strength, input$loop_confidence)
+      # The effect starts unset: no invented sign, and say why nothing was added
+      if (!isTRUE(input$loop_effect %in% c("+", "-"))) {
+        showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
+        return()
+      }
 
       new_connection <- data.frame(
         DriverID = input$loop_driver,
@@ -1953,6 +1957,12 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
           gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
           d_idx <- which(isa_data$drivers$ID == conn$DriverID)
 
+          # Never write a cell without a sign (legacy rows, workbook Loop sheets)
+          if (!isTRUE(as.character(conn$Effect) %in% c("+", "-"))) {
+            debug_log(sprintf("Skipping loop connection without a sign: %s -> %s",
+                              conn$GBID, conn$DriverID), "ISA_ENTRY")
+            next
+          }
           if (length(gb_idx) > 0 && length(d_idx) > 0) {
             # Format: "effect+strength:confidence"
             value <- paste0(conn$Effect, conn$Strength, ":", conn$Confidence)

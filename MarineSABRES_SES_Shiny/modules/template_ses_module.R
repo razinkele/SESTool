@@ -1133,9 +1133,15 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         return(x)
       }
 
+      n_written <- 0L
       for (conn in final_connections) {
         from_id <- as.character(conn$from_id)
         to_id <- as.character(conn$to_id)
+        # Never write a cell without a sign (no NA, "" or invented "+")
+        if (!isTRUE(conn$polarity %in% c("+", "-"))) {
+          debug_log(sprintf("Skipping connection without a sign: '%s' -> '%s'", from_id, to_id), "TEMPLATE-CONN")
+          next
+        }
         value <- paste0(conn$polarity, conn$strength, ":", conn$confidence)
         assigned <- FALSE
         for (matrix_name in names(adj_matrices)) {
@@ -1143,6 +1149,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
           if (!is.na(from_id) && !is.na(to_id) && from_id %in% rownames(mat) && to_id %in% colnames(mat)) {
             adj_matrices[[matrix_name]][from_id, to_id] <- value
             assigned <- TRUE
+            n_written <- n_written + 1L
             break
           }
         }
@@ -1156,7 +1163,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       # Update metadata
       project_data$data$metadata$template_used <- i18n$t(template$name_key)
       project_data$data$metadata$connections_reviewed <- TRUE
-      project_data$data$metadata$connections_count <- length(final_connections)
+      project_data$data$metadata$connections_count <- n_written
       project_data$data$metadata$source <- "template_reviewed_load"  # Flag to prevent AI ISA auto-save overwrite
       project_data$last_modified <- Sys.time()
 
@@ -1166,14 +1173,14 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       # Emit ISA change event to trigger CLD regeneration
       if (!is.null(event_bus)) {
         event_bus$emit_isa_change()
-        debug_log(sprintf("Emitted ISA change event with %d connections", length(final_connections)), "TEMPLATE")
+        debug_log(sprintf("Emitted ISA change event with %d connections", n_written), "TEMPLATE")
       }
 
       # Show success message
       showNotification(
         sprintf(i18n$t("modules.ses.creation.template_s_loaded_with_d_connections"),
                 i18n$t(template$name_key),
-                length(final_connections)),
+                n_written),
         type = "message",
         duration = 5
       )
