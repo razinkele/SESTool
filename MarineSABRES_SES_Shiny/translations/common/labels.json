@@ -660,6 +660,17 @@
       "no": "%d forbindelser hadde fortsatt ikke fortegn og ble ikke importert. Velg fortegn i Gjennomgang, eller importer på nytt.",
       "el": "%d συνδέσεις δεν είχαν ακόμη πρόσημο και δεν εισήχθησαν. Επιλέξτε πρόσημο στην Αναθεώρηση ή εισαγάγετε ξανά."
     },
+    "common.polarity.export_left_out_unsigned": {
+      "en": "%d connections have no sign and were left out of the export.",
+      "es": "%d conexiones no tienen signo y se dejaron fuera de la exportación.",
+      "fr": "%d connexions n'ont pas de signe et ont été exclues de l'export.",
+      "de": "%d Verbindungen haben kein Vorzeichen und wurden nicht exportiert.",
+      "lt": "%d ryšiai neturi ženklo ir nebuvo eksportuoti.",
+      "pt": "%d conexões não têm sinal e ficaram fora da exportação.",
+      "it": "%d connessioni non hanno segno e sono state escluse dall'esportazione.",
+      "no": "%d forbindelser har ikke fortegn og ble utelatt fra eksporten.",
+      "el": "%d συνδέσεις δεν έχουν πρόσημο και παραλείφθηκαν από την εξαγωγή."
+    },
     "common.polarity.affects": {
       "en": "affects",
       "es": "afecta a",

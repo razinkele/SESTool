@@ -225,14 +225,20 @@ graphical_polarity_evidence <- function(from_name, from_type, to_name, to_type) 
 generate_suggestion_reasoning <- function(from_name, to_name, from_type,
                                          to_type, polarity, strength) {
 
+  strength_word <- if (identical(strength, "strong")) "strongly" else "moderately"
+
+  # An unset sign (NA) gets neutral wording only: the rule-table descriptions
+  # ("Pressures negatively affect ...", "Responses ... mitigate ...") would
+  # hint at a typical sign, which evidenced polarity forbids.
+  if (!isTRUE(polarity %in% c("+", "-"))) {
+    return(paste0(from_type, " ", strength_word, " affects ", to_type, "."))
+  }
+
   # Get connection description
   conn_desc <- get_connection_description(from_type, to_type)
 
   # Build reasoning
-  # an unset sign (NA) gets a neutral verb
-  polarity_word <- if (!isTRUE(polarity %in% c("+", "-"))) "affects"
-                   else if (polarity == "+") "increases" else "decreases"
-  strength_word <- if (strength == "strong") "strongly" else "moderately"
+  polarity_word <- if (polarity == "+") "increases" else "decreases"
 
   reasoning <- paste0(
     from_type, " ", strength_word, " ", polarity_word, " ", to_type, ". ",
@@ -901,7 +907,11 @@ analyze_network_topology_for_suggestions <- function(node_id, node_data,
         connection_polarity_source = evidence$source,
         connection_strength = "strong",
         connection_confidence = 0.85,
-        reasoning = paste0("Creates ", loop_opp$loop_type, " feedback loop"),
+        # loop_type ("balancing"/"reinforcing") follows from the closing edge's
+        # sign, so it is shown only once that sign is evidenced (kept as data)
+        reasoning = if (is.na(evidence$polarity)) "Closes a feedback loop"
+                    else paste0("Creates ", loop_opp$loop_type, " feedback loop"),
+        loop_type = loop_opp$loop_type,
         strategy_tag = "FEEDBACK_LOOP"
       )
     }

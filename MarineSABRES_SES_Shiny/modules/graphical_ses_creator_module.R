@@ -265,6 +265,10 @@ graphical_ses_creator_ui <- function(id, i18n) {
           color: #555;
         }
 
+        .ghost-suggestion.needs-sign {
+          box-shadow: 0 0 0 3px #2196F3;
+        }
+
         .ghost-suggestion .suggestion-feedback {
           display: flex;
           justify-content: flex-end;
@@ -413,6 +417,29 @@ graphical_ghost_sign_id <- function(batch, ghost_id) {
   paste0("ghost_sign_", batch, "_", ghost_id)
 }
 
+#' Which evidenced ghosts still show their "from: <citation>" line
+#'
+#' The citation applies only to the evidenced sign: it is shown while the
+#' picker is unset or holds that sign, and hidden once the user picks the other.
+#' @param ghost_edges ghost edge data.frame (polarity, polarity_source, to)
+#' @param batch expansion counter (rv$ghost_batch)
+#' @param pick_of function(input id) returning the picker's current value
+#' @return named logical: names are the citation element ids
+#'   ("<picker id>_source", un-namespaced), TRUE = show
+graphical_ghost_citation_states <- function(ghost_edges, batch, pick_of) {
+  out <- logical(0)
+  if (!is.data.frame(ghost_edges) || nrow(ghost_edges) == 0 ||
+      !"polarity_source" %in% names(ghost_edges)) return(out)
+  for (i in seq_len(nrow(ghost_edges))) {
+    ev <- read_polarity_pick(ghost_edges$polarity[i])
+    if (is.na(ev) || is.na(ghost_edges$polarity_source[i])) next
+    pid <- graphical_ghost_sign_id(batch, ghost_edges$to[i])
+    pick <- read_polarity_pick(pick_of(pid))
+    out[[paste0(pid, "_source")]] <- is.na(pick) || identical(pick, ev)
+  }
+  out
+}
+
 
 #' Graphical SES Creator Server
 #'
@@ -481,6 +508,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       ghost_nodes = data.frame(),
       ghost_edges = data.frame(),
       ghost_batch = 0,  # expansion counter, part of each ghost's sign-picker id
+      sign_needed_ghost = NULL,      # last ghost whose accept waited for a sign
+      citation_states = logical(0),  # evidenced ghosts' citation shown (TRUE) / hidden
 
       # UI state
       selected_node_id = NULL,
@@ -983,16 +1012,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
     # sign: hide it while the user's pick differs (the panel does not re-render
     # on a pick, so do it client-side)
     observe({
-      ge <- rv$ghost_edges
-      batch <- rv$ghost_batch
-      req(is.data.frame(ge), nrow(ge) > 0, "polarity_source" %in% names(ge))
-      for (i in seq_len(nrow(ge))) {
-        ev <- read_polarity_pick(ge$polarity[i])
-        if (is.na(ev) || is.na(ge$polarity_source[i])) next
-        pid <- graphical_ghost_sign_id(batch, ge$to[i])
-        pick <- read_polarity_pick(input[[pid]])
-        shinyjs::toggle(id = paste0(pid, "_source"), condition = is.na(pick) || identical(pick, ev))
-      }
+      states <- graphical_ghost_citation_states(rv$ghost_edges, rv$ghost_batch,
+                                                function(id) input[[id]])
+      rv$citation_states <- states
+      for (src_id in names(states)) shinyjs::toggle(id = src_id, condition = states[[src_id]])
     })
 
     # Suggestion-panel card click: accept that ghost (same rules as a canvas click)
@@ -1099,6 +1122,25 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       sign <- if (!is.na(picked_sign)) picked_sign else evidenced_sign
       if (has_edge && is.na(sign)) {
         showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
+        # Make sure the picker for this ghost is in view: the suggestion panel
+        # lists ghosts for the expanded node, so select it if needed, then
+        # scroll to the ghost's picker and highlight its card.
+        if (!is.null(rv$expanded_node_id) && !identical(rv$selected_node_id, rv$expanded_node_id)) {
+          rv$selected_node_id <- rv$expanded_node_id
+        }
+        rv$sign_needed_ghost <- ghost_id
+        picker_dom_id <- ns(graphical_ghost_sign_id(rv$ghost_batch, ghost_id))
+        shinyjs::runjs(sprintf(
+          "setTimeout(function() {
+             var el = document.getElementById('%s');
+             if (!el) return;
+             el.scrollIntoView({behavior: 'smooth', block: 'center'});
+             var card = el.closest('.ghost-suggestion');
+             if (card) {
+               card.classList.add('needs-sign');
+               setTimeout(function() { card.classList.remove('needs-sign'); }, 2500);
+             }
+           }, 150);", picker_dom_id))
         debug_log(paste("Ghost node waits for a sign:", ghost_id), "GRAPHICAL SES")
         return()
       }
@@ -1249,6 +1291,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
               # evidenced sign or NA; never an invented "+"
               polarity = read_polarity_pick(ghost_edge$polarity[1])
             )
+            # what the user actually chose in the picker (NA when nothing picked)
+            user_properties <- ml_prediction
+            user_properties$polarity <- read_polarity_pick(
+              input[[graphical_ghost_sign_id(rv$ghost_batch, prediction_id)]])
 
             tryCatch({
               log_connection_feedback(
@@ -1256,6 +1302,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 target_element = list(name = ghost_node$name, type = ghost_node$type),
                 ml_prediction = ml_prediction,
                 user_action = user_action,
+                user_properties = user_properties,
                 context = rv$context,
                 session_id = session$token
               )
@@ -1687,6 +1734,15 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         type = "message",
         duration = 5
       )
+      # Connections without a sign are never written; say how many were left out
+      n_unsigned <- as.integer(isa_data$metadata$edges_unsigned %||% 0L)
+      if (!is.na(n_unsigned) && n_unsigned > 0) {
+        showNotification(
+          sprintf(i18n$t("common.polarity.export_left_out_unsigned"), n_unsigned),
+          type = "warning",
+          duration = 8
+        )
+      }
 
       debug_log("Exported network to ISA", "GRAPHICAL SES")
     })

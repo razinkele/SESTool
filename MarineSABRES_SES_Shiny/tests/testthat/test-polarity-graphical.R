@@ -43,8 +43,11 @@ test_that("ghost suggestions carry only evidenced signs", {
     "D_1", list(name = "Food demand", type = "Drivers"), net, get_allowed_targets("Drivers"), ctx)
   chain <- analyze_causal_chains_for_suggestions(
     "D_1", list(name = "Food demand", type = "Drivers"), net, get_allowed_targets("Drivers"), ctx)
-  expect_gt(length(c(topo, chain)), 0)
-  expect_true(all(is.na(pols(c(topo, chain)))))
+  tags <- vapply(c(topo, chain), function(s) s$strategy_tag, character(1))
+  expect_true(all(c("COMPLETENESS", "CHAIN_COMPLETION", "BRIDGE") %in% tags))
+  for (tg in c("COMPLETENESS", "CHAIN_COMPLETION", "BRIDGE")) {
+    expect_true(all(is.na(pols(c(topo, chain)[tags == tg]))), info = tg)
+  }
 })
 
 test_that("an exact, sourced KB match fills the sign and its citation", {
@@ -93,9 +96,68 @@ test_that("a loop opportunity never supplies a sign", {
   expect_true(all(is.na(pols(loops))))
 })
 
-test_that("unsigned suggestions get a neutral reasoning text", {
-  expect_match(generate_suggestion_reasoning("a", "b", "Activities", "Pressures", NA_character_, "strong"),
-               "affects", fixed = TRUE)
+# Words that name or imply a sign in the rule-table descriptions and loop labels
+sign_words <- "negativ|mitigat|enhanc|reduc|increas|decreas|demand|generat|harm|degrad|balancing|reinforcing"
+rule_descriptions <- vapply(DAPSIWRM_ADJACENCY_RULES, function(r) r$description, character(1))
+# tooltip text without the element name (names are user/KB data, not hints)
+tooltip_text <- function(ghost) sub("<b>[^<]*</b>", "", ghost$title)
+expect_no_sign_hint <- function(text, info = NULL) {
+  for (d in rule_descriptions) expect_false(grepl(d, text, fixed = TRUE), info = paste(info, d))
+  expect_false(grepl(sign_words, text, ignore.case = TRUE), info = paste(info, text))
+}
+
+test_that("unsigned reasoning never shows a rule description or sign word", {
+  for (f in names(DAPSIWRM_ADJACENCY_RULES)) {
+    r <- DAPSIWRM_ADJACENCY_RULES[[f]]
+    for (t in unique(c(r$targets, r$extension_targets))) {
+      txt <- generate_suggestion_reasoning("a", "b", f, t, NA_character_, "strong")
+      expect_match(txt, "affects", fixed = TRUE)
+      expect_no_sign_hint(txt, paste(f, "->", t))
+    }
+  }
+  # once a sign is evidenced the description may be shown
+  expect_match(generate_suggestion_reasoning("a", "b", "Pressures", "Marine Processes & Functioning",
+                                             "-", "strong"),
+               rule_descriptions[["Pressures"]], fixed = TRUE)
+})
+
+test_that("unsigned ghost tooltips carry no sign hint (real suggestions, real tooltip)", {
+  stub_kb(NULL)
+  net <- data.frame(id = c("P_1", "R_1", "D_1", "GB_1"),
+                    name = c("Seabed abrasion", "Gear rules", "Food demand", "Fish income"),
+                    type = c("Pressures", "Responses", "Drivers", "Goods & Benefits"),
+                    stringsAsFactors = FALSE)
+  for (src in list(list(id = "P_1", name = "Seabed abrasion", type = "Pressures"),
+                   list(id = "R_1", name = "Gear rules", type = "Responses"))) {
+    g <- suggest_connected_elements(src$id, list(name = src$name, type = src$type), net, ctx,
+                                    max_suggestions = 10)
+    expect_gt(length(g), 0)
+    for (i in seq_along(g)) {
+      expect_true(is.na(g[[i]]$connection_polarity))
+      expect_no_sign_hint(tooltip_text(create_ghost_node_data(g[[i]], i, i18n = make_test_i18n())),
+                          paste(src$type, g[[i]]$name))
+    }
+  }
+})
+
+test_that("an unsigned loop ghost does not name its loop type; an evidenced one may", {
+  net <- data.frame(id = c("R_1", "D_1"), name = c("Fishing quota", "Food demand"),
+                    type = c("Responses", "Drivers"), stringsAsFactors = FALSE)
+  loop_of <- function() {
+    topo <- analyze_network_topology_for_suggestions(
+      "R_1", list(name = "Gear rules", type = "Responses"), net, get_allowed_targets("Responses"), ctx)
+    Filter(function(s) identical(s$strategy_tag, "FEEDBACK_LOOP"), topo)
+  }
+  stub_kb(NULL)
+  loops <- loop_of()
+  expect_gt(length(loops), 0)
+  for (s in loops) {
+    expect_true(s$loop_type %in% c("balancing", "reinforcing"))     # kept as data
+    expect_false(grepl("balancing|reinforcing", s$reasoning))
+    expect_no_sign_hint(tooltip_text(create_ghost_node_data(s, 1, i18n = make_test_i18n())), s$name)
+  }
+  stub_kb(list(polarity = "-", match_quality = "exact", source = "Smith 2020"))
+  for (s in loop_of()) expect_match(s$reasoning, s$loop_type, fixed = TRUE)
 })
 
 test_that("ghost edges carry the polarity source column", {
@@ -166,6 +228,13 @@ test_that("accepting an unsigned ghost waits for a sign", {
 
     session$setInputs(accept_ghost = "GHOST_1")           # suggestion-panel click, no sign yet
     expect_identical(rv$network_nodes, nodes_before)
+    expect_identical(rv$network_edges, edges_before)
+    expect_gt(nrow(rv$ghost_nodes), 0)
+    # the picker for that ghost is brought into view: its node's suggestions are listed
+    expect_identical(rv$sign_needed_ghost, "GHOST_1")
+    expect_identical(rv$selected_node_id, rv$expanded_node_id)
+    expect_match(output$details_content$html,
+                 session$ns(graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")), fixed = TRUE)
 
     pick <- graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")
     do.call(session$setInputs, setNames(list("-"), pick))
@@ -210,7 +279,16 @@ test_that("changing an evidenced sign keeps the user's sign and drops the citati
   testServer(graphical_ses_creator_server, args = list(
     project_data_reactive = reactiveVal(list()), i18n = make_test_i18n()), {
     start_network(session, rv)
-    do.call(session$setInputs, setNames(list("+"), graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")))
+    pid <- graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")
+    src_id <- paste0(pid, "_source")
+    # the element the citation toggle targets is the one the panel renders
+    expect_match(output$details_content$html, paste0('id="', session$ns(src_id), '"'), fixed = TRUE)
+    session$flushReact()
+    expect_true(rv$citation_states[[src_id]])                # evidenced sign: citation shown
+    do.call(session$setInputs, setNames(list("-"), pid))
+    expect_true(rv$citation_states[[src_id]])                # same sign picked: still shown
+    do.call(session$setInputs, setNames(list("+"), pid))
+    expect_false(rv$citation_states[[src_id]])               # changed: citation hidden
     session$setInputs(accept_ghost = "GHOST_1")
     expect_equal(nrow(rv$network_edges), 1)
     expect_identical(rv$network_edges$polarity, "+")
@@ -241,6 +319,44 @@ test_that("the suggestion panel shows the picker for unsigned and the citation f
       }
     })
   }
+})
+
+test_that("a vote logs the user's picked sign, not the evidenced one", {
+  stub_kb(list(polarity = "-", match_quality = "exact", source = "Smith 2020"))
+  local_global("ML_AVAILABLE", FALSE)
+  logged <- list()
+  local_global("log_connection_feedback", function(...) logged[[length(logged) + 1]] <<- list(...))
+  testServer(graphical_ses_creator_server, args = list(
+    project_data_reactive = reactiveVal(list()), i18n = make_test_i18n()), {
+    start_network(session, rv)
+    session$setInputs(ml_feedback = list(id = "GHOST_1", vote = "up", n = 1))
+    do.call(session$setInputs, setNames(list("+"), graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")))
+    session$setInputs(ml_feedback = list(id = "GHOST_1", vote = "up", n = 2))
+  })
+  expect_length(logged, 2)
+  expect_identical(logged[[1]]$ml_prediction$polarity, "-")        # the suggestion's evidenced sign
+  expect_identical(logged[[1]]$user_properties$polarity, NA_character_)  # nothing picked yet
+  expect_identical(logged[[2]]$user_properties$polarity, "+")      # the user's pick
+})
+
+test_that("the ISA export tells the user how many unsigned edges it left out", {
+  notes <- character(0)
+  local_global("showNotification", function(ui, ...) notes <<- c(notes, paste(as.character(ui), collapse = "")))
+  tr <- list(t = function(key, ...) if (identical(key, "common.polarity.export_left_out_unsigned"))
+    "%d unsigned left out" else key)
+  pd <- reactiveVal(list())
+  testServer(graphical_ses_creator_server, args = list(project_data_reactive = pd, i18n = tr), {
+    rv$network_nodes <- data.frame(id = c("D_1", "A_1", "P_1"), name = c("Food demand", "Trawling", "Abrasion"),
+                                   type = c("Drivers", "Activities", "Pressures"), stringsAsFactors = FALSE)
+    rv$network_edges <- data.frame(id = c("E1", "E2"), from = c("D_1", "A_1"), to = c("A_1", "P_1"),
+                                   polarity = c(NA, "-"), strength = "medium", confidence = 3,
+                                   stringsAsFactors = FALSE)
+    session$setInputs(export_isa = 1)
+  })
+  expect_true("1 unsigned left out" %in% notes)
+  am <- pd()$data$isa_data$adjacency_matrices
+  expect_null(am$d_a)
+  expect_equal(am$a_p["A001", "P001"], "-medium:3")
 })
 
 test_that("infer_connection_polarity and get_rule_default_polarity are gone", {
