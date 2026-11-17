@@ -799,15 +799,14 @@ sync_cld_to_isa_data <- function(project_data) {
   names(group_ids) <- names(group_to_key)
   id_to_group <- if (nrow(nodes) > 0) setNames(nodes$group, nodes$id) else character(0)
 
+  # Returns "+" / "-", or NA when the edge carries no valid sign (the caller drops
+  # such an edge: saved data never holds a missing or invented sign).
   norm_pol <- function(x) {
     x <- as.character(x)
-    if (length(x) == 0 || is.na(x) || !nzchar(x)) return("+")
-    x <- trimws(x)
+    if (length(x) == 0 || is.na(x[1])) return(NA_character_)
+    x <- trimws(x[1])
     if (x %in% c("+", "-")) return(x)
-    if (exists("debug_log", mode = "function")) {
-      debug_log(sprintf("sync_cld_to_isa_data: unknown polarity '%s'; coercing to '+'", x), "CLD SYNC")
-    }
-    "+"
+    NA_character_
   }
   pick <- function(df, col, i, default) {
     if (col %in% names(df)) { v <- df[[col]][i]; if (!is.null(v) && !is.na(v) && nzchar(as.character(v))) return(as.character(v)) }
@@ -827,13 +826,20 @@ sync_cld_to_isa_data <- function(project_data) {
       src_e <- node_elem[from_id]; tgt_e <- node_elem[to_id]
       if (is.na(src_e) || is.na(tgt_e)) next
       mat_name <- paste0(group_to_mat[[src_grp]], "_", group_to_mat[[tgt_grp]])
+      lbl_pol <- if ("label" %in% names(edges)) trimws(as.character(edges$label[i])) else NA_character_
+      pol <- if (!is.na(lbl_pol) && lbl_pol %in% c("+", "-")) lbl_pol
+             else norm_pol(if ("polarity" %in% names(edges)) edges$polarity[i] else lbl_pol)
+      if (is.na(pol)) {
+        if (exists("debug_log", mode = "function")) {
+          debug_log(sprintf("sync_cld_to_isa_data: dropping edge %s -> %s: no valid polarity",
+                            from_id, to_id), "ERROR")
+        }
+        next
+      }
       if (is.null(adj[[mat_name]])) {
         adj[[mat_name]] <- blank_matrix(src_grp, tgt_grp, "")
         ue[[mat_name]]  <- blank_matrix(src_grp, tgt_grp, FALSE)
       }
-      lbl_pol <- if ("label" %in% names(edges)) trimws(as.character(edges$label[i])) else NA_character_
-      pol <- if (!is.na(lbl_pol) && lbl_pol %in% c("+", "-")) lbl_pol
-             else norm_pol(if ("polarity" %in% names(edges)) edges$polarity[i] else lbl_pol)
       prev_m <- prev_am[[mat_name]]
       prev_cell <- if (is.matrix(prev_m) && src_e %in% rownames(prev_m) && tgt_e %in% colnames(prev_m)) prev_m[src_e, tgt_e] else ""
       if (!is.na(prev_cell) && nzchar(prev_cell)) {

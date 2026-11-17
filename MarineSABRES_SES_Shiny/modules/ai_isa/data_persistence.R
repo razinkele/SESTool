@@ -310,6 +310,16 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   for (conn_idx in approved_connections) {
     conn <- suggested_connections[[conn_idx]]
 
+    # Saved data never holds a missing sign: a connection whose polarity is not
+    # exactly "+" or "-" is refused here (never written as "NA..." or as "+").
+    pol <- conn$polarity
+    if (!(is.character(pol) && length(pol) == 1 && !is.na(pol) && pol %in% c("+", "-"))) {
+      debug_log(sprintf("Refusing to save connection %s -> %s: polarity is missing or invalid ('%s')",
+                        as.character(conn$from %||% "?")[1], as.character(conn$to %||% "?")[1],
+                        paste(as.character(pol), collapse = "")), "ERROR")
+      next
+    }
+
     # Format: "+strength:confidence" or "+strength:confidence:delay_category"
     # or "+strength:confidence:delay_category:delay_years"
     confidence <- conn$confidence %||% CONFIDENCE_DEFAULT

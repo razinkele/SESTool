@@ -660,6 +660,9 @@ convert_matrices_to_connections <- function(matrices, elements) {
         polarity <- "+"
         strength <- "medium"
         confidence <- 3
+        if (!grepl("^[+-]", value)) {
+          debug_log(sprintf("Matrix cell '%s' has no sign; reading it as '+'", value), "WARN")
+        }
 
         if (grepl("^[+-]", value)) {
           polarity <- substr(value, 1, 1)
