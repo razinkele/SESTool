@@ -582,6 +582,72 @@
       "it": "Inizializzazione...",
       "no": "Initialiserer...",
       "el": "Αρχικοποίηση..."
+    },
+    "common.polarity.choose_sign": {
+      "en": "Choose a sign",
+      "es": "Elija un signo",
+      "fr": "Choisissez un signe",
+      "de": "Vorzeichen wählen",
+      "lt": "Pasirinkite ženklą",
+      "pt": "Escolha um sinal",
+      "it": "Scegli un segno",
+      "no": "Velg et fortegn",
+      "el": "Επιλέξτε πρόσημο"
+    },
+    "common.polarity.from_source": {
+      "en": "from:",
+      "es": "de:",
+      "fr": "de :",
+      "de": "aus:",
+      "lt": "šaltinis:",
+      "pt": "de:",
+      "it": "da:",
+      "no": "fra:",
+      "el": "από:"
+    },
+    "common.polarity.approve_blocked": {
+      "en": "Choose + or − before approving this connection.",
+      "es": "Elija + o − antes de aprobar esta conexión.",
+      "fr": "Choisissez + ou − avant d'approuver cette connexion.",
+      "de": "Wählen Sie + oder −, bevor Sie diese Verbindung genehmigen.",
+      "lt": "Prieš patvirtindami šį ryšį pasirinkite + arba −.",
+      "pt": "Escolha + ou − antes de aprovar esta conexão.",
+      "it": "Scegli + o − prima di approvare questa connessione.",
+      "no": "Velg + eller − før du godkjenner denne forbindelsen.",
+      "el": "Επιλέξτε + ή − πριν εγκρίνετε αυτή τη σύνδεση."
+    },
+    "common.polarity.needs_sign_count": {
+      "en": "%d connections need a sign before they can be approved.",
+      "es": "%d conexiones necesitan un signo antes de poder aprobarse.",
+      "fr": "%d connexions ont besoin d'un signe avant de pouvoir être approuvées.",
+      "de": "%d Verbindungen benötigen ein Vorzeichen, bevor sie genehmigt werden können.",
+      "lt": "%d ryšiams reikia ženklo, kad juos būtų galima patvirtinti.",
+      "pt": "%d conexões precisam de um sinal antes de poderem ser aprovadas.",
+      "it": "%d connessioni necessitano di un segno prima di poter essere approvate.",
+      "no": "%d forbindelser trenger et fortegn før de kan godkjennes.",
+      "el": "%d συνδέσεις χρειάζονται πρόσημο πριν εγκριθούν."
+    },
+    "common.polarity.sign_dialog_title": {
+      "en": "Choose the sign for new connections",
+      "es": "Elija el signo de las nuevas conexiones",
+      "fr": "Choisissez le signe des nouvelles connexions",
+      "de": "Vorzeichen für neue Verbindungen wählen",
+      "lt": "Pasirinkite naujų ryšių ženklą",
+      "pt": "Escolha o sinal das novas conexões",
+      "it": "Scegli il segno per le nuove connessioni",
+      "no": "Velg fortegn for nye forbindelser",
+      "el": "Επιλέξτε το πρόσημο των νέων συνδέσεων"
+    },
+    "common.polarity.direct_import_blocked": {
+      "en": "%d connections in the file have no sign. Use Review to choose them.",
+      "es": "%d conexiones del archivo no tienen signo. Use Revisar para elegirlos.",
+      "fr": "%d connexions du fichier n'ont pas de signe. Utilisez Réviser pour les choisir.",
+      "de": "%d Verbindungen in der Datei haben kein Vorzeichen. Wählen Sie diese über Prüfen aus.",
+      "lt": "%d failo ryšių neturi ženklo. Naudokite Peržiūra, kad juos pasirinktumėte.",
+      "pt": "%d conexões no arquivo não têm sinal. Use Revisar para escolhê-las.",
+      "it": "%d connessioni nel file non hanno segno. Usa Revisione per sceglierle.",
+      "no": "%d forbindelser i filen har ikke fortegn. Bruk Gjennomgang for å velge dem.",
+      "el": "%d συνδέσεις στο αρχείο δεν έχουν πρόσημο. Χρησιμοποιήστε την Αναθεώρηση για να τις επιλέξετε."
     }
   }
 }
