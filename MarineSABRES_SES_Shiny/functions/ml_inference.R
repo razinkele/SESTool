@@ -439,7 +439,9 @@ unload_ml_model <- function() {
   # 4. Polarity
   polarity_logit <- predictions$polarity$item()
   polarity_prob <- 1 / (1 + exp(-polarity_logit))
-  polarity <- if (polarity_prob >= 0.5) "+" else "-"
+  # The model's sign is a prediction, not evidence: it is kept for logging only
+  # and never fills a connection's sign (polarity stays NA until the user chooses).
+  predicted_polarity <- if (polarity_prob >= 0.5) "+" else "-"
 
   # Build result
   result <- list(
@@ -452,7 +454,8 @@ unload_ml_model <- function() {
       strong = strength_probs[3]
     ),
     confidence = confidence,
-    polarity = polarity,
+    polarity = NA_character_,
+    predicted_polarity = predicted_polarity,
     source = list(name = source_name, type = source_type),
     target = list(name = target_name, type = target_type),
     method = method
@@ -1003,11 +1006,12 @@ blend_predictions <- function(ml_result, rule_result, ml_weight = 0.7) {
   if (connection_exists) {
     strength <- ml_result$strength %||% rule_result$strength %||% "medium"
     confidence <- round(ml_result$confidence %||% rule_result$confidence %||% 3)
-    polarity <- ml_result$polarity %||% rule_result$polarity %||% "+"
+    predicted_polarity <- ml_result$predicted_polarity %||% ml_result$polarity %||%
+      rule_result$polarity %||% NA_character_
   } else {
     strength <- rule_result$strength %||% "medium"
     confidence <- rule_result$confidence %||% 3
-    polarity <- rule_result$polarity %||% "+"
+    predicted_polarity <- rule_result$polarity %||% NA_character_
   }
 
   return(list(
@@ -1015,7 +1019,8 @@ blend_predictions <- function(ml_result, rule_result, ml_weight = 0.7) {
     existence_probability = blended_prob,
     strength = strength,
     confidence = confidence,
-    polarity = polarity,
+    polarity = NA_character_,  # a prediction is not evidence; see predicted_polarity
+    predicted_polarity = predicted_polarity,
     method = "blended",
     ml_weight = ml_weight,
     ml_contribution = ml_prob,

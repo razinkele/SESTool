@@ -79,13 +79,13 @@ suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
       suggestion$ml_score <- ml_pred$existence_probability
       suggestion$ml_strength <- ml_pred$strength
       suggestion$ml_confidence <- ml_pred$confidence
-      suggestion$ml_polarity <- ml_pred$polarity
+      suggestion$ml_polarity <- ml_pred$predicted_polarity  # prediction only, never a sign
 
       # Update connection properties with ML predictions
       if (ml_pred$existence_probability > 0.5) {
         suggestion$strength <- ml_pred$strength
         suggestion$confidence <- ml_pred$confidence
-        suggestion$polarity <- ml_pred$polarity
+        # polarity is deliberately not taken from ML: a prediction is not evidence
       }
     } else {
       suggestion$ml_score <- 0.5  # Default neutral score

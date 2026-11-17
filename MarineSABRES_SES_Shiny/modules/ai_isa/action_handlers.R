@@ -68,7 +68,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
                     strong(conn$from_name),
                     " ",
                     span(style = CSS_TEXT_MUTED,
-                         if(conn$polarity == "+") "\u2192" else "\u22b8"),
+                         if (isTRUE(conn$polarity == "+")) "→" else if (isTRUE(conn$polarity == "-")) "⊸" else "–"),
                     " ",
                     strong(conn$to_name),
                     tags$br(),
@@ -285,7 +285,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
         conn <- rv$suggested_connections[[idx]]
         tags$li(
           strong(conn$from_name), " ",
-          span(style = CSS_TEXT_MUTED, if(conn$polarity == "+") "\u2192" else "\u22b8"), " ",
+          span(style = CSS_TEXT_MUTED, if (isTRUE(conn$polarity == "+")) "→" else if (isTRUE(conn$polarity == "-")) "⊸" else "–"), " ",
           strong(conn$to_name),
           tags$br(),
           span(style = "font-size: 0.9em; color: #666;",

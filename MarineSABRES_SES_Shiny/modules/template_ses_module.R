@@ -737,7 +737,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
             parts <- strsplit(rest, ":")[[1]]
             strength <- if (length(parts) >= 1) parts[1] else "medium"
             confidence <- if (length(parts) >= 2) as.integer(parts[2]) else 3
-            rationale <- if (polarity == "+") "drives/increases" else "affects/reduces"
+            rationale <- if (isTRUE(polarity == "+")) "drives/increases" else if (isTRUE(polarity == "-")) "affects/reduces" else "affects"
 
             from_name <- from_names[i]
             to_name <- to_names[j]
@@ -938,7 +938,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         rv$template_connections[[idx]]$confidence <- confidence
         rv$template_connections[[idx]]$delay <- delay
         rv$template_connections[[idx]]$delay_years <- delay_years
-        rationale <- if (polarity == "+") "drives/increases" else "affects/reduces"
+        rationale <- if (isTRUE(polarity == "+")) "drives/increases" else if (isTRUE(polarity == "-")) "affects/reduces" else "affects"
         rv$template_connections[[idx]]$rationale <- paste(
           rv$template_connections[[idx]]$from_name,
           rationale,

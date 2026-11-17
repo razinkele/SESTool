@@ -272,14 +272,14 @@ log_connection_feedback <- function(source_element,
     ml_existence_probability = ml_prediction$existence_probability %||% NA,
     ml_strength = ml_prediction$strength %||% NA,
     ml_confidence = ml_prediction$confidence %||% NA,
-    ml_polarity = ml_prediction$polarity %||% NA,
+    ml_polarity = ml_prediction$predicted_polarity %||% ml_prediction$polarity %||% NA,
 
     # User decision
     user_action = user_action,
     user_selected_type = target_element$type,
     user_selected_strength = user_properties$strength %||% ml_prediction$strength %||% NA,
     user_selected_confidence = user_properties$confidence %||% ml_prediction$confidence %||% NA,
-    user_selected_polarity = user_properties$polarity %||% ml_prediction$polarity %||% NA,
+    user_selected_polarity = user_properties$polarity %||% ml_prediction$predicted_polarity %||% ml_prediction$polarity %||% NA,
 
     # Context
     regional_sea = context$regional_sea %||% NA,

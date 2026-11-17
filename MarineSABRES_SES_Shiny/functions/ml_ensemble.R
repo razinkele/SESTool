@@ -467,7 +467,8 @@ predict_connection_ensemble <- function(source_name, target_name,
 
   # Polarity
   polarity_prob <- as.numeric(torch_sigmoid(agg$polarity))
-  polarity <- if (polarity_prob >= 0.5) "+" else "-"
+  # Prediction only (logging); the ensemble never sets a connection's sign
+  predicted_polarity <- if (polarity_prob >= 0.5) "+" else "-"
 
   # Build result
   result <- list(
@@ -475,7 +476,8 @@ predict_connection_ensemble <- function(source_name, target_name,
     existence_probability = existence_prob,
     strength = strength,
     confidence = confidence,
-    polarity = polarity,
+    polarity = NA_character_,
+    predicted_polarity = predicted_polarity,
     source = list(name = source_name, type = source_type),
     target = list(name = target_name, type = target_type),
     method = "ensemble",

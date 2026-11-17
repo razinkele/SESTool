@@ -17,212 +17,27 @@
 #   Optional: data/ses_connection_knowledge_base.R (for knowledge base)
 
 # ==============================================================================
-# POLARITY DETECTION (Enhanced with negation + knowledge base)
+# POLARITY DETECTION (evidence only)
 # ==============================================================================
 
-#' Detect Connection Polarity
+#' Detect Connection Polarity (evidence only)
 #'
-#' Determines whether a connection between two elements is positive (+) or
-#' negative (-) based on:
-#'   1. Knowledge base lookup (highest priority)
-#'   2. Negation-aware phrase analysis
-#'   3. Compound phrase handling (e.g., "pollution reduction" = positive)
-#'   4. DAPSI(W)R(M) framework rules
-#'   5. Keyword matching (fallback)
+#' Returns a sign only when it is backed by evidence: an exact knowledge-base
+#' match that carries a citation. Synonym matches, keyword heuristics and
+#' DAPSI(W)R(M) rule-table defaults are never evidence, so they yield NA and the
+#' user has to choose the sign (see evidenced_polarity() in
+#' functions/polarity_evidence.R).
 #'
 #' @param from_name Character string of source element name
 #' @param to_name Character string of target element name
 #' @param from_type Character string of source element type
-#'   (drivers, activities, pressures, states, impacts, welfare, responses)
 #' @param to_type Character string of target element type
 #'
-#' @return Character: "+" (positive/increasing) or "-" (negative/decreasing)
-#'
-#' @details
-#' Polarity detection uses a layered approach:
-#' - Knowledge base: Returns known polarity from published case studies
-#' - Negation detection: Handles "no", "without", "prevent", "reduce", "ban on"
-#' - Compound phrases: "pollution reduction" -> positive (reducing negative)
-#' - Framework rules: e.g., Responses -> Pressures is typically "-"
-#' - Keywords: Matching for negative/positive impacts (fallback)
-#'
-#' @examples
-#' \dontrun{
-#' detect_polarity("Fishing", "Fish_Stocks", "activities", "states")
-#' # Returns: "-" (fishing decreases fish stocks)
-#'
-#' detect_polarity("Protection", "Biodiversity", "responses", "states")
-#' # Returns: "+" (protection increases biodiversity)
-#'
-#' detect_polarity("Pollution reduction", "Water quality", "responses", "pressures")
-#' # Returns: "-" (response reduces pressure)
-#' }
+#' @return Character: "+" or "-" when evidenced, otherwise NA_character_
 #'
 #' @export
 detect_polarity <- function(from_name, to_name, from_type, to_type) {
-  # ---- Step 1: Knowledge base lookup (highest confidence) ----
-  if (exists("lookup_knowledge_base", mode = "function")) {
-    kb_result <- tryCatch(
-      lookup_knowledge_base(from_name, from_type, to_name, to_type),
-      error = function(e) NULL
-    )
-    if (!is.null(kb_result) && !is.null(kb_result$polarity)) {
-      debug_log(sprintf("Polarity from knowledge base: %s -> %s = '%s' (source: %s)",
-                         from_name, to_name, kb_result$polarity, kb_result$source),
-                "AI ISA CONNECTIONS")
-      return(kb_result$polarity)
-    }
-  }
-
-  # ---- Step 2: Negation-aware phrase analysis ----
-  from_lower <- tolower(from_name)
-  to_lower <- tolower(to_name)
-
-  # Analyze both element names for negation and compound phrases
-  from_analysis <- .analyze_polarity_phrase(from_lower)
-  to_analysis <- .analyze_polarity_phrase(to_lower)
-
-  # Keywords that suggest negative impacts/changes
-  negative_keywords <- c(
-    "declin", "degrad", "loss", "reduc", "damag", "destruct", "pollut",
-    "eutrophic", "overfish", "bycatch", "invasive", "extinct", "harm",
-    "contaminat", "erosion", "acidific", "hypox", "dead zone", "bleach",
-    "disease", "mortality", "collapse", "fragment", "depletion"
-  )
-
-  # Keywords that suggest positive changes
-  positive_keywords <- c(
-    "increas", "growth", "restor", "recover", "improv", "enhanc", "protect",
-    "conserv", "benefit", "health", "sustain", "resilient", "biodiver",
-    "abundance", "productiv", "regenerat", "rehabilit", "rebui"
-  )
-
-  # Keywords for mitigation/reduction actions
-  mitigation_keywords <- c(
-    "ban", "prohibit", "restrict", "limit", "regulat", "control", "manag",
-    "reduce", "prevent", "mitigat", "protect", "enforce", "monitor",
-    "stop", "remov", "clean", "treat"
-  )
-
-  # Check characteristics of target element
-  to_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, to_lower)))
-  to_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, to_lower)))
-
-  # Check if source is a mitigation action
-  from_is_mitigation <- any(sapply(mitigation_keywords, function(kw) grepl(kw, from_lower)))
-
-  # ---- Step 3: Framework-specific rules with negation awareness ----
-
-  # Special case: Response Measures -> Pressures
-  if (from_type == "responses" && to_type == "pressures") {
-    # Response measures typically reduce pressures
-    return("-")
-  }
-
-  # Special case: Response Measures -> States
-  if (from_type == "responses" && to_type == "states") {
-    if (to_is_negative) {
-      return("-")  # Reduces bad state
-    } else if (to_is_positive) {
-      return("+")  # Increases good state
-    }
-    return("+")  # Default: responses improve states
-  }
-
-  # Activities -> Pressures
-  if (from_type == "activities" && to_type == "pressures") {
-    # If the activity is a mitigation/reduction activity, it reduces pressure
-    if (from_is_mitigation || from_analysis$sentiment == "positive") {
-      return("-")
-    }
-    # Activities generally cause pressures
-    return("+")
-  }
-
-  # Pressures -> States
-  if (from_type == "pressures" && to_type == "states") {
-    if (to_is_negative) {
-      return("+")  # Pressure increases negative state
-    } else if (to_is_positive) {
-      return("-")  # Pressure decreases positive state
-    }
-    return("-")  # Default: pressures degrade states
-  }
-
-  # States -> Impacts
-  if (from_type == "states" && to_type == "impacts") {
-    from_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, from_lower)))
-    from_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, from_lower)))
-
-    # Account for negation in element names
-    if (from_analysis$negated && from_is_negative) from_is_negative <- FALSE
-    if (to_analysis$negated && to_is_negative) to_is_negative <- FALSE
-
-    if ((from_is_negative && to_is_negative) || (from_is_positive && to_is_positive)) {
-      return("+")
-    } else if ((from_is_negative && to_is_positive) || (from_is_positive && to_is_negative)) {
-      return("-")
-    }
-    return("-")  # Default: degraded states reduce services
-  }
-
-  # Impacts -> Welfare
-  if (from_type == "impacts" && to_type == "welfare") {
-    from_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, from_lower)))
-    from_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, from_lower)))
-
-    # Account for negation
-    if (from_analysis$negated && from_is_negative) from_is_negative <- FALSE
-
-    if (from_is_negative) {
-      return("-")
-    } else if (from_is_positive) {
-      return("+")
-    }
-    return("-")  # Default: impacts reduce welfare
-  }
-
-  # Default fallback
-  return("+")
-}
-
-
-#' Analyze a phrase for polarity with negation detection (internal)
-#'
-#' Lightweight version of analyze_phrase_polarity for use within detect_polarity.
-#' Falls back to the full knowledge base version if available.
-#'
-#' @param phrase_lower Lowercase phrase to analyze
-#' @return List with sentiment, negated, base_sentiment
-#' @keywords internal
-.analyze_polarity_phrase <- function(phrase_lower) {
-  # Use the full knowledge base function if available
-
-  if (exists("analyze_phrase_polarity", mode = "function")) {
-    return(tryCatch(
-      analyze_phrase_polarity(phrase_lower),
-      error = function(e) list(sentiment = "neutral", negated = FALSE, base_sentiment = "neutral")
-    ))
-  }
-
-  # Inline fallback (minimal negation detection)
-  negation_words <- c("\\bno\\b", "\\bnot\\b", "\\bnon[- ]", "\\bwithout\\b",
-                       "\\bprevent", "\\bban\\b", "\\breduc", "\\bremov",
-                       "\\bcontrol", "\\blimit", "\\brestrict")
-
-  has_negation <- any(sapply(negation_words, function(p) grepl(p, phrase_lower, perl = TRUE)))
-
-  # Reversal compounds (negation of negative = positive)
-  reversal_compounds <- c("pollut.*reduc", "emission.*reduc", "pressure.*reduc",
-                           "litter.*reduc", "waste.*reduc", "noise.*reduc",
-                           "overfish.*prevent", "erosion.*control")
-  is_reversal <- any(sapply(reversal_compounds, function(p) grepl(p, phrase_lower, perl = TRUE)))
-
-  if (is_reversal) {
-    return(list(sentiment = "positive", negated = TRUE, base_sentiment = "negative"))
-  }
-
-  return(list(sentiment = "neutral", negated = has_negation, base_sentiment = "neutral"))
+  evidenced_polarity(from_name, from_type, to_name, to_type)$polarity
 }
 
 
@@ -413,7 +228,8 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 #' Each connection object contains:
 #' - from_type, from_index, from_name
 #' - to_type, to_index, to_name
-#' - polarity ("+"/"-")
+#' - polarity ("+"/"-" only when evidenced, otherwise NA)
+#' - polarity_source (citation for an evidenced sign, otherwise NA)
 #' - strength ("weak"/"medium"/"strong")
 #' - confidence (1-5)
 #' - rationale (human-readable description)
@@ -462,7 +278,11 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
           next  # Skip this connection
         }
 
-        polarity <- detect_polarity(from_name, to_name, from_type, to_type)
+        # Sign only when evidenced (exact, sourced KB match); otherwise NA and
+        # the user chooses it before the connection is accepted.
+        pol_evidence <- evidenced_polarity(from_name, from_type, to_name, to_type)
+        polarity <- pol_evidence$polarity
+        polarity_source <- pol_evidence$source
 
         # Determine strength from knowledge base or ML if available
         strength <- "medium"
@@ -510,7 +330,9 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
         }
 
         # Choose appropriate verb based on connection type
-        verb <- if (from_type == "drivers") {
+        verb <- if (is.na(polarity)) {
+          "affects"  # neutral: no sign is claimed without evidence
+        } else if (from_type == "drivers") {
           "drives"
         } else if (from_type == "activities") {
           if (polarity == "+") "increases" else "causes"
@@ -537,6 +359,7 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
             to_index = j,
             to_name = to_name,
             polarity = polarity,
+            polarity_source = polarity_source,
             strength = strength,
             confidence = confidence,
             delay = delay_category,
@@ -853,6 +676,7 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
           # Find matching elements by name (case-insensitive partial match)
           from_idx <- NULL
           to_idx <- NULL
+          exact_names <- TRUE  # both KB labels equal the project's element names
 
           from_lookup <- element_index[[from_type]]
           to_lookup <- element_index[[to_type]]
@@ -870,6 +694,7 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
               if (grepl(nm, from_lower, fixed = TRUE) || grepl(from_lower, nm, fixed = TRUE)) {
                 from_idx <- from_lookup[[nm]]
                 from_name <- elements[[from_type]][[from_idx]]$name
+                exact_names <- FALSE
                 break
               }
             }
@@ -882,6 +707,7 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
               if (grepl(nm, to_lower, fixed = TRUE) || grepl(to_lower, nm, fixed = TRUE)) {
                 to_idx <- to_lookup[[nm]]
                 to_name <- elements[[to_type]][[to_idx]]$name
+                exact_names <- FALSE
                 break
               }
             }
@@ -893,6 +719,12 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
           type_key <- paste(from_type, to_type, sep = "_")
           mat_name <- matrix_map[[type_key]] %||% type_key
 
+          # A sign is evidence only for an exact name match backed by references
+          kb_refs <- as.character(unlist(kb_conn$references))
+          kb_refs <- kb_refs[!is.na(kb_refs) & nzchar(trimws(kb_refs))]
+          kb_signed <- exact_names && length(kb_refs) > 0 &&
+            length(kb_conn$polarity) == 1L && kb_conn$polarity %in% c("+", "-")
+
           conn_key <- paste(from_type, from_idx, to_type, to_idx, sep = "_")
           kb_seeded_keys <- c(kb_seeded_keys, conn_key)
 
@@ -903,7 +735,8 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
             to_type = to_type,
             to_index = to_idx,
             to_name = to_name,
-            polarity = kb_conn$polarity %||% "+",
+            polarity = if (kb_signed) kb_conn$polarity else NA_character_,
+            polarity_source = if (kb_signed) paste(kb_refs, collapse = "; ") else NA_character_,
             strength = kb_conn$strength %||% "medium",
             confidence = kb_conn$confidence %||% 4,
             rationale = kb_conn$rationale %||% paste(from_name, "affects", to_name),
