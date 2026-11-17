@@ -96,3 +96,51 @@ test_that("direct import goes ahead when every row has a sign", {
       expect_setequal(substr(cells, 1, 1), c("+", "-"))
   })
 })
+
+# Capture notifications: the module calls showNotification unqualified, so a
+# GlobalEnv binding shadows shiny's for the duration of the test.
+pi_capture_toasts <- function(env = parent.frame()) {
+  toasts <- new.env(); toasts$msgs <- character()
+  assign("showNotification", function(ui, ...) toasts$msgs <- c(toasts$msgs, as.character(ui)),
+         envir = .GlobalEnv)
+  withr::defer(rm("showNotification", envir = .GlobalEnv), envir = env)
+  toasts
+}
+
+test_that("finalize with only unsigned rows imports nothing and leaves the project untouched", {
+  toasts <- pi_capture_toasts()
+  pi_i18n3 <- list(t = function(key, ...) switch(key,
+    "common.polarity.left_out_unsigned" = "%d left out", key))
+  pdr <- reactiveVal(init_session_data())
+  before <- pdr()
+  testServer(import_data_server,
+    args = list(project_data_reactive = pdr, i18n = pi_i18n3, parent_session = NULL, event_bus = NULL), {
+      pi_load(rv)
+      rv$connections_data$Label <- c("", "")
+      session$setInputs(review_btn = 1)
+      session$flushReact()
+      session$setInputs(finalize_import_btn = 1)
+      session$flushReact()
+      expect_identical(pdr(), before)
+      expect_true(any(toasts$msgs == "2 left out"))
+      expect_false(any(grepl("imported successfully", toasts$msgs)))
+  })
+})
+
+test_that("finalize with some unsigned rows counts only written rows and warns", {
+  toasts <- pi_capture_toasts()
+  pi_i18n2 <- list(t = function(key, ...) switch(key,
+    "common.polarity.left_out_unsigned" = "%d left out", key))
+  pdr <- reactiveVal(init_session_data())
+  testServer(import_data_server,
+    args = list(project_data_reactive = pdr, i18n = pi_i18n2, parent_session = NULL, event_bus = NULL), {
+      pi_load(rv)
+      session$setInputs(review_btn = 1)
+      session$flushReact()
+      session$setInputs(`conn_review-approve_2` = 1)
+      session$setInputs(finalize_import_btn = 1)
+      session$flushReact()
+      expect_true(any(toasts$msgs == "1 left out"))
+      expect_true(any(grepl("1 connections imported", toasts$msgs)))
+  })
+})

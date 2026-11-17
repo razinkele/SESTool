@@ -649,6 +649,17 @@
       "no": "%d forbindelser i filen har ikke fortegn. Bruk Gjennomgang for å velge dem.",
       "el": "%d συνδέσεις στο αρχείο δεν έχουν πρόσημο. Χρησιμοποιήστε την Αναθεώρηση για να τις επιλέξετε."
     },
+    "common.polarity.left_out_unsigned": {
+      "en": "%d connections still had no sign and were not imported. Pick a sign for them in Review, or import again.",
+      "es": "%d conexiones seguían sin signo y no se importaron. Elija un signo en Revisar o vuelva a importar.",
+      "fr": "%d connexions n'avaient toujours pas de signe et n'ont pas été importées. Choisissez un signe dans Réviser, ou importez à nouveau.",
+      "de": "%d Verbindungen hatten noch kein Vorzeichen und wurden nicht importiert. Wählen Sie in Prüfen ein Vorzeichen oder importieren Sie erneut.",
+      "lt": "%d ryšių vis dar neturėjo ženklo ir nebuvo importuoti. Pasirinkite ženklą skiltyje Peržiūra arba importuokite iš naujo.",
+      "pt": "%d conexões continuavam sem sinal e não foram importadas. Escolha um sinal em Revisar ou importe novamente.",
+      "it": "%d connessioni non avevano ancora un segno e non sono state importate. Scegli un segno in Revisione o importa di nuovo.",
+      "no": "%d forbindelser hadde fortsatt ikke fortegn og ble ikke importert. Velg fortegn i Gjennomgang, eller importer på nytt.",
+      "el": "%d συνδέσεις δεν είχαν ακόμη πρόσημο και δεν εισήχθησαν. Επιλέξτε πρόσημο στην Αναθεώρηση ή εισαγάγετε ξανά."
+    },
     "common.polarity.affects": {
       "en": "affects",
       "es": "afecta a",

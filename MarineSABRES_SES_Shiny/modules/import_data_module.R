@@ -444,6 +444,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
     observeEvent(input$cancel_review_btn, {
       rv$show_review <- FALSE
       rv$parsed_connections <- NULL
+      rv$review_signs <- list()
     })
 
     # Finalize import after review
@@ -511,17 +512,23 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)
         isa_data <- convert_excel_to_isa(rv$elements_data, connections_to_import)
-        if (nrow(isa_data$unsigned) > 0) {
-          debug_log(sprintf("Leaving out %d unsigned connections", nrow(isa_data$unsigned)), "IMPORT")
+        n_left_out <- nrow(isa_data$unsigned)
+        n_written <- nrow(connections_to_import) - n_left_out
+        isa_data$unsigned <- NULL  # report only; never stored in project data
+        if (n_left_out > 0) {
+          debug_log(sprintf("Leaving out %d unsigned connections", n_left_out), "IMPORT")
           showNotification(
-            sprintf(i18n$t("common.polarity.direct_import_blocked"), nrow(isa_data$unsigned)),
+            sprintf(i18n$t("common.polarity.left_out_unsigned"), n_left_out),
             type = "warning", duration = 8
           )
         }
+        if (n_written <= 0) {
+          # Nothing with a sign: leave the project untouched
+          return()
+        }
 
         # Perform import
-        isa_data$unsigned <- NULL  # report only; never stored in project data
-        perform_import(isa_data, nrow(rv$elements_data), nrow(connections_to_import))
+        perform_import(isa_data, nrow(rv$elements_data), n_written)
 
       }, error = function(e) {
         showNotification(
@@ -647,6 +654,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       rv$connections_data <- NULL
       rv$show_review <- FALSE
       rv$parsed_connections <- NULL
+      rv$review_signs <- list()
 
       # Navigate to dashboard using parent session if provided
       if (!is.null(parent_session)) {
