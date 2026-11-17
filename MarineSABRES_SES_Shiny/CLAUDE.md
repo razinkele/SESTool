@@ -159,19 +159,19 @@ observe({
 
 ## DAPSIWRM Framework
 
-The core domain model for SES analysis. Components flow: **D → A → P → C → ES → GB → HW → D** (feedback loop)
+The core domain model for SES analysis. Components flow: **D → A → P → C → ES → GB → D** (feedback loop)
 
 | Code | Category | Description |
 |------|----------|-------------|
-| D | Drivers | Root causes (food security, economic needs) |
+| D | Drivers | Root causes (food security, livelihoods) |
 | A | Activities | Human actions (fishing, tourism) |
 | P | Pressures | Environmental stressors |
 | C | Components/State | Ecosystem elements |
-| ES | Ecosystem Services | Benefits from ecosystem |
-| GB | Goods & Benefits | Tangible human welfare |
-| HW | Human Wellbeing | Overall welfare impacts |
-| R | Responses | Policy interventions |
-| M | Measures | Implementation actions |
+| ES | Ecosystem Services | Ecological services only, no societal elements |
+| GB | Goods & Benefits / Welfare | Benefits to people; impacts on welfare are the connections, not elements (no separate Human Wellbeing category) |
+| R | Responses | Policy and management interventions; Measures (M) are stored as Responses |
+
+Element names carry no action words and stay neutral ("Fishing effort", not "Reduce fishing" or "Overfishing").
 
 See `DAPSIWRM_FRAMEWORK_RULES.md` for full connection rules and polarity logic.
 
