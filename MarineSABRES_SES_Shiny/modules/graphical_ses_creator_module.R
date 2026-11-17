@@ -571,6 +571,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       rv$ghost_nodes <- data.frame()
       rv$ghost_edges <- data.frame()
       rv$expanded_node_id <- NULL
+      rv$sign_needed_ghost <- NULL  # the ghost it named is gone (accepted, dismissed or re-expanded)
 
       debug_log("Cleared ghost nodes", "GRAPHICAL SES")
     }
@@ -1192,6 +1193,13 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       permanent_node$size <- 50
       permanent_node$font.size <- 16
       permanent_node$font.color <- "#ffffff"
+      # The ghost tooltip described the suggestion (its then-unset or evidenced
+      # sign, "Click to accept"); an accepted node gets the normal node tooltip,
+      # as the first node does. The connection's sign lives on the edge.
+      permanent_node$title <- paste0(
+        "<b>", htmltools::htmlEscape(ghost_node$name), "</b><br>",
+        i18n$t("modules.graphical_ses_creator.node_tooltip_type"), " ",
+        htmltools::htmlEscape(ghost_node$type))
 
       rv$network_nodes <- rbind(rv$network_nodes, permanent_node)
 

@@ -248,6 +248,9 @@ test_that("accepting an unsigned ghost waits for a sign", {
     expect_equal(rv$network_edges$color,
                  adjustcolor(EDGE_COLORS$opposing, alpha.f = GHOST_EDGE_OPACITY))
     expect_equal(nrow(rv$ghost_nodes), 0)
+    expect_null(rv$sign_needed_ghost)                        # cleared once that ghost is accepted
+    node_title <- rv$network_nodes$title[nrow(rv$network_nodes)]
+    expect_false(grepl("unset|Click to accept|Connection:", node_title))
 
     # a later expansion reuses GHOST_1: the earlier pick must not carry over
     session$setInputs(expand_node = 2)
@@ -256,6 +259,13 @@ test_that("accepting an unsigned ghost waits for a sign", {
     session$setInputs(accept_ghost = "GHOST_1")
     expect_equal(nrow(rv$network_nodes), n_nodes)
     expect_equal(nrow(rv$network_edges), 1)
+    expect_identical(rv$sign_needed_ghost, "GHOST_1")
+    session$setInputs(expand_node = 3)                       # a new expansion clears it
+    expect_null(rv$sign_needed_ghost)
+    session$setInputs(accept_ghost = "GHOST_1")
+    expect_identical(rv$sign_needed_ghost, "GHOST_1")
+    session$setInputs(clear_ghosts = 1)                      # dismissing the suggestions clears it
+    expect_null(rv$sign_needed_ghost)
   })
 })
 
@@ -289,10 +299,16 @@ test_that("changing an evidenced sign keeps the user's sign and drops the citati
     expect_true(rv$citation_states[[src_id]])                # same sign picked: still shown
     do.call(session$setInputs, setNames(list("+"), pid))
     expect_false(rv$citation_states[[src_id]])               # changed: citation hidden
+    ghost_title <- rv$ghost_nodes$title[rv$ghost_nodes$id == "GHOST_1"]
+    expect_match(ghost_title, "decreases", fixed = TRUE)     # the ghost described the "-"
     session$setInputs(accept_ghost = "GHOST_1")
     expect_equal(nrow(rv$network_edges), 1)
     expect_identical(rv$network_edges$polarity, "+")
     expect_identical(rv$network_edges$polarity_source, NA_character_)
+    # the accepted node no longer carries the ghost's sign wording or accept prompt
+    node_title <- rv$network_nodes$title[rv$network_nodes$id == rv$network_edges$to]
+    expect_false(grepl("unset|negativ|decreases|Click to accept|Connection:", node_title))
+    expect_match(node_title, "modules.graphical_ses_creator.node_tooltip_type", fixed = TRUE)
     expect_equal(rv$network_edges$color,
                  adjustcolor(EDGE_COLORS$reinforcing, alpha.f = GHOST_EDGE_OPACITY))
   })
