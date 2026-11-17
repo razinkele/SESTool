@@ -206,20 +206,28 @@ rebuild_matrix_from_linked <- function(element_df, linked_col,
       }
     }
     # A user-edited cell is kept as is — unless it carries no sign (legacy
-    # data such as "medium:3"): saved data never holds a missing sign, so it
-    # takes a chosen sign or is blanked and reported like any unsigned link,
-    # keeping its own strength/confidence as the suffix.
+    # data such as "medium:3", "x", "1"): saved data never holds a missing
+    # sign, so it takes a chosen sign or is blanked and reported like any
+    # unsigned link. Its own content is kept as the suffix only when it is a
+    # well-formed "<strength>:<confidence>"; any other marker falls back to
+    # the row default, so Confirm never writes e.g. "+x".
     for (tgt_id in target_ids) {
       if (!out_edited[src_id, tgt_id]) next
       prev <- out[src_id, tgt_id]
       if (is.na(prev) || !nzchar(prev) || substr(prev, 1, 1) %in% c("+", "-")) next
+      cell_suffix <- if (grepl("^(very )?(weak|medium|strong):[1-5]$", tolower(trimws(prev)))) {
+        tolower(trimws(prev))
+      } else suffix
       pick <- chosen_sign_for(chosen_signs, src_id, tgt_id)
       if (!is.na(pick)) {
-        out[src_id, tgt_id] <- paste0(pick, prev)
+        out[src_id, tgt_id] <- paste0(pick, cell_suffix)
       } else {
         out[src_id, tgt_id] <- ""
+        # no longer a user edit: a still-ticked link is reported again on
+        # every later rebuild until it is signed or unticked
+        out_edited[src_id, tgt_id] <- FALSE
         uns_src <- c(uns_src, src_id); uns_tgt <- c(uns_tgt, tgt_id)
-        uns_suffix <- c(uns_suffix, prev)
+        uns_suffix <- c(uns_suffix, cell_suffix)
       }
     }
   }

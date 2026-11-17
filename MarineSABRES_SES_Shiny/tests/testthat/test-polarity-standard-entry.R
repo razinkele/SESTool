@@ -416,3 +416,34 @@ test_that("a user-edited cell without a sign is blanked and reported, never kept
                                    chosen_signs = c("D1|A1" = "-"))
   expect_equal(r2$matrix["D1", "A1"], "-strong:4")
 })
+
+test_that("a blanked unsigned user-edited cell loses its user-edited flag, so a ticked link stays reported", {
+  ex <- matrix("strong:4", 1, dimnames = list("D1", "A1"))
+  ue <- matrix(TRUE, 1, 1, dimnames = dimnames(ex))
+  df <- data.frame(ID = "D1", LinkedA = "A1", Confidence = "3")
+  r1 <- rebuild_matrix_from_linked(df, "LinkedA", "D1", "A1",
+                                   existing_matrix = ex, user_edited_matrix = ue)
+  expect_equal(r1$matrix["D1", "A1"], "")
+  expect_false(r1$user_edited["D1", "A1"])
+  # the next rebuild (dialog never answered, link still ticked) reports it again
+  r2 <- rebuild_matrix_from_linked(df, "LinkedA", "D1", "A1",
+                                   existing_matrix = r1$matrix, user_edited_matrix = r1$user_edited)
+  expect_equal(r2$unsigned_links$tgt_id, "A1")
+  expect_equal(r2$matrix["D1", "A1"], "")
+})
+
+test_that("a legacy unsigned marker in a user-edited cell is not kept as the suffix", {
+  ex <- matrix(c("x", "1"), 1, dimnames = list("D1", c("A1", "A2")))
+  ue <- matrix(TRUE, 1, 2, dimnames = dimnames(ex))
+  df <- data.frame(ID = "D1", LinkedA = "A1|A2", Confidence = "3")
+  r <- rebuild_matrix_from_linked(df, "LinkedA", "D1", c("A1", "A2"),
+                                  existing_matrix = ex, user_edited_matrix = ue)
+  expect_equal(r$unsigned_links$suffix, c("medium:3", "medium:3"))
+  am <- apply_chosen_signs(list(d_a = r$matrix), tag_unsigned_links(r$unsigned_links, "d_a"),
+                           c("D1|A1" = "+", "D1|A2" = "-"))
+  expect_equal(unname(am$d_a["D1", ]), c("+medium:3", "-medium:3"))
+  r2 <- rebuild_matrix_from_linked(df, "LinkedA", "D1", c("A1", "A2"),
+                                   existing_matrix = ex, user_edited_matrix = ue,
+                                   chosen_signs = c("D1|A1" = "+"))
+  expect_equal(r2$matrix["D1", "A1"], "+medium:3")
+})
