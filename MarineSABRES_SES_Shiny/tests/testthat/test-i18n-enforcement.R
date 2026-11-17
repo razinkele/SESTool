@@ -653,7 +653,6 @@ test_that("Standard Entry import keys exist in all 9 languages", {
   keys <- c(
     "import_success",
     "import_not_recognized",
-    "import_links_defaulted",
     "import_no_connections",
     "import_replace_title",
     "import_replace_warning"

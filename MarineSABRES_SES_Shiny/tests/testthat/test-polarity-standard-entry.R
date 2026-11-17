@@ -109,7 +109,6 @@ test_that("recovering a LinkedX-only workbook asks for signs", {
   expect_equal(nrow(rec$unsigned_links), 2)
   expect_equal(unique(rec$unsigned_links$matrix_key), "d_a")
   expect_true(all(rec$adjacency_matrices$d_a == ""))
-  expect_false(isTRUE(rec$fell_back))
   # a cancel unticks them; a second recovery then has nothing to ask
   saved <- linked_only_saved()
   for (k in seq_len(nrow(rec$unsigned_links))) {

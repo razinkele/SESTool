@@ -1,8 +1,8 @@
 {
-  "version": "1.35.6",
-  "version_name": "Pages in every language, clickable progress, fairer AI suggestions, terms explained (November 2026)",
-  "release_date": "2026-11-13",
-  "release_type": "patch",
+  "version": "1.36.0",
+  "version_name": "Evidenced polarity: you choose every sign without evidence (November 2026)",
+  "release_date": "2026-11-17",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -12,6 +12,7 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "Evidenced polarity: a connection's sign is filled in only from evidence (an exact knowledge-base match with a source, a template, a sign in an imported file); otherwise you choose positive or negative before the connection is accepted, in the AI assistant review, import, Standard Entry, graphical creator and CLD editor (1.36.0).",
     "PowerPoint report: graphs. The CLD section adds a network diagram, the loops section the Loop Strength, Loop Types and Element Participation charts, and the leverage section a top-10 leverage chart (1.35.6).",
     "Dashboard: a collapsible glossary explains CLD, ISA, PIMS, DAPSI(W)R(M) and leverage point in all 9 languages (1.35.3).",
     "Leverage page: 'About Leverage Points' explains in-degree and out-degree (1.35.3).",

@@ -214,7 +214,6 @@ test_that("N50: recover_isa_data rebuilds r_d / r_a / r_p / gb_r from Linked* wh
   expect_true(nzchar(am$gb_r["GB001", "R001"]))
   expect_true(startsWith(am$r_d["R001", "D001"], "-"))    # the chosen signs, in place
   expect_true(startsWith(am$gb_r["GB001", "R001"], "+"))
-  expect_false(isTRUE(rec$fell_back))
 })
 
 test_that("N50: a faithful saved r_d matrix is kept (not overwritten by the fallback)", {

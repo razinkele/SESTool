@@ -531,7 +531,6 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       any_repaired      <- rec$repaired
       any_rows_in       <- rec$any_rows_in
       any_panel_ids_out <- rec$any_panel_ids_out
-      fell_back         <- rec$fell_back
 
       if (any_repaired) {
         showNotification(i18n$t("modules.isa.data_entry.common.ids_repaired_on_load"),
@@ -546,7 +545,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       # re-derive the responses' Linked* from the signed matrices and sync.
       asked <- ask_signs(rec$unsigned_links, after_done = rederive_response_links,
                          after_sync = after_signs, from_load = from_load)
-      invisible(list(fell_back = fell_back, signs_pending = isTRUE(asked)))
+      invisible(list(signs_pending = isTRUE(asked)))
     }
 
     # Responses' Linked* columns re-derived from the R-arm matrices. Works on a
@@ -2175,11 +2174,6 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       data_initialized(TRUE)
-
-      if (isTRUE(res$fell_back)) {
-        showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
-                         type = "warning", duration = 10, session = session)
-      }
 
       if (!isTRUE(res$signs_pending)) import_tail()
       invisible(NULL)

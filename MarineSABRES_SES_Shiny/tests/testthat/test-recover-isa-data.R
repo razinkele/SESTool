@@ -41,7 +41,6 @@ test_that("recover_isa_data reconciles dup IDs, rebuilds forward edges by name, 
   # unsigned with empty cells; the caller writes the signs the user chooses.
   expect_equal(rec$adjacency_matrices$gb_d["GB001", "D001"], "+Strong:3")
   expect_equal(rec$adjacency_matrices$es_gb["ES001", "GB001"], "")
-  expect_false(rec$fell_back)
   ul <- rec$unsigned_links
   expect_true(all(c("es_gb", "mpf_es", "p_mpf") %in% ul$matrix_key))
   signs <- setNames(rep("+", nrow(ul)), paste0(ul$src_id, "|", ul$tgt_id))
@@ -69,6 +68,5 @@ test_that("recover_isa_data leaves a clean (no-dup, faithful) project unchanged"
   )
   rec <- recover_isa_data(saved)
   expect_false(rec$repaired)
-  expect_false(rec$fell_back)                       # es_gb already had an edge
   expect_equal(rec$adjacency_matrices$es_gb["ES001", "GB001"], "+High:High")
 })

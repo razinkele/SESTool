@@ -232,16 +232,19 @@ Most category pairs can carry either sign: the sign depends on the
 system being modelled and on how each element is phrased. The toolbox
 therefore follows this rule:
 
-- Where a connection has evidenced polarity (a matching link in the
-  toolbox's knowledge base of published case studies), the toolbox fills
-  in that sign, and the user can change it.
+- Where a connection has evidenced polarity, the toolbox fills in that
+  sign, and the user can change it. Evidence is exactly: an exact match
+  with a link in the toolbox's knowledge base of published case studies
+  that carries a source (shown as "from: <citation>"), a sign in a
+  shipped template, a sign in an imported file, or the user's earlier
+  choice.
 - Where no evidenced polarity exists, the user must choose the sign
   before the connection is accepted. The toolbox does not guess a sign
-  from the category pair.
+  from the category pair, from keywords, or from synonym matches.
 
 The "Polarity" lines below describe what is common, not a default the
-toolbox applies. *(Agreed 17 November 2026; being implemented in the
-toolbox, which still pre-fills a typical sign in version 1.35.6.)*
+toolbox applies. *(Agreed 17 November 2026; implemented in toolbox
+version 1.36.0.)*
 
 ### Primary Causal Chain (Forward Connections)
 
@@ -611,13 +614,22 @@ The framework uses adjacency matrices (`DAPSIWRM_MATRIX_KEY_TYPES` in
 Measures are rows of the response matrices. Rule 14 (D → GB) is rejected by
 `is_valid_dapsirwrm_transition()` in `functions/network_analysis.R`.
 
-### Polarity seeding
+### Polarity evidence
 
-Until the "How Polarity Is Assigned" rule is implemented, new cells are
-seeded from the rule table (`get_rule_default_polarity()`,
-`default_polarity_for_matrix()`), and the AI-assisted generator falls back
-from the knowledge base to keyword heuristics and then the rule default
-(`detect_polarity()` in `modules/ai_isa/connection_generator.R`).
+The rule table decides only which transitions are valid; its sign fields
+no longer seed any connection. Since version 1.36.0 the "How Polarity Is
+Assigned" rule is implemented as follows:
+
+- The sign is evidenced only by an exact knowledge-base match with a
+  source (shown as "from: <citation>"), or by a template sign, a file
+  sign, or the user's earlier choice.
+- Otherwise the user picks the sign in a two-button picker (positive or
+  negative) in the AI assistant review, the import review, the Standard
+  Entry dialog, the graphical creator and the CLD editor.
+- Saved data never holds an unsigned connection: no empty, `NA` or
+  invented `+` in connections, adjacency-matrix cells or CLD edges.
+- A shipped template connection without an explicit sign is a load error.
+  Saved projects from earlier versions are loaded as they are.
 
 ### Implementation Guidelines
 
@@ -671,7 +683,7 @@ This framework integrates:
 | Non-consumable products (alginate, sand) | Added as "Non-food marine products and their revenue". |
 | Food security is a Driver; the benefit is fish for consumption | Food security removed from Goods & Benefits; "Fish for consumption" added. |
 | Splitting Responses and Measures may add confusion | Open Question 1 for Mike. Measures remain a Response subtype, as stored in the toolbox. |
-| Automatic polarity is context dependent | New section "How Polarity Is Assigned": evidenced signs are filled in and editable; otherwise the user must choose. Agreed, and being implemented in the toolbox. |
+| Automatic polarity is context dependent | New section "How Polarity Is Assigned": evidenced signs are filled in and editable; otherwise the user must choose. Agreed, and implemented in toolbox version 1.36.0. |
 | A → P can be opposing (mooring vs anchoring, Tuscany) | Rule 2 now allows either sign, with the Tuscany example. |
 | C/S → ES can be opposing (phytoplankton past a threshold) | Rule 4 now allows either sign, with the example. |
 | ES → GB polarity must be flexible (seaweed and recreation) | Rule 5 now allows either sign, with the example. |

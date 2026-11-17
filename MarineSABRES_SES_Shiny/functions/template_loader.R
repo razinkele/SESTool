@@ -116,7 +116,13 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
     to_idx <- which(to_elements == conn$to_id)
 
     if (length(from_idx) > 0 && length(to_idx) > 0) {
-      polarity <- conn$polarity %||% "+"
+      # A shipped template's sign is evidence; a connection without one is a
+      # data error (evidenced polarity), never a silent "+".
+      polarity <- conn$polarity
+      if (!is.character(polarity) || length(polarity) != 1L || !(polarity %in% c("+", "-"))) {
+        stop(sprintf("connection %s -> %s has no explicit +/- sign",
+                     conn$from_id, conn$to_id), call. = FALSE)
+      }
       strength <- conn$strength %||% "medium"
       confidence <- conn$confidence %||% 3
 

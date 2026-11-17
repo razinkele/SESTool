@@ -282,10 +282,6 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
             n_ed <- sum(vapply(adjacency_matrices,
                                function(m) if (is.matrix(m)) sum(nzchar(m) & !is.na(m)) else 0L, integer(1)))
             perform_import(isa_for_import, n_el, n_ed)   # sets project_data + CLD, navigates
-            if (isTRUE(recov$fell_back)) {
-              showNotification(i18n$t("modules.isa.data_entry.common.import_links_defaulted"),
-                               type = "warning", duration = 10)
-            }
             if (!is.null(parent_session)) {
               updateTabItems(parent_session, "sidebar_menu", "cld_viz")
             }

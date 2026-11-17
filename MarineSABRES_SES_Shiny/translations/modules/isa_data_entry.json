@@ -1683,17 +1683,6 @@
       "no": "Importer data",
       "el": "Εισαγωγή Δεδομένα"
     },
-    "modules.isa.data_entry.common.import_links_defaulted": {
-      "en": "Connections were rebuilt with default values (positive, medium strength) because this file did not store link strengths. Re-export to preserve them.",
-      "es": "Las conexiones se reconstruyeron con valores predeterminados (positivo, fuerza media) porque este archivo no almacenaba las intensidades de los vínculos. Vuelva a exportar para conservarlos.",
-      "fr": "Les connexions ont été reconstruites avec des valeurs par défaut (positif, intensité moyenne) car ce fichier ne contenait pas les intensités des liens. Ré-exportez pour les conserver.",
-      "de": "Verbindungen wurden mit Standardwerten (positiv, mittlere Stärke) neu erstellt, da diese Datei keine Verbindungsstärken enthielt. Erneut exportieren, um sie zu erhalten.",
-      "lt": "Ryšiai buvo atstatyti su numatytomis reikšmėmis (teigiami, vidutinis stiprumas), nes šiame faile nebuvo saugomi ryšių stiprumai. Eksportuokite iš naujo, kad juos išsaugotumėte.",
-      "pt": "As conexões foram reconstruídas com valores predefinidos (positivo, força média) porque este ficheiro não armazenava as intensidades dos vínculos. Exporte novamente para as preservar.",
-      "it": "Le connessioni sono state ricostruite con valori predefiniti (positivo, intensità media) perché questo file non memorizzava le intensità dei collegamenti. Riesportare per conservarle.",
-      "no": "Forbindelsene ble gjenoppbygd med standardverdier (positiv, middels styrke) fordi denne filen ikke lagret koblingsstyrker. Eksporter på nytt for å bevare dem.",
-      "el": "Οι συνδέσεις αναδημιουργήθηκαν με προεπιλεγμένες τιμές (θετικές, μέτρια ισχύς) επειδή αυτό το αρχείο δεν αποθήκευε τις εντάσεις των συνδέσεων. Εξαγάγετε ξανά για να τις διατηρήσετε."
-    },
     "modules.isa.data_entry.common.import_no_connections": {
       "en": "Imported elements, but no connections were found — the diagram will have no links.",
       "es": "Se importaron elementos, pero no se encontraron conexiones — el diagrama no tendrá vínculos.",

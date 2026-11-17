@@ -112,7 +112,7 @@ read_standard_entry_workbook <- function(path) {
 # (matrix_from_linked.R).
 #
 # @return list(elements, panel_ids, adjacency_matrices, user_edited_matrices,
-#   repaired, any_rows_in, any_panel_ids_out, fell_back, unsigned_links)
+#   repaired, any_rows_in, any_panel_ids_out, unsigned_links)
 #   `unsigned_links`: links recovered from LinkedX columns, which carry no
 #   sign; their (empty) matrices are returned so the caller can write the
 #   signs the user chooses with apply_chosen_signs(), or untick them.
@@ -168,7 +168,6 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
 
   am <- if (!is.null(saved_isa$adjacency_matrices)) saved_isa$adjacency_matrices else list()
   ue <- list()
-  fell_back <- FALSE
   linked_map <- list(
     es_gb  = list(src = "ecosystem_services", col = "LinkedGB",  tgt = "goods_benefits"),
     mpf_es = list(src = "marine_processes",   col = "LinkedES",  tgt = "ecosystem_services"),
@@ -232,7 +231,6 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
         # keep the (possibly still empty) matrix so chosen signs have a target
         am[[mk]] <- mat
         ue[[mk]] <- matrix(FALSE, nrow(mat), ncol(mat), dimnames = dimnames(mat))
-        if (any(nzchar(mat))) fell_back <- TRUE
       }
       if (nrow(ul) > 0) unsigned[[mk]] <- ul
     }
@@ -250,7 +248,6 @@ recover_isa_data <- function(saved_isa, id_store = NULL) {
     deduped_rows = deduped_rows,
     any_rows_in = any_rows_in,
     any_panel_ids_out = any_panel_ids_out,
-    fell_back = fell_back,
     unsigned_links = unsigned_links
   )
 }
