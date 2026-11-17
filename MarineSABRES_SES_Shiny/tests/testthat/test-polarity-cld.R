@@ -338,3 +338,48 @@ test_that("a cancelled edit can skip re-enabling manipulation", {
   expect_match(clear, "window.editEdgeCallback_cldv = null", fixed = TRUE)
   expect_false(grepl("(null)", clear, fixed = TRUE))
 })
+
+# --- Final fix round: edit-mode toolbar after Save (manual check, CLD bug 1) --
+# Saving a drawn or edited edge syncs it into the matrices, which changes the
+# ISA hash and re-renders the network. The new vis-network starts without
+# manipulation, so the toolbar vanished while the Edit Mode switch stayed on.
+
+test_that("the edit-mode JS records whether edit mode is on", {
+  en <- generate_manipulation_enable_js("cldv", function(x) paste0("m-", x))
+  expect_match(en, "window.cldEditMode_cldv = true", fixed = TRUE)
+  expect_match(generate_manipulation_disable_js("cldv"), "window.cldEditMode_cldv = false", fixed = TRUE)
+})
+
+test_that("a re-rendered network re-applies manipulation when edit mode is on", {
+  js <- generate_network_stored_js("cldv")
+  expect_match(js, "window.network_cldv = this", fixed = TRUE)
+  expect_match(js, "if (window.cldEditMode_cldv && window.manipulationConfig_cldv)", fixed = TRUE)
+  expect_match(js, "this.setOptions({ manipulation: window.manipulationConfig_cldv })", fixed = TRUE)
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    session$setInputs(layout_type = "hierarchical", hierarchy_direction = "DU", level_separation = 150)
+    widget <- paste(as.character(output$network), collapse = "")
+    expect_match(widget, "cldEditMode_", fixed = TRUE)   # both stabilization handlers
+  })
+})
+
+test_that("confirming a drawn edge and saving an edited edge both re-enable manipulation", {
+  stub_proxy_edges()
+  js <- stub_runjs()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    draw_edge(session)
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    n0 <- length(js$js)
+    respond(session, "confirm")
+    expect_true(any(grepl("reEnableManipulation_", js$js[-seq_len(n0)], fixed = TRUE)))
+    old <- edges_between(rv$edges, "A_1", "P_1")
+    session$setInputs(edit_edge_triggered = list(id = old$id, from = "A_1", to = "P_1", nonce = runif(1)))
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    n1 <- length(js$js)
+    respond(session, "confirm")
+    expect_true(any(grepl("reEnableManipulation_", js$js[-seq_len(n1)], fixed = TRUE)))
+  })
+})

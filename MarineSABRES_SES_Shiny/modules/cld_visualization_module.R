@@ -845,17 +845,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           stabilizationIterationsDone = sprintf(
             "function() {
               this.setOptions({physics: false});
-              window.network_%s = this;
+              %s
               console.log('[CLD VIZ] Network stabilized and stored');
             }",
-            id
+            generate_network_stored_js(id)
           ),
           stabilized = sprintf(
             "function() {
-              window.network_%s = this;
+              %s
               console.log('[CLD VIZ] Network stabilized and stored in window.network_%s');
             }",
-            id, id
+            generate_network_stored_js(id), id
           )
         )
 

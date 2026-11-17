@@ -112,7 +112,9 @@ generate_manipulation_enable_js <- function(network_id, ns) {
         }
       };
 
-      // Apply initial config
+      // Apply initial config. The flag lets a re-rendered network (saving an
+      // edge re-renders it) re-apply this config: see generate_network_stored_js
+      window.cldEditMode_%s = true;
       window.network_%s.setOptions({ manipulation: window.manipulationConfig_%s });
       console.log('[CLD VIZ] Manipulation mode enabled');
     }",
@@ -123,7 +125,7 @@ generate_manipulation_enable_js <- function(network_id, ns) {
     network_id, network_id, ns("edit_edge_triggered"),
     ns("nodes_deleted"),
     ns("edges_deleted"),
-    network_id, network_id, network_id, network_id, network_id, network_id, network_id
+    network_id, network_id, network_id, network_id, network_id, network_id, network_id, network_id
   )
 }
 
@@ -134,6 +136,7 @@ generate_manipulation_enable_js <- function(network_id, ns) {
 #' @return Character string containing JavaScript code.
 generate_manipulation_disable_js <- function(network_id) {
   sprintf("
+    window.cldEditMode_%s = false;
     if (window.network_%s) {
       window.network_%s.setOptions({
         manipulation: {
@@ -142,7 +145,28 @@ generate_manipulation_disable_js <- function(network_id) {
       });
       console.log('[CLD VIZ] Manipulation mode disabled');
     }",
-    network_id, network_id
+    network_id, network_id, network_id
+  )
+}
+
+
+#' Generate the JavaScript body that stores a (re-)rendered network
+#'
+#' Run from the network's one-shot stabilization handlers (`this` is the new
+#' vis-network). Saving a drawn or edited edge re-renders the network, and a
+#' new vis-network starts without manipulation, so while edit mode is on the
+#' stored manipulation config is applied again; otherwise the Add Node / Add
+#' Edge toolbar vanished with the Edit Mode switch still on.
+#'
+#' @param network_id Character. The module ID used to namespace window variables.
+#' @return Character string containing JavaScript statements.
+generate_network_stored_js <- function(network_id) {
+  sprintf("
+              window.network_%s = this;
+              if (window.cldEditMode_%s && window.manipulationConfig_%s) {
+                this.setOptions({ manipulation: window.manipulationConfig_%s });
+              }",
+    network_id, network_id, network_id, network_id
   )
 }
 
