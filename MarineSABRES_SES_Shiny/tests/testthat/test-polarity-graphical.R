@@ -204,6 +204,22 @@ test_that("an evidenced ghost is added directly with its sign and citation", {
   })
 })
 
+test_that("changing an evidenced sign keeps the user's sign and drops the citation", {
+  stub_kb(list(polarity = "-", match_quality = "exact", source = "Smith 2020", strength = "strong"))
+  local_global("ML_AVAILABLE", FALSE)
+  testServer(graphical_ses_creator_server, args = list(
+    project_data_reactive = reactiveVal(list()), i18n = make_test_i18n()), {
+    start_network(session, rv)
+    do.call(session$setInputs, setNames(list("+"), graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")))
+    session$setInputs(accept_ghost = "GHOST_1")
+    expect_equal(nrow(rv$network_edges), 1)
+    expect_identical(rv$network_edges$polarity, "+")
+    expect_identical(rv$network_edges$polarity_source, NA_character_)
+    expect_equal(rv$network_edges$color,
+                 adjustcolor(EDGE_COLORS$reinforcing, alpha.f = GHOST_EDGE_OPACITY))
+  })
+})
+
 test_that("the suggestion panel shows the picker for unsigned and the citation for evidenced ghosts", {
   local_global("ML_AVAILABLE", FALSE)
   for (case in list(list(kb = NULL, picker = TRUE),
@@ -218,8 +234,10 @@ test_that("the suggestion panel shows the picker for unsigned and the citation f
       expect_match(html, session$ns(graphical_ghost_sign_id(rv$ghost_batch, "GHOST_1")), fixed = TRUE)
       if (case$picker) {
         expect_false(grepl("Smith 2020", html, fixed = TRUE))
+        expect_false(grepl("checked", html, fixed = TRUE))   # nothing preselected
       } else {
         expect_match(html, "common.polarity.from_source Smith 2020", fixed = TRUE)
+        expect_match(html, "checked", fixed = TRUE)          # evidenced sign preselected
       }
     })
   }

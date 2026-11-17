@@ -979,6 +979,22 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       }
     })
 
+    # An evidenced ghost's "from: <citation>" line applies only to the evidenced
+    # sign: hide it while the user's pick differs (the panel does not re-render
+    # on a pick, so do it client-side)
+    observe({
+      ge <- rv$ghost_edges
+      batch <- rv$ghost_batch
+      req(is.data.frame(ge), nrow(ge) > 0, "polarity_source" %in% names(ge))
+      for (i in seq_len(nrow(ge))) {
+        ev <- read_polarity_pick(ge$polarity[i])
+        if (is.na(ev) || is.na(ge$polarity_source[i])) next
+        pid <- graphical_ghost_sign_id(batch, ge$to[i])
+        pick <- read_polarity_pick(input[[pid]])
+        shinyjs::toggle(id = paste0(pid, "_source"), condition = is.na(pick) || identical(pick, ev))
+      }
+    })
+
     # Suggestion-panel card click: accept that ghost (same rules as a canvas click)
     observeEvent(input$accept_ghost, {
       ghost_id <- as.character(input$accept_ghost)
