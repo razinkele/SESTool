@@ -346,14 +346,13 @@ cld_viz_ui <- function(id, i18n) {
           tags$strong(i18n$t("modules.cld.visualization.connection")), ": ",
           span(id = ns("edit_edge_from_to"), "")
         ),
-        selectInput(
-          ns("edit_edge_polarity"),
-          i18n$t("modules.cld.visualization.polarity"),
-          choices = setNames(c("+", "-"),
-            c(i18n$t("common.choices.polarity_reinforcing"),
-              i18n$t("common.choices.polarity_opposing"))),
-          selected = "+",
-          width = "100%"
+        # Sign picker: rendered per opening under a fresh id (unset for a
+        # newly drawn edge, the edge's sign when editing)
+        div(
+          class = "form-group shiny-input-container",
+          style = "width: 100%;",
+          tags$label(class = "control-label", i18n$t("modules.cld.visualization.polarity")),
+          uiOutput(ns("edit_edge_polarity_ui"))
         ),
         selectInput(
           ns("edit_edge_strength"),
@@ -385,12 +384,8 @@ cld_viz_ui <- function(id, i18n) {
             onclick = sprintf("Shiny.setInputValue('%s', {cancel: true, nonce: Math.random()});", ns("edit_edge_response")),
             i18n$t("common.buttons.cancel")
           ),
-          tags$button(
-            type = "button",
-            class = "btn btn-primary btn-sm",
-            onclick = sprintf("Shiny.setInputValue('%s', {confirm: true, nonce: Math.random()});", ns("edit_edge_response")),
-            i18n$t("common.buttons.save")
-          )
+          # enabled only once a sign is chosen (rendered server-side)
+          uiOutput(ns("edit_edge_confirm_ui"), inline = TRUE)
         )
       )
     ),
@@ -1210,45 +1205,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       debug_log(sprintf("Saved positions for %d node(s)", length(positions)), "CLD VIZ")
     })
 
-    # Handle edge addition
+    # Handle edge addition.
+    # Evidenced polarity: a drawn edge is only pending. It opens the edge
+    # dialog with no sign selected; the edge is created on confirm and the
+    # client-side copy vis-network drew is removed on cancel.
     observeEvent(input$edge_added, {
       req(input$edge_added)
-      debug_log(sprintf("Edge added: %s -> %s", input$edge_added$from, input$edge_added$to), "CLD VIZ")
-
-      # Add to internal state using helper.
-      # Allocate from the maximum existing id (not count) so the new id stays
-      # unique even when the edge set is sparse after deletes.
-      new_edge <- create_new_edge_data(
-        input$edge_added$from,
-        input$edge_added$to,
-        max(c(0, suppressWarnings(as.numeric(rv$edges$id))), na.rm = TRUE)
-      )
-      rv$edges <- bind_rows(rv$edges, new_edge)
-
-      # Sync to project_data + propagate to isa_data so analyses refresh.
-      isolate({
-        pd <- project_data_reactive()
-        pd$data$cld$edges <- rv$edges
-        tryCatch({
-          pd <- sync_cld_to_isa_data(pd)
-          project_data_reactive(pd)
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            notify_cld_edit(event_bus, "cld_edit_add_edge")
-          }
-          debug_log(sprintf("Edge %s -> %s added and synced to isa_data",
-                            input$edge_added$from, input$edge_added$to), "CLD VIZ")
-        }, error = function(e) {
-          debug_log(paste("sync_cld_to_isa_data failed on add_edge:", e$message), "ERROR")
-          showNotification(
-            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
-            type = "error",
-            duration = 8
-          )
-        })
-      })
-
-      # Re-enable manipulation mode after a short delay
-      runjs(generate_reenable_manipulation_js(id, "edge add"))
+      ea <- input$edge_added
+      debug_log(sprintf("Edge drawn: %s -> %s (awaiting sign)", ea$from, ea$to), "CLD VIZ")
+      # a pending dialog left open is dropped (and its drawn edge removed)
+      discard_pending_edge()
+      client_id <- if (is.null(ea$id)) NA_character_ else as.character(ea$id)
+      open_edge_dialog(list(
+        is_new = TRUE, id = NA, from = ea$from, to = ea$to, client_id = client_id,
+        polarity = NA_character_, strength = "medium", confidence = 3L
+      ))
     })
 
     # Handle node label edit
@@ -1296,134 +1267,226 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       runjs(generate_reenable_manipulation_js(id, "node edit"))
     })
 
-    # Handle edge edit triggered (show modal)
+    # === EDGE DIALOG (sign of a drawn edge / edit an edge) ===
+    # rv$pending_edge_edit holds the open dialog: is_new (a drawn edge awaiting
+    # its sign), the edge id / client id, from, to, the edge's current sign,
+    # strength and confidence, and picker_id. The picker gets a fresh id per
+    # opening so an earlier pick is never inherited.
     rv$pending_edge_edit <- NULL
+    rv$edge_dialog_seq <- 0L
+
+    edge_node_label <- function(node_id) {
+      lab <- rv$nodes$label[rv$nodes$id == node_id]
+      if (length(lab) == 0 || is.na(lab[1]) || !nzchar(lab[1])) node_id else lab[1]
+    }
+
+    # Remove a pending (unconfirmed) edge vis-network drew in the browser
+    remove_client_edge <- function(client_id) {
+      if (is.null(client_id) || length(client_id) != 1L || is.na(client_id) ||
+          !nzchar(client_id)) return(invisible(FALSE))
+      visNetworkProxy(session$ns("network")) %>% visRemoveEdges(id = client_id)
+      invisible(TRUE)
+    }
+
+    # Drop the open dialog without applying it
+    discard_pending_edge <- function() {
+      pend <- isolate(rv$pending_edge_edit)
+      if (is.null(pend)) return(invisible(FALSE))
+      if (isTRUE(pend$is_new)) {
+        remove_client_edge(pend$client_id)
+      } else {
+        runjs(generate_edge_edit_callback_js(id, confirm = FALSE))
+      }
+      rv$pending_edge_edit <- NULL
+      shinyjs::hide("edit_edge_modal_container")
+      invisible(TRUE)
+    }
+
+    open_edge_dialog <- function(pend) {
+      seq_no <- isolate(rv$edge_dialog_seq) + 1L
+      rv$edge_dialog_seq <- seq_no
+      pend$picker_id <- paste0("edit_edge_polarity_", seq_no)
+      rv$pending_edge_edit <- pend
+
+      # Update the info display (use JSON encoding for safe JS string injection)
+      safe_from <- jsonlite::toJSON(as.character(edge_node_label(pend$from)), auto_unbox = TRUE)
+      safe_to <- jsonlite::toJSON(as.character(edge_node_label(pend$to)), auto_unbox = TRUE)
+      runjs(sprintf(
+        "document.getElementById('%s').textContent = %s + ' → ' + %s;",
+        session$ns("edit_edge_from_to"), safe_from, safe_to
+      ))
+      updateSelectInput(session, "edit_edge_strength", selected = pend$strength)
+      updateSelectInput(session, "edit_edge_confidence", selected = as.character(pend$confidence))
+      shinyjs::show("edit_edge_modal_container")
+    }
+
+    # The dialog's sign: the picker's value, or the preselected sign until the
+    # browser has reported the picker (a shown sign is a chosen sign)
+    current_edge_pick <- function(pend) {
+      v <- input[[pend$picker_id]]
+      if (is.null(v)) read_polarity_pick(pend$polarity) else read_polarity_pick(v)
+    }
+
+    output$edit_edge_polarity_ui <- renderUI({
+      pend <- rv$pending_edge_edit
+      req(pend)
+      polarity_picker_input(session$ns(pend$picker_id), i18n, selected = pend$polarity)
+    })
+
+    output$edit_edge_confirm_ui <- renderUI({
+      pend <- rv$pending_edge_edit
+      ready <- !is.null(pend) && !is.na(current_edge_pick(pend))
+      btn <- tags$button(
+        type = "button",
+        id = session$ns("edit_edge_confirm"),
+        class = "btn btn-primary btn-sm",
+        onclick = sprintf("Shiny.setInputValue('%s', {confirm: true, nonce: Math.random()});",
+                          session$ns("edit_edge_response")),
+        i18n$t("common.buttons.save")
+      )
+      if (!ready) btn <- tagAppendAttributes(btn, disabled = "disabled")
+      btn
+    })
+    # the dialog lives in a hidden container: render before it is shown
+    outputOptions(output, "edit_edge_polarity_ui", suspendWhenHidden = FALSE)
+    outputOptions(output, "edit_edge_confirm_ui", suspendWhenHidden = FALSE)
+
+    # Write rv$edges to project_data and propagate to isa_data so analyses refresh
+    sync_edges_to_isa <- function(event_name, what) {
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$edges <- rv$edges
+        tryCatch({
+          pd <- sync_cld_to_isa_data(pd)
+          project_data_reactive(pd)
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            notify_cld_edit(event_bus, event_name)
+          }
+          debug_log(sprintf("Edge %s synced to isa_data", what), "CLD VIZ")
+        }, error = function(e) {
+          debug_log(paste0("sync_cld_to_isa_data failed on ", what, ": ", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
+            type = "error",
+            duration = 8
+          )
+        })
+      })
+    }
 
     observeEvent(input$edit_edge_triggered, {
       req(input$edit_edge_triggered)
-      debug_log(sprintf("Edit edge triggered: id=%s", input$edit_edge_triggered$id), "CLD VIZ")
+      et <- input$edit_edge_triggered
+      debug_log(sprintf("Edit edge triggered: id=%s", et$id), "CLD VIZ")
 
-      edge_id <- input$edit_edge_triggered$id
-      from_id <- input$edit_edge_triggered$from
-      to_id <- input$edit_edge_triggered$to
+      # An edit request while a drawn edge awaits its sign drops that edge.
+      # (A pending edit is not answered here: the browser already replaced
+      # its callback with this request's.)
+      pend_old <- isolate(rv$pending_edge_edit)
+      if (!is.null(pend_old) && isTRUE(pend_old$is_new)) discard_pending_edge()
 
-      # Find the edge in rv$edges
-      edge_row <- rv$edges[rv$edges$id == edge_id, ]
-
+      # Find the edge in rv$edges (by id, else by from/to)
+      edge_row <- rv$edges[!is.na(rv$edges$id) & rv$edges$id == et$id, , drop = FALSE]
       if (nrow(edge_row) == 0) {
-        # Edge might be new (not yet in our data), try to find by from/to
-        edge_row <- rv$edges[rv$edges$from == from_id & rv$edges$to == to_id, ]
+        edge_row <- rv$edges[rv$edges$from == et$from & rv$edges$to == et$to, , drop = FALSE]
       }
+      has_row <- nrow(edge_row) > 0
 
-      # Get node labels for display
-      from_label <- rv$nodes$label[rv$nodes$id == from_id]
-      to_label <- rv$nodes$label[rv$nodes$id == to_id]
-
-      if (length(from_label) == 0) from_label <- from_id
-      if (length(to_label) == 0) to_label <- to_id
-
-      # Store the edge being edited
-      rv$pending_edge_edit <- list(
-        id = edge_id,
-        from = from_id,
-        to = to_id
-      )
-
-      # Update the info display (use JSON encoding for safe JS string injection)
-      safe_from <- jsonlite::toJSON(as.character(from_label), auto_unbox = TRUE)
-      safe_to <- jsonlite::toJSON(as.character(to_label), auto_unbox = TRUE)
-      runjs(sprintf(
-        "document.getElementById('%s').textContent = %s + ' \u2192 ' + %s;",
-        session$ns("edit_edge_from_to"), safe_from, safe_to
+      open_edge_dialog(list(
+        is_new = FALSE, id = et$id, from = et$from, to = et$to, client_id = NA_character_,
+        # the edge's own sign is preselected; an unknown edge starts unset
+        polarity = if (has_row) read_polarity_pick(edge_row$polarity[1]) else NA_character_,
+        strength = if (has_row && !is.na(edge_row$strength[1])) edge_row$strength[1] else "medium",
+        confidence = if (has_row && !is.na(edge_row$confidence[1])) edge_row$confidence[1] else 3L
       ))
-
-      # Update form values with current edge properties
-      if (nrow(edge_row) > 0) {
-        updateSelectInput(session, "edit_edge_polarity", selected = edge_row$polarity[1])
-        updateSelectInput(session, "edit_edge_strength", selected = edge_row$strength[1])
-        updateSelectInput(session, "edit_edge_confidence", selected = as.character(edge_row$confidence[1]))
-      } else {
-        # Defaults for new/unknown edge
-        updateSelectInput(session, "edit_edge_polarity", selected = "+")
-        updateSelectInput(session, "edit_edge_strength", selected = "medium")
-        updateSelectInput(session, "edit_edge_confidence", selected = "3")
-      }
-
-      # Show the modal
-      shinyjs::show("edit_edge_modal_container")
     })
 
-    # Handle edge edit response (confirm or cancel)
+    # Handle edge dialog response (confirm or cancel)
     observeEvent(input$edit_edge_response, {
       req(input$edit_edge_response)
+      pend <- rv$pending_edge_edit
 
-      if (isTRUE(input$edit_edge_response$confirm) && !is.null(rv$pending_edge_edit)) {
-        # User confirmed - update the edge
-        edge_id <- rv$pending_edge_edit$id
-        from_id <- rv$pending_edge_edit$from
-        to_id <- rv$pending_edge_edit$to
+      if (isTRUE(input$edit_edge_response$confirm) && !is.null(pend)) {
+        new_polarity <- current_edge_pick(pend)
+        if (is.na(new_polarity)) {
+          # server-side guard for the disabled button: keep the dialog open
+          showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
+          return()
+        }
+        new_strength <- input$edit_edge_strength %||% pend$strength
+        new_confidence <- suppressWarnings(as.integer(input$edit_edge_confidence %||% pend$confidence))
+        if (length(new_confidence) != 1L || is.na(new_confidence)) new_confidence <- 3L
 
-        new_polarity <- input$edit_edge_polarity
-        new_strength <- input$edit_edge_strength
-        new_confidence <- as.integer(input$edit_edge_confidence)
+        debug_log(sprintf("Edge dialog confirmed (%s): polarity=%s, strength=%s, confidence=%d",
+                          if (isTRUE(pend$is_new)) "new" else as.character(pend$id),
+                          new_polarity, new_strength, new_confidence), "CLD VIZ")
 
-        debug_log(sprintf("Updating edge %s: polarity=%s, strength=%s, confidence=%d",
-                          edge_id, new_polarity, new_strength, new_confidence), "CLD VIZ")
-
-        # Compute new visual properties using helper
+        # Compute new visual properties using helper (sign validated above)
         edge_props <- compute_edge_properties(new_polarity, new_strength, new_confidence)
 
-        # Update rv$edges
-        edge_idx <- which(rv$edges$id == edge_id)
-        if (length(edge_idx) == 0) {
-          # Try to find by from/to
-          edge_idx <- which(rv$edges$from == from_id & rv$edges$to == to_id)
-        }
-
-        if (length(edge_idx) > 0) {
-          rv$edges$polarity[edge_idx] <- new_polarity
-          rv$edges$strength[edge_idx] <- new_strength
-          rv$edges$confidence[edge_idx] <- new_confidence
-          rv$edges$color[edge_idx] <- edge_props$color
-          rv$edges$width[edge_idx] <- edge_props$width
-          rv$edges$label[edge_idx] <- new_polarity
-          rv$edges$originalColor[edge_idx] <- edge_props$color
-          rv$edges$originalWidth[edge_idx] <- edge_props$width
-
-          # Update the edge in visNetwork
-          runjs(generate_update_edge_js(id, edge_id, edge_props$color, edge_props$width, new_polarity))
-
-          # Sync to project_data + propagate to isa_data so analyses refresh.
-          isolate({
-            pd <- project_data_reactive()
-            pd$data$cld$edges <- rv$edges
-            tryCatch({
-              pd <- sync_cld_to_isa_data(pd)
-              project_data_reactive(pd)
-              if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-                notify_cld_edit(event_bus, "cld_edit_edge_polarity")
-              }
-              debug_log("Edge updated and synced to isa_data", "CLD VIZ")
-            }, error = function(e) {
-              debug_log(paste("sync_cld_to_isa_data failed on edit_edge_polarity:", e$message), "ERROR")
-              showNotification(
-                format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
-                type = "error",
-                duration = 8
-              )
-            })
-          })
-
-          showNotification(
-            i18n$t("modules.cld.visualization.connection_updated"),
-            type = "message",
-            duration = 3
+        if (isTRUE(pend$is_new)) {
+          # Allocate from the maximum existing id (not count) so the new id
+          # stays unique even when the edge set is sparse after deletes.
+          new_edge <- create_new_edge_data(
+            pend$from, pend$to,
+            max(c(0, suppressWarnings(as.numeric(rv$edges$id))), na.rm = TRUE),
+            polarity = new_polarity
           )
+          new_edge$strength <- new_strength
+          new_edge$confidence <- new_confidence
+          new_edge$width <- edge_props$width
+          new_edge$originalWidth <- edge_props$width
+          rv$edges <- bind_rows(rv$edges, new_edge)
+
+          # Show the chosen sign on the drawn edge until the network re-renders
+          if (!is.na(pend$client_id) && nzchar(pend$client_id)) {
+            visNetworkProxy(session$ns("network")) %>%
+              visUpdateEdges(data.frame(id = pend$client_id, color = edge_props$color,
+                                        width = edge_props$width, label = new_polarity,
+                                        stringsAsFactors = FALSE))
+          }
+
+          sync_edges_to_isa("cld_edit_add_edge",
+                            sprintf("%s -> %s added", pend$from, pend$to))
+          runjs(generate_reenable_manipulation_js(id, "edge add"))
+        } else {
+          # Update rv$edges
+          edge_idx <- which(!is.na(rv$edges$id) & rv$edges$id == pend$id)
+          if (length(edge_idx) == 0) {
+            # Try to find by from/to
+            edge_idx <- which(rv$edges$from == pend$from & rv$edges$to == pend$to)
+          }
+
+          if (length(edge_idx) > 0) {
+            rv$edges$polarity[edge_idx] <- new_polarity
+            rv$edges$strength[edge_idx] <- new_strength
+            rv$edges$confidence[edge_idx] <- new_confidence
+            rv$edges$color[edge_idx] <- edge_props$color
+            rv$edges$width[edge_idx] <- edge_props$width
+            rv$edges$label[edge_idx] <- new_polarity
+            rv$edges$originalColor[edge_idx] <- edge_props$color
+            rv$edges$originalWidth[edge_idx] <- edge_props$width
+
+            # Update the edge in visNetwork
+            runjs(generate_update_edge_js(id, pend$id, edge_props$color, edge_props$width, new_polarity))
+
+            sync_edges_to_isa("cld_edit_edge_polarity", "edit_edge_polarity")
+
+            showNotification(
+              i18n$t("modules.cld.visualization.connection_updated"),
+              type = "message",
+              duration = 3
+            )
+          }
+
+          # Call the visNetwork callback to confirm the edit, then re-enable manipulation
+          runjs(generate_edge_edit_callback_js(id, confirm = TRUE))
         }
 
-        # Call the visNetwork callback to confirm the edit, then re-enable manipulation
-        runjs(generate_edge_edit_callback_js(id, confirm = TRUE))
-
+      } else if (!is.null(pend) && isTRUE(pend$is_new)) {
+        # Cancelled a drawn edge: nothing is created; remove the browser's copy
+        remove_client_edge(pend$client_id)
+        runjs(generate_reenable_manipulation_js(id, "cancel"))
       } else {
         # User cancelled - call callback with null, then re-enable manipulation mode
         runjs(generate_edge_edit_callback_js(id, confirm = FALSE))

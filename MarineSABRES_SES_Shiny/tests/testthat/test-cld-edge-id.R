@@ -21,7 +21,7 @@ test_that("new edge id is greater than every existing id (no collision after del
   # The NEW code uses max_existing_id = max(c(0, 1, 3)) = 3, so new id = 4.
   existing_ids <- c(1L, 3L)
   max_id <- max(c(0L, suppressWarnings(as.numeric(existing_ids))), na.rm = TRUE)
-  e <- create_new_edge_data("A", "B", max_id)
+  e <- create_new_edge_data("A", "B", max_id, polarity = "+")
 
   expect_false(e$id %in% existing_ids,
     info = "New edge id must not collide with any existing id")
@@ -36,7 +36,7 @@ test_that("new edge id is unique when existing ids are non-contiguous after mult
   # nrow=6 -> old code gives id=7, collision with 7.
   existing_ids <- c(1L, 3L, 5L, 7L, 9L, 10L)
   max_id <- max(c(0L, suppressWarnings(as.numeric(existing_ids))), na.rm = TRUE)
-  e <- create_new_edge_data("X", "Y", max_id)
+  e <- create_new_edge_data("X", "Y", max_id, polarity = "+")
 
   expect_false(e$id %in% existing_ids,
     info = "New id must not collide with any existing id in {1,3,5,7,9,10}")
@@ -48,7 +48,7 @@ test_that("new edge id = 1 when edge table is empty", {
   skip_if_not(exists("create_new_edge_data", mode = "function"))
 
   max_id <- max(c(0L, suppressWarnings(as.numeric(integer(0)))), na.rm = TRUE)
-  e <- create_new_edge_data("A", "B", max_id)
+  e <- create_new_edge_data("A", "B", max_id, polarity = "+")
 
   expect_equal(e$id, 1L,
     info = "First edge in empty table must get id = 1")
@@ -61,7 +61,7 @@ test_that("new edge id = 1 when edge table is empty", {
 test_that("create_new_edge_data returns a well-formed edge row", {
   skip_if_not(exists("create_new_edge_data", mode = "function"))
 
-  e <- create_new_edge_data("A", "B", 0L)
+  e <- create_new_edge_data("A", "B", 0L, polarity = "+")
 
   expect_equal(nrow(e), 1L)
   expect_equal(e$from, "A")
@@ -74,10 +74,10 @@ test_that("create_new_edge_data returns a well-formed edge row", {
     info = "Edge id must be numeric")
 })
 
-test_that("create_new_edge_data polarity defaults to '+'", {
+test_that("create_new_edge_data has no default sign (evidenced polarity)", {
   skip_if_not(exists("create_new_edge_data", mode = "function"))
 
-  e <- create_new_edge_data("A", "B", 5L)
-
-  expect_equal(e$polarity, "+")
+  expect_error(create_new_edge_data("A", "B", 5L))
+  e <- create_new_edge_data("A", "B", 5L, polarity = "-")
+  expect_equal(e$polarity, "-")
 })

@@ -35,7 +35,9 @@ generate_manipulation_enable_js <- function(network_id, ns) {
           });
         },
         addEdge: function(edgeData, callback) {
-          // Allow edge addition directly
+          // Draw the edge as pending; Shiny asks for its sign and either
+          // keeps it (confirm) or removes it by this id (cancel)
+          edgeData.id = 'pending_edge_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
           edgeData.arrows = 'to';
           edgeData.color = '#80b8d7';
           edgeData.width = 2;
@@ -44,6 +46,7 @@ generate_manipulation_enable_js <- function(network_id, ns) {
           Shiny.setInputValue('%s', {
             from: edgeData.from,
             to: edgeData.to,
+            id: edgeData.id,
             nonce: Math.random()
           });
         },
@@ -334,23 +337,30 @@ generate_cancel_add_node_js <- function(network_id) {
 #'   table (pass \code{max(c(0, suppressWarnings(as.numeric(rv$edges$id))), na.rm = TRUE)}).
 #'   The new edge receives \code{max_existing_id + 1}, which is guaranteed to be
 #'   unique even when the id sequence is sparse (e.g., after deletes).
+#' @param polarity Character. "+" or "-", chosen by the user (evidenced
+#'   polarity: a CLD edge is never created without a sign). Required.
 #' @return Data frame with one row of edge data.
-create_new_edge_data <- function(from_id, to_id, max_existing_id) {
+create_new_edge_data <- function(from_id, to_id, max_existing_id, polarity) {
+  if (missing(polarity) || !(length(polarity) == 1L && !is.na(polarity) &&
+                             polarity %in% c("+", "-"))) {
+    stop("create_new_edge_data: polarity must be \"+\" or \"-\"", call. = FALSE)
+  }
+  edge_color <- if (identical(polarity, "+")) EDGE_COLORS$reinforcing else EDGE_COLORS$opposing
   data.frame(
     id = max_existing_id + 1,
     from = from_id,
     to = to_id,
     arrows = "to",
-    color = EDGE_COLORS$reinforcing,
+    color = edge_color,
     width = 2,
     opacity = 1,
     title = paste0(htmltools::htmlEscape(from_id), " \u2192 ", htmltools::htmlEscape(to_id)),
-    polarity = "+",
+    polarity = polarity,
     strength = "medium",
     confidence = 3,
-    label = "+",
+    label = polarity,
     font.size = 10,
-    originalColor = EDGE_COLORS$reinforcing,
+    originalColor = edge_color,
     originalWidth = 2,
     stringsAsFactors = FALSE
   )

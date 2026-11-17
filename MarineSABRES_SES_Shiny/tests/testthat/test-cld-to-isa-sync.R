@@ -286,7 +286,7 @@ test_that("sync_cld_to_isa_data handles non-data.frame edges defensively", {
   expect_error(sync_cld_to_isa_data(pd2), NA)
 })
 
-test_that("sync_cld_to_isa_data coerces unknown polarity strings to '+'", {
+test_that("sync_cld_to_isa_data skips unknown polarity strings (no '+' invented)", {
   # REGRESSION: old sync wrote whatever edges$label contained into the
   # matrix cell, including corrupt values like '++' or '0' — breaks
   # downstream polarity-aware analyses that assume binary '+' / '-'.
@@ -307,9 +307,12 @@ test_that("sync_cld_to_isa_data coerces unknown polarity strings to '+'", {
   pd <- list(data = list(cld = list(nodes = nodes, edges = edges),
                          isa_data = list()))
   result <- sync_cld_to_isa_data(pd)
-  # Coerced to "+"
+  # Evidenced polarity: an unknown sign is not coerced to "+"; the edge is
+  # skipped, so no signed cell is written
   isa <- result$data$isa_data
-  expect_true(startsWith(isa$adjacency_matrices$d_a[isa$drivers$ID, isa$activities$ID], "+"))
+  cells <- unlist(isa$adjacency_matrices)
+  cells <- cells[!is.na(cells) & nzchar(cells)]
+  expect_length(cells, 0)
 })
 
 test_that("sync_cld_to_isa_data does not throw on malformed nodes", {

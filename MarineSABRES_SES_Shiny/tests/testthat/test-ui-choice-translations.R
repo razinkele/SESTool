@@ -55,7 +55,12 @@ test_that("report type and CLD edit options are translated, values unchanged", {
   for (txt in c("Reinforcing (+)", "Very Low (1/5)", "Hierarchical (DAPSI)", "Down-Up")) {
     expect_false(grepl(txt, cld, fixed = TRUE), info = txt)
   }
-  expect_true(grepl("T[common.choices.polarity_reinforcing]", cld, fixed = TRUE))
+  # the edge sign picker is rendered server-side per dialog opening
+  # (evidenced polarity); its label is in the UI, its choices in the picker
+  expect_true(grepl("T[modules.cld.visualization.polarity]", cld, fixed = TRUE))
+  picker <- as.character(htmltools::renderTags(polarity_picker_input("p", fake_i18n))$html)
+  expect_true(grepl("T[common.choices.polarity_reinforcing]", picker, fixed = TRUE))
+  expect_false(grepl("Reinforcing (+)", picker, fixed = TRUE))
   expect_true(grepl('value="DU"', cld, fixed = TRUE))
 })
 
