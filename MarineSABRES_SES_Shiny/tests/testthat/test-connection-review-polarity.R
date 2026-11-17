@@ -140,8 +140,14 @@ test_that("a re-render after a swap-clear keeps the sign unset", {
 
 test_that("approve_blocked and needs_sign_count notifications fire with the right count", {
   seen <- character()
+  # Swap the global and restore any earlier binding afterwards
+  had_sn <- exists("showNotification", envir = .GlobalEnv, inherits = FALSE)
+  old_sn <- if (had_sn) get("showNotification", envir = .GlobalEnv) else NULL
   assign("showNotification", function(ui, ...) { seen <<- c(seen, ui); invisible(NULL) }, envir = .GlobalEnv)
-  on.exit(rm("showNotification", envir = .GlobalEnv), add = TRUE)
+  on.exit({
+    if (had_sn) assign("showNotification", old_sn, envir = .GlobalEnv)
+    else rm("showNotification", envir = .GlobalEnv)
+  }, add = TRUE)
   conns <- shiny::reactiveVal(pol_signs(c(NA, "+", NA)))
   testServer(connection_review_tabbed_server,
              args = list(connections_reactive = conns, i18n = pol_i18n), {
