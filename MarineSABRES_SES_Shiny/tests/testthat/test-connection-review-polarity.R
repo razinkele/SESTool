@@ -25,7 +25,7 @@ test_that("approve is blocked while the sign is unset", {
     session$setInputs(approve_1 = 1)
     expect_false(1 %in% rv$approved)
     expect_length(approved, 0)
-    session$setInputs(polarity_pick_1 = "-", approve_1 = 2)
+    session$setInputs(polarity_pick_1_1 = "-", approve_1 = 2)
     expect_true(1 %in% rv$approved)
     expect_equal(rv$amended_data[["1"]]$polarity, "-")
     expect_equal(approved, 1)
@@ -54,7 +54,7 @@ test_that("approve all uses a live pick for a card whose sign was unset", {
   testServer(connection_review_tabbed_server,
              args = list(connections_reactive = conns, i18n = pol_i18n), {
     session$flushReact()
-    session$setInputs(polarity_pick_1 = "-")
+    session$setInputs(polarity_pick_1_1 = "-")
     session$setInputs(approve_all_drivers_activities = 1)
     expect_setequal(rv$approved, c(1L, 2L))
     expect_equal(rv$amended_data[["1"]]$polarity, "-")
@@ -69,7 +69,7 @@ test_that("swap clears an evidenced sign but keeps a user-chosen one", {
     expect_equal(current_sign(1L), "-")
     session$setInputs(swap_direction_1 = 1)
     expect_true(is.na(current_sign(1L)))
-    session$setInputs(polarity_pick_1 = "+")
+    session$setInputs(polarity_pick_1_1 = "+")
     expect_equal(current_sign(1L), "+")
     rv$last_action_time <- NULL   # the swap handler debounces for 500 ms
     session$setInputs(swap_direction_1 = 2)
@@ -93,8 +93,8 @@ test_that("a user-chosen sign equal to the evidenced one survives the swap (flip
   testServer(connection_review_tabbed_server,
              args = list(connections_reactive = conns, i18n = pol_i18n), {
     session$flushReact()
-    session$setInputs(polarity_pick_1 = "+")
-    session$setInputs(polarity_pick_1 = "-")
+    session$setInputs(polarity_pick_1_1 = "+")
+    session$setInputs(polarity_pick_1_1 = "-")
     expect_equal(current_sign(1L), "-")
     session$setInputs(swap_direction_1 = 1)
     expect_equal(current_sign(1L), "-")
@@ -131,7 +131,7 @@ test_that("a re-render after a swap-clear keeps the sign unset", {
     session$setInputs(show_delay_toggle = TRUE)
     session$flushReact()
     html <- paste(as.character(output$batch_connections_drivers_activities$html), collapse = "")
-    expect_match(html, "polarity_pick_1", fixed = TRUE)   # the card did re-render
+    expect_match(html, "polarity_pick_1_1", fixed = TRUE)   # the card did re-render
     expect_false(grepl("Smith 2020", html, fixed = TRUE))
     expect_true(is.na(current_sign(1L)))
     expect_false(1 %in% rv$user_signed)
@@ -165,7 +165,7 @@ test_that("flipping an evidenced sign is what gets approved", {
              args = list(connections_reactive = conns, i18n = pol_i18n,
                          on_amend = function(index, polarity, strength, confidence, delay = NA, delay_years = NA) got <<- polarity), {
     session$flushReact()
-    session$setInputs(polarity_pick_1 = "+")
+    session$setInputs(polarity_pick_1_1 = "+")
     session$setInputs(approve_1 = 1)
     expect_true(1 %in% rv$approved)
     expect_equal(got, "+")
@@ -187,7 +187,7 @@ test_that("the card renders the picker, with the from: line only for an evidence
   rv <- shiny::reactiveValues(approved = c(), rejected = c(), amended_data = list(), sign_cleared = c())
   ns <- function(x) paste0("m-", x)
   html_ev <- as.character(shiny::isolate(render_connection_card(pol_conn("-", "Smith 2020"), 1, ns, pol_i18n, rv)))
-  expect_match(html_ev, "m-polarity_pick_1", fixed = TRUE)
+  expect_match(html_ev, "m-polarity_pick_0_1", fixed = TRUE)
   expect_false(grepl("polarity_switch", html_ev, fixed = TRUE))
   expect_match(html_ev, "Smith 2020", fixed = TRUE)
   html_none <- as.character(shiny::isolate(render_connection_card(pol_conn(NA_character_), 1, ns, pol_i18n, rv)))
@@ -209,4 +209,58 @@ test_that("the picker prompt carries the class the stylesheet hides once a sign 
   css <- paste(readLines(file.path(
     if (basename(getwd()) == "testthat") "../../www" else "www", "custom.css")), collapse = "\n")
   expect_match(css, ".polarity-picker:has(.active) .polarity-picker-prompt", fixed = TRUE)
+})
+
+# ---- Final review I1: a new connection set starts a fresh review ------------
+# The picker id of card `idx` in the review's current generation.
+crp_pick <- function(status, idx) {
+  gen <- status$generation
+  stopifnot(length(gen) == 1)
+  paste0("polarity_pick_", gen, "_", idx)
+}
+crp_set <- function(session, id, value) do.call(session$setInputs, stats::setNames(list(value), id))
+
+test_that("a new connection set does not inherit the previous set's pick or approval", {
+  conns <- shiny::reactiveVal(list(pol_conn(NA_character_, i = 1)))
+  amended <- list()
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n,
+                         on_amend = function(index, polarity, ...) amended[[length(amended) + 1L]] <<- polarity), {
+    session$flushReact()
+    old_id <- crp_pick(session$getReturned()(), 1)
+    crp_set(session, old_id, "-")
+    session$setInputs(approve_1 = 1)
+    expect_true(1 %in% rv$approved)
+    # A different unsigned connection replaces the set
+    connections_reactive(list(pol_conn(NA_character_, i = 7)))
+    session$flushReact()
+    expect_true(is.na(current_sign(1L)))
+    expect_length(rv$approved, 0)
+    expect_length(rv$amended_data, 0)
+    expect_length(rv$user_signed, 0)
+    expect_false(identical(crp_pick(session$getReturned()(), 1), old_id))
+    n_before <- length(amended)
+    session$setInputs(approve_1 = 2)
+    expect_false(1 %in% rv$approved)           # approve is blocked: nothing picked
+    expect_equal(length(amended), n_before)    # and the parent is not given the old sign
+  })
+})
+
+test_that("the same set coming back after a reset (cancel, reload) starts fresh too", {
+  conns <- shiny::reactiveVal(list(pol_conn(NA_character_, i = 1)))
+  testServer(connection_review_tabbed_server,
+             args = list(connections_reactive = conns, i18n = pol_i18n), {
+    session$flushReact()
+    old_id <- crp_pick(session$getReturned()(), 1)
+    crp_set(session, old_id, "+")
+    session$setInputs(swap_direction_1 = 1)
+    expect_equal(current_sign(1L), "+")
+    connections_reactive(NULL)
+    session$flushReact()
+    connections_reactive(list(pol_conn(NA_character_, i = 1)))
+    session$flushReact()
+    expect_true(is.na(current_sign(1L)))
+    expect_length(rv$swapped, 0)
+    expect_false(identical(crp_pick(session$getReturned()(), 1), old_id))
+  })
 })

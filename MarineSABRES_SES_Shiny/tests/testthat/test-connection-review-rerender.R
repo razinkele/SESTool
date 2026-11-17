@@ -27,7 +27,7 @@ test_that("approving a connection leaves the tab bar and the card list as they a
     tabs_before <- html_of(output$dynamic_tabs)
     cards_before <- html_of(output$batch_connections_drivers_activities)
     session$setInputs(batch_tabs = "drivers_activities")
-    session$setInputs(strength_1 = 3, confidence_1 = 3, polarity_pick_1 = "+")
+    session$setInputs(strength_1 = 3, confidence_1 = 3, polarity_pick_1_1 = "+")
     session$setInputs(approve_1 = 1)
     expect_equal(rv$approved, 1L)
     expect_identical(html_of(output$dynamic_tabs), tabs_before)
@@ -46,7 +46,7 @@ test_that("an amendment written back by the parent does not rebuild the review",
              args = list(connections_reactive = conns, i18n = fake_i18n_rr, on_amend = amend), {
     session$flushReact()
     batches_before <- batched_connections()
-    session$setInputs(strength_2 = 5, confidence_2 = 3, polarity_pick_2 = "-")
+    session$setInputs(strength_2 = 5, confidence_2 = 3, polarity_pick_1_2 = "-")
     session$setInputs(approve_2 = 1)
     expect_equal(connections_reactive()[[2]]$strength, "very strong")   # the parent did change its list
     expect_identical(batched_connections(), batches_before)

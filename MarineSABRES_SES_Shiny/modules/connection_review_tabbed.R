@@ -450,7 +450,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       a <- rv$amended_data[[as.character(idx)]] %||% list()
       a$polarity <- sign
       rv$amended_data[[as.character(idx)]] <- a
-      shinyjs::hide(id = paste0("polarity_pick_", idx, "_source"))
+      shinyjs::hide(id = paste0(pick_id(idx), "_source"))
       if (!is.null(on_amend)) {
         v <- amend_values(idx, conn)
         on_amend(idx, sign, v$strength, v$confidence, v$delay, v$delay_years)
@@ -552,13 +552,35 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     # elements are linked). Parents write each approval's amendments back into
     # their list (on_amend), and rebuilding on those reset the tabs and the
     # scroll position after every click (feedback 2026-10-21).
+    #
+    # A new set of connections starts a fresh review: approvals, swaps and
+    # picks belong to the connection at an index, so carrying them over gave a
+    # sign the user chose for one connection to a different one (final review
+    # I1). The generation goes into the card picker ids, so a re-rendered
+    # card never inherits a pick the browser still holds.
     review_conns <- reactiveVal(NULL)
+    review_gen <- reactiveVal(0L)
     observe({
       conns <- connections_reactive()
       if (!identical(connection_structure(conns), connection_structure(isolate(review_conns())))) {
+        isolate({
+          rv$approved <- c()
+          rv$rejected <- c()
+          rv$swapped <- c()
+          rv$amended_data <- list()
+          rv$sign_cleared <- c()
+          rv$user_signed <- c()
+          rv$scroll_to <- NULL
+          rv$last_action_time <- NULL
+          review_gen(review_gen() + 1L)
+        })
         review_conns(conns)
       }
     })
+    # The input id of a card's sign picker in the current generation.
+    pick_id <- function(idx, gen = isolate(review_gen())) {
+      paste0("polarity_pick_", gen, "_", idx)
+    }
 
     # Categorize connections into batches
     batched_connections <- reactive({
@@ -826,7 +848,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               conn <- conns[[i]]
               conn_idx <- indices[i]  # Original index in full list
 
-              render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i, show_delay = show_delay)
+              render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i, show_delay = show_delay,
+                                     gen = review_gen())
             }))
 
             do.call(tagList, connection_cards)
@@ -914,7 +937,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # was touched uses the live pick, others their current sign.
             signs <- vapply(seq_along(batch$indices), function(k) {
               idx <- batch$indices[k]
-              pick <- read_polarity_pick(input[[paste0("polarity_pick_", idx)]])
+              pick <- read_polarity_pick(input[[pick_id(idx)]])
               if (!is.na(pick)) pick else current_sign(idx, batch$connections[[k]])
             }, character(1))
             signed <- !is.na(signs)
@@ -1018,7 +1041,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
       # Create a signature of the actual connection content to detect real changes
       # This prevents infinite loops when connections_reactive() invalidates but content is unchanged
-      conn_signature <- digest::digest(lapply(conns, function(c) {
+      gen <- review_gen()
+      conn_signature <- digest::digest(c(list(gen = gen), lapply(conns, function(c) {
         list(
           from_type = c$from_type %|||% "",
           from_index = c$from_index %|||% 0,
@@ -1028,7 +1052,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           polarity_source = c$polarity_source %||% NA_character_,
           strength = c$strength %|||% "medium"
         )
-      }))
+      })))
 
       # Check if connections have actually changed (by content, not just timestamp)
       if (!is.null(last_connections_signature()) &&
@@ -1056,6 +1080,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         local({
           local_idx <- conn_idx
           conn <- conns[[local_idx]]
+          local_pick <- pick_id(local_idx, gen)
 
           # Strength label output
           output[[paste0("strength_label_", local_idx)]] <- renderText({
@@ -1105,8 +1130,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # A sign picked by the user is stored as an amendment
           obs_env$conn[[length(obs_env$conn) + 1L]] <- observeEvent(
-            input[[paste0("polarity_pick_", local_idx)]], {
-              pick <- read_polarity_pick(input[[paste0("polarity_pick_", local_idx)]])
+            input[[local_pick]], {
+              pick <- read_polarity_pick(input[[local_pick]])
               if (!is.na(pick) && !identical(pick, current_sign(local_idx, conn))) {
                 commit_user_sign(local_idx, conn, pick)
               }
@@ -1137,7 +1162,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             strength_label <- strength_labels[strength_value]
 
             # The sign: the live pick, else the card's current sign. No sign, no approval.
-            polarity <- read_polarity_pick(input[[paste0("polarity_pick_", local_idx)]])
+            polarity <- read_polarity_pick(input[[local_pick]])
             if (is.na(polarity)) polarity <- current_sign(local_idx, conn)
             if (is.na(polarity)) {
               showNotification(i18n$t("common.polarity.approve_blocked"), type = "warning", duration = 4)
@@ -1221,11 +1246,11 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
                 rv$approved <- setdiff(rv$approved, local_idx)
                 set_card_status(local_idx, "pending")
               }
-              pick_id <- ns(paste0("polarity_pick_", local_idx))
-              shinyjs::hide(id = paste0("polarity_pick_", local_idx, "_source"))
+              ns_pick <- ns(local_pick)
+              shinyjs::hide(id = paste0(local_pick, "_source"))
               shinyjs::runjs(sprintf(
                 "(function(){var e=$('#%s');e.find('input').prop('checked',false);e.find('.btn').removeClass('active');Shiny.setInputValue('%s',null,{priority:'event'});})();",
-                pick_id, pick_id))
+                ns_pick, ns_pick))
               # Tell the parent the sign is gone (it also drops the approval)
               if (!is.null(on_amend)) {
                 v <- amend_values(local_idx, conn)
@@ -1260,7 +1285,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         rejected = rv$rejected,
         swapped = rv$swapped,  # Track which connections have swapped direction
         amended_data = rv$amended_data,
-        batches = batched_connections()$batches
+        batches = batched_connections()$batches,
+        generation = review_gen()  # stamped into the card picker ids
       )
     }))
   })
@@ -1284,7 +1310,8 @@ connection_structure <- function(conns) {
 # HELPER FUNCTION: RENDER CONNECTION CARD
 # ============================================================================
 
-render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices = NULL, pos_in_batch = NULL, show_delay = FALSE) {
+render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices = NULL, pos_in_batch = NULL, show_delay = FALSE,
+                                   gen = 0L) {
   # Determine status class
   status_class <- "conn-card-tabbed"
   if (conn_idx %in% rv$approved) {
@@ -1331,7 +1358,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
       # Sign picker in header
       div(style = "margin-left: 15px;",
         polarity_picker_input(
-          ns(paste0("polarity_pick_", conn_idx)), i18n,
+          ns(paste0("polarity_pick_", gen, "_", conn_idx)), i18n,
           selected = current_polarity,
           evidence_source = if (user_chose || sign_cleared) NA_character_ else conn$polarity_source
         )

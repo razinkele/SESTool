@@ -145,3 +145,41 @@ test_that("approving a connection does not re-render the template's review secti
     expect_equal(builds, 1L)
   })
 })
+
+# ---- Final review I1: template finalize applies no stale amendment ----------
+.tpl_pick_id <- function(status, idx) {
+  gen <- status$generation
+  stopifnot(length(gen) == 1)
+  paste0("template_conn_review-polarity_pick_", gen, "_", idx)
+}
+
+test_that("a sign picked while reviewing one template is not applied to another", {
+  pdr <- reactiveVal(init_session_data())
+  testServer(template_ses_server,
+             args = list(project_data_reactive = pdr, i18n = i18n), {
+    # Template B: note its first connection's sign, then leave
+    session$setInputs(template_selected = "tourism")
+    session$setInputs(review_connections = 1)
+    b1 <- rv$template_connections[[1]]
+    expect_true(b1$polarity %in% c("+", "-"))
+    flipped <- if (b1$polarity == "+") "-" else "+"
+    session$setInputs(cancel_review = 1)
+    # Template A: pick the opposite sign on card 1, then leave
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(review_connections = 2)
+    do.call(session$setInputs, stats::setNames(list(flipped), .tpl_pick_id(review_status(), 1)))
+    session$setInputs(cancel_review = 2)
+    # Template B again: finalize untouched
+    session$setInputs(template_selected = "tourism")
+    session$setInputs(review_connections = 3)
+    expect_length(review_status()$amended_data, 0)
+    session$setInputs(finalize_template = 1)
+    mats <- pdr()$data$isa_data$adjacency_matrices
+    cell <- NULL
+    for (m in mats) {
+      if (b1$from_id %in% rownames(m) && b1$to_id %in% colnames(m)) { cell <- m[b1$from_id, b1$to_id]; break }
+    }
+    expect_false(is.null(cell))
+    expect_equal(substr(cell, 1, 1), b1$polarity)   # the template's own sign, not A's pick
+  })
+})
