@@ -374,7 +374,11 @@ create_new_edge_data <- function(from_id, to_id, max_existing_id, polarity) {
 #' @param new_confidence Integer. 1-5 confidence value.
 #' @return List with: color (character), width (integer).
 compute_edge_properties <- function(new_polarity, new_strength, new_confidence) {
-  new_color <- if (new_polarity == "+") EDGE_COLORS$reinforcing else EDGE_COLORS$opposing
+  # Evidenced polarity: an edge without a sign gets no colour
+  if (!(length(new_polarity) == 1L && !is.na(new_polarity) && new_polarity %in% c("+", "-"))) {
+    stop("compute_edge_properties: new_polarity must be \"+\" or \"-\"", call. = FALSE)
+  }
+  new_color <- if (identical(new_polarity, "+")) EDGE_COLORS$reinforcing else EDGE_COLORS$opposing
   new_width <- switch(new_strength,
     "weak" = 1,
     "medium" = 2,
@@ -414,8 +418,10 @@ generate_update_edge_js <- function(network_id, edge_id, new_color, new_width, n
 #'
 #' @param network_id Character. The module ID.
 #' @param confirm Logical. TRUE to confirm, FALSE to cancel.
+#' @param reenable Logical. Re-enable manipulation mode after a cancel (FALSE
+#'   when edit mode is being switched off).
 #' @return Character string containing JavaScript code.
-generate_edge_edit_callback_js <- function(network_id, confirm = TRUE) {
+generate_edge_edit_callback_js <- function(network_id, confirm = TRUE, reenable = TRUE) {
   if (confirm) {
     sprintf("
       if (window.editEdgeCallback_%s && window.pendingEdgeData_%s) {
@@ -437,9 +443,24 @@ generate_edge_edit_callback_js <- function(network_id, confirm = TRUE) {
       }
       %s",
       network_id, network_id, network_id, network_id,
-      generate_reenable_manipulation_js(network_id, "cancel")
+      if (reenable) generate_reenable_manipulation_js(network_id, "cancel") else ""
     )
   }
+}
+
+
+#' Generate JavaScript that drops a pending edge-edit callback without calling it
+#'
+#' Used when the edge being edited is already gone from the browser (its node
+#' was deleted): calling the vis-network callback then would throw.
+#' @param network_id Character. The module ID.
+#' @return Character string containing JavaScript code.
+generate_edge_edit_clear_js <- function(network_id) {
+  sprintf("
+      window.editEdgeCallback_%s = null;
+      window.pendingEdgeData_%s = null;",
+    network_id, network_id
+  )
 }
 
 

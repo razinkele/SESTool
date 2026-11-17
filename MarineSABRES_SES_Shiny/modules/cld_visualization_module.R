@@ -946,6 +946,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           duration = 3
         )
       } else {
+        # A drawn edge still awaiting its sign (or an open edit) is dropped
+        discard_pending_edge(reenable = FALSE)
         # Disable manipulation mode
         runjs(generate_manipulation_disable_js(id))
 
@@ -1288,14 +1290,20 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       invisible(TRUE)
     }
 
-    # Drop the open dialog without applying it
-    discard_pending_edge <- function() {
+    # Drop the open dialog without applying it.
+    #   reenable  = FALSE when edit mode is being switched off (pending edit)
+    #   edge_gone = TRUE when the browser already removed the edge (its node
+    #               was deleted): a pending edit callback is cleared, not called
+    discard_pending_edge <- function(reenable = TRUE, edge_gone = FALSE) {
       pend <- isolate(rv$pending_edge_edit)
       if (is.null(pend)) return(invisible(FALSE))
       if (isTRUE(pend$is_new)) {
+        # removing it lets vis-network restore its toolbar (no re-enable here)
         remove_client_edge(pend$client_id)
+      } else if (edge_gone) {
+        runjs(generate_edge_edit_clear_js(id))
       } else {
-        runjs(generate_edge_edit_callback_js(id, confirm = FALSE))
+        runjs(generate_edge_edit_callback_js(id, confirm = FALSE, reenable = reenable))
       }
       rv$pending_edge_edit <- NULL
       shinyjs::hide("edit_edge_modal_container")
@@ -1312,7 +1320,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       safe_from <- jsonlite::toJSON(as.character(edge_node_label(pend$from)), auto_unbox = TRUE)
       safe_to <- jsonlite::toJSON(as.character(edge_node_label(pend$to)), auto_unbox = TRUE)
       runjs(sprintf(
-        "document.getElementById('%s').textContent = %s + ' → ' + %s;",
+        "document.getElementById('%s').textContent = %s + ' \u2192 ' + %s;",
         session$ns("edit_edge_from_to"), safe_from, safe_to
       ))
       updateSelectInput(session, "edit_edge_strength", selected = pend$strength)
@@ -1383,7 +1391,15 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       # (A pending edit is not answered here: the browser already replaced
       # its callback with this request's.)
       pend_old <- isolate(rv$pending_edge_edit)
-      if (!is.null(pend_old) && isTRUE(pend_old$is_new)) discard_pending_edge()
+      if (!is.null(pend_old) && isTRUE(pend_old$is_new)) {
+        if (identical(as.character(et$id), as.character(pend_old$client_id))) {
+          # "Edit edge" on the drawn edge itself: its sign dialog is already
+          # open, so keep it and answer vis-network's edit callback with null
+          runjs(generate_edge_edit_callback_js(id, confirm = FALSE))
+          return()
+        }
+        discard_pending_edge()
+      }
 
       # Find the edge in rv$edges (by id, else by from/to)
       edge_row <- rv$edges[!is.na(rv$edges$id) & rv$edges$id == et$id, , drop = FALSE]
@@ -1502,6 +1518,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       req(input$nodes_deleted$nodes)
       deleted_ids <- input$nodes_deleted$nodes
       debug_log(sprintf("Nodes deleted: %s", paste(deleted_ids, collapse = ", ")), "CLD VIZ")
+
+      # The open edge dialog's edge went with its node (vis removes it)
+      pend <- isolate(rv$pending_edge_edit)
+      if (!is.null(pend) && any(c(pend$from, pend$to) %in% unlist(deleted_ids))) {
+        discard_pending_edge(reenable = FALSE, edge_gone = TRUE)
+      }
 
       rv$nodes <- rv$nodes %>% filter(!(id %in% deleted_ids))
       rv$edges <- rv$edges %>% filter(!(from %in% deleted_ids | to %in% deleted_ids))

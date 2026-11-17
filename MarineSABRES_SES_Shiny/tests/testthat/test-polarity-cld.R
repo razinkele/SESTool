@@ -242,3 +242,99 @@ test_that("the edit-edge dialog preselects the edge's sign and applies a change"
     expect_length(prx$removed, 0)
   })
 })
+
+# --- Fix round 1 -------------------------------------------------------------
+
+stub_runjs <- function(env = parent.frame()) {
+  rec <- new.env(); rec$js <- character(0)
+  local_global("runjs", function(code) { rec$js <- c(rec$js, code); invisible(NULL) }, env)
+  rec
+}
+
+test_that("confirm recolours and labels the drawn client edge under its id", {
+  prx <- stub_proxy_edges()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    draw_edge(session, client_id = "pending_1")
+    set_input(session, rv$pending_edge_edit$picker_id, "-")
+    respond(session, "confirm")
+    expect_length(prx$updated, 1)
+    upd <- prx$updated[[1]]
+    expect_equal(upd$id, "pending_1")
+    expect_equal(upd$label, "-")
+    expect_equal(upd$color, EDGE_COLORS$opposing)
+  })
+})
+
+test_that("'Edit edge' on the drawn edge keeps its sign dialog and answers vis with null", {
+  prx <- stub_proxy_edges()
+  rj <- stub_runjs()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    draw_edge(session, client_id = "pending_1")
+    pend <- rv$pending_edge_edit
+    rj$js <- character(0)
+    session$setInputs(edit_edge_triggered = list(id = "pending_1", from = "D_1", to = "A_1",
+                                                 nonce = runif(1)))
+    expect_identical(rv$pending_edge_edit, pend)        # same dialog, same picker
+    expect_length(prx$removed, 0)
+    expect_true(any(grepl(paste0("editEdgeCallback_", id, "(null)"), rj$js, fixed = TRUE)))
+    # the sign dialog still works
+    set_input(session, pend$picker_id, "-")
+    respond(session, "confirm")
+    expect_equal(edges_between(pd()$data$cld$edges, "D_1", "A_1")$polarity, "-")
+  })
+})
+
+test_that("turning edit mode off drops a drawn edge awaiting its sign", {
+  prx <- stub_proxy_edges()
+  rj <- stub_runjs()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    before <- rv$edges
+    draw_edge(session, client_id = "pending_1")
+    rj$js <- character(0)
+    session$setInputs(enable_manipulation = FALSE)
+    expect_null(rv$pending_edge_edit)
+    expect_equal(prx$removed, list("pending_1"))
+    expect_identical(rv$edges, before)
+    # manipulation is not turned back on while the switch is off
+    expect_false(any(grepl("reEnableManipulation", rj$js, fixed = TRUE)))
+  })
+})
+
+test_that("deleting a node of the drawn edge drops its dialog; a late confirm adds nothing", {
+  prx <- stub_proxy_edges()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    draw_edge(session, client_id = "pending_1")
+    picker <- rv$pending_edge_edit$picker_id
+    set_input(session, picker, "-")
+    session$setInputs(nodes_deleted = list(nodes = list("D_1"), nonce = runif(1)))
+    expect_null(rv$pending_edge_edit)
+    respond(session, "confirm")
+    expect_equal(nrow(edges_between(rv$edges, "D_1", "A_1")), 0L)
+    expect_equal(nrow(edges_between(pd()$data$cld$edges, "D_1", "A_1")), 0L)
+  })
+})
+
+test_that("compute_edge_properties refuses a missing sign instead of colouring it", {
+  expect_error(compute_edge_properties(NA_character_, "medium", 3), "must be")
+  expect_error(compute_edge_properties("", "medium", 3), "must be")
+  expect_equal(compute_edge_properties("-", "strong", 3),
+               list(color = EDGE_COLORS$opposing, width = 3))
+  expect_equal(compute_edge_properties("+", "weak", 3)$color, EDGE_COLORS$reinforcing)
+})
+
+test_that("a cancelled edit can skip re-enabling manipulation", {
+  expect_match(generate_edge_edit_callback_js("cldv", confirm = FALSE), "reEnableManipulation", fixed = TRUE)
+  expect_false(grepl("reEnableManipulation",
+                     generate_edge_edit_callback_js("cldv", confirm = FALSE, reenable = FALSE), fixed = TRUE))
+  clear <- generate_edge_edit_clear_js("cldv")
+  expect_match(clear, "window.editEdgeCallback_cldv = null", fixed = TRUE)
+  expect_false(grepl("(null)", clear, fixed = TRUE))
+})

@@ -293,26 +293,32 @@ test_that("sync_cld_to_isa_data skips unknown polarity strings (no '+' invented)
   skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
               "sync_cld_to_isa_data not available")
   nodes <- data.frame(
-    id = c("D_1", "A_1"),
-    label = c("d", "a"),
-    group = c("Drivers", "Activities"),
+    id = c("D_1", "A_1", "P_1"),
+    label = c("d", "a", "p"),
+    group = c("Drivers", "Activities", "Pressures"),
     stringsAsFactors = FALSE
   )
+  # one unknown sign and one valid sign in the same run
   edges <- data.frame(
-    id = 1,
-    from = "D_1", to = "A_1",
-    label = "uncertain",
+    id = 1:2,
+    from = c("D_1", "A_1"), to = c("A_1", "P_1"),
+    label = c("uncertain", "-"),
     stringsAsFactors = FALSE
   )
   pd <- list(data = list(cld = list(nodes = nodes, edges = edges),
                          isa_data = list()))
   result <- sync_cld_to_isa_data(pd)
-  # Evidenced polarity: an unknown sign is not coerced to "+"; the edge is
-  # skipped, so no signed cell is written
+  # Evidenced polarity: an unknown sign is not coerced to "+"; that edge is
+  # skipped while the signed edge is written (so sync did run)
   isa <- result$data$isa_data
+  d_a <- isa$adjacency_matrices$d_a
+  expect_false(is.null(d_a))
+  expect_true(all(is.na(d_a) | !nzchar(d_a)))
+  a_p <- isa$adjacency_matrices$a_p
+  expect_true(startsWith(a_p[isa$activities$ID, isa$pressures$ID], "-"))
   cells <- unlist(isa$adjacency_matrices)
   cells <- cells[!is.na(cells) & nzchar(cells)]
-  expect_length(cells, 0)
+  expect_length(cells, 1)
 })
 
 test_that("sync_cld_to_isa_data does not throw on malformed nodes", {
