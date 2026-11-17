@@ -132,7 +132,8 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       validation_errors = NULL,
       import_success = FALSE,
       show_review = FALSE,
-      parsed_connections = NULL
+      parsed_connections = NULL,
+      review_signs = list()  # idx (chr) -> sign chosen in review, NA when cleared
     )
 
     # === REACTIVE MODULE HEADER ===
@@ -408,6 +409,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       tryCatch({
         # Parse connections into review format
         rv$parsed_connections <- parse_connections_for_review(rv$elements_data, rv$connections_data)
+        rv$review_signs <- list()
         rv$show_review <- TRUE
 
       }, error = function(e) {
@@ -424,11 +426,17 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       "conn_review",
       connections_reactive = reactive({ rv$parsed_connections }),
       i18n = i18n,
-      on_approve = function(approved_idx) {
+      on_approve = function(approved_idx, conn = NULL) {
         debug_log(paste("Approved connections:", paste(approved_idx, collapse = ", ")), "IMPORT")
       },
-      on_reject = function(rejected_idx) {
+      on_reject = function(rejected_idx, conn = NULL) {
         debug_log(paste("Rejected connections:", paste(rejected_idx, collapse = ", ")), "IMPORT")
+      },
+      # A sign picked (or cleared) in the review is kept here; finalize writes
+      # it back into the Label column before converting.
+      on_amend = function(idx, polarity, strength, confidence, delay = NULL, delay_years = NULL) {
+        sign <- if (length(polarity) == 1 && !is.na(polarity) && polarity %in% c("+", "-")) polarity else NA_character_
+        rv$review_signs[[as.character(idx)]] <- sign
       }
     )
 
@@ -466,6 +474,20 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
                       length(swapped_indices)), "IMPORT")
         }
 
+        # Write signs picked in the review back into Label (positions align 1:1
+        # with the file rows, as for swaps above)
+        if (!"Label" %in% names(rv$connections_data)) {
+          rv$connections_data$Label <- NA_character_
+        }
+        rv$connections_data$Label <- as.character(rv$connections_data$Label)
+        for (key in names(rv$review_signs)) {
+          i <- suppressWarnings(as.integer(key))
+          sign <- rv$review_signs[[key]]
+          if (!is.na(i) && i <= nrow(rv$connections_data)) {
+            rv$connections_data$Label[i] <- sign
+          }
+        }
+
         # Filter connections based on review
         if (length(rejected) > 0) {
           # Create filtered connections dataframe
@@ -489,8 +511,16 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)
         isa_data <- convert_excel_to_isa(rv$elements_data, connections_to_import)
+        if (nrow(isa_data$unsigned) > 0) {
+          debug_log(sprintf("Leaving out %d unsigned connections", nrow(isa_data$unsigned)), "IMPORT")
+          showNotification(
+            sprintf(i18n$t("common.polarity.direct_import_blocked"), nrow(isa_data$unsigned)),
+            type = "warning", duration = 8
+          )
+        }
 
         # Perform import
+        isa_data$unsigned <- NULL  # report only; never stored in project data
         perform_import(isa_data, nrow(rv$elements_data), nrow(connections_to_import))
 
       }, error = function(e) {
@@ -505,6 +535,20 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
     # Direct import button (skip review)
     observeEvent(input$import_direct_btn, {
       req(rv$file_loaded)
+
+      # A sign is never invented: files with unsigned rows go through Review
+      n_unsigned <- if ("Label" %in% names(rv$connections_data)) {
+        sum(is.na(import_label_polarity(rv$connections_data$Label)))
+      } else {
+        nrow(rv$connections_data)
+      }
+      if (n_unsigned > 0) {
+        showNotification(
+          sprintf(i18n$t("common.polarity.direct_import_blocked"), n_unsigned),
+          type = "error", duration = 10
+        )
+        return()
+      }
 
       tryCatch({
         # Verify shared function is available
@@ -521,6 +565,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         isa_data <- convert_excel_to_isa(rv$elements_data, rv$connections_data)
 
         # Perform import
+        isa_data$unsigned <- NULL
         perform_import(isa_data, nrow(rv$elements_data), nrow(rv$connections_data))
 
       }, error = function(e) {
@@ -715,7 +760,7 @@ parse_connections_for_review <- function(elements, connections) {
 
     from_label <- conn$From
     to_label <- conn$To
-    polarity <- conn$Label
+    polarity <- import_label_polarity(conn$Label)
 
     # Get strength
     strength <- "medium"

@@ -28,6 +28,19 @@ normalize_name <- function(name) {
   return(normalized)
 }
 
+#' Read the sign of an imported connection label
+#'
+#' Only a leading "+" or "-" (after optional whitespace) counts as a sign.
+#' Anything else (NA, "", "medium:3", "x", "1", "negative") has no sign.
+#'
+#' @param label Character vector of Label cells
+#' @return Character vector of "+", "-" or NA_character_
+import_label_polarity <- function(label) {
+  first <- substr(trimws(as.character(label)), 1, 1)
+  out <- ifelse(!is.na(first) & first %in% c("+", "-"), first, NA_character_)
+  as.character(out)
+}
+
 # ============================================================================
 # EXCEL TO ISA CONVERSION
 # ============================================================================
@@ -36,7 +49,9 @@ normalize_name <- function(name) {
 #'
 #' @param elements Data frame with Element data (Label and type columns)
 #' @param connections Data frame with Connection data (From, To, Label columns)
-#' @return List with ISA data structure
+#' @return List with ISA data structure. The element `unsigned` is a data frame
+#'   (From, To) of connections whose Label carries no "+"/"-"; they get no
+#'   adjacency-matrix cell.
 #' @export
 convert_excel_to_isa <- function(elements, connections) {
   debug_log("Converting Excel data to ISA structure...", "EXCEL_IMPORT")
@@ -249,6 +264,18 @@ convert_excel_to_isa <- function(elements, connections) {
   }
   debug_log(paste("Total connections in matrices:", total_matrix_connections, "of", nrow(connections), "original"), "EXCEL_IMPORT")
 
+  # Connections without a file sign are reported, never written
+  lbl <- if ("Label" %in% names(connections)) connections$Label else rep(NA_character_, nrow(connections))
+  unsigned_idx <- which(is.na(import_label_polarity(lbl)))
+  isa_data$unsigned <- data.frame(
+    From = as.character(connections$From[unsigned_idx]),
+    To = as.character(connections$To[unsigned_idx]),
+    stringsAsFactors = FALSE
+  )
+  if (length(unsigned_idx) > 0) {
+    debug_log(paste(length(unsigned_idx), "connections have no sign and were left out"), "EXCEL_IMPORT")
+  }
+
   return(isa_data)
 }
 
@@ -428,13 +455,11 @@ build_adjacency_matrices_from_connections_v2 <- function(node_types, connections
         next
       }
 
-      # Extract polarity
-      polarity <- as.character(connections$Label[j])
-      polarity_sign <- "+"
-      if (!is.na(polarity) && nzchar(polarity)) {
-        if (polarity %in% c("-") || grepl("^-", polarity, perl = TRUE)) {
-          polarity_sign <- "-"
-        }
+      # Sign comes only from the file: a leading "+" or "-". No sign, no cell
+      # (the connection is reported as unsigned by convert_excel_to_isa()).
+      polarity_sign <- import_label_polarity(connections$Label[j])
+      if (is.na(polarity_sign)) {
+        next
       }
 
       # Extract strength

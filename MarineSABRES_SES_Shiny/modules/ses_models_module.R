@@ -675,6 +675,14 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
         }
 
         isa_data <- convert_excel_to_isa(model_data$elements, model_data$connections)
+        # Connections without a "+"/"-" in the file are never written: log and leave out
+        if (!is.null(isa_data$unsigned) && nrow(isa_data$unsigned) > 0) {
+          debug_log(sprintf("%d unsigned connections left out of model %s: %s",
+                            nrow(isa_data$unsigned), model_data$file_name,
+                            paste(paste(isa_data$unsigned$From, "->", isa_data$unsigned$To), collapse = "; ")),
+                    "SES_MODELS")
+        }
+        isa_data$unsigned <- NULL
         debug_log("ISA conversion complete", "SES_MODELS")
 
         # Perform import (similar to import_data_module.R)

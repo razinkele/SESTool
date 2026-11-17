@@ -437,29 +437,22 @@ test_that("negative polarity is correctly parsed", {
   }
 })
 
-test_that("missing polarity defaults to positive", {
+test_that("missing polarity writes no cell and is reported as unsigned", {
   elements <- data.frame(
     Label = c("A", "B"),
     Type = c("Driver", "Activity")
-    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
-    Label = c(NA)
-    
+    Label = c(NA_character_)
   )
 
   result <- convert_excel_to_isa(elements, connections)
 
-  # Check adjacency matrix defaults to positive
-  if (length(result$adjacency_matrices) > 0) {
-    mat <- result$adjacency_matrices[[1]]
-    non_empty <- mat[mat != ""]
-    if (length(non_empty) > 0) {
-      expect_true(grepl("^\\+", non_empty[1]))
-    }
-  }
+  total_cells <- sum(vapply(result$adjacency_matrices, function(m) sum(m != ""), numeric(1)))
+  expect_equal(total_cells, 0)
+  expect_equal(nrow(result$unsigned), 1)
 })
 
 # ==============================================================================
