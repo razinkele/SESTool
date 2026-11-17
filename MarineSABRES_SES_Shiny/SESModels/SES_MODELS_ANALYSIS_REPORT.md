@@ -193,7 +193,7 @@ All 4 files follow KUMU Standard format but have:
 2. **Better NA handling**
    - Already fixed in `excel_import_helpers.R`
    - Skip rows with NA From/To values
-   - Default polarity to "+" when Label is NA
+   - Rows whose Label has no "+"/"-" are left out and reported (v1.36.0 evidenced polarity; no default "+")
 
 3. **Type value normalization**
    ```r
