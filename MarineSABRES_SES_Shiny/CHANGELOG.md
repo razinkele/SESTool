@@ -15,13 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Import (Excel, Kumu, matrices): a sign written at the start of the Label (or of a matrix cell) is kept; other rows must be signed in the import review, and "Direct import" is blocked, with a message pointing to the review, while any row lacks a sign. A sign you change in the review is now kept (it was discarded before). Links that a Standard Entry workbook carries only in its Linked columns have no sign, so a "choose signs" dialog opens after loading and the links are added once signed.
   - Standard Entry dialog: saving new links opens a dialog listing them with a sign picker; Cancel leaves them out and unticks them.
   - Graphical creator: ghost suggestions carry an evidenced sign or none; accepting one without a sign asks for it first.
-  - CLD editor: an edge you draw asks for its sign before it is added.
+  - CLD editor: an edge you draw asks for its sign before it is added. Saving, editing or deleting in the editor now updates the diagram in place, so Edit Mode (the Add Node / Add Edge toolbar) stays on, including after a layout change, and an edited sign is shown at once with the same styling and tooltip as a loaded link. After an element is deleted, links no longer attach to the wrong element, or to the deleted one, when the diagram is redrawn.
   - SES Models library: a model whose connections partly lack a sign (Label "directed" or empty, as in three of the shipped models) loads only its signed connections. The success message counts those, and a warning says how many connections without a sign were left out and that they can be added in CLD Visualization (Edit Mode) or Standard Entry by choosing a sign. A model with no signed connection is not loaded, and the project stays as it was.
   - Review: picks, approvals and swaps belong to the connection set under review. A new set (another file, another template, regenerated suggestions) starts with nothing picked, so a sign chosen for one connection is never carried over to another.
   - Templates: every connection in every shipped template already carries an explicit sign (checked by a test), so the silent `+` fallback in the template loader was removed; a template connection without a sign is now a load error logged with the template name.
   - Saved projects never hold an unsigned connection. Existing saved projects are unchanged and load as before.
   - The Standard Entry import notice "links rebuilt with default values (positive, medium strength)" can no longer occur and was removed with its translations.
   - DAPSIWRM_FRAMEWORK_RULES.md and the user guide now describe this behaviour; the rules document's "being implemented" note is gone.
+
+### Known limitations
+- CLD editor, hierarchical layout: the first link saved in place, or deleting an element in the top row, can re-arrange the diagram, and a node you dragged may move back. Earlier versions redrew the whole diagram after every save, which re-arranged it as well.
 
 ## [1.35.6] - 2026-11-13
 
