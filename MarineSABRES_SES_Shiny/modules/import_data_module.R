@@ -150,9 +150,19 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       i18n = i18n
     )
 
+    # A new file replaces the rows the open review indexes into: drop that
+    # review (its picks, swaps and rejections are by row index), which also
+    # sends the review module through NULL so it starts fresh (re-review N1)
+    drop_open_review <- function() {
+      rv$show_review <- FALSE
+      rv$parsed_connections <- NULL
+      rv$review_signs <- list()
+    }
+
     # Load sample file
     observeEvent(input$load_sample, {
       sample_file <- "data/TuscanySES.xlsx"
+      drop_open_review()
 
       tryCatch({
         if (file.exists(sample_file)) {
@@ -187,6 +197,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       req(input$excel_file)
 
       # Clear previous state before new upload attempt (prevents memory accumulation from retries)
+      drop_open_review()
       rv$elements_data <- NULL
       rv$connections_data <- NULL
       rv$file_loaded <- FALSE

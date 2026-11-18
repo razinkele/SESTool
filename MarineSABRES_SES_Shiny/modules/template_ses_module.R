@@ -1037,17 +1037,28 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         }
       }
 
-      # Apply swapped directions to final connections
+      # Apply swapped directions to final connections. Swap indices are
+      # positions in rv$template_connections; map them into the filtered list
+      # the same way as the amendments above (they were applied by original
+      # index, reversing the wrong connection after a partial approval).
+      final_index <- if (length(approved_idx) > 0) {
+        approved_idx
+      } else if (length(rejected_idx) > 0) {
+        setdiff(seq_along(rv$template_connections), rejected_idx)
+      } else {
+        seq_along(rv$template_connections)
+      }
       swapped_indices <- status$swapped
       for (swap_idx in swapped_indices) {
-        if (swap_idx <= length(final_connections)) {
-          conn <- final_connections[[swap_idx]]
-          final_connections[[swap_idx]]$from_id <- conn$to_id
-          final_connections[[swap_idx]]$to_id <- conn$from_id
-          final_connections[[swap_idx]]$from_name <- conn$to_name
-          final_connections[[swap_idx]]$to_name <- conn$from_name
-          final_connections[[swap_idx]]$from_type <- conn$to_type
-          final_connections[[swap_idx]]$to_type <- conn$from_type
+        pos <- which(final_index == swap_idx)
+        if (length(pos) == 1L && pos <= length(final_connections)) {
+          conn <- final_connections[[pos]]
+          final_connections[[pos]]$from_id <- conn$to_id
+          final_connections[[pos]]$to_id <- conn$from_id
+          final_connections[[pos]]$from_name <- conn$to_name
+          final_connections[[pos]]$to_name <- conn$from_name
+          final_connections[[pos]]$from_type <- conn$to_type
+          final_connections[[pos]]$to_type <- conn$from_type
         }
       }
 

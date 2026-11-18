@@ -234,3 +234,38 @@ test_that("the validation panel counts the rows without a sign", {
       expect_false(grepl("have no sign", html2, fixed = TRUE))
   })
 })
+
+# Re-review N1 (ruling R9): a file uploaded while a review is open must not be
+# finalized with the old file's picks (they were applied by row index)
+test_that("uploading a file while a review is open drops that review", {
+  pdr <- reactiveVal(init_session_data())
+  f <- tempfile(fileext = ".xlsx")
+  on.exit(unlink(f), add = TRUE)
+  writexl::write_xlsx(list(
+    Elements = pi_elements,
+    Connections = data.frame(From = c("Fishing", "Demand"), To = c("Pollution", "Fishing"),
+                             Label = c("", "+"), stringsAsFactors = FALSE)), f)
+  testServer(import_data_server,
+    args = list(project_data_reactive = pdr, i18n = pi_i18n, parent_session = NULL, event_bus = NULL), {
+      pi_load(rv)                                   # file A: row 1 Demand -> Fishing, unsigned
+      session$setInputs(review_btn = 1)
+      session$flushReact()
+      do.call(session$setInputs, stats::setNames(list("-"), pi_pick_id(review_status(), 1)))
+      session$setInputs(`conn_review-approve_1` = 1)
+      expect_equal(rv$review_signs[["1"]], "-")
+      # file B: rows reordered, row 1 is now Fishing -> Pollution, unsigned
+      session$setInputs(excel_file = data.frame(
+        name = "b.xlsx", size = file.size(f), datapath = f,
+        type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        stringsAsFactors = FALSE))
+      session$flushReact()
+      expect_true(isTRUE(rv$file_loaded))
+      expect_false(isTRUE(rv$show_review))
+      expect_null(rv$parsed_connections)
+      expect_length(rv$review_signs, 0)
+      session$setInputs(finalize_import_btn = 1)    # the old review cannot be finalized
+      session$flushReact()
+      cells <- unlist(lapply(pdr()$data$isa_data$adjacency_matrices, function(m) m[m != ""]))
+      expect_length(cells, 0)
+  })
+})

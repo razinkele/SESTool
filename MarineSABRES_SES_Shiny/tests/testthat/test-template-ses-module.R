@@ -205,3 +205,32 @@ test_that("template finalize writes no cell for a connection without a sign", {
     expect_equal(pdr()$data$metadata$connections_count, length(cells))
   })
 })
+
+# Re-review (bundled with N1): template finalize applied swaps by original
+# index to the list filtered by approvals, so the wrong connection was reversed
+test_that("a swap is applied to the swapped connection when only some are approved", {
+  pdr <- reactiveVal(init_session_data())
+  testServer(template_ses_server,
+             args = list(project_data_reactive = pdr, i18n = i18n), {
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(review_connections = 1)
+    c3 <- rv$template_connections[[3]]
+    c4 <- rv$template_connections[[4]]
+    session$setInputs(`template_conn_review-swap_direction_3` = 1)
+    session$setInputs(`template_conn_review-approve_1` = 1)
+    session$setInputs(`template_conn_review-approve_3` = 1)
+    session$setInputs(`template_conn_review-approve_4` = 1)
+    expect_setequal(review_status()$approved, c(1L, 3L, 4L))
+    expect_equal(review_status()$swapped, 3L)
+    session$setInputs(finalize_template = 1)
+    mats <- pdr()$data$isa_data$adjacency_matrices
+    cell_of <- function(from, to) {
+      for (m in mats) if (from %in% rownames(m) && to %in% colnames(m)) return(m[from, to])
+      NA_character_
+    }
+    # connection 4 was not swapped: it keeps its own direction
+    expect_true(nzchar(cell_of(c4$from_id, c4$to_id)))
+    # connection 3 was swapped: it is not written in its original direction
+    expect_false(isTRUE(nzchar(cell_of(c3$from_id, c3$to_id))))
+  })
+})
