@@ -569,7 +569,6 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       loops = NULL,
       metrics = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
-      last_render_hash = NULL,  # Track last rendered network hash
       render_key = NULL,  # Changes only when the network must be re-rendered (not on CLD edits)
       render_gen = 0L,    # Bumped on every real reload: render_key never repeats
       layout_render_trigger = 0  # Trigger to force re-render on layout changes
@@ -734,10 +733,10 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       }
     })
     
-    # === MAIN NETWORK VISUALIZATION (WITH CACHING) ===
+    # === MAIN NETWORK VISUALIZATION ===
     # NOTE: Layout inputs are isolated to prevent re-renders on layout changes.
     # Layout updates are handled via proxy observers below for better performance.
-    # The visNetwork output is cached by ISA data signature to avoid expensive re-renders.
+    # Not cached: re-rendered when rv$render_key or the layout trigger changes.
     output$network <- renderVisNetwork({
       # Re-rendered only when rv$render_key (or the layout trigger) changes.
       # Edits made in the CLD editor are already in the browser's network and
@@ -749,16 +748,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       edges <- isolate(rv$edges)
       req(nodes, edges)
 
-      # Check if we already rendered this exact data
-      current_hash <- rv$render_key
-      if (!is.null(rv$last_render_hash) && identical(rv$last_render_hash, current_hash)) {
-        debug_log("renderVisNetwork CACHE HIT - skipping render", "CLD VIZ PERF")
-        # Return early - Shiny will use cached output
-      } else {
-        debug_log(sprintf("renderVisNetwork triggered: %d nodes, %d edges",
-                          nrow(nodes), nrow(edges)), "CLD VIZ PERF")
-        rv$last_render_hash <- current_hash
-      }
+      debug_log(sprintf("renderVisNetwork: %d nodes, %d edges", nrow(nodes), nrow(edges)),
+                "CLD VIZ PERF")
 
       # Create visNetwork with standard styling
       vis <- visNetwork(nodes, edges, height = "100%", width = "100%") %>%

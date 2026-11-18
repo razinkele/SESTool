@@ -606,3 +606,27 @@ test_that("create_nodes_df warns when it skips a non-empty list-shaped category 
   create_nodes_df(isa)
   expect_length(msgs, 0)   # an empty list is just "no responses"
 })
+
+# --- Fix round 4 (browser recheck after b40cdf6) ------------------------------
+
+test_that("a real reload renders the widget once (M-r5)", {
+  stub_proxy_edges()
+  n <- new.env(); n$k <- 0
+  real_vn <- visNetwork::visNetwork
+  local_global("visNetwork", function(...) { n$k <- n$k + 1; real_vn(...) })
+  p0 <- make_cld_project()
+  pd <- shiny::reactiveVal(p0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$setInputs(layout_type = "physics", hierarchy_direction = "UD", level_separation = 150)
+    session$flushReact()
+    invisible(output$network)
+    expect_equal(n$k, 1)
+    p <- pd()
+    p$data$cld$edges <- rbind(p$data$cld$edges,
+      data.frame(from = "D_1", to = "A_1", label = "+", polarity = "+", stringsAsFactors = FALSE))
+    pd(sync_cld_to_isa_data(p))
+    session$flushReact()
+    invisible(output$network)
+    expect_equal(n$k, 2)
+  })
+})
