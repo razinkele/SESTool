@@ -812,6 +812,9 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       project_data$data$isa_data$goods_benefits <- template$goods_benefits
       project_data$data$isa_data$responses <- template$responses
       project_data$data$isa_data$adjacency_matrices <- template$adjacency_matrices
+      # The CLD is rebuilt from the template: an earlier CLD (edits, a saved
+      # simplification) must not survive into the loaded template (1.36.2)
+      project_data$data$cld <- list(nodes = NULL, edges = NULL)
 
       # Update metadata
       project_data$data$metadata$template_used <- i18n$t(template$name_key)
@@ -1170,6 +1173,9 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       }
 
       project_data$data$isa_data$adjacency_matrices <- adj_matrices
+      # The CLD is rebuilt from the template: an earlier CLD (edits, a saved
+      # simplification) must not survive into the loaded template (1.36.2)
+      project_data$data$cld <- list(nodes = NULL, edges = NULL)
 
       # Update metadata
       project_data$data$metadata$template_used <- i18n$t(template$name_key)

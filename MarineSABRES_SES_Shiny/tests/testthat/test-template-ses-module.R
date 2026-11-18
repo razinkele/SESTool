@@ -234,3 +234,46 @@ test_that("a swap is applied to the swapped connection when only some are approv
     expect_false(isTRUE(nzchar(cell_of(c3$from_id, c3$to_id))))
   })
 })
+
+# A template load must not keep the CLD of whatever was there before: other
+# loaders (import, SES Models, AI assistant) replace or clear data$cld, but a
+# template load replaced only isa_data, so an edited CLD survived a reload of
+# the same template (re-review I-r12 / I-r13, parked for 1.36.0).
+.stale_cld_project <- function() {
+  p <- init_session_data()
+  p$data$cld <- list(
+    nodes = data.frame(id = c("A_1", "X_9"), label = c("Edited", "Added in the CLD"),
+                       group = c("Activities", "Drivers"), stringsAsFactors = FALSE),
+    edges = data.frame(from = "X_9", to = "A_1", polarity = "+", stringsAsFactors = FALSE),
+    original_nodes = data.frame(id = "A_1", stringsAsFactors = FALSE))
+  p
+}
+
+test_that("loading a template directly clears the previous CLD", {
+  pdr <- reactiveVal(.stale_cld_project())
+  testServer(template_ses_server,
+             args = list(project_data_reactive = pdr, i18n = i18n), {
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(load_template = 1)
+    expect_gt(NROW(pdr()$data$isa_data$drivers), 0)
+    cld <- pdr()$data$cld
+    expect_equal(NROW(cld$nodes), 0L)
+    expect_equal(NROW(cld$edges), 0L)
+    expect_null(cld$original_nodes)
+  })
+})
+
+test_that("finalizing a reviewed template clears the previous CLD", {
+  pdr <- reactiveVal(.stale_cld_project())
+  testServer(template_ses_server,
+             args = list(project_data_reactive = pdr, i18n = i18n), {
+    session$setInputs(template_selected = "fisheries")
+    session$setInputs(review_connections = 1)
+    session$setInputs(finalize_template = 1)
+    expect_gt(NROW(pdr()$data$isa_data$drivers), 0)
+    cld <- pdr()$data$cld
+    expect_equal(NROW(cld$nodes), 0L)
+    expect_equal(NROW(cld$edges), 0L)
+    expect_null(cld$original_nodes)
+  })
+})
