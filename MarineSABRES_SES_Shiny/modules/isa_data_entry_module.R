@@ -507,8 +507,14 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       # lowercased copy load_isa_elements_from_saved just wrote — keying on
       # lowercase 'id' was the L6 'no elements' bug.
       rec <- recover_isa_data(saved_isa, id_store)
+      # A category the saved data holds as an empty table is copied too: a CLD
+      # delete that emptied it must not leave the old rows here, or the next
+      # save writes them back into the project (v1.36.1). A category the saved
+      # data does not mention at all is left as it is.
       for (k in names(rec$elements)) {
-        if (nrow(rec$elements[[k]]) > 0) isa_data[[k]] <- rec$elements[[k]]
+        if (nrow(rec$elements[[k]]) > 0 || is.data.frame(saved_isa[[k]])) {
+          isa_data[[k]] <- rec$elements[[k]]
+        }
       }
       for (p in names(rec$panel_ids)) isa_data[[p]] <- rec$panel_ids[[p]]
       isa_data$adjacency_matrices <- rec$adjacency_matrices
