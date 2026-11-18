@@ -573,6 +573,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
       last_render_hash = NULL,  # Track last rendered network hash
       render_key = NULL,  # Changes only when the network must be re-rendered (not on CLD edits)
+      render_gen = 0L,    # Bumped on every real reload: render_key never repeats
       layout_render_trigger = 0  # Trigger to force re-render on layout changes
     )
 
@@ -689,7 +690,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           }
 
           rv$isa_hash <- full_signature
-          rv$render_key <- full_signature
+          # A reload back to the last rendered signature must still re-render
+          # (the canvas may hold absorbed edits): the key carries a counter
+          # bumped on every reload (re-review 2, P2)
+          gen <- isolate(rv$render_gen) + 1L
+          rv$render_gen <- gen
+          rv$render_key <- paste(full_signature, gen)
           rv$metrics <- NULL
 
           debug_log(paste("Loaded nodes:", nrow(rv$nodes)), "CLD VIZ")
@@ -770,6 +776,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       # leave the key alone: a re-render replaced the network, reshuffled its
       # layout and dropped the edit-mode toolbar (re-review N3).
       req(rv$render_key)
+      rv$layout_render_trigger   # layout changes that need a full re-render
       nodes <- isolate(rv$nodes)
       edges <- isolate(rv$edges)
       req(nodes, edges)
@@ -871,14 +878,10 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         )
 
       return(vis)
-    }) %>% bindCache(
-      # Cache the entire visNetwork widget by its render key
-      # This prevents expensive physics calculations on unchanged data
-      rv$render_key,
-      # Include layout render trigger to force re-render when switching to hierarchical
-      # or changing hierarchy direction/level separation
-      rv$layout_render_trigger
-    )
+    })
+    # No bindCache on this output (re-review 2, P3): the widget holds the
+    # session's absorbed edits, so an app-wide cache could serve them to
+    # another user, and with a key that never repeats a cache would never hit.
 
     # Store network proxy (IMPORTANT: Use session namespace in module)
     observe({

@@ -548,3 +548,38 @@ test_that("deleting a mid-list node with links leaves no orphan edge in the brow
     expect_equal(paste(prx$updated[[1]]$from, prx$updated[[1]]$to), "P_1 GB_1")
   })
 })
+
+test_that("an outside change back to the last rendered data re-renders the network (P2)", {
+  stub_proxy_edges()
+  p0 <- make_cld_project()
+  pd <- shiny::reactiveVal(p0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    key0 <- rv$render_key
+    draw_edge(session, client_id = "pending_1")
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    respond(session, "confirm")
+    session$flushReact()
+    expect_identical(rv$render_key, key0)           # absorbed: no re-render
+    pd(p0)                                          # the same project loaded again
+    session$flushReact()
+    expect_equal(nrow(rv$edges), 1L)
+    expect_false(identical(rv$render_key, key0))   # the canvas must be rebuilt
+  })
+})
+
+.cld_root_dir <- function() {
+  td <- getwd()
+  if (basename(td) == "testthat") dirname(dirname(td)) else td
+}
+test_that("the network widget is not cached app-wide (P3)", {
+  src <- paste(readLines(file.path(.cld_root_dir(), "modules", "cld_visualization_module.R"), warn = FALSE),
+               collapse = "\n")
+  start <- regexpr("output$network <- renderVisNetwork(", src, fixed = TRUE)
+  expect_gt(start, 0)
+  rest <- substring(src, start)
+  block <- substring(rest, 1, regexpr("\n    # ", substring(rest, 2), fixed = TRUE) + 1)
+  # either no bindCache on this output, or one scoped to the session
+  has_bind <- grepl("bindCache(", block, fixed = TRUE)
+  expect_true(!has_bind || grepl('cache = "session"', block, fixed = TRUE))
+})
