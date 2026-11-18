@@ -159,32 +159,41 @@ generate_manipulation_disable_js <- function(network_id) {
 #'
 #' @param x Stored nodes: a data frame, a list of records, or a named list of
 #'   equal-length columns.
-#' @return A data frame, or NULL when \code{x} holds no usable nodes.
+#' @return A data frame with an \code{id} column, or NULL when \code{x} holds
+#'   no usable nodes (the caller then rebuilds them from the ISA data).
 as_cld_node_table <- function(x) {
   if (is.data.frame(x)) return(x)
   if (!is.list(x) || length(x) == 0) return(NULL)
-  if (all(vapply(x, is.list, logical(1)))) {
+  out <- NULL
+  if (is.null(names(x)) && all(vapply(x, is.list, logical(1)))) {
+    # a list of records
     rows <- lapply(x, function(r) {
       r <- lapply(r, function(v) if (is.null(v) || length(v) == 0) NA else v[[1]])
       data.frame(r, check.names = FALSE, stringsAsFactors = FALSE)
     })
-    return(tryCatch(as.data.frame(dplyr::bind_rows(rows)), error = function(e) NULL))
+    out <- tryCatch(as.data.frame(dplyr::bind_rows(rows)), error = function(e) NULL)
+  } else if (!is.null(names(x)) && !any(vapply(x, is.list, logical(1))) &&
+             length(unique(lengths(x))) == 1L) {
+    # a named list of atomic columns
+    out <- tryCatch(data.frame(x, check.names = FALSE, stringsAsFactors = FALSE),
+                    error = function(e) NULL)
   }
-  if (!is.null(names(x)) && length(unique(lengths(x))) == 1L) {
-    return(tryCatch(data.frame(x, check.names = FALSE, stringsAsFactors = FALSE),
-                    error = function(e) NULL))
-  }
-  NULL
+  if (is.null(out) || !"id" %in% names(out)) return(NULL)
+  out
 }
 
 
 #' Generate the JavaScript body that stores a (re-)rendered network
 #'
-#' Run from the network's one-shot stabilization handlers (`this` is the new
-#' vis-network). Saving a drawn or edited edge re-renders the network, and a
-#' new vis-network starts without manipulation, so while edit mode is on the
+#' Run from the network's one-shot \code{afterDrawing} handler, which fires on
+#' the first draw of every rendered widget whatever the physics setting (and
+#' from the stabilization handlers; `this` is the new vis-network). Edits made
+#' in the CLD editor update the network through the proxy, but a full
+#' re-render still happens on a real reload, node add, merge or layout change.
+#' A new vis-network starts without manipulation, so while edit mode is on the
 #' stored manipulation config is applied again; otherwise the Add Node / Add
-#' Edge toolbar vanished with the Edit Mode switch still on.
+#' Edge toolbar vanished with the Edit Mode switch still on, and
+#' \code{window.network_<id>} kept pointing at the destroyed network.
 #'
 #' @param network_id Character. The module ID used to namespace window variables.
 #' @return Character string containing JavaScript statements.

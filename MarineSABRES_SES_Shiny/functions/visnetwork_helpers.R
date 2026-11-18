@@ -71,7 +71,16 @@ wrap_label <- function(text, max_width = LABEL_WRAP_WIDTH) {
 create_nodes_df <- function(isa_data) {
 
   # A category that is not a data frame (a recovered project can carry an
-  # empty list) is skipped: `!is.null(x) && nrow(x) > 0` was NA for it.
+  # empty list) is skipped: `!is.null(x) && nrow(x) > 0` was NA for it. A
+  # non-empty one is skipped too, but with a warning: its nodes go missing.
+  for (cat_name in c("goods_benefits", "ecosystem_services", "marine_processes",
+                     "pressures", "activities", "drivers", "responses")) {
+    x <- isa_data[[cat_name]]
+    if (!is.null(x) && !is.data.frame(x) && length(x) > 0 && exists("log_warning", mode = "function")) {
+      log_warning("CLD", sprintf("create_nodes_df: skipping %s, stored as a %s, not a data frame (%d entries)",
+                                 cat_name, class(x)[1], length(x)))
+    }
+  }
 
   # OPTIMIZATION: Collect all node dataframes in a list, then bind once
   # This avoids repeated memory allocations from multiple bind_rows calls

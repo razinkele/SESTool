@@ -583,3 +583,26 @@ test_that("the network widget is not cached app-wide (P3)", {
   has_bind <- grepl("bindCache(", block, fixed = TRUE)
   expect_true(!has_bind || grepl('cache = "session"', block, fixed = TRUE))
 })
+
+test_that("as_cld_node_table returns NULL unless the nodes have an id column (M-r1)", {
+  expect_null(as_cld_node_table(list(id = list("D_1", "A_1"), x = list(1, 2), label = list("a", "b"))))
+  expect_null(as_cld_node_table(list(list(label = "a"), list(label = "b"))))
+  cols <- as_cld_node_table(list(id = c("D_1", "A_1"), label = c("a", "b")))
+  expect_equal(cols$id, c("D_1", "A_1"))
+  recs <- as_cld_node_table(list(list(id = "D_1", label = "a"), list(id = "A_1", label = "b")))
+  expect_equal(recs$id, c("D_1", "A_1"))
+})
+
+test_that("create_nodes_df warns when it skips a non-empty list-shaped category (M-r2)", {
+  msgs <- character(0)
+  local_global("log_warning", function(context, message) msgs <<- c(msgs, message))
+  isa <- make_cld_project()$data$isa_data
+  isa$responses <- list(list(ID = "R1", Name = "Gear rules"))
+  nodes <- create_nodes_df(isa)
+  expect_true(is.data.frame(nodes))
+  expect_true(any(grepl("responses", msgs, fixed = TRUE)))
+  msgs <- character(0)
+  isa$responses <- list()
+  create_nodes_df(isa)
+  expect_length(msgs, 0)   # an empty list is just "no responses"
+})

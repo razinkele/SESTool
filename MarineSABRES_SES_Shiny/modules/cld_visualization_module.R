@@ -568,8 +568,6 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       selected_edge = NULL,
       loops = NULL,
       metrics = NULL,
-      filtered_nodes = NULL,
-      filtered_edges = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
       last_render_hash = NULL,  # Track last rendered network hash
       render_key = NULL,  # Changes only when the network must be re-rendered (not on CLD edits)
@@ -736,36 +734,6 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       }
     })
     
-    # === CACHED NETWORK DATA ===
-    # Simplified reactive that returns nodes/edges with proper caching
-    # Uses bindCache with digest-based signature for efficient cache invalidation
-    network_data <- reactive({
-      req(rv$nodes, rv$edges)
-
-      # Only log on actual computation (not cache hits)
-      debug_log(sprintf("network_data reactive: %d nodes, %d edges",
-                        nrow(rv$nodes), nrow(rv$edges)), "CLD VIZ")
-
-      # Update filtered references for other observers
-      rv$filtered_nodes <- rv$nodes
-      rv$filtered_edges <- rv$edges
-
-      list(
-        nodes = rv$nodes,
-        edges = rv$edges
-      )
-    }) %>% bindCache(
-      # Cache key: hash of ISA data stored in rv$isa_hash
-      rv$isa_hash
-    )
-
-    # Backward compatibility aliases (some observers may still reference these)
-    filtered_data <- network_data
-    sized_nodes <- reactive({
-      req(network_data())
-      network_data()$nodes
-    })
-
     # === MAIN NETWORK VISUALIZATION (WITH CACHING) ===
     # NOTE: Layout inputs are isolated to prevent re-renders on layout changes.
     # Layout updates are handled via proxy observers below for better performance.
