@@ -645,12 +645,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           debug_log("Signature changed - reloading CLD data", "CLD VIZ")
 
           # (an autosave-recovered CLD can carry its nodes as a plain list:
-          # nrow() is NULL then, and the old !is.null() test made `if` fail)
-          if (is.data.frame(project_data$data$cld$nodes) &&
-              nrow(project_data$data$cld$nodes) > 0) {
+          # coerce it, keeping its positions and leverage scores)
+          cld_nodes <- as_cld_node_table(project_data$data$cld$nodes)
+          if (!is.null(cld_nodes) && nrow(cld_nodes) > 0) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
             debug_log("Using existing CLD nodes with analysis results", "CLD VIZ")
-            rv$nodes <- project_data$data$cld$nodes
+            rv$nodes <- cld_nodes
             # Store original colors for JavaScript-based highlighting
             if (!"originalColor" %in% names(rv$nodes)) {
               rv$nodes$originalColor <- rv$nodes$color

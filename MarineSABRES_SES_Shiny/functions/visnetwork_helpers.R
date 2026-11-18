@@ -70,12 +70,15 @@ wrap_label <- function(text, max_width = LABEL_WRAP_WIDTH) {
 #' @return Data frame with node attributes for visNetwork
 create_nodes_df <- function(isa_data) {
 
+  # A category that is not a data frame (a recovered project can carry an
+  # empty list) is skipped: `!is.null(x) && nrow(x) > 0` was NA for it.
+
   # OPTIMIZATION: Collect all node dataframes in a list, then bind once
   # This avoids repeated memory allocations from multiple bind_rows calls
   node_list <- list()
 
   # Goods & Benefits (Level 0)
-  if (!is.null(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0) {
+  if (is.data.frame(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0) {
     node_list$gb <- isa_data$goods_benefits %>%
       mutate(
         id = paste0("GB_", row_number()),
@@ -101,7 +104,7 @@ create_nodes_df <- function(isa_data) {
   }
   
   # Ecosystem Services (Level 1)
-  if (!is.null(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0) {
+  if (is.data.frame(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0) {
     node_list$es <- isa_data$ecosystem_services %>%
       mutate(
         id = paste0("ES_", row_number()),
@@ -127,7 +130,7 @@ create_nodes_df <- function(isa_data) {
   }
 
   # Marine Processes & Functioning (Level 2)
-  if (!is.null(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0) {
+  if (is.data.frame(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0) {
     node_list$mpf <- isa_data$marine_processes %>%
       mutate(
         id = paste0("MPF_", row_number()),
@@ -153,7 +156,7 @@ create_nodes_df <- function(isa_data) {
   }
 
   # Pressures (Level 3)
-  if (!is.null(isa_data$pressures) && nrow(isa_data$pressures) > 0) {
+  if (is.data.frame(isa_data$pressures) && nrow(isa_data$pressures) > 0) {
     node_list$pressures <- isa_data$pressures %>%
       mutate(
         id = paste0("P_", row_number()),
@@ -182,7 +185,7 @@ create_nodes_df <- function(isa_data) {
   }
 
   # Activities (Level 4)
-  if (!is.null(isa_data$activities) && nrow(isa_data$activities) > 0) {
+  if (is.data.frame(isa_data$activities) && nrow(isa_data$activities) > 0) {
     node_list$activities <- isa_data$activities %>%
       mutate(
         id = paste0("A_", row_number()),
@@ -211,7 +214,7 @@ create_nodes_df <- function(isa_data) {
   }
 
   # Drivers (Level 5) - Using custom octagon SVG
-  if (!is.null(isa_data$drivers) && nrow(isa_data$drivers) > 0) {
+  if (is.data.frame(isa_data$drivers) && nrow(isa_data$drivers) > 0) {
     node_list$drivers <- isa_data$drivers %>%
       mutate(
         id = paste0("D_", row_number()),
@@ -238,7 +241,7 @@ create_nodes_df <- function(isa_data) {
 
   # Responses (Level 3 - positioned in middle, will be offset to the right)
   # Now includes both original responses and measures merged together
-  if (!is.null(isa_data$responses) && nrow(isa_data$responses) > 0) {
+  if (is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
     node_list$responses <- isa_data$responses %>%
       mutate(
         id = paste0("R_", row_number()),

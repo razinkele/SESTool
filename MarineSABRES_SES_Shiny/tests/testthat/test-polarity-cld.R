@@ -396,3 +396,35 @@ test_that("recovered CLD nodes that are not a data frame do not break the load o
     expect_gt(nrow(rv$nodes), 0)
   })
 })
+
+# Recheck 2026-11-18: recovery hit create_nodes_df with an empty-list category
+# (`TRUE && NULL > 0` is NA), and list-shaped CLD nodes were rebuilt from ISA,
+# losing positions and leverage scores
+test_that("create_nodes_df skips a category stored as an empty list", {
+  pd0 <- make_cld_project()
+  isa <- pd0$data$isa_data
+  isa$responses <- list()
+  nodes <- create_nodes_df(isa)
+  expect_true(is.data.frame(nodes))
+  expect_gt(nrow(nodes), 0)
+})
+
+test_that("list-shaped recovered CLD nodes keep their positions and leverage scores", {
+  pd0 <- make_cld_project()
+  n <- pd0$data$cld$nodes
+  n$title <- n$label; n$x <- c(10, 20, 30); n$y <- c(1, 2, 3); n$leverage_score <- c(0.5, NA, 2)
+  pd0$data$cld$nodes <- lapply(seq_len(nrow(n)), function(i) as.list(n[i, ]))
+  tbl <- as_cld_node_table(pd0$data$cld$nodes)
+  expect_true(is.data.frame(tbl))
+  expect_equal(tbl$x, c(10, 20, 30))
+  expect_equal(tbl$leverage_score, c(0.5, NA, 2))
+  expect_identical(as_cld_node_table(n), n)
+  expect_null(as_cld_node_table(list()))
+  pd <- reactiveVal(pd0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    expect_equal(rv$nodes$x, c(10, 20, 30))
+    expect_equal(rv$nodes$y, c(1, 2, 3))
+    expect_equal(rv$nodes$id, n$id)
+  })
+})

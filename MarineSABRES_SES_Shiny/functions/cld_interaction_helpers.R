@@ -150,6 +150,34 @@ generate_manipulation_disable_js <- function(network_id) {
 }
 
 
+#' Coerce stored CLD nodes to a data frame
+#'
+#' An autosave-recovered project can carry \code{cld$nodes} as a list of
+#' records (or of columns) instead of a data frame. Coercing it keeps the
+#' recovered positions and leverage scores, which rebuilding the nodes from
+#' the ISA data would lose.
+#'
+#' @param x Stored nodes: a data frame, a list of records, or a named list of
+#'   equal-length columns.
+#' @return A data frame, or NULL when \code{x} holds no usable nodes.
+as_cld_node_table <- function(x) {
+  if (is.data.frame(x)) return(x)
+  if (!is.list(x) || length(x) == 0) return(NULL)
+  if (all(vapply(x, is.list, logical(1)))) {
+    rows <- lapply(x, function(r) {
+      r <- lapply(r, function(v) if (is.null(v) || length(v) == 0) NA else v[[1]])
+      data.frame(r, check.names = FALSE, stringsAsFactors = FALSE)
+    })
+    return(tryCatch(as.data.frame(dplyr::bind_rows(rows)), error = function(e) NULL))
+  }
+  if (!is.null(names(x)) && length(unique(lengths(x))) == 1L) {
+    return(tryCatch(data.frame(x, check.names = FALSE, stringsAsFactors = FALSE),
+                    error = function(e) NULL))
+  }
+  NULL
+}
+
+
 #' Generate the JavaScript body that stores a (re-)rendered network
 #'
 #' Run from the network's one-shot stabilization handlers (`this` is the new
