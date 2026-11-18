@@ -1,6 +1,6 @@
 {
-  "version": "1.36.1",
-  "version_name": "Evidenced polarity; elements deleted in the CLD stay deleted (November 2026)",
+  "version": "1.36.2",
+  "version_name": "Evidenced polarity; loading a template always shows that template's diagram (November 2026)",
   "release_date": "2026-11-18",
   "release_type": "patch",
   "status": "stable",
@@ -52,6 +52,7 @@
       "ML connection suggestions: batch graph-feature extraction computes paths, neighbours and centrality once per call instead of per pair; 2000 pairs on a 200-node network went from 35 s to 0.2 s with identical output (1.26.1)."
     ],
     "high": [
+      "Templates: loading a template kept the previous CLD (editor changes, a saved simplification), so after CLD edits a reload of the same template could still show the edited diagram, or a renamed element; the CLD is now rebuilt from the loaded template (1.36.2).",
       "Standard Entry: when a CLD delete removed every element of a type (for example all drivers), the next Standard Entry save, even of an unrelated exercise, wrote the deleted elements back into the project without their links, and the connection matrices no longer matched the element lists (1.36.1).",
       "Template page: approving a connection still rebuilt the whole review in 1.34.1 (the header re-read the connection list each approval updates); the tabs and cards now stay in place (1.34.2).",
       "Connection review (AI assistant, templates, import): approving a connection rebuilt every tab and card list, so the review jumped between sections; approving now updates only that card, the counts and the tab badge (1.34.1).",
@@ -95,7 +96,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.36.0",
+  "previous_version": "1.36.1",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }

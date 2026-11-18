@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.36.2] - 2026-11-18
+
+### Fixed
+- Templates: loading a template replaced the model but kept the previous CLD (changes made in the CLD editor, a saved simplification). After CLD edits, a reload of the same template could still show the edited diagram, or keep the name of an element added in the editor in place of the template's own. Loading a template, directly or after review, now always rebuilds the CLD from that template, as Import and the SES Models library already did. Present before 1.36.0.
+
 ## [1.36.1] - 2026-11-18
 
 ### Fixed
