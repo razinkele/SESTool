@@ -807,7 +807,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
 
           showNotification(
             i18n$t("modules.analysis.network.simplified_network_saved"),
-            type = "success",
+            type = "message",
             duration = 4
           )
         }
@@ -879,7 +879,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
 
         showNotification(
           i18n$t("modules.analysis.network.original_network_restored"),
-          type = "success",
+          type = "message",
           duration = 4
         )
       } else {
