@@ -719,7 +719,7 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
 #'
 #' Connections without a "+"/"-" in the file are never written (evidenced
 #' polarity, ruling R8): they are left out, and the user is told how many and
-#' pointed to Import Data, where they can be signed in the review. A model
+#' told they can add them in the CLD editor or Standard Entry. A model
 #' whose every connection is unsigned is not loaded and the project is left
 #' untouched.
 #'

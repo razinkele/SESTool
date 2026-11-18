@@ -694,26 +694,26 @@
       "el": "μη ορισμένο"
     },
     "common.polarity.model_left_out_unsigned": {
-      "en": "%d connections in this model have no sign and were left out. To sign them, open the model file in Import Data and choose the signs in the review.",
-      "es": "%d conexiones de este modelo no tienen signo y se dejaron fuera. Para asignarles un signo, abra el archivo del modelo en Importar Datos y elija los signos en la revisión.",
-      "fr": "%d connexions de ce modèle n'ont pas de signe et ont été laissées de côté. Pour leur donner un signe, ouvrez le fichier du modèle dans Importer des Données et choisissez les signes lors de la révision.",
-      "de": "%d Verbindungen in diesem Modell haben kein Vorzeichen und wurden ausgelassen. Um sie zu setzen, öffnen Sie die Modelldatei unter Daten importieren und wählen Sie die Vorzeichen in der Prüfung.",
-      "lt": "%d šio modelio ryšių neturi ženklo ir buvo praleisti. Norėdami juos pažymėti, atidarykite modelio failą skiltyje Importuoti duomenis ir peržiūroje pasirinkite ženklus.",
-      "pt": "%d conexões deste modelo não têm sinal e foram deixadas de fora. Para lhes atribuir um sinal, abra o arquivo do modelo em Importar Dados e escolha os sinais na revisão.",
-      "it": "%d connessioni di questo modello non hanno segno e sono state escluse. Per assegnarlo, apri il file del modello in Importa Dati e scegli i segni nella revisione.",
-      "no": "%d forbindelser i denne modellen har ikke fortegn og ble utelatt. For å gi dem fortegn, åpne modellfilen i Importer data og velg fortegnene i gjennomgangen.",
-      "el": "%d συνδέσεις αυτού του μοντέλου δεν έχουν πρόσημο και παραλείφθηκαν. Για να τους δώσετε πρόσημο, ανοίξτε το αρχείο του μοντέλου στην Εισαγωγή Δεδομένων και επιλέξτε τα πρόσημα στην αναθεώρηση."
+      "en": "%d connections in this model have no sign and were left out. You can add them in CLD Visualization (Edit Mode) or in Standard Entry by choosing a sign.",
+      "es": "%d conexiones de este modelo no tienen signo y se dejaron fuera. Puede añadirlas en Visualización CLD (modo de edición) o en Entrada Estándar eligiendo un signo.",
+      "fr": "%d connexions de ce modèle n'ont pas de signe et ont été laissées de côté. Vous pouvez les ajouter dans Visualisation CLD (mode édition) ou dans Saisie Standard en choisissant un signe.",
+      "de": "%d Verbindungen in diesem Modell haben kein Vorzeichen und wurden ausgelassen. Sie können sie in der CLD-Visualisierung (Bearbeitungsmodus) oder in der Standardeingabe hinzufügen, indem Sie ein Vorzeichen wählen.",
+      "lt": "%d šio modelio ryšių neturi ženklo ir buvo praleisti. Juos galite pridėti skiltyje CLD vizualizacija (redagavimo režimas) arba Standartinė įvestis, pasirinkę ženklą.",
+      "pt": "%d conexões deste modelo não têm sinal e foram deixadas de fora. Pode adicioná-las em Visualização CLD (modo de edição) ou em Entrada Padrão, escolhendo um sinal.",
+      "it": "%d connessioni di questo modello non hanno segno e sono state escluse. Puoi aggiungerle in Visualizzazione CLD (modalità modifica) o in Inserimento Standard scegliendo un segno.",
+      "no": "%d forbindelser i denne modellen har ikke fortegn og ble utelatt. Du kan legge dem til i CLD-visualisering (redigeringsmodus) eller i Standard inngang ved å velge et fortegn.",
+      "el": "%d συνδέσεις αυτού του μοντέλου δεν έχουν πρόσημο και παραλείφθηκαν. Μπορείτε να τις προσθέσετε στην Οπτικοποίηση CLD (λειτουργία επεξεργασίας) ή στην Τυπική Εισαγωγή επιλέγοντας πρόσημο."
     },
     "common.polarity.model_not_loaded_unsigned": {
-      "en": "This model was not loaded: none of its %d connections has a sign. Open the model file in Import Data and choose the signs in the review.",
-      "es": "Este modelo no se cargó: ninguna de sus %d conexiones tiene signo. Abra el archivo del modelo en Importar Datos y elija los signos en la revisión.",
-      "fr": "Ce modèle n'a pas été chargé : aucune de ses %d connexions n'a de signe. Ouvrez le fichier du modèle dans Importer des Données et choisissez les signes lors de la révision.",
-      "de": "Dieses Modell wurde nicht geladen: Keine seiner %d Verbindungen hat ein Vorzeichen. Öffnen Sie die Modelldatei unter Daten importieren und wählen Sie die Vorzeichen in der Prüfung.",
-      "lt": "Šis modelis neįkeltas: nė vienas iš jo %d ryšių neturi ženklo. Atidarykite modelio failą skiltyje Importuoti duomenis ir peržiūroje pasirinkite ženklus.",
-      "pt": "Este modelo não foi carregado: nenhuma das suas %d conexões tem sinal. Abra o arquivo do modelo em Importar Dados e escolha os sinais na revisão.",
-      "it": "Questo modello non è stato caricato: nessuna delle sue %d connessioni ha un segno. Apri il file del modello in Importa Dati e scegli i segni nella revisione.",
-      "no": "Denne modellen ble ikke lastet: ingen av de %d forbindelsene har fortegn. Åpne modellfilen i Importer data og velg fortegnene i gjennomgangen.",
-      "el": "Αυτό το μοντέλο δεν φορτώθηκε: καμία από τις %d συνδέσεις του δεν έχει πρόσημο. Ανοίξτε το αρχείο του μοντέλου στην Εισαγωγή Δεδομένων και επιλέξτε τα πρόσημα στην αναθεώρηση."
+      "en": "This model was not loaded: none of its %d connections has a sign. Connections can be added in CLD Visualization (Edit Mode) or in Standard Entry by choosing a sign.",
+      "es": "Este modelo no se cargó: ninguna de sus %d conexiones tiene signo. Las conexiones pueden añadirse en Visualización CLD (modo de edición) o en Entrada Estándar eligiendo un signo.",
+      "fr": "Ce modèle n'a pas été chargé : aucune de ses %d connexions n'a de signe. Les connexions peuvent être ajoutées dans Visualisation CLD (mode édition) ou dans Saisie Standard en choisissant un signe.",
+      "de": "Dieses Modell wurde nicht geladen: Keine seiner %d Verbindungen hat ein Vorzeichen. Verbindungen können in der CLD-Visualisierung (Bearbeitungsmodus) oder in der Standardeingabe hinzugefügt werden, indem Sie ein Vorzeichen wählen.",
+      "lt": "Šis modelis neįkeltas: nė vienas iš jo %d ryšių neturi ženklo. Ryšius galima pridėti skiltyje CLD vizualizacija (redagavimo režimas) arba Standartinė įvestis, pasirinkus ženklą.",
+      "pt": "Este modelo não foi carregado: nenhuma das suas %d conexões tem sinal. As conexões podem ser adicionadas em Visualização CLD (modo de edição) ou em Entrada Padrão, escolhendo um sinal.",
+      "it": "Questo modello non è stato caricato: nessuna delle sue %d connessioni ha un segno. Le connessioni possono essere aggiunte in Visualizzazione CLD (modalità modifica) o in Inserimento Standard scegliendo un segno.",
+      "no": "Denne modellen ble ikke lastet: ingen av de %d forbindelsene har fortegn. Forbindelser kan legges til i CLD-visualisering (redigeringsmodus) eller i Standard inngang ved å velge et fortegn.",
+      "el": "Αυτό το μοντέλο δεν φορτώθηκε: καμία από τις %d συνδέσεις του δεν έχει πρόσημο. Συνδέσεις μπορούν να προστεθούν στην Οπτικοποίηση CLD (λειτουργία επεξεργασίας) ή στην Τυπική Εισαγωγή επιλέγοντας πρόσημο."
     },
     "common.polarity.closes_loop": {
       "en": "Closes a feedback loop",
