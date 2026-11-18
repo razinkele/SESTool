@@ -872,6 +872,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
               updateInterval = 25
             )
           )
+        # The proxy update leaves manipulation disabled on the same network
+        # (no re-render, so afterDrawing does not run): re-apply edit mode
+        # (browser recheck B3)
+        if (isTRUE(input$enable_manipulation)) {
+          runjs(generate_reenable_manipulation_js(id, "layout change"))
+        }
       }
     }, ignoreInit = TRUE)  # Don't run on initial load (already handled in render)
 

@@ -670,6 +670,24 @@ test_that("saving an edited sign sends the styled row after vis's edit callback 
   })
 })
 
+test_that("a layout change via the proxy re-applies edit mode while it is on (B3)", {
+  rj <- stub_runjs()
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$setInputs(layout_type = "hierarchical")
+    session$flushReact()
+    session$setInputs(enable_manipulation = TRUE)
+    rj$js <- character(0)
+    session$setInputs(layout_type = "physics")
+    expect_true(any(grepl("reEnableManipulation_", rj$js, fixed = TRUE)))
+    session$setInputs(enable_manipulation = FALSE)
+    session$setInputs(layout_type = "hierarchical")
+    rj$js <- character(0)
+    session$setInputs(layout_type = "physics")
+    expect_false(any(grepl("reEnableManipulation_", rj$js, fixed = TRUE)))
+  })
+})
+
 # Two drivers, D_1 first: deleting D_1 shifts the drivers' positions in the ISA
 make_cld_project_b5 <- function() {
   nodes <- data.frame(id = c("D_1", "D_2", "A_1", "P_1"),
