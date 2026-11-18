@@ -747,6 +747,18 @@ import_ses_model_data <- function(model_data, project_data_reactive, event_bus,
       type = "warning", duration = 15
     )
   }
+  # Signed rows that got no matrix cell: an element type the toolbox does not
+  # recognise, a type pair that is not a DAPSIWRM link, or a repeated row.
+  # They used to be dropped without a word (1.36.3).
+  n_unplaced <- max(0L, nrow(model_data$connections) - n_unsigned - as.integer(n_written))
+  if (n_unplaced > 0 && n_written > 0) {
+    debug_log(sprintf("%d signed connections could not be placed in model %s",
+                      n_unplaced, model_data$file_name), "SES_MODELS")
+    showNotification(
+      sprintf(i18n$t("modules.ses_models.left_out_unplaced"), n_unplaced),
+      type = "warning", duration = 15
+    )
+  }
   debug_log("ISA conversion complete", "SES_MODELS")
   perform_ses_model_import(
     isa_data,

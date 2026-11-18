@@ -8,6 +8,7 @@ import_ses_model_data <- get("import_ses_model_data", envir = .GlobalEnv)
 sm_i18n <- list(t = function(key, ...) switch(key,
   "common.polarity.model_left_out_unsigned" = "%d left out of the model",
   "common.polarity.model_not_loaded_unsigned" = "model not loaded: %d unsigned",
+  "modules.ses_models.left_out_unplaced" = "%d signed could not be placed",
   key))
 sm_model <- function(labels) {
   list(
@@ -73,4 +74,27 @@ test_that("a fully signed model loads every row without a warning", {
   shiny::isolate(import_ses_model_data(sm_model(c("+", "-", "+")), pdr, NULL, NULL, sm_i18n))
   expect_length(sm_cells(shiny::isolate(pdr())$data$isa_data), 3)
   expect_false(any(grepl("left out", toasts$msgs, fixed = TRUE)))
+})
+
+# 1.36.3: signed rows that get no matrix cell (an element type the toolbox does
+# not recognise, as in the Arctic DA file's "causal loop" rows, a type pair
+# that is not a DAPSIWRM link, or a repeated row) were dropped silently.
+test_that("signed connections that cannot be placed are counted in a warning", {
+  toasts <- sm_capture_toasts()
+  pdr <- shiny::reactiveVal(init_session_data())
+  m <- sm_model(c("+", "-", "+"))
+  m$elements <- rbind(m$elements,
+    data.frame(Label = "Mystery", type = "causal loop", stringsAsFactors = FALSE))
+  m$connections <- rbind(m$connections,
+    data.frame(From = "Demand", To = "Mystery", Label = "+", stringsAsFactors = FALSE))
+  shiny::isolate(import_ses_model_data(m, pdr, NULL, NULL, sm_i18n))
+  expect_length(sm_cells(shiny::isolate(pdr())$data$isa_data), 3)
+  expect_true("1 signed could not be placed" %in% toasts$msgs)
+})
+
+test_that("a model whose signed rows all get a cell shows no placement warning", {
+  toasts <- sm_capture_toasts()
+  pdr <- shiny::reactiveVal(init_session_data())
+  shiny::isolate(import_ses_model_data(sm_model(c("+", "-", "+")), pdr, NULL, NULL, sm_i18n))
+  expect_false(any(grepl("could not be placed", toasts$msgs, fixed = TRUE)))
 })

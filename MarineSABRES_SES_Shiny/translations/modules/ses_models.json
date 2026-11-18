@@ -242,6 +242,17 @@
       "no": "forbindelser importert.",
       "el": "Συνδέσεις imported."
     },
+    "modules.ses_models.left_out_unplaced": {
+      "en": "%d signed connections could not be placed and were left out: an element has no DAPSIWRM type the toolbox recognises, the two element types do not form a DAPSIWRM link, or the connection repeats another one. Check the element types in the model file.",
+      "es": "%d conexiones con signo no se pudieron colocar y se dejaron fuera: un elemento no tiene un tipo DAPSIWRM que la herramienta reconozca, los dos tipos de elemento no forman un vínculo DAPSIWRM o la conexión repite otra. Revise los tipos de elemento en el archivo del modelo.",
+      "fr": "%d connexions signées n'ont pas pu être placées et ont été laissées de côté : un élément n'a pas de type DAPSIWRM reconnu par l'outil, les deux types d'éléments ne forment pas un lien DAPSIWRM, ou la connexion en répète une autre. Vérifiez les types d'éléments dans le fichier du modèle.",
+      "de": "%d Verbindungen mit Vorzeichen konnten nicht zugeordnet werden und wurden ausgelassen: Ein Element hat keinen DAPSIWRM-Typ, den das Werkzeug erkennt, die beiden Elementtypen bilden keine DAPSIWRM-Verbindung, oder die Verbindung wiederholt eine andere. Prüfen Sie die Elementtypen in der Modelldatei.",
+      "lt": "%d ryšių su ženklu nepavyko priskirti, todėl jie praleisti: elementas neturi įrankiui žinomo DAPSIWRM tipo, du elementų tipai nesudaro DAPSIWRM ryšio arba ryšys kartoja kitą. Patikrinkite elementų tipus modelio faile.",
+      "pt": "%d conexões com sinal não puderam ser colocadas e foram deixadas de fora: um elemento não tem um tipo DAPSIWRM reconhecido pela ferramenta, os dois tipos de elemento não formam uma ligação DAPSIWRM, ou a conexão repete outra. Verifique os tipos de elemento no ficheiro do modelo.",
+      "it": "%d connessioni con segno non hanno potuto essere collocate e sono state escluse: un elemento non ha un tipo DAPSIWRM riconosciuto dallo strumento, i due tipi di elemento non formano un collegamento DAPSIWRM, oppure la connessione ne ripete un'altra. Controlla i tipi di elemento nel file del modello.",
+      "no": "%d forbindelser med fortegn kunne ikke plasseres og ble utelatt: et element har ingen DAPSIWRM-type verktøyet kjenner igjen, de to elementtypene danner ikke en DAPSIWRM-kobling, eller forbindelsen gjentar en annen. Kontroller elementtypene i modellfilen.",
+      "el": "%d συνδέσεις με πρόσημο δεν ήταν δυνατό να τοποθετηθούν και παραλείφθηκαν: ένα στοιχείο δεν έχει τύπο DAPSIWRM που αναγνωρίζει το εργαλείο, οι δύο τύποι στοιχείων δεν σχηματίζουν σύνδεσμο DAPSIWRM ή η σύνδεση επαναλαμβάνει άλλη. Ελέγξτε τους τύπους στοιχείων στο αρχείο του μοντέλου."
+    },
     "modules.ses_models.loading": {
       "en": "Loading model...",
       "es": "Cargando modelo...",
