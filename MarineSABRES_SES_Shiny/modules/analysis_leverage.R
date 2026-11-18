@@ -109,6 +109,33 @@ analysis_leverage_ui <- function(id, i18n) {
 #' @param id Module ID
 #' @param project_data_reactive Reactive project data
 #' @return Server logic
+#' Add leverage scores and centrality metrics to CLD nodes
+#'
+#' Matches nodes to the ranked centralities by label (the first node with a
+#' label gets that row); nodes without a match get NA. Other columns (positions,
+#' styling) are kept.
+#'
+#' @param nodes CLD nodes data frame (needs a label column).
+#' @param centralities Output of identify_leverage_points().
+#' @return nodes with leverage_score, in_degree, out_degree and betweenness.
+add_leverage_scores <- function(nodes, centralities) {
+  nodes$leverage_score <- NA_real_
+  nodes$in_degree <- NA_real_
+  nodes$out_degree <- NA_real_
+  nodes$betweenness <- NA_real_
+  labels <- as.character(nodes$label)
+  for (i in seq_len(nrow(centralities))) {
+    node_idx <- which(labels == centralities$Name[i])
+    if (length(node_idx) > 0) {
+      nodes$leverage_score[node_idx[1]] <- centralities$Composite_Score[i]
+      nodes$in_degree[node_idx[1]] <- centralities$In_Degree[i]
+      nodes$out_degree[node_idx[1]] <- centralities$Out_Degree[i]
+      nodes$betweenness[node_idx[1]] <- centralities$Betweenness[i]
+    }
+  }
+  nodes
+}
+
 analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
                                      user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
@@ -218,27 +245,18 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
           incProgress(0.8, detail = i18n$t("modules.analysis.leverage.progress_updating"))
 
-          # Update nodes with leverage scores and centrality metrics
-          nodes$leverage_score <- NA_real_
-          nodes$in_degree <- NA_real_
-          nodes$out_degree <- NA_real_
-          nodes$betweenness <- NA_real_
-
-          for (i in seq_len(nrow(all_centralities))) {
-            node_label <- all_centralities$Name[i]
-            node_idx <- which(nodes$label == node_label)
-            if (length(node_idx) > 0) {
-              nodes$leverage_score[node_idx[1]] <- all_centralities$Composite_Score[i]
-              nodes$in_degree[node_idx[1]] <- all_centralities$In_Degree[i]
-              nodes$out_degree[node_idx[1]] <- all_centralities$Out_Degree[i]
-              nodes$betweenness[node_idx[1]] <- all_centralities$Betweenness[i]
-            }
-          }
-
-          # Save updated nodes AND edges back to project_data
+          # Save the scores to project_data. A stored CLD (a saved
+          # simplification, dragged positions) keeps its nodes and edges and
+          # only gains the scores; the full network is written only when there
+          # is no CLD yet (1.36.3: it used to replace the stored CLD).
           project_data <- project_data_reactive()
-          project_data$data$cld$nodes <- nodes
-          project_data$data$cld$edges <- edges
+          stored <- project_data$data$cld$nodes
+          if (is.data.frame(stored) && nrow(stored) > 0) {
+            project_data$data$cld$nodes <- add_leverage_scores(stored, all_centralities)
+          } else {
+            project_data$data$cld$nodes <- add_leverage_scores(nodes, all_centralities)
+            project_data$data$cld$edges <- edges
+          }
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
 
