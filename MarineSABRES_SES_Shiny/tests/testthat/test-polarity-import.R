@@ -241,7 +241,7 @@ test_that("uploading a file while a review is open drops that review", {
   pdr <- reactiveVal(init_session_data())
   f <- tempfile(fileext = ".xlsx")
   on.exit(unlink(f), add = TRUE)
-  writexl::write_xlsx(list(
+  openxlsx::write.xlsx(list(
     Elements = pi_elements,
     Connections = data.frame(From = c("Fishing", "Demand"), To = c("Pollution", "Fishing"),
                              Label = c("", "+"), stringsAsFactors = FALSE)), f)
