@@ -183,6 +183,56 @@ as_cld_node_table <- function(x) {
 }
 
 
+#' Build the CLD edge table from the adjacency matrices for a set of nodes
+#'
+#' \code{create_edges_df()} names edge endpoints by position ("D_2" is the
+#' second driver). The CLD keeps its node ids when an element is deleted, so
+#' after deleting "D_1" the positional "D_1" is the old "D_2": edges then
+#' pointed at the deleted node or at the wrong one (browser recheck B5). The
+#' endpoints are mapped through the ISA element ids the nodes carry; an edge
+#' whose endpoint is not among the nodes is dropped. Nodes without an element
+#' id (a CLD never synced) keep the positional id, as before.
+#'
+#' @param isa_data ISA data (elements and adjacency matrices).
+#' @param nodes The CLD nodes (id, group, and element_id when known).
+#' @return The edge data frame, ids 1..n, with originalColor/originalWidth.
+build_cld_edges <- function(isa_data, nodes) {
+  e <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+  if (nrow(e) > 0 && is.data.frame(nodes) && nrow(nodes) > 0) {
+    node_ids <- as.character(nodes$id)
+    if (all(c("element_id", "group") %in% names(nodes))) {
+      fresh <- create_nodes_df(isa_data)
+      if (is.data.frame(fresh) && nrow(fresh) > 0 && "element_id" %in% names(fresh)) {
+        key <- function(g, el) paste(g, el, sep = "\r")
+        pos_key <- stats::setNames(key(fresh$group, fresh$element_id), fresh$id)
+        el <- as.character(nodes$element_id)
+        has_el <- !is.na(el) & nzchar(el)
+        node_by_key <- stats::setNames(node_ids[has_el], key(nodes$group[has_el], el[has_el]))
+        remap <- function(ids) {
+          ids <- as.character(ids)
+          out <- unname(node_by_key[unname(pos_key[ids])])
+          legacy <- is.na(out) & ids %in% node_ids[!has_el]
+          out[legacy] <- ids[legacy]
+          out
+        }
+        e$from <- remap(e$from)
+        e$to <- remap(e$to)
+      }
+    }
+    keep <- !is.na(e$from) & !is.na(e$to) & e$from %in% node_ids & e$to %in% node_ids
+    if (any(!keep) && exists("debug_log", mode = "function")) {
+      debug_log(sprintf("build_cld_edges: dropping %d edge(s) whose node is not in the CLD",
+                        sum(!keep)), "CLD VIZ")
+    }
+    e <- e[keep, , drop = FALSE]
+  }
+  e$id <- seq_len(nrow(e))
+  e$originalColor <- e$color
+  e$originalWidth <- e$width
+  e
+}
+
+
 #' Generate the JavaScript body that stores a (re-)rendered network
 #'
 #' Run from the network's one-shot \code{afterDrawing} handler, which fires on

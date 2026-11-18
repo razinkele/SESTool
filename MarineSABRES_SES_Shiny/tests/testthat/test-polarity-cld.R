@@ -630,3 +630,44 @@ test_that("a real reload renders the widget once (M-r5)", {
     expect_equal(n$k, 2)
   })
 })
+
+# Two drivers, D_1 first: deleting D_1 shifts the drivers' positions in the ISA
+make_cld_project_b5 <- function() {
+  nodes <- data.frame(id = c("D_1", "D_2", "A_1", "P_1"),
+    label = c("Food demand", "Jobs", "Trawling", "Seabed damage"),
+    group = c("Drivers", "Drivers", "Activities", "Pressures"), stringsAsFactors = FALSE)
+  edges <- data.frame(from = c("D_1", "D_2", "A_1", "D_1"), to = c("A_1", "A_1", "P_1", "A_1"),
+                      label = c("+", "-", "-", "+"), polarity = c("+", "-", "-", "+"),
+                      stringsAsFactors = FALSE)[1:3, ]
+  sync_cld_to_isa_data(list(project_id = "t", project_name = "T",
+                            data = list(cld = list(nodes = nodes, edges = edges), isa_data = list())))
+}
+
+test_that("after deleting a node and adding another, no edge references the deleted node (B5)", {
+  stub_proxy_edges()
+  pd <- shiny::reactiveVal(make_cld_project_b5())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    expect_equal(nrow(rv$edges), 3L)
+    session$setInputs(nodes_deleted = list(nodes = list("D_1"), nonce = runif(1)))
+    session$flushReact()
+    check <- function(where) {
+      expect_false(any(c(rv$edges$from, rv$edges$to) == "D_1"), info = where)
+      expect_true(all(c(rv$edges$from, rv$edges$to) %in% rv$nodes$id), info = where)
+      expect_false(any(duplicated(paste(rv$edges$from, rv$edges$to))), info = where)
+      expect_equal(sort(paste(rv$edges$from, rv$edges$to)), c("A_1 P_1", "D_2 A_1"), info = where)
+    }
+    check("after delete")
+    # add a node elsewhere (a full reload, as the CLD node add does)
+    p <- pd()
+    p$data$cld$nodes <- dplyr::bind_rows(p$data$cld$nodes,
+      data.frame(id = "GB_1", label = "Fish", group = "Goods & Benefits", stringsAsFactors = FALSE))
+    pd(sync_cld_to_isa_data(p))
+    session$flushReact()
+    check("after reload")
+    # the matrices hold no row for the deleted element
+    d_ids <- as.character(pd()$data$isa_data$drivers$ID)
+    expect_length(d_ids, 1L)
+    expect_equal(rownames(pd()$data$isa_data$adjacency_matrices$d_a), d_ids)
+  })
+})

@@ -654,13 +654,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
             if (!"originalColor" %in% names(rv$nodes)) {
               rv$nodes$originalColor <- rv$nodes$color
             }
-            # Always rebuild edges from adjacency matrices (they are the source of truth)
-            rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
-            # Add IDs to edges for reliable proxy updates
-            rv$edges$id <- seq_len(nrow(rv$edges))
-            # Store original edge properties for JavaScript-based highlighting
-            rv$edges$originalColor <- rv$edges$color
-            rv$edges$originalWidth <- rv$edges$width
+            # Always rebuild edges from adjacency matrices (they are the source
+            # of truth), with endpoints mapped onto these nodes' ids (B5)
+            rv$edges <- build_cld_edges(isa_data, rv$nodes)
             debug_log(sprintf("Rebuilt edges from adjacency matrices: %d edges", nrow(rv$edges)), "CLD VIZ")
           } else {
             # No CLD exists yet - build from ISA data
@@ -668,12 +664,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
             rv$nodes <- create_nodes_df(isa_data)
             # Store original colors for JavaScript-based highlighting
             rv$nodes$originalColor <- rv$nodes$color
-            rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
-            # Add IDs to edges for reliable proxy updates
-            rv$edges$id <- seq_len(nrow(rv$edges))
-            # Store original edge properties for JavaScript-based highlighting
-            rv$edges$originalColor <- rv$edges$color
-            rv$edges$originalWidth <- rv$edges$width
+            rv$edges <- build_cld_edges(isa_data, rv$nodes)
 
             # Save initial CLD to project_data (use isolate to prevent infinite loop)
             isolate({
