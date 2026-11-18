@@ -761,13 +761,11 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         apply_standard_styling()
 
       # If the user previously dragged nodes and saved the project, honor
-      # those positions. We check that x/y columns exist and at least one
-      # node has a concrete position. When honored: disable physics so
-      # the layout engine doesn't overwrite the saved coords on render.
-      # Must be vectorized AND (per row): a node with only x or only y
-      # should NOT disable physics for the whole network.
-      has_saved_positions <- "x" %in% names(nodes) && "y" %in% names(nodes) &&
-                             any(!is.na(nodes$x) & !is.na(nodes$y))
+      # those positions: physics off so the layout engine does not overwrite
+      # them. Only when EVERY node has one (a drag stores all positions since
+      # 1.36.3); with some missing, those nodes would scatter, so the
+      # selected layout runs instead.
+      has_saved_positions <- cld_has_complete_positions(nodes)
 
       # Apply INITIAL layout using isolate() to prevent re-render on layout changes
       # Subsequent layout changes are handled by proxy observers below
@@ -807,12 +805,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
             session$ns("node_selected"),
             session$ns("edge_selected")
           ),
-          # Capture user-dragged positions so they persist when the project
-          # is saved. Fires after each drag - NOT type='once'.
+          # Capture positions after a drag so they persist when the project
+          # is saved: every node's, so the saved layout is complete (the
+          # render only honors complete positions). NOT type='once'.
           dragEnd = sprintf(
             "function(params) {
               if (params.nodes && params.nodes.length > 0) {
-                var positions = this.getPositions(params.nodes);
+                var positions = this.getPositions();
                 Shiny.setInputValue('%s', positions, {priority: 'event'});
               }
             }",

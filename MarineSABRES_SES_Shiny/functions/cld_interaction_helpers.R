@@ -345,6 +345,23 @@ generate_reenable_manipulation_js <- function(network_id, context = "operation")
 }
 
 
+#' Do the CLD nodes carry a saved position for every node?
+#'
+#' Saved positions replace the layout (physics off, no layout algorithm), so
+#' they are only used when every node has both coordinates. With only some
+#' placed (projects saved before 1.36.3 stored just the dragged nodes), the
+#' others would land at random places; the selected layout runs instead.
+#'
+#' @param nodes The CLD nodes data frame.
+#' @return TRUE when there is at least one node and every node has x and y.
+cld_has_complete_positions <- function(nodes) {
+  is.data.frame(nodes) && nrow(nodes) > 0 &&
+    all(c("x", "y") %in% names(nodes)) &&
+    !anyNA(suppressWarnings(as.numeric(nodes$x))) &&
+    !anyNA(suppressWarnings(as.numeric(nodes$y)))
+}
+
+
 # ============================================================================
 # NODE CREATION HELPERS
 # ============================================================================
