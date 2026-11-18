@@ -822,3 +822,78 @@ test_that("cld_nodes_match_isa compares the node set with the ISA elements", {
   expect_true(cld_nodes_match_isa(legacy, p0$data$isa_data))
   expect_false(cld_nodes_match_isa(NULL, p0$data$isa_data))
 })
+
+# --- Fix round 6: I-r10, a saved simplification is a subset, not a stale CLD ---
+simp_fields <- c("original_nodes", "original_edges", "removed_nodes", "simplification_history")
+make_simplified <- function(p0) {
+  s <- p0
+  s$data$cld$original_nodes <- p0$data$cld$nodes
+  s$data$cld$original_edges <- p0$data$cld$edges
+  s$data$cld$nodes <- p0$data$cld$nodes[-1, ]
+  s$data$cld$removed_nodes <- p0$data$cld$nodes[1, ]
+  s$data$cld$simplification_history <- list(list(step = "test"))
+  s
+}
+
+test_that("loading a project with a saved simplification keeps the simplified network (I-r10)", {
+  stub_proxy_edges()
+  p0 <- make_cld_project_b5()
+  simp <- make_simplified(p0)
+  pd <- shiny::reactiveVal(NULL)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    pd(simp)
+    session$flushReact()
+    expect_equal(sort(rv$nodes$id), sort(simp$data$cld$nodes$id))
+    expect_equal(sort(as_cld_node_table(pd()$data$cld$nodes)$id), sort(simp$data$cld$nodes$id))
+    expect_false(is.null(pd()$data$cld$original_nodes))
+    expect_false(any(c(rv$edges$from, rv$edges$to) == p0$data$cld$nodes$id[1]))
+  })
+})
+
+test_that("saving a simplification after leverage keeps it and its scores (I-r10)", {
+  stub_proxy_edges()
+  lev <- make_cld_project_b5()
+  lev$data$cld$nodes$leverage_score <- c(0.1, 0.2, 0.3, 0.4)
+  lev$data$cld$nodes$title <- lev$data$cld$nodes$label
+  pd <- shiny::reactiveVal(lev)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    pd(make_simplified(lev))          # what "Save simplification to project" writes
+    session$flushReact()
+    expect_equal(sort(rv$nodes$id), sort(lev$data$cld$nodes$id[-1]))
+    expect_equal(sort(as_cld_node_table(pd()$data$cld$nodes)$id), sort(lev$data$cld$nodes$id[-1]))
+    expect_equal(sort(rv$nodes$leverage_score), c(0.2, 0.3, 0.4))
+  })
+})
+
+test_that("a load with other elements rebuilds a simplified CLD and clears the simplification (I-r10/B7)", {
+  stub_proxy_edges()
+  p0 <- make_cld_project_b5()
+  simp <- make_simplified(p0)
+  other <- make_cld_project3()      # different elements
+  pd <- shiny::reactiveVal(simp)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    p <- pd()
+    p$data$isa_data <- other$data$isa_data   # a template load: cld (and its simplification) left behind
+    pd(p)
+    session$flushReact()
+    fresh <- create_nodes_df(other$data$isa_data)
+    expect_equal(sort(rv$nodes$id), sort(fresh$id))
+    expect_equal(sort(as_cld_node_table(pd()$data$cld$nodes)$id), sort(fresh$id))
+    for (f in simp_fields) expect_null(pd()$data$cld[[f]], info = f)
+  })
+})
+
+test_that("cld_nodes_reusable accepts a subset only when the original matches the ISA", {
+  p0 <- make_cld_project_b5()
+  simp <- make_simplified(p0)
+  isa <- p0$data$isa_data
+  expect_true(cld_nodes_reusable(p0$data$cld$nodes, p0$data$cld, isa))
+  expect_true(cld_nodes_reusable(simp$data$cld$nodes, simp$data$cld, isa))
+  expect_false(cld_nodes_reusable(simp$data$cld$nodes, p0$data$cld, isa))   # no original: a stale subset
+  stale <- simp$data$cld; stale$nodes <- dplyr::bind_rows(stale$nodes,
+    data.frame(id = "D_9", label = "x", group = "Drivers", stringsAsFactors = FALSE))
+  expect_false(cld_nodes_reusable(stale$nodes, stale, isa))                 # not a subset of the original
+  expect_false(cld_nodes_reusable(simp$data$cld$nodes, simp$data$cld, make_cld_project3()$data$isa_data))
+})

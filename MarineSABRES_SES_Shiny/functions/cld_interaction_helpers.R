@@ -213,6 +213,34 @@ cld_nodes_match_isa <- function(nodes, isa_data) {
 }
 
 
+#' Can the stored CLD nodes be reused for this ISA data?
+#'
+#' Yes when they describe exactly the loaded elements
+#' (\code{cld_nodes_match_isa}), or when they are a saved simplification:
+#' "Save simplification to project" stores a subset of the nodes and keeps
+#' the full set in \code{cld$original_nodes} (re-review 5, I-r10). A subset
+#' is reused only while that original still matches the loaded ISA, so a
+#' simplification left behind by a template or project load does not keep a
+#' stale CLD (browser recheck B7).
+#'
+#' @param nodes Stored CLD nodes (a data frame).
+#' @param cld The stored CLD list (for \code{original_nodes}).
+#' @param isa_data ISA data.
+#' @return TRUE when the nodes can be reused.
+cld_nodes_reusable <- function(nodes, cld, isa_data) {
+  if (cld_nodes_match_isa(nodes, isa_data)) return(TRUE)
+  orig <- as_cld_node_table(cld$original_nodes)
+  if (is.null(orig) || !cld_nodes_match_isa(orig, isa_data)) return(FALSE)
+  is.data.frame(nodes) && nrow(nodes) > 0 && "id" %in% names(nodes) &&
+    all(as.character(nodes$id) %in% as.character(orig$id))
+}
+
+#' The fields "Save simplification to project" writes into the CLD; they are
+#' cleared whenever the CLD is rebuilt from the ISA data.
+CLD_SIMPLIFICATION_FIELDS <- c("original_nodes", "original_edges", "removed_nodes",
+                               "simplification_history")
+
+
 #' Build the CLD edge table from the adjacency matrices for a set of nodes
 #'
 #' \code{create_edges_df()} names edge endpoints by position ("D_2" is the

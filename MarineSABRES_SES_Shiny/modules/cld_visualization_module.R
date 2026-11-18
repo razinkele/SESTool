@@ -646,11 +646,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           # (an autosave-recovered CLD can carry its nodes as a plain list:
           # coerce it, keeping its positions and leverage scores). Stored
           # nodes are reused only when they describe exactly the loaded
-          # elements: a template or project load can leave an edited
-          # diagram's nodes behind (browser recheck B7).
+          # elements, or are a saved simplification of them: a template or
+          # project load can leave an edited diagram's nodes behind (browser
+          # recheck B7; re-review 5, I-r10).
           cld_nodes <- as_cld_node_table(project_data$data$cld$nodes)
           if (!is.null(cld_nodes) && nrow(cld_nodes) > 0 &&
-              !cld_nodes_match_isa(cld_nodes, isa_data)) {
+              !cld_nodes_reusable(cld_nodes, project_data$data$cld, isa_data)) {
             debug_log("Stored CLD nodes do not match the ISA elements - rebuilding the CLD", "CLD VIZ")
             cld_nodes <- NULL
           }
@@ -679,6 +680,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
               pd <- project_data_reactive()
               pd$data$cld$nodes <- rv$nodes
               pd$data$cld$edges <- rv$edges
+              # a simplification of another diagram no longer applies
+              for (f in CLD_SIMPLIFICATION_FIELDS) pd$data$cld[[f]] <- NULL
               pd$last_modified <- Sys.time()
               project_data_reactive(pd)
               debug_log("Saved initial CLD to project_data", "CLD VIZ")
