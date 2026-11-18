@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.36.1] - 2026-11-18
+
+### Fixed
+- Standard Entry: when a CLD delete removed every element of a type (for example all drivers), Standard Entry kept its old copy of them, and the next Standard Entry save (even of an unrelated exercise) wrote the deleted elements back into the project without their links. The connection matrices then no longer matched the element lists, which showed as a "connection matrix problem" warning. Deleting only some elements of a type was not affected. Present before 1.36.0.
+
 ## [1.36.0] - 2026-11-17
 
 ### Changed
