@@ -897,3 +897,13 @@ test_that("cld_nodes_reusable accepts a subset only when the original matches th
   expect_false(cld_nodes_reusable(stale$nodes, stale, isa))                 # not a subset of the original
   expect_false(cld_nodes_reusable(simp$data$cld$nodes, simp$data$cld, make_cld_project3()$data$isa_data))
 })
+
+test_that("never-synced nodes also need the same labels per group (M-r11)", {
+  p0 <- make_cld_project_b5()
+  legacy <- p0$data$cld$nodes[, setdiff(names(p0$data$cld$nodes), "element_id")]
+  expect_true(cld_nodes_match_isa(legacy, p0$data$isa_data))
+  renamed <- legacy; renamed$label[renamed$id == "D_1"] <- "Something else"
+  expect_false(cld_nodes_match_isa(renamed, p0$data$isa_data))
+  wrapped <- legacy; wrapped$label <- toupper(gsub(" ", "\n", wrapped$label))
+  expect_true(cld_nodes_match_isa(wrapped, p0$data$isa_data))   # display wrapping and case ignored
+})

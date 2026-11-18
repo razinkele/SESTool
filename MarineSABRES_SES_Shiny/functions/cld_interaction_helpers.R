@@ -192,7 +192,7 @@ as_cld_node_table <- function(x) {
 #' showed deleted elements as missing and removed ones as present (browser
 #' recheck B7). The node set must equal the elements, compared by group and
 #' ISA element id; nodes without element ids (a CLD never synced) are
-#' compared by their count per group.
+#' compared by their count and labels per group.
 #'
 #' @param nodes Stored CLD nodes (a data frame).
 #' @param isa_data ISA data.
@@ -208,8 +208,15 @@ cld_nodes_match_isa <- function(nodes, isa_data) {
                      sort(paste(fresh$group, el_f, sep = "\r"))))
   }
   counts <- function(g) { t <- table(as.character(g)); t[order(names(t))] }
-  identical(as.vector(counts(nodes$group)), as.vector(counts(fresh$group))) &&
+  same_counts <- identical(as.vector(counts(nodes$group)), as.vector(counts(fresh$group))) &&
     identical(names(counts(nodes$group)), names(counts(fresh$group)))
+  if (!same_counts) return(FALSE)
+  # and the same labels per group (whitespace and case ignored: labels are
+  # wrapped for display), so renamed elements are no match (re-review 5, M-r11)
+  if (!"label" %in% names(nodes) || !"label" %in% names(fresh)) return(TRUE)
+  norm <- function(x) tolower(gsub("[[:space:]]+", "", as.character(x)))
+  identical(sort(paste(nodes$group, norm(nodes$label), sep = "\r")),
+            sort(paste(fresh$group, norm(fresh$label), sep = "\r")))
 }
 
 
