@@ -572,6 +572,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       filtered_edges = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
       last_render_hash = NULL,  # Track last rendered network hash
+      render_key = NULL,  # Changes only when the network must be re-rendered (not on CLD edits)
       layout_render_trigger = 0  # Trigger to force re-render on layout changes
     )
 
@@ -688,6 +689,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           }
 
           rv$isa_hash <- full_signature
+          rv$render_key <- full_signature
           rv$metrics <- NULL
 
           debug_log(paste("Loaded nodes:", nrow(rv$nodes)), "CLD VIZ")
@@ -763,13 +765,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
     # Layout updates are handled via proxy observers below for better performance.
     # The visNetwork output is cached by ISA data signature to avoid expensive re-renders.
     output$network <- renderVisNetwork({
-      req(network_data())
-
-      nodes <- network_data()$nodes
-      edges <- network_data()$edges
+      # Re-rendered only when rv$render_key (or the layout trigger) changes.
+      # Edits made in the CLD editor are already in the browser's network and
+      # leave the key alone: a re-render replaced the network, reshuffled its
+      # layout and dropped the edit-mode toolbar (re-review N3).
+      req(rv$render_key)
+      nodes <- isolate(rv$nodes)
+      edges <- isolate(rv$edges)
+      req(nodes, edges)
 
       # Check if we already rendered this exact data
-      current_hash <- rv$isa_hash
+      current_hash <- rv$render_key
       if (!is.null(rv$last_render_hash) && identical(rv$last_render_hash, current_hash)) {
         debug_log("renderVisNetwork CACHE HIT - skipping render", "CLD VIZ PERF")
         # Return early - Shiny will use cached output
@@ -844,6 +850,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         ) %>%
         visEvents(
           type = "once",
+          # fires whatever the physics setting: with physics off (saved
+          # positions, circular layout) neither stabilization event fires
+          afterDrawing = sprintf("function() { %s }", generate_network_stored_js(id)),
           stabilizationIterationsDone = sprintf(
             "function() {
               this.setOptions({physics: false});
@@ -863,9 +872,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
 
       return(vis)
     }) %>% bindCache(
-      # Cache the entire visNetwork widget by ISA data hash
+      # Cache the entire visNetwork widget by its render key
       # This prevents expensive physics calculations on unchanged data
-      rv$isa_hash,
+      rv$render_key,
       # Include layout render trigger to force re-render when switching to hierarchical
       # or changing hierarchy direction/level separation
       rv$layout_render_trigger
@@ -1362,12 +1371,34 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
     outputOptions(output, "edit_edge_confirm_ui", suspendWhenHidden = FALSE)
 
     # Write rv$edges to project_data and propagate to isa_data so analyses refresh
+    # An edit made in the CLD editor is already in the browser's network: mark
+    # the synced data as loaded, so the load observer does not rebuild the
+    # nodes/edges and re-render the network (re-review N3)
+    absorb_cld_edit <- function(pd) {
+      sig <- create_network_signature(pd$data$isa_data, pd$data$cld)
+      if (!is.null(sig)) rv$isa_hash <- sig
+      rv$metrics <- NULL
+      invisible(sig)
+    }
+
+    # Renumber rv$edges 1..n (the leverage highlight proxies index edges by
+    # position) and replace the browser's edges with them through the proxy.
+    # old_ids: the browser ids of the edges still shown.
+    replace_client_edges <- function(old_ids) {
+      if (nrow(rv$edges) > 0) rv$edges$id <- seq_len(nrow(rv$edges))
+      prx <- visNetworkProxy(session$ns("network"))
+      if (length(old_ids) > 0) prx <- prx %>% visRemoveEdges(id = old_ids)
+      if (nrow(rv$edges) > 0) prx %>% visUpdateEdges(rv$edges)
+      invisible(TRUE)
+    }
+
     sync_edges_to_isa <- function(event_name, what) {
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$edges <- rv$edges
         tryCatch({
           pd <- sync_cld_to_isa_data(pd)
+          absorb_cld_edit(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
             notify_cld_edit(event_bus, event_name)
@@ -1456,13 +1487,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           new_edge$originalWidth <- edge_props$width
           rv$edges <- bind_rows(rv$edges, new_edge)
 
-          # Show the chosen sign on the drawn edge until the network re-renders
+          # Swap the drawn client edge for the saved one under its own id
+          # (the network is not re-rendered: see absorb_cld_edit)
+          prx <- visNetworkProxy(session$ns("network"))
           if (!is.na(pend$client_id) && nzchar(pend$client_id)) {
-            visNetworkProxy(session$ns("network")) %>%
-              visUpdateEdges(data.frame(id = pend$client_id, color = edge_props$color,
-                                        width = edge_props$width, label = new_polarity,
-                                        stringsAsFactors = FALSE))
+            prx <- prx %>% visRemoveEdges(id = pend$client_id)
           }
+          prx %>% visUpdateEdges(new_edge)
 
           sync_edges_to_isa("cld_edit_add_edge",
                             sprintf("%s -> %s added", pend$from, pend$to))
@@ -1529,6 +1560,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
 
       rv$nodes <- rv$nodes %>% filter(!(id %in% deleted_ids))
       rv$edges <- rv$edges %>% filter(!(from %in% deleted_ids | to %in% deleted_ids))
+      # vis already removed the node and its edges; renumber the rest
+      replace_client_edges(rv$edges$id)
 
       # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({
@@ -1537,6 +1570,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         pd$data$cld$edges <- rv$edges
         tryCatch({
           pd <- sync_cld_to_isa_data(pd)
+          absorb_cld_edit(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
             notify_cld_edit(event_bus, "cld_edit_delete_nodes")
@@ -1566,10 +1600,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
       # Reindex edge ids to keep them contiguous (1..n) after deletion.
       # build_leverage_highlight_data / build_leverage_reset_data use
       # seq_len(nrow(edges)) for vis.js proxy updates, so sparse ids would
-      # silently mismatch the wrong edges in the network canvas.
-      if (nrow(rv$edges) > 0) {
-        rv$edges$id <- seq_len(nrow(rv$edges))
-      }
+      # silently mismatch the wrong edges in the network canvas. The browser
+      # gets the renumbered edges too (the network is not re-rendered).
+      replace_client_edges(rv$edges$id)
 
       # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({
@@ -1577,6 +1610,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
         pd$data$cld$edges <- rv$edges
         tryCatch({
           pd <- sync_cld_to_isa_data(pd)
+          absorb_cld_edit(pd)
           project_data_reactive(pd)
           if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
             notify_cld_edit(event_bus, "cld_edit_delete_edges")

@@ -133,8 +133,9 @@ test_that("a drawn edge is added only after its sign is confirmed", {
     cell <- pd()$data$isa_data$adjacency_matrices$d_a
     expect_false(is.null(cell))
     expect_true(any(startsWith(cell[!is.na(cell) & nzchar(cell)], "-")))
-    # the client edge drawn by vis-network is not removed on confirm
-    expect_length(prx$removed, 0)
+    # the drawn client edge is swapped for the saved edge under its own id
+    # (through the proxy: the network is not re-rendered)
+    expect_equal(prx$removed, list("pending_1"))
   })
 })
 
@@ -251,19 +252,23 @@ stub_runjs <- function(env = parent.frame()) {
   rec
 }
 
-test_that("confirm recolours and labels the drawn client edge under its id", {
+test_that("confirm replaces the drawn client edge with the saved, coloured edge", {
   prx <- stub_proxy_edges()
   pd <- reactiveVal(make_cld_project())
   testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
     session$flushReact()
+    n0 <- nrow(rv$edges)
     draw_edge(session, client_id = "pending_1")
     set_input(session, rv$pending_edge_edit$picker_id, "-")
     respond(session, "confirm")
+    expect_equal(prx$removed, list("pending_1"))
     expect_length(prx$updated, 1)
     upd <- prx$updated[[1]]
-    expect_equal(upd$id, "pending_1")
-    expect_equal(upd$label, "-")
-    expect_equal(upd$color, EDGE_COLORS$opposing)
+    row <- upd[upd$from == "D_1" & upd$to == "A_1", , drop = FALSE]
+    expect_equal(nrow(row), 1L)
+    expect_equal(as.numeric(row$id), n0 + 1)
+    expect_equal(row$label, "-")
+    expect_equal(row$color, EDGE_COLORS$opposing)
   })
 })
 
@@ -426,5 +431,69 @@ test_that("list-shaped recovered CLD nodes keep their positions and leverage sco
     expect_equal(rv$nodes$x, c(10, 20, 30))
     expect_equal(rv$nodes$y, c(1, 2, 3))
     expect_equal(rv$nodes$id, n$id)
+  })
+})
+
+# Re-review N3 (ruling R11): saving or deleting in the CLD editor updates the
+# network through the proxy instead of re-rendering it, so the network, its
+# layout and its edit-mode toolbar survive
+test_that("saving a drawn edge, editing one and deleting a node do not re-render the network", {
+  prx <- stub_proxy_edges()
+  pd <- shiny::reactiveVal(make_cld_project())   # a real reactive: the load observer must see the sync
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    key0 <- rv$render_key
+    expect_false(is.null(key0))
+    draw_edge(session, client_id = "pending_1")
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    respond(session, "confirm")
+    session$flushReact()
+    expect_identical(rv$render_key, key0)
+    expect_equal(nrow(edges_between(rv$edges, "D_1", "A_1")), 1L)
+    old <- edges_between(rv$edges, "A_1", "P_1")
+    session$setInputs(edit_edge_triggered = list(id = old$id, from = "A_1", to = "P_1", nonce = runif(1)))
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    respond(session, "confirm")
+    session$flushReact()
+    expect_identical(rv$render_key, key0)
+    expect_equal(edges_between(rv$edges, "A_1", "P_1")$polarity, "+")
+    # deleting a node: its edges go, the rest are renumbered 1..n on both sides
+    prx$removed <- list(); prx$updated <- list()
+    session$setInputs(nodes_deleted = list(nodes = list("D_1"), nonce = runif(1)))
+    session$flushReact()
+    expect_identical(rv$render_key, key0)
+    expect_equal(nrow(edges_between(rv$edges, "D_1", "A_1")), 0L)
+    expect_equal(as.numeric(rv$edges$id), seq_len(nrow(rv$edges)))
+    expect_length(prx$updated, 1)
+    expect_equal(as.numeric(prx$updated[[1]]$id), seq_len(nrow(rv$edges)))
+    # project data still follows every edit
+    expect_equal(nrow(edges_between(pd()$data$cld$edges, "A_1", "P_1")), 1L)
+    expect_equal(edges_between(pd()$data$cld$edges, "A_1", "P_1")$polarity, "+")
+  })
+})
+
+test_that("an ISA change from outside the CLD editor still re-renders the network", {
+  pd <- shiny::reactiveVal(make_cld_project())   # a real reactive: the load observer must see the sync
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    key0 <- rv$render_key
+    p <- pd()
+    p$data$cld$edges <- rbind(p$data$cld$edges,
+      data.frame(from = "D_1", to = "A_1", label = "+", polarity = "+", stringsAsFactors = FALSE))
+    pd(sync_cld_to_isa_data(p))
+    session$flushReact()
+    expect_false(identical(rv$render_key, key0))
+  })
+})
+
+test_that("a re-rendered network is stored and gets edit mode back without physics", {
+  pd <- reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    session$setInputs(layout_type = "hierarchical", hierarchy_direction = "DU", level_separation = 150)
+    widget <- paste(as.character(output$network), collapse = "")
+    # afterDrawing fires whatever the physics setting (stabilization does not
+    # fire with physics off: saved positions, circular layout)
+    expect_match(widget, "afterDrawing", fixed = TRUE)
   })
 })
