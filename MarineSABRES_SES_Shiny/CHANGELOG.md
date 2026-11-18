@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.36.3] - 2026-11-18
+
+### Fixed
+- CLD: dragging a node saved only that node's position, and because any saved position switched the layout off, a reloaded project placed every other node at random. A drag now saves the position of every node, and saved positions are used only when every node has one; otherwise (for example in projects saved before this version) the selected layout arranges the diagram.
+- Leverage analysis: calculating leverage points replaced the project's CLD with the full network, which discarded a simplification saved to the project and every saved node position. The scores are now added to the CLD as it is.
+- SES Models library: signed connections that could not be placed in the model (an element type the toolbox does not recognise, two element types that do not form a DAPSIWRM link, or a repeated row) were left out without a message; the Arctic DA model, for example, loaded 20 of its 51 signed connections. A warning now says how many were left out and suggests checking the element types in the model file.
+
+All three were present before 1.36.0.
+
 ## [1.36.2] - 2026-11-18
 
 ### Fixed
