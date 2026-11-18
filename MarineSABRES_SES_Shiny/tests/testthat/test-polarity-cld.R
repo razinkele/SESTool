@@ -497,3 +497,54 @@ test_that("a re-rendered network is stored and gets edit mode back without physi
     expect_match(widget, "afterDrawing", fixed = TRUE)
   })
 })
+
+# --- Fix round 3 (re-review 2) -------------------------------------------------
+# Four nodes, three edges with ids 1..3: D_1>A_1, A_1>P_1, P_1>GB_1
+make_cld_project3 <- function() {
+  nodes <- data.frame(id = c("D_1", "A_1", "P_1", "GB_1"),
+    label = c("Food demand", "Trawling", "Seabed damage", "Fish"),
+    group = c("Drivers", "Activities", "Pressures", "Goods & Benefits"), stringsAsFactors = FALSE)
+  edges <- data.frame(from = c("D_1", "A_1", "P_1"), to = c("A_1", "P_1", "GB_1"),
+                      label = c("+", "-", "-"), polarity = c("+", "-", "-"), stringsAsFactors = FALSE)
+  sync_cld_to_isa_data(list(project_id = "t", project_name = "T",
+                            data = list(cld = list(nodes = nodes, edges = edges), isa_data = list())))
+}
+# The browser's edge ids after a delete: the old ids, minus those vis removed,
+# minus those the proxy removed, plus those it added
+client_after <- function(old, vis_removed, prx) {
+  sort(union(setdiff(old, c(vis_removed, unlist(prx$removed))), prx$updated[[1]]$id))
+}
+
+test_that("deleting a non-last edge replaces the browser's surviving edges by their old ids (P1)", {
+  prx <- stub_proxy_edges()
+  pd <- shiny::reactiveVal(make_cld_project3())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    old <- rv$edges$id
+    del <- old[rv$edges$from == "D_1" & rv$edges$to == "A_1"]
+    survivors <- setdiff(old, del)
+    session$setInputs(edges_deleted = list(edges = list(del), nonce = runif(1)))
+    session$flushReact()
+    expect_equal(sort(as.numeric(unlist(prx$removed))), sort(as.numeric(survivors)))
+    expect_equal(as.numeric(prx$updated[[1]]$id), seq_len(nrow(rv$edges)))
+    # no orphan: the browser holds exactly R's edges
+    expect_equal(client_after(old, del, prx), as.numeric(rv$edges$id))
+    expect_setequal(paste(prx$updated[[1]]$from, prx$updated[[1]]$to), c("A_1 P_1", "P_1 GB_1"))
+  })
+})
+
+test_that("deleting a mid-list node with links leaves no orphan edge in the browser (P1)", {
+  prx <- stub_proxy_edges()
+  pd <- shiny::reactiveVal(make_cld_project3())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    old <- rv$edges$id
+    gone <- old[rv$edges$from == "A_1" | rv$edges$to == "A_1"]   # vis removes these itself
+    survivors <- setdiff(old, gone)
+    session$setInputs(nodes_deleted = list(nodes = list("A_1"), nonce = runif(1)))
+    session$flushReact()
+    expect_equal(sort(as.numeric(unlist(prx$removed))), sort(as.numeric(survivors)))
+    expect_equal(client_after(old, gone, prx), as.numeric(rv$edges$id))
+    expect_equal(paste(prx$updated[[1]]$from, prx$updated[[1]]$to), "P_1 GB_1")
+  })
+})

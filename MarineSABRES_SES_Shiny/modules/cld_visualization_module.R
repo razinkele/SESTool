@@ -1385,6 +1385,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
     # position) and replace the browser's edges with them through the proxy.
     # old_ids: the browser ids of the edges still shown.
     replace_client_edges <- function(old_ids) {
+      # take the browser's ids now: the promise would otherwise be evaluated
+      # after the renumbering below (re-review 2, P1)
+      old_ids <- force(old_ids)
       if (nrow(rv$edges) > 0) rv$edges$id <- seq_len(nrow(rv$edges))
       prx <- visNetworkProxy(session$ns("network"))
       if (length(old_ids) > 0) prx <- prx %>% visRemoveEdges(id = old_ids)
