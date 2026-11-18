@@ -183,6 +183,36 @@ as_cld_node_table <- function(x) {
 }
 
 
+#' Do stored CLD nodes describe exactly the elements of this ISA data?
+#'
+#' A template or project load replaces \code{isa_data} but can leave the
+#' CLD nodes of an earlier, edited diagram in \code{cld$nodes} (the pipeline
+#' skips regenerating the CLD when the ISA signature equals the one it last
+#' built, and CLD edits never update that signature). Reusing those nodes
+#' showed deleted elements as missing and removed ones as present (browser
+#' recheck B7). The node set must equal the elements, compared by group and
+#' ISA element id; nodes without element ids (a CLD never synced) are
+#' compared by their count per group.
+#'
+#' @param nodes Stored CLD nodes (a data frame).
+#' @param isa_data ISA data.
+#' @return TRUE when the nodes can be reused for this ISA data.
+cld_nodes_match_isa <- function(nodes, isa_data) {
+  if (!is.data.frame(nodes) || nrow(nodes) == 0 || !"group" %in% names(nodes)) return(FALSE)
+  fresh <- create_nodes_df(isa_data)
+  if (!is.data.frame(fresh) || nrow(fresh) != nrow(nodes)) return(FALSE)
+  el_n <- if ("element_id" %in% names(nodes)) as.character(nodes$element_id) else rep(NA_character_, nrow(nodes))
+  el_f <- if ("element_id" %in% names(fresh)) as.character(fresh$element_id) else rep(NA_character_, nrow(fresh))
+  if (!anyNA(el_n) && !anyNA(el_f)) {
+    return(identical(sort(paste(nodes$group, el_n, sep = "\r")),
+                     sort(paste(fresh$group, el_f, sep = "\r"))))
+  }
+  counts <- function(g) { t <- table(as.character(g)); t[order(names(t))] }
+  identical(as.vector(counts(nodes$group)), as.vector(counts(fresh$group))) &&
+    identical(names(counts(nodes$group)), names(counts(fresh$group)))
+}
+
+
 #' Build the CLD edge table from the adjacency matrices for a set of nodes
 #'
 #' \code{create_edges_df()} names edge endpoints by position ("D_2" is the

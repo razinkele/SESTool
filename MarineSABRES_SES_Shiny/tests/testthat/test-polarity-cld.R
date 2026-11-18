@@ -750,3 +750,75 @@ test_that("build_cld_edges falls back to positional ids when element ids repeat 
   expect_equal(pairs(e2), pairs(create_edges_df(isa2, isa2$adjacency_matrices)))
   expect_equal(nrow(e2), 2L)
 })
+
+# --- Fix round 5: B7, reloading the same ISA after CLD edits -------------------
+# A template or project load replaces isa_data but can leave the edited
+# cld$nodes in project data; the CLD must be rebuilt from the loaded data.
+b7_pairs <- function(e) sort(paste(e$from, e$to))
+b7_edit <- function(session) {
+  session$setInputs(nodes_deleted = list(nodes = list("D_1"), nonce = runif(1)))
+  session$flushReact()
+  for (k in 1:2) {
+    session$setInputs(add_node_triggered = list(x = 10 * k, y = 0, nonce = runif(1)))
+    session$setInputs(new_node_type = "Drivers", new_node_label = paste("Extra", k))
+    session$setInputs(add_node_response = list(confirm = TRUE, nonce = runif(1)))
+    session$flushReact()
+  }
+}
+
+test_that("reloading the same ISA after deleting and adding nodes rebuilds the CLD (B7)", {
+  stub_proxy_edges()
+  p0 <- make_cld_project_b5()
+  fresh_nodes <- create_nodes_df(p0$data$isa_data)
+  fresh_edges <- build_cld_edges(p0$data$isa_data, fresh_nodes)
+  pd <- shiny::reactiveVal(p0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    b7_edit(session)
+    expect_false("D_1" %in% rv$nodes$id)
+    expect_gt(nrow(rv$nodes), nrow(fresh_nodes))   # the added nodes are there
+    key_edited <- rv$render_key
+    # a template load: the ISA goes back to the template, cld$nodes is left as edited
+    p <- pd()
+    p$data$isa_data <- p0$data$isa_data
+    pd(p)
+    session$flushReact()
+    expect_equal(sort(rv$nodes$id), sort(fresh_nodes$id))
+    expect_equal(b7_pairs(rv$edges), b7_pairs(fresh_edges))
+    expect_false(identical(rv$render_key, key_edited))
+    # project data's CLD follows the loaded ISA too
+    expect_equal(sort(as_cld_node_table(pd()$data$cld$nodes)$id), sort(fresh_nodes$id))
+  })
+})
+
+test_that("reloading a saved project with the same content restores its own CLD (B7)", {
+  stub_proxy_edges()
+  p0 <- make_cld_project_b5()
+  saved <- p0
+  saved$data$cld$nodes$x <- c(1, 2, 3, 4)   # the saved CLD keeps its positions
+  saved$data$cld$nodes$y <- c(5, 6, 7, 8)
+  pd <- shiny::reactiveVal(p0)
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    b7_edit(session)
+    pd(saved)
+    session$flushReact()
+    expect_equal(rv$nodes$id, saved$data$cld$nodes$id)
+    expect_equal(rv$nodes$x, c(1, 2, 3, 4))
+    expect_equal(b7_pairs(rv$edges),
+                 b7_pairs(build_cld_edges(saved$data$isa_data, saved$data$cld$nodes)))
+  })
+})
+
+test_that("cld_nodes_match_isa compares the node set with the ISA elements", {
+  p0 <- make_cld_project_b5()
+  nodes <- p0$data$cld$nodes
+  expect_true(cld_nodes_match_isa(nodes, p0$data$isa_data))
+  expect_false(cld_nodes_match_isa(nodes[-1, ], p0$data$isa_data))
+  extra <- dplyr::bind_rows(nodes, data.frame(id = "D_9", label = "x", group = "Drivers",
+                                              element_id = "D999", stringsAsFactors = FALSE))
+  expect_false(cld_nodes_match_isa(extra, p0$data$isa_data))
+  legacy <- nodes[, setdiff(names(nodes), "element_id")]
+  expect_true(cld_nodes_match_isa(legacy, p0$data$isa_data))
+  expect_false(cld_nodes_match_isa(NULL, p0$data$isa_data))
+})

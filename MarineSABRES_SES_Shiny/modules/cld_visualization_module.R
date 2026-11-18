@@ -644,8 +644,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
           debug_log("Signature changed - reloading CLD data", "CLD VIZ")
 
           # (an autosave-recovered CLD can carry its nodes as a plain list:
-          # coerce it, keeping its positions and leverage scores)
+          # coerce it, keeping its positions and leverage scores). Stored
+          # nodes are reused only when they describe exactly the loaded
+          # elements: a template or project load can leave an edited
+          # diagram's nodes behind (browser recheck B7).
           cld_nodes <- as_cld_node_table(project_data$data$cld$nodes)
+          if (!is.null(cld_nodes) && nrow(cld_nodes) > 0 &&
+              !cld_nodes_match_isa(cld_nodes, isa_data)) {
+            debug_log("Stored CLD nodes do not match the ISA elements - rebuilding the CLD", "CLD VIZ")
+            cld_nodes <- NULL
+          }
           if (!is.null(cld_nodes) && nrow(cld_nodes) > 0) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
             debug_log("Using existing CLD nodes with analysis results", "CLD VIZ")
@@ -675,6 +683,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL,
               project_data_reactive(pd)
               debug_log("Saved initial CLD to project_data", "CLD VIZ")
             })
+            # the signature of what was just written, so that write does not
+            # trigger a second reload
+            full_signature <- create_network_signature(isa_data, list(nodes = rv$nodes)) %||% full_signature
           }
 
           rv$isa_hash <- full_signature
