@@ -133,9 +133,9 @@ test_that("a drawn edge is added only after its sign is confirmed", {
     cell <- pd()$data$isa_data$adjacency_matrices$d_a
     expect_false(is.null(cell))
     expect_true(any(startsWith(cell[!is.na(cell) & nzchar(cell)], "-")))
-    # the drawn client edge is swapped for the saved edge under its own id
-    # (through the proxy: the network is not re-rendered)
-    expect_equal(prx$removed, list("pending_1"))
+    # the drawn client edge is swapped for the saved edges (through the
+    # proxy: the network is not re-rendered)
+    expect_true("pending_1" %in% unlist(prx$removed))
   })
 })
 
@@ -240,7 +240,8 @@ test_that("the edit-edge dialog preselects the edge's sign and applies a change"
     expect_equal(nrow(rv$edges), n_before)
     cell <- pd()$data$isa_data$adjacency_matrices$a_p
     expect_true(any(startsWith(cell[!is.na(cell) & nzchar(cell)], "+")))
-    expect_length(prx$removed, 0)
+    # the browser gets the synced, styled edges back (round 4, B1)
+    expect_equal(as.numeric(prx$updated[[length(prx$updated)]]$id), seq_len(nrow(rv$edges)))
   })
 })
 
@@ -261,14 +262,18 @@ test_that("confirm replaces the drawn client edge with the saved, coloured edge"
     draw_edge(session, client_id = "pending_1")
     set_input(session, rv$pending_edge_edit$picker_id, "-")
     respond(session, "confirm")
-    expect_equal(prx$removed, list("pending_1"))
+    expect_true("pending_1" %in% unlist(prx$removed))
     expect_length(prx$updated, 1)
     upd <- prx$updated[[1]]
     row <- upd[upd$from == "D_1" & upd$to == "A_1", , drop = FALSE]
     expect_equal(nrow(row), 1L)
-    expect_equal(as.numeric(row$id), n0 + 1)
     expect_equal(row$label, "-")
-    expect_equal(row$color, EDGE_COLORS$opposing)
+    # the row a full render would draw (fix round 4, B1): not the drawn styling
+    full <- create_edges_df(pd()$data$isa_data, pd()$data$isa_data$adjacency_matrices)
+    ref <- full[full$from == "D_1" & full$to == "A_1", , drop = FALSE]
+    expect_equal(row$color, ref$color)
+    expect_equal(row$title, ref$title)
+    expect_equal(row$width, ref$width)
   })
 })
 
@@ -607,6 +612,7 @@ test_that("create_nodes_df warns when it skips a non-empty list-shaped category 
   expect_length(msgs, 0)   # an empty list is just "no responses"
 })
 
+
 # --- Fix round 4 (browser recheck after b40cdf6) ------------------------------
 
 test_that("a real reload renders the widget once (M-r5)", {
@@ -628,6 +634,39 @@ test_that("a real reload renders the widget once (M-r5)", {
     session$flushReact()
     invisible(output$network)
     expect_equal(n$k, 2)
+  })
+})
+
+test_that("saving an edited sign sends the styled row after vis's edit callback (B1)", {
+  log <- new.env(); log$seq <- character(0); log$upd <- list()
+  local_global("visRemoveEdges", function(graph, id, ...) { log$seq <- c(log$seq, "remove"); graph })
+  local_global("visUpdateEdges", function(graph, edges, ...) {
+    log$seq <- c(log$seq, "update"); log$upd[[length(log$upd) + 1]] <- edges; graph })
+  local_global("runjs", function(code) {
+    if (grepl("editEdgeCallback_", code, fixed = TRUE)) log$seq <- c(log$seq, "callback")
+    invisible(NULL) })
+  pd <- shiny::reactiveVal(make_cld_project())
+  testServer(cld_viz_server, args = list(project_data_reactive = pd, i18n = cld_tr), {
+    session$flushReact()
+    old <- edges_between(rv$edges, "A_1", "P_1")
+    expect_equal(old$polarity, "-")
+    session$setInputs(edit_edge_triggered = list(id = old$id, from = "A_1", to = "P_1", nonce = runif(1)))
+    log$seq <- character(0)
+    set_input(session, rv$pending_edge_edit$picker_id, "+")
+    respond(session, "confirm")
+    # vis's edit callback (which re-applies the old edge data) comes first,
+    # then the styled row, so the canvas ends with the new sign
+    expect_true("callback" %in% log$seq)
+    expect_true(max(which(log$seq == "update")) > max(which(log$seq == "callback")))
+    upd <- log$upd[[length(log$upd)]]
+    row <- upd[upd$from == "A_1" & upd$to == "P_1", , drop = FALSE]
+    expect_equal(nrow(row), 1L)
+    expect_equal(row$label, "+")
+    full <- create_edges_df(pd()$data$isa_data, pd()$data$isa_data$adjacency_matrices)
+    ref <- full[full$from == "A_1" & full$to == "P_1", , drop = FALSE]
+    expect_equal(row$title, ref$title)
+    expect_equal(row$color, ref$color)
+    expect_equal(row$polarity, "+")
   })
 })
 
