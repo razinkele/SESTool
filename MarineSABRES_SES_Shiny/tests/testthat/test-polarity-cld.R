@@ -728,3 +728,25 @@ test_that("after deleting a node and adding another, no edge references the dele
     expect_equal(rownames(pd()$data$isa_data$adjacency_matrices$d_a), d_ids)
   })
 })
+
+test_that("build_cld_edges falls back to positional ids when element ids repeat (M-r7)", {
+  isa <- list(
+    drivers = data.frame(ID = c("D001", "D001"), Name = c("Food", "Jobs"), stringsAsFactors = FALSE),
+    activities = data.frame(ID = "A001", Name = "Trawl", stringsAsFactors = FALSE),
+    adjacency_matrices = list(d_a = matrix(c("+medium:3", "-medium:3"), 2, 1,
+                                           dimnames = list(c("D001", "D001"), "A001"))))
+  n <- create_nodes_df(isa)
+  pairs <- function(e) sort(paste(e$from, e$to, e$label, sep = ">"))
+  positional <- pairs(create_edges_df(isa, isa$adjacency_matrices))
+
+  # duplicate element ids in the ISA and on the nodes: no link moves or merges
+  expect_equal(pairs(build_cld_edges(isa, n)), positional)
+
+  # the ISA ids were made unique on load but the nodes still carry the old duplicate
+  isa2 <- isa
+  isa2$drivers$ID <- c("D001", "D002")
+  rownames(isa2$adjacency_matrices$d_a) <- c("D001", "D002")
+  e2 <- build_cld_edges(isa2, n)
+  expect_equal(pairs(e2), pairs(create_edges_df(isa2, isa2$adjacency_matrices)))
+  expect_equal(nrow(e2), 2L)
+})

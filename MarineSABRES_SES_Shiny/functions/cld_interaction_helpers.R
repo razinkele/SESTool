@@ -208,15 +208,19 @@ build_cld_edges <- function(isa_data, nodes) {
         el <- as.character(nodes$element_id)
         has_el <- !is.na(el) & nzchar(el)
         node_by_key <- stats::setNames(node_ids[has_el], key(nodes$group[has_el], el[has_el]))
-        remap <- function(ids) {
-          ids <- as.character(ids)
-          out <- unname(node_by_key[unname(pos_key[ids])])
-          legacy <- is.na(out) & ids %in% node_ids[!has_el]
-          out[legacy] <- ids[legacy]
-          out
+        # Repeated element ids within a group make the map ambiguous: keep the
+        # positional ids then, as before (re-review M-r7).
+        if (!anyDuplicated(pos_key) && !anyDuplicated(names(node_by_key))) {
+          remap <- function(ids) {
+            ids <- as.character(ids)
+            out <- unname(node_by_key[unname(pos_key[ids])])
+            legacy <- is.na(out) & ids %in% node_ids[!has_el]
+            out[legacy] <- ids[legacy]
+            out
+          }
+          e$from <- remap(e$from)
+          e$to <- remap(e$to)
         }
-        e$from <- remap(e$from)
-        e$to <- remap(e$to)
       }
     }
     keep <- !is.na(e$from) & !is.na(e$to) & e$from %in% node_ids & e$to %in% node_ids
