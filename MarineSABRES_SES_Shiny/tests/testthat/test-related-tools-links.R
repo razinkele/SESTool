@@ -50,8 +50,7 @@ test_that("every related-tools text exists in all 9 languages", {
             "related_tool_da_viewer_name", "related_tool_da_viewer_desc",
             "related_tool_da_viewer_help",
             "related_tool_governance_name", "related_tool_governance_desc",
-            "related_tool_governance_help", "related_tool_governance_help_2",
-            "related_tool_governance_help_3", "related_tool_governance_help_4")
+            "related_tool_governance_help")
   for (k in keys) {
     entry <- tr[[paste0("ui.dashboard.", k)]]
     expect_false(is.null(entry), info = k)
@@ -68,12 +67,9 @@ test_that("every related-tools text exists in all 9 languages", {
     expect_match(tr[["ui.dashboard.related_tool_governance_name"]][[l]], "HG&OG",
                  fixed = TRUE, info = l)
   }
-  # Every help paragraph is shown in the card.
-  app <- read_src("app.R")
-  for (n in 2:4) {
-    expect_match(app, sprintf('i18n$t("ui.dashboard.related_tool_governance_help_%d")', n),
-                 fixed = TRUE)
-  }
+  # The card carries a short version; the full LifeWatch text is in the guidebook.
+  expect_null(tr[["ui.dashboard.related_tool_governance_help_2"]])
+  expect_lt(nchar(tr[["ui.dashboard.related_tool_governance_desc"]]$en), 200)
 })
 
 test_that("the companion tools are linked where users need them", {

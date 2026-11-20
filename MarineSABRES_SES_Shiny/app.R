@@ -522,13 +522,7 @@ bs4DashPage(
                 tags$details(
                   tags$summary(i18n$t("ui.dashboard.related_tools_help_label")),
                   tags$p(class = "text-muted mb-2",
-                         i18n$t("ui.dashboard.related_tool_governance_help")),
-                  tags$p(class = "text-muted mb-2",
-                         i18n$t("ui.dashboard.related_tool_governance_help_2")),
-                  tags$p(class = "text-muted mb-2",
-                         i18n$t("ui.dashboard.related_tool_governance_help_3")),
-                  tags$p(class = "text-muted mb-2",
-                         i18n$t("ui.dashboard.related_tool_governance_help_4"))
+                         i18n$t("ui.dashboard.related_tool_governance_help"))
                 )
               )
             )
