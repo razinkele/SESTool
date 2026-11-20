@@ -1432,6 +1432,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                  paste0(i18n$t("modules.isa.ai_assistant.country_selection"), count_text)),
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
                 i18n$t("modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed")),
+              companion_tool_hint("governance", i18n),
               div(style = "margin-top: 5px;", select_all_btn, clear_all_btn),
               if (length(eu_buttons) > 0) {
                 tagList(

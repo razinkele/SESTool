@@ -512,3 +512,22 @@ provenance_badge <- function(provenance, i18n) {
   tags$span(class = "badge bg-warning text-dark ms-1",
             i18n$t(paste0("modules.wp5_mechanisms.provenance.", provenance)))
 }
+
+#' One-line pointer to a companion tool of the Marine SABRES DSS (issue #162),
+#' shown where the user needs it: a short hint and a link that opens the tool
+#' in a new tab. A plain link only: nothing here contacts the other service.
+#' @param tool "da_viewer" | "governance" (a name in DSS_COMPANION_TOOLS)
+#' @param i18n Translator
+companion_tool_hint <- function(tool, i18n) {
+  info <- DSS_COMPANION_TOOLS[[tool]]
+  if (is.null(info)) return(NULL)
+  # i18n-ref: ui.dashboard.related_tool_da_viewer_hint
+  # i18n-ref: ui.dashboard.related_tool_governance_hint
+  tags$p(
+    class = "text-muted small companion-tool-hint mb-2",
+    icon(info$icon), " ",
+    i18n$t(paste0("ui.dashboard.related_tool_", tool, "_hint")), " ",
+    tags$a(href = info$url, target = "_blank", rel = "noopener noreferrer",
+           i18n$t("ui.dashboard.related_tools_open"), " ", icon("external-link-alt"))
+  )
+}

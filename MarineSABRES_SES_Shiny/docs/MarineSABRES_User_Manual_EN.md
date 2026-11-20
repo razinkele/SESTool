@@ -1930,6 +1930,22 @@ For technical issues not resolved by troubleshooting:
 
 \newpage
 
+# Companion Tools
+
+The SES Toolbox is one of four tools in the Marine SABRES decision-support package. Two of the others can be opened from the Dashboard ("Related Marine SABRES tools"), from the About box and from the screens where they help: the DA Viewer next to the demonstration-area selector in PIMS and in the Getting Started recommendations, and the HG&OG tool in the Governance context (D5.4) tab of Response Measures and in the country step of the AI assistant. Each opens in a new tab; your project stays open in the Toolbox.
+
+## DA Viewer
+
+The [DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} shows maps of seabed habitats and human activities (EMODnet) for the three Demonstration Areas. Use it before or while you build your model, to see which habitats, activities and pressures occur in your area. Coverage differs between areas and is more limited for Icelandic, Greenlandic and Faroese waters, so check national sources as well.
+
+## HG&OG Tool
+
+The [HG&OG tool](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (Horrendograms & Organigrams), developed by LifeWatch ERIC, is a knowledge graph that connects legislation, policies, executive agencies and sectors. Use it when you define Responses and Measures, to find which legal instruments apply and which authorities must be involved. You can filter by Location, Umbrella, Executive Agency, Sector, Policy and Legislation, and limit the graph to 1–3 steps from any node.
+
+It complements two parts of the Toolbox: the country governance suggestions in the AI assistant (which governance elements belong in your model) and the Governance context (D5.4) tab in Response Measures (what helps or hinders implementation in your area).
+
+\newpage
+
 # Glossary
 
 **Activity (A)**: Human actions that generate pressures on marine systems (e.g., fishing, shipping, tourism)

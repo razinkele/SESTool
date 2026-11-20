@@ -75,6 +75,20 @@ Gir sentralitets- og konnektivitetsstatistikk.
 
 Eksporter dine funn som HTML-, PDF-, Word- eller PowerPoint-rapporter.
 
+# Tilknyttede verktøy
+
+SES Toolbox er ett av fire verktøy i Marine SABRES-pakken for beslutningsstøtte. To av de andre kan åpnes fra dashbordet («Beslektede Marine SABRES-verktøy»), fra Om-vinduet og fra skjermbildene der de er nyttige. Hvert av dem åpnes i en ny fane; prosjektet ditt forblir åpent i Toolbox.
+
+## DA Viewer
+
+[DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} viser kart over havbunnshabitater og menneskelig aktivitet (EMODnet) for de tre demonstrasjonsområdene. Bruk det før eller mens du bygger modellen, for å se hvilke habitater, aktiviteter og påvirkninger som finnes i området ditt. Dekningen varierer mellom områdene og er mer begrenset for islandske, grønlandske og færøyske farvann, så sjekk også nasjonale kilder.
+
+## HG&OG-verktøyet
+
+[HG&OG-verktøyet](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (horrendogrammer og organigrammer), utviklet av LifeWatch ERIC, er en kunnskapsgraf som knytter sammen lovverk, politikk, utøvende etater og sektorer. Bruk det når du definerer responser og tiltak, for å finne ut hvilke rettslige virkemidler som gjelder og hvilke myndigheter som må involveres. Du kan filtrere etter Location, Umbrella, Executive Agency, Sector, Policy og Legislation, og begrense grafen til 1–3 steg fra en hvilken som helst node.
+
+Det utfyller to deler av Toolbox: forslagene til forvaltningselementer per land i KI-assistenten (hvilke forvaltningselementer som hører hjemme i modellen din) og fanen Styringskontekst (D5.4) under Responstiltak (hva som fremmer eller hindrer gjennomføring i området ditt).
+
 # Ordliste
 
 - **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)

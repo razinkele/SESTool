@@ -1557,6 +1557,22 @@ tinytex:::is_tinytex()  # Devrait retourner TRUE
 
 \newpage
 
+# Outils complémentaires
+
+La SES Toolbox est l'un des quatre outils du dispositif d'aide à la décision de Marine SABRES. Deux des autres s'ouvrent depuis le Tableau de bord (« Outils Marine SABRES associés »), depuis la fenêtre « À propos » et depuis les écrans où ils sont utiles : le DA Viewer à côté du sélecteur de zone de démonstration dans PIMS et dans les recommandations de démarrage, et l'outil HG&OG dans l'onglet Contexte de gouvernance (D5.4) des Mesures de réponse et à l'étape du choix des pays de l'assistant IA. Chacun s'ouvre dans un nouvel onglet ; votre projet reste ouvert dans la Toolbox.
+
+## DA Viewer
+
+Le [DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} présente des cartes des habitats des fonds marins et des activités humaines (EMODnet) pour les trois zones de démonstration. Utilisez-le avant ou pendant la construction de votre modèle, pour voir quels habitats, activités et pressions sont présents dans votre zone. La couverture varie selon les zones et elle est plus limitée pour les eaux islandaises, groenlandaises et féroïennes ; consultez donc aussi les sources nationales.
+
+## Outil HG&OG
+
+L'[outil HG&OG](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (horrendogrammes et organigrammes), développé par LifeWatch ERIC, est un graphe de connaissances qui relie la législation, les politiques, les agences exécutives et les secteurs. Utilisez-le lorsque vous définissez les Réponses et les Mesures, pour savoir quels instruments juridiques s'appliquent et quelles autorités doivent être associées. Vous pouvez filtrer par Location, Umbrella, Executive Agency, Sector, Policy et Legislation, et limiter le graphe à 1 à 3 sauts depuis n'importe quel nœud.
+
+Il complète deux parties de la Toolbox : les suggestions de gouvernance par pays de l'assistant IA (quels éléments de gouvernance ont leur place dans votre modèle) et l'onglet Contexte de gouvernance (D5.4) des Mesures de réponse (ce qui facilite ou freine la mise en œuvre dans votre zone).
+
+\newpage
+
 # Glossaire
 
 **Activité (A)**: Actions humaines qui génèrent des pressions sur les systèmes marins (ex: pêche, navigation, tourisme)

@@ -659,6 +659,171 @@
       "it": "Errore",
       "no": "Feil",
       "el": "Σφάλμα"
+    },
+    "ui.dashboard.related_tools_title": {
+      "en": "Related Marine SABRES tools",
+      "es": "Herramientas relacionadas de Marine SABRES",
+      "fr": "Outils Marine SABRES associés",
+      "de": "Verwandte Marine-SABRES-Werkzeuge",
+      "lt": "Susiję „Marine SABRES“ įrankiai",
+      "pt": "Ferramentas Marine SABRES relacionadas",
+      "it": "Strumenti Marine SABRES correlati",
+      "no": "Beslektede Marine SABRES-verktøy",
+      "el": "Σχετικά εργαλεία του Marine SABRES"
+    },
+    "ui.dashboard.related_tools_intro": {
+      "en": "These tools complement the SES Toolbox. They open in a new tab; your project stays open here.",
+      "es": "Estas herramientas complementan la SES Toolbox. Se abren en una pestaña nueva; su proyecto permanece abierto aquí.",
+      "fr": "Ces outils complètent la SES Toolbox. Ils s'ouvrent dans un nouvel onglet ; votre projet reste ouvert ici.",
+      "de": "Diese Werkzeuge ergänzen die SES Toolbox. Sie öffnen sich in einem neuen Tab; Ihr Projekt bleibt hier geöffnet.",
+      "lt": "Šie įrankiai papildo „SES Toolbox“. Jie atsidaro naujame skirtuke; jūsų projektas lieka atidarytas čia.",
+      "pt": "Estas ferramentas complementam a SES Toolbox. Abrem num novo separador; o seu projeto permanece aberto aqui.",
+      "it": "Questi strumenti completano la SES Toolbox. Si aprono in una nuova scheda; il progetto resta aperto qui.",
+      "no": "Disse verktøyene utfyller SES Toolbox. De åpnes i en ny fane; prosjektet ditt forblir åpent her.",
+      "el": "Τα εργαλεία αυτά συμπληρώνουν το SES Toolbox. Ανοίγουν σε νέα καρτέλα· το έργο σας παραμένει ανοιχτό εδώ."
+    },
+    "ui.dashboard.related_tools_open": {
+      "en": "Open in a new tab",
+      "es": "Abrir en una pestaña nueva",
+      "fr": "Ouvrir dans un nouvel onglet",
+      "de": "In neuem Tab öffnen",
+      "lt": "Atidaryti naujame skirtuke",
+      "pt": "Abrir num novo separador",
+      "it": "Apri in una nuova scheda",
+      "no": "Åpne i ny fane",
+      "el": "Άνοιγμα σε νέα καρτέλα"
+    },
+    "ui.dashboard.related_tools_help_label": {
+      "en": "When to use it",
+      "es": "Cuándo usarla",
+      "fr": "Quand l'utiliser",
+      "de": "Wann es nützlich ist",
+      "lt": "Kada naudoti",
+      "pt": "Quando utilizar",
+      "it": "Quando usarlo",
+      "no": "Når du bør bruke det",
+      "el": "Πότε να το χρησιμοποιήσετε"
+    },
+    "ui.dashboard.related_tool_da_viewer_name": {
+      "en": "Demonstration Area Viewer (maps)",
+      "es": "Visor de las Áreas de Demostración (mapas)",
+      "fr": "Visualiseur des zones de démonstration (cartes)",
+      "de": "Viewer der Demonstrationsgebiete (Karten)",
+      "lt": "Demonstracinių teritorijų žemėlapių žiūryklė",
+      "pt": "Visualizador das Áreas de Demonstração (mapas)",
+      "it": "Visualizzatore delle Aree Dimostrative (mappe)",
+      "no": "Kartvisning for demonstrasjonsområdene",
+      "el": "Προβολή χαρτών των Περιοχών Επίδειξης"
+    },
+    "ui.dashboard.related_tool_da_viewer_desc": {
+      "en": "Maps of seabed habitats and human activities (EMODnet) for the three Demonstration Areas.",
+      "es": "Mapas de hábitats del fondo marino y de actividades humanas (EMODnet) para las tres Áreas de Demostración.",
+      "fr": "Cartes des habitats des fonds marins et des activités humaines (EMODnet) pour les trois zones de démonstration.",
+      "de": "Karten der Meeresbodenhabitate und der menschlichen Aktivitäten (EMODnet) für die drei Demonstrationsgebiete.",
+      "lt": "Jūros dugno buveinių ir žmogaus veiklos žemėlapiai (EMODnet) trims demonstracinėms teritorijoms.",
+      "pt": "Mapas dos habitats do fundo marinho e das atividades humanas (EMODnet) para as três Áreas de Demonstração.",
+      "it": "Mappe degli habitat dei fondali marini e delle attività umane (EMODnet) per le tre Aree Dimostrative.",
+      "no": "Kart over havbunnshabitater og menneskelige aktiviteter (EMODnet) for de tre demonstrasjonsområdene.",
+      "el": "Χάρτες των ενδιαιτημάτων του θαλάσσιου πυθμένα και των ανθρώπινων δραστηριοτήτων (EMODnet) για τις τρεις Περιοχές Επίδειξης."
+    },
+    "ui.dashboard.related_tool_da_viewer_help": {
+      "en": "Use it before or while you build your model, to see which habitats, activities and pressures occur in your area. The layers come live from EMODnet: coverage differs between areas and is more limited for Icelandic, Greenlandic and Faroese waters, so check national sources as well.",
+      "es": "Úsela antes de construir su modelo o mientras lo construye, para ver qué hábitats, actividades y presiones se dan en su zona. Las capas proceden en directo de EMODnet: la cobertura varía según la zona y es más limitada en aguas de Islandia, Groenlandia y las Islas Feroe, por lo que conviene consultar también fuentes nacionales.",
+      "fr": "Utilisez-le avant ou pendant la construction de votre modèle, pour voir quels habitats, activités et pressions sont présents dans votre zone. Les couches proviennent en direct d'EMODnet : la couverture varie selon les zones et est plus limitée pour les eaux islandaises, groenlandaises et féroïennes ; consultez donc aussi les sources nationales.",
+      "de": "Nutzen Sie ihn vor oder während der Erstellung Ihres Modells, um zu sehen, welche Habitate, Aktivitäten und Belastungen in Ihrem Gebiet vorkommen. Die Ebenen kommen direkt von EMODnet: Die Abdeckung unterscheidet sich je nach Gebiet und ist für isländische, grönländische und färöische Gewässer geringer; prüfen Sie daher auch nationale Quellen.",
+      "lt": "Naudokite prieš kurdami modelį arba jį kurdami, kad pamatytumėte, kokios buveinės, veiklos ir poveikiai būdingi jūsų teritorijai. Sluoksniai tiesiogiai gaunami iš EMODnet: aprėptis skirtingose teritorijose skiriasi ir yra ribotesnė Islandijos, Grenlandijos ir Farerų salų vandenyse, todėl patikrinkite ir nacionalinius šaltinius.",
+      "pt": "Utilize-o antes de construir o seu modelo ou durante a construção, para ver que habitats, atividades e pressões ocorrem na sua área. As camadas vêm diretamente do EMODnet: a cobertura varia entre áreas e é mais limitada nas águas da Islândia, da Gronelândia e das Ilhas Faroé, pelo que deve consultar também fontes nacionais.",
+      "it": "Usatelo prima o durante la costruzione del modello, per vedere quali habitat, attività e pressioni sono presenti nella vostra area. I livelli arrivano in tempo reale da EMODnet: la copertura varia da un'area all'altra ed è più limitata per le acque islandesi, groenlandesi e faroesi; consultate quindi anche le fonti nazionali.",
+      "no": "Bruk det før eller mens du bygger modellen, for å se hvilke habitater, aktiviteter og påvirkninger som finnes i området ditt. Kartlagene hentes direkte fra EMODnet: dekningen varierer mellom områdene og er mer begrenset for islandske, grønlandske og færøyske farvann, så sjekk også nasjonale kilder.",
+      "el": "Χρησιμοποιήστε το πριν ή κατά τη δημιουργία του μοντέλου σας, για να δείτε ποια ενδιαιτήματα, δραστηριότητες και πιέσεις υπάρχουν στην περιοχή σας. Τα επίπεδα προέρχονται απευθείας από το EMODnet: η κάλυψη διαφέρει ανά περιοχή και είναι πιο περιορισμένη για τα ύδατα της Ισλανδίας, της Γροιλανδίας και των Νήσων Φερόε· συμβουλευτείτε επομένως και εθνικές πηγές."
+    },
+    "ui.dashboard.related_tool_governance_name": {
+      "en": "HG&OG tool",
+      "es": "Herramienta HG&OG",
+      "fr": "Outil HG&OG",
+      "de": "HG&OG-Werkzeug",
+      "lt": "HG&OG įrankis",
+      "pt": "Ferramenta HG&OG",
+      "it": "Strumento HG&OG",
+      "no": "HG&OG-verktøyet",
+      "el": "Εργαλείο HG&OG"
+    },
+    "ui.dashboard.related_tool_governance_desc": {
+      "en": "The HG&OG Tool (Horrendograms & Organigrams) is an advanced interactive knowledge graph platform developed by LifeWatch ERIC in 2025. Its main goal is to connect European legislation, organizations, and MARBEFES BBTs (Broad Biogeographical Typologies) within a unified, dynamic and visual system.",
+      "es": "La herramienta HG&OG (horrendogramas y organigramas) es una plataforma avanzada e interactiva de grafos de conocimiento desarrollada por LifeWatch ERIC en 2025. Su objetivo principal es conectar la legislación europea, las organizaciones y las BBT de MARBEFES (tipologías biogeográficas amplias, Broad Biogeographical Typologies) en un sistema unificado, dinámico y visual.",
+      "fr": "L'outil HG&OG (horrendogrammes et organigrammes) est une plateforme avancée et interactive de graphes de connaissances développée par LifeWatch ERIC en 2025. Son objectif principal est de relier la législation européenne, les organisations et les BBT de MARBEFES (typologies biogéographiques larges, Broad Biogeographical Typologies) au sein d'un système unifié, dynamique et visuel.",
+      "de": "Das HG&OG-Werkzeug (Horrendogramme und Organigramme) ist eine fortschrittliche, interaktive Wissensgraph-Plattform, die LifeWatch ERIC 2025 entwickelt hat. Ihr Hauptziel ist es, europäische Rechtsvorschriften, Organisationen und die MARBEFES-BBTs (Broad Biogeographical Typologies, großräumige biogeografische Typologien) in einem einheitlichen, dynamischen und visuellen System zu verknüpfen.",
+      "lt": "HG&OG įrankis (horendogramos ir organigramos) – pažangi interaktyvi žinių grafų platforma, kurią 2025 m. sukūrė „LifeWatch ERIC“. Pagrindinis jos tikslas – vienoje vieningoje, dinamiškoje ir vaizdinėje sistemoje susieti Europos teisės aktus, organizacijas ir MARBEFES BBT (plačiąsias biogeografines tipologijas, angl. Broad Biogeographical Typologies).",
+      "pt": "A ferramenta HG&OG (horrendogramas e organigramas) é uma plataforma avançada e interativa de grafos de conhecimento desenvolvida pelo LifeWatch ERIC em 2025. O seu principal objetivo é ligar a legislação europeia, as organizações e as BBT do MARBEFES (tipologias biogeográficas amplas, Broad Biogeographical Typologies) num sistema unificado, dinâmico e visual.",
+      "it": "Lo strumento HG&OG (horrendogrammi e organigrammi) è una piattaforma avanzata e interattiva di grafi di conoscenza sviluppata da LifeWatch ERIC nel 2025. Il suo obiettivo principale è collegare la legislazione europea, le organizzazioni e le BBT di MARBEFES (tipologie biogeografiche ampie, Broad Biogeographical Typologies) in un sistema unificato, dinamico e visivo.",
+      "no": "HG&OG-verktøyet (horrendogrammer og organigrammer) er en avansert, interaktiv kunnskapsgrafplattform utviklet av LifeWatch ERIC i 2025. Hovedmålet er å knytte sammen europeisk lovverk, organisasjoner og MARBEFES-BBT-er (Broad Biogeographical Typologies, brede biogeografiske typologier) i ett samlet, dynamisk og visuelt system.",
+      "el": "Το εργαλείο HG&OG (horrendograms και οργανογράμματα) είναι μια προηγμένη διαδραστική πλατφόρμα γράφων γνώσης που ανέπτυξε το LifeWatch ERIC το 2025. Κύριος στόχος του είναι να συνδέσει την ευρωπαϊκή νομοθεσία, τους οργανισμούς και τις BBT του MARBEFES (ευρείες βιογεωγραφικές τυπολογίες, Broad Biogeographical Typologies) σε ένα ενιαίο, δυναμικό και οπτικό σύστημα."
+    },
+    "ui.dashboard.related_tool_governance_help": {
+      "en": "The tool combines the structural logic of organigrams (institutional hierarchies and relationships among agencies, departments, and ministries) with the relational complexity of horrendograms (multilayered conceptual maps). This dual representation allows users to explore how legislation, policies, executive agencies, and sectors interconnect across spatial (location-based) and administrative (umbrella and policy-based) layers.",
+      "es": "La herramienta combina la lógica estructural de los organigramas (jerarquías institucionales y relaciones entre agencias, departamentos y ministerios) con la complejidad relacional de los horrendogramas (mapas conceptuales multicapa). Esta doble representación permite explorar cómo se interconectan la legislación, las políticas, las agencias ejecutivas y los sectores a través de capas espaciales (basadas en la ubicación) y administrativas (basadas en organismos paraguas y en políticas).",
+      "fr": "L'outil combine la logique structurelle des organigrammes (hiérarchies institutionnelles et relations entre agences, services et ministères) avec la complexité relationnelle des horrendogrammes (cartes conceptuelles à plusieurs niveaux). Cette double représentation permet d'explorer comment la législation, les politiques, les agences exécutives et les secteurs sont reliés à travers des couches spatiales (fondées sur la localisation) et administratives (fondées sur les organismes de tutelle et les politiques).",
+      "de": "Das Werkzeug verbindet die strukturelle Logik von Organigrammen (institutionelle Hierarchien und Beziehungen zwischen Behörden, Abteilungen und Ministerien) mit der relationalen Komplexität von Horrendogrammen (mehrschichtige konzeptionelle Karten). Diese doppelte Darstellung zeigt, wie Rechtsvorschriften, Politiken, ausführende Behörden und Sektoren über räumliche (ortsbezogene) und administrative (dach- und politikbezogene) Ebenen miteinander verbunden sind.",
+      "lt": "Įrankis sujungia struktūrinę organigramų logiką (institucijų hierarchijas ir agentūrų, departamentų bei ministerijų tarpusavio ryšius) su horendogramoms (daugiasluoksniams konceptualiems žemėlapiams) būdingu ryšių sudėtingumu. Toks dvejopas vaizdavimas leidžia tyrinėti, kaip teisės aktai, politikos, vykdomosios agentūros ir sektoriai susiję erdviniuose (pagal vietą) ir administraciniuose (pagal skėtines organizacijas ir politikas) sluoksniuose.",
+      "pt": "A ferramenta combina a lógica estrutural dos organigramas (hierarquias institucionais e relações entre agências, departamentos e ministérios) com a complexidade relacional dos horrendogramas (mapas concetuais multicamada). Esta dupla representação permite explorar a forma como a legislação, as políticas, as agências executivas e os setores se interligam através de camadas espaciais (baseadas na localização) e administrativas (baseadas em entidades de enquadramento e em políticas).",
+      "it": "Lo strumento combina la logica strutturale degli organigrammi (gerarchie istituzionali e relazioni tra agenzie, dipartimenti e ministeri) con la complessità relazionale degli horrendogrammi (mappe concettuali multilivello). Questa doppia rappresentazione permette di esplorare come legislazione, politiche, agenzie esecutive e settori sono collegati tra loro attraverso livelli spaziali (basati sulla localizzazione) e amministrativi (basati sugli enti di riferimento e sulle politiche).",
+      "no": "Verktøyet kombinerer den strukturelle logikken i organigrammer (institusjonelle hierarkier og forbindelser mellom etater, avdelinger og departementer) med den relasjonelle kompleksiteten i horrendogrammer (konseptkart i flere lag). Denne doble fremstillingen gjør det mulig å utforske hvordan lovverk, politikk, utøvende etater og sektorer henger sammen på tvers av romlige (stedsbaserte) og administrative (paraply- og politikkbaserte) lag.",
+      "el": "Το εργαλείο συνδυάζει τη δομική λογική των οργανογραμμάτων (θεσμικές ιεραρχίες και σχέσεις μεταξύ υπηρεσιών, τμημάτων και υπουργείων) με τη σχεσιακή πολυπλοκότητα των horrendograms (πολυεπίπεδοι εννοιολογικοί χάρτες). Αυτή η διπλή αναπαράσταση επιτρέπει στους χρήστες να διερευνήσουν πώς η νομοθεσία, οι πολιτικές, οι εκτελεστικές υπηρεσίες και οι τομείς διασυνδέονται σε χωρικά (με βάση την τοποθεσία) και διοικητικά (με βάση τους φορείς-ομπρέλα και τις πολιτικές) επίπεδα."
+    },
+    "ui.dashboard.related_tool_governance_help_2": {
+      "en": "Built as a web-based visualization engine, HG&OG offers full graph navigation and interaction: users can drag and reorganize nodes, double-click to view detailed information, and filter by categories such as Location, Umbrella, Executive Agency, Sector, Policy, and Legislation. The system integrates a distance filter (1–3 hops from any node) to control the complexity of the displayed network and focus on relevant relationships.",
+      "es": "Construida como un motor de visualización web, HG&OG ofrece navegación e interacción completas con el grafo: se pueden arrastrar y reorganizar los nodos, hacer doble clic para ver información detallada y filtrar por categorías como Location, Umbrella, Executive Agency, Sector, Policy y Legislation. Un filtro de distancia (de 1 a 3 saltos desde cualquier nodo) permite controlar la complejidad de la red mostrada y centrarse en las relaciones pertinentes.",
+      "fr": "Conçu comme un moteur de visualisation web, HG&OG offre une navigation et une interaction complètes dans le graphe : on peut déplacer et réorganiser les nœuds, double-cliquer pour afficher des informations détaillées et filtrer par catégories telles que Location, Umbrella, Executive Agency, Sector, Policy et Legislation. Un filtre de distance (1 à 3 sauts depuis n'importe quel nœud) permet de maîtriser la complexité du réseau affiché et de se concentrer sur les relations pertinentes.",
+      "de": "Als webbasierte Visualisierungsumgebung bietet HG&OG vollständige Navigation und Interaktion im Graphen: Knoten lassen sich verschieben und neu anordnen, ein Doppelklick zeigt detaillierte Informationen, und es kann nach Kategorien wie Location, Umbrella, Executive Agency, Sector, Policy und Legislation gefiltert werden. Ein Distanzfilter (1–3 Schritte von einem beliebigen Knoten) begrenzt die Komplexität des angezeigten Netzes und lenkt den Blick auf die relevanten Beziehungen.",
+      "lt": "HG&OG sukurtas kaip internetinis vizualizavimo variklis, leidžiantis visapusiškai naršyti grafą ir su juo sąveikauti: mazgus galima vilkti ir pertvarkyti, dukart spustelėjus matyti išsamią informaciją, o duomenis filtruoti pagal kategorijas, tokias kaip Location, Umbrella, Executive Agency, Sector, Policy ir Legislation. Atstumo filtras (1–3 žingsniai nuo bet kurio mazgo) leidžia valdyti rodomo tinklo sudėtingumą ir sutelkti dėmesį į svarbius ryšius.",
+      "pt": "Construída como um motor de visualização web, a HG&OG oferece navegação e interação completas com o grafo: é possível arrastar e reorganizar os nós, fazer duplo clique para ver informação detalhada e filtrar por categorias como Location, Umbrella, Executive Agency, Sector, Policy e Legislation. Um filtro de distância (1 a 3 saltos a partir de qualquer nó) permite controlar a complexidade da rede apresentada e concentrar a atenção nas relações relevantes.",
+      "it": "Realizzato come motore di visualizzazione web, HG&OG offre navigazione e interazione complete con il grafo: è possibile trascinare e riorganizzare i nodi, fare doppio clic per visualizzare informazioni dettagliate e filtrare per categorie come Location, Umbrella, Executive Agency, Sector, Policy e Legislation. Un filtro di distanza (da 1 a 3 passaggi da qualsiasi nodo) consente di controllare la complessità della rete visualizzata e di concentrarsi sulle relazioni rilevanti.",
+      "no": "HG&OG er bygget som en nettbasert visualiseringsmotor og gir full navigering og samhandling i grafen: du kan dra og omorganisere noder, dobbeltklikke for å se detaljert informasjon og filtrere etter kategorier som Location, Umbrella, Executive Agency, Sector, Policy og Legislation. Et avstandsfilter (1–3 steg fra en hvilken som helst node) styrer hvor komplekst nettverket som vises er, slik at du kan konsentrere deg om de relevante forbindelsene.",
+      "el": "Σχεδιασμένο ως διαδικτυακή μηχανή οπτικοποίησης, το HG&OG προσφέρει πλήρη πλοήγηση και αλληλεπίδραση με τον γράφο: οι χρήστες μπορούν να σύρουν και να αναδιατάξουν κόμβους, να κάνουν διπλό κλικ για λεπτομερείς πληροφορίες και να φιλτράρουν ανά κατηγορίες όπως Location, Umbrella, Executive Agency, Sector, Policy και Legislation. Ένα φίλτρο απόστασης (1–3 βήματα από οποιονδήποτε κόμβο) ελέγχει την πολυπλοκότητα του δικτύου που εμφανίζεται και εστιάζει στις σχετικές συνδέσεις."
+    },
+    "ui.dashboard.related_tool_governance_help_3": {
+      "en": "The platform functions similarly to Obsidian’s graph view, offering a semantic navigation experience through interconnected data layers. This makes it especially useful for exploring policy relationships, institutional dependencies, and the connections between governance frameworks and MARBEFES BBTs.",
+      "es": "La plataforma funciona de forma similar a la vista de grafo de Obsidian y ofrece una navegación semántica a través de capas de datos interconectadas. Esto la hace especialmente útil para explorar relaciones entre políticas, dependencias institucionales y las conexiones entre los marcos de gobernanza y las BBT de MARBEFES.",
+      "fr": "La plateforme fonctionne de manière semblable à la vue en graphe d'Obsidian et offre une navigation sémantique à travers des couches de données interconnectées. Elle est donc particulièrement utile pour explorer les relations entre politiques, les dépendances institutionnelles et les liens entre les cadres de gouvernance et les BBT de MARBEFES.",
+      "de": "Die Plattform funktioniert ähnlich wie die Graphansicht von Obsidian und ermöglicht eine semantische Navigation durch miteinander verknüpfte Datenebenen. Damit eignet sie sich besonders, um Beziehungen zwischen Politiken, institutionelle Abhängigkeiten und die Verbindungen zwischen Governance-Rahmen und den MARBEFES-BBTs zu erkunden.",
+      "lt": "Platforma veikia panašiai kaip „Obsidian“ grafo rodinys ir leidžia semantiškai naršyti tarpusavyje susietus duomenų sluoksnius. Dėl to ji ypač naudinga tyrinėjant politikų tarpusavio ryšius, institucijų priklausomybes ir valdysenos sistemų ryšius su MARBEFES BBT.",
+      "pt": "A plataforma funciona de forma semelhante à vista de grafo do Obsidian, proporcionando uma navegação semântica através de camadas de dados interligadas. Isto torna-a especialmente útil para explorar relações entre políticas, dependências institucionais e as ligações entre os quadros de governança e as BBT do MARBEFES.",
+      "it": "La piattaforma funziona in modo simile alla vista a grafo di Obsidian e offre una navigazione semantica attraverso livelli di dati interconnessi. Ciò la rende particolarmente utile per esplorare le relazioni tra politiche, le dipendenze istituzionali e i collegamenti tra i quadri di governance e le BBT di MARBEFES.",
+      "no": "Plattformen fungerer omtrent som grafvisningen i Obsidian og gir semantisk navigering gjennom sammenkoblede datalag. Dette gjør den særlig nyttig for å utforske forbindelser mellom politikkområder, institusjonelle avhengigheter og koblingene mellom styringsrammeverk og MARBEFES-BBT-ene.",
+      "el": "Η πλατφόρμα λειτουργεί παρόμοια με την προβολή γράφου του Obsidian και προσφέρει σημασιολογική πλοήγηση μέσα από διασυνδεδεμένα επίπεδα δεδομένων. Γι' αυτό είναι ιδιαίτερα χρήσιμη για τη διερεύνηση σχέσεων μεταξύ πολιτικών, θεσμικών εξαρτήσεων και των συνδέσεων μεταξύ πλαισίων διακυβέρνησης και των BBT του MARBEFES."
+    },
+    "ui.dashboard.related_tool_governance_help_4": {
+      "en": "HG&OG is part of the LifeWatch ERIC knowledge infrastructure, supporting policy advisors, environmental researchers, and ecosystem managers in understanding how governance systems influence biodiversity-related domains. The application uses graph-based storage and visualization frameworks, integrating both manually curated and automatically extracted metadata from European institutional and legislative datasets.",
+      "es": "HG&OG forma parte de la infraestructura de conocimiento de LifeWatch ERIC y ayuda a asesores políticos, investigadores ambientales y gestores de ecosistemas a comprender cómo los sistemas de gobernanza influyen en los ámbitos relacionados con la biodiversidad. La aplicación utiliza almacenamiento y marcos de visualización basados en grafos, e integra metadatos curados manualmente y extraídos automáticamente de conjuntos de datos institucionales y legislativos europeos.",
+      "fr": "HG&OG fait partie de l'infrastructure de connaissances de LifeWatch ERIC et aide les conseillers politiques, les chercheurs en environnement et les gestionnaires d'écosystèmes à comprendre comment les systèmes de gouvernance influencent les domaines liés à la biodiversité. L'application utilise un stockage et des cadres de visualisation fondés sur les graphes, et intègre des métadonnées à la fois curées manuellement et extraites automatiquement de jeux de données institutionnels et législatifs européens.",
+      "de": "HG&OG ist Teil der Wissensinfrastruktur von LifeWatch ERIC und hilft Politikberaterinnen und -beratern, Umweltforschenden und Ökosystem-Managern zu verstehen, wie Governance-Systeme biodiversitätsbezogene Bereiche beeinflussen. Die Anwendung nutzt graphbasierte Speicher- und Visualisierungs-Frameworks und verbindet manuell kuratierte mit automatisch extrahierten Metadaten aus europäischen institutionellen und rechtlichen Datensätzen.",
+      "lt": "HG&OG yra „LifeWatch ERIC“ žinių infrastruktūros dalis, padedanti politikos patarėjams, aplinkos tyrėjams ir ekosistemų valdytojams suprasti, kaip valdysenos sistemos veikia su biologine įvairove susijusias sritis. Programa naudoja grafais grįstas duomenų saugojimo ir vizualizavimo priemones ir apjungia rankiniu būdu kuruojamus bei automatiškai išgautus metaduomenis iš Europos institucinių ir teisės aktų duomenų rinkinių.",
+      "pt": "A HG&OG faz parte da infraestrutura de conhecimento do LifeWatch ERIC e apoia conselheiros políticos, investigadores ambientais e gestores de ecossistemas na compreensão de como os sistemas de governança influenciam os domínios relacionados com a biodiversidade. A aplicação utiliza armazenamento e estruturas de visualização baseados em grafos, integrando metadados curados manualmente e extraídos automaticamente de conjuntos de dados institucionais e legislativos europeus.",
+      "it": "HG&OG fa parte dell'infrastruttura di conoscenza di LifeWatch ERIC e aiuta consulenti politici, ricercatori ambientali e gestori di ecosistemi a comprendere come i sistemi di governance influenzano gli ambiti legati alla biodiversità. L'applicazione utilizza archiviazione e framework di visualizzazione basati su grafi, integrando metadati curati manualmente ed estratti automaticamente da insiemi di dati istituzionali e legislativi europei.",
+      "no": "HG&OG er en del av kunnskapsinfrastrukturen til LifeWatch ERIC og hjelper politiske rådgivere, miljøforskere og økosystemforvaltere med å forstå hvordan styringssystemer påvirker områder knyttet til biologisk mangfold. Applikasjonen bruker grafbasert lagring og visualiseringsrammeverk og kombinerer manuelt kuraterte og automatisk uttrukne metadata fra europeiske institusjonelle og rettslige datasett.",
+      "el": "Το HG&OG αποτελεί μέρος της υποδομής γνώσης του LifeWatch ERIC και βοηθά συμβούλους πολιτικής, περιβαλλοντικούς ερευνητές και διαχειριστές οικοσυστημάτων να κατανοήσουν πώς τα συστήματα διακυβέρνησης επηρεάζουν τομείς που σχετίζονται με τη βιοποικιλότητα. Η εφαρμογή χρησιμοποιεί αποθήκευση και πλαίσια οπτικοποίησης βασισμένα σε γράφους, ενσωματώνοντας μεταδεδομένα που έχουν επιμεληθεί χειροκίνητα και μεταδεδομένα που έχουν εξαχθεί αυτόματα από ευρωπαϊκά θεσμικά και νομοθετικά σύνολα δεδομένων."
+    },
+    "ui.dashboard.related_tool_da_viewer_hint": {
+      "en": "To see maps of the seabed habitats and human activities in your area, use the DA Viewer.",
+      "es": "Para ver mapas de los hábitats del fondo marino y de las actividades humanas en su zona, utilice el DA Viewer.",
+      "fr": "Pour voir les cartes des habitats des fonds marins et des activités humaines de votre zone, utilisez le DA Viewer.",
+      "de": "Karten der Meeresbodenlebensräume und der menschlichen Aktivitäten in Ihrem Gebiet finden Sie im DA Viewer.",
+      "lt": "Jūsų teritorijos jūros dugno buveinių ir žmogaus veiklos žemėlapius rasite DA Viewer.",
+      "pt": "Para ver mapas dos habitats do fundo marinho e das atividades humanas na sua área, utilize o DA Viewer.",
+      "it": "Per vedere le mappe degli habitat dei fondali e delle attività umane nella vostra area, usate il DA Viewer.",
+      "no": "Kart over havbunnshabitater og menneskelig aktivitet i området ditt finner du i DA Viewer.",
+      "el": "Για να δείτε χάρτες των ενδιαιτημάτων του βυθού και των ανθρώπινων δραστηριοτήτων στην περιοχή σας, χρησιμοποιήστε το DA Viewer."
+    },
+    "ui.dashboard.related_tool_governance_hint": {
+      "en": "To find which legislation and which authorities apply in your area, use the HG&OG tool.",
+      "es": "Para saber qué legislación y qué autoridades se aplican en su zona, utilice la herramienta HG&OG.",
+      "fr": "Pour savoir quelle législation et quelles autorités s'appliquent dans votre zone, utilisez l'outil HG&OG.",
+      "de": "Welche Rechtsvorschriften und welche Behörden in Ihrem Gebiet gelten, zeigt das HG&OG-Werkzeug.",
+      "lt": "Kurie teisės aktai ir kurios institucijos taikomi jūsų teritorijoje, sužinosite naudodami HG&OG įrankį.",
+      "pt": "Para saber que legislação e que autoridades se aplicam na sua área, utilize a ferramenta HG&OG.",
+      "it": "Per sapere quale legislazione e quali autorità si applicano nella vostra area, usate lo strumento HG&OG.",
+      "no": "Hvilket lovverk og hvilke myndigheter som gjelder i området ditt, finner du i HG&OG-verktøyet.",
+      "el": "Για να βρείτε ποια νομοθεσία και ποιες αρχές ισχύουν στην περιοχή σας, χρησιμοποιήστε το εργαλείο HG&OG."
     }
   }
 }

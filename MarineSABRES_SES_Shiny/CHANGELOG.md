@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Dashboard: a "Related Marine SABRES tools" box links to the Demonstration Area Viewer (https://laguna.ku.lt/DA/) and to the LifeWatch ERIC HG&OG tool, the horrendograms & organigrams knowledge graph (https://marinesabres.lifewatch.eu/marine-sabres-graph/), with LifeWatch's own description of the tool. Each link opens in a new tab and has a short "When to use it" help text, in all 9 languages; the translations are first-pass and should be reviewed by native speakers. The addresses are defined once in `constants.R` (`DSS_COMPANION_TOOLS`) (issue #162).
+- The same two tools are linked where users need them: the DA Viewer next to the demonstration-area selector in PIMS project setup and in the Getting Started recommendations; the HG&OG tool in the Governance context (D5.4) tab of Response Measures and in the country step of the AI assistant. The About box lists both (issue #162).
+- Guidebook (all 9 languages) and user manual (English and French, Markdown and HTML): a "Companion tools" section describes the DA Viewer and the HG&OG tool and how the HG&OG tool relates to the Toolbox's own governance features (issue #162). The manual PDFs still need to be regenerated.
+
+### Fixed
+- README: the Marine-SABRES grant number is 101058956 (it showed 101059482).
+
 ## [1.36.3] - 2026-11-18
 
 ### Fixed

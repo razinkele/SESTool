@@ -1006,6 +1006,20 @@ WORKSHOP_MIN_VALID <- 3L                  # fewer valid tenet ratings -> no writ
 WP5_WORKSHOP_MIN_APP_VERSION <- "1.32.0"
 
 # ============================================================================
+# COMPANION TOOLS OF THE MARINE SABRES DSS (issue #162)
+# ============================================================================
+# The DSS is a package of tools (D6.1 sitemap, D6.2). The Dashboard links to
+# the two that the SES Toolbox does not contain. Addresses live here only.
+DSS_COMPANION_TOOLS <- list(
+  # Spatial information exploration tool (D6.1 R37-R41), hosted by KU
+  da_viewer = list(url = "https://laguna.ku.lt/DA/", icon = "map-marked-alt"),
+  # HG&OG tool: horrendograms & organigrams knowledge graph (D6.1 R32-R36),
+  # hosted by LifeWatch ERIC
+  governance = list(url = "https://marinesabres.lifewatch.eu/marine-sabres-graph/",
+                    icon = "landmark")
+)
+
+# ============================================================================
 # END OF CONSTANTS
 # ============================================================================
 

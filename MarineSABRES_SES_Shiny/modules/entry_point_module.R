@@ -943,6 +943,7 @@ render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i
           tags$li(strong(i18n$t("modules.entry_point.visualize_analyze"), " "), i18n$t("modules.entry_point.create_cld_networks_with_confidence_based_visual_f")),
           tags$li(strong(i18n$t("modules.entry_point.refine_communicate"), " "), i18n$t("modules.entry_point.simplify_models_and_develop_management_scenarios"))
         ),
+        companion_tool_hint("da_viewer", i18n),
         tags$div(
           class = "alert alert-info",
           style = "margin-top: 15px; margin-bottom: 0;",
