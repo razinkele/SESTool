@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.37.1] - 2026-11-20
+
+### Changed
+- User manual PDFs (English and French) regenerated, so they now include the "Companion tools" section with links to the DA Viewer and the HG&OG tool. They are printed from the HTML manuals with a browser, so their layout differs from the earlier LaTeX-built PDFs (issue #162).
+
 ## [1.37.0] - 2026-11-20
 
 ### Added

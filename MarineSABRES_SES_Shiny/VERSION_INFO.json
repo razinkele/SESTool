@@ -1,8 +1,8 @@
 {
-  "version": "1.37.0",
+  "version": "1.37.1",
   "version_name": "Evidenced polarity; links to the DA Viewer and the HG&OG governance tool (November 2026)",
   "release_date": "2026-11-20",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
@@ -100,7 +100,7 @@
     "Projects with readiness answers need app 1.31.0.",
     "Projects with workshops need app 1.32.0."
   ],
-  "previous_version": "1.36.3",
+  "previous_version": "1.37.0",
   "build_info": {
     "build_date": "2026-10-12 16:52:16.391920"
   }
