@@ -75,6 +75,20 @@ Pateikia centralumo ir jungiamumo statistikas.
 
 Eksportuokite savo rezultatus kaip HTML, PDF, Word arba PowerPoint ataskaitas.
 
+# Papildomi įrankiai
+
+SES Toolbox yra vienas iš keturių „Marine SABRES“ sprendimų paramos paketo įrankių. Du kitus galima atverti iš skydelio („Susiję „Marine SABRES“ įrankiai“), iš lango „Apie“ ir iš tų ekranų, kuriuose jie praverčia. Kiekvienas atsidaro naujame skirtuke; jūsų projektas lieka atvertas Toolbox.
+
+## DA Viewer
+
+[DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} rodo trijų demonstracinių teritorijų jūros dugno buveinių ir žmogaus veiklos žemėlapius (EMODnet). Naudokite jį prieš kurdami modelį arba jo kūrimo metu, kad pamatytumėte, kokios buveinės, veiklos ir poveikiai yra jūsų teritorijoje. Duomenų aprėptis teritorijose skiriasi ir yra ribotesnė Islandijos, Grenlandijos ir Farerų salų vandenims, todėl pasitikrinkite ir nacionalinius šaltinius.
+
+## HG&OG įrankis
+
+[HG&OG įrankis](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (horendogramos ir organigramos), sukurtas „LifeWatch ERIC“, yra žinių grafas, siejantis teisės aktus, politikas, vykdomąsias agentūras ir sektorius. Naudokite jį apibrėždami atsakus ir priemones, kad sužinotumėte, kurie teisės aktai taikomi ir kurias institucijas reikia įtraukti. Galite filtruoti pagal Location, Umbrella, Executive Agency, Sector, Policy ir Legislation bei apriboti grafą 1–3 žingsniais nuo bet kurio mazgo.
+
+Jis papildo dvi Toolbox dalis: DI asistento šalies valdysenos pasiūlymus (kurie valdysenos elementai turi būti jūsų modelyje) ir skilties „Atsakomosios priemonės“ skirtuką „Valdysenos kontekstas (D5.4)“ (kas padeda ar trukdo įgyvendinimui jūsų teritorijoje).
+
 # Žodynas
 
 - **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)

@@ -75,6 +75,20 @@ Liefert Zentralitäts- und Konnektivitätsstatistiken.
 
 Exportieren Sie Ihre Ergebnisse als HTML-, PDF-, Word- oder PowerPoint-Berichte.
 
+# Begleitwerkzeuge
+
+Die SES Toolbox ist eines von vier Werkzeugen des Marine-SABRES-Entscheidungsunterstützungspakets. Zwei der anderen lassen sich vom Dashboard („Verwandte Marine-SABRES-Werkzeuge“), aus dem Info-Fenster und aus den Ansichten öffnen, in denen sie helfen. Jedes öffnet sich in einem neuen Tab; Ihr Projekt bleibt in der Toolbox geöffnet.
+
+## DA Viewer
+
+Der [DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} zeigt Karten der Meeresbodenlebensräume und der menschlichen Aktivitäten (EMODnet) für die drei Demonstrationsgebiete. Nutzen Sie ihn vor oder während der Modellerstellung, um zu sehen, welche Lebensräume, Aktivitäten und Belastungen in Ihrem Gebiet vorkommen. Die Abdeckung ist je nach Gebiet unterschiedlich und für isländische, grönländische und färöische Gewässer begrenzter; ziehen Sie daher auch nationale Quellen heran.
+
+## HG&OG-Werkzeug
+
+Das [HG&OG-Werkzeug](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (Horrendogramme und Organigramme), entwickelt von LifeWatch ERIC, ist ein Wissensgraph, der Rechtsvorschriften, Politiken, ausführende Behörden und Sektoren verknüpft. Nutzen Sie es, wenn Sie Reaktionen und Maßnahmen festlegen, um zu sehen, welche Rechtsinstrumente gelten und welche Behörden einzubeziehen sind. Sie können nach Location, Umbrella, Executive Agency, Sector, Policy und Legislation filtern und den Graphen auf 1–3 Schritte um einen Knoten begrenzen.
+
+Es ergänzt zwei Teile der Toolbox: die länderspezifischen Governance-Vorschläge im KI-Assistenten (welche Governance-Elemente in Ihr Modell gehören) und den Tab Governance-Kontext (D5.4) bei den Reaktionsmaßnahmen (was die Umsetzung in Ihrem Gebiet fördert oder behindert).
+
 # Glossar
 
 - **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)

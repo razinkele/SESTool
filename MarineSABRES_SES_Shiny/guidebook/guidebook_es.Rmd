@@ -75,6 +75,20 @@ Proporciona estadísticas de centralidad y conectividad.
 
 Exporte sus hallazgos como informes en HTML, PDF, Word o PowerPoint.
 
+# Herramientas complementarias
+
+La SES Toolbox es una de las cuatro herramientas del paquete de apoyo a la decisión de Marine SABRES. Dos de las otras se pueden abrir desde el Panel («Herramientas relacionadas de Marine SABRES»), desde el cuadro «Acerca de» y desde las pantallas en las que resultan útiles. Cada una se abre en una pestaña nueva; su proyecto sigue abierto en la Toolbox.
+
+## DA Viewer
+
+El [DA Viewer](https://laguna.ku.lt/DA/){target="_blank" rel="noopener noreferrer"} muestra mapas de los hábitats del fondo marino y de las actividades humanas (EMODnet) de las tres Áreas de Demostración. Utilícelo antes o durante la construcción de su modelo, para ver qué hábitats, actividades y presiones existen en su zona. La cobertura varía entre áreas y es más limitada en las aguas de Islandia, Groenlandia y las Islas Feroe, por lo que conviene consultar también fuentes nacionales.
+
+## Herramienta HG&OG
+
+La [herramienta HG&OG](https://marinesabres.lifewatch.eu/marine-sabres-graph/){target="_blank" rel="noopener noreferrer"} (horrendogramas y organigramas), desarrollada por LifeWatch ERIC, es un grafo de conocimiento que conecta legislación, políticas, agencias ejecutivas y sectores. Utilícela al definir Respuestas y Medidas, para saber qué instrumentos jurídicos se aplican y qué autoridades deben participar. Puede filtrar por Location, Umbrella, Executive Agency, Sector, Policy y Legislation, y limitar el grafo a 1–3 pasos desde cualquier nodo.
+
+Complementa dos partes de la Toolbox: las sugerencias de gobernanza por país del asistente de IA (qué elementos de gobernanza corresponden a su modelo) y la pestaña Contexto de gobernanza (D5.4) de Medidas de Respuesta (qué facilita o dificulta la aplicación en su zona).
+
 # Glosario
 
 - **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)

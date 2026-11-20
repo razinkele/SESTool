@@ -476,6 +476,59 @@ bs4DashPage(
           )
         ),
 
+        # Companion tools of the Marine SABRES DSS (issue #162): the DA Viewer
+        # and the LifeWatch governance tool, each with a short help text.
+        # Plain links only: nothing here contacts the other services.
+        fluidRow(
+          bs4Card(
+            id = "related_tools_card",
+            title = tagList(icon("external-link-alt"), " ", i18n$t("ui.dashboard.related_tools_title")),
+            status = "info",
+            width = UI_BOX_WIDTH_FULL,
+            collapsible = TRUE,
+            collapsed = FALSE,
+            tags$p(i18n$t("ui.dashboard.related_tools_intro")),
+            fluidRow(
+              column(
+                6,
+                tags$h5(icon(DSS_COMPANION_TOOLS$da_viewer$icon), " ",
+                        i18n$t("ui.dashboard.related_tool_da_viewer_name")),
+                tags$p(i18n$t("ui.dashboard.related_tool_da_viewer_desc")),
+                tags$a(
+                  id = "related_tool_da_viewer_link",
+                  class = "btn btn-outline-primary btn-sm mb-2",
+                  href = DSS_COMPANION_TOOLS$da_viewer$url,
+                  target = "_blank", rel = "noopener noreferrer",
+                  icon("external-link-alt"), " ", i18n$t("ui.dashboard.related_tools_open")
+                ),
+                tags$details(
+                  tags$summary(i18n$t("ui.dashboard.related_tools_help_label")),
+                  tags$p(class = "text-muted mb-2",
+                         i18n$t("ui.dashboard.related_tool_da_viewer_help"))
+                )
+              ),
+              column(
+                6,
+                tags$h5(icon(DSS_COMPANION_TOOLS$governance$icon), " ",
+                        i18n$t("ui.dashboard.related_tool_governance_name")),
+                tags$p(i18n$t("ui.dashboard.related_tool_governance_desc")),
+                tags$a(
+                  id = "related_tool_governance_link",
+                  class = "btn btn-outline-primary btn-sm mb-2",
+                  href = DSS_COMPANION_TOOLS$governance$url,
+                  target = "_blank", rel = "noopener noreferrer",
+                  icon("external-link-alt"), " ", i18n$t("ui.dashboard.related_tools_open")
+                ),
+                tags$details(
+                  tags$summary(i18n$t("ui.dashboard.related_tools_help_label")),
+                  tags$p(class = "text-muted mb-2",
+                         i18n$t("ui.dashboard.related_tool_governance_help"))
+                )
+              )
+            )
+          )
+        ),
+
         # Glossary of the abbreviations used across the tool (feedback
         # 2026-11-11 "Legend, terminology": unclear for beginners)
         fluidRow(

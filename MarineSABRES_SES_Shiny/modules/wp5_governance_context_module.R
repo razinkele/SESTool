@@ -52,6 +52,7 @@ wp5_governance_context_ui <- function(id, i18n) {
   tagList(
     h4(tr("context_title")),
     tags$small(class = "text-muted", tr("context_note")),
+    companion_tool_hint("governance", i18n),
     hr(),
     fluidRow(
       column(3, selectInput(ns("da"), tr("filter_da"),

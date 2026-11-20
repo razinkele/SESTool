@@ -659,6 +659,138 @@
       "it": "Errore",
       "no": "Feil",
       "el": "Σφάλμα"
+    },
+    "ui.dashboard.related_tools_title": {
+      "en": "Related Marine SABRES tools",
+      "es": "Herramientas relacionadas de Marine SABRES",
+      "fr": "Outils Marine SABRES associés",
+      "de": "Verwandte Marine-SABRES-Werkzeuge",
+      "lt": "Susiję „Marine SABRES“ įrankiai",
+      "pt": "Ferramentas Marine SABRES relacionadas",
+      "it": "Strumenti Marine SABRES correlati",
+      "no": "Beslektede Marine SABRES-verktøy",
+      "el": "Σχετικά εργαλεία του Marine SABRES"
+    },
+    "ui.dashboard.related_tools_intro": {
+      "en": "These tools complement the SES Toolbox. They open in a new tab; your project stays open here.",
+      "es": "Estas herramientas complementan la SES Toolbox. Se abren en una pestaña nueva; su proyecto permanece abierto aquí.",
+      "fr": "Ces outils complètent la SES Toolbox. Ils s'ouvrent dans un nouvel onglet ; votre projet reste ouvert ici.",
+      "de": "Diese Werkzeuge ergänzen die SES Toolbox. Sie öffnen sich in einem neuen Tab; Ihr Projekt bleibt hier geöffnet.",
+      "lt": "Šie įrankiai papildo „SES Toolbox“. Jie atsidaro naujame skirtuke; jūsų projektas lieka atidarytas čia.",
+      "pt": "Estas ferramentas complementam a SES Toolbox. Abrem num novo separador; o seu projeto permanece aberto aqui.",
+      "it": "Questi strumenti completano la SES Toolbox. Si aprono in una nuova scheda; il progetto resta aperto qui.",
+      "no": "Disse verktøyene utfyller SES Toolbox. De åpnes i en ny fane; prosjektet ditt forblir åpent her.",
+      "el": "Τα εργαλεία αυτά συμπληρώνουν το SES Toolbox. Ανοίγουν σε νέα καρτέλα· το έργο σας παραμένει ανοιχτό εδώ."
+    },
+    "ui.dashboard.related_tools_open": {
+      "en": "Open in a new tab",
+      "es": "Abrir en una pestaña nueva",
+      "fr": "Ouvrir dans un nouvel onglet",
+      "de": "In neuem Tab öffnen",
+      "lt": "Atidaryti naujame skirtuke",
+      "pt": "Abrir num novo separador",
+      "it": "Apri in una nuova scheda",
+      "no": "Åpne i ny fane",
+      "el": "Άνοιγμα σε νέα καρτέλα"
+    },
+    "ui.dashboard.related_tools_help_label": {
+      "en": "When to use it",
+      "es": "Cuándo usarla",
+      "fr": "Quand l'utiliser",
+      "de": "Wann es nützlich ist",
+      "lt": "Kada naudoti",
+      "pt": "Quando utilizar",
+      "it": "Quando usarlo",
+      "no": "Når du bør bruke det",
+      "el": "Πότε να το χρησιμοποιήσετε"
+    },
+    "ui.dashboard.related_tool_da_viewer_name": {
+      "en": "Demonstration Area Viewer (DA Viewer)",
+      "es": "Visor de las Áreas de Demostración (DA Viewer)",
+      "fr": "Visualiseur des zones de démonstration (DA Viewer)",
+      "de": "Viewer der Demonstrationsgebiete (DA Viewer)",
+      "lt": "Demonstracinių teritorijų žiūryklė (DA Viewer)",
+      "pt": "Visualizador das Áreas de Demonstração (DA Viewer)",
+      "it": "Visualizzatore delle Aree Dimostrative (DA Viewer)",
+      "no": "Visning av demonstrasjonsområdene (DA Viewer)",
+      "el": "Προβολή των Περιοχών Επίδειξης (DA Viewer)"
+    },
+    "ui.dashboard.related_tool_da_viewer_desc": {
+      "en": "Maps of seabed habitats and human activities (EMODnet) for the three Demonstration Areas.",
+      "es": "Mapas de hábitats del fondo marino y de actividades humanas (EMODnet) para las tres Áreas de Demostración.",
+      "fr": "Cartes des habitats des fonds marins et des activités humaines (EMODnet) pour les trois zones de démonstration.",
+      "de": "Karten der Meeresbodenhabitate und der menschlichen Aktivitäten (EMODnet) für die drei Demonstrationsgebiete.",
+      "lt": "Jūros dugno buveinių ir žmogaus veiklos žemėlapiai (EMODnet) trims demonstracinėms teritorijoms.",
+      "pt": "Mapas dos habitats do fundo marinho e das atividades humanas (EMODnet) para as três Áreas de Demonstração.",
+      "it": "Mappe degli habitat dei fondali marini e delle attività umane (EMODnet) per le tre Aree Dimostrative.",
+      "no": "Kart over havbunnshabitater og menneskelige aktiviteter (EMODnet) for de tre demonstrasjonsområdene.",
+      "el": "Χάρτες των ενδιαιτημάτων του θαλάσσιου πυθμένα και των ανθρώπινων δραστηριοτήτων (EMODnet) για τις τρεις Περιοχές Επίδειξης."
+    },
+    "ui.dashboard.related_tool_da_viewer_help": {
+      "en": "Use it before or while you build your model, to see which habitats, activities and pressures occur in your area. The layers come live from EMODnet: coverage differs between areas and is more limited for Icelandic, Greenlandic and Faroese waters, so check national sources as well.",
+      "es": "Úsela antes de construir su modelo o mientras lo construye, para ver qué hábitats, actividades y presiones se dan en su zona. Las capas proceden en directo de EMODnet: la cobertura varía según la zona y es más limitada en aguas de Islandia, Groenlandia y las Islas Feroe, por lo que conviene consultar también fuentes nacionales.",
+      "fr": "Utilisez-le avant ou pendant la construction de votre modèle, pour voir quels habitats, activités et pressions sont présents dans votre zone. Les couches proviennent en direct d'EMODnet : la couverture varie selon les zones et est plus limitée pour les eaux islandaises, groenlandaises et féroïennes ; consultez donc aussi les sources nationales.",
+      "de": "Nutzen Sie ihn vor oder während der Erstellung Ihres Modells, um zu sehen, welche Habitate, Aktivitäten und Belastungen in Ihrem Gebiet vorkommen. Die Ebenen kommen direkt von EMODnet: Die Abdeckung unterscheidet sich je nach Gebiet und ist für isländische, grönländische und färöische Gewässer geringer; prüfen Sie daher auch nationale Quellen.",
+      "lt": "Naudokite prieš kurdami modelį arba jį kurdami, kad pamatytumėte, kokios buveinės, veiklos ir poveikiai būdingi jūsų teritorijai. Sluoksniai tiesiogiai gaunami iš EMODnet: aprėptis skirtingose teritorijose skiriasi ir yra ribotesnė Islandijos, Grenlandijos ir Farerų salų vandenyse, todėl patikrinkite ir nacionalinius šaltinius.",
+      "pt": "Utilize-o antes de construir o seu modelo ou durante a construção, para ver que habitats, atividades e pressões ocorrem na sua área. As camadas vêm diretamente do EMODnet: a cobertura varia entre áreas e é mais limitada nas águas da Islândia, da Gronelândia e das Ilhas Faroé, pelo que deve consultar também fontes nacionais.",
+      "it": "Usatelo prima o durante la costruzione del modello, per vedere quali habitat, attività e pressioni sono presenti nella vostra area. I livelli arrivano in tempo reale da EMODnet: la copertura varia da un'area all'altra ed è più limitata per le acque islandesi, groenlandesi e faroesi; consultate quindi anche le fonti nazionali.",
+      "no": "Bruk det før eller mens du bygger modellen, for å se hvilke habitater, aktiviteter og påvirkninger som finnes i området ditt. Kartlagene hentes direkte fra EMODnet: dekningen varierer mellom områdene og er mer begrenset for islandske, grønlandske og færøyske farvann, så sjekk også nasjonale kilder.",
+      "el": "Χρησιμοποιήστε το πριν ή κατά τη δημιουργία του μοντέλου σας, για να δείτε ποια ενδιαιτήματα, δραστηριότητες και πιέσεις υπάρχουν στην περιοχή σας. Τα επίπεδα προέρχονται απευθείας από το EMODnet: η κάλυψη διαφέρει ανά περιοχή και είναι πιο περιορισμένη για τα ύδατα της Ισλανδίας, της Γροιλανδίας και των Νήσων Φερόε· συμβουλευτείτε επομένως και εθνικές πηγές."
+    },
+    "ui.dashboard.related_tool_governance_name": {
+      "en": "HG&OG tool",
+      "es": "Herramienta HG&OG",
+      "fr": "Outil HG&OG",
+      "de": "HG&OG-Werkzeug",
+      "lt": "HG&OG įrankis",
+      "pt": "Ferramenta HG&OG",
+      "it": "Strumento HG&OG",
+      "no": "HG&OG-verktøyet",
+      "el": "Εργαλείο HG&OG"
+    },
+    "ui.dashboard.related_tool_governance_desc": {
+      "en": "An interactive knowledge graph by LifeWatch ERIC that connects European legislation, organisations, policies and sectors in one visual system.",
+      "es": "Un grafo de conocimiento interactivo de LifeWatch ERIC que conecta la legislación europea, las organizaciones, las políticas y los sectores en un único sistema visual.",
+      "fr": "Un graphe de connaissances interactif de LifeWatch ERIC qui relie la législation européenne, les organisations, les politiques et les secteurs dans un même système visuel.",
+      "de": "Ein interaktiver Wissensgraph von LifeWatch ERIC, der europäische Rechtsvorschriften, Organisationen, Politiken und Sektoren in einem visuellen System verknüpft.",
+      "lt": "Interaktyvus „LifeWatch ERIC“ žinių grafas, vienoje vaizdinėje sistemoje siejantis Europos teisės aktus, organizacijas, politikas ir sektorius.",
+      "pt": "Um grafo de conhecimento interativo do LifeWatch ERIC que liga a legislação europeia, as organizações, as políticas e os setores num único sistema visual.",
+      "it": "Un grafo di conoscenza interattivo di LifeWatch ERIC che collega legislazione europea, organizzazioni, politiche e settori in un unico sistema visivo.",
+      "no": "En interaktiv kunnskapsgraf fra LifeWatch ERIC som knytter sammen europeisk lovverk, organisasjoner, politikk og sektorer i ett visuelt system.",
+      "el": "Ένας διαδραστικός γράφος γνώσης του LifeWatch ERIC που συνδέει την ευρωπαϊκή νομοθεσία, τους οργανισμούς, τις πολιτικές και τους τομείς σε ένα ενιαίο οπτικό σύστημα."
+    },
+    "ui.dashboard.related_tool_governance_help": {
+      "en": "It combines organigrams (hierarchies of agencies, departments and ministries) with horrendograms (multilayered maps of how legislation and policies interconnect). Filter by Location, Umbrella, Executive Agency, Sector, Policy or Legislation, limit the graph to 1–3 steps from a node, and double-click a node for details.",
+      "es": "Combina organigramas (jerarquías de agencias, departamentos y ministerios) con horrendogramas (mapas multicapa de cómo se interconectan la legislación y las políticas). Filtre por Location, Umbrella, Executive Agency, Sector, Policy o Legislation, limite el grafo a 1–3 pasos desde un nodo y haga doble clic en un nodo para ver los detalles.",
+      "fr": "Il combine des organigrammes (hiérarchies d'agences, de services et de ministères) et des horrendogrammes (cartes à plusieurs niveaux des liens entre législation et politiques). Filtrez par Location, Umbrella, Executive Agency, Sector, Policy ou Legislation, limitez le graphe à 1 à 3 sauts depuis un nœud et double-cliquez sur un nœud pour en voir le détail.",
+      "de": "Es verbindet Organigramme (Hierarchien von Behörden, Abteilungen und Ministerien) mit Horrendogrammen (mehrschichtige Karten der Verflechtung von Rechtsvorschriften und Politiken). Filtern Sie nach Location, Umbrella, Executive Agency, Sector, Policy oder Legislation, begrenzen Sie den Graphen auf 1–3 Schritte um einen Knoten und doppelklicken Sie auf einen Knoten, um Details zu sehen.",
+      "lt": "Jis sujungia organigramas (agentūrų, departamentų ir ministerijų hierarchijas) su horendogramomis (daugiasluoksniais teisės aktų ir politikų sąsajų žemėlapiais). Filtruokite pagal Location, Umbrella, Executive Agency, Sector, Policy ar Legislation, apribokite grafą 1–3 žingsniais nuo mazgo ir dukart spustelėkite mazgą, kad pamatytumėte išsamią informaciją.",
+      "pt": "Combina organigramas (hierarquias de agências, departamentos e ministérios) com horrendogramas (mapas multicamada das ligações entre legislação e políticas). Filtre por Location, Umbrella, Executive Agency, Sector, Policy ou Legislation, limite o grafo a 1–3 saltos a partir de um nó e faça duplo clique num nó para ver os detalhes.",
+      "it": "Combina organigrammi (gerarchie di agenzie, dipartimenti e ministeri) e horrendogrammi (mappe multilivello dei collegamenti tra legislazione e politiche). Filtrate per Location, Umbrella, Executive Agency, Sector, Policy o Legislation, limitate il grafo a 1–3 passaggi da un nodo e fate doppio clic su un nodo per i dettagli.",
+      "no": "Det kombinerer organigrammer (hierarkier av etater, avdelinger og departementer) med horrendogrammer (kart i flere lag over hvordan lovverk og politikk henger sammen). Filtrer etter Location, Umbrella, Executive Agency, Sector, Policy eller Legislation, begrens grafen til 1–3 steg fra en node, og dobbeltklikk på en node for å se detaljer.",
+      "el": "Συνδυάζει οργανογράμματα (ιεραρχίες υπηρεσιών, τμημάτων και υπουργείων) με horrendograms (πολυεπίπεδους χάρτες της διασύνδεσης νομοθεσίας και πολιτικών). Φιλτράρετε ανά Location, Umbrella, Executive Agency, Sector, Policy ή Legislation, περιορίστε τον γράφο σε 1–3 βήματα από έναν κόμβο και κάντε διπλό κλικ σε έναν κόμβο για λεπτομέρειες."
+    },
+    "ui.dashboard.related_tool_da_viewer_hint": {
+      "en": "To see maps of the seabed habitats and human activities in your area, use the DA Viewer.",
+      "es": "Para ver mapas de los hábitats del fondo marino y de las actividades humanas en su zona, utilice el DA Viewer.",
+      "fr": "Pour voir les cartes des habitats des fonds marins et des activités humaines de votre zone, utilisez le DA Viewer.",
+      "de": "Karten der Meeresbodenlebensräume und der menschlichen Aktivitäten in Ihrem Gebiet finden Sie im DA Viewer.",
+      "lt": "Jūsų teritorijos jūros dugno buveinių ir žmogaus veiklos žemėlapius rasite DA Viewer.",
+      "pt": "Para ver mapas dos habitats do fundo marinho e das atividades humanas na sua área, utilize o DA Viewer.",
+      "it": "Per vedere le mappe degli habitat dei fondali e delle attività umane nella vostra area, usate il DA Viewer.",
+      "no": "Kart over havbunnshabitater og menneskelig aktivitet i området ditt finner du i DA Viewer.",
+      "el": "Για να δείτε χάρτες των ενδιαιτημάτων του βυθού και των ανθρώπινων δραστηριοτήτων στην περιοχή σας, χρησιμοποιήστε το DA Viewer."
+    },
+    "ui.dashboard.related_tool_governance_hint": {
+      "en": "To find which legislation and which authorities apply in your area, use the HG&OG tool.",
+      "es": "Para saber qué legislación y qué autoridades se aplican en su zona, utilice la herramienta HG&OG.",
+      "fr": "Pour savoir quelle législation et quelles autorités s'appliquent dans votre zone, utilisez l'outil HG&OG.",
+      "de": "Welche Rechtsvorschriften und welche Behörden in Ihrem Gebiet gelten, zeigt das HG&OG-Werkzeug.",
+      "lt": "Kurie teisės aktai ir kurios institucijos taikomi jūsų teritorijoje, sužinosite naudodami HG&OG įrankį.",
+      "pt": "Para saber que legislação e que autoridades se aplicam na sua área, utilize a ferramenta HG&OG.",
+      "it": "Per sapere quale legislazione e quali autorità si applicano nella vostra area, usate lo strumento HG&OG.",
+      "no": "Hvilket lovverk og hvilke myndigheter som gjelder i området ditt, finner du i HG&OG-verktøyet.",
+      "el": "Για να βρείτε ποια νομοθεσία και ποιες αρχές ισχύουν στην περιοχή σας, χρησιμοποιήστε το εργαλείο HG&OG."
     }
   }
 }

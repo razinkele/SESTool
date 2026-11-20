@@ -1536,6 +1536,25 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
           )
         ),
 
+        # Companion tools of the Marine SABRES DSS (issue #162)
+        tags$div(
+          class = "well",
+          id = "about_related_tools",
+          tags$h4(icon("external-link-alt"), " ", i18n$t("ui.dashboard.related_tools_title")),
+          tags$ul(
+            lapply(c("da_viewer", "governance"), function(tool) {
+              info <- DSS_COMPANION_TOOLS[[tool]]
+              # i18n-ref: ui.dashboard.related_tool_da_viewer_name
+              # i18n-ref: ui.dashboard.related_tool_governance_name
+              tags$li(
+                icon(info$icon), " ",
+                tags$a(href = info$url, target = "_blank", rel = "noopener noreferrer",
+                       i18n$t(paste0("ui.dashboard.related_tool_", tool, "_name")))
+              )
+            })
+          )
+        ),
+
         # Links - use light background with dark text/links for readability
         tags$div(
           class = "alert",

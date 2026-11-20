@@ -309,7 +309,7 @@ Numbers in those materials trace back to RDS outputs in `data/in_silico_*.rds` a
 
 Funded by the European Union's Horizon Europe research and innovation programme under:
 
-- **Marine-SABRES** (Marine Systems Approaches for Biodiversity Resilient European Seas), Grant 101059482.
+- **Marine-SABRES** (Marine Systems Approaches for Biodiversity Resilient European Seas), Grant 101058956.
 - **MARBEFES** (Marine Biodiversity and Ecosystem Functioning leading to Ecosystem Services), Grant 101060937.
 
 Code development was assisted by several AI coding tools (Claude Code, GitHub Copilot).
