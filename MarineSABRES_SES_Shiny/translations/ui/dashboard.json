@@ -705,15 +705,15 @@
       "el": "Πότε να το χρησιμοποιήσετε"
     },
     "ui.dashboard.related_tool_da_viewer_name": {
-      "en": "Demonstration Area Viewer (maps)",
-      "es": "Visor de las Áreas de Demostración (mapas)",
-      "fr": "Visualiseur des zones de démonstration (cartes)",
-      "de": "Viewer der Demonstrationsgebiete (Karten)",
-      "lt": "Demonstracinių teritorijų žemėlapių žiūryklė",
-      "pt": "Visualizador das Áreas de Demonstração (mapas)",
-      "it": "Visualizzatore delle Aree Dimostrative (mappe)",
-      "no": "Kartvisning for demonstrasjonsområdene",
-      "el": "Προβολή χαρτών των Περιοχών Επίδειξης"
+      "en": "Demonstration Area Viewer (DA Viewer)",
+      "es": "Visor de las Áreas de Demostración (DA Viewer)",
+      "fr": "Visualiseur des zones de démonstration (DA Viewer)",
+      "de": "Viewer der Demonstrationsgebiete (DA Viewer)",
+      "lt": "Demonstracinių teritorijų žiūryklė (DA Viewer)",
+      "pt": "Visualizador das Áreas de Demonstração (DA Viewer)",
+      "it": "Visualizzatore delle Aree Dimostrative (DA Viewer)",
+      "no": "Visning av demonstrasjonsområdene (DA Viewer)",
+      "el": "Προβολή των Περιοχών Επίδειξης (DA Viewer)"
     },
     "ui.dashboard.related_tool_da_viewer_desc": {
       "en": "Maps of seabed habitats and human activities (EMODnet) for the three Demonstration Areas.",

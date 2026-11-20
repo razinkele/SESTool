@@ -116,3 +116,14 @@ test_that("companion_tool_hint renders a translated hint and a safe new-tab link
     }
   }
 })
+
+test_that("the DA Viewer card name carries the short name the hints and guidebook use", {
+  tr <- jsonlite::fromJSON(file.path(app_root(), "translations", "ui", "dashboard.json"),
+                           simplifyVector = FALSE)$translation
+  for (l in LANGS) {
+    expect_match(tr[["ui.dashboard.related_tool_da_viewer_name"]][[l]], "DA Viewer",
+                 fixed = TRUE, info = l)
+    expect_match(tr[["ui.dashboard.related_tool_da_viewer_hint"]][[l]], "DA Viewer",
+                 fixed = TRUE, info = l)
+  }
+})
