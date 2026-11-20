@@ -15,8 +15,12 @@ From the app directory (`MarineSABRES_SES_Shiny/`), run exactly:
     bash deployment/deploy-and-verify.sh --check
 
 It refuses (exit 1) unless: on `main`, in sync with `origin/main`, `VERSION` has a pushed
-`v<VERSION>` tag on HEAD (or HEAD differs from the tag only in deployment/, .claude/,
-.github/, tests/, docs/), CI `R Tests` and `i18n validation` passed on HEAD, laguna reachable.
+`v<VERSION>` tag on HEAD (or HEAD differs from the tag only in files the deploy leaves out:
+those marked `export-ignore` in `.gitattributes` — tests/, .claude/, deployment/ (except
+required_packages.R), DTU/, Documents/ — or outside the app directory, e.g. .github/),
+CI `R Tests` and `i18n validation` passed on HEAD, laguna reachable.
+**docs/ ships** (the About box serves the manuals from it), so a docs-only change still
+needs a patch release before it can be deployed; so does a CHANGELOG-only change.
 Uncommitted edits only warn (the deploy ships the committed tree via `git archive`).
 If it fails, report the [FAIL] line; fix the cause (release, wait for CI, pull) — never bypass.
 
